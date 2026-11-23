@@ -149,7 +149,7 @@ const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE
                         opts.process_name(),
                         opts.command_line_buf ()));
 
-  pid_t result = mgr.spawn (opts);
+  pid_t const result = mgr.spawn (opts);
 
   if (result != ACE_INVALID_PID)
     {
@@ -193,7 +193,7 @@ public:
   {
     int result = 0;
     ACE_exitcode exitcode;
-    pid_t my_child = spawn_child (argv0_,
+    pid_t const my_child = spawn_child (argv0_,
                                   mgr_,
                                   sleep_time_,
                                   0);
@@ -392,7 +392,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_exitcode exitcode;
 
   // wait for a specific PID
-  pid_t child1 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child1 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               1,
                               1);
@@ -420,11 +420,11 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   // wait for a specific PID; another should finish first
-  pid_t child2 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child2 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               1,
                               2);
-  pid_t child3 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child3 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               4,
                               3);
@@ -478,7 +478,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // Try the timed wait functions
 
   // This one shouldn't timeout:
-  pid_t child4 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child4 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               1,
                               4);
@@ -505,7 +505,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   // This one should timeout:
-  pid_t child5 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child5 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               4,
                               5);
@@ -551,7 +551,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   // Terminate a child process and make sure we can wait for it.
-  pid_t child6 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child6 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               5,
                               6);
@@ -628,7 +628,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   mgr.open (ACE_Process_Manager::DEFAULT_SIZE,
             ACE_Reactor::instance ());
 
-  pid_t child7 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
+  pid_t const child7 = spawn_child (argc > 0 ? argv[0] : ACE_TEXT ("Process_Manager_Test"),
                               mgr,
                               5,
                               7);
