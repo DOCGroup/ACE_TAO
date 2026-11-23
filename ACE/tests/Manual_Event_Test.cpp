@@ -86,7 +86,7 @@ worker (void *)
   if (++n_awoken < n_workers)
     {
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_Time_Value wait (1, 0);   // Wait 10 sec
+      ACE_Time_Value const wait (1, 0);   // Wait 10 sec
       //FUZZ: enable check_for_lack_ACE_OS
 
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;

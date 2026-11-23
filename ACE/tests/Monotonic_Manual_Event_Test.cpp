@@ -146,7 +146,7 @@ worker (void *)
       ACE_Time_Value tm_sys;
 
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_Time_Value wait (1, 0);   // Wait 1 sec
+      ACE_Time_Value const wait (1, 0);   // Wait 1 sec
       //FUZZ: enable check_for_lack_ACE_OS
 
       if (use_monotonic)
@@ -239,7 +239,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   parse_args (argc, argv);
 
   //FUZZ: disable check_for_lack_ACE_OS
-  ACE_Time_Value wait (7, 0);   // Wait 7 sec
+  ACE_Time_Value const wait (7, 0);   // Wait 7 sec
   //FUZZ: enable check_for_lack_ACE_OS
 
   if (use_monotonic)
@@ -257,7 +257,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   // shift forward in time 3 sec; this will mess up timeouts if
   // monotonic timer is not used
-  ACE_Time_Value tv_shift (3, 0);
+  ACE_Time_Value const tv_shift (3, 0);
   set_system_time (ACE_OS::gettimeofday () + tv_shift);
 
   ACE_DEBUG ((LM_DEBUG,

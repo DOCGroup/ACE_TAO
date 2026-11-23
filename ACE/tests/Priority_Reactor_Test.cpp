@@ -156,7 +156,7 @@ Write_Handler::svc ()
 {
   // Send several short messages, doing pauses between each message.
   // The number of messages can be controlled from the command line.
-  ACE_Time_Value pause (0, 1000);
+  ACE_Time_Value const pause (0, 1000);
 
   for (int i = 0; i < opt_nloops; ++i)
     {
@@ -191,7 +191,7 @@ client (void *arg)
   ACE_Synch_Options options = ACE_Synch_Options::synch;
 
   // Start with one msec timeouts.
-  ACE_Time_Value msec (0, 1000);
+  ACE_Time_Value const msec (0, 1000);
   options.timeout (msec);
 
   // Try up to <max_retries> to connect to the server.
