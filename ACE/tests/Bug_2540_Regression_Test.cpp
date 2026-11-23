@@ -105,7 +105,7 @@ run_main (int, ACE_TCHAR *[])
   // happen with ACE_WFMO_Reactor.
   ACE_Select_Reactor *impl_ptr {};
   ACE_NEW_RETURN (impl_ptr, ACE_Select_Reactor, -1);
-  std::unique_ptr<ACE_Select_Reactor> auto_impl (impl_ptr);
+  std::unique_ptr<ACE_Select_Reactor> const auto_impl (impl_ptr);
 
   ACE_Reactor reactor (impl_ptr);
 

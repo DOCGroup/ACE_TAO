@@ -60,7 +60,7 @@ reverse_file (ACE_HANDLE file_handle,
 static int
 create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
 {
-  std::unique_ptr<char[]> mybuf (
+  std::unique_ptr<char[]> const mybuf (
     new (std::nothrow) char[line_length + 1]);
   if (!mybuf)
     {
@@ -75,7 +75,7 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
   mmap_4_open.open (filename, O_RDWR | O_CREAT | O_TRUNC, ACE_DEFAULT_FILE_PERMS);
   ACE_HANDLE file_handle  = mmap_4_open.handle();
 #else
-  ACE_HANDLE file_handle = ACE_OS::open (filename,
+  ACE_HANDLE const file_handle = ACE_OS::open (filename,
                                          O_RDWR | O_CREAT | O_TRUNC,
                                          ACE_DEFAULT_FILE_PERMS);
 #endif

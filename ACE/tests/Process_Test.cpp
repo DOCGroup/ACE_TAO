@@ -131,7 +131,7 @@ run_parent (bool inherit_files)
 
   ACE_OS::strcat (tempfile, t);
 
-  ACE_HANDLE file_handle = ACE_OS::mkstemp (tempfile);
+  ACE_HANDLE const file_handle = ACE_OS::mkstemp (tempfile);
   if (file_handle == ACE_INVALID_HANDLE)
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not get temp filename\n")));
