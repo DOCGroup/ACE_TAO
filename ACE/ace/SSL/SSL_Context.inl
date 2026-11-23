@@ -1,14 +1,10 @@
-// -*- C++ -*-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_SSL_Data_File::ACE_SSL_Data_File ()
-  : type_ (-1)
-{
-}
+ACE_SSL_Data_File::ACE_SSL_Data_File () = default;
 
 ACE_INLINE
-ACE_SSL_Data_File::ACE_SSL_Data_File (const char *file_name,
+ACE_SSL_Data_File::ACE_SSL_Data_File (char const *file_name,
                                       int type)
   : file_name_ (file_name),
     type_ (type)
@@ -27,19 +23,17 @@ ACE_SSL_Data_File::type () const
   return this->type_;
 }
 
-// ****************************************************************
-
 ACE_INLINE void
 ACE_SSL_Context::check_context ()
 {
-  if (this->context_ == nullptr)
+  if (!this->context_)
     {
       this->set_mode ();
     }
 
-  if (this->context_ != nullptr)
+  if (this->context_)
     {
-      ::SSL_CTX_set_verify (this->context_, this->default_verify_mode (),
+      ::SSL_CTX_set_verify (this->context_.get (), this->default_verify_mode (),
                             this->default_verify_callback ());
     }
 }
@@ -48,7 +42,7 @@ ACE_INLINE SSL_CTX *
 ACE_SSL_Context::context ()
 {
   this->check_context ();
-  return this->context_;
+  return this->context_.get ();
 }
 
 ACE_INLINE int

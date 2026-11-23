@@ -1,4 +1,3 @@
-//  -*- MPC -*-
 project(SSL) : acelib, ace_output, install, ace_openssl {
   avoids      += ace_for_tao
   requires    += ssl

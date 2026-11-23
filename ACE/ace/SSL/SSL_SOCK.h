@@ -1,13 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SSL_SOCK.h
  *
  *  @author Ossama Othman <ossama@ece.uci.edu>
  */
-//=============================================================================
-
 
 #ifndef ACE_SSL_SOCK_H
 #define ACE_SSL_SOCK_H
@@ -43,7 +38,7 @@ public:
    * Override ACE_SOCK base class implementations with these SSL
    * specific ones.
    */
-  //@{
+  /// @{
   int set_option (int level,
                   int option,
                   void *optval,
@@ -57,14 +52,18 @@ public:
   void set_handle (ACE_HANDLE);
   ACE_HANDLE get_handle () const;
   int control (int cmd, void *arg) const;
-  //@}
+  /// @}
 
 protected:
+  ACE_SSL_SOCK (ACE_SSL_SOCK const &) = delete;
+  ACE_SSL_SOCK &operator= (ACE_SSL_SOCK const &) = delete;
+  ACE_SSL_SOCK (ACE_SSL_SOCK &&) = delete;
+  ACE_SSL_SOCK &operator= (ACE_SSL_SOCK &&) = delete;
+
   /// Default constructor is private to prevent instances of this class
   /// from being defined.
   ACE_SSL_SOCK ();
 
-  /// Destructor
   /**
    * Not a virtual destructor.  Protected destructor to prevent
    * operator delete() from being called through a base class
@@ -82,6 +81,4 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 #include /**/ "ace/post.h"
 
 #endif /* ACE_SSL_SOCK_H */
-
-
 

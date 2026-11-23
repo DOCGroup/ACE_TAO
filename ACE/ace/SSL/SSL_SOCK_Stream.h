@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SSL_SOCK_Stream.h
  *
@@ -8,8 +5,6 @@
  *  @author Carlos O'Ryan <coryan@uci.edu>
  *  @author John Heitmann
  */
-//=============================================================================
-
 
 #ifndef ACE_SSL_SOCK_STREAM_H
 #define ACE_SSL_SOCK_STREAM_H
@@ -31,6 +26,8 @@
 #include "SSL_Context.h"
 
 #include "ace/SOCK_Stream.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -60,7 +57,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK_Stream : public ACE_SSL_SOCK
 {
 public:
-  /// Constructor
+  ACE_SSL_SOCK_Stream (ACE_SSL_SOCK_Stream const &) = delete;
+  ACE_SSL_SOCK_Stream (ACE_SSL_SOCK_Stream &&) = delete;
+  ACE_SSL_SOCK_Stream &operator= (ACE_SSL_SOCK_Stream const &) = delete;
+  ACE_SSL_SOCK_Stream &operator= (ACE_SSL_SOCK_Stream &&) = delete;
+
   /**
    * @param context Pointer to @c ACE_SSL_Context instance containing
    *                the OpenSSL @c SSL data structure to be associated
@@ -68,10 +69,9 @@ public:
    *                structure will be copied to make it at least
    *                logically independent of the supplied @a context.
    */
-  ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
-                       ACE_SSL_Context::instance ());
+  explicit ACE_SSL_SOCK_Stream (ACE_SSL_Context *context =
+                                ACE_SSL_Context::instance ());
 
-  /// Destructor
   ~ACE_SSL_SOCK_Stream ();
 
   /// Send an @a n byte buffer to the ssl socket using the semantics of
@@ -104,7 +104,7 @@ public:
 
   /// Send an iovec of size @a n to the ssl socket.
   /**
-   * Note that it is not possible to perform a "scattered" write with
+   * @note that it is not possible to perform a "scattered" write with
    * the underlying OpenSSL implementation.  As such, the expected
    * semantics are not fully reproduced with this implementation.
    */
@@ -183,7 +183,7 @@ public:
    * @note In the following four methods, only MSG_PEEK is supported
    * for recv_n(), and no flags are supported for send_n().
    */
-  //@{
+  /// @{
   /// Send @a n bytes, keep trying until @a n are sent.
   ssize_t send_n (const void *buf, int n, int flags) const;
 
@@ -245,7 +245,7 @@ public:
                   size_t len,
                   const ACE_Time_Value *timeout,
                   size_t *bytes_transferred = nullptr) const;
-  //@}
+  /// @}
 
   /**
    * Send an iovec of size n to the connected socket.  Will block
@@ -261,13 +261,13 @@ public:
   /**
    * Selectively close endpoints.
    */
-  //@{
+  /// @{
   /// Close down the reader.
   int close_reader ();
 
   /// Close down the writer.
   int close_writer ();
-  //@}
+  /// @}
 
   ///Close down the socket.
   int close ();
@@ -318,12 +318,17 @@ protected:
                   const ACE_Time_Value *timeout) const;
 
 private:
-  void operator= (const ACE_SSL_SOCK_Stream &) = delete;
-  ACE_SSL_SOCK_Stream (const ACE_SSL_SOCK_Stream &) = delete;
+  /// The SSL session.
+  struct SSL_Deleter
+  {
+    void operator() (SSL *ssl) const
+    {
+      ::SSL_free (ssl);
+    }
+  };
 
 protected:
-  /// The SSL session.
-  SSL *ssl_;
+  std::unique_ptr<SSL, SSL_Deleter> ssl_ {};
 
   /// The stream which works under the ssl connection.
   ACE_SOCK_Stream stream_;
