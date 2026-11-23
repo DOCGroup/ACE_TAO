@@ -37,7 +37,7 @@ TAO::ORB_Table::bind (char const * orb_id,
                     this->lock_,
                     -1);
 
-  std::pair<iterator, bool> result = this->table_.insert (value);
+  std::pair<iterator, bool> const result = this->table_.insert (value);
 
   if (result.second)
     {
@@ -96,7 +96,7 @@ TAO::ORB_Table::unbind (char const *orb_id)
 
   if (result != this->end ())
     {
-      TAO::ORB_Core_Ref_Counter oc ((*result).second);
+      TAO::ORB_Core_Ref_Counter const oc ((*result).second);
 
       this->table_.erase (result);
 

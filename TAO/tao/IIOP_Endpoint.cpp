@@ -390,7 +390,7 @@ TAO_IIOP_Endpoint_get_ip_interfaces (std::vector<ACE_CString> &local_ips)
   ACE_INET_Addr *tmp {};
   size_t cnt {};
   int const err = ACE::get_ip_interfaces (cnt, tmp);
-  std::unique_ptr<ACE_INET_Addr[]> interfaces (tmp);
+  std::unique_ptr<ACE_INET_Addr[]> const interfaces (tmp);
   if (err != 0)
   {
     return;
@@ -450,7 +450,7 @@ TAO_IIOP_Endpoint::find_preferred_interfaces (
   ACE_CString::size_type index {};
   while (index < csv_preferred.length ())
     {
-      ACE_CString::size_type comma = csv_preferred.find (',', index);
+      ACE_CString::size_type const comma = csv_preferred.find (',', index);
       ACE_CString::size_type assign = csv_preferred.find ('=', index);
 
       if (assign == ACE_CString::npos)
