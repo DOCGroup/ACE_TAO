@@ -90,7 +90,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           continue;
         }
 
-      int addr_len = sizeof cli_addr.sin_addr.s_addr;
+      int const addr_len = sizeof cli_addr.sin_addr.s_addr;
       hp = ACE_OS::gethostbyaddr ((char *) &cli_addr.sin_addr,
                                   addr_len, AF_INET);
 
