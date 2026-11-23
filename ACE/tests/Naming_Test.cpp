@@ -63,13 +63,13 @@ test_bind (ACE_Naming_Context &ns_context)
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
-      ACE_NS_WString w_name (name);
+      ACE_NS_WString const w_name (name);
 
       ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", array[i]);
-      ACE_NS_WString w_value (value);
+      ACE_NS_WString const w_value (value);
 
       ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", array [i]);
-      int bind_result = ns_context.bind (w_name, w_value, type);
+      int const bind_result = ns_context.bind (w_name, w_value, type);
       ACE_TEST_ASSERT (bind_result != -1);
     }
 }
@@ -78,14 +78,14 @@ static void
 test_find_failure (ACE_Naming_Context &ns_context)
 {
   ACE_OS::snprintf (name, BUFSIZ, "%s", "foo-bar");
-  ACE_NS_WString w_name (name);
+  ACE_NS_WString const w_name (name);
   ACE_NS_WString w_value;
   char *l_type {};
 
   // Do the finds.
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
-      int resolve = ns_context.resolve (w_name, w_value, l_type);
+      int const resolve = ns_context.resolve (w_name, w_value, l_type);
       ACE_TEST_ASSERT (resolve == -1);
     }
 }
@@ -102,13 +102,13 @@ test_rebind (ACE_Naming_Context &ns_context)
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
-      ACE_NS_WString w_name (name);
+      ACE_NS_WString const w_name (name);
 
       ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", -array[i]);
-      ACE_NS_WString w_value (value);
+      ACE_NS_WString const w_value (value);
 
       ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", -array[i]);
-      int rebind = ns_context.rebind (w_name, w_value, type);
+      int const rebind = ns_context.rebind (w_name, w_value, type);
       ACE_TEST_ASSERT (rebind != -1);
     }
 }
@@ -125,8 +125,8 @@ test_unbind (ACE_Naming_Context &ns_context)
   for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
     {
       ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
-      ACE_NS_WString w_name (name);
-      int unbind = ns_context.unbind (w_name);
+      ACE_NS_WString const w_name (name);
+      int const unbind = ns_context.unbind (w_name);
       ACE_TEST_ASSERT (unbind != -1);
     }
 }
@@ -158,10 +158,10 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
 
       ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
 
-      ACE_NS_WString w_name (name);
+      ACE_NS_WString const w_name (name);
       ACE_NS_WString w_value;
       char *type_out {};
-      ACE_NS_WString val (temp_val);
+      ACE_NS_WString const val (temp_val);
 
       int const resolve_result = ns_context.resolve (w_name, w_value, type_out);
       if (resolve_result != result)
@@ -231,7 +231,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 # if defined (ACE_LINUX) && defined (__x86_64__)
   name_options->base_address ((char*)0x3c00000000);
 # endif
-  bool unicode = false;
+  bool const unicode = false;
 # if (defined (ACE_WIN32) && defined (ACE_USES_WCHAR))
   unicode = true;
 # endif /* ACE_WIN32 && ACE_USES_WCHAR */
