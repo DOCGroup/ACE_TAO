@@ -96,7 +96,7 @@ TAO_Codeset_Manager_i::set_tcs (TAO_Profile &theProfile,
 {
   /// If tcs is already set on the transport then do not process,
   /// use existing transport as CDR have translators set.
-  TAO_Tagged_Components& theTaggedComp = theProfile.tagged_components ();
+  TAO_Tagged_Components const &theTaggedComp = theProfile.tagged_components ();
 
   CONV_FRAME::CodeSetComponentInfo remote;
 
@@ -167,7 +167,7 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
 {
   // Get the service Context from an object of TAO_ServerRequest
   // and set the TCS values on the Transport
-  TAO_Service_Context &service_cntx = request.request_service_context ();
+  TAO_Service_Context const &service_cntx = request.request_service_context ();
   IOP::ServiceContext context;
   context.context_id = IOP::CodeSets;
 
