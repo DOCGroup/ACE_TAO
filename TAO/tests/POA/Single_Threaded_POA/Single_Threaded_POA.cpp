@@ -164,13 +164,13 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::Object_var object_act = root_poa->id_to_reference (id.in ());
 
-      test_var object1 = test::_narrow (object_act.in ());
+      test_var const object1 = test::_narrow (object_act.in ());
 
       id = root_poa->activate_object (std::addressof (servant2));
 
       object_act = root_poa->id_to_reference (id.in ());
 
-      test_var object2 = test::_narrow (object_act.in ());
+      test_var const object2 = test::_narrow (object_act.in ());
 
       Worker worker1 (object1.in ());
       Worker worker2 (object2.in ());
