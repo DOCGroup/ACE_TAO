@@ -87,10 +87,6 @@ public:
   /// @{
 
   /**
-   * @fn int ACE_Process_Options::set_handles(ACE_HANDLE std_in,
-   *                                          ACE_HANDLE std_out,
-   *                                          ACE_HANDLE std_err)
-   *
    * Set the standard handles of the new process to the respective
    * handles.  If you want to affect a subset of the handles, make
    * sure to set the others to ACE_INVALID_HANDLE.
@@ -105,7 +101,7 @@ public:
    *       on Windows. Socket handles require an alternate mechanism to pass;
    *       see http://msdn.microsoft.com/en-us/library/ms741565(v=VS.85).aspx
    *
-   * @return 0 on success, -1 on failure.
+   * Returns 0 on success and -1 on failure.
    */
   int set_handles (ACE_HANDLE std_in,
                    ACE_HANDLE std_out = ACE_INVALID_HANDLE,

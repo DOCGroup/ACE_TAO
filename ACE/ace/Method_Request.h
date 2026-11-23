@@ -59,7 +59,7 @@ public:
    * method to order the method requests in the queue by priority.
    * 0 is the lowest priority.
    *
-   * @param prio   unsigned long, the new priority value for this object.
+   * The @a prio is the new priority value for this object.
    *
    * @sa ACE_Activation_Queue::enqueue
    */

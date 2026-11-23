@@ -544,11 +544,6 @@ public:
   /// @name Timer management
   /// @{
   /**
-   * @fn long ACE_Reactor::schedule_timer(ACE_Event_Handler *event_handler,
-   *                                      const void *arg,
-   *                                      const ACE_Time_Value &delay,
-   *                                      const ACE_Time_Value &interval)
-   *
    * Schedule a timer event.
    *
    * Schedule a timer event that will expire after an @a delay amount
@@ -566,15 +561,11 @@ public:
    * @see cancel_timer()
    * @see reset_timer_interval()
    *
-   * @param event_handler Event handler to schedule on reactor. The handler's
-   *                      handle_timeout() method will be called when this
-   *                      scheduled timer expires.
-   * @param arg           Argument passed to the handle_timeout() method of
-   *                      event_handler.
-   * @param delay         Time interval after which the timer will expire.
-   * @param interval      Time interval for which the timer will be
-   *                      automatically rescheduled if the handle_timeout()
-   *                      callback does not return a value less than 0.
+   * The @a event_handler's handle_timeout() method will be called when the
+   * scheduled timer expires. The @a arg is passed to handle_timeout(). The
+   * @a delay is the time interval after which the timer expires. The @a interval
+   * is the time interval at which the timer is automatically rescheduled,
+   * provided handle_timeout() does not return a value less than 0.
    *
    * @retval              timer id, on success. The id can be used to
    *                      cancel or reschedule this timer.
