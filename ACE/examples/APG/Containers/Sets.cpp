@@ -57,7 +57,7 @@ int SetExample::runBoundedSet ()
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%d\n"),
               DataElement::numOfActiveObjects ()));
 
-  DataElement elem1 (10), elem2 (99);
+  DataElement const elem1 (10), elem2 (99);
   if (!bset.find (elem1) && !bset.find (elem2))
     {
       ACE_DEBUG ((LM_INFO,
