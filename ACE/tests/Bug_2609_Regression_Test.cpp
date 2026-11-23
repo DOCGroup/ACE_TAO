@@ -79,7 +79,7 @@ struct My_Task : public ACE_Task_Base
      TEST_TRACE ("My_Task::svc");
      ACE_Reactor *r = ACE_Reactor::instance ();
      r->owner (ACE_OS::thr_self ());
-     int rv = r->run_reactor_event_loop ();
+     int const rv = r->run_reactor_event_loop ();
      if (rv < 0)
        {
          ACE_ERROR ((LM_ERROR,
@@ -139,7 +139,7 @@ run_main (int, ACE_TCHAR *[])
                                            ACE_Time_Value(0));
 
   My_Task task;
-  int activated = task.activate ();
+  int const activated = task.activate ();
   if (activated < 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

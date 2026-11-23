@@ -195,7 +195,7 @@ test_argv_quotes ()
   // warns if the const char*[] is passed to the ACE_ARGV constructor as in
   // "args3" below.
 
-  int argc = 3;
+  int const argc = 3;
 
   // (argc, argv)
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** argv ***\n")));

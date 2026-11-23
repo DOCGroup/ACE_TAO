@@ -21,7 +21,7 @@ run_main (int, ACE_TCHAR *[])
 
   // Normally applications should check the return value, but if they
   // ignore it...
-  int result = dll.open (library_name);
+  int const result = dll.open (library_name);
 
   if(result == -1)
   {
