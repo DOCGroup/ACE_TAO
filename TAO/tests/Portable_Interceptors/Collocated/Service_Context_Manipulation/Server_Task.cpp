@@ -20,10 +20,10 @@ Server_Task::svc ()
 {
   try
     {
-     CORBA::Object_var poa_object =
+     CORBA::Object_var const poa_object =
        this->sorb_->resolve_initial_references ("RootPOA");
 
-     PortableServer::POA_var root_poa =
+     PortableServer::POA_var const root_poa =
        PortableServer::POA::_narrow (poa_object.in ());
 
      if (CORBA::is_nil (root_poa.in ()))
@@ -33,7 +33,7 @@ Server_Task::svc ()
                            1);
        }
 
-     PortableServer::POAManager_var poa_manager =
+     PortableServer::POAManager_var const poa_manager =
        root_poa->the_POAManager ();
 
      poa_manager->activate ();
@@ -41,24 +41,24 @@ Server_Task::svc ()
      Visual_i *vi {};
      ACE_NEW_RETURN (vi, Visual_i (sorb_.in ()), 1);
      // The servant var assumes ownership of the ACE_NEW allocation.
-     PortableServer::ServantBase_var server_impl = vi;
+     PortableServer::ServantBase_var const server_impl = vi;
 
-     PortableServer::ObjectId_var id =
+     PortableServer::ObjectId_var const id =
        root_poa->activate_object (server_impl.in ());
 
-     CORBA::Object_var test_obj =
+     CORBA::Object_var const test_obj =
        root_poa->id_to_reference (id.in ());
 
-     Test_Interceptors::Visual_var server =
+     Test_Interceptors::Visual_var const server =
        Test_Interceptors::Visual::_narrow (test_obj.in ());
 
-     CORBA::String_var ior =
+     CORBA::String_var const ior =
        sorb_->object_to_string (server.in ());
 
      // If the ior_output_file exists, output the ior to it
      if (!this->output_.is_empty ())
        {
-         std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+         std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
            ACE_OS::fopen (this->output_.c_str (), ACE_TEXT ("w")),
            ACE_OS::fclose);
          if (!output_file)
