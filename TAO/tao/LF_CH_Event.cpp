@@ -53,7 +53,7 @@ TAO_LF_CH_Event::state_changed_i (LFS_STATE new_state)
 
   ACE_MT (ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->followers_.mutex ()));
 
-  HASH_MAP::iterator end_it = this->followers_.end ();
+  HASH_MAP::iterator const end_it = this->followers_.end ();
   for (HASH_MAP::iterator it = this->followers_.begin (); it != end_it ; ++it)
     {
       it->ext_id_->signal ();
