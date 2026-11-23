@@ -209,7 +209,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
       ACE_NEW_RETURN (proxy,
                       ACE_INET_Addr(static_cast<u_short> (proxy_port),proxy_host.c_str()),
                       0);
-      ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id,proxy, 1), 0);
+      ACE_NEW_RETURN (session, ACE::HTBP::Session (session_id, proxy, true), 0);
       if (ACE::HTBP::Session::add_session (session) == -1)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
