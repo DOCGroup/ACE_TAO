@@ -1,4 +1,3 @@
-
 /**
  *  @file   Transient_Naming_Context.h
  *

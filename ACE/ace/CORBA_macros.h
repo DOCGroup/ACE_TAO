@@ -1,4 +1,3 @@
-
 /**
  * @file CORBA_macros.h
  *

@@ -1,4 +1,3 @@
-
 /**
  * @file PortableServer_PolicyFactory.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   UIOP_Connection_Handler.h
  *

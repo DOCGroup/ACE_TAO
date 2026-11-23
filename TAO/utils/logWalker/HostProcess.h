@@ -1,4 +1,3 @@
-
 //
 
 #ifndef LOG_WALKER_HOST_PROCESS_H

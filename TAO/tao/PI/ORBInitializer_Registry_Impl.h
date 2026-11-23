@@ -1,4 +1,3 @@
-
 /**
  *  @file   ORBInitializer_Registry_Impl.h
  *

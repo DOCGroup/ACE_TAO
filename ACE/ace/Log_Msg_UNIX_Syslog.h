@@ -1,4 +1,3 @@
-
 /**
  *  @file    Log_Msg_UNIX_Syslog.h
  *

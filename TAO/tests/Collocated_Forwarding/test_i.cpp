@@ -1,4 +1,3 @@
-
 #include "test_i.h"
 #include "tao/PortableServer/ForwardRequestC.h"
 

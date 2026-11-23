@@ -1,4 +1,3 @@
-
 /**
  *  @file    ATM_Acceptor.h
  *

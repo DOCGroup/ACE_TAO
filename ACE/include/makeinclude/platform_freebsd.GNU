@@ -1,4 +1,3 @@
-
 # platform_freebsd.GNU
 
 ##  See /usr/ports/Mk/bsd.port.mk for sample usage of the OSVERSION

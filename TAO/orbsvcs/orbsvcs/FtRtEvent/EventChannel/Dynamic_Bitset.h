@@ -1,4 +1,3 @@
-
 /**
  *  @file   Dynamic_Bitset.h
  *

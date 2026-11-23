@@ -1,4 +1,3 @@
-
 /**
  *  @file    Active_Map_Manager_T.h
  *

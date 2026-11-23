@@ -1,4 +1,3 @@
-
 #include "ACEXML/common/Transcode.h"
 #include "ACEXML/common/XML_Codecs.h"
 #include "ace/Log_Msg.h"

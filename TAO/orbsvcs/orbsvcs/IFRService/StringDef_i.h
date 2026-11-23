@@ -1,4 +1,3 @@
-
 /**
  *  @file    StringDef_i.h
  *

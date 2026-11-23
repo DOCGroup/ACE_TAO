@@ -1,4 +1,3 @@
-
 /**
  *  @file    Server_Logging_Handler.h
  *

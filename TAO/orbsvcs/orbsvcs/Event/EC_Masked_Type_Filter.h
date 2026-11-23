@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Masked_Type_Filter.h
  *

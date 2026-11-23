@@ -1,4 +1,3 @@
-
 /**
  *  @file   DLL_Parser.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    TAO_ETCL_Constraint.h
  *

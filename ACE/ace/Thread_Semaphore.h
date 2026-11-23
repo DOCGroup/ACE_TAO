@@ -1,4 +1,3 @@
-
 /**
  *  @file    Thread_Semaphore.h
  *

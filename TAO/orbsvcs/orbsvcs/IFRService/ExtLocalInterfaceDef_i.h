@@ -1,4 +1,3 @@
-
 /**
  *  @file    ExtLocalInterfaceDef_i.h
  *

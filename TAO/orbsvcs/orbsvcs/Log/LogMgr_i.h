@@ -1,4 +1,3 @@
-
 /**
  *  @file   LogMgr_i.h
  *

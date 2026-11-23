@@ -1,4 +1,3 @@
-
 /**
  *  @file   Notify_Consumer.h
  *

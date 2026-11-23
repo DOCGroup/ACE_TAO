@@ -1,4 +1,3 @@
-
 /**
  *  @file   Log_Constraint_Visitors.h
  *

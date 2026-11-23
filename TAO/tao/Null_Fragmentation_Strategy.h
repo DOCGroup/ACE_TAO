@@ -1,4 +1,3 @@
-
 /**
  *  @file    Null_Fragmentation_Strategy.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Seq_Var_T.h
  *

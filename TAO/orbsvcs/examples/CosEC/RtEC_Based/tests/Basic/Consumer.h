@@ -1,4 +1,3 @@
-
 /**
  *  @file   Consumer.h
  *

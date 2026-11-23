@@ -1,4 +1,3 @@
-
 /**
  *  @file    Scheduler_Utilities.h
  *

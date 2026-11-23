@@ -1,4 +1,3 @@
-
 /**
  *  @file   FTEC_Become_Primary_Listener.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   Event_Logging_Service.h
  *

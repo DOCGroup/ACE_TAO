@@ -1,4 +1,3 @@
-
 /**
  *  @file    IDLType_i.h
  *

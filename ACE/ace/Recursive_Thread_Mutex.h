@@ -1,4 +1,3 @@
-
 /**
  *  @file    Recursive_Thread_Mutex.h
  *

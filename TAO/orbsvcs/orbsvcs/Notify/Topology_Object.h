@@ -1,4 +1,3 @@
-
 /**
 *  @file    Topology_Object.h
 *

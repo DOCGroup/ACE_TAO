@@ -1,4 +1,3 @@
-
 /**
  *  @file   RT_Invocation_Endpoint_Selectors.h
  *

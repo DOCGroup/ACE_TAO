@@ -1,4 +1,3 @@
-
 /** @file   URL_Addr.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>

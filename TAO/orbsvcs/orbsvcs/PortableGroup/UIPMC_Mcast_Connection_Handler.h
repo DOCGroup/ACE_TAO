@@ -1,4 +1,3 @@
-
 /**
  *  @file     UIPMC_Mcast_Connection_Handler.h
  *

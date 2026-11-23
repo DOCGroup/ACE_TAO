@@ -1,4 +1,3 @@
-
 /**
  *  @file Async_Table_Adapter.h
  *

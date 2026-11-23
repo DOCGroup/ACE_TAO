@@ -1,4 +1,3 @@
-
 /**
  *  @file    NT_Naming_Service.h
  *

@@ -1,4 +1,3 @@
-
 /**
  * @file LocalObject.h
  *

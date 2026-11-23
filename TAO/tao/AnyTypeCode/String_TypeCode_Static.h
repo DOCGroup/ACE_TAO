@@ -1,4 +1,3 @@
-
 /**
  *  @file    String_TypeCode_Static.h
  *

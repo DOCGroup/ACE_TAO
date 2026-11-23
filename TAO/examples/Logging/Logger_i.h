@@ -1,4 +1,3 @@
-
 /**
  *  @file   Logger_i.h
  *

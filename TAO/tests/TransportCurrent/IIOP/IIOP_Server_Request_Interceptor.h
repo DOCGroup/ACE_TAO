@@ -1,4 +1,3 @@
-
 /**
  * @file IIOP_Server_Request_Interceptor.h
  *

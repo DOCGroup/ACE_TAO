@@ -1,4 +1,3 @@
-
 /**
  *  @file    sink_i.h
  *

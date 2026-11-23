@@ -1,4 +1,3 @@
-
 /**
  *  @file    Alias_TypeCode_Static.h
  *

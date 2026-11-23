@@ -1,4 +1,3 @@
-
 /**
  *  @file   Hash_Persistence_Strategy.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   BasicLogFactory_i.h
  *

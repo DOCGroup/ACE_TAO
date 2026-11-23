@@ -1,4 +1,3 @@
-
 /**
  *  @file    TypeCode_Base_Attributes.h
  *

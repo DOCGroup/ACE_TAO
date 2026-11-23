@@ -1,4 +1,3 @@
-
 /**
  *  @file    IPC_SAP.h
  *

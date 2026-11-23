@@ -1,4 +1,3 @@
-
 /**
  *  @file    High_Res_Timer.h
  *

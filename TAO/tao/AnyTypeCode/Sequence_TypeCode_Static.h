@@ -1,4 +1,3 @@
-
 /**
  *  @file    Sequence_TypeCode_Static.h
  *

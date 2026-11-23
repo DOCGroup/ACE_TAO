@@ -1,4 +1,3 @@
-
 /**
  *  @file   Resource_Factory.h
  *

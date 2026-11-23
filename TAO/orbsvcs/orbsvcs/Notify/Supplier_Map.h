@@ -1,4 +1,3 @@
-
 /**
  *  @file Supplier_Map.h
  *

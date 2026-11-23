@@ -1,4 +1,3 @@
-
 /**
  *  @file    Reconfig_Sched_Utils.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Sig_Adapter.h
  *

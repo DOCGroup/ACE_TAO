@@ -1,4 +1,3 @@
-
 /**
  *  @file    FT_Naming_Server.h
  *

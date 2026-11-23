@@ -1,4 +1,3 @@
-
 ACEXML_INLINE const ACEXML_Char *
 ACEXML_Exception::id () const
 {

@@ -1,6 +1,3 @@
-
-
-
 @mainpage ACEXML - A Small and Portable XML Parser
 
 @section acexml_synopsis Synopsis

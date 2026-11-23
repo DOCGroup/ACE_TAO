@@ -1,4 +1,3 @@
-
 /**
  *  @file     GIOP_Message_Locate_Header.h
  *

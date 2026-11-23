@@ -1,4 +1,3 @@
-
 /**
  *  @file   ECG_Reconnect_ConsumerEC_Control.h
  *

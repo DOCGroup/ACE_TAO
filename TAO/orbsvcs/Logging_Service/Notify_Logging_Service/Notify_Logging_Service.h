@@ -1,4 +1,3 @@
-
 /**
  *  @file   Notify_Logging_Service.h
  *

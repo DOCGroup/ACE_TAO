@@ -1,4 +1,3 @@
-
 /**
  *  @file    Multicast_Manager.h
  *

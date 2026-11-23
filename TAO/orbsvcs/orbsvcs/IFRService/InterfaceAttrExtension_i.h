@@ -1,4 +1,3 @@
-
 /**
  *  @file    InterfaceAttrExtension_i.h
  *

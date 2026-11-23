@@ -1,4 +1,3 @@
-
 /**
  *  @file    Any_Dual_Impl_T.h
  *

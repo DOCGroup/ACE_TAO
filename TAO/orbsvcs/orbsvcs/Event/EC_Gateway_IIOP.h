@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Gateway_IIOP.h
  *

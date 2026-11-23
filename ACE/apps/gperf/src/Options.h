@@ -1,4 +1,3 @@
-
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
  * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)

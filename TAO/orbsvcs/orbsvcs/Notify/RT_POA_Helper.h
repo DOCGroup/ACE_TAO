@@ -1,4 +1,3 @@
-
 /**
  *  @file RT_POA_Helper.h
  *

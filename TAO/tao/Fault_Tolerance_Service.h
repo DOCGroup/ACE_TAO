@@ -1,4 +1,3 @@
-
 /**
  *  @file    Fault_Tolerance_Service.h
  *

@@ -1,4 +1,3 @@
-
 #include "ACEXML/common/DefaultHandler.h"
 
 ACEXML_DefaultHandler::ACEXML_DefaultHandler () = default;

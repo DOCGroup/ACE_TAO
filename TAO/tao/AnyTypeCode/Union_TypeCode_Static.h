@@ -1,4 +1,3 @@
-
 /**
  *  @file    Union_TypeCode_Static.h
  *

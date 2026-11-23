@@ -1,4 +1,3 @@
-
 /**
  *  @file   Buffering_Constraint_Policy.h
  *

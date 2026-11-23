@@ -1,4 +1,3 @@
-
 /**
  *  @file   ESF_Proxy_RefCount_Guard.h
  *

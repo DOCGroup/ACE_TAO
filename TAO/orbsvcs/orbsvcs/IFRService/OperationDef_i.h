@@ -1,4 +1,3 @@
-
 /**
  *  @file    OperationDef_i.h
  *

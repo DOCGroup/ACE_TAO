@@ -1,4 +1,3 @@
-
 /**
  *  @file    sender.cpp
  *

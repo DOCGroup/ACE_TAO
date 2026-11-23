@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Trivial_Supplier_Filter.h
  *

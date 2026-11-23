@@ -1,4 +1,3 @@
-
 /**
  *  @file    SMR_Client.h
  *

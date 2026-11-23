@@ -1,4 +1,3 @@
-
 /**
  *  @file    NT_Notify_Service.h
  *

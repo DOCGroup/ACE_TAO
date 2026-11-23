@@ -1,4 +1,3 @@
-
 /**
  *  @file    XML_Util.h
  *

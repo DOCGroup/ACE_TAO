@@ -1,4 +1,3 @@
-
 /**
  *  @file    Managed_Object.h
  *

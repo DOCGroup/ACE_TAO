@@ -1,4 +1,3 @@
-
 // Current program version number.
 
 /**

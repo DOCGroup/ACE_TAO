@@ -1,4 +1,3 @@
-
 /**
  *  @file     GIOP_Utils.h
  *

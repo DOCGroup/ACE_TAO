@@ -1,4 +1,3 @@
-
 /**
  *  @file   QtResource_Loader.h
  *

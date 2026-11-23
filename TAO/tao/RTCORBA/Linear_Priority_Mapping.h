@@ -1,4 +1,3 @@
-
 /**
  *  @file   Linear_Priority_Mapping.h
  *

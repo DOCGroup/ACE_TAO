@@ -1,4 +1,3 @@
-
 #ifndef EVENT_NODE_H
 #define EVENT_NODE_H
 #include /**/ "ace/pre.h"

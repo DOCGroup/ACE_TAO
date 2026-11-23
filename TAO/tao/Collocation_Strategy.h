@@ -1,4 +1,3 @@
-
 /**
  *  @file    Collocation_Strategy.h
  *

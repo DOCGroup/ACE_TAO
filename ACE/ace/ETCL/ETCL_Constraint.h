@@ -1,4 +1,3 @@
-
 /**
  *  @file    ETCL_Constraint.h
  *

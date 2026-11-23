@@ -1,4 +1,3 @@
-
 /**
  *  @file    XML_Svc_Conf.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   Recyclable.h
  *

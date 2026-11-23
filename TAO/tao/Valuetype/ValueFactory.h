@@ -1,4 +1,3 @@
-
 /**
  *  @file     ValueFactory.h
  *

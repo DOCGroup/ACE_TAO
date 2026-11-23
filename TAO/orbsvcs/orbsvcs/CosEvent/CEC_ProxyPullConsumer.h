@@ -1,4 +1,3 @@
-
 /**
  *  @file   CEC_ProxyPullConsumer.h
  *

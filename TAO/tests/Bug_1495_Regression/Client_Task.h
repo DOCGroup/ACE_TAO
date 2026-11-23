@@ -1,4 +1,3 @@
-
 /**
  * @file Client_Task.h
  * @author Will Otte <wotte@dre.vanderbilt.edu>'

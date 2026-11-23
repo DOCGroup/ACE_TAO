@@ -1,4 +1,3 @@
-
 /**
  *  @file    DTP_POA_Strategy.h
  *

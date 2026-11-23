@@ -1,4 +1,3 @@
-
 /**
  *  @file   Notify_Constraint_Visitors.h
  *

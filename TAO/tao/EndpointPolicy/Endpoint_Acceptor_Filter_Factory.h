@@ -1,4 +1,3 @@
-
 /**
  *  @file    Endpoint_Acceptor_Filter_Factory.h
  *

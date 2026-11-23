@@ -1,4 +1,3 @@
-
 /**
  *  @file   Connection_Timeout_Policy_i.h
  *

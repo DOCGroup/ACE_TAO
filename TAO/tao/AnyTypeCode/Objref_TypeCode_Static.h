@@ -1,4 +1,3 @@
-
 /**
  *  @file    Objref_TypeCode_Static.h
  *

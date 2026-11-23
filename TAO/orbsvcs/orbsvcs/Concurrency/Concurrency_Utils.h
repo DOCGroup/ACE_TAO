@@ -1,4 +1,3 @@
-
 /**
  *  @file    Concurrency_Utils.h
  *

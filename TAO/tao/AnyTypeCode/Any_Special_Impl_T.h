@@ -1,4 +1,3 @@
-
 /**
  *  @file    Any_Special_Impl_T.h
  *

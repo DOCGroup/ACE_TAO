@@ -1,4 +1,3 @@
-
 /**
  *  @file Reactive_Connect_Strategy.h
  *

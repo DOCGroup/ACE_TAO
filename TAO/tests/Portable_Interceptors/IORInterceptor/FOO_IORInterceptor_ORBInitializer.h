@@ -1,4 +1,3 @@
-
 /**
  * @file FOO_IORInterceptor_ORBInitializer.h
  *

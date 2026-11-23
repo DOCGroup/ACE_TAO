@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Dispatching_Task.h
  *

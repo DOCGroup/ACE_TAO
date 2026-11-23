@@ -1,4 +1,3 @@
-
 /**
  *  @file POA_Helper.h
  *

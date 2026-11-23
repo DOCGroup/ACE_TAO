@@ -1,4 +1,3 @@
-
 /**
  *  @file   FoxResource_Factory.h
  *

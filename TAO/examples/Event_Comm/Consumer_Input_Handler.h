@@ -1,4 +1,3 @@
-
 /**
  *  @file    Consumer_Input_Handler.h
  *

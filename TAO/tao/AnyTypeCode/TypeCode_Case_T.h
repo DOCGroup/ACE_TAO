@@ -1,4 +1,3 @@
-
 /**
  *  @file    TypeCode_Case_T.h
  *

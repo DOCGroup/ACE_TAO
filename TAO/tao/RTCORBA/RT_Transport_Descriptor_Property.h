@@ -1,4 +1,3 @@
-
 /**
  *  @file RT_Transport_Descriptor_Property.h
  *

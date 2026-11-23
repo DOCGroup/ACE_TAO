@@ -1,4 +1,3 @@
-
 /**
  *  @file   HTIOP_Connector_Impl.h
  *

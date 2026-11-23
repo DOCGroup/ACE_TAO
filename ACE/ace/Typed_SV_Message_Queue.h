@@ -1,4 +1,3 @@
-
 /**
  *  @file    Typed_SV_Message_Queue.h
  *

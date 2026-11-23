@@ -1,4 +1,3 @@
-
 /**
  *  @file    ExtValueDef_i.h
  *

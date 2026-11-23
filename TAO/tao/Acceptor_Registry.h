@@ -1,4 +1,3 @@
-
 /**
  *  @file     Acceptor_Registry.h
  *

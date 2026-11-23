@@ -1,4 +1,3 @@
-
 /**
  *  @file    QoS_Session_Impl.h
  *

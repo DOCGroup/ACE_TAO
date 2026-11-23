@@ -1,4 +1,3 @@
-
 /**
  *  @file   Service_Type_Repository.h
  *

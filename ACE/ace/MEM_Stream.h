@@ -1,4 +1,3 @@
-
 /**
  *  @file    MEM_Stream.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    BD_String_Argument_T.h
  *

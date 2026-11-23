@@ -1,4 +1,3 @@
-
 /**
  *  @file    ConsumesDef_i.h
  *

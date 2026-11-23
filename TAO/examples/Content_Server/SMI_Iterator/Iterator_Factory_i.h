@@ -1,4 +1,3 @@
-
 /**
  *  @file     Iterator_Factory_i.h
  *

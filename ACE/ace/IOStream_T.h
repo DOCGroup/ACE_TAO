@@ -1,4 +1,3 @@
-
 /**
  *  @file    IOStream_T.h
  *

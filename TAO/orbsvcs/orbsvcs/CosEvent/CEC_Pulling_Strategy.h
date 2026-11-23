@@ -1,4 +1,3 @@
-
 /**
  *  @file   CEC_Pulling_Strategy.h
  *

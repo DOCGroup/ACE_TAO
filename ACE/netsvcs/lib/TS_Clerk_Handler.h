@@ -1,4 +1,3 @@
-
 /**
  *  @file    TS_Clerk_Handler.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Offer_Database.h
  *

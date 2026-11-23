@@ -1,4 +1,3 @@
-
 /**
  *  @file    PolicyFactory_Loader.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Entity_Manager.h
  *

@@ -1,4 +1,3 @@
-
 /**
  * @file RIR_Narrow.h
  *

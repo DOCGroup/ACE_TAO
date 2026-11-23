@@ -1,4 +1,3 @@
-
 /**
  *  @file    nestea_client_i.h
  *

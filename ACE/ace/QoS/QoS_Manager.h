@@ -1,4 +1,3 @@
-
 /**
  *  @file    QoS_Manager.h
  *

@@ -1,4 +1,3 @@
-
 #include "tao/GIOP_Message_Version.h"
 
 #include <memory>

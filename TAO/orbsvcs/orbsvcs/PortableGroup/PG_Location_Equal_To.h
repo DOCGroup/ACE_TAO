@@ -1,4 +1,3 @@
-
 /**
  *  @file    PG_Location_Equal_To.h
  *

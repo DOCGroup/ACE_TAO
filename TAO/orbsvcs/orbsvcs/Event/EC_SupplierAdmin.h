@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_SupplierAdmin.h
  *

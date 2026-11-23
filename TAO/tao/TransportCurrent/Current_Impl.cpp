@@ -1,4 +1,3 @@
-
 /**
  * @file Current_Impl.cpp
  *

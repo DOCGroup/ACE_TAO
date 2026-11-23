@@ -1,4 +1,3 @@
-
 #include "ace/Get_Opt.h"
 #include "FooC.h"
 #include "orbsvcs/SecurityC.h"

@@ -1,4 +1,3 @@
-
 /**
  *  @file   Compression_Manager.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Dynamic_Adapter_Impl.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Configuration.h
  *

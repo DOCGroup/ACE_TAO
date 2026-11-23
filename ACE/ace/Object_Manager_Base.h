@@ -1,4 +1,3 @@
-
 /**
  *  @file    Object_Manager_Base.h
  *

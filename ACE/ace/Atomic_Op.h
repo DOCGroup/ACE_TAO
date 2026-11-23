@@ -1,4 +1,3 @@
-
 /**
  *  @file    Atomic_Op.h
  *

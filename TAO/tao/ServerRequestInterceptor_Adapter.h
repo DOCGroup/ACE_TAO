@@ -1,4 +1,3 @@
-
 /**
  *  @file    ServerRequestInterceptor_Adapter.h
  *

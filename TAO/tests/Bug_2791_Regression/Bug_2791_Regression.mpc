@@ -1,4 +1,3 @@
-
 project (*client) : taoclient, valuetype {
 
    IDL_Files {

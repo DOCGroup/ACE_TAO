@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Basic_Filter_Builder.h
  *

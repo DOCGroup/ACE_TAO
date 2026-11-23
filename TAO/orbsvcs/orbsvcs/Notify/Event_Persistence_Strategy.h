@@ -1,4 +1,3 @@
-
 /**
  *  @file    Event_Persistence_Strategy.h
  *

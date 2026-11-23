@@ -1,4 +1,3 @@
-
 /**
  *  @file   ProxySupplierStateWorker.h
  *

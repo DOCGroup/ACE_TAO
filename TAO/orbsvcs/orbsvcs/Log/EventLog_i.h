@@ -1,4 +1,3 @@
-
 /**
  *  @file   EventLog_i.h
  *

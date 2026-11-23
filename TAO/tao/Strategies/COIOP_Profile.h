@@ -1,4 +1,3 @@
-
 /**
  *  @file     COIOP_Profile.h
  *

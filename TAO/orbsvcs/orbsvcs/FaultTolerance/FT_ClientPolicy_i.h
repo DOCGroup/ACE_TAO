@@ -1,4 +1,3 @@
-
 /**
  *  @file   FT_ClientPolicy_i.h
  *

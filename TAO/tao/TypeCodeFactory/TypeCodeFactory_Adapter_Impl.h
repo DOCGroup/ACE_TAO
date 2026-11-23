@@ -1,4 +1,3 @@
-
 /**
  *  @file    TypeCodeFactory_Adapter_Impl.h
  *

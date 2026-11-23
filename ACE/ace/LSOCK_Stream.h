@@ -1,4 +1,3 @@
-
 /**
  *  @file    LSOCK_Stream.h
  *

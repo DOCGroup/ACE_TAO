@@ -1,4 +1,3 @@
-
 @include version.texi
 
 @c %**start of header

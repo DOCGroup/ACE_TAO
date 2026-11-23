@@ -1,4 +1,3 @@
-
 /**
  *  @file   GIOP_Message_Generator_Parser_11.h
  *

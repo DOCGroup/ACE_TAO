@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_TPC_Dispatching_Task.h
  *

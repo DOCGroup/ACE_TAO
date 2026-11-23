@@ -1,4 +1,3 @@
-
 /**
  *  @file    Thread.h
  *

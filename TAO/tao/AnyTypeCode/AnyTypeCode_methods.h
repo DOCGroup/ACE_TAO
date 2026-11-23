@@ -1,4 +1,3 @@
-
 /**
  *  @file    AnyTypeCode_methods.h
  *

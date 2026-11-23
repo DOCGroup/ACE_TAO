@@ -1,4 +1,3 @@
-
 /**
  *  @file LB_CPU_Utilization_Monitor.h
  *

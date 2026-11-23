@@ -1,4 +1,3 @@
-
 /**
  *  @file    SystemException.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Event_Channel_Base.h
  *

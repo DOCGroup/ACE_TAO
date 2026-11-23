@@ -1,4 +1,3 @@
-
 /**
  *  @file IOR_Table_Impl.h
  *

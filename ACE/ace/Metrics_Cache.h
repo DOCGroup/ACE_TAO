@@ -1,4 +1,3 @@
-
 /**
  *  @file    Metrics_Cache.h
  *

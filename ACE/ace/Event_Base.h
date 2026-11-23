@@ -1,4 +1,3 @@
-
 /**
  *  @file    Event_Base.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   IIOP_SSL_Connection_Handler.h
  *

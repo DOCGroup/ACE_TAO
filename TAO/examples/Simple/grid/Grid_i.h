@@ -1,4 +1,3 @@
-
 /**
  *  @file    Grid_i.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    TypeCode_Struct_Field.h
  *

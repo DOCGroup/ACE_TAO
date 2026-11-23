@@ -1,4 +1,3 @@
-
 /**
  *  @file    Notifier_i.h
  *

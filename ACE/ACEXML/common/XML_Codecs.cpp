@@ -1,4 +1,3 @@
-
 #include "ace/OS_Errno.h"
 #include "ace/OS_NS_string.h"
 #include "ACEXML/common/XML_Codecs.h"

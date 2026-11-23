@@ -1,4 +1,3 @@
-
 /**
  *  @file    Receiver_QoS_Event_Handler.cpp
  *

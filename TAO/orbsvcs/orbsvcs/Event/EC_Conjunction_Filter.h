@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Conjunction_Filter.h
  *

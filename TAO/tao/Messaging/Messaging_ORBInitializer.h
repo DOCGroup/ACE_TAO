@@ -1,4 +1,3 @@
-
 /**
  *  @file     Messaging_ORBInitializer.h
  *

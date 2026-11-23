@@ -1,4 +1,3 @@
-
 /**
  * @file Truncate.h
  *

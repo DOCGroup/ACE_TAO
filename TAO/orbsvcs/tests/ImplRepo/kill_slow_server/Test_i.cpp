@@ -1,4 +1,3 @@
-
 #include "Test_i.h"
 
 CORBA::Short

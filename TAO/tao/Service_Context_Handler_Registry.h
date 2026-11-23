@@ -1,4 +1,3 @@
-
 /**
  *  @file   Service_Context_Handler_Registry.h
  *

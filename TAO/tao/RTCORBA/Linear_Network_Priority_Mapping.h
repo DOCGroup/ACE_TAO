@@ -1,4 +1,3 @@
-
 /**
  *  @file   Linear_Network_Priority_Mapping.h
  *

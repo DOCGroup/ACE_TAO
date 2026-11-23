@@ -1,4 +1,3 @@
-
 /**
  *  @file Synch_Queued_Message.h
  *

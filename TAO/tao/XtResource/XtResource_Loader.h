@@ -1,4 +1,3 @@
-
 /**
  *  @file   XtResource_Loader.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    CSD_Strategy_Proxy.h
  *

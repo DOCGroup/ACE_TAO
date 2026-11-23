@@ -1,4 +1,3 @@
-
 /**
  *  @file    Based_Pointer_T.h
  *

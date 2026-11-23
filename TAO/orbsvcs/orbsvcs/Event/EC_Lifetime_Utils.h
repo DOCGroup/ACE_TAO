@@ -1,4 +1,3 @@
-
 /**
  *  @file EC_Lifetime_Utils.h
  *

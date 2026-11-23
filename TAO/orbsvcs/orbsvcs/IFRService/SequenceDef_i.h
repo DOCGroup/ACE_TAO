@@ -1,4 +1,3 @@
-
 /**
  *  @file    SequenceDef_i.h
  *

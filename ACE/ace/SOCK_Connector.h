@@ -1,4 +1,3 @@
-
 /**
  *  @file    SOCK_Connector.h
  *

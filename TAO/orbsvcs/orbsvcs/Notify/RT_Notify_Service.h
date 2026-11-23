@@ -1,4 +1,3 @@
-
 /**
  *  @file RT_Notify_Service.h
  *

@@ -1,4 +1,3 @@
-
 /**
  * @file LB_conf.h
  *

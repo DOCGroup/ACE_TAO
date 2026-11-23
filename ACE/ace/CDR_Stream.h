@@ -1,4 +1,3 @@
-
 /**
  *  @file   CDR_Stream.h
  *

@@ -1,4 +1,3 @@
-
 ifneq ($(CROSS_COMPILE),)
   CROSS-COMPILE = 1
   # Build using the cross-tools

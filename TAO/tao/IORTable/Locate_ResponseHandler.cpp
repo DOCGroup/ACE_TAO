@@ -1,4 +1,3 @@
-
 /**
  *  @file    Locate_ResponseHandler.cpp
  *

@@ -1,4 +1,3 @@
-
 # We always include config-linux.h on Linux platforms.
 ACE_PLATFORM_CONFIG ?= config-linux.h
 

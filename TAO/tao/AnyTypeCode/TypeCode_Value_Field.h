@@ -1,4 +1,3 @@
-
 /**
  *  @file    TypeCode_Value_Field.h
  *

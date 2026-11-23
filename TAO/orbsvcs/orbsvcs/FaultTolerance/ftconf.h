@@ -1,4 +1,3 @@
-
 /**
  *  @file     ftconf.h
  *

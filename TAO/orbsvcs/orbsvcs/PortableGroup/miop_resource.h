@@ -1,4 +1,3 @@
-
 /**
  *  @file   miop_resource.h
  *

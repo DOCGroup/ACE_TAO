@@ -1,4 +1,3 @@
-
 #ifndef _PEER_ROUTER_H
 #define _PEER_ROUTER_H
 

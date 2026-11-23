@@ -1,4 +1,3 @@
-
 /**
  *  @file    Adapter_Registry.h
  *

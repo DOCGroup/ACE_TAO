@@ -1,4 +1,3 @@
-
 #include "ACEXML/common/Exception.h"
 #include "ace/Log_Msg.h"
 #include "ace/ACE.h"

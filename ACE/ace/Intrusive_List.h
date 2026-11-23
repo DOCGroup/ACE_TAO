@@ -1,4 +1,3 @@
-
 /**
  *  @file Intrusive_List.h
  *

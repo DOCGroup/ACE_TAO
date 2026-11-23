@@ -1,4 +1,3 @@
-
 /**
  *  @file    Grid_Client_i.h
  *

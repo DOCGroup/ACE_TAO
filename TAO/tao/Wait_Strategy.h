@@ -1,4 +1,3 @@
-
 /**
  *  @file    Wait_Strategy.h
  *

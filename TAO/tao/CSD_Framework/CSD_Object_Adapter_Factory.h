@@ -1,4 +1,3 @@
-
 /**
  *  @file CSD_Object_Adapter_Factory.h
  *

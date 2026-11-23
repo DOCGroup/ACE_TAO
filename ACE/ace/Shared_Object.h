@@ -1,4 +1,3 @@
-
 /**
  *  @file    Shared_Object.h
  *

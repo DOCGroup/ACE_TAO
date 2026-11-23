@@ -1,4 +1,3 @@
-
 /**
  *  @file    DTDHandler.h
  *

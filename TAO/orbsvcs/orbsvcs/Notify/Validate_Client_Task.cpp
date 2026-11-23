@@ -1,4 +1,3 @@
-
 #include "orbsvcs/Log_Macros.h"
 #include "Validate_Client_Task.h"
 #include "EventChannelFactory.h"

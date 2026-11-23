@@ -1,4 +1,3 @@
-
 /**
  *  @file    Log_Msg_Backend.h
  *

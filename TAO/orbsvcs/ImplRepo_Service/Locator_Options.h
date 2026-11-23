@@ -1,4 +1,3 @@
-
 /**
  *  @file   Locator_Options.h
  *

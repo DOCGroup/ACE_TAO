@@ -1,4 +1,3 @@
-
 /**
  *  @file   config-lite.h
  *

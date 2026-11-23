@@ -1,4 +1,3 @@
-
 /**
  *  @file    SL_Client.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file ECG_Simple_Address_Server.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    SSL_Initializer.h
  *

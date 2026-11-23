@@ -1,4 +1,3 @@
-
 /**
  *  @file   AV_Core.h
  *

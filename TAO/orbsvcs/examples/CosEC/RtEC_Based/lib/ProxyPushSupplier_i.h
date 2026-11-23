@@ -1,4 +1,3 @@
-
 /**
  *  @file   ProxyPushSupplier_i.h
  *

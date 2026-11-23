@@ -1,4 +1,3 @@
-
 /**
  *  @file    Valuetype_Adapter.h
  *

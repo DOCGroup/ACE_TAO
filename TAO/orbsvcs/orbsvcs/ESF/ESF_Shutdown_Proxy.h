@@ -1,4 +1,3 @@
-
 /**
  *  @file   ESF_Shutdown_Proxy.h
  *

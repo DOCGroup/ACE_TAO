@@ -1,4 +1,3 @@
-
 /**
  *  @file    agent_impl.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   GUIResource_Factory.h
  *

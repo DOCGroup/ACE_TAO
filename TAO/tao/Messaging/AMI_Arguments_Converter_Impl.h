@@ -1,4 +1,3 @@
-
 /**
  *  @file    AMI_Arguments_Converter_Impl.h
  *

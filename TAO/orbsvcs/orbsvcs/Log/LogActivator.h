@@ -1,4 +1,3 @@
-
 /**
  *  @file   LogActivator.h
  */

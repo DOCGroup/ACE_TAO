@@ -1,4 +1,3 @@
-
 /**
  *  @file   Flag_Manip.h
  *

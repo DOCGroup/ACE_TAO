@@ -1,4 +1,3 @@
-
 /**
  *  @file   FIFO_Connection_Purging_Strategy.h
  *

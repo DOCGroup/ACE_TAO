@@ -1,4 +1,3 @@
-
 #ifndef TAO_NOTIFY_ROUTING_SLIP_QUEUE_H
 #define TAO_NOTIFY_ROUTING_SLIP_QUEUE_H
 #include /**/ "ace/pre.h"

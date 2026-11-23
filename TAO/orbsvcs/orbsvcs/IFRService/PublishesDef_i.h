@@ -1,4 +1,3 @@
-
 /**
  *  @file    PublishesDef_i.h
  *

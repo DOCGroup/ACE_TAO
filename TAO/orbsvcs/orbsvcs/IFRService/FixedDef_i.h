@@ -1,4 +1,3 @@
-
 /**
  *  @file    FixedDef_i.h
  *

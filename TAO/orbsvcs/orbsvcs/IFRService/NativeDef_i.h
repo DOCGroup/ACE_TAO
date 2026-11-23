@@ -1,4 +1,3 @@
-
 /**
  *  @file    NativeDef_i.h
  *

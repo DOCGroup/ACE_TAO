@@ -1,4 +1,3 @@
-
 /**
  *  @file LF_Strategy_Complete.h
  *

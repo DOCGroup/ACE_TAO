@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Sched_Filter_Builder.h
  *

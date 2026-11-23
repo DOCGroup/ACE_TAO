@@ -1,4 +1,3 @@
-
 /**
  *  @file    Condition_Attributes.h
  *

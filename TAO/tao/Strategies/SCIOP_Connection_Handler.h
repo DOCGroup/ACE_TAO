@@ -1,4 +1,3 @@
-
 /**
  *  @file   SCIOP_Connection_Handler.h
  *

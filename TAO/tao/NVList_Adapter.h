@@ -1,4 +1,3 @@
-
 /**
  *  @file    NVList_Adapter.h
  *

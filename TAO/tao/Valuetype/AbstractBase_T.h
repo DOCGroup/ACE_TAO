@@ -1,4 +1,3 @@
-
 /**
  *  @file     AbstractBase_T.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    LOCK_SOCK_Acceptor.h
  *

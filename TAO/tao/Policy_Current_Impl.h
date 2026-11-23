@@ -1,4 +1,3 @@
-
 /**
  *  @file   Policy_Current_Impl.h
  *

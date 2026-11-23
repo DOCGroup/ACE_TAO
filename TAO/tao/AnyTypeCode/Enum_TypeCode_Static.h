@@ -1,4 +1,3 @@
-
 /**
  *  @file    Enum_TypeCode_Static.h
  *

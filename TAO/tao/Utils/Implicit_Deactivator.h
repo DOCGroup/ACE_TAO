@@ -1,4 +1,3 @@
-
 /**
  * @file Implicit_Deactivator.h
  *

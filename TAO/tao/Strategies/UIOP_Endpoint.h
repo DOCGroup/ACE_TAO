@@ -1,4 +1,3 @@
-
 /**
  * @file UIOP_Endpoint.h
  *

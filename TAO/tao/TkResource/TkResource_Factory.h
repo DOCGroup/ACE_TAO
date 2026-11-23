@@ -1,4 +1,3 @@
-
 /**
  *  @file   TkResource_Factory.h
  *

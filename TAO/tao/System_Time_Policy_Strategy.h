@@ -1,4 +1,3 @@
-
 /**
  *  @file   System_Time_Policy_Strategy.h
  *

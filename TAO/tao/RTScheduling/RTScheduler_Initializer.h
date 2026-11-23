@@ -1,4 +1,3 @@
-
 /**
  *  @file RTScheduler_Initializer.h
  *

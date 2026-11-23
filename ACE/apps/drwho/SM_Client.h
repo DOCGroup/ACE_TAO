@@ -1,4 +1,3 @@
-
 /**
  *  @file    SM_Client.h
  *

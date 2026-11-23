@@ -1,4 +1,3 @@
-
 /**
  * @file SL3_SecurityManager.h
  *

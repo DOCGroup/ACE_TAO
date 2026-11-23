@@ -1,4 +1,3 @@
-
 /**
  *  @file    MFC_Log.h
  *

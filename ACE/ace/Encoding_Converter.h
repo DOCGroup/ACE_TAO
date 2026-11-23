@@ -1,4 +1,3 @@
-
 /**
  * @file Encoding_Converter.h
  *

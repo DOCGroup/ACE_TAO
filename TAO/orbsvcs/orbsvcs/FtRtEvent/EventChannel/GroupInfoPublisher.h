@@ -1,4 +1,3 @@
-
 /**
  *  @file   GroupInfoPublisher.h
  *

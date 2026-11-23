@@ -1,4 +1,3 @@
-
 /**
  *  @file   Min_Max.h
  *

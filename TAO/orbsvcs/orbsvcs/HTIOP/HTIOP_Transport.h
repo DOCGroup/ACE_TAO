@@ -1,4 +1,3 @@
-
 /**
  *  @file   HTIOP_Transport.h
  *

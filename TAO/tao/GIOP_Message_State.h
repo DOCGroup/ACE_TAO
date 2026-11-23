@@ -1,4 +1,3 @@
-
 /**
  *  @file     GIOP_Message_State.h
  *

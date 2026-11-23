@@ -1,4 +1,3 @@
-
 /**
  *  @file    Notifier_Handler.h
  *

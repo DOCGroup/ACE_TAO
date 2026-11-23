@@ -1,4 +1,3 @@
-
 /**
  *  @file     UIPMC_Endpoint.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Binary_Search.h
  *

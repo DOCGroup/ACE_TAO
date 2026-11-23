@@ -1,4 +1,3 @@
-
 /**
  *  @file    Intrusive_Ref_Count_Base_T.h
  *

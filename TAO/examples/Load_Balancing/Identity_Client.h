@@ -1,4 +1,3 @@
-
 /**
  *  @file    Identity_Client.h
  *

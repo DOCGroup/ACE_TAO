@@ -1,4 +1,3 @@
-
 #include "Server_ORBInitializer.h"
 #include "Test_Protocols_Hooks.h"
 #include "tao/ORB_Core.h"

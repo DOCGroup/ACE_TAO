@@ -1,4 +1,3 @@
-
 /**
  *  @file    AbstractInterfaceDef_i.h
  *

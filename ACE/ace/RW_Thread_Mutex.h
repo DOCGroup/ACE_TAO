@@ -1,4 +1,3 @@
-
 /**
  *  @file    RW_Thread_Mutex.h
  *

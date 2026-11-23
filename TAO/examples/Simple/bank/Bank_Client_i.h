@@ -1,4 +1,3 @@
-
 /**
  *  @file    Bank_Client_i.h
  *

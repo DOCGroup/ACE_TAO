@@ -1,4 +1,3 @@
-
 /**
  *  @file   CEC_Reactive_ConsumerControl.h
  *

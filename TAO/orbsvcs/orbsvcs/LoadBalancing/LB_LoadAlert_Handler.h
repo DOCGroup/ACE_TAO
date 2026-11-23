@@ -1,4 +1,3 @@
-
 /**
  * @file   LB_LoadAlert_Handler.h
  *

@@ -1,4 +1,3 @@
-
 #include "ace/ACE.h"
 
 ACEXML_INLINE void

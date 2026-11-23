@@ -1,4 +1,3 @@
-
 /**
  *  @file    PrimitiveDef_i.h
  *

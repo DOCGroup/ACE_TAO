@@ -1,4 +1,3 @@
-
 /**
  *  @file    Strategy_Scheduler.h
  *

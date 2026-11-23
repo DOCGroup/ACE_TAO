@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Disjunction_Filter.h
  *

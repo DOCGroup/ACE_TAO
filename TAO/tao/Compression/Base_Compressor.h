@@ -1,4 +1,3 @@
-
 /**
  *  @file   Base_Compressor.h
  *

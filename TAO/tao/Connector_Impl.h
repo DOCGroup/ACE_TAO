@@ -1,4 +1,3 @@
-
 /**
  *  @file   Connector_Impl.h
  *

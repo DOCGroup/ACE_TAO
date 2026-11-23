@@ -1,4 +1,3 @@
-
 /**
  *  @file    ValueDef_i.h
  *

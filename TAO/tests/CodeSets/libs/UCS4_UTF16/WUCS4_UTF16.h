@@ -1,4 +1,3 @@
-
 /**
  *  @file    WUCS4_UTF16.h
  *

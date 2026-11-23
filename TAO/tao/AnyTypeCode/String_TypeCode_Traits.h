@@ -1,4 +1,3 @@
-
 /**
  *  @file    String_TypeCode_Traits.h
  *

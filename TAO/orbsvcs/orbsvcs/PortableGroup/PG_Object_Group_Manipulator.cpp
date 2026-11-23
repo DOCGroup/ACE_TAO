@@ -1,4 +1,3 @@
-
 /**
  * @file PG_Object_Group_Manipulator.cpp
  *

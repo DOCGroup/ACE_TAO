@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Priority_Dispatching.h
  *

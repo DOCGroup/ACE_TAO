@@ -1,4 +1,3 @@
-
 /**
  *  @file    Load_Balancing_Service.h
  *

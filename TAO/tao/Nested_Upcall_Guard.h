@@ -1,4 +1,3 @@
-
 /**
  *  @file    Nested_Upcall_Guard.h
  *

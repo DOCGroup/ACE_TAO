@@ -1,4 +1,3 @@
-
 /**
  *  @file   Iterator_i.h
  *

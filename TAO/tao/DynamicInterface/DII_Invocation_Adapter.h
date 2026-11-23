@@ -1,4 +1,3 @@
-
 /**
  *  @file    DII_Invocation_Adapter.h
  *

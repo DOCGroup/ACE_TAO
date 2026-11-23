@@ -1,4 +1,3 @@
-
 /**
  *  @file   Basic_Logging_Service.h
  *

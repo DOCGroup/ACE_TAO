@@ -1,4 +1,3 @@
-
 /**
  *  @file    UPIPE_Stream.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Consumer_Signal_Handler.cpp
  *

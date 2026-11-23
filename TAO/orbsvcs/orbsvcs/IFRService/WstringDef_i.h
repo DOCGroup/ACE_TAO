@@ -1,4 +1,3 @@
-
 /**
  *  @file    WstringDef_i.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    os_utsname.h
  *

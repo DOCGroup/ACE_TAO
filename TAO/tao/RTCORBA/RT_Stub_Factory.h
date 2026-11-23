@@ -1,4 +1,3 @@
-
 /**
  *  @file    RT_Stub_Factory.h
  *

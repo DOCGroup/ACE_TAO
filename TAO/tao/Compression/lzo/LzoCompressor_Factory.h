@@ -1,4 +1,3 @@
-
 /**
  *  @file   LzoCompressor_Factory.h
  *

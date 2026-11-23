@@ -1,4 +1,3 @@
-
 /**
  *  @file OS_Thread_Adapter.h
  *

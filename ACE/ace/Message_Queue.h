@@ -1,4 +1,3 @@
-
 /**
  *  @file    Message_Queue.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    HTBP_Inside_Squid_Filter.h
  *

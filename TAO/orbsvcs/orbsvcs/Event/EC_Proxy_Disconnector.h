@@ -1,4 +1,3 @@
-
 /**
  * @file EC_Proxy_Disconnector.h
  *

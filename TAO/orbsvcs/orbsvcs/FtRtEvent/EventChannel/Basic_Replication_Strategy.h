@@ -1,4 +1,3 @@
-
 /**
  *  @file   Basic_Replication_Strategy.h
  *

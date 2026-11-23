@@ -1,4 +1,3 @@
-
 /**
  *  @file   RTEventLogFactory_i.h
  *

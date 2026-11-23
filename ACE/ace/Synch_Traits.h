@@ -1,4 +1,3 @@
-
 /**
  *  @file    Synch_Traits.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file PortableGroup_ORBInitializer.h
  *

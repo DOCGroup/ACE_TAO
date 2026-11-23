@@ -1,4 +1,3 @@
-
 /**
  *  @file RT_Service_Context_Handler.h
  *

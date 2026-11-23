@@ -1,4 +1,3 @@
-
 /**
  *  @file    IORInterceptor_Adapter_Factory_Impl.h
  *

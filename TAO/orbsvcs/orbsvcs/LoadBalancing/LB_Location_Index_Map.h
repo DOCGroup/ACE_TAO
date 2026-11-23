@@ -1,4 +1,3 @@
-
 /**
  *  @file    LB_Location_Index_Map.h
  *

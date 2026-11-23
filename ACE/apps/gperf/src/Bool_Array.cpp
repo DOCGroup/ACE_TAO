@@ -1,4 +1,3 @@
-
 // Fast lookup table abstraction implemented as an Iteration Number Array
 
 /**

@@ -1,4 +1,3 @@
-
 /**
  *  @file    TAO_Singleton.h
  *

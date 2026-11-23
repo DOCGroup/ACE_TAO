@@ -1,4 +1,3 @@
-
 /**
  *  @file    Struct_TypeCode.h
  *

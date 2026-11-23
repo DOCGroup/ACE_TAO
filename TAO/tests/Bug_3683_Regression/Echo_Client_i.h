@@ -1,4 +1,3 @@
-
 /**
  *  @file    Echo_Client_i.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    TypeCode_CDR_Extraction.h
  *

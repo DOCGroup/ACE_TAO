@@ -1,4 +1,3 @@
-
 /**
  *  @file     SSLIOP_Connector.h
  *

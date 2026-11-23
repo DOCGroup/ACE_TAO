@@ -1,4 +1,3 @@
-
 /**
  * @file   ORT_test_IORInterceptor.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    airplane_client_i.h
  *

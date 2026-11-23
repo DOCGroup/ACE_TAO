@@ -1,4 +1,3 @@
-
 /**
  *  @file    STL_algorithm_Test_T.h
  *

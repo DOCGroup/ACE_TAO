@@ -1,4 +1,3 @@
-
 /**
  *  @file   Leader_Follower.h
  *

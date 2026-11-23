@@ -1,4 +1,3 @@
-
 /**
  *  @file    Functor_String.h
  *

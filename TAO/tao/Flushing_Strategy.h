@@ -1,4 +1,3 @@
-
 /**
  *  @file Flushing_Strategy.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   AMH_Response_Handler.h
  *

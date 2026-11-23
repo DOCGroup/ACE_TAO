@@ -1,4 +1,3 @@
-
 /**
  *  @file    ACE_Init_Test_Resource.h
  *

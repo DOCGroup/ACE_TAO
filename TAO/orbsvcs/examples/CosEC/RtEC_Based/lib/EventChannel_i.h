@@ -1,4 +1,3 @@
-
 /**
  *  @file   EventChannel_i.h
  *

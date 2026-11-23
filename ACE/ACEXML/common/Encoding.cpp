@@ -1,4 +1,3 @@
-
 #include "ACEXML/common/Encoding.h"
 
 #include <cstring>

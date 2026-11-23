@@ -1,4 +1,3 @@
-
 /**
  *  @file   EventLogFactory_i.h
  *

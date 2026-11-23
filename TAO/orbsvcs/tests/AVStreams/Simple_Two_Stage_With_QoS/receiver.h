@@ -1,4 +1,3 @@
-
 #ifndef TAO_AV_QOS_RECEIVER_H
 #define TAO_AV_QOS_RECEIVER_H
 

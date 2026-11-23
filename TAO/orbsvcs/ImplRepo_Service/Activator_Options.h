@@ -1,4 +1,3 @@
-
 /**
  *  @file   Activator_Options.h
  *

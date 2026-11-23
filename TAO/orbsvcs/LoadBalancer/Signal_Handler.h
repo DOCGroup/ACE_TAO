@@ -1,4 +1,3 @@
-
 /**
  * @file   Signal_Handler.h
  *

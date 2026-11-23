@@ -1,4 +1,3 @@
-
 /**
  *  @file    ExceptionHolder_i.h
  *

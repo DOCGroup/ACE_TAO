@@ -1,4 +1,3 @@
-
 /**
  *  @file Subscription_Change_Worker.h
  *

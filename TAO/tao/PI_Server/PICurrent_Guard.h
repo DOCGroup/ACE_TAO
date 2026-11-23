@@ -1,4 +1,3 @@
-
 /**
  *  @file   PICurrent_Guard.h
  *

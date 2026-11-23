@@ -1,4 +1,3 @@
-
 #ifndef FACTORY_STRUCT_H
 #define FACTORY_STRUCT_H
 

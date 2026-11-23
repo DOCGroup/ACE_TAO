@@ -1,4 +1,3 @@
-
 /**
  * @file UTF8_Encoding_Converter.h
  *

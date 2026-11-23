@@ -1,4 +1,3 @@
-
 /**
  *  @file    Offer_Iterators_T.h
  *

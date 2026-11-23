@@ -1,4 +1,3 @@
-
 /**
  *  @file Worker_Task.h
  *

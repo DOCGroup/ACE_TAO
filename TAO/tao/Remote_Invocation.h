@@ -1,4 +1,3 @@
-
 /**
  *  @file    Remote_Invocation.h
  *

@@ -1,4 +1,3 @@
-
 #include "ACEXML/common/SAXExceptions.h"
 
 #include <memory>

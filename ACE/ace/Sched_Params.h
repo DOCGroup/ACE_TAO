@@ -1,4 +1,3 @@
-
 /**
  *  @file    Sched_Params.h
  *

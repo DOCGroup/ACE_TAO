@@ -1,4 +1,3 @@
-
 /**
  *  @file   RLECompressor_Factory.h
  *

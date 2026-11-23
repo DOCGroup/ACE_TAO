@@ -1,4 +1,3 @@
-
 /**
  * @file Trader_T.h
  *

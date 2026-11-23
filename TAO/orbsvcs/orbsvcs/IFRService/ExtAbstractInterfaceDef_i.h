@@ -1,4 +1,3 @@
-
 /**
  *  @file    ExtAbstractInterfaceDef_i.h
  *

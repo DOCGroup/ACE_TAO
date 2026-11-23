@@ -1,4 +1,3 @@
-
 /**
  *  @file    HttpCharStream.h
  *

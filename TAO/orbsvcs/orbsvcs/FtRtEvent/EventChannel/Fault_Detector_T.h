@@ -1,4 +1,3 @@
-
 /**
  *  @file   Fault_Detector_T.h
  *

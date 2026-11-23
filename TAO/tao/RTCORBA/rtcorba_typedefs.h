@@ -1,4 +1,3 @@
-
 /**
  *  @file rtcorba_typedefs.h
  *

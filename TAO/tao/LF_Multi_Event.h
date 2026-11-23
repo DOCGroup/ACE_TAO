@@ -1,4 +1,3 @@
-
 /**
  *  @file LF_Multi_Event.h
  *

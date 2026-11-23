@@ -1,4 +1,3 @@
-
 /**
  *  @file    PG_Property_Set_Find.h
  *

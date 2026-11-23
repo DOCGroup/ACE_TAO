@@ -1,4 +1,3 @@
-
 /**
  *  @file Incoming_Message_Stack.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Any_Impl.h
  *

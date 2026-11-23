@@ -1,4 +1,3 @@
-
 /**
  *  @file    FinderDef_i.h
  *

@@ -1,4 +1,3 @@
-
 # platform_netbsd.GNU
 
 debug ?= 1

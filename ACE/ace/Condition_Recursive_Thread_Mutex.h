@@ -1,4 +1,3 @@
-
 /**
  *  @file    Condition_Recursive_Thread_Mutex.h
  *

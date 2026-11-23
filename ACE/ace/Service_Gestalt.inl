@@ -1,4 +1,3 @@
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// This is the primary entry point into the ACE_Service_Config (the

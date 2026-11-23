@@ -1,4 +1,3 @@
-
 /**
  *  @file LF_CH_Event.h
  *

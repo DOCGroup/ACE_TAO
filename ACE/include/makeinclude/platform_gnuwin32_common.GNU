@@ -1,4 +1,3 @@
-
 ifneq ($(mingw32),1)
   ifneq ($(cygwin32),1)
     fail := \

@@ -1,4 +1,3 @@
-
 /**
  *  @file    ComponentContainer_i.h
  *

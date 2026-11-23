@@ -1,4 +1,3 @@
-
 /**
  *  @file    ComponentModuleDef_i.h
  *

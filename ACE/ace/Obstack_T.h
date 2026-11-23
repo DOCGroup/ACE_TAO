@@ -1,4 +1,3 @@
-
 /**
  *  @file    Obstack_T.h
  *

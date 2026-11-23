@@ -1,4 +1,3 @@
-
 /**
  *  @file    Refcounted_Auto_Ptr.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Reactive_SupplierControl.h
  *

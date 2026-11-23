@@ -1,4 +1,3 @@
-
 /**
  * @file ClientRequestInterceptor2.h
  *

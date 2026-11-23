@@ -1,4 +1,3 @@
-
 /**
  *  @file    EnumDef_i.h
  *

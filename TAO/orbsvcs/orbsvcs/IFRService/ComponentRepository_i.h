@@ -1,4 +1,3 @@
-
 /**
  *  @file    ComponentRepository_i.h
  *

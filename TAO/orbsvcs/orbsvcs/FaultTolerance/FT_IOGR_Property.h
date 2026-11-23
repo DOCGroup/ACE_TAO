@@ -1,4 +1,3 @@
-
 /**
  *  @file    FT_IOGR_Property.h
  *

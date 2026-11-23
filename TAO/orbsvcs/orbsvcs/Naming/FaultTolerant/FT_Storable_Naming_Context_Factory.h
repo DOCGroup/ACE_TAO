@@ -1,4 +1,3 @@
-
 /**
  *  @file   FT_Storable_Naming_Context_Factory.h
  *

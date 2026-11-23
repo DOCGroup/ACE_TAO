@@ -1,4 +1,3 @@
-
 /**
  *  @file  UTF16_BOM_Translator.h
  *

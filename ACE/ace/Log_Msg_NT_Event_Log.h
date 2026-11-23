@@ -1,4 +1,3 @@
-
 /**
  *  @file    Log_Msg_NT_Event_Log.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Bit_Vector.h
  *

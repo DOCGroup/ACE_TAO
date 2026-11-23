@@ -1,4 +1,3 @@
-
 /**
  *  @file BiDir_Policy_i.h
  *

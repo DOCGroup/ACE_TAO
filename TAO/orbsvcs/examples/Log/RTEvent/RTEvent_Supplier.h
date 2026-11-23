@@ -1,4 +1,3 @@
-
 /**
  *  @file   RTEvent_Supplier.h
  *

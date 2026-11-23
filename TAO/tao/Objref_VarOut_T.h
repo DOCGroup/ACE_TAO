@@ -1,4 +1,3 @@
-
 /**
  *  @file    Objref_VarOut_T.h
  *

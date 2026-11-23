@@ -1,4 +1,3 @@
-
 #include "ace/SPIPE_Stream.h"
 
 #if defined (ACE_HAS_STREAM_PIPES)

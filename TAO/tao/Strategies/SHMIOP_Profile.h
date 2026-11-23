@@ -1,4 +1,3 @@
-
 /**
  *  @file     SHMIOP_Profile.h
  *

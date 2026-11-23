@@ -1,4 +1,3 @@
-
 /**
  *  @file    SOCK_Dgram_Mcast_QoS.h
  *

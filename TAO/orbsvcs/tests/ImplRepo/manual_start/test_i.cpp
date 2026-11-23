@@ -1,4 +1,3 @@
-
 #include "test_i.h"
 #include "ace/Log_Msg.h"
 

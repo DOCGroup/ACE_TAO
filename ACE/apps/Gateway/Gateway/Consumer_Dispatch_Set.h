@@ -1,4 +1,3 @@
-
 /**
  *  @file    Consumer_Dispatch_Set.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   OS_NS_dirent.h
  *

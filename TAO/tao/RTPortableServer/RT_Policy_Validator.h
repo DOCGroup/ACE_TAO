@@ -1,4 +1,3 @@
-
 /**
  *  @file    RT_Policy_Validator.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   Endpoint_Strategy_T.h
  *

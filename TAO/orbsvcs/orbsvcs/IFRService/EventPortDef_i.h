@@ -1,4 +1,3 @@
-
 /**
  *  @file    EventPortDef_i.h
  *

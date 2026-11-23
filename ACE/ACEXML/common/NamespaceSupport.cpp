@@ -1,4 +1,3 @@
-
 #include "ACEXML/common/NamespaceSupport.h"
 #include "ace/OS_NS_string.h"
 #include <new>

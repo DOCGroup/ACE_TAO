@@ -1,4 +1,3 @@
-
 /**
  *  @file    Value_TypeCode.h
  *

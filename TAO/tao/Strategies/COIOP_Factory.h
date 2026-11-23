@@ -1,4 +1,3 @@
-
 /**
  *  @file   COIOP_Factory.h
  *

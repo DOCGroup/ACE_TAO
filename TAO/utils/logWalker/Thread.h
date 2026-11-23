@@ -1,4 +1,3 @@
-
 //
 
 #ifndef LOG_WALKER_THREAD_H

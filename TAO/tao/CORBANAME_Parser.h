@@ -1,4 +1,3 @@
-
 /**
  *  @file   CORBANAME_Parser.h
  *

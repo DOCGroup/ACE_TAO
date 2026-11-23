@@ -1,4 +1,3 @@
-
 /**
  *  @file LB_CPU_Load_Average_Monitor.h
  *

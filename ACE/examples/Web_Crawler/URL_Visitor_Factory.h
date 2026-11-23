@@ -1,4 +1,3 @@
-
 /**
  *  @file    URL_Visitor_Factory.h
  *

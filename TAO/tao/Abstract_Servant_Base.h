@@ -1,4 +1,3 @@
-
 /**
  *  @file    Abstract_Servant_Base.h
  *

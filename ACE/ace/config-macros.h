@@ -1,4 +1,3 @@
-
 /**
  *  @file   config-macros.h
  *

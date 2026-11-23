@@ -1,4 +1,3 @@
-
 /**
  *  @file    Reactor_Singleton.h
  *

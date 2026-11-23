@@ -1,4 +1,3 @@
-
 /**
  *  @file    middle_i.h
  *

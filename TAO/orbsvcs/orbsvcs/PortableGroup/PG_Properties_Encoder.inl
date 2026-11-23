@@ -1,4 +1,3 @@
-
 /**
  *  @file    PG_Properties_Encoder.inl
  *

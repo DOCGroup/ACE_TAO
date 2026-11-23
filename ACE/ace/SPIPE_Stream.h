@@ -1,4 +1,3 @@
-
 /**
  *  @file    SPIPE_Stream.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    SPIPE_Connector.h
  *

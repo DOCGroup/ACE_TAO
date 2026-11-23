@@ -1,4 +1,3 @@
-
 #include "ACEXML/common/LocatorImpl.h"
 
 #if !defined (__ACEXML_INLINE__)

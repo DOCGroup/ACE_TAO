@@ -1,4 +1,3 @@
-
 /**
  * @file   ServerORBInitializer.h
  *

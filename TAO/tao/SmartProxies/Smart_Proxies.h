@@ -1,4 +1,3 @@
-
 /**
  *  @file   Smart_Proxies.h
  *

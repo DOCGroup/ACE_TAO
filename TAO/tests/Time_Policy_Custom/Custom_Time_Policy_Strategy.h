@@ -1,4 +1,3 @@
-
 /**
  *  @file   Custom_Time_Policy_Strategy.h
  *

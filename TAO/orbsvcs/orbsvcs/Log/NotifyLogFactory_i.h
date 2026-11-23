@@ -1,4 +1,3 @@
-
 /**
  *  @file   NotifyLogFactory_i.h
  *

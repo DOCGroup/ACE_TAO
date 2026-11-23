@@ -1,4 +1,3 @@
-
 /**
  *  @file   HR_Time_Policy_Strategy.h
  *

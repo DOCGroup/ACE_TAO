@@ -1,4 +1,3 @@
-
 /**
  *  @file   Persistent_Naming_Context.h
  *

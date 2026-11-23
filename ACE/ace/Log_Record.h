@@ -1,4 +1,3 @@
-
 /**
  *  @file    Log_Record.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Collocated_Invocation.h
  *

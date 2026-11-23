@@ -1,4 +1,3 @@
-
 /**
  *  @file   SupplierAdmin_i.h
  *

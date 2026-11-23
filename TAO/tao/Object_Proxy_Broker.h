@@ -1,4 +1,3 @@
-
 /**
  *  @file    Object_Proxy_Broker.h
  *

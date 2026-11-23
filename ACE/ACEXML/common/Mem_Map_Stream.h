@@ -1,4 +1,3 @@
-
 /** @file   Mem_Map_Stream.h
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>

@@ -1,4 +1,3 @@
-
 /**
  *  @file    global.h
  *

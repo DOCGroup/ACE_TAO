@@ -1,4 +1,3 @@
-
 # platform_openbsd.GNU
 
 debug ?= 1

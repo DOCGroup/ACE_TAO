@@ -1,4 +1,3 @@
-
 /**
  *  @file   Cleanup_Func_Registry.h
  *

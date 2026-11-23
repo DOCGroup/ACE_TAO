@@ -1,4 +1,3 @@
-
 /**
  *  @file Queued_Message.h
  *

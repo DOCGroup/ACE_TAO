@@ -1,4 +1,3 @@
-
 /**
  *  @file    DEV_Connector.h
  *

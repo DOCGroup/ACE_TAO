@@ -1,4 +1,3 @@
-
 /**
  *  @file    Regular_POA.h
  *

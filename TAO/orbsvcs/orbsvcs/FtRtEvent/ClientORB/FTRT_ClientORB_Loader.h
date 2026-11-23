@@ -1,4 +1,3 @@
-
 /**
  *  @file FTRT_ClientORB_Loader.h
  *

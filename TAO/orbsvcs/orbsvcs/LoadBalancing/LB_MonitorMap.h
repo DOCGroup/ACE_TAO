@@ -1,4 +1,3 @@
-
 /**
  * @file   LB_MonitorMap.h
  *

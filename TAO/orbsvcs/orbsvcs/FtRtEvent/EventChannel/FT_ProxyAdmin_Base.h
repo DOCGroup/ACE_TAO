@@ -1,4 +1,3 @@
-
 /**
  *  @file   FT_ProxyAdmin_Base.h
  *

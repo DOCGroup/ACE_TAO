@@ -1,4 +1,3 @@
-
 // Driver program for the gperf hash function generator.
 
 /**

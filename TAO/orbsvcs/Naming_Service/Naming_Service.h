@@ -1,4 +1,3 @@
-
 /**
  *  @file    Naming_Service.h
  *

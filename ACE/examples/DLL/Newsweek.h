@@ -1,4 +1,3 @@
-
 /**
  *  @file    Newsweek.h
  *

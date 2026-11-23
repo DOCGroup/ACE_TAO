@@ -1,4 +1,3 @@
-
 /**
  *  @file   Strategies_T.h
  *

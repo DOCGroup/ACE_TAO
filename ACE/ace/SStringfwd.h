@@ -1,4 +1,3 @@
-
 /**
  *  @file    SStringfwd.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Contained_i.h
  *

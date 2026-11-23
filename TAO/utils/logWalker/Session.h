@@ -1,4 +1,3 @@
-
 //
 
 #ifndef LOG_WALKER_SESSION_H

@@ -1,4 +1,3 @@
-
 /**
  *  @file    ArrayDef_i.h
  *

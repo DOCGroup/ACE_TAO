@@ -1,4 +1,3 @@
-
 /**
  * @file PG_PropertyManager.h
  *

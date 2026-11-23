@@ -1,4 +1,3 @@
-
 /**
  *  @file   AMI_Replication_Strategy.h
  *

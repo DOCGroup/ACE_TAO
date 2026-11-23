@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_MT_Dispatching.h
  *

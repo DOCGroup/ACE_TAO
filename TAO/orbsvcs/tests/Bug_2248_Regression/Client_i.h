@@ -1,4 +1,3 @@
-
 /**
  *  @file    Client_i.h
  *

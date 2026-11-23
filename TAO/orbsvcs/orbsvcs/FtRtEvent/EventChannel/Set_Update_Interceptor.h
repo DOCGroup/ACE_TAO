@@ -1,4 +1,3 @@
-
 /**
  *  @file   Set_Update_Interceptor.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   EC_Null_Factory.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Constraint_Interpreter.h
  *

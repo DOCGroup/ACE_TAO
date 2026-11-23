@@ -1,4 +1,3 @@
-
 /**
  * @file ObjectReferenceTemplate.h
  *

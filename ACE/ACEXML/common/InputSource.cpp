@@ -1,4 +1,3 @@
-
 #include "ACEXML/common/InputSource.h"
 #include "ACEXML/common/StreamFactory.h"
 #include "ace/ACE.h"

@@ -1,4 +1,3 @@
-
 /**
  * @file Notify_EventChannelFactory_i.h
  *

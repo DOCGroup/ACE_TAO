@@ -1,4 +1,3 @@
-
 /**
  *  @file     UIPMC_Connection_Handler.h
  *

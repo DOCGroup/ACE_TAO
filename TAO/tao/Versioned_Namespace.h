@@ -1,4 +1,3 @@
-
 /**
  * @file    Versioned_Namespace.h
  *

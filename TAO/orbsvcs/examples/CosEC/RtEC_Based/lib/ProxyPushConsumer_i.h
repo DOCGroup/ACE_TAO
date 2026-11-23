@@ -1,4 +1,3 @@
-
 /**
  *  @file   ProxyPushConsumer_i.h
  *

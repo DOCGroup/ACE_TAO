@@ -1,4 +1,3 @@
-
 /**
  *  @file     Pluggable_Messaging_Utils.h
  *

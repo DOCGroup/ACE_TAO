@@ -1,4 +1,3 @@
-
 /**
  *  @file   FactoryC_impl.h
  *

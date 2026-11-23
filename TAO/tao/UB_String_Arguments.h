@@ -1,4 +1,3 @@
-
 /**
  *  @file    UB_String_Arguments.h
  *

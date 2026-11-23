@@ -1,4 +1,3 @@
-
 #include "MessengerShutdownTimer.h"
 
 MessengerShutdownTimer::MessengerShutdownTimer (CORBA::ORB_ptr orb)

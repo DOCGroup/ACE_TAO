@@ -1,4 +1,3 @@
-
 /**
  *  @file    Event_Forwarding_Discriminator.h
  *

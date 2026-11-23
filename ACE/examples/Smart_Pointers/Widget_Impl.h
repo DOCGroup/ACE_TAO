@@ -1,4 +1,3 @@
-
 /**
  *  @file    Widget_Impl.h
  *

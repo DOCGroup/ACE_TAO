@@ -1,4 +1,3 @@
-
 /**
  *  @file   SSLIOP_OpenSSL_st_T.h
  *

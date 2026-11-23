@@ -1,4 +1,3 @@
-
 /**
  *  @file   default_resource.h
  *

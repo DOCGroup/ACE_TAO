@@ -1,4 +1,3 @@
-
 /**
  *  @file    Sequence_TypeCode.h
  *

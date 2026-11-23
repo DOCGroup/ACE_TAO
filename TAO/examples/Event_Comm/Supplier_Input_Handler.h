@@ -1,4 +1,3 @@
-
 /**
  *  @file    Supplier_Input_Handler.h
  *

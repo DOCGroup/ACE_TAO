@@ -1,4 +1,3 @@
-
 /**
  *  @file    UnionDef_i.h
  *

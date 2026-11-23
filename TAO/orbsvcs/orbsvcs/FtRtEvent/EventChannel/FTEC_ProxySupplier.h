@@ -1,4 +1,3 @@
-
 /**
  *  @file   FTEC_ProxySupplier.h
  *

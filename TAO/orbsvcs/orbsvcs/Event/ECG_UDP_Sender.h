@@ -1,4 +1,3 @@
-
 /**
  * @file ECG_UDP_Sender.h
  *

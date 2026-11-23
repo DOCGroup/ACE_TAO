@@ -1,4 +1,3 @@
-
 /**
  *  @file     DIOP_Endpoint.h
  *

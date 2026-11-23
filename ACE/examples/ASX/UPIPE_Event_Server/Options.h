@@ -1,4 +1,3 @@
-
 #ifndef DEVICE_OPTIONS_H
 #define DEVICE_OPTIONS_H
 

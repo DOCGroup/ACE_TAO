@@ -1,4 +1,3 @@
-
 /**
  *  @file   IIOP_Transport.h
  *

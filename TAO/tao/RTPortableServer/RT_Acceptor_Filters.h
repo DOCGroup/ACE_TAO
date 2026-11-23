@@ -1,4 +1,3 @@
-
 /**
  *  @file    RT_Acceptor_Filters.h
  *

@@ -1,4 +1,3 @@
-
 /**
  * @file FT_ClientService_Activate.h
  *

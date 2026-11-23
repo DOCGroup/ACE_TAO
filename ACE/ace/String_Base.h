@@ -1,4 +1,3 @@
-
 /**
  *  @file    String_Base.h
  *

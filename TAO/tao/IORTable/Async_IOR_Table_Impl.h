@@ -1,4 +1,3 @@
-
 /**
  *  @file Async_IOR_Table_Impl.h
  *

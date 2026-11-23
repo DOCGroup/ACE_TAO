@@ -1,4 +1,3 @@
-
 /**
  *  @file    Name_Request_Reply.h
  *

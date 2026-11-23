@@ -1,4 +1,3 @@
-
 /**
  *  @file    UTF16_UCS2_Factory.cpp
  *

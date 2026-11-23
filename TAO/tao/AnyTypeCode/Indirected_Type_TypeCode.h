@@ -1,4 +1,3 @@
-
 /**
  *  @file    Indirected_Type_TypeCode.h
  *

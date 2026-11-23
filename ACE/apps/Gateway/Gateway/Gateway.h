@@ -1,4 +1,3 @@
-
 /**
  *  @file    Gateway.h
  *

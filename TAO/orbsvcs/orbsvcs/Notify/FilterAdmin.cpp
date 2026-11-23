@@ -1,4 +1,3 @@
-
 #include "orbsvcs/Notify/FilterAdmin.h"
 
 #if ! defined (__ACE_INLINE__)

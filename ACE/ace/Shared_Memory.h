@@ -1,4 +1,3 @@
-
 /**
  *  @file    Shared_Memory.h
  *

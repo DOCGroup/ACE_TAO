@@ -1,4 +1,3 @@
-
 /**
  *  @file   EndpointPolicy_i.h
  *

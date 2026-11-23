@@ -1,4 +1,3 @@
-
 /**
  *  @file   Bzip2Compressor_Factory.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   Messaging_Policy_i.h
  *

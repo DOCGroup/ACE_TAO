@@ -1,4 +1,3 @@
-
 /**
  *  @file    Log_Category.h
  *

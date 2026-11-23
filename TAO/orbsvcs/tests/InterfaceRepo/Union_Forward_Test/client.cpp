@@ -1,4 +1,3 @@
-
 #include "tao/IFR_Client/IFR_BasicC.h"
 #include "tao/ORB_Core.h"
 

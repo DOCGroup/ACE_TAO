@@ -1,4 +1,3 @@
-
 /**
  *  @file Table_Adapter.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   Compressor_Factory.h
  *

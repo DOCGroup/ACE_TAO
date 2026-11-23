@@ -1,4 +1,3 @@
-
 /**
  *  @file   ESF_Copy_On_Write.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   Replication_Service.h
  *

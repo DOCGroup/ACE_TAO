@@ -1,4 +1,3 @@
-
 /**
  * @file  Storable_FlatFileStream.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    EmitsDef_i.h
  *

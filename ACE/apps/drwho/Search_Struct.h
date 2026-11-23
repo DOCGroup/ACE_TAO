@@ -1,4 +1,3 @@
-
 /**
  *  @file    Search_Struct.h
  *

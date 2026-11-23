@@ -1,4 +1,3 @@
-
 /**
 *  @file UpdateableServerInfo.h
 *

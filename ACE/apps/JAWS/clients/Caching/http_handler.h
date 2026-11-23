@@ -1,4 +1,3 @@
-
 /**
  *  @file    http_handler.h
  *

@@ -1,4 +1,3 @@
-
 #include "Filter.h"
 
 constexpr char notify_factory_name[] = "NotifyEventChannelFactory";

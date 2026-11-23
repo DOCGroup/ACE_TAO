@@ -1,4 +1,3 @@
-
 /**
  *  @file    AttributeDef_i.h
  *

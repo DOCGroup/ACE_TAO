@@ -1,4 +1,3 @@
-
 /// @file EC_Mcast.h
 /// Test communication between UDP Event Channels using multicast.
 ///

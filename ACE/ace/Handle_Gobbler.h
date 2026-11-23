@@ -1,4 +1,3 @@
-
 /**
  *  @file    Handle_Gobbler.h
  *

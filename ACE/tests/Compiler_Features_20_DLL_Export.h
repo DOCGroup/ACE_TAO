@@ -1,4 +1,3 @@
-
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl COMPILER_FEATURES_20_DLL
 // ------------------------------

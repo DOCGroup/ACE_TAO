@@ -1,4 +1,3 @@
-
 /**
  *  @file   Refcountable_T.h
  *

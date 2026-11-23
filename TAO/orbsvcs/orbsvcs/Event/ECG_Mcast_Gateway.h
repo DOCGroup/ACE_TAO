@@ -1,4 +1,3 @@
-
 /**
  *  @file   ECG_Mcast_Gateway.h
  *

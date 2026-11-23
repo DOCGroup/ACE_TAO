@@ -1,4 +1,3 @@
-
 /**
  *  @file    ValueBoxDef_i.h
  *

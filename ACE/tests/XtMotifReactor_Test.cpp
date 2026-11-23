@@ -1,4 +1,3 @@
-
 /**
  *  @file    XtMotifReactor_Test.cpp
  *

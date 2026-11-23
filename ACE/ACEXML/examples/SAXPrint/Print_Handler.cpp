@@ -1,4 +1,3 @@
-
 #include "Print_Handler.h"
 #include "ace/Log_Msg.h"
 

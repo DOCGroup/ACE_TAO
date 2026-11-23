@@ -1,4 +1,3 @@
-
 /**
  *  @file    OS_Log_Msg_Attributes.h
  *

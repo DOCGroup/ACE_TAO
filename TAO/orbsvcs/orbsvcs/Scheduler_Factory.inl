@@ -1,5 +1,3 @@
-
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// This helper function allows the application to determine whether

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Log_Priority.h
  *

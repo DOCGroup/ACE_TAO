@@ -1,4 +1,3 @@
-
 /**
  *  @file    IFR_Client_Adapter.h
  *

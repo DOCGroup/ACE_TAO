@@ -1,4 +1,3 @@
-
 /**
  *  @file    Token_Request_Reply.h
  *

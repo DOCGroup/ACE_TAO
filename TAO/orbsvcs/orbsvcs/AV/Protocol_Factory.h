@@ -1,4 +1,3 @@
-
 /**
  *  @file   Protocol_Factory.h
  *

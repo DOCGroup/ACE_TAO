@@ -1,4 +1,3 @@
-
 /**
  *  @file   ECG_Reactive_ConsumerEC_Control.h
  *

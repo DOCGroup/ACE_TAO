@@ -1,4 +1,3 @@
-
 /**
  *  @file    ace_wchar.h
  *

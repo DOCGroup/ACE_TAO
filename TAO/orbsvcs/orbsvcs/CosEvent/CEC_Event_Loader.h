@@ -1,4 +1,3 @@
-
 /**
  * @file CEC_Event_Loader.h
  *

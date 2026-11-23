@@ -1,4 +1,3 @@
-
 /**
  *  @file    Array_VarOut_T.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    StructDef_i.h
  *

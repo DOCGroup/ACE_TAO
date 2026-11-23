@@ -1,4 +1,3 @@
-
 /**
  *  @file    Connector.h
  *

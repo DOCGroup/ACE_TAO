@@ -1,4 +1,3 @@
-
 /**
  *  @file Connect_Strategy.h
  *

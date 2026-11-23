@@ -1,4 +1,3 @@
-
 /**
  *  @file    HTTP_Response.h
  *

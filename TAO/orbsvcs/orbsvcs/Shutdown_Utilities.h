@@ -1,4 +1,3 @@
-
 #ifndef _SHUTDOWN_UTILS_H
 #define _SHUTDOWN_UTILS_H
 #include /**/ "ace/pre.h"

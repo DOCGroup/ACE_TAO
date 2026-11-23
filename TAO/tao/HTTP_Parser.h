@@ -1,5 +1,3 @@
-
-
 /**
  *  @file   HTTP_Parser.h
  *

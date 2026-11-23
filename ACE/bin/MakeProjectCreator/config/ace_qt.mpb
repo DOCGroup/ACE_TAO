@@ -1,4 +1,3 @@
-
 project: qt {
   // Depends on configuration from include/makeinclude/platform_*.GNU
   verbatim(gnuace,local) {

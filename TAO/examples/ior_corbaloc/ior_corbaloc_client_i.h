@@ -1,4 +1,3 @@
-
 /**
  * @file ior_corbaloc_client_i.h
  * @author Priyanka Gontla <pgontla@ece.uci.edu>

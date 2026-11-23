@@ -1,4 +1,3 @@
-
 /**
  *  @file     CosEvent_Utilities.h
  *

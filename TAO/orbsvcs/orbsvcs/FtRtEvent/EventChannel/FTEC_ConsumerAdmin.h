@@ -1,4 +1,3 @@
-
 /**
  *  @file   FTEC_ConsumerAdmin.h
  *

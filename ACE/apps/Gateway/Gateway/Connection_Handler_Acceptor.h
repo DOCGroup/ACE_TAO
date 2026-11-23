@@ -1,4 +1,3 @@
-
 /**
  *  @file    Connection_Handler_Acceptor.h
  *

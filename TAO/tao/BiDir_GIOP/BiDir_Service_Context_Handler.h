@@ -1,4 +1,3 @@
-
 /**
  *  @file BiDir_Service_Context_Handler.h
  *

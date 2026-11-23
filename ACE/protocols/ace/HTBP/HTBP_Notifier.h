@@ -1,4 +1,3 @@
-
 /**
  *  @file   HTBP_Notifier.h
  *

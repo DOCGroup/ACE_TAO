@@ -1,4 +1,3 @@
-
 /**
  *  @file    Trading_Service.h
  *

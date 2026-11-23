@@ -1,4 +1,3 @@
-
 /**
  *  @file    ValueMemberDef_i.h
  *

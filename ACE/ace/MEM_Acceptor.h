@@ -1,4 +1,3 @@
-
 /**
  *  @file    MEM_Acceptor.h
  *

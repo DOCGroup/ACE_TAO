@@ -1,4 +1,3 @@
-
 /**
  *  @file    XTI_ATM_Mcast.h
  *

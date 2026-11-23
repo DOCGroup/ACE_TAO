@@ -1,4 +1,3 @@
-
 /**
  *  @file    Services_Activate.h
  *

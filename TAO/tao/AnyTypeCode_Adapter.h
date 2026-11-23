@@ -1,4 +1,3 @@
-
 /**
  *  @file    AnyTypeCode_Adapter.h
  *

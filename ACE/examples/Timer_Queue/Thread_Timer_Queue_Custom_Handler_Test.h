@@ -1,4 +1,3 @@
-
 /**
  *  @file    Thread_Timer_Queue_Custom_Handler_Test.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   Hash_LogRecordStore.h
  *

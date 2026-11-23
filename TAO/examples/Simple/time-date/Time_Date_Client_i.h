@@ -1,4 +1,3 @@
-
 /**
  *  @file    Time_Date_Client_i.h
  *

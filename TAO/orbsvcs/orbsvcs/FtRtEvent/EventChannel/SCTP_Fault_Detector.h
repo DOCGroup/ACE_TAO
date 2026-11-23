@@ -1,4 +1,3 @@
-
 /**
  *  @file   SCTP_Fault_Detector.h
  *

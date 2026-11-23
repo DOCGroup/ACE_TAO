@@ -1,4 +1,3 @@
-
 /**
  *  @file    Wchar_IBM1047_ISO8859_Factory.cpp
  *

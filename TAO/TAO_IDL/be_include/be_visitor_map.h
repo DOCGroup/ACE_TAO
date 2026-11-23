@@ -1,4 +1,3 @@
-
 #ifndef TAO_BE_VISITOR_MAP_H
 #define TAO_BE_VISITOR_MAP_H
 

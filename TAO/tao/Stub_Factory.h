@@ -1,4 +1,3 @@
-
 /**
  *  @file    Stub_Factory.h
  *

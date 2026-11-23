@@ -1,4 +1,3 @@
-
 /**
  * @file Monitor_Query.h
  *

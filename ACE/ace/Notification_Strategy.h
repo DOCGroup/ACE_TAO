@@ -1,4 +1,3 @@
-
 /**
  *  @file   Notification_Strategy.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file   create_persistent_poa.h
  *

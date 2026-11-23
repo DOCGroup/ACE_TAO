@@ -1,4 +1,3 @@
-
 /**
  *  @file   Connection_Purging_Strategy.h
  *

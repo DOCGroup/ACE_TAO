@@ -1,4 +1,3 @@
-
 /**
  *  @file    Clerk_i.h
  *
