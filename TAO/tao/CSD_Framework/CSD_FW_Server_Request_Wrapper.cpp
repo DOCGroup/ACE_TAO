@@ -119,9 +119,9 @@ TAO::CSD::FW_Server_Request_Wrapper::dispatch (
       // we have native exceptions but no support for them in the ORB
       // we should still be able to catch it.  If we don't have native
       // exceptions it couldn't have been raised in the first place!
-      CORBA::UNKNOWN exception (CORBA::SystemException::_tao_minor_code
-                                 (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
-                                  CORBA::COMPLETED_MAYBE);
+      CORBA::UNKNOWN const exception (CORBA::SystemException::_tao_minor_code
+                                        (TAO_UNHANDLED_SERVER_CXX_EXCEPTION, 0),
+                                       CORBA::COMPLETED_MAYBE);
 
       if (this->request_->collocated())
         {
