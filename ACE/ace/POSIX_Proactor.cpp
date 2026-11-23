@@ -971,7 +971,7 @@ int
 ACE_POSIX_AIOCB_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
   // Decrement <wait_time> with the amount of time spent in the method
-  ACE_Countdown_Time countdown (std::addressof (wait_time));
+  ACE_Countdown_Time const countdown (std::addressof (wait_time));
   return this->handle_events_i (wait_time.msec ());
 }
 
@@ -1683,7 +1683,7 @@ int
 ACE_POSIX_SIG_Proactor::handle_events (ACE_Time_Value &wait_time)
 {
   // Decrement <wait_time> with the amount of time spent in the method
-  ACE_Countdown_Time countdown (std::addressof (wait_time));
+  ACE_Countdown_Time const countdown (std::addressof (wait_time));
   return this->handle_events_i (std::addressof (wait_time));
 }
 

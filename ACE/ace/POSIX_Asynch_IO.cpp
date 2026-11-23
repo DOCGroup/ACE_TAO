@@ -261,7 +261,7 @@ ACE_POSIX_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
   this->message_block_.wr_ptr (bytes_transferred);
 
   // Create the interface result class.
-  ACE_Asynch_Read_Stream::Result result (this);
+  ACE_Asynch_Read_Stream::Result const result (this);
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
@@ -382,7 +382,7 @@ ACE_POSIX_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
   this->message_block_.rd_ptr (bytes_transferred);
 
   // Create the interface result class.
-  ACE_Asynch_Write_Stream::Result result (this);
+  ACE_Asynch_Write_Stream::Result const result (this);
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
@@ -496,7 +496,7 @@ ACE_POSIX_Asynch_Read_File_Result::complete (size_t bytes_transferred,
   this->message_block_.wr_ptr (bytes_transferred);
 
   // Create the interface result class.
-  ACE_Asynch_Read_File::Result result (this);
+  ACE_Asynch_Read_File::Result const result (this);
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
@@ -628,7 +628,7 @@ ACE_POSIX_Asynch_Write_File_Result::complete (size_t bytes_transferred,
   this->message_block_.rd_ptr (bytes_transferred);
 
   // Create the interface result class.
-  ACE_Asynch_Write_File::Result result (this);
+  ACE_Asynch_Write_File::Result const result (this);
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
@@ -774,7 +774,7 @@ ACE_POSIX_Asynch_Accept_Result::complete (size_t bytes_transferred,
   this->message_block_.wr_ptr (bytes_transferred);
 
   // Create the interface result class.
-  ACE_Asynch_Accept::Result result (this);
+  ACE_Asynch_Accept::Result const result (this);
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
@@ -1237,7 +1237,7 @@ ACE_POSIX_Asynch_Connect_Result::complete (size_t bytes_transferred,
   this->error_ = error;
 
   // Create the interface result class.
-  ACE_Asynch_Connect::Result result (this);
+  ACE_Asynch_Connect::Result const result (this);
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
@@ -1810,7 +1810,7 @@ ACE_POSIX_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
   */
 
   // Create the interface result class.
-  ACE_Asynch_Transmit_File::Result result (this);
+  ACE_Asynch_Transmit_File::Result const result (this);
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
@@ -2358,7 +2358,7 @@ ACE_POSIX_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
  this->remote_address_->set_size(this->addr_len_);
 
   // Create the interface result class.
-  ACE_Asynch_Read_Dgram::Result result (this);
+  ACE_Asynch_Read_Dgram::Result const result (this);
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
@@ -2437,7 +2437,7 @@ ACE_POSIX_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
   this->message_block_->rd_ptr (bytes_transferred);
 
   // Create the interface result class.
-  ACE_Asynch_Write_Dgram::Result result (this);
+  ACE_Asynch_Write_Dgram::Result const result (this);
 
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
