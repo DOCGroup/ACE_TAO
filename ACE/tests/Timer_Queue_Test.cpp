@@ -104,14 +104,14 @@ test_interval_timer (ACE_Timer_Queue *tq)
     Set up a timer to fire on a 50ms interval.
   */
   Interval_Handler ih;
-  ACE_Time_Value interval (0, 50 * 1000 /* number of usec in millisecond */);
+  ACE_Time_Value const interval (0, 50 * 1000 /* number of usec in millisecond */);
   const unsigned NUM_INTERVAL_FIRINGS = 50;
-  ACE_Time_Value loop_stop_time =
+  ACE_Time_Value const loop_stop_time =
     tq->gettimeofday () + (NUM_INTERVAL_FIRINGS * interval);
   const unsigned EXPECTED_TRIP_COUNT =
     NUM_INTERVAL_FIRINGS + 1 /* for the first immediate firing */;
 
-  long id = tq->schedule (&ih, nullptr /* no act */, ACE_Time_Value::zero, interval);
+  long const id = tq->schedule (&ih, nullptr /* no act */, ACE_Time_Value::zero, interval);
   ACE_TEST_ASSERT (id != -1);
 
   do
@@ -142,7 +142,7 @@ test_functionality (ACE_Timer_Queue *tq)
   long timer_id2;
 
   // Do a test on earliest_time.
-  ACE_Time_Value earliest_time = tq->gettimeofday ();
+  ACE_Time_Value const earliest_time = tq->gettimeofday ();
 
   const void *timer_act {};
   ACE_NEW (timer_act, int (1));
@@ -318,7 +318,7 @@ test_performance (ACE_Timer_Queue *tq,
 
   // Test the amount of time required to schedule all the timers.
 
-  std::unique_ptr<ACE_Time_Value[]> times (
+  std::unique_ptr<ACE_Time_Value[]> const times (
     new (std::nothrow) ACE_Time_Value[max_iterations]);
   if (!times)
     {
@@ -333,7 +333,7 @@ test_performance (ACE_Timer_Queue *tq,
         + ACE_Time_Value(0, i * TIMER_DISTANCE * 1000));
     }
 
-  ACE_Time_Value last_time = times[max_iterations-1];
+  ACE_Time_Value const last_time = times[max_iterations-1];
 
   timer.start ();
 
@@ -398,7 +398,7 @@ test_performance (ACE_Timer_Queue *tq,
   for (i = 0; i < max_iterations; ++i)
     {
       ACE_NEW (timer_act, int (42));
-      long result = tq->schedule (&eh, timer_act, times[i]);
+      long const result = tq->schedule (&eh, timer_act, times[i]);
       ACE_TEST_ASSERT (result != -1);
     }
 
@@ -531,7 +531,7 @@ test_unique_timer_heap_ids ()
 {
   Example_Handler eh;
   ACE_Timer_Heap timer_heap (44);
-  ACE_Time_Value anytime(1);
+  ACE_Time_Value const anytime(1);
   ACE_Bounded_Set<long> timer_ids (max_iterations);
   long timer_id = -1;
   bool all_unique = true;
