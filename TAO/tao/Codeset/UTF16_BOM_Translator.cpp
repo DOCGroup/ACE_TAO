@@ -392,7 +392,7 @@ TAO_UTF16_BOM_Translator::write_wchar_i (ACE_OutputCDR &cdr,
           }
         }
 
-      ACE_CDR::Octet tcsize =
+      ACE_CDR::Octet const tcsize =
         static_cast<ACE_CDR::Octet> (len * ACE_UTF16_CODEPOINT_SIZE);
 
       if (this->write_1 (cdr, &tcsize))
@@ -407,7 +407,7 @@ TAO_UTF16_BOM_Translator::write_wchar_i (ACE_OutputCDR &cdr,
   else if (static_cast<ACE_CDR::Short> (this->minor_version (cdr)) != 0)
     {
       // GIOP 1.1 simple support
-      ACE_UTF16_T sx = static_cast<ACE_UTF16_T> (x);
+      ACE_UTF16_T const sx = static_cast<ACE_UTF16_T> (x);
       return this->write_2 (cdr, &sx);
     }
   else
@@ -436,7 +436,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
 
       if (this->forceBE_ && cdr.byte_order ())
         {
-          ACE_CDR::ULong l = (len+1) * ACE_UL_UTF16_CODEPOINT_SIZE;
+          ACE_CDR::ULong const l = (len+1) * ACE_UL_UTF16_CODEPOINT_SIZE;
           if (this->write_4 (cdr, &l) &&
               this->write_2 (cdr, &ACE_UNICODE_BOM_SWAPPED) &&
               x != nullptr)
@@ -446,7 +446,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
         }
       else
         {
-          ACE_CDR::ULong l = (len+1) * ACE_UL_UTF16_CODEPOINT_SIZE;
+          ACE_CDR::ULong const l = (len+1) * ACE_UL_UTF16_CODEPOINT_SIZE;
           if (this->write_4 (cdr, &l) &&
               this->write_2 (cdr, &ACE_UNICODE_BOM_CORRECT) &&
               x != nullptr)
@@ -458,7 +458,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
   else
     {
       // pre GIOP 1.2:  include null terminator in length
-      ACE_CDR::ULong l = len + 1;
+      ACE_CDR::ULong const l = len + 1;
 
       if (this->write_4 (cdr, &l))
         {
@@ -468,7 +468,7 @@ TAO_UTF16_BOM_Translator::write_wstring (ACE_OutputCDR & cdr,
             }
           else
             {
-              ACE_UTF16_T s {};
+              ACE_UTF16_T const s {};
               return this->write_2 (cdr, &s);
             }
         }
