@@ -20,21 +20,22 @@ void
 Echo_Server_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  CORBA::String_var orb_id =
+  CORBA::String_var const orb_id =
     info->orb_id ();
 
   // TAO-Specific way to get to the ORB Core (and thus, the ORB).
-  TAO_ORBInitInfo_var tao_info =
+  TAO_ORBInitInfo_var const tao_info =
     TAO_ORBInitInfo::_narrow (info);
 
-  CORBA::ORB_var orb = CORBA::ORB::_duplicate (tao_info->orb_core ()->orb ());
+  CORBA::ORB_var const orb =
+    CORBA::ORB::_duplicate (tao_info->orb_core ()->orb ());
 
   if (CORBA::is_nil (orb.in ()))
     {
       throw CORBA::INTERNAL ();
     }
 
-  PortableInterceptor::ORBInitInfo_3_1_var info_3_1 =
+  PortableInterceptor::ORBInitInfo_3_1_var const info_3_1 =
     PortableInterceptor::ORBInitInfo_3_1::_narrow (info);
 
   if (CORBA::is_nil (info_3_1.in ()))
@@ -49,7 +50,7 @@ Echo_Server_ORBInitializer::post_init (
                     Echo_Server_Request_Interceptor,
                     CORBA::NO_MEMORY ());
 
-  PortableInterceptor::ServerRequestInterceptor_var
+  PortableInterceptor::ServerRequestInterceptor_var const
     server_interceptor = interceptor;
 
   CORBA::Any proc_mode_as_any {};

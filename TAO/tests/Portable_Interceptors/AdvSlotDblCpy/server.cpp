@@ -276,16 +276,16 @@ public:
 
   void post_init (ORBInitInfo_ptr info) override
   {
-    CORBA::Object_var obj =
+    CORBA::Object_var const obj =
       info->resolve_initial_references ("PICurrent");
 
-    PortableInterceptor::Current_var pi_current =
+    PortableInterceptor::Current_var const pi_current =
       PortableInterceptor::Current::_narrow (obj.in ());
 
     slot_id = info->allocate_slot_id ();
     ACE_DEBUG ((LM_DEBUG, "Allocated slot with id %d.\n", slot_id));
 
-    ServerRequestInterceptor_var
+    ServerRequestInterceptor_var const
       interceptor (new ReplicaController (pi_current.in ()));
     info->add_server_request_interceptor (interceptor.in ());
   }
@@ -316,7 +316,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   InvokeMeImpl * const impl = new InvokeMeImpl (orb.in ());
   // Transfer the initial servant reference to the owning var.
-  ServantBase_var impl_var (impl);
+  ServantBase_var const impl_var (impl);
 
   PortableServer::ObjectId_var const id_act =
     root_poa->activate_object (impl);
@@ -331,7 +331,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Dump the ior.
   //
     {
-      std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+      std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
         ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
       if (!output_file)
         {
