@@ -125,7 +125,7 @@ TAO_EC_Timeout_Filter::clear ()
 
       ACE_Time_Value tv_interval;
       ORBSVCS_Time::TimeT_to_Time_Value (tv_interval, this->period_);
-      ACE_Time_Value tv_delta = tv_interval;
+      ACE_Time_Value const tv_delta = tv_interval;
 
       this->id_ =
         tg->schedule_timer (this,
