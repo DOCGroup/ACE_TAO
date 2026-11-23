@@ -124,8 +124,8 @@ Counting_Test_Producer::svc ()
               delay_ms));
 
   ACE_Message_Block *first {}, *prev {}, *b {};
-  ACE_Time_Value delay (0, delay_ms);
-  ACE_Time_Value timeout (10);
+  ACE_Time_Value const delay (0, delay_ms);
+  ACE_Time_Value const timeout (10);
   while (produced < count)
     {
       ACE_NEW_NORETURN (b, ACE_Message_Block (1));
@@ -214,8 +214,8 @@ Counting_Test_Consumer::svc ()
               (size_t)count,
               delay_ms));
   ACE_Message_Block *b {};
-  ACE_Time_Value delay (0, delay_ms);
-  ACE_Time_Value timeout (2);
+  ACE_Time_Value const delay (0, delay_ms);
+  ACE_Time_Value const timeout (2);
   while (consumed < count)
     {
       // To be sure we can wait in the case of an empty queue, but not
