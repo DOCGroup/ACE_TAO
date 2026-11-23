@@ -74,7 +74,7 @@ ACE_Name_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
-  ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
+  ACE_Sig_Action const sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
   ACE_UNUSED_ARG (sig);
 
   ACE_INET_Addr server_addr;
@@ -174,14 +174,14 @@ ACE_Name_Handler::send_reply (ACE_INT32 status,
   this->name_reply_.errnum (err);
 
   this->name_reply_.init ();
-  int len = this->name_reply_.encode (buf);
+  int const len = this->name_reply_.encode (buf);
 
   if (len == -1)
   {
     return -1;
   }
 
-  ssize_t n = this->peer ().send (buf, len);
+  ssize_t const n = this->peer ().send (buf, len);
 
   if (n != len)
     {
@@ -203,7 +203,7 @@ ACE_Name_Handler::send_request (ACE_Name_Request &request)
 {
   ACE_TRACE ("ACE_Name_Handler::send_request");
   void *buffer;
-  ssize_t length = request.encode (buffer);
+  ssize_t const length = request.encode (buffer);
 
   if (length == -1)
     {
@@ -259,7 +259,7 @@ ACE_Name_Handler::dispatch ()
 {
   ACE_TRACE ("ACE_Name_Handler::dispatch");
   // Dispatch the appropriate request.
-  int index = this->name_request_.msg_type ();
+  int const index = this->name_request_.msg_type ();
 
   // Invoke the appropriate member function obtained by indexing into
   // the op_table_. ACE_TABLE_MAP returns the same index (by bitwise
@@ -304,7 +304,7 @@ ACE_Name_Handler::recv_request ()
     case sizeof (ACE_UINT32):
       {
         // Transform the length into host byte order.
-        ssize_t length = ACE_NTOHL (this->name_request_.length ());
+        ssize_t const length = ACE_NTOHL (this->name_request_.length ());
 
         // Do a sanity check on the length of the message.
         if (length > (ssize_t) sizeof this->name_request_)
@@ -372,7 +372,7 @@ int
 ACE_Name_Handler::rebind ()
 {
   ACE_TRACE ("ACE_Name_Handler::rebind");
-  int result = this->shared_bind (1);
+  int const result = this->shared_bind (1);
   return result == 1 ? 0 : result;
 }
 
@@ -380,9 +380,9 @@ int
 ACE_Name_Handler::shared_bind (int rebind)
 {
   ACE_TRACE ("ACE_Name_Handler::shared_bind");
-  ACE_NS_WString a_name (this->name_request_.name (),
+  ACE_NS_WString const a_name (this->name_request_.name (),
                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
-  ACE_NS_WString a_value (this->name_request_.value (),
+  ACE_NS_WString const a_value (this->name_request_.value (),
                           this->name_request_.value_len () / sizeof (ACE_WCHAR_T));
   int result;
   if (rebind == 0)
@@ -426,7 +426,7 @@ ACE_Name_Handler::resolve ()
 #if 0
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("request for RESOLVE\n")));
 #endif /* 0 */
-  ACE_NS_WString a_name (this->name_request_.name (),
+  ACE_NS_WString const a_name (this->name_request_.name (),
                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
   // The following will deliver our reply back to client we
@@ -436,7 +436,7 @@ ACE_Name_Handler::resolve ()
   char *atype;
   if (this->naming_context ()->resolve (a_name, avalue, atype) == 0)
     {
-      std::unique_ptr<ACE_WCHAR_T[]> avalue_urep (avalue.rep ());
+      std::unique_ptr<ACE_WCHAR_T[]> const avalue_urep (avalue.rep ());
       ACE_Name_Request nrq (ACE_Name_Request::RESOLVE,
                             nullptr,
                             0,
@@ -459,7 +459,7 @@ ACE_Name_Handler::unbind ()
 #if 0
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("request for UNBIND\n")));
 #endif /* 0 */
-  ACE_NS_WString a_name (this->name_request_.name (),
+  ACE_NS_WString const a_name (this->name_request_.name (),
                          this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
   if (this->naming_context ()->unbind (a_name) == 0)
@@ -476,7 +476,7 @@ ACE_Name_Request
 ACE_Name_Handler::name_request (ACE_NS_WString *one_name)
 {
   ACE_TRACE ("ACE_Name_Handler::name_request");
-  std::unique_ptr<ACE_WCHAR_T[]> one_name_urep (one_name->rep ());
+  std::unique_ptr<ACE_WCHAR_T[]> const one_name_urep (one_name->rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_NAMES,
                            one_name_urep.get (),
                            one_name->length () * sizeof (ACE_WCHAR_T),
@@ -488,7 +488,7 @@ ACE_Name_Request
 ACE_Name_Handler::value_request (ACE_NS_WString *one_value)
 {
   ACE_TRACE ("ACE_Name_Handler::value_request");
-  std::unique_ptr<ACE_WCHAR_T[]> one_value_urep (one_value->rep ());
+  std::unique_ptr<ACE_WCHAR_T[]> const one_value_urep (one_value->rep ());
   return ACE_Name_Request (ACE_Name_Request::LIST_VALUES,
                            nullptr, 0,
                            one_value_urep.get (),
@@ -513,11 +513,11 @@ ACE_Name_Handler::lists ()
   ACE_TRACE ("ACE_Name_Handler::lists");
 
   ACE_PWSTRING_SET set;
-  ACE_NS_WString pattern (this->name_request_.name (),
+  ACE_NS_WString const pattern (this->name_request_.name (),
                           this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
   // Get the index into the list table
-  int index = ACE_LIST_MAP (this->name_request_.msg_type (),
+  int const index = ACE_LIST_MAP (this->name_request_.msg_type (),
                             ACE_Name_Request::LIST_OP_MASK);
 
   // Print the message type
@@ -567,7 +567,7 @@ ACE_Name_Handler::lists_entries ()
 {
   ACE_TRACE ("ACE_Name_Handler::lists_entries");
   ACE_BINDING_SET set;
-  ACE_NS_WString pattern (this->name_request_.name (),
+  ACE_NS_WString const pattern (this->name_request_.name (),
                           this->name_request_.name_len () / sizeof (ACE_WCHAR_T));
 
   int result = -1;
@@ -619,8 +619,8 @@ ACE_Name_Handler::lists_entries ()
            set_iterator.next (one_entry) !=0;
            set_iterator.advance())
         {
-           std::unique_ptr<ACE_WCHAR_T[]> name_urep (one_entry->name_.rep ());
-           std::unique_ptr<ACE_WCHAR_T[]> value_urep (one_entry->value_.rep ());
+           std::unique_ptr<ACE_WCHAR_T[]> const name_urep (one_entry->name_.rep ());
+           std::unique_ptr<ACE_WCHAR_T[]> const value_urep (one_entry->value_.rep ());
            ACE_Name_Request mynrq (this->name_request_.msg_type (),
                                   name_urep.get (),
                                   one_entry->name_.length () * sizeof (ACE_WCHAR_T),

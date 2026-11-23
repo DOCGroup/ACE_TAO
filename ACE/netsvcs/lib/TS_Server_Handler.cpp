@@ -60,7 +60,7 @@ ACE_TS_Server_Acceptor::init (int argc, ACE_TCHAR *argv[])
 
   // Ignore SIGPIPE so that each <SVC_HANDLER> can handle this on its
   // own.
-  ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
+  ACE_Sig_Action const sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
   ACE_UNUSED_ARG (sig);
 
   ACE_INET_Addr server_addr;
@@ -132,7 +132,7 @@ ACE_TS_Server_Handler::send_request (ACE_Time_Request &request)
 {
   ACE_TRACE ("ACE_TS_Server_Handler::send_request");
   void *buffer;
-  ssize_t length = request.encode (buffer);
+  ssize_t const length = request.encode (buffer);
 
   if (length == -1)
     {
@@ -192,7 +192,7 @@ ACE_TS_Server_Handler::dispatch ()
 {
   ACE_TRACE ("ACE_TS_Server_Handler::dispatch");
   // Get the system time and then create an ACE_Time_Request
-  time_t t = ACE_OS::time (nullptr);
+  time_t const t = ACE_OS::time (nullptr);
   ACE_Time_Request rq (ACE_Time_Request::TIME_UPDATE, t);
   return this->send_request (rq);
 }

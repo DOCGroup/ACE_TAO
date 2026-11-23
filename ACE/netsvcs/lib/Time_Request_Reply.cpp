@@ -84,7 +84,7 @@ ACE_Time_Value
 ACE_Time_Request::timeout () const
 {
   ACE_TRACE ("ACE_Time_Request::timeout");
-  time_t sec = ACE_Utils::truncate_cast<time_t> (this->transfer_.sec_timeout_);
+  time_t const sec = ACE_Utils::truncate_cast<time_t> (this->transfer_.sec_timeout_);
   return ACE_Time_Value (sec, this->transfer_.usec_timeout_);
 }
 

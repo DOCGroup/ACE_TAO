@@ -57,7 +57,7 @@ long
 ACE_TS_Clerk_Handler::timeout ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::timeout");
-  long old_timeout = this->timeout_;
+  long const old_timeout = this->timeout_;
   this->timeout_ *= 2;
 
   if (this->timeout_ > this->max_timeout_)
@@ -196,14 +196,14 @@ ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE)
   else
     {
       // Get current local time
-      time_t local_time = ACE_OS::time (nullptr);
+      time_t const local_time = ACE_OS::time (nullptr);
 
       // Compure delta time (difference between current local time and
       // system time obtained from the server)
       time_t t = reply.time () - local_time;
 
       // Compute round trip delay and adjust time accordingly
-      time_t one_way_time = (local_time - this->start_time_)/2;
+      time_t const one_way_time = (local_time - this->start_time_)/2;
       t += one_way_time;
 
       // Now update time info (to be retrieved by Clerk_Processor)
@@ -252,7 +252,7 @@ ACE_TS_Clerk_Handler::recv_reply (ACE_Time_Request &reply)
 
   // Since Time_Request messages are fixed size, read the entire
   // message in one go.
-  ssize_t n = this->peer ().recv (std::addressof (reply), bytes_expected);
+  ssize_t const n = this->peer ().recv (std::addressof (reply), bytes_expected);
 
   if (n != bytes_expected)
     {
@@ -384,7 +384,7 @@ int
 ACE_TS_Clerk_Processor::update_time ()
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::update_time");
-  ACE_UINT32 expected_sequence_num = this->cur_sequence_num_;
+  ACE_UINT32 const expected_sequence_num = this->cur_sequence_num_;
 
   // Increment sequence number
   ++this->cur_sequence_num_;
@@ -499,7 +499,7 @@ ACE_TS_Clerk_Processor::init (int argc, ACE_TCHAR *argv[])
 
 #if !defined (ACE_WIN32)
   // Ignore SIPPIPE so each Output_Channel can handle it.
-  ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
+  ACE_Sig_Action const sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
   ACE_UNUSED_ARG (sig);
 #endif /* ACE_WIN32 */
 
