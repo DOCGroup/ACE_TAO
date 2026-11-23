@@ -706,7 +706,7 @@ TAO_IIOP_Acceptor::parse_address (char const *address,
                                   int *def_type)
 {
   {
-    ACE_INET_Addr tmp;
+    ACE_INET_Addr const tmp;
     addr.set (tmp);
     specified_hostname.clear();
   }
@@ -1365,8 +1365,8 @@ TAO_IIOP_Acceptor::parse_options_i (int &argc,
                             -1);
         }
 
-      ACE_CString name = argv[i]->substring (0, slot);
-      ACE_CString value = argv[i]->substring (slot + 1);
+      ACE_CString const name = argv[i]->substring (0, slot);
+      ACE_CString const value = argv[i]->substring (slot + 1);
 
       if (name.length () == 0)
         {

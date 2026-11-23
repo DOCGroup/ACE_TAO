@@ -679,7 +679,7 @@ TAO::Storable_FlatFileStream::create_backup ()
 void
 TAO::Storable_FlatFileStream::remove_backup ()
 {
-  std::string backup_name = this->backup_file_name ();
+  std::string const backup_name = this->backup_file_name ();
 
   if (ACE_OS::access (backup_name.c_str (), F_OK) == 0)
     {
@@ -690,7 +690,7 @@ TAO::Storable_FlatFileStream::remove_backup ()
 int
 TAO::Storable_FlatFileStream::restore_backup ()
 {
-  std::string backup_name = this->backup_file_name ();
+  std::string const backup_name = this->backup_file_name ();
 
   if (ACE_OS::access (backup_name.c_str (), F_OK))
   {
@@ -859,7 +859,7 @@ TAO::Storable_FlatFileFactory::create_stream (std::string const &file,
                                               bool )
 {
   TAO::Storable_Base *stream {};
-  std::string path = this->directory_ + "/" + file;
+  std::string const path = this->directory_ + "/" + file;
   ACE_NEW_RETURN (stream,
                   TAO::Storable_FlatFileStream(path,
                                                mode,
