@@ -135,7 +135,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           // Just process one upcall. We know that we would get the
           // clients IOR in that call.
-          CORBA::Boolean pending =
+          const CORBA::Boolean pending =
             orb->work_pending();
 
           if (pending)
