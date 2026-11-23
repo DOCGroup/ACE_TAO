@@ -132,11 +132,11 @@ private:
     /// Length of entire request.
     ACE_UINT32 length_;
 
-    /// Type of the request (i.e., <BIND>, <REBIND>, <RESOLVE>, and <UNBIND>).
+    /// Type of the request (i.e., @c BIND, @c REBIND, @c RESOLVE, and @c UNBIND).
     ACE_UINT32 msg_type_;
 
-    /// Indicates if we should block forever.  If 0, then <secTimeout_>
-    /// and <usecTimeout_> indicates how long we should wait.
+    /// Indicates if we should block forever. If 0, then @c sec_timeout_
+    /// and @c usec_timeout_ indicate how long we should wait.
     ACE_UINT32 block_forever_;
 
     /// Max seconds willing to wait for name if not blocking forever.

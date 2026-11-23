@@ -359,7 +359,7 @@ protected:
   /// Resize the map.  Must be called with locks held.
   int resize_i (ACE_UINT32 size);
 
-  /// Close down a <Map_Manager>.  Must be called with locks held.
+  /// Close down a @c Map_Manager.  Must be called with locks held.
   int close_i ();
 
   /// Returns 1 if <id1> == <id2>, else 0.  This is defined as a

@@ -269,7 +269,7 @@ protected:
  * and Win32.  In UNIX, ACE_HANDLE is an int, whereas in Win32
  * it's a void *.  This class hides all these details from the
  * bulk of the ACE_Select_Reactor code.  All of these methods
- * are called with the main <Select_Reactor> token lock held.
+ * are called with the main @c ACE_Select_Reactor token lock held.
  */
 class ACE_Export ACE_Select_Reactor_Handler_Repository
 {
@@ -485,14 +485,14 @@ public:
   int resumable_handler () override;
 
 protected:
-  /// Allow manipulation of the <wait_set_> mask and <ready_set_> mask.
+  /// Allow manipulation of the @c wait_set_ mask and @c ready_set_ mask.
   virtual int bit_ops (ACE_HANDLE handle,
                        ACE_Reactor_Mask mask,
                        ACE_Select_Reactor_Handle_Set &handle_set,
                        int ops);
 
   /// Enqueue ourselves into the list of waiting threads at the
-  /// appropriate point specified by <requeue_position_>.
+  /// appropriate point specified by @c requeue_position_.
   virtual void renew () = 0;
 
   /// Check to see if the Event_Handler associated with @a handle is
@@ -504,20 +504,20 @@ protected:
   virtual void clear_dispatch_mask (ACE_HANDLE handle,
                                     ACE_Reactor_Mask mask);
 
-  /// Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
+  /// Table that maps @c ACE_HANDLE values to pointers to @c ACE_Event_Handler objects.
   ACE_Select_Reactor_Handler_Repository handler_rep_;
 
-  /// Tracks handles that are ready for dispatch from <select>
+  /// Tracks handles that are ready for dispatch from @c select()
   ACE_Select_Reactor_Handle_Set dispatch_set_;
 
-  /// Tracks handles that are waited for by <select>.
+  /// Tracks handles that are waited for by @c select().
   ACE_Select_Reactor_Handle_Set wait_set_;
 
   /// Tracks handles that are currently suspended.
   ACE_Select_Reactor_Handle_Set suspend_set_;
 
   /// Track HANDLES we are interested in for various events that must
-  /// be dispatched *without* going through <select>.
+  /// be dispatched *without* going through @c select().
   ACE_Select_Reactor_Handle_Set ready_set_;
 
   /// Defined as a pointer to allow overriding by derived classes...
@@ -546,7 +546,7 @@ protected:
   bool initialized_ {};
 
   /// Restart the <handle_events> event-loop method automatically when
-  /// <select> is interrupted via <EINTR>.
+  /// @c select() is interrupted via @c EINTR.
   bool restart_ {};
 
   /**
@@ -565,7 +565,7 @@ protected:
    * True if state has changed during dispatching of
    * ACE_Event_Handlers, else false.  This is used to determine
    * whether we need to make another trip through the
-   * <Select_Reactor>'s <wait_for_multiple_events> loop.
+   * @c ACE_Select_Reactor's @c wait_for_multiple_events() loop.
    */
   bool state_changed_ {};
 

@@ -109,7 +109,7 @@ public:
                 ...) const;
 #endif
 
-  /// Send @a n bytes via Win32 <WriteFile> using overlapped I/O.
+  /// Send @a n bytes via Win32 @c WriteFile using overlapped I/O.
   ssize_t send (const void *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;

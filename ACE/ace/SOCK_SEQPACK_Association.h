@@ -77,7 +77,7 @@ public:
   /// @{
   ACE_SOCK_SEQPACK_Association ();
 
-  /// Constructor (sets the underlying ACE_HANDLE with <h>).
+  /// Constructor (sets the underlying ACE_HANDLE with @a h).
   explicit ACE_SOCK_SEQPACK_Association (ACE_HANDLE h);
 
   ~ACE_SOCK_SEQPACK_Association ();

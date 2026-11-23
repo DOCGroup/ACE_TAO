@@ -58,7 +58,7 @@ public:
   /// @{
   ACE_MEM_Stream ();
 
-  /// Constructor (sets the underlying ACE_HANDLE with <h>).
+  /// Constructor (sets the underlying ACE_HANDLE with @a h).
   explicit ACE_MEM_Stream (ACE_HANDLE h);
 
   ~ACE_MEM_Stream ();

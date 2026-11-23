@@ -1305,7 +1305,7 @@ protected:
   /// Adapter used to return internal lock to outside world.
   ACE_Lock_Adapter<ACE_Process_Mutex> lock_adapter_;
 
-  /// Table that maps <ACE_HANDLEs> to <ACE_Event_Handler *>'s.
+  /// Table that maps @c ACE_HANDLE values to pointers to @c ACE_Event_Handler objects.
   ACE_WFMO_Reactor_Handler_Repository handler_rep_;
 
   /// A manual event used to block threads from proceeding into

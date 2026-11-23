@@ -98,7 +98,7 @@ public:
    * <max_handle> (highest bit set) and <size> (how many bits set) values.
    * This is useful for evaluating the changes after the handle set has
    * been manipulated in some way other than member functions; for example,
-   * after <select> modifies the @c fd_set.
+   * after @c select() modifies @c fd_set.
    */
   void sync (ACE_HANDLE max);
 

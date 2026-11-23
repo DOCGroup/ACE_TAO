@@ -28,7 +28,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_IPC_SAP
 {
 public:
-  /// Interface for <ioctl>.
+  /// Interface for @c ioctl().
   int control (int cmd, void *) const;
 
   /// @name Common I/O handle options

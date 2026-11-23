@@ -111,7 +111,7 @@ public:
   void set_bytes_transferred (size_t nbytes);
 
 protected:
-  /// Constructor. <Event> is not used on POSIX.
+  /// Constructor. The @a event argument is not used on POSIX.
   ACE_POSIX_Asynch_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
                            const void* act,
                            ACE_HANDLE event,

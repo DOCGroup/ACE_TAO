@@ -201,7 +201,7 @@ public:
 
   /**
    * Register a @a eh with a particular @a mask.  Note that the
-   * <Select_Reactor> will call ACE_Event_Handler::get_handle() to
+   * @c ACE_Select_Reactor will call ACE_Event_Handler::get_handle() to
    * extract the underlying I/O handle.
    */
   int register_handler (ACE_Event_Handler *eh,
@@ -304,7 +304,7 @@ public:
   /// @name Suspend and resume handlers
   /// @{
 
-  /// Temporarily suspend the <Event_Handler> associated with @a eh.
+  /// Temporarily suspend the @c ACE_Event_Handler associated with @a eh.
   int suspend_handler (ACE_Event_Handler *eh) override;
 
   /// Temporarily suspend the Event_Handler associated with @a handle.
@@ -427,12 +427,12 @@ public:
 
   /**
    * Called by a thread when it wants to unblock the Select_Reactor.
-   * This wakeups the <ACE_Select_Reactor> if currently blocked in
-   * <select>/<poll>.  Pass over both the Event_Handler *and* the
-   * @a mask to allow the caller to dictate which <Event_Handler>
-   * method the <Select_Reactor> will invoke.  The ACE_Time_Value
+   * This wakeups the @c ACE_Select_Reactor if currently blocked in
+   * @c select() or @c poll(). Pass over both the event handler and the
+   * @a mask to allow the caller to dictate which @c ACE_Event_Handler
+   * method the @c ACE_Select_Reactor will invoke. The ACE_Time_Value
    * indicates how long to blocking trying to notify the
-   * <Select_Reactor>.  If @a timeout == 0, the caller will block until
+   * @c ACE_Select_Reactor.  If @a timeout == 0, the caller will block until
    * action is possible, else will wait until the relative time
    * specified in *@a timeout elapses).
    */
@@ -600,14 +600,14 @@ protected:
   virtual int remove_handler_i (const ACE_Handle_Set &handles,
                                 ACE_Reactor_Mask);
 
-  /// Suspend the <Event_Handler> associated with @a handle
+  /// Suspend the @c ACE_Event_Handler associated with @a handle
   virtual int suspend_i (ACE_HANDLE handle);
 
-  /// Check to see if the <Event_Handler> associated with @a handle is
+  /// Check to see if the @c ACE_Event_Handler associated with @a handle is
   /// suspended. Returns 0 if not, 1 if so.
   bool is_suspended_i (ACE_HANDLE handle) override;
 
-  /// Resume the <Event_Handler> associated with @a handle
+  /// Resume the @c ACE_Event_Handler associated with @a handle
   virtual int resume_i (ACE_HANDLE handle);
 
   /// Implement the public handler method.
@@ -622,13 +622,13 @@ protected:
   virtual int handler_i (int signum, ACE_Event_Handler ** = nullptr);
 
   /**
-   * Check if there are any HANDLEs enabled in the <ready_set_>, and
+   * Check if there are any HANDLEs enabled in the @c ready_set_, and
    * if so, update the @a handle_set and return the number ready.  If
    * there aren't any HANDLEs enabled return 0.
    */
   virtual int any_ready (ACE_Select_Reactor_Handle_Set &handle_set);
 
-  /// Implement the <any_ready> method, assuming that the Sig_Guard is
+  /// Implement the @c any_ready() method, assuming that the Sig_Guard is
   /// being held
   virtual int any_ready_i (ACE_Select_Reactor_Handle_Set &handle_set);
 
@@ -658,15 +658,15 @@ protected:
 
   /**
    * Dispatch all timer handlers that have expired.  Returns -1 if the
-   * state of the <wait_set_> has changed, else 0.
-   * <number_dispatched> is set to the number of timer handlers
+   * state of the @c wait_set_ has changed, else 0.
+   * @a number_dispatched is set to the number of timer handlers
    * dispatched.
    */
   virtual int dispatch_timer_handlers (int &number_dispatched);
 
   /**
    * Dispatch any notification handlers.  Returns -1 if the state of
-   * the <wait_set_> has changed, else returns number of handlers
+   * the @c wait_set_ has changed, else returns number of handlers
    * notified.
    */
   virtual int dispatch_notification_handlers (ACE_Select_Reactor_Handle_Set &dispatch_set,
@@ -677,7 +677,7 @@ protected:
    * Dispatch all the input/output/except handlers that are enabled in
    * the @a dispatch_set.  Updates @a number_of_active_handles and
    * @a number_of_handlers_dispatched according to the behavior of the
-   * number Returns -1 if the state of the <wait_set_> has changed,
+   * Returns -1 if the state of the @c wait_set_ has changed,
    * else 0.
    */
   virtual int dispatch_io_handlers (ACE_Select_Reactor_Handle_Set &dispatch_set,
@@ -710,7 +710,7 @@ protected:
   /// @}
 
   /// Enqueue ourselves into the list of waiting threads at the
-  /// appropriate point specified by <requeue_position_>.
+  /// appropriate point specified by @c requeue_position_.
   void renew () override;
 
   /// Synchronization token for the MT_SAFE ACE_Select_Reactor.

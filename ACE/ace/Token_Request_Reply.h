@@ -146,7 +146,7 @@ private:
     /// Type of the request (i.e., MUTEX, RLOCK, WLOCK...
     ACE_UINT32 proxy_type_;
 
-    /// Type of the request (i.e., <ACQUIRE>, <RELEASE>, <RENEW>, and <REMOVE>).
+    /// Type of the request (i.e., @c ACQUIRE, @c RELEASE, @c RENEW, and @c REMOVE).
     ACE_UINT32 operation_type_;
 
     /// this only makes sense when operation type is renew
@@ -157,8 +157,8 @@ private:
 
     /// Timeout fields copied from ACE_Synch_Options.
 
-    /// Indicates if we should block forever.  If 1, then <secTimeout_>
-    /// and <usecTimeout_> indicates how long we should wait.  If 0,
+    /// Indicates if we should block forever.  If 1, then @c sec_
+    /// and @c usec_ indicates how long we should wait.  If 0,
     /// then we block forever.
     ACE_UINT32 use_timeout_;
 

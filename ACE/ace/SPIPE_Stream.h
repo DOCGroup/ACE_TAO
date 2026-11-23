@@ -125,10 +125,10 @@ public:
   ssize_t recv (size_t len, ...) const;
 #endif
 
-  /// Send @a len bytes via Win32 <WriteFile> using overlapped I/O.
+  /// Send @a len bytes via Win32 @c WriteFile using overlapped I/O.
   ssize_t send (const void *buf, size_t len, ACE_OVERLAPPED *overlapped) const;
 
-  /// Recv @a len bytes via Win32 <ReadFile> using overlapped I/O.
+  /// Recv @a len bytes via Win32 @c ReadFile using overlapped I/O.
   ssize_t recv (void *buf, size_t len, ACE_OVERLAPPED *overlapped) const;
 
   /// Send an <iovec> of size @a len to the stream.
