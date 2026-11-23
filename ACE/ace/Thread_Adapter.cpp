@@ -64,7 +64,7 @@ ACE_Thread_Adapter::invoke ()
   // -jxh
 
   ACE_Thread_Exit *exit_hook_instance = ACE_Thread_Exit::instance ();
-  ACE_Thread_Exit_Maybe exit_hook_maybe (exit_hook_instance == nullptr);
+  ACE_Thread_Exit_Maybe const exit_hook_maybe (exit_hook_instance == nullptr);
   ACE_Thread_Exit *exit_hook_ptr = exit_hook_instance
                                    ? exit_hook_instance
                                    : exit_hook_maybe.instance ();
@@ -104,7 +104,7 @@ ACE_Thread_Adapter::invoke_i ()
 #endif /* ACE_WIN32 && ACE_HAS_MFC && (ACE_HAS_MFC != 0) */
 
   // Pick up the cancel-related flags before deleting this.
-  long cancel_flags = this->flags_;
+  long const cancel_flags = this->flags_;
 
   // Delete ourselves since we don't need <this> anymore.  Make sure
   // not to access <this> anywhere below this point.

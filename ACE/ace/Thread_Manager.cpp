@@ -172,7 +172,7 @@ ACE_Thread_Descriptor::terminate ()
      // We must remove Thread_Descriptor from Thread_Manager list
      if (this->tm_ != nullptr)
       {
-         int close_handle = 0;
+         int const close_handle = 0;
 
 #if !defined (ACE_HAS_VXTHREADS)
          // Threads created with THR_DAEMON shouldn't exist here, but
@@ -1170,7 +1170,7 @@ ACE_Thread_Manager::kill_thr (ACE_Thread_Descriptor *td, int signum)
 {
   ACE_TRACE ("ACE_Thread_Manager::kill_thr");
 
-  ACE_thread_t tid = td->thr_id_;
+  ACE_thread_t const tid = td->thr_id_;
 
   int const result = ACE_Thread::kill (tid, signum);
 
@@ -1253,7 +1253,7 @@ ACE_Thread_Manager::check_state (ACE_UINT32 state,
 
   ACE_UINT32 thr_state;
 
-  int self_check = ACE_OS::thr_equal (id, ACE_OS::thr_self ());
+  int const self_check = ACE_OS::thr_equal (id, ACE_OS::thr_self ());
 
   // If we're checking the state of our thread, try to get the cached
   // value out of TSS to avoid lookup.
