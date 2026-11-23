@@ -1159,7 +1159,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (ACE_Sig_Handler *sh,
     open_for_business_ (false),
     deactivated_ (0)
 {
-  if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, 0, sh, tq, 0, notify) == -1)
+  if (this->open (ACE_WFMO_Reactor::DEFAULT_SIZE, false, sh, tq, 0, notify) == -1)
     {
       ACELIB_ERROR ((LM_ERROR,
                      ACE_TEXT ("%p\n"),
@@ -1188,7 +1188,7 @@ ACE_WFMO_Reactor::ACE_WFMO_Reactor (size_t size,
 {
   ACE_UNUSED_ARG (unused);
 
-  if (this->open (size, 0, sh, tq, 0, notify) == -1)
+  if (this->open (size, false, sh, tq, 0, notify) == -1)
     {
       ACELIB_ERROR ((LM_ERROR,
                      ACE_TEXT ("%p\n"),
