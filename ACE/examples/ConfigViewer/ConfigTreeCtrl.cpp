@@ -45,7 +45,7 @@ void ConfigTreeCtrl::LoadSection(wxTreeItemId& ParentItem, const ACE_Configurati
   {
     wxTreeItemId Item = AppendItem(ParentItem, Name.fast_rep());
     ACE_Configuration_Section_Key Child;
-    m_pConfig->open_section(Key, Name.fast_rep(), 0, Child);
+    m_pConfig->open_section(Key, Name.fast_rep(), false, Child);
     LoadSection( Item, Child);
     ++Index;
   }
@@ -122,7 +122,7 @@ void ConfigTreeCtrl::OnNewKey(wxCommandEvent& event)
   wxTreeItemId ItemID = GetSelection();
   ACE_Configuration_Section_Key Key, NewKey;
   ResolveKey(ItemID, Key);
-  m_pConfig->open_section(Key, Value, 1, NewKey);
+  m_pConfig->open_section(Key, Value, true, NewKey);
   wxTreeItemId NewItemID = AppendItem(ItemID, Value);
   EnsureVisible(NewItemID);
 }
