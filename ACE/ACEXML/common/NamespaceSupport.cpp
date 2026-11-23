@@ -102,8 +102,8 @@ ACEXML_NamespaceSupport::init ()
     return -1;
   }
 
-  ACEXML_String prefix (ACEXML_TABOO_NS_PREFIX, 0, false);
-  ACEXML_String uri (ACEXML_XMLNS_URI_name, 0, false);
+  ACEXML_String prefix (ACEXML_TABOO_NS_PREFIX, nullptr, false);
+  ACEXML_String uri (ACEXML_XMLNS_URI_name, nullptr, false);
   return this->effective_context_->bind (prefix, uri);
 }
 
@@ -131,8 +131,8 @@ ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
     return -1;
   }
 
-  ACEXML_String ns_prefix (prefix, 0, false);
-  ACEXML_String ns_uri (uri, 0, false);
+  ACEXML_String ns_prefix (prefix, nullptr, false);
+  ACEXML_String ns_uri (uri, nullptr, false);
 
   return this->effective_context_->rebind (ns_prefix, ns_uri);
 }
@@ -168,7 +168,7 @@ ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
        iter.next (entry) != 0;
        iter.advance ())
     {
-      if (entry->int_id_ == ACEXML_String (uri, 0, false))
+      if (entry->int_id_ == ACEXML_String (uri, nullptr, false))
         {
           return entry->ext_id_.c_str ();
         }
@@ -208,8 +208,8 @@ ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
        iter.next (entry) != 0;
        iter.advance ())
     {
-      if (entry->int_id_ == ACEXML_String (uri, 0, false) &&
-          entry->ext_id_ != ACEXML_String (ACEXML_DEFAULT_NS_PREFIX, 0, false))
+      if (entry->int_id_ == ACEXML_String (uri, nullptr, false) &&
+          entry->ext_id_ != ACEXML_String (ACEXML_DEFAULT_NS_PREFIX, nullptr, false))
         {
           prefixes.enqueue_tail (entry->ext_id_.c_str ());
         }
@@ -232,7 +232,7 @@ ACEXML_NamespaceSupport::getURI (const ACEXML_Char *prefix) const
 
   ACEXML_NS_CONTEXT_ENTRY *entry {};
 
-  if (this->effective_context_->find (ACEXML_String (prefix, 0, false),
+  if (this->effective_context_->find (ACEXML_String (prefix, nullptr, false),
                                       entry) == 0)
   {
     return entry->int_id_.c_str ();
@@ -257,7 +257,7 @@ ACEXML_NamespaceSupport::processName (ACEXML_Char const *qName,
           }
       }
 
-  ACEXML_String prefix (ACE_TEXT (""), 0, false);
+  ACEXML_String prefix (ACE_TEXT (""), nullptr, false);
   if (len == -1)
     {
       name = qName;

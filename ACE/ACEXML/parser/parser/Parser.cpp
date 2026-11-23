@@ -1953,7 +1953,7 @@ ACEXML_Parser::parse_reference_name ()
   ACEXML_Char ch = this->get ();
   if (!this->isLetter (ch) && (ch != '_' && ch != ':'))
   {
-    return 0;
+    return nullptr;
   }
   while (ch) {
     this->alt_stack_.grow (ch);
@@ -1966,7 +1966,7 @@ ACEXML_Parser::parse_reference_name ()
   };
   if (ch != ';')
   {
-    return 0;
+    return nullptr;
   }
   ch = this->get();
   return this->alt_stack_.freeze ();
@@ -2377,7 +2377,7 @@ ACEXML_Parser::parse_name (ACEXML_Char ch)
   }
   if (!this->isLetter (ch) && ch != '_' && ch != ':')
   {
-    return 0;
+    return nullptr;
   }
   while (ch) {
     this->obstack_.grow (ch);
@@ -2400,7 +2400,7 @@ ACEXML_Parser::parse_nmtoken (ACEXML_Char ch)
   }
   if (!this->isNameChar (ch))
   {
-    return 0;
+    return nullptr;
   }
   while (ch) {
     this->obstack_.grow (ch);

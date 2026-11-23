@@ -124,7 +124,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   unsigned short port = ACE_DEFAULT_HTTP_PORT;
   if (*url == ':')
     {
-      port = (unsigned short) ACE_OS::strtol (++url, 0, 10); // Skip over ':'
+      port = (unsigned short) ACE_OS::strtol (++url, nullptr, 10); // Skip over ':'
       while ( *url != '\0' && *url != '/' )
         {
           ++url;

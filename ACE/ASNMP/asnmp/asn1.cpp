@@ -74,21 +74,21 @@ u_char * asn1::parse_int(u_char *data,
 
   if (intsize != (int) sizeof (long)){
     ASNERROR("not long");
-    return 0;
+    return nullptr;
   }
   *type = *bufp++;
   bufp =asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr){
     ASNERROR("bad length");
-    return 0;
+    return nullptr;
   }
   if ((int)(asn_length + (bufp - data)) > *datalength){
     ASNERROR("overflow of message");
-    return 0;
+    return nullptr;
   }
   if ((int)asn_length > intsize){
     ASNERROR("I don't support such large integers");
-    return 0;
+    return nullptr;
   }
   *datalength -= (int)asn_length + (bufp - data);
   if (*bufp & 0x80)
@@ -129,22 +129,22 @@ u_char * asn1::parse_unsigned_int( u_char *data,
 
   if (intsize != (int) sizeof (long)){
     ASNERROR("not long");
-    return 0;
+    return nullptr;
   }
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr){
     ASNERROR("bad length");
-    return 0;
+    return nullptr;
   }
   if ((int)(asn_length + (bufp - data)) > *datalength){
     ASNERROR("overflow of message");
-    return 0;
+    return nullptr;
   }
   if (((int)asn_length > (intsize + 1)) ||
       (((int)asn_length == intsize + 1) && *bufp != 0x00)){
     ASNERROR("I don't support such large integers");
-    return 0;
+    return nullptr;
   }
   *datalength -= (int)asn_length + (bufp - data);
   if (*bufp & 0x80)
@@ -185,7 +185,7 @@ u_char * asn1::build_int( u_char *data,
 
   if (intsize != (int) sizeof (long))
   {
-    return 0;
+    return nullptr;
   }
   integer = *intp;
   /*
@@ -204,11 +204,11 @@ u_char * asn1::build_int( u_char *data,
   data = asn1::build_header(data, datalength, type, intsize);
   if (data == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   if (*datalength < intsize)
   {
-    return 0;
+    return nullptr;
   }
   *datalength -= intsize;
   mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
@@ -247,7 +247,7 @@ u_char * asn1::build_unsigned_int( u_char *data,
 
   if (intsize != (int) sizeof (long))
   {
-    return 0;
+    return nullptr;
   }
   integer = *intp;
   mask = u_long (0xFF) << (8 * (sizeof(u_long) - 1));
@@ -271,11 +271,11 @@ u_char * asn1::build_unsigned_int( u_char *data,
   data = asn1::build_header(data, datalength, type, intsize);
   if (data == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   if (*datalength < intsize)
   {
-    return 0;
+    return nullptr;
   }
   *datalength -= intsize;
   if (add_null_byte == 1){
@@ -322,15 +322,15 @@ u_char * asn1::parse_string( u_char     *data,
   bufp = asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   if ((int)(asn_length + (bufp - data)) > *datalength){
     ASNERROR("overflow of message");
-    return 0;
+    return nullptr;
   }
   if ((int)asn_length > *strlength){
     ASNERROR("I don't support such long strings");
-    return 0;
+    return nullptr;
   }
   // fixed
   std::memcpy (string, bufp, static_cast<int> (asn_length));
@@ -365,11 +365,11 @@ u_char * asn1::build_string( u_char *data,
   data = asn1::build_header(data, datalength, type, strlength);
   if (data == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   if (*datalength < strlength)
   {
-    return 0;
+    return nullptr;
   }
   // fixed
   std::memcpy (data, string, strlength);
@@ -398,18 +398,18 @@ u_char *asn1::parse_header( u_char *data,
   /* this only works on data types < 30, i.e. no extension octets */
   if (IS_EXTENSION_ID(*bufp)){
     ASNERROR("can't process ID >= 30");
-    return 0;
+    return nullptr;
   }
   *type = *bufp;
   bufp = asn1::parse_length(bufp + 1, &asn_length);
   if (bufp == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   header_len = bufp - data;
   if ((int)(header_len + asn_length) > *datalength){
     ASNERROR("asn length too long");
-    return 0;
+    return nullptr;
   }
   *datalength = (int)asn_length;
   return bufp;
@@ -436,7 +436,7 @@ u_char * asn1::build_header( u_char *data,
   ACE_TRACE("asn1::build_header");
   if (*datalength < 1)
   {
-    return 0;
+    return nullptr;
   }
   *data++ = type;
   (*datalength)--;
@@ -465,7 +465,7 @@ u_char * asn1::build_sequence( u_char *data,
   *datalength -= 4;
   if (*datalength < 0){
     *datalength += 4;   /* fix up before punting */
-    return 0;
+    return nullptr;
   }
   *data++ = type;
   *data++ = (u_char)(0x02 | ASN_LONG_LEN);
@@ -492,11 +492,11 @@ u_char * asn1::parse_length( u_char *data,
     lengthbyte &= ~ASN_LONG_LEN;        /* turn MSb off */
     if (lengthbyte == 0){
       ASNERROR("We don't support indefinite lengths");
-      return 0;
+      return nullptr;
     }
     if (lengthbyte > sizeof(long)){
       ASNERROR("we can't support data lengths that long");
-      return 0;
+      return nullptr;
     }
     // fixed
     std::memcpy (length, data + 1, lengthbyte);
@@ -520,20 +520,20 @@ u_char *asn1::build_length( u_char *data,
   if (length < 0x80){
     if (*datalength < 1){
       ASNERROR("build_length");
-      return 0;
+      return nullptr;
     }
     *data++ = (u_char)length;
   } else if (length <= 0xFF){
     if (*datalength < 2){
       ASNERROR("build_length");
-      return 0;
+      return nullptr;
     }
     *data++ = (u_char)(0x01 | ASN_LONG_LEN);
     *data++ = (u_char)length;
   } else { /* 0xFF < length <= 0xFFFF */
     if (*datalength < 3){
       ASNERROR("build_length");
-      return 0;
+      return nullptr;
     }
     *data++ = (u_char)(0x02 | ASN_LONG_LEN);
     *data++ = (u_char)((length >> 8) & 0xFF);
@@ -578,11 +578,11 @@ u_char *asn1::parse_objid( u_char *data,
   bufp = asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   if ((int)asn_length + (bufp - data) > *datalength){
     ASNERROR("overflow of message");
-    return 0;
+    return nullptr;
   }
   *datalength -= (int)asn_length + (bufp - data);
 
@@ -602,7 +602,7 @@ u_char *asn1::parse_objid( u_char *data,
     } while (*bufp++ & ASN_BIT8);     /* last byte has high bit clear */
     if (subidentifier > (u_long)MAX_SUBID){
       ASNERROR("subidentifier too long");
-      return 0;
+      return nullptr;
     }
     *oidp++ = (oid)subidentifier;
   }
@@ -697,11 +697,11 @@ u_char *asn1::build_objid( u_char *data,
   data = asn1::build_header(data, datalength, type, asnlength);
   if (data == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   if (*datalength < asnlength)
   {
-    return 0;
+    return nullptr;
   }
   // fixed
   std::memcpy (data, buf, asnlength);
@@ -734,11 +734,11 @@ u_char *asn1::parse_null(u_char *data,
   bufp = asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   if (asn_length != 0){
     ASNERROR("Malformed 0");
-    return 0;
+    return nullptr;
   }
   *datalength -= (bufp - data);
   return bufp + asn_length;
@@ -794,23 +794,23 @@ u_char *asn1::parse_bitstring( u_char *data,
   bufp = asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   if ((int)(asn_length + (bufp - data)) > *datalength){
     ASNERROR("overflow of message");
-    return 0;
+    return nullptr;
   }
   if ((int) asn_length > *strlength){
     ASNERROR("I don't support such long bitstrings");
-    return 0;
+    return nullptr;
   }
   if (asn_length < 1){
     ASNERROR("Invalid bitstring");
-    return 0;
+    return nullptr;
   }
   if (*bufp > 7){
     ASNERROR("Invalid bitstring");
-    return 0;
+    return nullptr;
   }
   // fixed
   std::memcpy (string, bufp, static_cast<int> (asn_length));
@@ -842,16 +842,16 @@ u_char *asn1::build_bitstring( u_char *data,
    */
   if (strlength < 1 || *string || *string > 7){
     ASNERROR("Building invalid bitstring");
-    return 0;
+    return nullptr;
   }
   data = asn1::build_header(data, datalength, type, strlength);
   if (data == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   if (*datalength < strlength)
   {
-    return 0;
+    return nullptr;
   }
   // fixed
   std::memcpy (data, string, strlength);
@@ -887,22 +887,22 @@ u_char * asn1::parse_unsigned_int64(u_char *data,
 
   if (countersize != (int) sizeof(struct counter64)){
     ASNERROR("not right size");
-    return 0;
+    return nullptr;
   }
   *type = *bufp++;
   bufp = asn1::parse_length(bufp, &asn_length);
   if (bufp == nullptr){
     ASNERROR("bad length");
-    return 0;
+    return nullptr;
   }
   if ((int)(asn_length + (bufp - data)) > *datalength){
     ASNERROR("overflow of message");
-    return 0;
+    return nullptr;
   }
   if (((int)asn_length > (intsize * 2 + 1)) ||
       (((int)asn_length == (intsize * 2) + 1) && *bufp != 0x00)){
     ASNERROR("I don't support such large integers");
-    return 0;
+    return nullptr;
   }
   *datalength -= (int)asn_length + (bufp - data);
   if (*bufp & 0x80){
@@ -946,7 +946,7 @@ u_char * asn1::build_unsigned_int64( u_char *data,
 
   if (countersize != (int) sizeof (struct counter64))
   {
-    return 0;
+    return nullptr;
   }
   intsize = 8;
   low = cp->low;
@@ -976,11 +976,11 @@ u_char * asn1::build_unsigned_int64( u_char *data,
   data = asn1::build_header(data, datalength, type, intsize);
   if (data == nullptr)
   {
-    return 0;
+    return nullptr;
   }
   if (*datalength < intsize)
   {
-    return 0;
+    return nullptr;
   }
   *datalength -= intsize;
   if (add_null_byte == 1){
@@ -1183,7 +1183,7 @@ u_char *cmu_snmp::auth_build( u_char *data,
                             messagelen + plen + 5);
   if (data == nullptr){
     ASNERROR("buildheader");
-    return 0;
+    return nullptr;
   }
   data = asn1::build_int(data,
                        length,
@@ -1192,7 +1192,7 @@ u_char *cmu_snmp::auth_build( u_char *data,
                        sizeof(version));
   if (data == nullptr){
     ASNERROR("buildint");
-    return 0;
+    return nullptr;
   }
 
   data = asn1::build_string(data,
@@ -1202,7 +1202,7 @@ u_char *cmu_snmp::auth_build( u_char *data,
                           plen );
   if (data == nullptr){
     ASNERROR("buildstring");
-    return 0;
+    return nullptr;
   }
 
   return data;
@@ -1227,7 +1227,7 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
   dummyLen -=4;
   if (dummyLen < 0)
   {
-    return 0;
+    return nullptr;
   }
 
   headerLen = data - dataPtr;
@@ -1237,7 +1237,7 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
                          var_name, *var_name_len);
   if (data == nullptr) {
     ASNERROR("");
-    return 0;
+    return nullptr;
   }
 
   // based on the type...
@@ -1298,11 +1298,11 @@ u_char * cmu_snmp::build_var_op(u_char *data, oid * var_name,
 
   default:
     ASNERROR("wrong type");
-    return 0;
+    return nullptr;
   }
   if (data == nullptr) {
     ASNERROR("");
-    return 0;
+    return nullptr;
   }
   dummyLen = (data - dataPtr) - headerLen;
 
@@ -1509,26 +1509,26 @@ u_char *cmu_snmp::auth_parse(u_char *data,
   data = asn1::parse_header( data, length, &type);
   if (data == nullptr){
     ASNERROR("bad header");
-    return 0;
+    return nullptr;
   }
 
   if (type != (ASN_SEQUENCE | ASN_CONSTRUCTOR)) {
     ASNERROR("wrong auth header type");
-    return 0;
+    return nullptr;
   }
 
   // get the version
   data = asn1::parse_int(data, length, &type, version, sizeof(*version));
   if (data == nullptr) {
     ASNERROR("bad parse of version");
-    return 0;
+    return nullptr;
   }
 
   // get the community name
   data = asn1::parse_string(data, length, &type, sid, slen);
   if (data == nullptr) {
     ASNERROR("bad parse of community");
-    return 0;
+    return nullptr;
   }
 
   return data;
@@ -1557,28 +1557,28 @@ cmu_snmp::parse_var_op( u_char *data, oid *var_name,
   data = asn1::parse_header(data, &var_op_len, &var_op_type);
   if (data == nullptr){
     ASNERROR("");
-    return 0;
+    return nullptr;
   }
   if (var_op_type != (u_char)(ASN_SEQUENCE | ASN_CONSTRUCTOR))
   {
-    return 0;
+    return nullptr;
   }
   data = asn1::parse_objid(data, &var_op_len, &var_op_type, var_name, var_name_len);
   if (data == nullptr) {
     ASNERROR("");
-    return 0;
+    return nullptr;
   }
   if (var_op_type != (u_char)
                      (ASN_UNIVERSAL | ASN_PRIMITIVE | ASN_OBJECT_ID))
   {
-    return 0;
+    return nullptr;
   }
   *var_val = data;      /* save pointer to this object */
   /* find out what type of object this is */
   data = asn1::parse_header(data, &var_op_len, var_val_type);
   if (data == nullptr) {
     ASNERROR("");
-    return 0;
+    return nullptr;
   }
   *var_val_len = var_op_len;
   data += var_op_len;
