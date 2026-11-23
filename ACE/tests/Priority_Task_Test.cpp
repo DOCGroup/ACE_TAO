@@ -82,7 +82,7 @@ Priority_Task::open (void *arg)
       // let the superuser run an interesting test, but for other
       // users use the minimum ACE_SCHED_OTHER thread priority.
 
-      long fallback_priority =
+      long const fallback_priority =
         ACE_Sched_Params::priority_min (ACE_SCHED_OTHER,
                                         ACE_SCOPE_THREAD);
 

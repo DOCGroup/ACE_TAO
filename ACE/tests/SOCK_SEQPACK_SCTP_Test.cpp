@@ -246,7 +246,7 @@ Client(void *arg)
 
   // abort closes the connection, so the recv should either see a closed
   // socket or some failure other than a timeout.
-  ssize_t cnt = Stream.recv_n (&b, 1, std::addressof (tv), &bytes);
+  ssize_t const cnt = Stream.recv_n (&b, 1, std::addressof (tv), &bytes);
   if (cnt > 0 || (cnt == -1 && errno == ETIME))
     {
       ACE_ERROR ((LM_ERROR,
@@ -371,7 +371,7 @@ int run_main (int, ACE_TCHAR *[])
   // If not, just pass because there is not a hope of testing
   // SOCK_SEQPACK.
   //
-  int status = 0;
+  int const status = 0;
 
 #ifdef ACE_HAS_SCTP
   status = do_test();

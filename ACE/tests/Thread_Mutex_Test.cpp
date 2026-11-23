@@ -53,7 +53,7 @@ test (void *args)
                   ACE_TEXT ("iteration %B\n"),
                   i));
 
-      ACE_Time_Value delta (1, 0);  // One second timeout
+      ACE_Time_Value const delta (1, 0);  // One second timeout
       ACE_Time_Value timeout = ACE_OS::gettimeofday ();
       timeout += delta;  // Must pass absolute time to acquire().
 
@@ -123,7 +123,7 @@ test (void *args)
       // destruction.
       {
         // Construct an ACE_Guard to implicitly acquire the mutex.
-        ACE_Guard<ACE_TEST_MUTEX> guard (*mutex);
+        ACE_Guard<ACE_TEST_MUTEX> const guard (*mutex);
         ACE_TEST_ASSERT (guard.locked () != 0);
 
         // Perform some operation which might exit the current scope
@@ -215,7 +215,7 @@ test (void *args)
           // acquiring the mutex, but instead take ownership of the
           // existing lock.  The third parameter tells the guard that
           // the mutex has already been locked.
-          ACE_Guard<ACE_TEST_MUTEX> guard (*mutex, false, 1);
+          ACE_Guard<ACE_TEST_MUTEX> const guard (*mutex, false, 1);
           ACE_TEST_ASSERT (guard.locked () != 0);
 
           // Perform some operation which might exit the current scope
