@@ -214,7 +214,7 @@ namespace ACE
    * pairs. Arguments following @a n are char *, size_t pairs.
    *
    * @param handle The I/O handle to receive on
-   * @param n      The total number of char *, size_t pairs following @a n.
+   * @c n is the total number of char *, size_t pairs following it.
    *
    * @return -1 on error, else total number of bytes received.
    */
@@ -486,14 +486,14 @@ namespace ACE
    * @param time_value      ACE_Time_Value to format. This is assumed to be
    *                        an absolute time value.
    * @param date_and_time   Array to hold the timestamp.
-   * @param time_len        Size of @a date_and_time in ACE_TCHARs.
+   * @param date_and_timelen Size of @a date_and_time in ACE_TCHARs.
    *                        Must be greater than or equal to 27.
    * @param return_pointer_to_first_digit  If true, returned pointer value
    *                        is to the first time digit, else to the space
    *                        prior to the first time digit. See Return Values.
    *
-   * @retval 0 if unsuccessful, with errno set. If @a time_len is less than
-   *           27 errno will be EINVAL.
+   * @retval 0 if unsuccessful, with errno set. If @a date_and_timelen is less
+   *           than 27 errno will be EINVAL.
    * @retval If successful, pointer to beginning of the "time" portion of
    *         @a date_and_time.  If @a return_pointer_to_first_digit is false
    *         the pointer is actually to the space before the time, else
@@ -501,28 +501,28 @@ namespace ACE
    */
   extern ACE_Export ACE_TCHAR *timestamp (const ACE_Time_Value& time_value,
                                           ACE_TCHAR date_and_time[],
-                                          size_t time_len,
+                                          size_t date_and_timelen,
                                           bool return_pointer_to_first_digit = false);
 
   /**
    * Translate the current time to ISO-8601 timestamp format.
    *
    * @param date_and_time   Array to hold the timestamp.
-   * @param time_len        Size of @a date_and_time in ACE_TCHARs.
+   * @param date_and_timelen Size of @a date_and_time in ACE_TCHARs.
    *                        Must be greater than or equal to 27.
    * @param return_pointer_to_first_digit  If true, returned pointer value
    *                        is to the first time digit, else to the space
    *                        prior to the first time digit. See Return Values.
    *
-   * @retval 0 if unsuccessful, with errno set. If @a time_len is less than
-   *           27 errno will be EINVAL.
+   * @retval 0 if unsuccessful, with errno set. If @a date_and_timelen is less
+   *           than 27 errno will be EINVAL.
    * @retval If successful, pointer to beginning of the "time" portion of
    *         @a date_and_time.  If @a return_pointer_to_first_digit is false
    *         the pointer is actually to the space before the time, else
    *         the pointer is to the first time digit.
    */
   extern ACE_Export ACE_TCHAR *timestamp (ACE_TCHAR date_and_time[],
-                                          size_t time_len,
+                                          size_t date_and_timelen,
                                           bool return_pointer_to_first_digit = false);
 
   /**

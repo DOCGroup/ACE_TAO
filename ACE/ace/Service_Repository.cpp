@@ -271,14 +271,15 @@ ACE_Service_Repository::~ACE_Service_Repository ()
   this->close ();
 }
 
-/// Locate an entry with @a name in the table.  If @a ignore_suspended is
+/// Locate an entry with @a service_name in the table. If @a ignore_suspended is
 /// set then only consider services marked as resumed.  If the caller
 /// wants the located entry, pass back a pointer to the located entry
-/// via @a srp.  If @a name is not found -1 is returned.  If @a name is
-/// found, but it is suspended and the caller wants to ignore suspended
-/// services a -2 is returned.  Must be called with locks held.
+/// via @a srp.  If @a service_name is not found -1 is returned. If
+/// @a service_name is found, but it is suspended and the caller wants to
+/// ignore suspended services a -2 is returned. Must be called with locks
+/// held.
 int
-ACE_Service_Repository::find_i (ACE_TCHAR const name[],
+ACE_Service_Repository::find_i (ACE_TCHAR const service_name[],
                                 size_t &slot,
                                 ACE_Service_Type const **srp,
                                 bool ignore_suspended) const
@@ -289,7 +290,7 @@ ACE_Service_Repository::find_i (ACE_TCHAR const name[],
   for (iter = this->service_array_.begin(); iter != this->service_array_.end(); ++iter)
     {
       if ((*iter).second != nullptr // skip any empty slots
-          && ACE_OS::strcmp (name, (*iter).second->name ()) == 0)
+          && ACE_OS::strcmp (service_name, (*iter).second->name ()) == 0)
       {
         break;
       }
