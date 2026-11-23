@@ -53,7 +53,7 @@ TAO_EC_Disjunction_Filter::filter (RtecEventComm::EventSet const &event,
        i != end;
        ++i)
     {
-      int n = (*i)->filter (event, qos_info);
+      const int n = (*i)->filter (event, qos_info);
       if (n != 0)
       {
         return n;
@@ -71,7 +71,7 @@ TAO_EC_Disjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
        i != end;
        ++i)
     {
-      int n = (*i)->filter (event, qos_info);
+      const int n = (*i)->filter (event, qos_info);
       if (n != 0)
       {
         return n;
@@ -121,7 +121,7 @@ TAO_EC_Disjunction_Filter::max_event_size () const
        i != end;
        ++i)
     {
-      CORBA::ULong m = (*i)->max_event_size ();
+      const CORBA::ULong m = (*i)->max_event_size ();
       if (n < m)
       {
         n = m;

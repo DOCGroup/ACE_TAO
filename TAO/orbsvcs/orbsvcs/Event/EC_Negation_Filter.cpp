@@ -35,7 +35,7 @@ int
 TAO_EC_Negation_Filter::filter (RtecEventComm::EventSet const &event,
                                 TAO_EC_QOS_Info& qos_info)
 {
-  int n =
+  const int n =
     this->child_->filter (event, qos_info);
   if (this->parent () != nullptr && n == 0)
     {
@@ -49,7 +49,7 @@ int
 TAO_EC_Negation_Filter::filter_nocopy (RtecEventComm::EventSet& event,
                                    TAO_EC_QOS_Info& qos_info)
 {
-  int n =
+  const int n =
     this->child_->filter_nocopy (event, qos_info);
   if (this->parent () != nullptr && n == 0)
     {
