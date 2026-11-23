@@ -348,14 +348,14 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time) const
   // Then it converts that to nanoseconds by dividing by the scale
   // factor to convert to usec, and multiplying by 1000.)  The cast
   // avoids a MSVC 4.1 compiler warning about narrowing.
-  ACE_hrtime_t elapsed =
+  ACE_hrtime_t const elapsed =
     ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_);
-  u_long nseconds = static_cast<u_long> (elapsed %
+  u_long const nseconds = static_cast<u_long> (elapsed %
                                          global_scale_factor () * 1000u /
                                          global_scale_factor ());
 
   // Get just the microseconds (dropping any left over nanoseconds).
-  ACE_UINT32 useconds = (ACE_UINT32) (elapsed / global_scale_factor ());
+  ACE_UINT32 const useconds = (ACE_UINT32) (elapsed / global_scale_factor ());
 
   elapsed_time.tv_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
   // Transforms one second in microseconds into nanoseconds.
@@ -415,15 +415,15 @@ ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  u_long total_secs =
+  u_long const total_secs =
     static_cast<u_long> (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
-  ACE_UINT32 extra_nsecs =
+  ACE_UINT32 const extra_nsecs =
     static_cast<ACE_UINT32> (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   ACE_TCHAR buf[100];
   if (count > 1)
     {
-      ACE_hrtime_t avg_nsecs = total_nanoseconds / (ACE_UINT32) count;
+      ACE_hrtime_t const avg_nsecs = total_nanoseconds / (ACE_UINT32) count;
       ACE_OS::snprintf (buf, 100,
                         ACE_TEXT (" count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n"),
                         count,
@@ -459,15 +459,15 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  u_long total_secs =
+  u_long const total_secs =
     static_cast<u_long> (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
-  ACE_UINT32 extra_nsecs =
+  ACE_UINT32 const extra_nsecs =
     static_cast<ACE_UINT32> (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   ACE_TCHAR buf[100];
   if (count > 1)
     {
-      ACE_hrtime_t avg_nsecs = this->total_ / (ACE_UINT32) count;
+      ACE_hrtime_t const avg_nsecs = this->total_ / (ACE_UINT32) count;
 
       ACE_OS::snprintf (buf, 100,
                         ACE_TEXT (" count = %d, total (secs %lu, usecs %u), avg usecs = %lu\n"),
