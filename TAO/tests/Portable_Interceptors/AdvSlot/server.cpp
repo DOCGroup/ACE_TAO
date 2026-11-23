@@ -121,7 +121,7 @@ public:
 
   void send_reply (ServerRequestInfo_ptr ri) override
   {
-    Any_var state (ri->get_slot (slot_id));
+    Any_var const state (ri->get_slot (slot_id));
     CORBA::Long n {};
     state >>= n;
 
@@ -197,7 +197,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       StateTransferImpl * const impl = new StateTransferImpl (orb.in ());
       // Transfer the initial servant reference to the owning var.
-      ServantBase_var impl_var (impl);
+      ServantBase_var const impl_var (impl);
 
       PortableServer::ObjectId_var const id_act =
         root_poa->activate_object (impl);
@@ -212,7 +212,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Dump the ior.
       //
         {
-          std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+          std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
             ACE_OS::fopen (ior_output_file, "w"), ACE_OS::fclose);
           if (!output_file)
             {
