@@ -106,7 +106,7 @@ int CommandTask::svc ()
       // Listing 063 code/ch18
       else
         {
-          int result = this->process (command);
+          int const result = this->process (command);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("CommandTask::svc() - ")
                       ACE_TEXT ("%s work request %d result is %d\n"),

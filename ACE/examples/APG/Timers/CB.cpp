@@ -20,8 +20,8 @@ int CB::handle_timeout (ACE_Time_Value const &,
                   timerID_));
 
       // New interval is 10 ms.
-      ACE_Time_Value interval (0L, 1000L);
-      int status = Timer::instance ()->reset_interval
+      ACE_Time_Value const interval (0L, 1000L);
+      int const status = Timer::instance ()->reset_interval
                                          (timerID_, interval);
 #if defined (ACE_NDEBUG)
       ACE_UNUSED_ARG (status);

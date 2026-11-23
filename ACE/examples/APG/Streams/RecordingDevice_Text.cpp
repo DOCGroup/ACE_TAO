@@ -182,7 +182,7 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
   {
     return -1;
   }
-  int rval = this->play_message (temp);
+  int const rval = this->play_message (temp);
   file->remove ();
   return rval;
 }

@@ -42,7 +42,7 @@ void Temperature_Monitor::record_temperature (float temp)
 void Temperature_Monitor::record_failure ()
 {
   Name_Binding_Ptr lastReset {this->naming_context_.fetch ("lastReset")};
-  Name_Binding_Ptr resetCount {this->naming_context_.fetch ("resetCount")};
+  Name_Binding_Ptr const resetCount {this->naming_context_.fetch ("resetCount")};
 // Listing 41
 
 // Listing 42 code/ch21
@@ -78,7 +78,7 @@ Temperature_Monitor::reset_device (Name_Binding_Ptr const &resetCount)
       if (number_of_resets > this->opt_.excessive_resets ())
         {
           // Exclude 5
-          EMail notification {};
+          EMail const notification {};
 
           char message[BUFSIZ] {};
           std::snprintf (message,

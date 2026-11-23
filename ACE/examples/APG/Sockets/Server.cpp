@@ -11,7 +11,7 @@
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Listing 1 code/ch06
-  ACE_INET_Addr port_to_listen ("HAStatus");
+  ACE_INET_Addr const port_to_listen ("HAStatus");
   ACE_SOCK_Acceptor acceptor;
 
   if (acceptor.open (port_to_listen, 1) == -1)

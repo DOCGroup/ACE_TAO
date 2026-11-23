@@ -100,7 +100,7 @@ int QueueExample::runHeapUnboundedQueue ()
       iter.next(elem);
       ACE_DEBUG
         ((LM_DEBUG, ACE_TEXT ("%d:"), (*elem)->getData ()));
-      std::unique_ptr<DataElement> element_owner {*elem};
+      std::unique_ptr<DataElement> const element_owner {*elem};
     }
 
   return 0;

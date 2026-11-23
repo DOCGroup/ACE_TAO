@@ -75,7 +75,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   lp_handler.activate (THR_NEW_LWP | THR_JOINABLE,
                        1, 1, ACE_THR_PRI_OTHER_DEF);
 
-  ACE_Message_Block mb;
+  ACE_Message_Block const mb;
   for (int i = 0; i < 100; ++i)
     {
       // putq takes ownership of each clone; the handlers release them after dequeue.
@@ -85,7 +85,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       lp_handler.putq (mb_lp);
     }
 
-  ACE_Message_Block stop {0, ACE_Message_Block::MB_BREAK};
+  ACE_Message_Block const stop {0, ACE_Message_Block::MB_BREAK};
   ACE_Message_Block *const hp_stop = stop.clone ();
   ACE_Message_Block *const lp_stop = stop.clone ();
   hp_handler.putq (hp_stop);

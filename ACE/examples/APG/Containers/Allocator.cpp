@@ -28,7 +28,7 @@ int StackExample::run ()
      ACE_Dynamic_Cached_Allocator<ACE_Null_Mutex>
        (100 + 1, block_size),
      -1);
-  std::unique_ptr<ACE_Allocator> allocator {allocator_raw};
+  std::unique_ptr<ACE_Allocator> const allocator {allocator_raw};
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n# of live objects %d\n"),
               DataElement::numOfActiveObjects ()));
@@ -51,7 +51,7 @@ int StackExample::runUnboundedStack (ACE_Allocator* allocator)
 
   for (int m = 0; m < 100; ++m)
     {
-      DataElement elem (m);
+      DataElement const elem (m);
       int const result = ustack.push (elem);
       if (result == -1)
         {

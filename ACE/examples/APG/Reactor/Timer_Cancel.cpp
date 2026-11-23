@@ -83,8 +83,8 @@ private:
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_Time_Value initialDelay {3};
-  ACE_Time_Value interval {5};
+  ACE_Time_Value const initialDelay {3};
+  ACE_Time_Value const interval {5};
 
   // Listing 2 code/ch07
   MyTimerHandler handler {};

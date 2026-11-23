@@ -18,7 +18,7 @@ using Iovec_Buffer_Owner = std::unique_ptr<char, ACE_Array_Deleter<char>>;
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_INET_Addr srvr (50000, ACE_LOCALHOST);
+  ACE_INET_Addr const srvr (50000, ACE_LOCALHOST);
   ACE_SOCK_Connector connector;
   ACE_SOCK_Stream peer;
 
@@ -84,7 +84,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   peer.send_n ("uptime\n", 7);
   iovec response {};
   peer.recvv (&response);
-  Iovec_Buffer_Owner response_buffer (static_cast<char *> (response.iov_base));
+  Iovec_Buffer_Owner const response_buffer (static_cast<char *> (response.iov_base));
   ACE_OS::write (ACE_STDOUT, response_buffer.get (), response.iov_len);
   // Listing 5
 

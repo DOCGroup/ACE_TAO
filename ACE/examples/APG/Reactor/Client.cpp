@@ -120,7 +120,7 @@ int Client::handle_output (ACE_HANDLE)
 // Listing 6 code/ch07
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_INET_Addr port_to_connect (ACE_TEXT ("HAStatus"), ACE_LOCALHOST);
+  ACE_INET_Addr const port_to_connect (ACE_TEXT ("HAStatus"), ACE_LOCALHOST);
   ACE_Connector<Client, ACE_SOCK_CONNECTOR> connector;
   Client client;
   Client *pc = &client;

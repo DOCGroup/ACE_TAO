@@ -24,7 +24,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_TEST_ASSERT (get_result == -1);
 
   // Make a copy and compare to the original.
-  ACE_Array<DataElement *> copy = arr;
+  ACE_Array<DataElement *> const copy = arr;
   ACE_ASSERT (copy == arr);
 
   ACE_Array<DataElement *>::ITERATOR iter (arr);
@@ -34,7 +34,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       iter.next (data);
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%d\n"), (*data)->getData ()));
-      std::unique_ptr<DataElement> element_owner {*data};
+      std::unique_ptr<DataElement> const element_owner {*data};
       iter.advance ();
     }
   return 0;

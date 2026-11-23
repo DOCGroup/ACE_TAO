@@ -50,7 +50,7 @@ void
 HA_CommandHandler::initialize_handler ()
 {
   ACE_Time_Value const tv (0, ACE_OS::rand () * 100);
-  timespec_t t = static_cast<timespec_t> (tv);
+  timespec_t const t = static_cast<timespec_t> (tv);
   ACE_OS::nanosleep (&t);
 }
 
@@ -58,7 +58,7 @@ int
 HA_CommandHandler::handle_command_requests ()
 {
   ACE_Time_Value const tv (0, ACE_OS::rand () * 100);
-  timespec_t t = static_cast<timespec_t> (tv);
+  timespec_t const t = static_cast<timespec_t> (tv);
 
   // Simulate work.
   ACE_OS::nanosleep (&t);

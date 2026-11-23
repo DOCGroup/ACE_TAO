@@ -255,7 +255,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Reactor::instance (std::addressof (new_reactor));
 
   ACCEPTOR acceptor;
-  ACE_INET_Addr accept_addr (rendezvous);
+  ACE_INET_Addr const accept_addr (rendezvous);
 
   if (acceptor.open (accept_addr) == -1)
     {

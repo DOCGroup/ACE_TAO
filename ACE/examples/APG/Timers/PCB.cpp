@@ -22,7 +22,7 @@ int PCB::handleEvent (void const *arg)
                   timerID_));
 
       // New interval is 10 ms.
-      ACE_Time_Value interval (0L, 1000L);
+      ACE_Time_Value const interval (0L, 1000L);
       if (PTimer::instance ()->reset_interval (timerID_, interval) != -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

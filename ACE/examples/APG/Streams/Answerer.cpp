@@ -71,7 +71,7 @@ protected:
     ACE_FILE_Addr outgoing_message =
       this->get_outgoing_message (message);
 
-    int pmrv =
+    int const pmrv =
       message->recorder ()->play_message (outgoing_message);
     if (pmrv < 0)
       {
@@ -188,7 +188,7 @@ protected:
 
     ACE_FILE_Connector connector;
     ACE_FILE_IO file;
-    ACE_FILE_Addr addr (path.c_str ());
+    ACE_FILE_Addr const addr (path.c_str ());
     if (connector.connect (file, addr) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -391,7 +391,7 @@ public:
                 ACE_TEXT ("message->recorder(recorder)\n")));
     message->recorder (recorder);
 
-    int rval = this->put (mb);
+    int const rval = this->put (mb);
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("RecordingStream::record() - ")
                 ACE_TEXT ("this->put() returns %d\n"),

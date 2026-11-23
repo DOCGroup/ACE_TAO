@@ -120,7 +120,7 @@ public:
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  std::unique_ptr<TemperatureQueryHandler> temperatureMonitor =
+  std::unique_ptr<TemperatureQueryHandler> const temperatureMonitor =
     std::make_unique<TemperatureQueryHandler> ();
 
   // Listing 2 code/ch07
@@ -129,7 +129,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Time_Value const initialDelay {3};
   ACE_Time_Value const intervalOne {5};
   // Listing 3 code/ch07
-  std::unique_ptr<TemperatureSensor> sensorOne =
+  std::unique_ptr<TemperatureSensor> const sensorOne =
     std::make_unique<TemperatureSensor> ("Kitchen");
 
   long const timer_id_one = ACE_Reactor::instance ()->schedule_timer (
@@ -138,14 +138,14 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 
   ACE_Time_Value const intervalTwo {4};
   // Listing 4 code/ch07
-  std::unique_ptr<TemperatureSensor> sensorTwo =
+  std::unique_ptr<TemperatureSensor> const sensorTwo =
     std::make_unique<TemperatureSensor> ("Foyer");
 
   long const timer_id_two = ACE_Reactor::instance ()->schedule_timer (
     temperatureMonitor.get (), sensorTwo.get (), initialDelay, intervalTwo);
   // Listing 4
 
-  std::unique_ptr<SigintHandler> handleExit =
+  std::unique_ptr<SigintHandler> const handleExit =
     std::make_unique<SigintHandler> ();
 
   ACE_Reactor::instance ()->register_handler (SIGINT,

@@ -7,7 +7,7 @@
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Listing 1 code/ch06
-  ACE_INET_Addr srvr (50000, ACE_LOCALHOST);
+  ACE_INET_Addr const srvr (50000, ACE_LOCALHOST);
   // Listing 1
 
   // Listing 2 code/ch06

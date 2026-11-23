@@ -122,7 +122,7 @@ int Tree_Example::remove_all ()
           ACE_ERROR_RETURN((LM_ERROR, "%p\n", "Unbind"), -1);
         }
       ACE_ASSERT (d != nullptr);
-      std::unique_ptr<DataElement> element_owner {d};
+      std::unique_ptr<DataElement> const element_owner {d};
     }
 
   return 0;

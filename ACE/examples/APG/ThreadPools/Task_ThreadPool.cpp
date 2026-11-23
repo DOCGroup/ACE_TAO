@@ -32,7 +32,7 @@ public:
                         ACE_TEXT ("(%t) Shutting down\n")));
             break;
           }
-        ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
+        ACE_Message_Block_Unique_Ptr const message_block {raw_message_block};
         if (!message_block)
         {
           break;

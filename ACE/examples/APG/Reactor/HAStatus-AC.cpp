@@ -146,7 +146,7 @@ ClientService::handle_close (ACE_HANDLE h, ACE_Reactor_Mask mask)
 // Listing 2 code/ch07
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_INET_Addr port_to_listen ("HAStatus");
+  ACE_INET_Addr const port_to_listen ("HAStatus");
   ClientAcceptor acceptor;
   if (acceptor.open (port_to_listen,
                      ACE_Reactor::instance (),

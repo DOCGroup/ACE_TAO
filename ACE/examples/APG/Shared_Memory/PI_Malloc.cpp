@@ -100,7 +100,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *[])
   ALLOCATOR *allocator {};
   if (argc > 1)
     {
-      ACE_MMAP_Memory_Pool_Options options
+      ACE_MMAP_Memory_Pool_Options const options
         (ACE_DEFAULT_BASE_ADDR,
          ACE_MMAP_Memory_Pool_Options::ALWAYS_FIXED);
       ACE_NEW_RETURN (allocator,
@@ -117,7 +117,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *[])
     }
   else
     {
-      ACE_MMAP_Memory_Pool_Options options
+      ACE_MMAP_Memory_Pool_Options const options
         (nullptr, ACE_MMAP_Memory_Pool_Options::NEVER_FIXED);
       ACE_NEW_RETURN (allocator,
                       ALLOCATOR (BACKING_STORE,

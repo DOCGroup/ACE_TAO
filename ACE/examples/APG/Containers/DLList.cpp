@@ -76,7 +76,7 @@ ListTest::destroyList (MyList& list)
        !iter.done ();
        iter.advance ())
     {
-      std::unique_ptr<DataElement> element_owner {iter.next ()};
+      std::unique_ptr<DataElement> const element_owner {iter.next ()};
     }
 }
 // Listing 4

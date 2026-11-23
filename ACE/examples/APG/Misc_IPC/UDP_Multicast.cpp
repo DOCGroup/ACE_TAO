@@ -31,7 +31,7 @@ int send_multicast (ACE_INET_Addr const &mcast_addr)
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_INET_Addr nop {};
+  ACE_INET_Addr const nop {};
   send_multicast (nop);
   return 0;
 }

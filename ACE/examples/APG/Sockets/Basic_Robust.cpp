@@ -43,7 +43,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   // Listing 3 code/ch06
   ACE_SOCK_Stream status;
   ACE_OS::last_error (0);
-  ACE_SOCK_Connector statusConnector (status, addr);
+  ACE_SOCK_Connector const statusConnector (status, addr);
   if (ACE_OS::last_error ())
     {
       ACE_ERROR_RETURN ((LM_ERROR,

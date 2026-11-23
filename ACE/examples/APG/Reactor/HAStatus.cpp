@@ -138,7 +138,7 @@ ClientAcceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask)
 {
   if (this->acceptor_.get_handle () != ACE_INVALID_HANDLE)
     {
-      ACE_Reactor_Mask m = ACE_Event_Handler::ACCEPT_MASK |
+      ACE_Reactor_Mask const m = ACE_Event_Handler::ACCEPT_MASK |
                            ACE_Event_Handler::DONT_CALL;
       this->reactor ()->remove_handler (this, m);
       this->acceptor_.close ();
@@ -374,7 +374,7 @@ LogSwitcher::handle_exception (ACE_HANDLE)
 // Listing 11 code/ch07
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
-  ACE_INET_Addr port_to_listen ("HAStatus");
+  ACE_INET_Addr const port_to_listen ("HAStatus");
   ClientAcceptor acceptor;
   acceptor.reactor (ACE_Reactor::instance ());
   if (acceptor.open (port_to_listen) == -1)

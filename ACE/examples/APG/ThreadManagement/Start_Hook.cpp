@@ -19,7 +19,7 @@ public:
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) New Thread Spawned\n")));
 
     // Create the context on the thread's own stack.
-    ACE_TSS<SecurityContext> secCtx;
+    ACE_TSS<SecurityContext> const secCtx;
     // Special initialization.
     add_sec_context_thr (secCtx);
 

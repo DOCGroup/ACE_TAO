@@ -33,7 +33,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_Sig_Set ss;
   ss.sig_add (SIGUSR1);
 
-  ACE_Sig_Guard guard (&ss);
+  ACE_Sig_Guard const guard (&ss);
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Entering critical region\n")));

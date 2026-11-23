@@ -145,7 +145,7 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   // Listing 5 code/ch08
-  ACE_INET_Addr listen_addr {}; // Set up with listen port
+  ACE_INET_Addr const listen_addr {}; // Set up with listen port
   HA_Proactive_Acceptor aio_acceptor {};
   if (aio_acceptor.open (listen_addr,
                          0,     // bytes_to_read

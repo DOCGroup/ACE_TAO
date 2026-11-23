@@ -222,7 +222,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   if (argc > 1)   // Slave mode
     {
-      Slave s;
+      Slave const s;
       return s.doWork ();
     }
 
