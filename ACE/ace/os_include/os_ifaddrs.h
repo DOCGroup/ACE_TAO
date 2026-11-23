@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    os_ifaddrs.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Johnny Willemsen  <jwillemsen@remedy.nl>
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_OS_IFADDRS_H
 #define ACE_OS_INCLUDE_OS_IFADDRS_H

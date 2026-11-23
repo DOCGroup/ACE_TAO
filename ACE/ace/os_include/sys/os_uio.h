@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    os_uio.h
  *
@@ -9,7 +6,6 @@
  *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_SYS_OS_UIO_H
 #define ACE_OS_INCLUDE_SYS_OS_UIO_H
@@ -51,7 +47,6 @@ extern "C"
 #  endif /* defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0) */
    };
 #endif /* ACE_LACKS_IOVEC */
-
 
 # if defined (ACE_LACKS_TIMEDWAIT_PROTOTYPES)
 

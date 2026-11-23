@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    os_strings.h
  *
@@ -9,7 +6,6 @@
  *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
-//=============================================================================
 
 #ifndef ACE_OS_INCLUDE_OS_STRINGS_H
 #define ACE_OS_INCLUDE_OS_STRINGS_H
