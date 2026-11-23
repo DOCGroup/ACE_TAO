@@ -155,7 +155,7 @@ TAO_EC_Dispatching_Task::push (TAO_EC_ProxyPushSupplier *proxy,
     {
       if (nullptr != this->queue_full_service_object_)
         {
-          int action =
+          const int action =
             this->queue_full_service_object_->queue_full_action (this, proxy,
                                                                  consumer, event);
 

@@ -93,7 +93,7 @@ TAO_ECG_Complex_Address_Server::add_entry (char const *key,
 
   // Convert strings to values.
   char * endptr {};
-  CORBA::Long header_value = ACE_OS::strtol (key, &endptr, 0);
+  const CORBA::Long header_value = ACE_OS::strtol (key, &endptr, 0);
   if (*endptr != '\0')
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "

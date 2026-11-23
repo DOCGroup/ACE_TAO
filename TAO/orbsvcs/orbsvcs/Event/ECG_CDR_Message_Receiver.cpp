@@ -50,8 +50,8 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
     {
       this->received_fragments_[i] = 0;
     }
-  CORBA::ULong idx = this->fragment_count_ / bits_per_ulong;
-  CORBA::ULong bit = this->fragment_count_ % bits_per_ulong;
+  const CORBA::ULong idx = this->fragment_count_ / bits_per_ulong;
+  const CORBA::ULong bit = this->fragment_count_ % bits_per_ulong;
   this->received_fragments_[idx] = (0xFFFFFFFF << bit);
 }
 
@@ -89,8 +89,8 @@ TAO_ECG_UDP_Request_Entry::test_received (CORBA::ULong fragment_id) const
   }
 
   constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
-  CORBA::ULong idx = fragment_id / bits_per_ulong;
-  CORBA::ULong bit = fragment_id % bits_per_ulong;
+  const CORBA::ULong idx = fragment_id / bits_per_ulong;
+  const CORBA::ULong bit = fragment_id % bits_per_ulong;
   return ACE_BIT_ENABLED (this->received_fragments_[idx], 1<<bit);
 }
 
@@ -104,8 +104,8 @@ TAO_ECG_UDP_Request_Entry::mark_received (CORBA::ULong fragment_id)
   }
 
   constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
-  CORBA::ULong idx = fragment_id / bits_per_ulong;
-  CORBA::ULong bit = fragment_id % bits_per_ulong;
+  const CORBA::ULong idx = fragment_id / bits_per_ulong;
+  const CORBA::ULong bit = fragment_id % bits_per_ulong;
   ACE_SET_BITS (this->received_fragments_[idx], 1<<bit);
 }
 
@@ -216,7 +216,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::get_request (CORBA::ULong request_id)
     }
 
   // Return array location for <request_id>.
-  int index = request_id % this->size_;
+  const int index = request_id % this->size_;
   return this->fragmented_requests_.get () + index;
 }
 
