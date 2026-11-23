@@ -210,7 +210,7 @@ ACE_SPIPE_Acceptor::close ()
 #endif /* ACE_HAS_WIN32_NAMED_PIPES */
 
   // This behavior is shared by UNIX and Win32...
-  int result = this->ACE_SPIPE::close ();
+  int const result = this->ACE_SPIPE::close ();
   this->set_handle (ACE_INVALID_HANDLE);
 
 #if defined (ACE_HAS_STREAM_PIPES)
