@@ -659,10 +659,10 @@ int queue_priority_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
   }
 
   // Set up a few objects with names for how they should come out of the queue.
-  std::unique_ptr<User_Class> b1 = std::make_unique<User_Class> ("first");
-  std::unique_ptr<User_Class> b2 = std::make_unique<User_Class> ("second");
-  std::unique_ptr<User_Class> b3 = std::make_unique<User_Class> ("third");
-  std::unique_ptr<User_Class> b4 = std::make_unique<User_Class> ("fourth");
+  std::unique_ptr<User_Class> const b1 = std::make_unique<User_Class> ("first");
+  std::unique_ptr<User_Class> const b2 = std::make_unique<User_Class> ("second");
+  std::unique_ptr<User_Class> const b3 = std::make_unique<User_Class> ("third");
+  std::unique_ptr<User_Class> const b4 = std::make_unique<User_Class> ("fourth");
   unsigned long prio =
     ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>::DEFAULT_PRIORITY;
 
@@ -804,10 +804,10 @@ int queue_iterator_test (ACE_Message_Queue_Ex<User_Class, ACE_SYNCH>& q)
   }
 
   // Set up a few objects with names for how they should come out of the queue.
-  std::unique_ptr<User_Class> b1 = std::make_unique<User_Class> ("first");
-  std::unique_ptr<User_Class> b2 = std::make_unique<User_Class> ("second");
-  std::unique_ptr<User_Class> b3 = std::make_unique<User_Class> ("third");
-  std::unique_ptr<User_Class> b4 = std::make_unique<User_Class> ("fourth");
+  std::unique_ptr<User_Class> const b1 = std::make_unique<User_Class> ("first");
+  std::unique_ptr<User_Class> const b2 = std::make_unique<User_Class> ("second");
+  std::unique_ptr<User_Class> const b3 = std::make_unique<User_Class> ("third");
+  std::unique_ptr<User_Class> const b4 = std::make_unique<User_Class> ("fourth");
   if (-1 == q.enqueue_tail (b1.get (), nullptr))
   {
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("b1")), 1);
