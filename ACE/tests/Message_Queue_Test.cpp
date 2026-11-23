@@ -106,16 +106,16 @@ Counting_Test_Producer::svc ()
   // Also, to be sure there's not just 1 producer and 1 consumer pinging
   // back and forth, make the producers randomly delay between blocks.
   ACE_OS::srand (static_cast<unsigned int> (ACE_OS::time ()));
-  int multiple = ACE_OS::rand () % 10;
+  int const multiple = ACE_OS::rand () % 10;
   int delay_ms = (ACE_OS::rand () % 10) / 2;
   // The delay usually causes the test to time out in the automated
   // regression testing. I just left it here in case it's needed someday.
   delay_ms = 0;
-  long count = MESSAGE_FACTOR * (multiple ? multiple : 1);
+  long const count = MESSAGE_FACTOR * (multiple ? multiple : 1);
   long produced = 0;
   // Some of the threads enqueue single blocks, others sequences.
-  long lsequence = ++(this->sequence_);
-  int seq = static_cast<int> (lsequence);
+  long const lsequence = ++(this->sequence_);
+  int const seq = static_cast<int> (lsequence);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Producer will enqueue %B blocks in seq of %d, ")
               ACE_TEXT ("%d msec delay\n"),
@@ -201,12 +201,12 @@ Counting_Test_Consumer::svc ()
   // number produced.
   unsigned int seed = static_cast<unsigned int> (ACE_OS::time ());
 
-  int multiple = ACE_OS::rand_r (&seed) % 10;
+  int const multiple = ACE_OS::rand_r (&seed) % 10;
   int delay_ms = ACE_OS::rand_r (&seed) % 10;
   // The delay usually causes the test to time out in the automated
   // regression testing. I just left it here in case it's needed someday.
   delay_ms = 0;
-  long count = MESSAGE_FACTOR * (multiple ? multiple : 1);
+  long const count = MESSAGE_FACTOR * (multiple ? multiple : 1);
   long consumed = 0;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Consumer will dequeue %B blocks, ")
@@ -281,8 +281,8 @@ counting_test ()
   // This compare relies on the flush() method counting blocks as it
   // walks the chain releasing them, and doesn't rely on the count.
   int status = 0;
-  long q_count = static_cast<long> (q.message_count ());
-  long remaining = q.flush ();
+  long const q_count = static_cast<long> (q.message_count ());
+  long const remaining = q.flush ();
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Queue message_count is %b; %b flushed\n"),
               (ssize_t)q_count,
@@ -293,7 +293,7 @@ counting_test ()
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("message_count and flushed should be equal!\n")));
     }
-  long expected = p.produced_.value () - c.consumed_.value ();
+  long const expected = p.produced_.value () - c.consumed_.value ();
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Produced %b, consumed %b; diff %b\n"),
               (ssize_t)p.produced_.value (),

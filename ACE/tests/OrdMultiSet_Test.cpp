@@ -19,7 +19,7 @@
 int
 run_main (int, ACE_TCHAR *[])
 {
-  int ret = 0;
+  int const ret = 0;
   int *ptr {};
 
   ACE_START_TEST (ACE_TEXT ("OrdMultiSet_Test"));

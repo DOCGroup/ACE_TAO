@@ -40,7 +40,7 @@ access_test ()
 
   int test_status = 0;
 
-  int status = ACE_OS::access (ACE_TEXT ("missing_file.txt"), F_OK);
+  int const status = ACE_OS::access (ACE_TEXT ("missing_file.txt"), F_OK);
   if (status == -1)
     {
       if (errno == ENOTSUP)

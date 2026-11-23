@@ -150,7 +150,7 @@ void purge_empty_queue(char const * test_name)
 
   Event_Handler eh1(1);
 
-  int result = queue.purge_pending_notifications(std::addressof (eh1),
+  int const result = queue.purge_pending_notifications(std::addressof (eh1),
                                                  ACE_Event_Handler::READ_MASK);
   TEST_ASSERT(result == 0, "purge of empty queue should return 0");
 }
