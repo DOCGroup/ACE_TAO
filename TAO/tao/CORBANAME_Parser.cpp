@@ -100,7 +100,7 @@ TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
                                0);
         }
 
-      CORBA::Boolean is_a =
+      CORBA::Boolean const is_a =
         name_context->_is_a ("IDL:omg.org/CosNaming/NamingContextExt:1.0");
 
       if (!is_a)

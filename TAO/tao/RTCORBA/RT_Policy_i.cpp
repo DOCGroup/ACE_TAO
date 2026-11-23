@@ -1116,12 +1116,12 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
 
   if (id == IOP::TAG_INTERNET_IOP)
     {
-      int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
-      int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
-      int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
-      CORBA::Boolean keep_alive = orb_core ? orb_core->orb_params ()->sock_keepalive () : true;
-      CORBA::Boolean dont_route = orb_core ? orb_core->orb_params ()->sock_dontroute () : false;
-      CORBA::Boolean enable_network_priority {};
+      int const send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
+      int const recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
+      int const no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
+      CORBA::Boolean const keep_alive = orb_core ? orb_core->orb_params ()->sock_keepalive () : true;
+      CORBA::Boolean const dont_route = orb_core ? orb_core->orb_params ()->sock_dontroute () : false;
+      CORBA::Boolean const enable_network_priority {};
 
       ACE_NEW_RETURN (property,
                       TAO_TCP_Protocol_Properties (send_buffer_size,
@@ -1135,12 +1135,12 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
 
   else if (id == TAO_TAG_SHMEM_PROFILE)
     {
-      int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
-      int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
-      int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
-      CORBA::Boolean keep_alive = true;
-      CORBA::Boolean dont_route {};
-      CORBA::Long preallocate_buffer_size {};
+      int const send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
+      int const recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
+      int const no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
+      CORBA::Boolean const keep_alive = true;
+      CORBA::Boolean const dont_route {};
+      CORBA::Long const preallocate_buffer_size {};
       char const *mmap_filename = "";
       char const *mmap_lockname = "";
 
@@ -1171,7 +1171,7 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
     {
       int const send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
       int const recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
-      CORBA::Boolean enable_network_priority {};
+      CORBA::Boolean const enable_network_priority {};
 
       ACE_NEW_RETURN (property,
                       TAO_UserDatagram_Protocol_Properties (send_buffer_size,
@@ -1182,12 +1182,12 @@ TAO_Protocol_Properties_Factory::create_transport_protocol_property (IOP::Profil
 
   else if (id == TAO_TAG_SCIOP_PROFILE)
     {
-      int send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
-      int recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
-      int no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
-      CORBA::Boolean keep_alive = true;
-      CORBA::Boolean dont_route {};
-      CORBA::Boolean enable_network_priority {};
+      int const send_buffer_size = orb_core ? orb_core->orb_params ()->sock_sndbuf_size () : 0;
+      int const recv_buffer_size = orb_core ? orb_core->orb_params ()->sock_rcvbuf_size () : 0;
+      int const no_delay = orb_core ? orb_core->orb_params ()->nodelay () : 0;
+      CORBA::Boolean const keep_alive = true;
+      CORBA::Boolean const dont_route {};
+      CORBA::Boolean const enable_network_priority {};
 
       ACE_NEW_RETURN (property,
                       TAO_StreamControl_Protocol_Properties (send_buffer_size,
