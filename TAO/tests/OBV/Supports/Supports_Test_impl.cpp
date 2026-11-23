@@ -16,7 +16,7 @@ vt_graph_impl::vt_graph_impl (int num_nodes)
 {
   nodes_ ().length (0);
   add_node ("ROOT");
-  for (int i = 1; i < num_nodes; i++)
+  for (int i = 1; i < num_nodes; ++i)
     {
       add_node ("CHILD");
       nodes_ ()[0]->add_edge (nodes_ ()[i]);
@@ -49,7 +49,7 @@ vt_graph_impl::print ()
   ACE_DEBUG ((LM_DEBUG,
               "Number of nodes: [%d]\n", nodes_ ().length ()));
 
-  for (size_t i = 0; i < nodes_ ().length (); i++)
+  for (size_t i = 0; i < nodes_ ().length (); ++i)
     nodes_ ()[i]->print ();
 }
 
@@ -205,7 +205,7 @@ node_impl::add_edge (Supports_Test::Node * neighbor)
 void
 node_impl::remove_edge (Supports_Test::Node * neighbor)
 {
-  for (unsigned int i = 0; i < neighbors_ ().length (); i++)
+  for (unsigned int i = 0; i < neighbors_ ().length (); ++i)
     if (neighbors_ ()[i] == neighbor)
       {
         neighbors_ ()[i] = neighbors_ ()[neighbors_ ().length () - 1];
@@ -227,7 +227,7 @@ node_impl::print ()
   cout << "    Weight: " << weight_ () << endl;
   cout << "    Degree: " << degree_ () << endl;
   cout << "    Neighbors: " << endl;
-  for (size_t i = 0; i < neighbors_ ().length (); i++)
+  for (size_t i = 0; i < neighbors_ ().length (); ++i)
     cout << "      " << neighbors_ ()[i]->name_ () << endl;
 }
 
