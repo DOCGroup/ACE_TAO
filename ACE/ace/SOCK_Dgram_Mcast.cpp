@@ -291,7 +291,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
   if (ACE_BIT_ENABLED (this->opts_, OPT_NULLIFACE_ALL)
       && net_if == nullptr)
     {
-      int family = mcast_addr.get_type ();
+      int const family = mcast_addr.get_type ();
       size_t nr_subscribed = 0;
 
 #if defined (ACE_HAS_GETIFADDRS)
@@ -519,7 +519,7 @@ ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
 
   // If port# is 0, insert bound port# if it is set. (To satisfy lower-level
   // port# validation.)
-  u_short def_port_number = this->send_addr_.get_port_number ();
+  u_short const def_port_number = this->send_addr_.get_port_number ();
   if (subscribe_addr.get_port_number () == 0
       && def_port_number != 0)
     {
@@ -527,7 +527,7 @@ ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
     }
 
   // Check for port# different than bound port#.
-  u_short sub_port_number = mcast_addr.get_port_number ();
+  u_short const sub_port_number = mcast_addr.get_port_number ();
   if (sub_port_number != 0
       && def_port_number != 0
       && sub_port_number != def_port_number)
@@ -565,7 +565,7 @@ ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
     }
 
   // Attempt subscription.
-  int result = this->subscribe_i (subscribe_addr, reuse_addr, net_if);
+  int const result = this->subscribe_i (subscribe_addr, reuse_addr, net_if);
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
   if (result == 0)
@@ -760,7 +760,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
             {
               return -1;
             }
-          std::unique_ptr<ACE_INET_Addr[]> safe_if_addrs (if_addrs);
+          std::unique_ptr<ACE_INET_Addr[]> const safe_if_addrs (if_addrs);
 
           size_t nr_unsubscribed {};
 
@@ -867,7 +867,7 @@ ACE_SOCK_Dgram_Mcast::leave (const ACE_INET_Addr &mcast_addr,
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::leave");
   // Unsubscribe.
-  int result = this->unsubscribe_i (mcast_addr,
+  int const result = this->unsubscribe_i (mcast_addr,
                                     net_if);
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
@@ -904,7 +904,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_i (const ACE_INET_Addr &mcast_addr,
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe_i");
 
-  int result = this->unsubscribe_ifs (mcast_addr,
+  int const result = this->unsubscribe_ifs (mcast_addr,
                                       net_if);
 
   // Check for error or "short-circuit" return.
@@ -978,7 +978,7 @@ int
 ACE_SOCK_Dgram_Mcast::clear_subs_list ()
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::clear_subs_list");
-  int result = 0;
+  int const result = 0;
 
 #if defined (ACE_SOCK_DGRAM_MCAST_DUMPABLE)
   ACE_MT (ACE_GUARD_RETURN (ACE_SDM_LOCK, guard,
