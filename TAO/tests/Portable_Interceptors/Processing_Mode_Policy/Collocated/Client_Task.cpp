@@ -16,10 +16,10 @@ Client_Task::svc ()
 {
   try
     {
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         corb_->string_to_object (this->input_.c_str ());
 
-      Test_Interceptors::Visual_var server =
+      Test_Interceptors::Visual_var const server =
         Test_Interceptors::Visual::_narrow (object.in ());
 
       if (CORBA::is_nil (server.in ()))
