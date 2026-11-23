@@ -32,7 +32,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       CORBA::ContainedSeq_var attributes =
-        intDef->contents (CORBA::dk_Attribute, 1);
+        intDef->contents (CORBA::dk_Attribute, true);
       CORBA::ULong const n_ats = attributes->length ();
 
       CORBA::ULong const index {};

@@ -46,7 +46,7 @@ printContents (CORBA::ContainedSeq const &cont)
               CORBA::ModuleDef_var const module =
                 CORBA::ModuleDef::_narrow (cont[i]);
 
-              CORBA::ContainedSeq_var const contents = module->contents (CORBA::dk_all, 1);
+              CORBA::ContainedSeq_var const contents = module->contents (CORBA::dk_all, true);
               printContents (contents.in ());
             }
         }
@@ -82,7 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             -1);
         }
 
-      CORBA::ContainedSeq_var const contents = repository->contents (CORBA::dk_all, 0);
+      CORBA::ContainedSeq_var const contents = repository->contents (CORBA::dk_all, false);
 
       printContents (contents.in ());
 

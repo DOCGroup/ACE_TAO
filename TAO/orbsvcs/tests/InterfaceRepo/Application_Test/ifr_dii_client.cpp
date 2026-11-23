@@ -143,7 +143,7 @@ IFR_DII_Client::lookup_interface_def ()
         {
           // Does this container contain any interfaces?
           interfaces = candidate->contents (CORBA::dk_Interface,
-                                            1); // Exclude parents.
+                                            true); // Exclude parents.
 
           n_interfaces = interfaces->length ();
 
@@ -180,7 +180,7 @@ IFR_DII_Client::get_operation_def ()
   // What operation(s) does this interface contain?
   CORBA::ContainedSeq_var operations =
     this->target_def_->contents (CORBA::dk_Operation,
-                                 0);  // Do not exclude inherited operations.
+                                 false);  // Do not exclude inherited operations.
 
   CORBA::ULong const n_operations = operations->length ();
 

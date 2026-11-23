@@ -171,7 +171,7 @@ Ptest::query ()
     "my_enum"
   };
 
-  CORBA::ContainedSeq_var contents = this->repo_->contents (CORBA::dk_all, 0);
+  CORBA::ContainedSeq_var contents = this->repo_->contents (CORBA::dk_all, false);
 
   CORBA::ULong const length = contents->length ();
 

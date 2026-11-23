@@ -1070,7 +1070,7 @@ Admin_Client::struct_test ()
 
   CORBA::ContainedSeq_var contents =
     this->repo_->contents (CORBA::dk_all,
-                           0);
+                           false);
 
   length = contents->length ();
 
@@ -1084,7 +1084,7 @@ Admin_Client::struct_test ()
   ACE_TEST_ASSERT (length == 2);
 
   contents = svar->contents (CORBA::dk_all,
-                             0);
+                             false);
 
   length = contents->length ();
 
@@ -1157,7 +1157,7 @@ Admin_Client::struct_test ()
 
   CORBA::Container::DescriptionSeq_var cont_desc =
     this->repo_->describe_contents (CORBA::dk_all,
-                                    0,
+                                    false,
                                     -1);
 
   length = cont_desc->length ();
@@ -1207,7 +1207,7 @@ Admin_Client::struct_test ()
     }
 
   contents = svar->contents (CORBA::dk_all,
-                             0);
+                             false);
 
   length = contents->length ();
 
@@ -1702,7 +1702,7 @@ Admin_Client::exception_test ()
 
   CORBA::ContainedSeq_var contents =
     this->repo_->contents (CORBA::dk_all,
-                           0);
+                           false);
 
   length = contents->length ();
 
@@ -1716,7 +1716,7 @@ Admin_Client::exception_test ()
   ACE_TEST_ASSERT (length == 2);
 
   contents = exvar->contents (CORBA::dk_all,
-                              0);
+                              false);
 
   length = contents->length ();
 
@@ -1782,7 +1782,7 @@ Admin_Client::exception_test ()
 
   CORBA::Container::DescriptionSeq_var cont_desc =
     this->repo_->describe_contents (CORBA::dk_all,
-                                    0,
+                                    false,
                                     -1);
 
   length = cont_desc->length ();
@@ -1871,7 +1871,7 @@ Admin_Client::exception_test ()
     }
 
   contents = exvar->contents (CORBA::dk_all,
-                              0);
+                              false);
 
   length = contents->length ();
   char const *tmp = "::your_exception";
@@ -2448,7 +2448,7 @@ Admin_Client::interface_test ()
     }
 
   CORBA::ContainedSeq_var contents = ivar->contents (CORBA::dk_all,
-                                                     0);
+                                                     false);
 
   length = contents->length ();
 
@@ -2618,7 +2618,7 @@ Admin_Client::move_test ()
 
   CORBA::ContainedSeq_var out_contents =
     u_var->contents (CORBA::dk_all,
-                     1);
+                     true);
 
   length = out_contents->length ();
 
@@ -2677,7 +2677,7 @@ Admin_Client::move_test ()
     }
 
   out_contents = u_var->contents (CORBA::dk_all,
-                                  1);
+                                  true);
 
   length = out_contents->length ();
 
@@ -2728,7 +2728,7 @@ Admin_Client::move_test ()
     }
 
   out_contents = this->repo_->contents (CORBA::dk_all,
-                                        1);
+                                        true);
 
   length = out_contents->length ();
 
@@ -2770,7 +2770,7 @@ Admin_Client::move_test ()
     }
 
   out_contents = u_var->contents (CORBA::dk_all,
-                                  1);
+                                  true);
 
   length = out_contents->length ();
 
@@ -2811,7 +2811,7 @@ Admin_Client::move_test ()
     }
 
   out_contents = s_tmp->contents (CORBA::dk_all,
-                                  0);
+                                  false);
 
   length = out_contents->length ();
 
