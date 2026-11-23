@@ -70,7 +70,7 @@ test_cache_map_manager (size_t table_size,
       {
         i = 0;
 
-        CACHE_MAP_MANAGER::ITERATOR end = map.end ();
+        CACHE_MAP_MANAGER::ITERATOR const end = map.end ();
 
         for (CACHE_MAP_MANAGER::ITERATOR iter = map.begin ();
              iter != end;
@@ -92,7 +92,7 @@ test_cache_map_manager (size_t table_size,
       {
         k = iterations - 1;
 
-        CACHE_MAP_MANAGER::REVERSE_ITERATOR rend = map.rend ();
+        CACHE_MAP_MANAGER::REVERSE_ITERATOR const rend = map.rend ();
 
         for (CACHE_MAP_MANAGER::REVERSE_ITERATOR iter = map.rbegin ();
              iter != rend;
@@ -114,7 +114,7 @@ test_cache_map_manager (size_t table_size,
       {
         i = 0;
 
-        CACHE_MAP_MANAGER::iterator end = map.end ();
+        CACHE_MAP_MANAGER::iterator const end = map.end ();
 
         for (CACHE_MAP_MANAGER::iterator iter = map.begin ();
              iter != end;
@@ -136,7 +136,7 @@ test_cache_map_manager (size_t table_size,
       {
         k = iterations - 1;
 
-        CACHE_MAP_MANAGER::reverse_iterator rend = map.rend ();
+        CACHE_MAP_MANAGER::reverse_iterator const rend = map.rend ();
 
         for (CACHE_MAP_MANAGER::reverse_iterator iter = map.rbegin ();
              iter != rend;
@@ -196,7 +196,7 @@ test_hash_cache_map_manager (size_t table_size,
       {
         i = 0;
 
-        HASH_CACHE_MAP_MANAGER::ITERATOR end = map.end ();
+        HASH_CACHE_MAP_MANAGER::ITERATOR const end = map.end ();
 
         for (HASH_CACHE_MAP_MANAGER::ITERATOR iter = map.begin ();
              iter != end;
@@ -218,7 +218,7 @@ test_hash_cache_map_manager (size_t table_size,
       {
         k = iterations - 1;
 
-        HASH_CACHE_MAP_MANAGER::REVERSE_ITERATOR rend = map.rend ();
+        HASH_CACHE_MAP_MANAGER::REVERSE_ITERATOR const rend = map.rend ();
 
         for (HASH_CACHE_MAP_MANAGER::REVERSE_ITERATOR iter = map.rbegin ();
              iter != rend;
@@ -240,7 +240,7 @@ test_hash_cache_map_manager (size_t table_size,
       {
         i = 0;
 
-        HASH_CACHE_MAP_MANAGER::iterator end = map.end ();
+        HASH_CACHE_MAP_MANAGER::iterator const end = map.end ();
 
         for (HASH_CACHE_MAP_MANAGER::iterator iter = map.begin ();
              iter != end;
@@ -262,7 +262,7 @@ test_hash_cache_map_manager (size_t table_size,
       {
         k = iterations - 1;
 
-        HASH_CACHE_MAP_MANAGER::reverse_iterator rend = map.rend ();
+        HASH_CACHE_MAP_MANAGER::reverse_iterator const rend = map.rend ();
 
         for (HASH_CACHE_MAP_MANAGER::reverse_iterator iter = map.rbegin ();
              iter != rend;
@@ -309,7 +309,7 @@ test_active_map_manager (size_t table_size,
   TYPE j = 0;
   ssize_t k;
 
-  std::unique_ptr<ACTIVE_MAP_MANAGER::key_type[]> active_keys (
+  std::unique_ptr<ACTIVE_MAP_MANAGER::key_type[]> const active_keys (
     new (std::nothrow) ACTIVE_MAP_MANAGER::key_type[iterations]);
   if (!active_keys)
     {
@@ -329,13 +329,13 @@ test_active_map_manager (size_t table_size,
       {
         i = 0;
 
-        ACTIVE_MAP_MANAGER::iterator end = map.end ();
+        ACTIVE_MAP_MANAGER::iterator const end = map.end ();
 
         for (ACTIVE_MAP_MANAGER::iterator iter = map.begin ();
              iter != end;
              ++iter)
           {
-            ACTIVE_MAP_MANAGER::ENTRY &entry = *iter;
+            ACTIVE_MAP_MANAGER::ENTRY const &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%u|%u-%u|%u)"),
                         i,
@@ -353,13 +353,13 @@ test_active_map_manager (size_t table_size,
       {
         k = iterations - 1;
 
-        ACTIVE_MAP_MANAGER::reverse_iterator rend = map.rend ();
+        ACTIVE_MAP_MANAGER::reverse_iterator const rend = map.rend ();
 
         for (ACTIVE_MAP_MANAGER::reverse_iterator iter = map.rbegin ();
              iter != rend;
              ++iter)
           {
-            ACTIVE_MAP_MANAGER::ENTRY &entry = *iter;
+            ACTIVE_MAP_MANAGER::ENTRY const &entry = *iter;
             ACE_UNUSED_ARG (entry);
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%b|%u-%u|%u)"),
@@ -413,12 +413,12 @@ test_hash_map_manager (size_t table_size,
       {
         i = 0;
 
-        HASH_ITERATOR end = map.end ();
+        HASH_ITERATOR const end = map.end ();
         for (HASH_ITERATOR iter = map.begin ();
              iter != end;
              ++iter)
           {
-            HASH_ENTRY &entry = *iter;
+            HASH_ENTRY const &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%u|%u|%u)"),
                         i,
@@ -455,13 +455,13 @@ test_hash_map_manager (size_t table_size,
 
       {
         k = iterations - 1;
-        HASH_REVERSE_ITERATOR rend = map.rend ();
+        HASH_REVERSE_ITERATOR const rend = map.rend ();
 
         for (HASH_REVERSE_ITERATOR iter = map.rbegin ();
              iter != rend;
              ++iter)
           {
-            HASH_ENTRY &entry = *iter;
+            HASH_ENTRY const &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%b|%u|%u)"),
                         k,
@@ -499,12 +499,12 @@ test_hash_map_manager (size_t table_size,
       {
         i = 0;
 
-        HASH_MAP_MANAGER::iterator end = map.end ();
+        HASH_MAP_MANAGER::iterator const end = map.end ();
         for (HASH_MAP_MANAGER::iterator iter = map.begin ();
              iter != end;
              ++iter)
           {
-            HASH_MAP_MANAGER::ENTRY &entry = *iter;
+            HASH_MAP_MANAGER::ENTRY const &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%u|%u|%u)"),
                         i,
@@ -541,13 +541,13 @@ test_hash_map_manager (size_t table_size,
 
       {
         k = iterations - 1;
-        HASH_MAP_MANAGER::reverse_iterator rend = map.rend ();
+        HASH_MAP_MANAGER::reverse_iterator const rend = map.rend ();
 
         for (HASH_MAP_MANAGER::reverse_iterator iter = map.rbegin ();
              iter != rend;
              ++iter)
           {
-            HASH_MAP_MANAGER::ENTRY &entry = *iter;
+            HASH_MAP_MANAGER::ENTRY const &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%b|%u|%u)"),
                         k,
@@ -620,12 +620,12 @@ test_map_manager (size_t table_size,
       {
         i = 0;
 
-        ITERATOR end = map.end ();
+        ITERATOR const end = map.end ();
         for (ITERATOR iter = map.begin ();
              iter != end;
              ++iter)
           {
-            MAP_ENTRY &entry = *iter;
+            MAP_ENTRY const &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%u|%u|%u)"),
                         i,
@@ -662,13 +662,13 @@ test_map_manager (size_t table_size,
 
       {
         k = iterations - 1;
-        REVERSE_ITERATOR rend = map.rend ();
+        REVERSE_ITERATOR const rend = map.rend ();
 
         for (REVERSE_ITERATOR iter = map.rbegin ();
              iter != rend;
              ++iter)
           {
-            MAP_ENTRY &entry = *iter;
+            MAP_ENTRY const &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%b|%u|%u)"),
                         k,
@@ -706,12 +706,12 @@ test_map_manager (size_t table_size,
       {
         i = 0;
 
-        MAP_MANAGER::iterator end = map.end ();
+        MAP_MANAGER::iterator const end = map.end ();
         for (MAP_MANAGER::iterator iter = map.begin ();
              iter != end;
              ++iter)
           {
-            MAP_MANAGER::ENTRY &entry = *iter;
+            MAP_MANAGER::ENTRY const &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%u|%u|%u)"),
                         i,
@@ -748,13 +748,13 @@ test_map_manager (size_t table_size,
 
       {
         k = iterations - 1;
-        MAP_MANAGER::reverse_iterator rend = map.rend ();
+        MAP_MANAGER::reverse_iterator const rend = map.rend ();
 
         for (MAP_MANAGER::reverse_iterator iter = map.rbegin ();
              iter != rend;
              ++iter)
           {
-            MAP_ENTRY &entry = *iter;
+            MAP_ENTRY const &entry = *iter;
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("(%b|%u|%u)"),
                         k,
@@ -822,10 +822,10 @@ test_map_manager (size_t table_size,
     }
 
   // Unbind one at a time.
-  MAP_MANAGER::iterator end = map.end ();
+  MAP_MANAGER::iterator const end = map.end ();
   while (true)
     {
-      MAP_MANAGER::iterator iter = map.begin ();
+      MAP_MANAGER::iterator const iter = map.begin ();
       if (iter == end)
       {
         break;
