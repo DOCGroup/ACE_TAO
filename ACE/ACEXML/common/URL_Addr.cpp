@@ -118,8 +118,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
       errno = ENOMEM;
       return -1;
     }
-  std::memcpy (host_name.get (), s + http_len,
-               host_len * sizeof (*host_name.get ()));
+  std::memcpy (host_name.get (), s + http_len, host_len * sizeof (*host_name.get ()));
   host_name[host_len] = '\0';
 
   // Get the port number (if any)

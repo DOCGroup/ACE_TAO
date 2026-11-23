@@ -325,9 +325,7 @@ TAO::CSD::FW_Server_Request_Wrapper::clone (TAO_Operation_Details *& from,
                   char[from->opname_len_ + 1],
                   false);
   std::unique_ptr<char[]> cloned_op_name (cloned_op_name_buffer);
-  std::memcpy (cloned_op_name.get (),
-               from->opname_,
-               from->opname_len_);
+  std::memcpy (cloned_op_name.get (), from->opname_, from->opname_len_);
   cloned_op_name[from->opname_len_] = '\0';
 
   // See if we can clone arguments.  If we can, the user compiled the
