@@ -8,7 +8,6 @@ module Diamond
   interface Left : Top
     {
       string color ();
-      long combine (in long first, inout long second, out long third);
     };
 
   interface Right : Top

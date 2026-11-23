@@ -5,7 +5,7 @@
 module Test
 {
    typedef string<10> MyStringType;
-   /// Note: SAME LENGTH
+   /// @note SAME LENGTH
    typedef string<10> MyOtherStringType;
 
    interface Foo

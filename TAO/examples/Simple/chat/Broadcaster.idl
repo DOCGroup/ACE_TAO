@@ -1,11 +1,10 @@
 /* -*- C++ -*- */
 #include "Receiver.idl"
 
+/// Implemented by the simple chat server to broadcast messages from one
+/// registered client to all registered clients.
 interface Broadcaster
 {
-  /// Implemented by the simple chat server to broadcast messages from one
-  /// registered client to all registered clients.
-
   exception CannotAdd
     {
       string reason_;

@@ -76,13 +76,12 @@ module DsLogAdmin
   typedef sequence<LogRecord> RecordList;
   typedef sequence<any> Anys;
 
+  /// @brief Iterator with bulk operation support returned by Log queries.
+  ///
+  /// Allows clients to iterate over LogRecords returned by `query()` or
+  /// `retrieve()`.
   interface Iterator
     {
-      /// @brief Iterator with bulk operation support returned by Log queries.
-      ///
-      /// Allows clients to iterate over LogRecords returned by `query()` or
-      /// `retrieve()`.
-
       /// Returns a maximum of <how_many> records, starting from
       /// position <position>
       RecordList get(in unsigned long position,

@@ -22,12 +22,11 @@ module interop {
   case is_warray: warray u_array;
   };
 
+  /// The server and client for this test should both use a well known test
+  /// data to allow individual string comparisons against reference strings.
+  /// The separate test key value allows the tester to devise several strings,
+  /// arrays, or wchar values that may be tested separately.
   interface WChar_Passer {
-    /// The server and client for this test should both use a well known test
-    /// data to allow individual string comparisons against reference strings.
-    /// The separate test key value allows the tester to devise several strings,
-    /// arrays, or wchar values that may be tested separately.
-
     readonly attribute string orb_name;
 
     boolean wchar_to_server (in wchar test, in short key);

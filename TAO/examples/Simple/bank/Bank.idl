@@ -2,15 +2,13 @@
 /// This module defines the Account interface and a factory for Account objects.
 module Bank
 {
+  /// Represents an account with operations to check its balance,
+  /// deposit money, and withdraw money.
   interface Account
     {
-      /// Represents an account with operations to check its balance,
-      /// deposit money, and withdraw money.
-
+      /// Raised when a client tries to withdraw more than the balance.
       exception Overdraft
         {
-          /// Raised when a client tries to withdraw more than the balance.
-
           string reason;
         };
 
@@ -27,10 +25,9 @@ module Bank
       attribute string name;
     };
 
+  /// Creates and closes Account objects.
   interface AccountManager
     {
-      /// Creates and closes Account objects.
-
       /// Returns the Account associated with name. If name has not been
       /// seen before, the server creates an account; otherwise, it returns
       /// the existing object reference.

@@ -29,11 +29,10 @@ union Data switch (DataType)
 
 /// Explicit default case
 
+/// It is important to have a module, in which
+/// the following union is declared.
 module Necessary
 {
-  /// It is important to have a module, in which
-  /// the following union is declared.
-
   typedef long Result;
 
   enum Kind

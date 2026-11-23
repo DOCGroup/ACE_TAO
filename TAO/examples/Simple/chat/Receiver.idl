@@ -1,8 +1,7 @@
 /* -*- C++ -*- */
+/// Implemented by simple chat clients; the chat server calls its operations.
 interface Receiver
 {
-  /// Implemented by simple chat clients; the chat server calls its operations.
-
   /// Displays the message in the client application.
   void message (in string msg);
 

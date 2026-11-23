@@ -1,8 +1,7 @@
 /// -*- C++ -*-
+/// IDL schema definition for the Time and Date interface.
 interface Time_Date
 {
-  /// IDL schema definition for the Time and Date interface.
-
   /// Obtain the time and date in binary format.
   void bin_date (out long time_date);
 
