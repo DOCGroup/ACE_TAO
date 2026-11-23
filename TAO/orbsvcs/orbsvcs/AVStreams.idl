@@ -292,8 +292,8 @@ module AVStreams
       /// Multicasting operations are not supported yet.
       void set_dev_params (in string flowName,
                            in CosPropertyService::Properties new_params)
-        /// raises (CosPropertyService::PropertyException,
-        /// streamOpFailed);
+        // raises (CosPropertyService::PropertyException,
+        // streamOpFailed);
         raises (PropertyException,
                 streamOpFailed);
 

@@ -96,10 +96,10 @@ module CosLoadBalancing
     oneway void analyze_loads (in PortableGroup::ObjectGroup object_group,
                                in LoadManager load_manager);
 
-    /// The loads at the given location should no longer be considered
-    /// when performing load analysis.
+    // The loads at the given location should no longer be considered
+    // when performing load analysis.
     // void location_removed (in PortableGroup::Location the_location)
-    /// raises (LocationNotFound);
+    // raises (LocationNotFound);
   };
 
   typedef Strategy CustomStrategy;

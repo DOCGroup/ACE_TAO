@@ -289,7 +289,7 @@ interface Param_Test
     case 10:
       Var_Struct the_var_struct;
       // case 12:
-      /// Other_Union the_union;
+      // Other_Union the_union;
     case 11:
       Fixed_Struct the_fixed_struct;
     };

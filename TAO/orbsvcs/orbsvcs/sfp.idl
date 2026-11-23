@@ -37,7 +37,6 @@ module flowProtocol
     //    my_seq_char magic_number;
     /// '=', 'S', 'F', 'P'
     cmagic_nr magic_number;
-    /// '=', 'S', 'F', 'P'
     /// bit 0 = byte order,
     /// 1 = fragments, 2-7 always 0
     octet flags;
@@ -66,7 +65,6 @@ module flowProtocol
     //    my_seq_char magic_number;
     /// '=', 'S', 'T', 'A'
     cmagic_nr magic_number;
-    /// '=', 'S', 'T', 'A'
     octet major_version;
     octet minor_version;
     /// bit 0 = byte order
