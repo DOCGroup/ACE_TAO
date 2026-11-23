@@ -98,7 +98,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         RTCORBA::RTORB::_narrow (object.in ());
 
       Test_Options options;
-      int result = parse_args (argc, argv, options);
+      const int result = parse_args (argc, argv, options);
       if (result != 0)
       {
         return result;
