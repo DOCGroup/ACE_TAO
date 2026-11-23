@@ -66,7 +66,7 @@ test_timeout ()
 
   ACE_Time_Value wait = ACE_OS::gettimeofday ();
 
-  ACE_Time_Value begin = wait;
+  ACE_Time_Value const begin = wait;
 
   wait.sec (wait.sec () + wait_secs);
 
@@ -80,7 +80,7 @@ test_timeout ()
           status = -1;
         }
     }
-  ACE_Time_Value wait_diff = ACE_OS::gettimeofday () - begin;
+  ACE_Time_Value const wait_diff = ACE_OS::gettimeofday () - begin;
 
   msecs_waited = wait_diff.msec ();
   msecs_expected = wait_secs * 1000;
@@ -146,8 +146,8 @@ worker (void *)
        ++iterations)
     {
       //FUZZ: disable check_for_lack_ACE_OS
-      ACE_Time_Value wait (0,
-                           iterations * 1000 * 100);  // Wait 'iter' msec
+      ACE_Time_Value const wait (0,
+                                 iterations * 1000 * 100);  // Wait 'iter' msec
       //FUZZ: enable check_for_lack_ACE_OS
 
       ACE_Time_Value tv = ACE_OS::gettimeofday () + wait;
