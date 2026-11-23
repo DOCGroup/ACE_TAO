@@ -230,10 +230,10 @@ namespace TAO
   };
 
   /**
-   * @struct TAO-specific @c {W}String_var Equality Functor
+   * @struct String_Var_Equal_To
    *
-   * This functor exist to simplify usage of @c {W}String_var in
-   * containers.
+   * TAO-specific equality functor for using @c String_var and
+   * @c WString_var in containers.
    */
   struct String_Var_Equal_To
   {
