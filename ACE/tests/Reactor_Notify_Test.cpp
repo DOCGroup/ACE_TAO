@@ -369,7 +369,7 @@ run_test (int disable_notify_pipe,
                   -1);
 
   // Make sure this stuff gets cleaned up when this function exits.
-  std::unique_ptr<ACE_Reactor> r (reactor);
+  std::unique_ptr<ACE_Reactor> const r (reactor);
 
   // Set the Singleton Reactor.
   ACE_Reactor *orig_reactor = ACE_Reactor::instance (reactor);
@@ -467,13 +467,13 @@ static int
 run_notify_purge_test ()
 {
   int status;
-  ACE_Reactor *r = ACE_Reactor::instance ();
+  ACE_Reactor * const r = ACE_Reactor::instance ();
   {
     Purged_Notify n1;
     Purged_Notify *n2;
 
     ACE_NEW_RETURN (n2, Purged_Notify, -1);
-    std::unique_ptr<Purged_Notify> ap (n2);
+    std::unique_ptr<Purged_Notify> const ap (n2);
 
     // First test:
     // Notify EXCEPT, and purge ALL
