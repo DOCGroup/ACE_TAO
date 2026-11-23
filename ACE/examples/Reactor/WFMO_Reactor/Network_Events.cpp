@@ -165,7 +165,7 @@ Network_Listener::handle_input (ACE_HANDLE handle)
   int const result = this->acceptor_.accept (stream, // stream
                                              &remote_address, // remote address
                                              nullptr, // timeout
-                                             1, // restart
+                                             true, // restart
                                              reset_new_handle);  // reset new handler
   ACE_TEST_ASSERT (result == 0);
 

@@ -664,7 +664,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_POSIX_SIG_Proactor *  pImpl = new ACE_POSIX_SIG_Proactor;
 #endif
 
-  ACE_Proactor Proactor ( pImpl ,1 );
+  ACE_Proactor Proactor ( pImpl, true );
 
   ACE_Proactor::instance( & Proactor );
 
