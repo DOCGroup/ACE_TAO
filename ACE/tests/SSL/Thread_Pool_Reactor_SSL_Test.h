@@ -18,7 +18,7 @@
 
 #include "ace/Svc_Handler.h"
 
-///   This class is the Svc_Handler used by <Acceptor>.
+///   This class is the Svc_Handler used by @c Acceptor.
 class Request_Handler : public ACE_Svc_Handler<ACE_SSL_SOCK_Stream,
                                                ACE_MT_SYNCH>
 {

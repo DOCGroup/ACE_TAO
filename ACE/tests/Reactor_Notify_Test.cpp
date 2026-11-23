@@ -2,9 +2,9 @@
 /**
  *  @file      Reactor_Notify_Test.cpp
  *
- *    This is a test that illustrates how the <ACE_Reactor>'s
- *    <notify> method works under various <max_notify_iterations>
- *    settings.  It also tests that the <disable_notify_pipe> option
+ *    This is a test that illustrates how the @c ACE_Reactor's
+ *    @a notify method works under various @a max_notify_iterations
+ *    settings.  It also tests that the @a disable_notify_pipe option
  *    works correctly.  Moreover, if the $ACE_ROOT/ace/config.h file
  *    has the ACE_HAS_REACTOR_NOTIFICATION_QUEUE option enabled this
  *    test will also exercise this feature.
@@ -448,7 +448,7 @@ run_test (int disable_notify_pipe,
 /**
  * @class Purged_Notify
  *
- * @brief <run_notify_purge_test> tests the reactor's
+ * @brief @c run_notify_purge_test tests the reactor's
  * purge_pending_notifications function. It does 2 notifications,
  * and explicitly cancels one, and deletes the other's event
  * handler, which should cause it to be cancelled as well.

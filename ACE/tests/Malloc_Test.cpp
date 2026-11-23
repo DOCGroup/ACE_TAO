@@ -2,8 +2,8 @@
 /**
  *  @file    Malloc_Test.cpp
  *
- *   This is a test of the position-independent <ACE_Malloc> memory
- *   manager using the <ACE_MMAP_Memory_Pool> and <ACE_Process_Mutex>.
+ *   This is a test of the position-independent @c ACE_Malloc memory
+ *   manager using the @c ACE_MMAP_Memory_Pool and @c ACE_Process_Mutex.
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */

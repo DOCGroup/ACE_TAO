@@ -21,7 +21,7 @@
 /**
  * @class Request_Handler
  *
- * @brief This class is the Svc_Handler used by <Acceptor>.
+ * @brief This class is the Svc_Handler used by @c Acceptor.
  */
 class Request_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_MT_SYNCH>
 {

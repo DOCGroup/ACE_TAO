@@ -16,7 +16,7 @@
  *    threads.
  *
  *    Usage: Thread_Pool_Reactor_Test_SSL [-r <hostname:port#>]
- *              [-s <server thr#>] [-c <client thr#>] [-d <delay>]
+ *              [-s <server thr#>] [-c <client thr#>] [-d @a delay]
  *              [-i <client conn attempt#>] [-n <client request# per conn>]
  *
  *    Default value:
@@ -25,7 +25,7 @@
  *        <client thr#>:          ACE_MAX_ITERATIONS
  *        <client conn attempt#>: ACE_MAX_ITERATIONS
  *        <client req# per conn>: ACE_MAX_THREADS
- *        <delay>:                50 usec
+ *        @a delay:                50 usec
  *
  *  @author   Irfan Pyarali <irfan@cs.wustl.edu> and   Nanbor Wang <nanbor@cs.wustl.edu>
  */

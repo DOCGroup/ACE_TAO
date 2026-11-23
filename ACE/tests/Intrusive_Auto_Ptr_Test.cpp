@@ -2,7 +2,7 @@
 /**
  *  @file    Intrusive_Auto_Ptr_Test.cpp
  *
- *  This test verifies the functionality of the <ACE_Intrusive_Auto_Ptr>
+ *  This test verifies the functionality of the @c ACE_Intrusive_Auto_Ptr
  *  implementation.
  *
  *  @author Iliyan Jeliazkov <iliyan@ociweb.com>

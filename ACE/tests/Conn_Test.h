@@ -17,8 +17,8 @@
 /**
  * @class Svc_Handler
  *
- * @brief This class is the product created by both <ACE_Connector>
- * and <ACE_Acceptor> objects.
+ * @brief This class is the product created by both @c ACE_Connector
+ * and @c ACE_Acceptor objects.
  */
 class Svc_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
@@ -38,9 +38,9 @@ public:
   /// Recv data from client.
   void recv_data ();
 
-  /// Shutdown the <Svc_Handler>.
+  /// Shutdown the @c Svc_Handler.
   int close (u_long = 0) override;
 
-  /// Set <this> to idle.
+  /// Set @c this to idle.
   int idle (u_long flags) override;
 };

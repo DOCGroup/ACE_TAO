@@ -7,15 +7,15 @@
  *    Proactor framework and validates its basic functionality.
  *
  *    Usage: SSL_Asynch_Stream_Test [-r <hostname:port#>]
- *              [-t <num threads>] [-d <delay>]
- *              [-i <client conn attempt#>] [-n <client request# per conn>]
+ *              [-t @a num threads] [-d @a delay]
+ *              [-i @a client connection attempts] [-n @a client requests per connection]
  *
  *    Default value:
  *        <hostname:port#>:       ACE_DEFAULT_SERVER_HOST:ACE_DEFAULT_PORT
- *        <num threads>:          ACE_MAX_THREADS
- *        <client conn attempt#>: ACE_MAX_ITERATIONS
- *        <client req# per conn>: 20
- *        <delay>:                0 usec
+ *        num threads:          ACE_MAX_THREADS
+ *        client connection attempts: ACE_MAX_ITERATIONS
+ *        client requests per connection: 20
+ *        @a delay:                0 usec
  *
  *  @author   Steve Huston <shuston@riverace.com>
  */

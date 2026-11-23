@@ -2,11 +2,11 @@
 /**
  *  @file    Conn_Test.cpp
  *
- *   This is a test of the <ACE_Acceptor> and <ACE_Connector>
+ *   This is a test of the @c ACE_Acceptor and @c ACE_Connector
  *   classes. The test forks processes or spawns threads (depending
  *   upon the platform) and then executes client and server allowing
  *   them to connect and exchange data.  The test also illustrates
- *   how the <ACE_Strategy_Connector> works by showing how you can
+ *   how the @c ACE_Strategy_Connector works by showing how you can
  *   cache connections on the client.
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu>

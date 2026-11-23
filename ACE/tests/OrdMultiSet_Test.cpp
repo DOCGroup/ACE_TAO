@@ -2,8 +2,8 @@
 /**
  *  @file    OrdMultiSet_Test.cpp
  *
- *  This is a simple test of the <ACE_Ordered_MultiSet> and
- *  <ACE_Ordered_MultiSet_Iterator> class templates, instantiating
+ *  This is a simple test of the @c ACE_Ordered_MultiSet and
+ *  @c ACE_Ordered_MultiSet_Iterator class templates, instantiating
  *  them with type int.  No command line arguments are needed to run
  *  the test.
  *

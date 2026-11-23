@@ -1,6 +1,6 @@
 /// @file Get_Opt_Test.cpp
 /// This program tests both the short and long option support in
-/// <ACE_Get_Opt>, and demonstrates how to use it.
+/// @c ACE_Get_Opt, and demonstrates how to use it.
 ///
 /// @author Don Hinton <dhinton@dresystems.com>
 

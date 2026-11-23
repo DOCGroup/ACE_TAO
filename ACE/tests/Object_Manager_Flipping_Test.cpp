@@ -5,7 +5,7 @@
 
  *  Tests the basic function of the ACE_Service_Config in scenarios
  *  where the ACE_Object_Manager is being
- *  flipped. i.e. ACE::init/ACE::fini() are called in sequence
+ *  flipped. i.e. @c ACE::init and @c ACE::fini() are called in sequence
  *  (which can occur with loading DLLs).  More specifically we test
  *  that the OM correctly controlls the lifecycle of the default SC
  *  instance, which is pointed to by a TSS pointer.

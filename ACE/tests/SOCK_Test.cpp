@@ -2,8 +2,8 @@
 /**
  *  @file    SOCK_Test.cpp
  *
- *   This is a test of the <ACE_SOCK_Acceptor> and
- *   <ACE_SOCK_Connector> classes. The test forks two processes or
+ *   This is a test of the @c ACE_SOCK_Acceptor and
+ *   @c ACE_SOCK_Connector classes. The test forks two processes or
  *   spawns two threads (depending upon the platform) and then
  *   executes client and server allowing them to connect and
  *   exchange data.

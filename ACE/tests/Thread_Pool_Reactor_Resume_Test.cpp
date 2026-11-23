@@ -6,12 +6,12 @@
  *    reactors.  This test  is based on Thread_Pool_Reactor_Test.cpp
  *    in $ACE_ROOT/tests. This test differs from the other one
  *    slightly. The TP reactor is instantiated with the
- *    with a value of 1 for the <resume_flag> argument. The server
+ *    with a value of 1 for the @a resume_flag argument. The server
  *    threads during the  handle_input call resumes the handle that
  *    would have been suspended by the reactor.
  *
  *    Usage: Thread_Pool_Reactor_Test [-r <hostname:port#>]
- *              [-s <server thr#>] [-c <client thr#>] [-d <delay>]
+ *              [-s <server thr#>] [-c <client thr#>] [-d @a delay]
  *              [-i <client conn attempt#>] [-n <client request# per conn>]
  *
  *    Default value:
@@ -20,7 +20,7 @@
  *        <client thr#>:          ACE_MAX_ITERATIONS
  *        <client conn attempt#>: ACE_MAX_ITERATIONS
  *        <client req# per conn>: ACE_MAX_THREADS
- *        <delay>:                50 usec
+ *        @a delay:                50 usec
  *
  *  @author Balachandran Natarajan <bala@cs.wustl.edu>
  */

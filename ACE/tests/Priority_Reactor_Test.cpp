@@ -1,7 +1,7 @@
 /**
  *  @file    Priority_Reactor_Test.cpp
  *
- *   This is a test of the <ACE_Priority_Reactor>.  The test forks
+ *   This is a test of the @c ACE_Priority_Reactor.  The test forks
  *   two processes (for a total of three processes) which connect to
  *   the main process and The clients send data to a connector,
  *   interestingly enough the acceptor will give more priority to
@@ -9,7 +9,7 @@
  *   one.
  *
  *   The test itself is interesting, it shows how to write very
- *   simple <ACE_Svc_Handler>, <ACE_Connectors> and <ACE_Acceptors>.
+ *   simple @c ACE_Svc_Handler, @c ACE_Connectors and @c ACE_Acceptors.
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */

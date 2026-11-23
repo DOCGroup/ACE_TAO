@@ -2,8 +2,8 @@
 /**
  *  @file    Cache_Map_Manager_Test.cpp
  *
- *   This is a test of the <ACE_Cache_Map_Manager> and
- *   <ACE_Hash_Cache_Map_Manager> that illustrates how to use the
+ *   This is a test of the @c ACE_Cache_Map_Manager and
+ *   @c ACE_Hash_Cache_Map_Manager that illustrates how to use the
  *   forward and reverse iterators, as well as the purging and
  *   caching features.
  *

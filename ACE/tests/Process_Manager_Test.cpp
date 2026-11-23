@@ -3,7 +3,7 @@
  *  @file    Process_Manager_Test.cpp
  *
  *    This program tests the various methods provided by
- *    <ACE_Process_Manager>.  It illustrates both the explicit <wait>
+ *    @c ACE_Process_Manager.  It illustrates both the explicit @a wait
  *    functions and the Reactor-style auto-reaping.  There's an
  *    Exit_Handler class that can print out (in Debug mode) when a
  *    child has been reaped.

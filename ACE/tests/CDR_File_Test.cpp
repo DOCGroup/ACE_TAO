@@ -31,13 +31,13 @@
  */
 class CDR_Test
 {
-  /// Output the state of a <CDR_Test> object to the <ostream>.
+  /// Output the state of a @c CDR_Test object to the @c ostream.
   friend ostream& operator << (ostream &os, const CDR_Test &t);
 
-  /// Convert the state of this object into an <ACE_OutputCDR>.
+  /// Convert the state of this object into an @c ACE_OutputCDR.
   friend void operator << (ACE_OutputCDR &os, const CDR_Test &t);
 
-  /// Convert the <ACE_InputCDR> into the state of this object.
+  /// Convert the @c ACE_InputCDR into the state of this object.
   friend void operator >> (ACE_InputCDR &is, CDR_Test &);
 
 public:
@@ -50,7 +50,7 @@ public:
             ACE_CDR::Float f,
             ACE_CDR::Double d);
 
-  /// Compare <rhs> for equality with <this>.
+  /// Compare @a rhs for equality with @c this.
   bool operator == (const CDR_Test &rhs) const;
 
 private:

@@ -2,7 +2,7 @@
 /**
  *  @file    Process_Manual_Event_Test.cpp
  *
- *  This test verifies the functionality of the <ACE_Manual_Event>
+ *  This test verifies the functionality of the @c ACE_Manual_Event
  *  process-shared implementation.
  *
  *  @author Martin Corino <mcorino@remedy.nl>

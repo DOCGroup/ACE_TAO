@@ -3,11 +3,11 @@
  *
  *  The test runs on a single thread, and involves a single Sender,
  *  two Receivers and a single Writer.  The Sender async-reads
- *  (scattered) from a file into chunks of <page size>.  It
+ *  (scattered) from a file into chunks of @a page size.  It
  *  async-sends (gathered) the odd chunks to the first receiver over a
  *  stream, and the even chunks to the second receiver over a
  *  different stream.  The receivers async-read (scattered) from the
- *  socket streams into chunks in size of <page size>, and convey the
+ *  socket streams into chunks in size of @a page size, and convey the
  *  data to the Writer.  The Writer reconstructs the file using
  *  async-write (gathered).  Then, the reconstructed file is compared
  *  to the original file to determine test success. So, It covers both

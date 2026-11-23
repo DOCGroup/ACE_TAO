@@ -32,7 +32,7 @@ public:
   int handle_timeout (const ACE_Time_Value &tv,
                               const void *arg) override;
 
-  /// Called when <Time_Handler> is removed.
+  /// Called when @c Time_Handler is removed.
   int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask) override;
 

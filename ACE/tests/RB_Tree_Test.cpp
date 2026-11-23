@@ -3,10 +3,10 @@
  *  @file    RB_Tree_Test.cpp
  *
  *  This is a test to verify and illustrate the use of the
- *  <ACE_RB_Tree ACE_RB_Tree_Iterator> and
- *  <ACE_RB_Tree_Reverse_Iterator> classes.  Two different key and
+ *  @c ACE_RB_Tree @c ACE_RB_Tree_Iterator and
+ *  @c ACE_RB_Tree_Reverse_Iterator classes.  Two different key and
  *  item types are used in order to demonstrate specialization of
- *  the <ACE_Less_Than> comparison function object template: int
+ *  the @c ACE_Less_Than comparison function object template: int
  *  (for which the native < operator is sufficient), and const char
  *  * (for which < operator semantics must be replaced by strcmp
  *  semantics).  An RB tree for each of the four possible type

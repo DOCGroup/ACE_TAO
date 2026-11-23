@@ -2,9 +2,9 @@
 /**
  *  @file    Logging_Strategy_Test.cpp
  *
- *   This program tests the <ACE_Logging_Strategy> class in various
+ *   This program tests the @c ACE_Logging_Strategy class in various
  *   ways and also illustrates many of the features of the
- *   <ACE_Log_Msg>.  The test works as follows:
+ *   @c ACE_Log_Msg.  The test works as follows:
  *   -Load the inserted arguments;
  *   -Remove existent log_files with the file_name specified by the
  *    user;

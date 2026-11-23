@@ -1,6 +1,6 @@
 /// @file ARGV_Test.cpp
 /// This simple test illustrates how to use advanced features of
-/// <ACE_ARGV>.
+/// @c ACE_ARGV.
 ///
 /// @author Suresh Kannan <kannan@uav.ae.gatech.edu> and
 /// @author Duane Binder <duane.binder@veritas.com>

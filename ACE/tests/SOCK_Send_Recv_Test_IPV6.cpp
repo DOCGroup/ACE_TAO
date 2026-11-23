@@ -1,7 +1,7 @@
 /**
  * @file  SOCK_Send_Recv_Test_IPV6.cpp
  *
- * @brief This is a test of the <ACE_SOCK>'s various send and receive
+ * @brief This is a test of the @c ACE_SOCK's various send and receive
  * methods.
 
  * The test forks two processes or spawns two threads (depending upon

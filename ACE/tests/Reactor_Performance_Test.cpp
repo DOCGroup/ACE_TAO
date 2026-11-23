@@ -3,8 +3,8 @@
  *  @file    Reactor_Performance_Test.cpp
  *
  *  This test is used to time the dispatching mechanisms of the
- *  <ACE_Reactor>s. Both the <ACE_WFMO_Reactor> and
- *  <ACE_Select_Reactor> can be tested.
+ *  @c ACE_Reactors. Both the @c ACE_WFMO_Reactor and
+ *  @c ACE_Select_Reactor can be tested.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

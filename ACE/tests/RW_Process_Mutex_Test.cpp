@@ -1,7 +1,7 @@
 /**
  *  @file    RW_Process_Mutex_Test.cpp
  *
- *  Tests an <ACE_RW_Process_Mutex> shared between multiple child processes.
+ *  Tests an @c ACE_RW_Process_Mutex shared between multiple child processes.
  *
  *  @author Steve Huston <shuston@riverace.com>
  */

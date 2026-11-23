@@ -1,8 +1,8 @@
 /**
  *  @file    Bound_Ptr_Test.cpp
  *
- *  This example tests the <ACE_Strong_Bound_Ptr> and
- *  <ACE_Weak_Bound_Ptr> and illustrates how they may be dispersed
+ *  This example tests the @c ACE_Strong_Bound_Ptr and
+ *  @c ACE_Weak_Bound_Ptr and illustrates how they may be dispersed
  *  between multiple threads using an implementation of the Active
  *  Object pattern, which is available in the POSA2 book
  *  <http://www.dre.vanderbilt.edu/~schmidt/POSA>.

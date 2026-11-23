@@ -2,7 +2,7 @@
 /**
  *  @file    Cached_Conn_Test.cpp
  *
- *  The test illustrates how the <ACE_Strategy_Connector> works by
+ *  The test illustrates how the @c ACE_Strategy_Connector works by
  *  showing how you can cache connections on the client using
  *  different caching strategies. Also how connections can be purged
  *  explicitly and implicitly if needed from the connection cache

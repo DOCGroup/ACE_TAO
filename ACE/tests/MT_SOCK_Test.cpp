@@ -2,7 +2,7 @@
  *  @file    MT_SOCK_Test.cpp
  *
  *   This is a multi-threaded torture test of the
- *   <ACE_SOCK_Acceptor> and <ACE_SOCK_Connector> classes. The test
+ *   @c ACE_SOCK_Acceptor and @c ACE_SOCK_Connector classes. The test
  *   forks 30 processes or spawns 30 threads (depending upon the
  *   platform) and then executes client and server allowing them to
  *   connect and exchange data.  Note that most of the connections

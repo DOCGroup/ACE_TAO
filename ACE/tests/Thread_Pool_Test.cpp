@@ -2,9 +2,9 @@
 /**
  *  @file    Thread_Pool_Test.cpp
  *
- *   This test program illustrates how the <ACE_Task>
+ *   This test program illustrates how the @c ACE_Task
  *   synchronization mechanisms work in conjunction with the
- *   <ACE_Thread_Manager>.  If the <manual> flag is set input comes
+ *   @c ACE_Thread_Manager.  If the @a manual flag is set input comes
  *   from stdin until the user enters a return -- otherwise, the
  *   input is generated automatically.  All worker threads shutdown
  *   when (1) they receive a message block of length 0 or (2) the

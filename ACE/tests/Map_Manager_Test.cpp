@@ -2,8 +2,8 @@
 /**
  *  @file    Map_Manager_Test.cpp
  *
- *   This is a simple test of the <ACE_Map_Manager> and
- *   <ACE_Hash_Map_Manager> that illustrates how to use the forward
+ *   This is a simple test of the @c ACE_Map_Manager and
+ *   @c ACE_Hash_Map_Manager that illustrates how to use the forward
  *   and reverse iterators.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>

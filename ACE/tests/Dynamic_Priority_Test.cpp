@@ -3,9 +3,9 @@
  *  @file    Dynamic_Priority_Test.cpp (based on Priority_Buffer_Test.cpp)
  *
  *  This is a test to verify and illustrate the static and dynamic
- *  priority mechanisms of the <ACE_Message_Queue> class and the
- *  <ACE_Dynamic_Message_Queue> class.  As in the
- *  <Priority_Buffer_Test>, a producer generates messages and
+ *  priority mechanisms of the @c ACE_Message_Queue class and the
+ *  @c ACE_Dynamic_Message_Queue class.  As in the
+ *  @c Priority_Buffer_Test, a producer generates messages and
  *  enqueues them, and a consumer dequeues them and checks their
  *  ordering.
  *

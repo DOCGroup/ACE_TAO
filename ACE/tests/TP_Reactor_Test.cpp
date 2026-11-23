@@ -2,7 +2,7 @@
 /**
  *  @file    TP_Reactor_Test.cpp
  *
- *  This program illustrates how the <ACE_TP_Reactor> can be used to
+ *  This program illustrates how the @c ACE_TP_Reactor can be used to
  *  implement an application that does various  operations.
  *  usage: TP_Reactor_Test
  *         -n number threads in the TP_Reactor thread pool

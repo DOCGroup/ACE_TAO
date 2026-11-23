@@ -2,7 +2,7 @@
 /**
  *  @file    Hash_Map_Bucket_Iterator_Test.cpp
  *
- *   This is a simple test of the <Hash_Map_Bucket_Iterator>.
+ *   This is a simple test of the @c Hash_Map_Bucket_Iterator.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

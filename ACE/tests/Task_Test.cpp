@@ -4,8 +4,8 @@
  *
  *    This test program illustrates how the ACE barrier
  *    synchronization mechanisms work in conjunction with the
- *    <ACE_Task> and the <ACE_Thread_Manager>.  This also illustrates
- *    how the <ACE_Thread_Hook> mechanism works.
+ *    @c ACE_Task and the @c ACE_Thread_Manager.  This also illustrates
+ *    how the @c ACE_Thread_Hook mechanism works.
  *
  *  @author Prashant Jain <pjain@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */

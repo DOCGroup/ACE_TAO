@@ -3,7 +3,7 @@
  *  @file    Monotonic_Manual_Event_Test.cpp
  *
  *  This test verifies the functionality of the time policy support
- *  for the <ACE_Manual_Event> implementation.
+ *  for the @c ACE_Manual_Event implementation.
  *
  *  @author Martin Corino <mcorino@remedy.nl>
  */

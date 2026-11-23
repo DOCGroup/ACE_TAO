@@ -2,7 +2,7 @@
 /**
  *  @file    Capabilities_Test.cpp
  *
- *    This is a test that makes sure the <ACE_Capabililties> class
+ *    This is a test that makes sure the @c ACE_Capabililties class
  *    works correctly.
  *
  *  @author Arturo Montes <mitosys@colomsat.net.co>

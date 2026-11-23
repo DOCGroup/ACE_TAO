@@ -1,7 +1,7 @@
 /**
  *  @file    Reactor_Exceptions_Test.cpp
  *
- *    This is a test that makes sure the <ACE_Reactor> works
+ *    This is a test that makes sure the @c ACE_Reactor works
  *    correctly in the face of C++ exceptions and threads.
  *
  *  @author Luca Priorelli <lucapri@mbox.vol.it> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>

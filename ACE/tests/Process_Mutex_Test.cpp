@@ -1,7 +1,7 @@
 /**
  *  @file    Process_Mutex_Test.cpp
  *
- *  Tests an <ACE_Process_Mutex> shared between multiple child processes.
+ *  Tests an @c ACE_Process_Mutex shared between multiple child processes.
  *
  *  @author Irfan Pyarali <irfan@cs.wustl.edu>
  */

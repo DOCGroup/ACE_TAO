@@ -3,7 +3,7 @@
  *  @file    Task_Group_Test.cpp
  *
  *    This test program illustrates the logic of the grp_id handling
- *    mechanism in <ACE_Task_Base> and the <ACE_Thread_Manager>.
+ *    mechanism in @c ACE_Task_Base and the @c ACE_Thread_Manager.
  *    Partially reuses test submitted by Paxton Mason in Bugzilla #2366
  *
  *  @author Martin Corino <mcorino@remedy.nl>

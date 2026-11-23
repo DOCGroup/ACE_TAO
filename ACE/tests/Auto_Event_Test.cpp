@@ -2,7 +2,7 @@
 /**
  *  @file    Auto_Event_Test.cpp
  *
- *  This test verifies the functionality of the <ACE_Auto_Event>
+ *  This test verifies the functionality of the @c ACE_Auto_Event
  *  implementation.
  *
  *  @author Martin Corino <mcorino@remedy.nl>

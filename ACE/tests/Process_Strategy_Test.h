@@ -27,8 +27,8 @@
  * @brief Reads and increments the count in a shared file.
  *
  * Objects of this class execute in a separate process as a
- * result of the <ACE_Strategy_Acceptor> and
- * <ACE_Process_Strategy>.
+ * result of the @c ACE_Strategy_Acceptor and
+ * @c ACE_Process_Strategy.
  */
 class Counting_Service : public ACE_Svc_Handler <ACE_SOCK_STREAM, ACE_NULL_SYNCH>
 {
@@ -54,7 +54,7 @@ protected:
 
   /// @name Reactor and acceptor hooks
   /// @{
-  /// Hook called by the <Reactor> when data arrives from the client.
+  /// Hook called by the @c Reactor when data arrives from the client.
   int handle_input (ACE_HANDLE p = ACE_INVALID_HANDLE) override;
 
   /// Closing down

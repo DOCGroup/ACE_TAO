@@ -85,7 +85,7 @@ public:
   Accept_Strategy (CACHED_CONNECT_STRATEGY &caching_connect_strategy);
 
   /**
-   * Initialize the <peer_acceptor_> with <local_addr>.  If the
+   * Initialize the @c peer_acceptor_ with @a local_addr.  If the
    * process runs out of descriptors, the unsed svc_handlers from the
    * CONNECTION CACHE are removed.
    */
@@ -93,7 +93,7 @@ public:
             bool restart = false) override;
 
   /**
-   * The default behavior delegates to the <accept> method of the
+   * The default behavior delegates to the @a accept method of the
    * PEER_ACCEPTOR. A check is made here for the process running out
    * of file descriptors. If so, the CONNECTION CACHE is purged of
    * some idle svc_handlers.

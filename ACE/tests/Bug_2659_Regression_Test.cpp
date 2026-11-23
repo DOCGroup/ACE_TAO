@@ -5,7 +5,7 @@
  *     Reproduces the problems reported in bug 2659:
  *      https://github.com/DOCGroup/bugzilla/issues/2659
  *
- *  @author Ciju John <johnc at ociweb>
+ *  @author Ciju John (johnc at ociweb)
  */
 
 #include "test_config.h"

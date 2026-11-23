@@ -49,7 +49,7 @@ protected:
    */
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
 
-  /// This is called when an asynchronous <write> to the socket
+  /// This is called when an asynchronous @c write to the socket
   /// completes.
   void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
 

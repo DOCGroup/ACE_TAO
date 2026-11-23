@@ -2,14 +2,14 @@
 /**
  *  @file    Process_Strategy_Test.cpp
  *
- *   This is a test of the <ACE_Strategy_Acceptor> and
- *   <ACE_File_Lock> classes.  The <ACE_Strategy_Acceptor> uses
- *   either the <ACE_Process_Strategy> (which forks a
+ *   This is a test of the @c ACE_Strategy_Acceptor and
+ *   @c ACE_File_Lock classes.  The @c ACE_Strategy_Acceptor uses
+ *   either the @c ACE_Process_Strategy (which forks a
  *   process-per-connection and runs as a concurrent server
- *   process), the <ACE_Thread_Strategy> (which spawns a
+ *   process), the @c ACE_Thread_Strategy (which spawns a
  *   thread-per-connection and runs as a concurrent server thread),
- *   or <ACE_Reactive_Strategy> (which register the <Svc_Handler>
- *   with the <Reactor> and runs in the main thread of control as an
+ *   or @c ACE_Reactive_Strategy (which register the @c Svc_Handler
+ *   with the @c Reactor and runs in the main thread of control as an
  *   iterative server).  This server queries and increments a
  *   "counting value" in a file.
  *

@@ -2,10 +2,10 @@
 /**
  *  @file    Hash_Map_Manager_Test.cpp
  *
- *    This test illustrates the use of <ACE_Hash_Map_Manager> to
+ *    This test illustrates the use of @c ACE_Hash_Map_Manager to
  *    maintain a hash table using strings.  In addition, it also
- *    illustrates how the <ACE_Static_Allocator> works in
- *    conjunction with the <ACE_Hash_Map_Manager>.
+ *    illustrates how the @c ACE_Static_Allocator works in
+ *    conjunction with the @c ACE_Hash_Map_Manager.
  *
  *  @author James Hu <jxh@cs.wustl.edu> and Douglas C. Schmidt <d.schmidt@vanderbilt.edu>
  */

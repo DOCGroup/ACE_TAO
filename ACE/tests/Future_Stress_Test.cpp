@@ -5,8 +5,8 @@
  *  This example tests the ACE Future set() and get() operations in
  *  multithreaded environment and concurrent access.
  *
- *  Usage: Future_Stress_Test [-t <duration in seconds>]
- *            [-n <number of threads>]
+ *  Usage: Future_Stress_Test [-t @a duration in seconds]
+ *            [-n @a number of threads]
  *
  *  @see https://github.com/DOCGroup/ACE_TAO/issues/2163
  *

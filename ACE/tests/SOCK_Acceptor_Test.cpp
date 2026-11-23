@@ -2,7 +2,7 @@
 /**
  *  @file    SOCK_Acceptor_Test.cpp
  *
- *   This is a test of the <ACE_SOCK_Acceptor> class.
+ *   This is a test of the @c ACE_SOCK_Acceptor class.
  *
  *  @author Steve Huston <shuston@riverace.com>
  */

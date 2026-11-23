@@ -2,7 +2,7 @@
 /**
  *  @file    MM_Shared_Memory_Test.cpp
  *
- *   This is a simple test of <ACE_Shared_Memory_MM>.  The test
+ *   This is a simple test of @c ACE_Shared_Memory_MM.  The test
  *   forks two processes or spawns two threads (depending upon the
  *   platform) and then executes child and parent allowing them to
  *   exchange data using shared memory. No user input is required as

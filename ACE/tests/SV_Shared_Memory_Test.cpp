@@ -2,8 +2,8 @@
 /**
  *  @file    SV_Shared_Memory_Test.cpp
  *
- *   This is a simple test of <ACE_SV_Shared_Memory> and
- *   <ACE_Malloc> using the <ACE_Shared_Memory_Pool>.  The test
+ *   This is a simple test of @c ACE_SV_Shared_Memory and
+ *   @c ACE_Malloc using the @c ACE_Shared_Memory_Pool.  The test
  *   forks two processes and then executes client and server
  *   allowing them to exchange data using shared memory. No user
  *   input is required as far as command line arguments are

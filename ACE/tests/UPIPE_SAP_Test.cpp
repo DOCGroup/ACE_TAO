@@ -2,7 +2,7 @@
 /**
  *  @file    UPIPE_SAP_Test.cpp
  *
- *    This is a test that uses <ACE_UPIPE_SAP> and <ACE_Thread> for
+ *    This is a test that uses @c ACE_UPIPE_SAP and @c ACE_Thread for
  *    intra-process communication.
  *
  *  @author Gerhard Lenzer <Gerhard.Lenzer@med.siemens.de>

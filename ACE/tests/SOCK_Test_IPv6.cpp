@@ -1,8 +1,8 @@
 /**
  * @file SOCK_Test_IPv6.cpp
  *
- * @brief This is a test of the <ACE_SOCK_Acceptor> and
- * <ACE_SOCK_Connector> classes.
+ * @brief This is a test of the @c ACE_SOCK_Acceptor and
+ * @c ACE_SOCK_Connector classes.
  *
  * The test forks two processes or  spawns two threads (depending upon
  * the platform) and then executes client and server allowing them to

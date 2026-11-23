@@ -4,7 +4,7 @@
  *
  *  This test check the Based_Pointer and Based_Pointer_repository classes.
  *
- *  @author Steve Williams  <steve@telxio>
+ *  @author Steve Williams (steve at telxio)
  */
 
 #include "test_config.h"
