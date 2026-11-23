@@ -1055,7 +1055,7 @@ TAO_Connector::new_connection_is_ok (size_t busy_count)
     return true;
   }
 
-  unsigned int mux_limit = this->orb_core_->resource_factory ()
+  unsigned int const mux_limit = this->orb_core_->resource_factory ()
     ->max_muxed_connections ();
 
   return mux_limit == 0 || busy_count < mux_limit;
