@@ -275,7 +275,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                ACE_TCHAR* name = argv[curarg];
 
                ACE_TCHAR *err {};
-               long limit = ACE_OS::strtol (name, &err, 10);
+               long const limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
                    this->report_option_value_error (
@@ -299,7 +299,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                ACE_TCHAR* name = argv[curarg];
 
                ACE_TCHAR *err {};
-               long limit = ACE_OS::strtol (name, &err, 10);
+               long const limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
                    this->report_option_value_error (
@@ -324,7 +324,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                ACE_TCHAR* name = argv[curarg];
 
                ACE_TCHAR *err {};
-               long limit = ACE_OS::strtol (name, &err, 10);
+               long const limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
                    this->report_option_value_error (
@@ -348,7 +348,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                ACE_TCHAR* name = argv[curarg];
 
                ACE_TCHAR *err {};
-               long limit = ACE_OS::strtol (name, &err, 10);
+               long const limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
                    this->report_option_value_error (
@@ -372,7 +372,7 @@ TAO_Default_Client_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
                ACE_TCHAR* name = argv[curarg];
 
                ACE_TCHAR *err {};
-               long limit = ACE_OS::strtol (name, &err, 10);
+               long const limit = ACE_OS::strtol (name, &err, 10);
                if (err && *err != 0)
                  {
                    this->report_option_value_error (
