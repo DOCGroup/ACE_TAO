@@ -1319,7 +1319,6 @@ ACE_WFMO_Reactor::open (size_t size,
         }
     }
 
-  /* NOTE */
   // The order of the following two registrations is very important
 
   // Open the notification handler
