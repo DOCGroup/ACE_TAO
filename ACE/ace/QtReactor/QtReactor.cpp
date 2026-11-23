@@ -541,10 +541,10 @@ ACE_QtReactor::reset_timeout ()
                         SLOT (timeout_event ()));
 
 #if QT_VERSION >= 0x040000
-      this->qtime_->setSingleShot (1);
+      this->qtime_->setSingleShot (true);
       this->qtime_->start (max_wait_time->msec ());
 #else
-      this->qtime_->start (max_wait_time->msec (), 1);
+      this->qtime_->start (max_wait_time->msec (), true);
 #endif
     }
 }
