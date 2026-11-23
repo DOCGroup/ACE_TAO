@@ -25,7 +25,7 @@ namespace ACE
 
     Response::~Response() = default;
 
-    void Response::write(ostream& str) const
+    void Response::write(std::ostream& str) const
       {
         ACE_Array<ACE_CString>::size_type n = 0;
         str << this->status_;
@@ -48,7 +48,7 @@ namespace ACE
           }
       }
 
-    bool Response::read(istream& str)
+    bool Response::read(std::istream& str)
       {
         int ch;
         str >> this->status_;

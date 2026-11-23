@@ -251,7 +251,7 @@ namespace ACE
                                              ConnectionCacheValue::State& state);
 
               /// Looks up a matching cache entry for @a key and updates
-              /// <cacheval> with the entry state if found.
+              /// @a cacheval with the entry state if found.
               /// Returns true if found, false otherwise.
               bool find_connection (ConnectionKey const& key,
                                     ConnectionCacheValue& cacheval);

@@ -43,7 +43,7 @@ namespace ACE
         this->get_values (COOKIE, cookies);
       }
 
-    void Response::write(ostream& str) const
+    void Response::write(std::ostream& str) const
       {
         str << this->get_version ().c_str () << " "
             << static_cast<int>(this->status_.get_status ()) << " "
@@ -52,7 +52,7 @@ namespace ACE
         str << "\r\n";
       }
 
-    bool Response::read(istream& str)
+    bool Response::read(std::istream& str)
       {
         ACE_CString version;
         ACE_CString status;
