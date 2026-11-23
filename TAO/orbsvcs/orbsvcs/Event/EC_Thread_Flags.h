@@ -34,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
   in the flags, then inquiring for the scheduler type will yield the
   same result as an unknown or unset scheduler.
 
-  \bugs This should really be part of ACE or ACE_OS, and maybe someday
+  @bug This should really be part of ACE or ACE_OS, and maybe someday
   it will, but right now it's not.
 
 */

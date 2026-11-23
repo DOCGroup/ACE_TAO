@@ -140,7 +140,6 @@ public:
    * Obtain the QOS information for this filter, the default
    * implementation returns an invalid QOS.  Only the filters that
    * support scheduling information implement this method.
-   * @return Returns 0 on success and -1 on failure
    */
   virtual void get_qos_info (TAO_EC_QOS_Info& qos_info);
 

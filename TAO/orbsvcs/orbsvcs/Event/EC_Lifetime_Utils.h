@@ -57,7 +57,7 @@ public:
   TAO_EC_Object_Deactivator &operator= (TAO_EC_Object_Deactivator const &) = delete;
   TAO_EC_Object_Deactivator &operator= (TAO_EC_Object_Deactivator &&) = delete;
 
-  /// Set <id> which will be deactivated from <poa> in
+  /// Set @c id which will be deactivated from @c poa in
   /// the deactivator's destructor, unless deactivate () or
   /// disallow_deactivation () are invoked before the destruction.
   void set_values (PortableServer::POA_ptr poa,
@@ -74,7 +74,7 @@ public:
   /// when deactivate() is called.
   void disallow_deactivation ();
 
-  /// Perform deactivation now if <poa_> and <id_> values have been set, and
+  /// Perform deactivation now if @c poa_ and @c id_ values have been set, and
   /// deactivation hasn't happened yet nor has it been explicitly
   /// disallowed.  CORBA exceptions occurring during deactivation are
   /// not propagated.   Deactivation will NOT happen in the destructor.
@@ -91,7 +91,7 @@ private:
   PortableServer::ObjectId id_;
 
   /// Flag indicating whether deactivation will be attempted.
-  /// The flag is set to false if <poa_> and <id_> haven't been set
+  /// The flag is set to false if @c poa_ and @c id_ haven't been set
   /// yet, or if deactivation already happened, or if
   /// disallow_deactivation () method is invoked.
   bool deactivate_ {};
@@ -156,7 +156,7 @@ public:
   TAO_EC_ORB_Holder &operator= (TAO_EC_ORB_Holder const &) = delete;
   TAO_EC_ORB_Holder &operator= (TAO_EC_ORB_Holder &&) = delete;
 
-  /// Set the ORB to be destroyed in destructor to <orb_var>.  If
+  /// Set the ORB to be destroyed in destructor to @c orb_var.  If
   /// TAO_EC_ORB_Holder already held an orb prior to invocation of
   /// this method, that orb is NOT destroyed.
   void init (CORBA::ORB_var orb_var);

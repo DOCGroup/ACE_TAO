@@ -45,7 +45,7 @@ public:
   /// @{
   /// Messages received by this EH will be forwarded to the @a recv.
   /*
-   * See comments for <receiver_> data member on why raw pointer is
+   * See comments for @c receiver_ data member on why raw pointer is
    * used for the @a recv argument.
    */
   explicit TAO_ECG_UDP_EH (TAO_ECG_Dgram_Handler *recv);
@@ -64,8 +64,8 @@ public:
   int shutdown () override;
   /// @}
 
-  /// Main method - reactor callback.  Notify <receiver_> that
-  /// <dgram_> is ready for reading.
+  /// Main method - reactor callback.  Notify @c receiver_ that
+  /// @c dgram_ is ready for reading.
   int handle_input (ACE_HANDLE fd) override;
 
   /**

@@ -79,7 +79,7 @@ private:
                             ACE_Pointer_Hash<RtecEventComm::PushConsumer_ptr>,
                             ACE_Equal_To<RtecEventComm::PushConsumer_ptr>, ACE_Null_Mutex>;
 
-  /// Tweak the default size of this map by #defining
+  /// Tweak the default size of this map by defining
   /// TAO_EC_TPC_DISPATCHING_DEFAULT_MAP_SIZE.
   MAPTYPE consumer_task_map_;
 

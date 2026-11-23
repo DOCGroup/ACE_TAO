@@ -59,7 +59,7 @@ public:
   /**
    * Constructor.  Messages received by this EH will be forwarded to
    * the \a recv.  \a net_if can be used to specify NIC where multicast
-   * messages are expected. \buf_sz would be used to alter the default
+   * messages are expected. @a buf_sz would be used to alter the default
    * buffer size.
    *
    * See comments for receiver_ data member on why raw pointer is
@@ -262,11 +262,11 @@ private:
 
   /// Event Channel Observer.  Detects changes in EC consumer subscriptions.
   /// ORDER DEPENDENCY: this member should be declared before
-  /// <auto_observer_disconnect_>.
+  /// @c auto_observer_disconnect_.
   PortableServer::Servant_var<Observer> observer_;
 
   /// Manages connection of our observer to the Event Channel.
-  /// ORDER DEPENDENCY: this member should be declared AFTER <observer_>.
+  /// ORDER DEPENDENCY: this member should be declared AFTER @c observer_.
   TAO_EC_Auto_Command<Observer_Disconnect_Command> auto_observer_disconnect_;
 };
 

@@ -44,7 +44,7 @@ class TAO_RTSchedEvent_Export TAO_EC_Sched_Filter : public TAO_EC_Filter
 public:
   /**
    * Constructor.
-   * It assumes ownership of the <body>, makes a copy of the other
+   * It assumes ownership of the @c body, makes a copy of the other
    * parameters
    */
   TAO_EC_Sched_Filter (char const *name,

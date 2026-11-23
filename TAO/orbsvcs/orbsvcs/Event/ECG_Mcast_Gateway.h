@@ -62,12 +62,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Service config file options:
  *
- * -ECGService <service>
+ * -ECGService service
  *  Valid values: sender, receiver, two_way
  *  Specifies whether this gateway should act as a multicast sender of
  *  the events or multicast receiver, or both.
  *
- * -ECGAddressServer <server_type>
+ * -ECGAddressServer server_type
  *  Valid values: basic, source, type
  *  Specifies what implementation of the address server should be used
  *  by the gateway.  basic - the same multicast address is returned for
@@ -77,7 +77,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  on the event type, according to the mapping provided at
  *  initialization.
  *
- * -ECGAddressServerArg <arg>
+ * -ECGAddressServerArg arg
  *  Valid value: arg is a string, whose format requirements are
  *  specific to the implementation of address server used.
  *  Arg is not interpreted by the gateway, but simply passed to the
@@ -85,7 +85,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  THIS OPTION MUST ALWAYS BE SPECIFIED BY THE USER (there is no
  *  default value for it)
  *
- * -ECGHandler <handler_type>
+ * -ECGHandler handler_type
  *  Valid values: basic, complex, udp
  *  Specifies what implementation of event handler should be used if
  *  gateway is acting as events receiver. basic - a simple event
@@ -94,13 +94,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *  events of interest to consumers.  udp - similar to basic handler,
  *  except listens on udp address as opposed to a multicast group.
  *
- * -ECGTTL <ttl>
+ * -ECGTTL ttl
  *  Valid values: a number > 0
  *  IP_Multicast time to live value that should be set on a sending socket.
  *  This option matters only if the gateway is acting as a sender of
  *  mcast messages.
  *
- * -ECGNIC <nic>
+ * -ECGNIC nic
  *  Valid values: name of the network interface
  *  This interface is used for sending and/or receiving multicast messages.
  *

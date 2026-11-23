@@ -230,7 +230,7 @@ protected:
  * the observer list.
  *
  * <H2>Memory Management</H2>
- * It assumes ownership of the <lock>, but not of the
+ * It assumes ownership of the @c lock, but not of the
  * Event_Channel.
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Reactive_ObserverStrategy :

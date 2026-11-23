@@ -159,13 +159,13 @@ public:
   /// @}
 
   /// Main method: read the data from @a dgram and either pass ready data
-  /// to @a cdr_processor or update the <request_map_> if the request
+  /// to @a cdr_processor or update the @c request_map_ if the request
   /// is not yet complete.
   /**
    * Returns 1 if data was read successfully and accepted by
-   * <cdr_processor> without errors.
+   * @c cdr_processor without errors.
    * Returns 0 if there were no errors, but no data has been passed to
-   * <cdr_processor>, either due to request being incomplete (not all
+   * @c cdr_processor, either due to request being incomplete (not all
    * fragments received), or it being a duplicate.
    * Returns -1 if there were errors.
    */
@@ -190,12 +190,12 @@ private:
                                            ACE_Null_Mutex>;
 
 private:
-  /// Returns 1 on success, 0 if <request_id> has already been
+  /// Returns 1 on success, 0 if @c request_id has already been
   /// received or is below current request range, and -1 on error.
   int mark_received (const ACE_INET_Addr &from,
                      CORBA::ULong request_id);
 
-  /// Returns 1 if complete request is received and <event> is
+  /// Returns 1 if complete request is received and @c event is
   /// populated, 0 if request has only partially been received or is a
   /// duplicate, and -1 on error.
   int process_fragment (const ACE_INET_Addr &from,
@@ -264,18 +264,18 @@ public:
   /// Allocates and initializes @c fragmented_requests_.
   int init (size_t size, size_t min_purge_count);
 
-  /// Returns pointer to a <fragmented_requests_> element
-  /// representing <request_id>.
+  /// Returns pointer to a @c fragmented_requests_ element
+  /// representing @c request_id.
   /**
-   * If <request_id> < <id_range_low> return 0.
-   * If <request_id> > <id_range_high>, shift the range so it
-   * includes <request_id>, purging incomplete requests as needed.
+   * If @c request_id is less than @c id_range_low, return 0.
+   * If @c request_id is greater than @c id_range_high, shift the range so it
+   * includes @c request_id, purging incomplete requests as needed.
    */
   TAO_ECG_UDP_Request_Entry ** get_request (CORBA::ULong request_id);
 
 private:
   /// Delete any outstanding requests with ids in the range
-  /// [<purge_first>, <purge_last>] from <fragmented_requests> and
+  /// @c purge_first through @c purge_last from @c fragmented_requests
   /// and reset their slots.
   void purge_requests (CORBA::ULong purge_first,
                        CORBA::ULong purge_last);
@@ -292,7 +292,7 @@ private:
   size_t size_ {};
 
   /// The range of request ids, currently represented in
-  /// <fragmented_requests>.
+  /// @c fragmented_requests.
   /// @{
   CORBA::ULong id_range_low_ {};
   CORBA::ULong id_range_high_ {};

@@ -34,6 +34,7 @@ class TAO_RTCORBAEvent_Export TAO_EC_RTCORBA_Factory : public TAO_EC_Factory
 public:
   /**
    * @param body The decorated factory.
+   * @param lanes The RTCORBA thread pool lanes used for dispatching.
    */
   TAO_EC_RTCORBA_Factory (TAO_EC_Factory *body,
                           const RTCORBA::ThreadpoolLanes &lanes);

@@ -29,9 +29,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * INITIALIZATION STRING FORMAT
  *
- * The string is a sequence of <key>@<value> pairs separated by
- * a single space, where <key> is event source (or type)
- * and <value> is the corresponding mcast address.  Example:
+ * The string is a sequence of key-value pairs separated by
+ * a single space, where key is event source (or type)
+ * and value is the corresponding mcast address.  Example:
  * "34@230.100.0.2:2300 45@230.100.123.43:2300"
  * The string above represents two key-value pairs.
  *
@@ -48,7 +48,7 @@ public:
   /*
    * (Constructor access is restricted to insure that all
    * TAO_ECG_Complex_Address_Server objects are heap-allocated.)
-   * <is_source_mapping> flag indicates whether this
+   * @c is_source_mapping flag indicates whether this
    * server maps based on event header source or event header type.
    */
   static PortableServer::Servant_var<TAO_ECG_Complex_Address_Server>
@@ -76,7 +76,7 @@ protected:
   /// Constructor (protected).  Clients can create new
   /// TAO_ECG_Complex_Address_Server objects using the static create()
   /// method.
-  /// <is_source_mapping> flag indicates whether this
+  /// @c is_source_mapping flag indicates whether this
   /// server maps based on event header source or event header type.
   explicit TAO_ECG_Complex_Address_Server (bool is_source_mapping = true);
 
