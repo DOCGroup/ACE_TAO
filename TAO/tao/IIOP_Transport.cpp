@@ -300,7 +300,7 @@ void
 TAO_IIOP_Transport::set_bidir_context_info (TAO_Operation_Details &opdetails)
 {
   // Get a handle to the acceptor registry
-  TAO_Acceptor_Registry &ar =
+  TAO_Acceptor_Registry const &ar =
     this->orb_core ()->lane_resources ().acceptor_registry ();
 
   IIOP::ListenPointList listen_point_list;

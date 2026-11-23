@@ -506,7 +506,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
       // If transport found, reference count is incremented on assignment
       TAO_Transport *base_transport {};
       size_t busy_count {};
-      TAO::Transport_Cache_Manager::Find_Result found =
+      TAO::Transport_Cache_Manager::Find_Result const found =
           tcm.find_transport (desc,
                               base_transport,
                               busy_count);
@@ -542,7 +542,7 @@ TAO_Connector::connect (TAO::Profile_Transport_Resolver *r,
             {
               if (TAO_debug_level > 4)
                 {
-                  TAO::Connection_Role cr = base_transport->opened_as ();
+                  TAO::Connection_Role const cr = base_transport->opened_as ();
 
                   TAOLIB_DEBUG ((LM_DEBUG,
                               ACE_TEXT("TAO (%P|%t) - Transport_Connector::connect, ")

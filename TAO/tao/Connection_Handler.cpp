@@ -217,7 +217,7 @@ TAO_Connection_Handler::handle_output_eh (ACE_HANDLE, ACE_Event_Handler * eh)
     }
 
   // The default constraints are to never block.
-  TAO::Transport::Drain_Constraints dc;
+  TAO::Transport::Drain_Constraints const dc;
   if (this->transport ()->handle_output (dc) == TAO_Transport::DR_ERROR)
     {
       return_value = -1;
