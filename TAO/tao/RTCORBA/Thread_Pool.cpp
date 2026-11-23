@@ -193,7 +193,7 @@ TAO_Thread_Lane::new_dynamic_thread ()
                     this->lock_,
                     false);
 
-  TAO_Thread_Pool_Manager &manager = this->pool_.manager ();
+  TAO_Thread_Pool_Manager const &manager = this->pool_.manager ();
 
   if (!manager.orb_core ().has_shutdown () && !this->shutdown_&&
       this->dynamic_threads_.thr_count () < this->dynamic_threads_number_)
@@ -263,16 +263,16 @@ TAO_Thread_Lane::validate_and_map_priority ()
       throw ::CORBA::BAD_PARAM ();
     }
 
-  CORBA::ORB_ptr orb = this->pool_.manager ().orb_core ().orb ();
+  CORBA::ORB_ptr const orb = this->pool_.manager ().orb_core ().orb ();
 
   // Get the priority mapping manager.
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     orb->resolve_initial_references (TAO_OBJID_PRIORITYMAPPINGMANAGER);
 
-  TAO_Priority_Mapping_Manager_var mapping_manager =
+  TAO_Priority_Mapping_Manager_var const mapping_manager =
     TAO_Priority_Mapping_Manager::_narrow (obj.in ());
 
-  RTCORBA::PriorityMapping *pm = mapping_manager.in ()->mapping ();
+  RTCORBA::PriorityMapping * const pm = mapping_manager.in ()->mapping ();
 
   // Map CORBA priority to native priority.
   CORBA::Boolean const result =
