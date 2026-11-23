@@ -172,8 +172,8 @@ run_main (int, ACE_TCHAR *[])
 #endif /* ACE_LITTLE_ENDIAN */
 
   test_val = 0x0123;
-  ACE_UINT32 test_val_2 = 0x01234567;
-  ACE_UINT64 test_val_3 = 0x0123456789abcdef;
+  ACE_UINT32 const test_val_2 = 0x01234567;
+  ACE_UINT64 const test_val_3 = 0x0123456789abcdef;
   errors +=
     check (ACE_TEXT ("ACE_SWAP_WORD(0x0123) is %u%s"), ACE_SWAP_WORD (test_val), 0x2301);
   errors +=
