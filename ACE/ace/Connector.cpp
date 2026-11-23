@@ -564,7 +564,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::cancel (SVC_HANDLER *sh)
     }
 
   // find_handler() increments handler's refcount; ensure we decrement it.
-  ACE_Event_Handler_var safe_handler (handler);
+  ACE_Event_Handler_var const safe_handler (handler);
 
   NBCH *nbch =
     dynamic_cast<NBCH *> (handler);
@@ -777,7 +777,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::close ()
         }
 
       // find_handler() incremented handler's refcount; ensure it's decremented
-      ACE_Event_Handler_var safe_handler (handler);
+      ACE_Event_Handler_var const safe_handler (handler);
       NBCH *nbch = dynamic_cast<NBCH *> (handler);
       if (nbch == nullptr)
         {
