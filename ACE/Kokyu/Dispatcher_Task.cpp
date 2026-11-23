@@ -133,7 +133,7 @@ Dispatcher_Task::svc ()
             }
         }
 
-      ACE_Message_Block_Unique_Ptr message_block (mb);
+      ACE_Message_Block_Unique_Ptr const message_block (mb);
       Dispatch_Queue_Item * const qitem =
         dynamic_cast<Dispatch_Queue_Item*> (message_block.get ());
 
@@ -218,7 +218,7 @@ Dispatcher_Task::discard_pending_commands ()
           return -1;
         }
 
-      ACE_Message_Block_Unique_Ptr message_block (mb);
+      ACE_Message_Block_Unique_Ptr const message_block (mb);
       Dispatch_Queue_Item * const qitem =
         dynamic_cast<Dispatch_Queue_Item*> (message_block.get ());
       if (qitem != nullptr)
