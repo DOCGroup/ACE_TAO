@@ -149,13 +149,13 @@ TAO_Linear_Priority_Mapping::to_CORBA (RTCORBA::NativePriority native_priority,
       return false;
     }
 
-  int delta = this->max_ - this->min_;
+  int const delta = this->max_ - this->min_;
   if (delta != 0)
     {
-      int numerator = (RTCORBA::maxPriority - RTCORBA::minPriority)
+      int const numerator = (RTCORBA::maxPriority - RTCORBA::minPriority)
                             * (native_priority - this->min_);
 
-      div_t corba_offset = div (numerator, delta);
+      div_t const corba_offset = div (numerator, delta);
 
       int rounding {};
 
