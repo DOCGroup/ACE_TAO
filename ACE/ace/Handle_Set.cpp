@@ -264,7 +264,11 @@ ACE_Handle_Set_Iterator::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 #if defined(ACE_HANDLE_SET_USES_FD_ARRAY) || !defined(ACE_HAS_BIG_FD_SET)
+#if defined (ACE_HANDLE_SET_USES_FD_ARRAY)
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandle_index_ = %u"), this->handle_index_));
+#else
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nhandle_index_ = %d"), this->handle_index_));
+#endif /* ACE_HANDLE_SET_USES_FD_ARRAY */
 #elif defined(ACE_HAS_BIG_FD_SET)
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nword_max_ = %d"), this->word_max_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nword_val_ = %d"), this->word_val_));
