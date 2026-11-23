@@ -285,7 +285,7 @@ bool operator>= (OctetStr const &lhs, OctetStr const &rhs)
 
 bool operator== (OctetStr const &lhs, char const *rhs)
 {
-   OctetStr to( rhs);
+   OctetStr const to( rhs);
    if( lhs.left_comparison( to.smival.value.string.len,to)==0)
        {
          return true;
@@ -298,7 +298,7 @@ bool operator== (OctetStr const &lhs, char const *rhs)
 
 bool operator!= (OctetStr const &lhs, char const *rhs)
 {
-   OctetStr to( rhs);
+   OctetStr const to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)!=0)
        {
          return true;
@@ -311,7 +311,7 @@ bool operator!= (OctetStr const &lhs, char const *rhs)
 
 bool operator< (OctetStr const &lhs, char const *rhs)
 {
-   OctetStr to( rhs);
+   OctetStr const to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)<0)
        {
          return true;
@@ -324,7 +324,7 @@ bool operator< (OctetStr const &lhs, char const *rhs)
 
 bool operator<= (OctetStr const &lhs, char *rhs)
 {
-   OctetStr to( rhs);
+   OctetStr const to( rhs);
    if (( lhs.left_comparison( to.smival.value.string.len,to)<0) ||
        ( lhs.left_comparison( to.smival.value.string.len,to)==0))
       {
@@ -338,7 +338,7 @@ bool operator<= (OctetStr const &lhs, char *rhs)
 
 bool operator> (OctetStr const &lhs, char const *rhs)
 {
-   OctetStr to( rhs);
+   OctetStr const to( rhs);
    if ( lhs.left_comparison( to.smival.value.string.len,to)>0)
        {
          return true;
@@ -351,7 +351,7 @@ bool operator> (OctetStr const &lhs, char const *rhs)
 
 bool operator>= (OctetStr const &lhs, char const *rhs)
 {
-   OctetStr to( rhs);
+   OctetStr const to( rhs);
    if (( lhs.left_comparison( to.smival.value.string.len,to)>0) ||
        ( lhs.left_comparison( to.smival.value.string.len,to)==0))
       {

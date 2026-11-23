@@ -54,7 +54,7 @@ Snmp::Snmp (unsigned short port)
 {
   ACE_TRACE("Snmp::Snmp");
 
-  ACE_INET_Addr addr(port); // any port,address is ok
+  ACE_INET_Addr const addr(port); // any port,address is ok
   if (iv_snmp_session_.open(addr) < 0)
     {
       last_transaction_status_ = errno; // open udp/ipv4 socket

@@ -184,7 +184,7 @@ int wpdu::set_trap_info (snmp_pdu *raw_pdu, Pdu const &pdu) const
   char localHostName[MAXHOSTNAMELEN];
   Snmp::get_host_name(localHostName, MAXHOSTNAMELEN);
   if (std::strlen (localHostName) > 0) {
-    GenAddress addr(localHostName);
+    GenAddress const addr(localHostName);
     OctetStr octet;
     addr.to_octet(octet);
     std::memcpy (&raw_pdu->agent_addr.sin_addr, octet.data (), octet.length ());
@@ -386,7 +386,7 @@ int wpdu::get_pdu (Pdu &pdu, snmp_version &version)
 
   // max value a client can send us - TODO: replace this with an
   // api to get actual string length
-  int status = cmu_snmp::parse( raw_pdu, (unsigned char *)iovec_.iov_base,
+  int const status = cmu_snmp::parse( raw_pdu, (unsigned char *)iovec_.iov_base,
                      community_name, comm_len,
                      version, iovec_.iov_len);
   if (status != 0)
@@ -427,7 +427,7 @@ int wpdu::restore_vbs (Pdu &pdu, snmp_pdu const *raw_pdu) const
     case sNMP_SYNTAX_OCTETS:
      case sNMP_SYNTAX_OPAQUE:
     {
-       OctetStr octets( (char *) vp->val.string,
+       OctetStr const octets( (char *) vp->val.string,
                          (long) vp->val_len);
        tempvb.set_value( octets);
     }
@@ -436,7 +436,7 @@ int wpdu::restore_vbs (Pdu &pdu, snmp_pdu const *raw_pdu) const
     // object id
     case sNMP_SYNTAX_OID:
     {
-         Oid oid( (unsigned long*) vp->val.objid,
+         Oid const oid( (unsigned long*) vp->val.objid,
               (int) vp->val_len);
       tempvb.set_value( oid);
     }
@@ -445,7 +445,7 @@ int wpdu::restore_vbs (Pdu &pdu, snmp_pdu const *raw_pdu) const
     // timeticks
     case sNMP_SYNTAX_TIMETICKS:
     {
-       TimeTicks timeticks( (unsigned long) *(vp->val.integer));
+       TimeTicks const timeticks( (unsigned long) *(vp->val.integer));
        tempvb.set_value( timeticks);
     }
     break;
@@ -453,7 +453,7 @@ int wpdu::restore_vbs (Pdu &pdu, snmp_pdu const *raw_pdu) const
     // Gauge32
     case sNMP_SYNTAX_GAUGE32:
     {
-       Gauge32 gauge32( (unsigned long) *(vp->val.integer));
+       Gauge32 const gauge32( (unsigned long) *(vp->val.integer));
        tempvb.set_value( gauge32);
     }
     break;
@@ -461,7 +461,7 @@ int wpdu::restore_vbs (Pdu &pdu, snmp_pdu const *raw_pdu) const
     // 32 bit counter
     case sNMP_SYNTAX_CNTR32:
     {
-        Counter32 counter32( (unsigned long) *(vp->val.integer));
+        Counter32 const counter32( (unsigned long) *(vp->val.integer));
        tempvb.set_value( counter32);
       }
     break;
@@ -475,7 +475,7 @@ int wpdu::restore_vbs (Pdu &pdu, snmp_pdu const *raw_pdu) const
                         vp->val.string[1],
                         vp->val.string[2],
                         vp->val.string[3]);
-       IpAddress ipaddress( buffer);
+       IpAddress const ipaddress( buffer);
        tempvb.set_value( ipaddress);
     }
     break;
@@ -483,7 +483,7 @@ int wpdu::restore_vbs (Pdu &pdu, snmp_pdu const *raw_pdu) const
     // 32 bit integer
     case sNMP_SYNTAX_INT:
     {
-       SnmpInt32 int32( (long) *(vp->val.integer));
+       SnmpInt32 const int32( (long) *(vp->val.integer));
       tempvb.set_value( int32);
     }
     break;
@@ -491,7 +491,7 @@ int wpdu::restore_vbs (Pdu &pdu, snmp_pdu const *raw_pdu) const
     // 32 bit unsigned integer
     case sNMP_SYNTAX_UINT32:
     {
-      SnmpUInt32 uint32( (unsigned long) *(vp->val.integer));
+      SnmpUInt32 const uint32( (unsigned long) *(vp->val.integer));
       tempvb.set_value( uint32);
     }
      break;

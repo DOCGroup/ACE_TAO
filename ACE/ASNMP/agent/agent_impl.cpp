@@ -88,7 +88,7 @@ int agent_impl::get_response (Vb &vb)
     {
       ACE_Time_Value tv {};
       agent_clock_.elapsed_time (tv);
-      TimeTicks tt (tv.msec ());
+      TimeTicks const tt (tv.msec ());
       vb.set_value (tt);
     }
   else if (oid == sysContact)
@@ -148,7 +148,7 @@ int agent_impl::process_requests ()
   ACE_TRACE ("agent_impl::process_requests");
   ACE_Reactor reactor;
 
-  ACE_Sig_Action sa (sig_handler, SIGINT);
+  ACE_Sig_Action const sa (sig_handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
   // Read data from other side.

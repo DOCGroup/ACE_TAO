@@ -883,7 +883,7 @@ u_char * asn1::parse_unsigned_int64(u_char *data,
   u_char *bufp = data;
   u_long            asn_length;
   u_long low = 0, high = 0;
-  int intsize = 4;
+  int const intsize = 4;
 
   if (countersize != (int) sizeof(struct counter64)){
     ASNERROR("not right size");

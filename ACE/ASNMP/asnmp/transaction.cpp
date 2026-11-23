@@ -22,7 +22,7 @@ transaction::transaction (Pdu const &pdu, UdpTarget const &target,
   UdpAddress udp;
   target.get_address (udp);
   // via string conversion "dotted-quad:port"
-  ACE_INET_Addr tmp (udp);
+  ACE_INET_Addr const tmp (udp);
   addr_ = tmp;
 }
 
@@ -94,7 +94,7 @@ int transaction::run (transaction_result *r)
     retry_counter_ = 0;
 
     // register a time handler and a socket with this
-    ACE_Time_Value to (params_.get_timeout ());
+    ACE_Time_Value const to (params_.get_timeout ());
     if (reactor->schedule_timer (this, nullptr, to, to) == -1)
     {
       return SNMP_CLASS_INTERNAL_ERROR;
@@ -173,7 +173,7 @@ int transaction::result (Pdu &pdu, char *comm_str, ACE_INET_Addr *from)
  snmp_version ver;
 
  // return comm str and from address of incoming pdu if requested
- int rc = tmp.get_pdu(pdu, ver);
+ int const rc = tmp.get_pdu(pdu, ver);
  if (comm_str != nullptr)
  {
    std::strcpy (comm_str, reinterpret_cast<char const *> (tmp.get_community ()));
@@ -192,12 +192,12 @@ transaction::transaction (ACE_SOCK_Dgram &io)
 
 int transaction::send ()
 {
-  iovec io = wp_.get_buffer();
+  iovec const io = wp_.get_buffer();
   if (io.iov_len == 0) {
     // NO DATA ?
     return -1;
   }
-  ssize_t rc = session_.send (io.iov_base, io.iov_len, addr_ , 0);
+  ssize_t const rc = session_.send (io.iov_base, io.iov_len, addr_ , 0);
   return rc;
 }
 
