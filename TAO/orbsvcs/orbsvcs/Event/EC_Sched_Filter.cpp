@@ -134,7 +134,7 @@ TAO_EC_Sched_Filter::add_dependencies (RtecEventComm::EventHeader const &header,
 {
   this->init_rt_info ();
 
-  int matches = this->body_->add_dependencies (header,
+  int const matches = this->body_->add_dependencies (header,
                                                qos_info);
 
   if (matches != 0)

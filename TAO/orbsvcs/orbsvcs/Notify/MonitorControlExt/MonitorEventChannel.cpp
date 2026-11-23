@@ -339,7 +339,7 @@ TAO_MonitorEventChannel::register_statistic (ACE_CString const &name,
 {
   // Add the statistic to the registry and
   // add the name to the statistic names list.
-  bool added = Monitor_Point_Registry::instance ()->add (stat);
+  bool const added = Monitor_Point_Registry::instance ()->add (stat);
 
   if (added)
     {
@@ -356,7 +356,7 @@ TAO_MonitorEventChannel::unregister_statistic (ACE_CString const &name)
 {
   // Remove the statistic from the registry and if it's successful
   // remove the name from the statistic names list.
-  bool removed = Monitor_Point_Registry::instance ()->remove (name.c_str ());
+  bool const removed = Monitor_Point_Registry::instance ()->remove (name.c_str ());
 
   if (removed)
     {

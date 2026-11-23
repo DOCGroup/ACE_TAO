@@ -50,7 +50,7 @@ TAO_EC_RTCORBA_Dispatching::shutdown ()
 {
   for (CORBA::ULong i {}; i != this->lanes_.length (); ++i)
     {
-      int nthreads =
+      int const nthreads =
         this->thread_manager_.num_threads_in_task (std::addressof (this->tasks_[i]));
       if (nthreads <= 0)
       {
