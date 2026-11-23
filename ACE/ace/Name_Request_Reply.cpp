@@ -163,7 +163,7 @@ ACE_Time_Value
 ACE_Name_Request::timeout () const
 {
   ACE_TRACE ("ACE_Name_Request::timeout");
-  time_t sec = ACE_Utils::truncate_cast<time_t> (this->transfer_.sec_timeout_);
+  time_t const sec = ACE_Utils::truncate_cast<time_t> (this->transfer_.sec_timeout_);
   return ACE_Time_Value (sec, this->transfer_.usec_timeout_);
 }
 
@@ -229,9 +229,9 @@ ACE_Name_Request::encode (void *&buf)
   ACE_TRACE ("ACE_Name_Request::encode");
   // Compute the length *before* doing the marshaling.
 
-  ACE_UINT32 len = this->length ();
+  ACE_UINT32 const len = this->length ();
 
-  size_t nv_data_len =
+  size_t const nv_data_len =
     (this->transfer_.name_len_ + this->transfer_.value_len_)
     / sizeof (ACE_WCHAR_T);
 
@@ -277,7 +277,7 @@ ACE_Name_Request::decode ()
   this->transfer_.value_len_ = ACE_NTOHL (this->transfer_.value_len_);
   this->transfer_.type_len_ = ACE_NTOHL (this->transfer_.type_len_);
 
-  size_t nv_data_len =
+  size_t const nv_data_len =
     (this->transfer_.name_len_ + this->transfer_.value_len_)
     / sizeof (ACE_WCHAR_T);
 
@@ -488,7 +488,7 @@ int
 ACE_Name_Reply::encode (void *&buf)
 {
   ACE_TRACE ("ACE_Name_Reply::encode");
-  int len = this->length (); // Get length *before* marshaling.
+  int const len = this->length (); // Get length *before* marshaling.
 
   this->transfer_.length_ = ACE_HTONL (this->transfer_.length_);
   this->transfer_.type_ = ACE_HTONL (this->transfer_.type_);
