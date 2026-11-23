@@ -164,7 +164,7 @@ FileImpl::Descriptor::read (CORBA::Long num_bytes)
   ACE_HANDLE const file_descriptor = this->fd ();
 
   CORBA::Octet *buffer = File::Descriptor::DataBuffer::allocbuf (num_bytes);
-  int length = ACE_OS::read (file_descriptor, buffer, num_bytes);
+  int const length = ACE_OS::read (file_descriptor, buffer, num_bytes);
 
   if (length > 0)
     {
@@ -184,7 +184,7 @@ FileImpl::Descriptor::lseek (CORBA::ULong offset,
 {
   ACE_HANDLE const file_descriptor = this->fd ();
 
-  CORBA::Long result = (CORBA::Long) ACE_OS::lseek (file_descriptor,
+  CORBA::Long const result = (CORBA::Long) ACE_OS::lseek (file_descriptor,
                                                     offset,
                                                     whence);
   if (result == -1)
