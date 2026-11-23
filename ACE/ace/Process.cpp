@@ -687,7 +687,7 @@ ACE_Process::wait (const ACE_Time_Value &tv,
 #else /* !ACE_WIN32 && !ACE_LACKS_UNIX_SIGNALS */
   if (tv == ACE_Time_Value::zero)
     {
-      pid_t retv =
+      pid_t const retv =
         ACE_OS::waitpid (this->child_id_,
                          &this->exit_code_,
                          WNOHANG);
@@ -999,7 +999,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
   va_start (argp, format);
 
   // Add the rest of the varargs.
-  int status = ACE_OS::vsnprintf (stack_buf, DEFAULT_COMMAND_LINE_BUF_LEN, format, argp);
+  int const status = ACE_OS::vsnprintf (stack_buf, DEFAULT_COMMAND_LINE_BUF_LEN, format, argp);
   // End varargs.
   va_end (argp);
 
@@ -1033,7 +1033,7 @@ ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
   size_t const buflen = ACE_OS::strlen (variable_name) + ACE_OS::strlen (format) + 2;
   ACE_TCHAR *newformat {};
   ACE_NEW_RETURN (newformat, ACE_TCHAR[buflen], -1);
-  std::unique_ptr<ACE_TCHAR[]> safe_newformat (newformat);
+  std::unique_ptr<ACE_TCHAR[]> const safe_newformat (newformat);
 
   // Add in the variable name.
   ACE_OS::snprintf (safe_newformat.get (), buflen,
