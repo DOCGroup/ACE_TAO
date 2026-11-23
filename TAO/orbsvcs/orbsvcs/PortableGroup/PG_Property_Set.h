@@ -93,8 +93,10 @@ namespace TAO
     /**
      * general purpose find. returns a pointer to an Any
      *  if templated methods were available:
+     * @code
      *    template <typename TYPE >
      *    int find (ACE_CString const & key, TYPE & value) const;
+     * @endcode
      *    instead, see global function below
      * @param key the (simple) name of the property
      * @param pValue an out parameter to receive a pointer to the Any containing the value
