@@ -174,7 +174,7 @@ BE_GlobalData::parse_args (long &i, char **av)
         if (av[i][2] == 'i' && av[i][3] == '\0')
           {
             // ... processing of included IDL files.
-            be_global->do_included_files (0);
+            be_global->do_included_files (false);
           }
         else
           {
