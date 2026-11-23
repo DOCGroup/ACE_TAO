@@ -58,7 +58,7 @@ TAO_Acceptor::handle_accept_error (ACE_Event_Handler* base_acceptor)
 
       // Schedule a timer so that we can resume the handler in hopes
       // that some file handles have freed up.
-      ACE_Time_Value timeout (this->error_retry_delay_);
+      ACE_Time_Value const timeout (this->error_retry_delay_);
       reactor->schedule_timer (base_acceptor, nullptr, timeout);
     }
 
