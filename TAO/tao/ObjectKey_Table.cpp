@@ -49,7 +49,7 @@ TAO::ObjectKey_Table::destroy ()
                         this->lock_,
                         0);
 
-      TABLE::ITERATOR end_iter = this->table_.end ();
+      TABLE::ITERATOR const end_iter = this->table_.end ();
       TABLE::ITERATOR start;
 
       while ((start = this->table_.begin ()) != end_iter)

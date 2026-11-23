@@ -94,7 +94,7 @@ TAO_Exclusive_TMS::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       return 0;
     }
 
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd (this->rd_.get ());
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> const rd (this->rd_.get ());
   this->request_id_ = 0; // @@ What is a good value???
   this->rd_.release ();
 
@@ -121,7 +121,7 @@ TAO_Exclusive_TMS::reply_timed_out (CORBA::ULong request_id)
       return 0;
     }
 
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd (this->rd_.get ());
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> const rd (this->rd_.get ());
   this->request_id_ = 0; // @@ What is a good value???
   this->rd_.release ();
 
