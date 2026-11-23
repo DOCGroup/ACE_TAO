@@ -97,7 +97,7 @@ Connection_Handler::timeout (long to)
 long
 Connection_Handler::timeout ()
 {
-  long old_timeout = this->timeout_;
+  long const old_timeout = this->timeout_;
   this->timeout_ *= 2;
 
   if (this->timeout_ > this->max_timeout_)

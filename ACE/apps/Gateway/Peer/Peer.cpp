@@ -779,8 +779,8 @@ Peer_Connector::open_connector (Peer_Handler *&peer_handler,
                   Peer_Handler,
                   -1);
 
-  ACE_INET_Addr addr (port,
-                      Options::instance ()->connector_host ());
+  ACE_INET_Addr const addr (port,
+                            Options::instance ()->connector_host ());
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("connecting to %C:%d\n"),

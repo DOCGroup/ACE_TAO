@@ -24,7 +24,7 @@ Consumer_Handler::handle_input (ACE_HANDLE)
   // Do not set FAILED state at here, just at real failed place.
 
   char buf[BUFSIZ];
-  ssize_t received = this->peer ().recv (buf, sizeof buf);
+  ssize_t const received = this->peer ().recv (buf, sizeof buf);
 
   switch (received)
     {
@@ -65,7 +65,7 @@ Consumer_Handler::nonblk_put (ACE_Message_Block *event)
   // Event_List and ask the ACE_Reactor to inform us (via
   // handle_output()) when it is possible to try again.
 
-  ssize_t n = this->send (event);
+  ssize_t const n = this->send (event);
 
   if (n == -1)
     {
@@ -121,8 +121,8 @@ Consumer_Handler::send (ACE_Message_Block *event)
               event->length (),
               this->connection_id ()));
 
-  ssize_t len = event->length ();
-  ssize_t n = this->peer ().send (event->rd_ptr (), len);
+  ssize_t const len = event->length ();
+  ssize_t const n = this->peer ().send (event->rd_ptr (), len);
 
   if (n <= 0)
     {
@@ -354,7 +354,7 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
   ssize_t header_received = 0;
 
   const size_t HEADER_SIZE = sizeof (Event_Header);
-  ssize_t header_bytes_left_to_read =
+  ssize_t const header_bytes_left_to_read =
     HEADER_SIZE - this->msg_frag_->length ();
 
   if (header_bytes_left_to_read > 0)
@@ -413,10 +413,10 @@ Supplier_Handler::recv (ACE_Message_Block *&forward_addr)
   // subtracting how much we've already read from the
   // event->header_.len_ we complete the data_bytes_left_to_read...
 
-  ssize_t data_bytes_left_to_read =
+  ssize_t const data_bytes_left_to_read =
     ssize_t (event->header_.len_ - (msg_frag_->wr_ptr () - event->data_));
 
-  ssize_t data_received =
+  ssize_t const data_received =
     !data_bytes_left_to_read
     ? 0 // peer().recv() should not be called when data_bytes_left_to_read is 0.
     : this->peer ().recv (this->msg_frag_->wr_ptr (), data_bytes_left_to_read);
@@ -712,7 +712,7 @@ Thr_Consumer_Handler::svc ()
            // satisfy original design.
            )
         {
-          ACE_Time_Value tv (this->timeout ());
+          ACE_Time_Value const tv (this->timeout ());
 
           ACE_ERROR ((LM_ERROR,
                       "(%t) reattempting connection, sec = %:\n",
@@ -829,7 +829,7 @@ Thr_Supplier_Handler::svc ()
            // satisfy original design.
            )
         {
-          ACE_Time_Value tv (this->timeout ());
+          ACE_Time_Value const tv (this->timeout ());
           ACE_ERROR ((LM_ERROR,
                       "(%t) reattempting connection, sec = %:\n",
                       tv.sec ()));

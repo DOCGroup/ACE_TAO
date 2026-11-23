@@ -36,7 +36,7 @@ int
 Event_Forwarding_Discriminator::unbind (Event_Key event_addr)
 {
   Consumer_Dispatch_Set *cds {};
-  int result = this->map_.unbind (event_addr, cds);
+  int const result = this->map_.unbind (event_addr, cds);
   delete cds;
   return result;
 }

@@ -274,7 +274,7 @@ Event_Channel::initiate_connection_connection (Connection_Handler *connection_ha
 int
 Event_Channel::complete_connection_connection (Connection_Handler *connection_handler)
 {
-  int option = connection_handler->connection_role () == 'S'
+  int const option = connection_handler->connection_role () == 'S'
     ? SO_RCVBUF
     : SO_SNDBUF;
   int socket_queue_size =
@@ -402,7 +402,7 @@ Event_Channel::initiate_acceptors ()
 {
   if (Options::instance ()->enabled (Options::CONSUMER_ACCEPTOR))
     {
-      ACE_INET_Addr
+      ACE_INET_Addr const
         consumer_addr (Options::instance ()->consumer_acceptor_port ());
       if (this->consumer_acceptor_.open
           (consumer_addr,
@@ -423,7 +423,7 @@ Event_Channel::initiate_acceptors ()
     }
   if (Options::instance ()->enabled (Options::SUPPLIER_ACCEPTOR))
     {
-      ACE_INET_Addr
+      ACE_INET_Addr const
         supplier_addr (Options::instance ()->supplier_acceptor_port ());
       if (this->supplier_acceptor_.open
           (supplier_addr,
@@ -531,8 +531,8 @@ Event_Channel::find_proxy (ACE_INT32 connection_id,
 int
 Event_Channel::bind_proxy (Connection_Handler *connection_handler)
 {
-  int result = this->connection_map_.bind (connection_handler->connection_id (),
-                                           connection_handler);
+  int const result = this->connection_map_.bind (connection_handler->connection_id (),
+                                                 connection_handler);
 
   switch (result)
     {
@@ -567,7 +567,7 @@ int
 Event_Channel::subscribe (Event_Key const &event_addr,
                           std::unique_ptr<Consumer_Dispatch_Set> cds)
 {
-  int result = this->efd_.bind (event_addr, cds.get ());
+  int const result = this->efd_.bind (event_addr, cds.get ());
 
   // Bind with consumer map, keyed by peer address.
   switch (result)
@@ -604,7 +604,7 @@ int
 Event_Channel::open (void *)
 {
   // Ignore <SIGPIPE> so each <Consumer_Handler> can handle it.
-  ACE_Sig_Action sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
+  ACE_Sig_Action const sig ((ACE_SignalHandler) SIG_IGN, SIGPIPE);
   ACE_UNUSED_ARG (sig);
 
   // Actively initiate Peer connections.

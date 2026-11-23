@@ -324,8 +324,8 @@ Gateway::parse_consumer_config_file ()
                       -1);
       std::unique_ptr<Consumer_Dispatch_Set> dispatch_set (dispatch_set_raw);
 
-      Event_Key event_addr (cci_entry.connection_id_,
-                            cci_entry.type_);
+      Event_Key const event_addr (cci_entry.connection_id_,
+                                  cci_entry.type_);
 
       // Add the Consumers to the Dispatch_Set.
       for (int i = 0; i < cci_entry.total_consumers_; ++i)
