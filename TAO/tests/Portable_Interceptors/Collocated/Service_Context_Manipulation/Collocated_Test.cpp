@@ -59,12 +59,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_NEW_RETURN (temp_initializer,
                       Collocated_ORBInitializer,
                       -1);  // No exceptions yet!
-      PortableInterceptor::ORBInitializer_var initializer =
+      PortableInterceptor::ORBInitializer_var const initializer =
         temp_initializer;
 
       PortableInterceptor::register_orb_initializer (initializer.in ());
 
-      CORBA::ORB_var sorb =
+      CORBA::ORB_var const sorb =
         CORBA::ORB_init (argc, argv, server_orb);
 
       ACE_Manual_Event me;
@@ -84,7 +84,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Wait for the server thread to do some processing
       me.wait ();
 
-      CORBA::ORB_var corb =
+      CORBA::ORB_var const corb =
         CORBA::ORB_init (argc, argv, client_orb);
 
       Client_Task client_task (options.input,
