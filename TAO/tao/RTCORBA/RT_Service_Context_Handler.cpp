@@ -37,10 +37,10 @@ TAO_RT_Service_Context_Handler::generate_service_context (
 
   if (rt_stub)
     {
-      CORBA::Policy_var priority_model_policy =
+      CORBA::Policy_var const priority_model_policy =
         rt_stub->get_cached_policy (TAO_CACHED_POLICY_PRIORITY_MODEL);
 
-      RTCORBA::PriorityModelPolicy_var model_policy_ptr =
+      RTCORBA::PriorityModelPolicy_var const model_policy_ptr =
         RTCORBA::PriorityModelPolicy::_narrow (priority_model_policy.in ());
 
       if (!CORBA::is_nil (model_policy_ptr.in ()))
