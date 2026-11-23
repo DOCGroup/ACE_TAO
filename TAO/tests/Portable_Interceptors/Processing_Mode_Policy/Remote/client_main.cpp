@@ -107,7 +107,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_Thread_Manager::instance ()->wait ();
 
-      CORBA::ULong number_called (
+      const CORBA::ULong number_called (
         Echo_Client_Request_Interceptor::client_interceptor_check_);
 
       if (number_called != expected_interceptor_check)

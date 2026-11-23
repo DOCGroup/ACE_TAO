@@ -47,7 +47,8 @@ Client_Task::run_test (Test_Interceptors::Visual_ptr server)
 {
   server->normal (10);
 
-  CORBA::Long one { 1 }, two { 1 };
+  const CORBA::Long one { 1 };
+  CORBA::Long two { 1 };
   (void) server->calculate (one,
                             two);
 
