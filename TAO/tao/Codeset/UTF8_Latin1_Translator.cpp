@@ -55,7 +55,7 @@ TAO_UTF8_Latin1_Translator::read_char_i (ACE_InputCDR &cdr, ACE_CDR::Char &x)
       ACE_CDR::Octet lower;
       if (this->read_1 (cdr, &lower))
         {
-          ACE_CDR::Octet final = ((upper & 0xBF) << 6) + (lower & 0xC0);
+          ACE_CDR::Octet const final = ((upper & 0xBF) << 6) + (lower & 0xC0);
           x = static_cast<ACE_CDR::Char>(final);
           return 2;
         };
@@ -188,7 +188,7 @@ ACE_CDR::Boolean
 TAO_UTF8_Latin1_Translator::write_char (ACE_OutputCDR &cdr,
                                    ACE_CDR::Char x)
 {
-  ACE_CDR::Octet ox = x;
+  ACE_CDR::Octet const ox = x;
   if (ox < 0xC0)
     {
       return this->write_1 (cdr,&ox);
@@ -208,7 +208,7 @@ TAO_UTF8_Latin1_Translator::write_char_i (ACE_OutputCDR &cdr,
   // something else in that case, but for now we will just let it
   // pass.
 
-  ACE_CDR::Octet ox = x;
+  ACE_CDR::Octet const ox = x;
   if (ox < 0xC0)
     {
       return this->write_1 (cdr,&ox);
@@ -217,8 +217,8 @@ TAO_UTF8_Latin1_Translator::write_char_i (ACE_OutputCDR &cdr,
     { // character cannot be represented in a single octet
       // Since the source will never be > 0xFF, we don't have to worry about
       // using a third octet.
-      ACE_CDR::Octet upper = 0xC0 + (ox >> 6);
-      ACE_CDR::Octet lower = 0x80 + (ox & 0x3F);
+      ACE_CDR::Octet const upper = 0xC0 + (ox >> 6);
+      ACE_CDR::Octet const lower = 0x80 + (ox & 0x3F);
       if (this->write_1(cdr, &upper))
       {
         return this->write_1(cdr, &lower);
@@ -259,7 +259,7 @@ TAO_UTF8_Latin1_Translator::write_string (ACE_OutputCDR & cdr,
             return false;
           }
         }
-      ACE_CDR::Octet s {};
+      ACE_CDR::Octet const s {};
       return this->write_1 (cdr, &s);
     }
   return false;
