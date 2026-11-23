@@ -37,7 +37,7 @@ TAO_DynamicImplementation::_this ()
   CORBA::Object_ptr retval {};
   ACE_NEW_RETURN (retval,
                   CORBA::Object (stub.get (),
-                                 1,
+                                 true,
                                  this),
                   CORBA::Object::_nil ());
   stub.release ();

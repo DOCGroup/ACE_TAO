@@ -875,7 +875,7 @@ TAO_Object_Adapter::create_collocated_object (TAO_Stub *stub,
   CORBA::Object_ptr x;
   ACE_NEW_RETURN (x,
                   CORBA::Object (stub,
-                                 1,
+                                 true,
                                  sb),
                   CORBA::Object::_nil ());
 

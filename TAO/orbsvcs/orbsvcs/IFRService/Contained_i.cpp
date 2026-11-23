@@ -347,7 +347,7 @@ TAO_Contained_i::move (CORBA::Container_ptr new_container,
   this->move_i (new_container,
                 new_name,
                 new_version,
-                1);
+                true);
 }
 
 CORBA::Boolean
@@ -1023,7 +1023,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
               impl->move_i (new_container,
                             name.c_str (),
                             version.c_str (),
-                            0);
+                            false);
             }
         }
     }
@@ -1071,7 +1071,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
               impl.move_i (new_container,
                            name.c_str (),
                            version.c_str (),
-                           0);
+                           false);
             }
         }
 
@@ -1112,7 +1112,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
               impl.move_i (new_container,
                            name.c_str (),
                            version.c_str (),
-                           0);
+                           false);
             }
         }
     }

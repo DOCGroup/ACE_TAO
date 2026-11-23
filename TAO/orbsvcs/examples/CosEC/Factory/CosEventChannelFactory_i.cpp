@@ -65,7 +65,7 @@ TAO_CosEventChannelFactory_i::create (char const *channel_id,
 
       TAO_CEC_EventChannel *impl {};
       ACE_NEW_THROW_EX (impl,
-                        TAO_CEC_EventChannel (attr, nullptr, 0),
+                        TAO_CEC_EventChannel (attr, nullptr, false),
                         CORBA::NO_MEMORY ());
 
       // Use TAO's reference-counted servant ownership while activating the channel.

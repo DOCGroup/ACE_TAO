@@ -1514,7 +1514,7 @@ ACE_WFMO_Reactor::register_handler_i (ACE_HANDLE event_handle,
       return result;
     }
   else if (result != SOCKET_ERROR &&
-           this->handler_rep_.bind_i (1,
+           this->handler_rep_.bind_i (true,
                                       event_handler,
                                       new_network_events,
                                       io_handle,

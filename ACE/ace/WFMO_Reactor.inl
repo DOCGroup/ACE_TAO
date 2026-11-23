@@ -510,12 +510,12 @@ ACE_WFMO_Reactor::register_handler (ACE_Event_Handler *event_handler,
   // This GUARD is necessary since we are updating shared state.
   ACE_GUARD_RETURN (ACE_Process_Mutex, ace_mon, this->lock_, -1);
 
-  return this->handler_rep_.bind_i (0,
+  return this->handler_rep_.bind_i (false,
                                     event_handler,
                                     0,
                                     ACE_INVALID_HANDLE,
                                     event_handle,
-                                    0);
+                                    false);
 }
 
 ACE_INLINE int

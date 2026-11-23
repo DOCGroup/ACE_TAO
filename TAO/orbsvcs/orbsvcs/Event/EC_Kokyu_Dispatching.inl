@@ -17,7 +17,7 @@ TAO_EC_Kokyu_Push_Command::TAO_EC_Kokyu_Push_Command (
      RtecEventComm::PushConsumer_ptr consumer,
      RtecEventComm::EventSet& event,
      ACE_Allocator* allocator)
-  :  Kokyu::Dispatch_Command (0,allocator),
+  :  Kokyu::Dispatch_Command (false,allocator),
      proxy_ (proxy),
      consumer_ (RtecEventComm::PushConsumer::_duplicate (consumer))
 {
