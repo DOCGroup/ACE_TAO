@@ -32,7 +32,7 @@ is_endpoint (TAO_Profile *profile, char const *host, unsigned short port)
     TAO_Endpoint *endpoint = iiop->endpoint ();
     TAO_IIOP_Endpoint *iiop_endpoint = dynamic_cast<TAO_IIOP_Endpoint*> (endpoint);
     char const *endpoint_host = iiop_endpoint->host();
-    unsigned short   endpoint_port = iiop_endpoint->port();
+    unsigned short const endpoint_port = iiop_endpoint->port();
 
     bool const retval =
       std::strcmp (endpoint_host, host) == 0
@@ -48,13 +48,13 @@ equal_endpoint (TAO_Profile *profile, TAO_Profile *other)
     TAO_Endpoint *endpoint = iiop->endpoint ();
     TAO_IIOP_Endpoint *iiop_endpoint = dynamic_cast<TAO_IIOP_Endpoint*> (endpoint);
     char const *endpoint_host = iiop_endpoint->host();
-    unsigned short   endpoint_port = iiop_endpoint->port();
+    unsigned short const endpoint_port = iiop_endpoint->port();
 
     TAO_IIOP_Profile *other_iiop = dynamic_cast<TAO_IIOP_Profile*> (other);
     TAO_Endpoint *other_endpoint = other_iiop->endpoint ();
     TAO_IIOP_Endpoint *other_iiop_endpoint = dynamic_cast<TAO_IIOP_Endpoint*> (other_endpoint);
     char const *other_endpoint_host = other_iiop_endpoint->host();
-    unsigned short   other_endpoint_port = other_iiop_endpoint->port();
+    unsigned short const other_endpoint_port = other_iiop_endpoint->port();
 
     bool const retval =
       std::strcmp (endpoint_host, other_endpoint_host) == 0

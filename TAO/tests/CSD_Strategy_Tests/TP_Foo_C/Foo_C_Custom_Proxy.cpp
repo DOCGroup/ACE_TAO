@@ -100,7 +100,7 @@ Foo_C_Custom_Proxy::cust_op3(long x)
 {
   Foo_C_cust_op3_Handle op = new Foo_C_cust_op3(this->servant_, x);
   this->strategy_->custom_synch_request(op.in());
-  int ret = op->result();
+  const int ret = op->result();
   return ret;
 }
 
