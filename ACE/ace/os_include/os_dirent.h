@@ -47,8 +47,6 @@ struct dirent {
   unsigned short d_ino;
   unsigned short d_off;
   unsigned short d_reclen;
-  /// This must be an ACE_TCHAR pointer and not a one-element array. This
-  /// avoids problems on wide-character builds with Visual C++ 6.0.
   ACE_TCHAR *d_name;
 };
 
