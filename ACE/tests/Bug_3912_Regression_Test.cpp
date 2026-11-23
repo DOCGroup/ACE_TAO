@@ -164,7 +164,7 @@ run_main(int, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting test\n")));
 
-  int status = run_test (3,_argv);
+  int const status = run_test (3,_argv);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Closing service config\n")));
 

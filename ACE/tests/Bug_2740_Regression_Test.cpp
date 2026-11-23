@@ -339,7 +339,7 @@ event_loop(void *arg)
   disable_signal (SIGPIPE, SIGPIPE);
 
   ACE_Reactor *reactor = static_cast<ACE_Reactor*>(arg);
-  int s = reactor->run_reactor_event_loop();
+  int const s = reactor->run_reactor_event_loop();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: reactor loop done; status %d\n"), s));
   return ACE_THR_FUNC_RETURN_NULL;

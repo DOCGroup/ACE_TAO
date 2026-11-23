@@ -156,7 +156,7 @@ Client::handle_timeout (const ACE_Time_Value &, const void *)
 
   ++this->call_count_;
 
-  int status = this->handle_output (this->get_handle ());
+  int const status = this->handle_output (this->get_handle ());
   if (status == -1 || this->call_count_ > 10)
     {
       if (this->reactor ()->end_reactor_event_loop () == 0)
@@ -335,7 +335,7 @@ class TestAcceptor : public ACCEPTOR
 public:
   int accept_svc_handler (Server * handler) override
   {
-    int result = this->ACCEPTOR::accept_svc_handler (handler);
+    int const result = this->ACCEPTOR::accept_svc_handler (handler);
 
     if (result != 0)
       {

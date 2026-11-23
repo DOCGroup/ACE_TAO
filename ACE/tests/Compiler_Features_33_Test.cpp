@@ -11,7 +11,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT("Compiler_Features_33_Test"));
 
   int retval = 1;
-  char _tao_discriminant =  '\x0';
+  char const _tao_discriminant =  '\x0';
 
   switch (_tao_discriminant)
   {

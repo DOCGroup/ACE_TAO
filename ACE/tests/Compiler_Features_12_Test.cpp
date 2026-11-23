@@ -41,7 +41,7 @@ run_main (int, ACE_TCHAR *[])
 
   // As usual, the exit status from the test is 0 on success, 1 on
   // failure
-  int status = 0;
+  int const status = 0;
 
   Array<int, Pair> pairs;
   pairs.array[0].x1 = 0;
