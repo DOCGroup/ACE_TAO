@@ -26,7 +26,6 @@
 #include "tao/Any_Insert_Policy_T.h"
 
 #include "ace/Basic_Types.h"
-#include "ace/Synch_Traits.h"
 #include <atomic>
 #include <vector>
 
