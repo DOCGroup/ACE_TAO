@@ -18,7 +18,7 @@ TestAppBase::name() const
 int
 TestAppBase::run (int argc, ACE_TCHAR *argv[])
 {
-  int rc = this->run_i (argc, argv);
+  const int rc = this->run_i (argc, argv);
 
   // Convert 1 to 0.  Leave 0 and -1 as they are.
   return (rc == 1) ? 0 : rc;
