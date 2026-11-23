@@ -177,7 +177,7 @@ Pipe::open ()
     }
   else
     {
-      int af = my_addr.get_type ();
+      int const af = my_addr.get_type ();
       const ACE_TCHAR *local = ACE_LOCALHOST;
 #if defined (ACE_HAS_IPV6)
       if (af == AF_INET6)
@@ -709,7 +709,7 @@ Connection_Cache::add_connection (Sender *sender)
   // expected. <sender> should not be already in the cache.
   ACE_TEST_ASSERT (this->find (sender) == -1);
 
-  int empty_index =
+  int const empty_index =
     this->find (nullptr);
 
   sender->add_reference ();
@@ -724,7 +724,7 @@ Connection_Cache::remove_connection (Sender *sender)
 
   // Make sure that the state of the connection cache is as expected.
   // remove_connection() may already have been called.
-  int index =
+  int const index =
     this->find (sender);
 
   if (index == -1)

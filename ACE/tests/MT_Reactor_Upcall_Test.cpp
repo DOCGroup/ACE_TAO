@@ -224,7 +224,7 @@ test_reactor_upcall (ACE_Reactor &reactor)
   Event_Loop_Task event_loop_task (reactor);
 
   // Start up the event loop threads.
-  int result =
+  int const result =
     event_loop_task.activate (THR_NEW_LWP | THR_JOINABLE,
                               number_of_event_loop_threads);
   if (result != 0)
@@ -358,7 +358,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
 
-  int result =
+  int const result =
     parse_args (argc, argv);
 
   if (result != 0)
