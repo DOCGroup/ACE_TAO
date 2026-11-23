@@ -49,7 +49,7 @@ ACE_FILE_IO::send (size_t n, ...) const
   ACE_NOTSUP_RETURN (-1);
 #else
   va_list argp;
-  int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
+  int const total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
   iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
   iovp = static_cast<iovec *> (alloca (total_tuples * sizeof (iovec)));
@@ -74,7 +74,7 @@ ACE_FILE_IO::send (size_t n, ...) const
       iovp[i].iov_len  = va_arg (argp, int);
     }
 
-  ssize_t result = ACE_OS::writev (this->get_handle (),
+  ssize_t const result = ACE_OS::writev (this->get_handle (),
                                    iovp,
                                    total_tuples);
 #if !defined (ACE_HAS_ALLOCA)
@@ -104,7 +104,7 @@ ACE_FILE_IO::recv (size_t n, ...) const
   ACE_NOTSUP_RETURN (-1);
 #else
   va_list argp;
-  int total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
+  int const total_tuples = ACE_Utils::truncate_cast<int> (n / 2);
   iovec *iovp {};
 #if defined (ACE_HAS_ALLOCA)
   iovp = static_cast<iovec *> (alloca (total_tuples * sizeof (iovec)));
@@ -160,7 +160,7 @@ ACE_FILE_IO::recvv (iovec *io_vec)
   if (length > 0)
     {
       // Restrict to max size we can record in iov_len.
-      size_t len = ACE_Utils::truncate_cast<u_long> (length);
+      size_t const len = ACE_Utils::truncate_cast<u_long> (length);
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_ALLOCATOR_RETURN (io_vec->iov_base,
                             static_cast<char*>(ACE_Allocator::instance()->malloc(sizeof(char) * len)),
