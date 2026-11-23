@@ -1154,7 +1154,7 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
   // @@ We shouldnt block here since we have already done poll/select
   // thru reactor. But are we sure?
 
-  ACE_HANDLE new_handle = ACE_OS::accept (this->handle_, nullptr, nullptr);
+  const ACE_HANDLE new_handle = ACE_OS::accept (this->handle_, nullptr, nullptr);
 
   if (result == nullptr) // there is nobody to notify
     {
@@ -1336,7 +1336,7 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                   -1);
   auto result_deleter = [] (ACE_POSIX_Asynch_Connect_Result *result)
     {
-      ACE_HANDLE handle = result->connect_handle ();
+      const ACE_HANDLE handle = result->connect_handle ();
       if (handle != ACE_INVALID_HANDLE)
         {
           ACE_OS::closesocket (handle);
@@ -1429,7 +1429,7 @@ int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * res
                   ACE_TEXT(" <post_completion> failed")));
     }
 
-  ACE_HANDLE handle = result->connect_handle ();
+  const ACE_HANDLE handle = result->connect_handle ();
 
   if (handle != ACE_INVALID_HANDLE)
   {
@@ -1574,7 +1574,7 @@ ACE_POSIX_Asynch_Connect::cancel_uncompleted (bool flg_notify,
 
   for (; iter.next (me) != 0;  ++retval, iter.advance ())
     {
-       ACE_HANDLE handle = me->ext_id_;
+       const ACE_HANDLE handle = me->ext_id_;
        ACE_POSIX_Asynch_Connect_Result* result = me->int_id_ ;
 
        set.set_bit (handle);
@@ -2180,7 +2180,7 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                int signal_number)
 {
   // Adjust these parameters if there are default values specified.
-  ssize_t file_size = ACE_OS::filesize (file);
+  const ssize_t file_size = ACE_OS::filesize (file);
 
   if (file_size == -1)
     {
