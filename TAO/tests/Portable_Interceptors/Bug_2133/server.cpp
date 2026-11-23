@@ -45,10 +45,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv);
 
-      CORBA::Object_var poa_object =
+      CORBA::Object_var const poa_object =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var root_poa =
+      PortableServer::POA_var const root_poa =
         PortableServer::POA::_narrow (poa_object.in ());
 
       if (CORBA::is_nil (root_poa.in ()))
@@ -69,9 +69,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       Hello (orb.in ()),
                       1);
       // Keep a typed pointer for _this; the ServantBase var owns the object.
-      PortableServer::ServantBase_var owner_transfer (hello_impl);
+      PortableServer::ServantBase_var const owner_transfer (hello_impl);
 
-      Test::Hello_var hello =
+      Test::Hello_var const hello =
         hello_impl->_this ();
 
       CORBA::String_var const ior =
@@ -79,7 +79,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Output the IOR to the configured file.
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> output_file (
+        std::unique_ptr<FILE, int (*) (FILE *)> const output_file (
           ACE_OS::fopen (options.ior_output_file.c_str (), "w"), ACE_OS::fclose);
         if (!output_file)
           {
