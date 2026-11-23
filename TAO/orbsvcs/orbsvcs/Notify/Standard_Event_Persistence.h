@@ -3,7 +3,7 @@
  *
  *  The standard implementation of Event_Persistence_Factory.
  *
- *  \author Jonathan Pollack <pollack_j@ociweb.com>
+ *  @author Jonathan Pollack <pollack_j@ociweb.com>
  */
 
 #ifndef STANDARD_EVENT_PERSISTENCE_H
