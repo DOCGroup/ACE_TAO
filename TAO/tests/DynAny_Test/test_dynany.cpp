@@ -576,7 +576,7 @@ Test_DynAny::run_test ()
       CORBA::TypeCode_ptr out_tc;
       out_any2 >>= out_tc;
 
-      CORBA::Boolean equal = out_tc->equal (data.m_typecode1);
+      const CORBA::Boolean equal = out_tc->equal (data.m_typecode1);
 
       if (equal)
         {
