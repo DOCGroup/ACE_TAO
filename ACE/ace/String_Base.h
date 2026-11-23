@@ -80,7 +80,7 @@ public:
     *
     *  @param the_allocator ACE_Allocator associated with string
     */
-  explicit ACE_String_Base (ACE_Allocator *the_allocator = nullptr);
+  ACE_String_Base (ACE_Allocator *the_allocator = nullptr);
 
   /**
    * Constructor that copies @a s into dynamically allocated memory.
