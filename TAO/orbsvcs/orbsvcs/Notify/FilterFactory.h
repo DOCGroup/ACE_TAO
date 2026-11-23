@@ -32,7 +32,8 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterFactory
 {
 public:
   /// Factory method to create a FilterFactory reference
-  /// The Factory is activated in the default POA. The filters created are activated in the <filter_poa>.
+  /// The Factory is activated in the default POA. The filters created are
+  /// activated in @a filter_poa.
   virtual CosNotifyFilter::FilterFactory_ptr create (
       PortableServer::POA_ptr filter_poa) = 0;
   virtual void destroy () = 0;

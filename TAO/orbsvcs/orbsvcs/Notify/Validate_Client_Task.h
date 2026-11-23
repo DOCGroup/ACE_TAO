@@ -41,7 +41,7 @@ class TAO_Notify_Serv_Export TAO_Notify_validate_client_Task
 public:
   using CONDITION = TAO_Condition<TAO_SYNCH_MUTEX>;
 
-  /// Constructor.  It does not assume ownership of the <event_channel>
+  /// Constructor. It does not assume ownership of the @a event_channel
   /// parameter.
   TAO_Notify_validate_client_Task (const ACE_Time_Value &delay,
                                      const ACE_Time_Value &interval,

@@ -130,7 +130,7 @@ protected:
   TAO_Notify_AdminProperties& admin_properties ();
 
   /// Notification that can be overridden by subclasses to be informed that
-  /// <qos_properties_> have been modified.
+  /// @c qos_properties_ have been modified.
   virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
 
   /// Called by derived types to save their attributes. Each
