@@ -715,7 +715,7 @@ ctime_r_test ()
   ACE_TCHAR buf[27];
   buf[26] = 'Z';
 
-  ACE_Time_Value cur_time =
+  ACE_Time_Value const cur_time =
     ACE_OS::gettimeofday ();
 
   time_t const secs = cur_time.sec ();
