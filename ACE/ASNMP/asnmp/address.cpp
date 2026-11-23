@@ -668,8 +668,8 @@ int Address_Iter::next (IpAddress &addr)
 
   in_addr binary_address {};
   std::memcpy (&binary_address.s_addr,
-               this->lookupResult_.h_addr_list[this->entry_index_],
-               sizeof binary_address.s_addr);
+                this->lookupResult_.h_addr_list[this->entry_index_],
+                sizeof binary_address.s_addr);
 
   char address_string[MAX_DISPLAY_SZ] {};
   if (ACE_OS::inet_ntop (AF_INET, &binary_address, address_string, sizeof address_string) == nullptr)

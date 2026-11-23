@@ -410,7 +410,7 @@ ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
       (*result)[i].ai_addr = reinterpret_cast<sockaddr *> (addr_storage) + i;
       (*result)[i].ai_addr->sa_family = AF_INET;
       std::memcpy (std::addressof (addr_storage[i].sin_addr), host->h_addr_list[i],
-                   (std::min) (size_t (host->h_length), sizeof (in_addr)));
+                    (std::min) (size_t (host->h_length), sizeof (in_addr)));
       if (i < n - 1)
         {
           (*result)[i].ai_next = (*result) + i + 1;
