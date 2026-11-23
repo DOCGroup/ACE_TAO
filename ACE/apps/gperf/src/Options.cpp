@@ -521,7 +521,6 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'k':
           {
             int const BAD_VALUE = -1;
-            int value;
             Iterator expand (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()),
                              1,
                              MAX_KEY_POS - 1,
@@ -536,6 +535,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
               }
             else
               {
+                int value;
                 char *l_key_pos;
 
                 for (l_key_pos = key_positions_.data ();

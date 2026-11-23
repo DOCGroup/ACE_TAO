@@ -218,8 +218,6 @@ be_sequence::gen_name ()
 int
 be_sequence::create_name (be_typedef *node)
 {
-  std::string namebuf;
-
   // If there is a typedef node, we use its name as our name.
   if (node)
     {
@@ -230,7 +228,7 @@ be_sequence::create_name (be_typedef *node)
   else
     {
       // Generate a local name.
-      namebuf = this->gen_name ();
+      std::string namebuf = this->gen_name ();
       if (namebuf.empty ())
         {
           return -1;

@@ -983,13 +983,13 @@ void
 Key_List::output_keylength_table ()
 {
   int const max_column = 15;
-  int slot = 0;
-  int column = 0;
   char const *indent = option[GLOBAL] ? "" : "  ";
   List_Node *temp;
 
   if (!option[DUP] && !option[SWITCH])
     {
+      int slot = 0;
+      int column = 0;
       char const *const qualifier = option[CONSTANT] ? "constexpr " : "";
       char const *const element_type = max_key_len <= UCHAR_MAX
         ? "char" : max_key_len <= USHRT_MAX ? "short" : "long";
