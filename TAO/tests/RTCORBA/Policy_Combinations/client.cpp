@@ -160,7 +160,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // scheduling policy.  This will give us the biggest range on NT
       // since the default priority is 0 where as the lowest priority
       // is -15.
-      int minimum_priority =
+      const int minimum_priority =
         ACE_Sched_Params::priority_min (orb->orb_core ()->orb_params ()->ace_sched_policy ());
 
       // Thread Manager for managing task.
