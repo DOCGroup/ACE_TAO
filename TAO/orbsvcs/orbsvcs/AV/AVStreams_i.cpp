@@ -2349,7 +2349,7 @@ TAO_StreamEndPoint::add_fep_i_add_property (AVStreams::FlowEndPoint_ptr fep)
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_StreamEndPoint::add_fep");
-      return 0;
+      return nullptr;
     }
   return CORBA::string_dup (flow_name.c_str ());
 }
@@ -2407,7 +2407,7 @@ TAO_StreamEndPoint::add_fep (CORBA::Object_ptr fep_obj)
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_StreamEndPoint::add_fep");
-      return 0;
+      return nullptr;
     }
   return flow_name._retn ();
 }
@@ -3400,7 +3400,7 @@ TAO_MMDevice::add_fdev_i (AVStreams::FDev_ptr fdev)
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_MMDevice::add_fdev");
-      return 0;
+      return nullptr;
     }
   return CORBA::string_dup (flow_name.c_str ());
 }
@@ -3418,7 +3418,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj)
 
       if (CORBA::is_nil (fdev.in ()))
       {
-        return 0;
+        return nullptr;
       }
 
       flow_name_any = fdev->get_property_value ("Flow");
@@ -3456,7 +3456,7 @@ TAO_MMDevice::add_fdev (CORBA::Object_ptr fdev_obj)
   catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("TAO_MMDevice::add_fdev");
-      return 0;
+      return nullptr;
     }
   return flow_name._retn ();
 }
@@ -4408,7 +4408,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
                                                     this->format_.in (),
                                                     flowProtocol,
                                                     this->protocol_addresses_ [j]),
-                        0);
+                        nullptr);
 
         TAO_AV_Acceptor_Registry *acceptor_registry = TAO_AV_CORE::instance ()->acceptor_registry ();
         this->flow_spec_set_.insert (entry);
@@ -4417,7 +4417,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
                                               this->flow_spec_set_);
         if (result < 0)
         {
-          return 0;
+          return nullptr;
         }
         CORBA::String_var listen_address (entry->get_local_addr_str ());
         if (listen_address.in () == nullptr)
@@ -4430,7 +4430,7 @@ TAO_FlowEndPoint::go_to_listen_i (TAO_FlowSpec_Entry::Role role,
         return CORBA::string_dup (address.c_str ());
       }
   }
-  return 0;
+  return nullptr;
 }
 
 CORBA::Boolean
@@ -4498,7 +4498,7 @@ TAO_FlowProducer::TAO_FlowProducer (char const *flowname,
 char *
 TAO_FlowProducer::get_rev_channel (char const * /*pcol_name*/)
 {
-  return 0;
+  return nullptr;
 }
 
 // The start, stop and destroy are to be handled by the application.
