@@ -224,13 +224,13 @@ TAO_RT_Stub::effective_priority_banded_connection ()
     return exposed._retn ();
   }
 
-  RTCORBA::PriorityBandedConnectionPolicy_var override_policy_var =
+  RTCORBA::PriorityBandedConnectionPolicy_var const override_policy_var =
     RTCORBA::PriorityBandedConnectionPolicy::_narrow (override.in ());
 
   TAO_PriorityBandedConnectionPolicy *override_policy =
     dynamic_cast<TAO_PriorityBandedConnectionPolicy *> (override_policy_var.in ());
 
-  RTCORBA::PriorityBandedConnectionPolicy_var exposed_policy_var =
+  RTCORBA::PriorityBandedConnectionPolicy_var const exposed_policy_var =
     RTCORBA::PriorityBandedConnectionPolicy::_narrow (exposed.in ());
 
   TAO_PriorityBandedConnectionPolicy *exposed_policy =
@@ -280,13 +280,13 @@ TAO_RT_Stub::effective_client_protocol ()
     return exposed._retn ();
   }
 
-  RTCORBA::ClientProtocolPolicy_var override_policy_var =
+  RTCORBA::ClientProtocolPolicy_var const override_policy_var =
     RTCORBA::ClientProtocolPolicy::_narrow (override.in ());
 
   TAO_ClientProtocolPolicy *override_policy =
     dynamic_cast<TAO_ClientProtocolPolicy *> (override_policy_var.in ());
 
-  RTCORBA::ClientProtocolPolicy_var exposed_policy_var =
+  RTCORBA::ClientProtocolPolicy_var const exposed_policy_var =
     RTCORBA::ClientProtocolPolicy::_narrow (exposed.in ());
 
   TAO_ClientProtocolPolicy *exposed_policy =
@@ -299,7 +299,7 @@ TAO_RT_Stub::effective_client_protocol ()
 
   // Both override and exposed have been set.
   // See if either of them has empty priority bands.
-  RTCORBA::ProtocolList &protocols_rep_var =
+  RTCORBA::ProtocolList const &protocols_rep_var =
     exposed_policy->protocols_rep ();
 
   if (protocols_rep_var.length () == 0)
