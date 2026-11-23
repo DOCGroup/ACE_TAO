@@ -54,7 +54,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      CORBA::Boolean result =
+      const CORBA::Boolean result =
         server->request_server ();
 
       if (!result)
