@@ -327,8 +327,8 @@ run_event_loop (u_short port)
 #  endif /* ACE_WIN32 */
       int result = ACE_OS::select (maxfd + 1,
                                    temp.fdset (),
-                                   0,
-                                   0,
+                                   nullptr,
+                                   nullptr,
                                    timeout);
       if (result == -1)
         {

@@ -213,7 +213,7 @@ ACE_THR_FUNC_RETURN CLD_Handler::forward () {
 
   msg_queue_.close ();
   no_sigpipe.restore_action (SIGPIPE, original_action);
-  return 0;
+  return nullptr;
 }
 
 int CLD_Handler::send (

@@ -568,8 +568,8 @@ Handler_Factory::handle_events ()
       int result =
         ACE_OS::select (select_width,
                         &temp,
-                        0,
-                        0,
+                        nullptr,
+                        nullptr,
                         timeout);
       if (result == -1)
         {

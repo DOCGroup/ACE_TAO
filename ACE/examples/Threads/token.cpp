@@ -49,10 +49,10 @@ My_Task::svc ()
   for (size_t i = 0; i < 100; ++i)
     {
       // Wait for up to 1 millisecond past the current time to get the token.
-      ACE_Time_Value timeout (ACE_OS::time (0), 1000);
+      ACE_Time_Value timeout (ACE_OS::time (nullptr), 1000);
 
       if (this->token_.acquire (&My_Task::sleep_hook,
-                                0,
+                                nullptr,
                                 std::addressof (timeout)) == 1)
         {
           this->token_.acquire ();

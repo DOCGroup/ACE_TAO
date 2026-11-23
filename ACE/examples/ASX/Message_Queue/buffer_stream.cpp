@@ -234,7 +234,7 @@ Consumer::svc ()
       ACE_Message_Block *mb {};
 
       // Wait for upto 4 seconds.
-      this->timeout_.sec (ACE_OS::time (0) + 4);
+      this->timeout_.sec (ACE_OS::time (nullptr) + 4);
 
       result = this->getq (mb, std::addressof (this->timeout_));
 

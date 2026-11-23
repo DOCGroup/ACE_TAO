@@ -91,7 +91,7 @@ consumer (void *arg)
     {
       ACE_Message_Block *mb {};
 
-      ACE_Time_Value timeout (ACE_OS::time (0) + 4, 0); // Wait for upto 4 seconds
+      ACE_Time_Value timeout (ACE_OS::time (nullptr) + 4, 0); // Wait for upto 4 seconds
 
       result = msg_queue->dequeue_head (mb, std::addressof (timeout));
 

@@ -197,7 +197,7 @@ wait_for_children ()
     {
       pid_t pid;
 
-      while ((pid = ACE_OS::wait (0)) != -1)
+      while ((pid = ACE_OS::wait (nullptr)) != -1)
       {
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) reaped pid = %d\n", pid));
       }

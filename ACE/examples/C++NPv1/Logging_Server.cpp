@@ -71,7 +71,7 @@ int Logging_Server::make_log_file (ACE_FILE_IO &logging_file,
   ACE_FILE_Connector connector;
   return connector.connect (logging_file,
                             ACE_FILE_Addr (filename.c_str ()),
-                            0, // No timeout.
+                            nullptr, // No timeout.
                             ACE_Addr::sap_any, // Ignored.
                             0, // Don't try to reuse the addr.
                             O_RDWR|O_CREAT|O_APPEND,

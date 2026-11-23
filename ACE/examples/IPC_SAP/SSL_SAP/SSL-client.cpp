@@ -28,7 +28,7 @@ Options::Options ()
     iterations_ (10000),
     oneway_ (1) // Make oneway calls the default.
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    , barrier_ (0)
+    , barrier_ (nullptr)
 #endif /* ACE_MT_SAFE */
 {
   std::strcpy (quit_string_, "q");
@@ -207,7 +207,7 @@ Options::shared_client_test (u_short port,
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("(%P|%t) %p\n"),
                          ACE_TEXT ("connection failed")),
-                        nullptr);
+                        0);
     }
   else
     {

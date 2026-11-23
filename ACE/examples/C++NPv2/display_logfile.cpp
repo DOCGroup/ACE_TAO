@@ -27,7 +27,7 @@ public:
     this->open (name,
                 &task_, // Initialize writer-side task.
                 nullptr, // Ignore reader-side task.
-                0,
+                nullptr,
                 ACE_Module<ACE_SYNCH>::M_DELETE_READER);
   }
 private:
@@ -221,7 +221,7 @@ public:
     this->open (ACE_TEXT ("Logrec Reader"),
                 &task_, // Initialize writer-side.
                 nullptr, // Ignore reader-side.
-                0,
+                nullptr,
                 ACE_Module<ACE_SYNCH>::M_DELETE_READER);
   }
 private:
