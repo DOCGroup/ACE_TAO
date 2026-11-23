@@ -82,7 +82,7 @@ Adapter_Activator::unknown_adapter (PortableServer::POA_ptr parent,
 {
   if (std::strcmp (name, "firstPOA") == 0)
     {
-      PortableServer::POA_var child = parent->create_POA (name,
+      PortableServer::POA_var const child = parent->create_POA (name,
                                                           this->poa_manager_.in (),
                                                           this->first_poa_policies_);
 
