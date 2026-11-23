@@ -70,7 +70,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
       ACE_Thread_Manager::instance ()->wait ();
 
-      CORBA::Long count =
+      CORBA::Long const count =
         sender->get_event_count ();
 
       ACE_DEBUG ((LM_DEBUG, "(%P) - Receiver got %d messages\n",
