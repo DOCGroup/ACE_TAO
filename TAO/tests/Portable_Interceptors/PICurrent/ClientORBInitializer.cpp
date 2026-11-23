@@ -18,10 +18,10 @@ void
 ClientORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  CORBA::Object_var obj =
+  CORBA::Object_var const obj =
     info->resolve_initial_references ("PICurrent");
 
-  PortableInterceptor::Current_var pi_current =
+  PortableInterceptor::Current_var const pi_current =
     PortableInterceptor::Current::_narrow (obj.in ());
 
   if (CORBA::is_nil (pi_current.in ()))
@@ -44,7 +44,7 @@ ClientORBInitializer::post_init (
                         ENOMEM),
                       CORBA::COMPLETED_NO));
 
-  PortableInterceptor::ClientRequestInterceptor_var interceptor =
+  PortableInterceptor::ClientRequestInterceptor_var const interceptor =
     foo;
 
   info->add_client_request_interceptor (interceptor.in ());
