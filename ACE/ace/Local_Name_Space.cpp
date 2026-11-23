@@ -45,7 +45,7 @@ char *
 ACE_NS_String::char_rep () const
 {
   ACE_TRACE ("ACE_NS_String::char_rep");
-  ACE_NS_WString w_string (this->rep_,
+  ACE_NS_WString const w_string (this->rep_,
                            (this->len_ / sizeof (ACE_WCHAR_T)) - 1);
   return w_string.char_rep ();
 }
