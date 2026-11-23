@@ -107,7 +107,7 @@ Monitor_Impl::get_statistics (::Monitor::NameList const &names)
   for (CORBA::ULong index {}; index < names.length (); ++index)
     {
       // Look up the requested monitor.
-      TAO_Monitor_Point_Ptr monitor (
+      TAO_Monitor_Point_Ptr const monitor (
         mgr->admin ().monitor_point (names[index]));
 
       if (monitor != nullptr)
@@ -139,7 +139,7 @@ Monitor_Impl::get_and_clear_statistics (::Monitor::NameList const &names)
   for (CORBA::ULong index {}; index < names.length (); ++index)
     {
       // Look up the requested monitor.
-      TAO_Monitor_Point_Ptr monitor (
+      TAO_Monitor_Point_Ptr const monitor (
         mgr->admin ().monitor_point (names[index]));
 
       if (monitor != nullptr)
@@ -273,7 +273,7 @@ Monitor_Impl::register_constraint (
 
       if (monitor != nullptr)
         {
-          TAO_Control_Action_Ptr ca (new TAO_Control_Action (sub));
+          TAO_Control_Action_Ptr const ca (new TAO_Control_Action (sub));
           long const id = monitor->add_constraint (cs, ca.get ());
           CORBA::ULong const length = constraintlist->length ();
           constraintlist->length (length + 1);
@@ -301,7 +301,7 @@ Monitor_Impl::unregister_constraints (
 
       if (monitor != nullptr)
         {
-          TAO_Control_Action_Ptr action (
+          TAO_Control_Action_Ptr const action (
             monitor->remove_constraint (constraint[index].id));
         }
     }
