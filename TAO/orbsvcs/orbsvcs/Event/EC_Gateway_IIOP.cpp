@@ -253,7 +253,7 @@ TAO_EC_Gateway_IIOP::open_i (
     RtecEventChannelAdmin::ConsumerQOS const &c_qos)
 {
   // Connect as a supplier to the consumer event channel.
-  RtecEventChannelAdmin::SupplierAdmin_var supplier_admin =
+  RtecEventChannelAdmin::SupplierAdmin_var const supplier_admin =
     this->consumer_ec_->for_suppliers ();
 
   RtecEventChannelAdmin::ConsumerQOS sub = c_qos;
@@ -270,7 +270,7 @@ TAO_EC_Gateway_IIOP::open_i (
       RtecEventComm::EventHeader const &h =
         sub.dependencies[i].event.header;
 
-      RtecEventComm::EventSourceID sid = h.source;
+      RtecEventComm::EventSourceID const sid = h.source;
 
       //ORBSVCS_DEBUG ((LM_DEBUG,
       //            "ECG (%t)    trying (%d,%d)\n",
@@ -308,7 +308,7 @@ TAO_EC_Gateway_IIOP::open_i (
       this->supplier_is_active_ = true;
 
       // Obtain a reference to our supplier personality...
-      RtecEventComm::PushSupplier_var supplier_ref = this->supplier_._this ();
+      RtecEventComm::PushSupplier_var const supplier_ref = this->supplier_._this ();
 
       // For each subscription by source build the set of publications
       // (they may several, by type, for instance) and connect to the
@@ -323,7 +323,7 @@ TAO_EC_Gateway_IIOP::open_i (
 
           int c {};
 
-          RtecEventComm::EventSourceID sid = (*j).ext_id_;
+          RtecEventComm::EventSourceID const sid = (*j).ext_id_;
           for (CORBA::ULong k {}; k < sub.dependencies.length (); ++k)
             {
               RtecEventComm::EventHeader const &h =
@@ -369,7 +369,7 @@ TAO_EC_Gateway_IIOP::open_i (
     {
       RtecEventComm::EventHeader const &h =
         sub.dependencies[k].event.header;
-      RtecEventComm::EventSourceID sid = h.source;
+      RtecEventComm::EventSourceID const sid = h.source;
 
       // Skip all subscriptions with a specific source when we use the map
       if (sid != ACE_ES_EVENT_SOURCE_ANY && this->use_consumer_proxy_map_ == 1)
@@ -397,7 +397,7 @@ TAO_EC_Gateway_IIOP::open_i (
       this->supplier_is_active_ = true;
 
       // Obtain a reference to our supplier personality...
-      RtecEventComm::PushSupplier_var supplier_ref =
+      RtecEventComm::PushSupplier_var const supplier_ref =
         this->supplier_._this ();
 
       // Obtain the consumer....
@@ -485,7 +485,7 @@ TAO_EC_Gateway_IIOP::push (RtecEventComm::EventSet const &events)
         }
 
       RtecEventChannelAdmin::ProxyPushConsumer_ptr proxy = nullptr;
-      RtecEventComm::EventSourceID sid = events[i].header.source;
+      RtecEventComm::EventSourceID const sid = events[i].header.source;
       if (sid == ACE_ES_EVENT_SOURCE_ANY || this->use_consumer_proxy_map_ == 0
           || this->consumer_proxy_map_.find (sid, proxy) == -1)
         {

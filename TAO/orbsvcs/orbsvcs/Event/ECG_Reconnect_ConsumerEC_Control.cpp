@@ -144,14 +144,14 @@ TAO_ECG_Reconnect_ConsumerEC_Control::activate ()
   try
     {
       // Get the PolicyCurrent object
-      CORBA::Object_var tmp =
+      CORBA::Object_var const tmp =
         this->orb_->resolve_initial_references ("PolicyCurrent");
 
       this->policy_current_ =
         CORBA::PolicyCurrent::_narrow (tmp.in ());
 
       // Timeout for polling state (default = 10 msec)
-      TimeBase::TimeT timeout = timeout_.usec() * 10;
+      TimeBase::TimeT const timeout = timeout_.usec() * 10;
       CORBA::Any any;
       any <<= timeout;
 
