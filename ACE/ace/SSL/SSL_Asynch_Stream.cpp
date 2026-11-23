@@ -561,7 +561,7 @@ ACE_SSL_Asynch_Stream::do_SSL_read ()
       return -1;
     }
 
-  ACE_Message_Block & mb = this->ext_read_result_->message_block ();
+  ACE_Message_Block const & mb = this->ext_read_result_->message_block ();
   size_t const bytes_req = this->ext_read_result_->bytes_to_read ();
 
   ERR_clear_error ();
@@ -621,7 +621,7 @@ ACE_SSL_Asynch_Stream::do_SSL_write ()
       return -1;
     }
 
-  ACE_Message_Block & mb = this->ext_write_result_->message_block ();
+  ACE_Message_Block const & mb = this->ext_write_result_->message_block ();
   size_t const bytes_req = this->ext_write_result_->bytes_to_write ();
 
   ERR_clear_error ();
