@@ -1385,7 +1385,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch
       // inconsistent in the state of the Reactor and we should avoid
       // the loop.  Please read the comments on bug 2540 for more
       // details.
-      int initial_handle_count = active_handle_count;
+      int const initial_handle_count = active_handle_count;
 
       // Note that we keep track of changes to our state.  If any of
       // the dispatch_*() methods below return -1 it means that the
