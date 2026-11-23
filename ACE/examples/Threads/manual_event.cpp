@@ -86,7 +86,7 @@ worker (void *arg)
 int
 ACE_TMAIN (int argc, ACE_TCHAR **argv)
 {
-  int n_threads = argc == 2 ? ACE_OS::atoi (argv[1]) : 5;
+  int const n_threads = argc == 2 ? ACE_OS::atoi (argv[1]) : 5;
 
   ACE_Thread_Manager &tm = *ACE_Thread_Manager::instance ();
 
