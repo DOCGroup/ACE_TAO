@@ -95,8 +95,8 @@ public:
   void max_timeout (long);
   /// @}
 
-  /// Activate this instance of the <ACE_TS_Clerk_Handler>
-  /// (called by the <ACE_TS_Clerk_Processor>).
+  /// Activate this instance of @c ACE_TS_Clerk_Handler
+  /// (called by the @c ACE_TS_Clerk_Processor).
   int open (void * = nullptr) override;
 
   /// Return the handle of the message_fifo_;

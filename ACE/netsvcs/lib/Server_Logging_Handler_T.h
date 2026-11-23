@@ -27,10 +27,10 @@
 /**
  * @class ACE_Server_Logging_Handler_T
  *
- * @brief Product object created by an <ACE_Server_Logging_Acceptor_T>.  An
- * <ACE_Server_Logging_Handler_T> receives, and frames logging
+ * @brief Product object created by an @c ACE_Server_Logging_Acceptor_T.  An
+ * @c ACE_Server_Logging_Handler_T receives, and frames logging
  * records. The logging record is then processed by the
- * <LOG_MESSAGE_RECEIVER>
+ * @c LOG_MESSAGE_RECEIVER
  *
  * Defines the classes that perform server logging daemon
  * functionality.
@@ -85,12 +85,12 @@ protected:
 /**
  * @class ACE_Server_Logging_Acceptor_T
  *
- * @brief Factory that creates <SERVER_LOGGING_HANDLER>s scheduled with
- * <SCHEDULE_STRATEGY> and logging records proccessed by a
- * <LOG_MESSAGE_RECEIVER>
+ * @brief Factory that creates @c SERVER_LOGGING_HANDLER objects scheduled with
+ * @c SCHEDULE_STRATEGY and logging records proccessed by a
+ * @c LOG_MESSAGE_RECEIVER
  *
  * This class contains the service-specific methods that can't
- * easily be factored into the <ACE_Strategy_Acceptor>.
+ * easily be factored into the @c ACE_Strategy_Acceptor.
  */
 template<class SERVER_LOGGING_HANDLER, class LOG_MESSAGE_RECEIVER, class SCHEDULE_STRATEGY>
 class ACE_Server_Logging_Acceptor_T : public ACE_Strategy_Acceptor<SERVER_LOGGING_HANDLER, LOGGING_PEER_ACCEPTOR>
@@ -105,9 +105,9 @@ protected:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /**
-   * Factory that creates a new <SERVER_LOGGING_HANDLER>.  We need to
-   * specialize this since the <LOG_MESSAGE_RECEIVER> held by this Acceptor must be
-   * passed into the <SERVER_LOGGING_HANDLER>.
+   * Factory that creates a new @c SERVER_LOGGING_HANDLER.  We need to
+   * specialize this since the @c LOG_MESSAGE_RECEIVER held by this Acceptor must be
+   * passed into the @c SERVER_LOGGING_HANDLER.
    */
   int make_svc_handler (SERVER_LOGGING_HANDLER *&) override;
 
@@ -145,9 +145,9 @@ private:
  * @class ACE_Server_Logging_Handler
  *
  * @brief Product object created by a
- * <ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler> >.  An
+ * @c ACE_Server_Logging_Acceptor_T<ACE_Server_Logging_Handler>.  An
  * ACE_Server_Logging_Handler receives, frames. The logging record
- * is then processed by the <LOG_MESSAGE_RECEIVER>
+ * is then processed by the @c LOG_MESSAGE_RECEIVER
  *
  * All clients are handled in the same thread.
  */
@@ -174,9 +174,9 @@ using ACE_LOGGER_COUNTER = u_long;
  * @class ACE_Thr_Server_Logging_Handler
  *
  * @brief Product object created by a
- * <ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler>
- * >.  An ACE_Thr_Server_Logging_Handler receives, frames. The
- * logging record is then processed by the <LOG_MESSAGE_RECEIVER>
+ * @c ACE_Server_Logging_Acceptor_T<ACE_Thr_Server_Logging_Handler>.
+ * An ACE_Thr_Server_Logging_Handler receives, frames. The
+ * logging record is then processed by the @c LOG_MESSAGE_RECEIVER
  *
  * Each client is handled in its own separate thread.
  */

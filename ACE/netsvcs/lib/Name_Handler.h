@@ -30,11 +30,11 @@ template class ACE_Svc_Export ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 /**
  * @class ACE_Name_Handler
  *
- * @brief Product object created by <ACE_Name_Acceptor>.  An
- * <ACE_Name_Handler> exchanges messages with a <ACE_Name_Proxy>
+ * @brief Product object created by @c ACE_Name_Acceptor.  An
+ * @c ACE_Name_Handler exchanges messages with an @c ACE_Name_Proxy
  * object on the client-side.
  *
- * This class is the main workhorse of the <ACE_Name_Server>.  It
+ * This class is the main workhorse of the @c ACE_Name_Server.  It
  * handles client requests to bind, rebind, resolve, and unbind
  * names.  It also schedules and handles timeouts that are used to
  * support "timed waits."  Clients used timed waits to bound the
@@ -54,8 +54,8 @@ public:
 
   explicit ACE_Name_Handler (ACE_Thread_Manager * = nullptr);
 
-  /// Activate this instance of the <ACE_Name_Handler> (called by the
-  /// <ACE_Strategy_Acceptor>).
+  /// Activate this instance of @c ACE_Name_Handler (called by the
+  /// @c ACE_Strategy_Acceptor).
   int open (void * = nullptr) override;
 
 protected:
@@ -90,10 +90,10 @@ protected:
   /// @name Demultiplexing hooks.
   /// @{
 
-  /// Return the underlying <ACE_HANDLE>.
+  /// Return the underlying @c ACE_HANDLE.
   ACE_HANDLE get_handle () const override;
 
-  /// Callback method invoked by the <ACE_Reactor> when client events
+  /// Callback method invoked by the @c ACE_Reactor when client events
   /// arrive.
   int handle_input (ACE_HANDLE) override;
 
@@ -184,7 +184,7 @@ private:
  * @class ACE_Name_Acceptor
  *
  * @brief This class contains the service-specific methods that can't
- * easily be factored into the <ACE_Strategy_Acceptor>.
+ * easily be factored into the @c ACE_Strategy_Acceptor.
  */
 class ACE_Name_Acceptor : public ACE_Strategy_Acceptor<ACE_Name_Handler, ACE_SOCK_ACCEPTOR>
 {

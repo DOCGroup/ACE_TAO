@@ -42,7 +42,7 @@ template class ACE_Svc_Export ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>;
  * receive the logging message from the application and an
  * ACE_SOCK_Stream to forward the logging message to the
  * server.  However, on platforms that don't support
- * <ACE_SPIPEs> (e.g., Win32) we use sockets instead.
+ * @c ACE_SPIPEs (e.g., Win32) we use sockets instead.
  */
 class ACE_Svc_Export ACE_Client_Logging_Handler :
   public ACE_Svc_Handler<LOGGING_STREAM, ACE_NULL_SYNCH>
