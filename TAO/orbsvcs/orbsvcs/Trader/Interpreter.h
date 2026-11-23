@@ -40,7 +40,7 @@ protected:
   ~TAO_Interpreter ();
 
   /// Using the Yacc generated parser, construct an expression tree
-  /// representing <constraints> from the tokens returned by it.
+  /// representing @c constraints from the tokens returned by it.
   int build_tree (const char* preferences);
 
   static bool is_empty_string (const char* str);

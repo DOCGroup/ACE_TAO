@@ -456,7 +456,7 @@ public:
  * be read and written. All attributes are defined as readonly in
  * either SupportAttributes, ImportAttributes, LinkAttributes, or
  * Admin. To set the trader "attribute" to a new value,
- * set_<attribute_name> operations are defined in Admin. Each of these
+ * set_@c attribute_name operations are defined in Admin. Each of these
  * set operations returns the previous value of the attribute as its
  * function value. If the admin interface operation
  * set_support_proxy_offers is invoked with a value set to FALSE in a

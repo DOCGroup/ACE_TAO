@@ -23,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Implement common tasks in the Admin interfaces.
  *
- * <H2>Requirements</H2>
+ * @par Requirements
  *
  * The EVENT_CHANNEL interface must implement:
  *
@@ -35,10 +35,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * void destroy_proxy (PROXY*);
  *
  * /// create a proxy collection
- * void create_proxy_collection (TAO_ESF_Proxy_Collection<PROXY>*&);
+ * void create_proxy_collection (TAO_ESF_Proxy_Collection@c PROXY*&);
  *
  * /// destroy a proxy collection
- * void destroy_proxy_collection (TAO_ESF_Proxy_Collection<PROXY>*&);
+ * void destroy_proxy_collection (TAO_ESF_Proxy_Collection@c PROXY*&);
  * @endverbatim
  *
  * In addition to the requirements imposed by
@@ -80,28 +80,28 @@ public:
 
   /**
    * The Event Channel that owns this Admin object is going
-   * down. Invoke <shutdown> on all the proxies, cleanup the
+   * down. Invoke @c shutdown on all the proxies, cleanup the
    * collection and prepare to terminate.
    */
   virtual void shutdown ();
 
   /**
-   * A <proxy> has connected, this is invoked when the proxy's client
+   * A @c proxy has connected, this is invoked when the proxy's client
    * has invoked the connect_xxx_yyy() method.
    * The default implementation is a no-op.
    */
   virtual void connected (PROXY *proxy);
 
   /**
-   * A <proxy> has reconnected, i.e. its client has invoked the
+   * A @c proxy has reconnected, i.e. its client has invoked the
    * connect_xxx_yyy() method, but the proxy was connected already.
    * The default implementation delegates on the collection
-   * <reconnected> method
+   * @c reconnected method
    */
   virtual void reconnected (PROXY *proxy);
 
   /**
-   * A <proxy> has been disconnected. The default implementation
+   * A @c proxy has been disconnected. The default implementation
    * removes the object from the collection and deactivates the
    * proxy.
    */

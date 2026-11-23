@@ -275,7 +275,7 @@ public:
 private:
   TAO_Lockable &locker_;
 
-  /// Upper bound of offers to be searched if <search_card>
+  /// Upper bound of offers to be searched if @c search_card
   /// is not specified.
   CORBA::ULong def_search_card_;
 
@@ -283,14 +283,14 @@ private:
   CORBA::ULong max_search_card_;
 
   /// Upper bound of matched offers to be ordered if
-  /// <match_card> is not specified).
+  /// @c match_card is not specified).
   CORBA::ULong def_match_card_;
 
   /// Maximum upper bound of matched offers to be ordered.
   CORBA::ULong max_match_card_;
 
   /// Upper bound of ordered offers to be returned if
-  /// <returned_card> is not specified.
+  /// @c returned_card is not specified.
   CORBA::ULong def_return_card_;
 
   /// Maximum upper bound of ordered offers to be returned.
@@ -299,7 +299,7 @@ private:
   /// Upper bound of depth
   CORBA::ULong max_list_;
 
-  /// Upper bound of depth of links to be traversed if <hop_count> is
+  /// Upper bound of depth of links to be traversed if @c hop_count is
   /// not specified.
   CORBA::ULong def_hop_count_;
 
@@ -394,8 +394,8 @@ private:
  * and be be aware of the type of lock they use.
  *
  * TAO_Trader is a template class.  And while we want
- * <import_attributes_>, <trader_components_>, and
- * <support_attributes> use a lock contained in TAO_Trader, we do not
+ * @c import_attributes_, @c trader_components_, and
+ * @c support_attributes use a lock contained in TAO_Trader, we do not
  * want all these classes to be templatized.  TAO_Trader_Base class solves
  * this problem.
  */

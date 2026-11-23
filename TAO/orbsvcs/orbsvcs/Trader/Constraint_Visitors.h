@@ -119,7 +119,7 @@ public:
   ~TAO_Constraint_Validator () override;
 
   /**
-   * Validate returns 1 if the expression tree whose root is <root>
+   * Validate returns 1 if the expression tree whose root is @c root
    * makes semantic sense, in that the operands for each operation
    * comply with each other and the types accepted by the operator.
    */
@@ -181,15 +181,15 @@ private:
   CORBA::TypeCode* extract_type (TAO_Constraint* expr_type,
                                  TAO_Expression_Type& type);
 
-  /// expr_returns_boolean returns 1 if <expr_type>, when evaluated, will
+  /// expr_returns_boolean returns 1 if @c expr_type, when evaluated, will
   /// return a boolean.
   int expr_returns_boolean (TAO_Expression_Type expr_type);
 
-  /// expr_returns_boolean returns 1 if <expr_type>, when evaluated, will
+  /// expr_returns_boolean returns 1 if @c expr_type, when evaluated, will
   /// return a number.
   int expr_returns_number (TAO_Expression_Type expr_type);
 
-  /// expr_returns_boolean returns 1 if <expr_type>, when evaluated, will
+  /// expr_returns_boolean returns 1 if @c expr_type, when evaluated, will
   /// return a string.
   int expr_returns_string (TAO_Expression_Type expr_type);
 };
@@ -224,7 +224,7 @@ public:
 
   /**
    * Evaluate returns 1 if the offer satisfies the constraints
-   * represented by the the expression tree rooted at <root>, 0 if it
+   * represented by the the expression tree rooted at @c root, 0 if it
    * doesn't. If an error occurs during process, the constraint
    * automatically fails.
    */
@@ -261,7 +261,7 @@ public:
   int visit_not (TAO_Unary_Constraint* unary_not) override;
 
   /// The property exists if its name is bound to a value in the
-  /// <props_> map.
+  /// @c props_ map.
   int visit_exist (TAO_Unary_Constraint* unary_exist) override;
 
   /// Mathematically negates the return value the operand.
@@ -334,7 +334,7 @@ private:
   int visit_bin_op (TAO_Binary_Constraint* op, int operation);
 
   /// Determine if sequence contains @a element, a literal of the same
-  /// simple type as <sequence_type>. Return true in this eventuality.
+  /// simple type as @c sequence_type. Return true in this eventuality.
   CORBA::Boolean sequence_does_contain (CORBA::Any* sequence,
                                         TAO_Literal_Constraint& element);
   CORBA::Boolean sequence_does_contain (CORBA::Any const* sequence,

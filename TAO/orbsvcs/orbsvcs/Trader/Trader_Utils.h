@@ -49,7 +49,7 @@ public:
   /**
    * Construct an instance of TAO_Property_Evaluator that operates on
    * an @a offer where the support for dynamic properties is dictated
-   * by <supports_dynamic_properties>.
+   * by @c supports_dynamic_properties.
    */
   TAO_Property_Evaluator (CosTrading::Offer& offer,
                           CORBA::Boolean supports_dp = true);
@@ -75,7 +75,7 @@ public:
   /**
    * Returns the type of the property whose index is @a index. If the
    * property is dynamic and the trader supports dynamic properties,
-   * then the method returns the <returned_type> field of the
+   * then the method returns the @c returned_type field of the
    * CosTradingDynamic::DynamicProp struct associated with the
    * property name. If the index is out of bounds, the method returns
    * a null pointer (that is, 0).
@@ -127,14 +127,14 @@ public:
 
   /**
    * Construct an instance of TAO_Property_Evaluator that operates on
-   * an <offer> where the support for dynamic properties is dictated
-   * by <supports_dynamic_properties>.
+   * an @c offer where the support for dynamic properties is dictated
+   * by @c supports_dynamic_properties.
    */
   TAO_Property_Evaluator_By_Name (CosTrading::Offer& offer,
                                   CORBA::Boolean supports_dp = true);
 
   /**
-   * Returns 1 if the property whose name is <property_name> is
+   * Returns 1 if the property whose name is @c property_name is
    * defined and dynamic. If the property is undefined, this method
    * will throw a Property_Undefined exception with impunity.
    */
@@ -352,9 +352,9 @@ public:
   CosTrading::FollowOption link_follow_rule () const;
 
   /**
-   * Determine the link follow policy for a given <link_name>.
+   * Determine the link follow policy for a given @c link_name.
    * This method returns the link_follow_rule for a link whose name is
-   * <link_name> using the following formula:
+   * @c link_name using the following formula:
    * if the importer specified a link_follow_rule policy
    *      min(trader.max_follow_policy, link.limiting_follow_rule,
    *          query.link_follow_rule)
@@ -388,9 +388,9 @@ public:
                         const CosTrading::TraderName& name) const;
 
   /**
-   * Determine the link follow policy to pass down the link with <link_name>.
+   * Determine the link follow policy to pass down the link with @c link_name.
    * This method returns the link_follow_rule for a link whose name is
-   * <link_name> using the following formula:
+   * @c link_name using the following formula:
    * If the importer specified a link_follow_rule, policy
    *      pass on min(query.link_follow_rule, link.limiting_follow_rule,
    *                  trader.max_follow_policy)

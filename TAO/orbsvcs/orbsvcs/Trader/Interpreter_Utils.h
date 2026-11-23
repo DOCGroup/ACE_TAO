@@ -77,7 +77,7 @@ class TAO_Sequence_Extracter_Base
 {
 public:
   /// Return the sequence element type for the sequence whose typecode
-  /// is <code>.
+  /// is @c code.
   static CORBA::TCKind sequence_type (CORBA::TypeCode* code);
 };
 

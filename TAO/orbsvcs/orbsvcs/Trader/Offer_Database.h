@@ -106,13 +106,13 @@ private:
   // The map stores entries by pointer because entries contain lock types
   // that are not copyable.
 
-  /// Lookup an offer whose type is @ type and id, @a id. Return 0 on
+  /// Lookup an offer whose type is @a type and ID is @a id. Return 0 on
   /// failure.
   CosTrading::Offer* lookup_offer (const char* type,
                                    CORBA::ULong id);
 
   /**
-   * Remove an offers whose id is @id. Returns 0 on success, -1
+   * Remove an offer whose id is @a id. Returns 0 on success, -1
    * on failure, and throws a CosTrading::IllegalOfferId if it can't
    * parse the CosTrading::OfferId.
    */

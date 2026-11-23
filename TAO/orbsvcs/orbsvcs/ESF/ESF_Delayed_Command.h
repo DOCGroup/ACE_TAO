@@ -25,13 +25,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @brief Implements a Command object that invokes the connected_i()
  * method on the target, passing an argument of type Object.
  *
- * <H2>Memory Managment</H2>
+ * @par Memory Management
  * It does not assume ownership of Object nor the Target
  * arguments.
  * Usually allocated from the heap or an allocator; but it is not
  * self-managed.
  *
- * <H2>Locking</H2>
+ * @par Locking
  * No provisions for locking, access must be serialized
  * externally.
  */
@@ -67,13 +67,13 @@ private:
  * @brief Implements a Command object that invokes the reconnected_i()
  * method on the target, passing an argument of type Object.
  *
- * <H2>Memory Managment</H2>
+ * @par Memory Management
  * It does not assume ownership of Object nor the Target
  * arguments.
  * Usually allocated from the heap or an allocator; but it is not
  * self-managed.
  *
- * <H2>Locking</H2>
+ * @par Locking
  * No provisions for locking, access must be serialized
  * externally.
  */
@@ -110,13 +110,13 @@ private:
  * disconnected_i() method on the target, passing an argument of type
  * Object.
  *
- * <H2>Memory Managment</H2>
+ * @par Memory Management
  * It does not assume ownership of Object nor the Target
  * arguments.
  * Usually allocated from the heap or an allocator; but it is not
  * self-managed.
  *
- * <H2>Locking</H2>
+ * @par Locking
  * No provisions for locking, access must be serialized
  * externally.
  */
@@ -152,13 +152,13 @@ private:
  * @brief Implements a Command object that invokes the shutdown_i()
  * method on the target, passing an argument of type Object.
  *
- * <H2>Memory Management</H2>
+ * @par Memory Management
  * It does not assume ownership of Object nor the Target
  * arguments.
  * Usually allocated from the heap or an allocator; but it is not
  * self-managed.
  *
- * <H2>Locking</H2>
+ * @par Locking
  * No provisions for locking, access must be serialized
  * externally.
  */
