@@ -134,7 +134,7 @@ public:
   /// Returns the IOR of the naming service.
   char * naming_service_ior ();
 
-  /// Returns a <NamingContext_ptr> for the root Naming Context.
+  /// Returns a @c NamingContext_ptr for the root Naming Context.
   CosNaming::NamingContext_ptr operator-> () const;
 
 protected:

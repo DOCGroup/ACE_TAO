@@ -138,7 +138,7 @@ private:
   /// creates a servant for each entry.
   int recreate_all ();
 
-  /// Helper for the <open> method.
+  /// Helper for the @c open method.
   int create_index ();
 
   /// Helper for <create_index> method: places hash table into an
@@ -161,7 +161,7 @@ private:
   /// Placement-constructed in mapped allocator memory; not separately deleted.
   CONTEXT_INDEX *index_ {};
 
-  /// Name of the memory-mapped file used by <allocator_>.
+  /// Name of the memory-mapped file used by @c allocator_.
   ACE_TCHAR const *index_file_ {};
 
   /// Base address for the memory-mapped file.

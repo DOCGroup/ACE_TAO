@@ -31,7 +31,7 @@ class TAO_RT_Invocation_Endpoint_Selector;
 /**
  * @class RT_Endpoint_Selector_Factory
  *
- * @brief Factory for obtaining appropriate <Invocation_Selector>.
+ * @brief Factory for obtaining an appropriate @c TAO_RT_Invocation_Endpoint_Selector.
  *
  * Used by Invocation classes to intialize its endpoint selection
  * strategy and state based on the effective policies.  Endpoint

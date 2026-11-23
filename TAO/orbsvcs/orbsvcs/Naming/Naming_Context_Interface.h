@@ -43,7 +43,7 @@ class TAO_Naming_Serv_Export TAO_Naming_Context :
   public virtual POA_CosNaming::NamingContextExt
 {
 public:
-  /// Constructor.  Initializes <impl_> with a concrete implementation.
+  /// Constructor.  Initializes @c impl_ with a concrete implementation.
   explicit TAO_Naming_Context (TAO_Naming_Context_Impl *impl);
 
   ~TAO_Naming_Context () override;

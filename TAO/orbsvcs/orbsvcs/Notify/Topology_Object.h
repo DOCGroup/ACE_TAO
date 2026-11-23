@@ -111,7 +111,7 @@ namespace TAO_Notify
 
     ~Topology_Object () override;
 
-    /// Init this object with data from <rhs>.
+    /// Init this object with data from @a topology_parent.
     virtual void initialize (Topology_Parent* topology_parent);
 
     /// \brief Create a child of the appropriate type and return it.

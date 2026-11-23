@@ -99,7 +99,7 @@ public:
 protected:
   TAO_Notify_Object ();
 
-  /// Init this object with data from <rhs>.
+  /// Init this object with data from @a parent.
   void initialize (TAO_Notify_Object* parent);
 
   /// Uses the poas from the supplied object

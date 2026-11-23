@@ -51,7 +51,7 @@ public:
   /// Init
   void init (TAO_Notify::Topology_Parent * parent);
 
-  /// Insert the proxy in the <proxy_container_>.
+  /// Insert the proxy in the @c proxy_container_.
   void insert (TAO_Notify_Proxy* proxy);
 
   /// Remove type from container_ and cleanup any EC resources.

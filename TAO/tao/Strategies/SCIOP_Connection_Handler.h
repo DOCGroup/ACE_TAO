@@ -87,7 +87,7 @@ public:
   /// Add ourselves to Cache.
   int add_transport_to_cache ();
 
-  /// Process the <listen_list>
+  /// Process the @a listen_list
   int process_listen_point_list (IIOP::ListenPointList &listen_list);
 
   /// Set Diff-Serv codepoint on outgoing packets.

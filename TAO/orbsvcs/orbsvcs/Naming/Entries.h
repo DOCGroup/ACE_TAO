@@ -25,12 +25,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class TAO_IntId
  *
  * @brief Helper class for TAO_Transient_Bindings_Map: unifies several
- * data items, so they can be stored together as a  <value>
- * for a <key> in a hash table holding the state of a Transient
+ * data items, so they can be stored together as a  @c value
+ * for a @c key in a hash table holding the state of a Transient
  * Naming Context.
  *
  * This class holds CORBA Object pointer and a binding type, so
- * they can be stored together as a <value> for a <key> in a
+ * they can be stored together as a @c value for a @c key in a
  * hash table holding the state of a Transient Naming Context.
  */
 class TAO_Naming_Serv_Export TAO_IntId
@@ -51,7 +51,7 @@ public:
   /// Object reference to be stored in a Transient Naming Context.
   CORBA::Object_ptr ref_;
 
-  /// Binding type for <ref_>.
+  /// Binding type for @c ref_.
   CosNaming::BindingType type_;
 };
 
@@ -59,12 +59,12 @@ public:
  * @class TAO_ExtId
  *
  * @brief Helper class for TAO_Transient_Bindings_Map: unifies several
- * data items, so they can be stored together as a  <key>
- * for a <value> in a hash table holding the state of a Transient
+ * data items, so they can be stored together as a  @c key
+ * for a @c value in a hash table holding the state of a Transient
  * Naming Context.
  *
  * This class holds id and kind strings, so
- * they can be stored together as a <key> for a <value> in a
+ * they can be stored together as a @c key for a @c value in a
  * hash table holding the state of a Transient Naming Context.
  */
 class TAO_Naming_Serv_Export TAO_ExtId

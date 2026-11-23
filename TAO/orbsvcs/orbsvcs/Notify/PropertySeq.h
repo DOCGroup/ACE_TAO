@@ -43,7 +43,7 @@ public:
   /// Return 0 on success, -1 on error.
   int init (const CosNotification::PropertySeq& prop_seq);
 
-  /// Find the <value> for property <name>. Returns 0 on success.
+  /// Find the @a value for property @a name. Returns 0 on success.
   int find (const char* name, CosNotification::PropertyValue& value) const;
 
   /// Return -1 on error.

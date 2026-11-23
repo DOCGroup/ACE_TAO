@@ -49,7 +49,7 @@ protected:
   /// successfully builds a tree from the constraints.
   std::unique_ptr<TAO_Constraint> root_;
 private:
-  /// This mutex protects the <build_tree> method from reentrance.
+  /// This mutex protects the @c build_tree method from reentrance.
   static TAO_SYNCH_MUTEX parserMutex__;
 };
 

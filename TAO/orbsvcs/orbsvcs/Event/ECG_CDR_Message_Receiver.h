@@ -213,7 +213,7 @@ private:
   /// partially received.
   Request_Map request_map_;
 
-  /// Serializes use of <request_map_>.
+  /// Serializes use of @c request_map_.
   //  ACE_Lock* lock_;
 
   /// Size of a fragmented requests array, i.e., max number of
@@ -261,7 +261,7 @@ public:
   Requests& operator= (const Requests&) = delete;
   Requests& operator= (Requests&&) = delete;
 
-  /// Allocates and initializes <fragmented_requests_>.
+  /// Allocates and initializes @c fragmented_requests_.
   int init (size_t size, size_t min_purge_count);
 
   /// Returns pointer to a <fragmented_requests_> element
@@ -288,7 +288,7 @@ private:
   /// get_request() to return the address of a slot.
   std::unique_ptr<TAO_ECG_UDP_Request_Entry*[]> fragmented_requests_ {};
 
-  /// Size of <fragmented_requests_> array.
+  /// Size of @c fragmented_requests_ array.
   size_t size_ {};
 
   /// The range of request ids, currently represented in

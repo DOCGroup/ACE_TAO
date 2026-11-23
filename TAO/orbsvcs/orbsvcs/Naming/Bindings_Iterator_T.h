@@ -17,8 +17,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_Bindings_Iterator
  *
- * @brief This class implements the <BindingIterator> interface that is
- * part of the <CosNaming> idl module.   This class works with Hash_Map-based
+ * @brief This class implements the @c BindingIterator interface that is
+ * part of the @c CosNaming idl module.   This class works with Hash_Map-based
  * implementations of CosNaming::NamingContext.
  *
  * This class is templatized by the types of the underlying

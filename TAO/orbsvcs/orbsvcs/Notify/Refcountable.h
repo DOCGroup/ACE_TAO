@@ -33,7 +33,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_Notify_Refcountable
  *
- * @brief Thread-safe refounting, calls the <release> method when refcount falls to 0.
+ * @brief Thread-safe refounting, calls the @c release method when refcount falls to 0.
  *
  *        The refcount is initialized to 0. When an instance of a
  *        derived class becomes owned by a managed pointer

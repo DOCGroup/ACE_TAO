@@ -48,7 +48,7 @@ public:
   TAO_Server_Protocol_Acceptor_Filter (TAO_Server_Protocol_Acceptor_Filter &&) = delete;
   TAO_Server_Protocol_Acceptor_Filter &operator= (TAO_Server_Protocol_Acceptor_Filter &&) = delete;
 
-  /// Populate @a mprofile based on what's in <protocols_>.
+  /// Populate @a mprofile based on what's in @c protocols_.
   int fill_profile (TAO::ObjectKey const &object_key,
                     TAO_MProfile &mprofile,
                     TAO_AcceptorSet const &acceptors,

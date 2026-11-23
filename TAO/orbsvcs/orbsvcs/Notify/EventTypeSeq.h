@@ -44,22 +44,22 @@ public:
   /// Populate this sequence with the intersection of rhs and lhs.
   void intersection (const TAO_Notify_EventTypeSeq& rhs, const TAO_Notify_EventTypeSeq& lhs);
 
-  /// insert_seq the contents of <event_type_seq> into this object.
+  /// insert_seq the contents of @a event_type_seq into this object.
   void insert_seq (const CosNotification::EventTypeSeq& event_type_seq);
 
-  /// remove_seq the contents of <event_type_seq> from this object.
+  /// remove_seq the contents of @a event_type_seq from this object.
   void remove_seq (const CosNotification::EventTypeSeq& event_type_seq);
 
-  /// insert_seq the contents of <event_type_seq> into this object.
+  /// insert_seq the contents of @a event_type_seq into this object.
   void insert_seq (const TAO_Notify_EventTypeSeq& event_type_seq);
 
-  /// remove_seq the contents of <event_type_seq> from this object.
+  /// remove_seq the contents of @a event_type_seq from this object.
   void remove_seq (const TAO_Notify_EventTypeSeq& event_type_seq);
 
-  /// Populate <event_type_seq> with the contents of this object.
+  /// Populate @a event_type with the contents of this object.
   void populate (CosNotification::EventTypeSeq& event_type) const;
 
-  /// Populate <event_type_seq> with the contents of this object.
+  /// Populate @a event_type with the contents of this object.
   /// Excludes the special event type. This is used to avoid sending * type updates to proxys.
   void populate_no_special (CosNotification::EventTypeSeq& event_type) const;
 

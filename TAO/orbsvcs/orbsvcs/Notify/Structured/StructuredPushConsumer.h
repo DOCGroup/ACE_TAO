@@ -41,10 +41,10 @@ public:
   TAO_Notify_StructuredPushConsumer &operator= (TAO_Notify_StructuredPushConsumer const &) = delete;
   TAO_Notify_StructuredPushConsumer &operator= (TAO_Notify_StructuredPushConsumer &&) = delete;
 
-  /// Push <event> to this consumer.
+  /// Push @a event to this consumer.
   void push (CORBA::Any const &event) override;
 
-  /// Push <event> to this consumer.
+  /// Push @a event to this consumer.
   void push (CosNotification::StructuredEvent const &event) override;
 
   /// Push a batch of events to this consumer.

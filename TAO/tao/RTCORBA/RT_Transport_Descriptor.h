@@ -47,7 +47,7 @@ public:
   /// returns the pointer
   TAO_Transport_Descriptor_Interface *duplicate () override;
 
-  /// Try to determine if this object is same as the <other_prop>.
+  /// Try to determine if this object is same as the @a other_prop.
   CORBA::Boolean is_equivalent (
       TAO_Transport_Descriptor_Interface const *other_prop) override;
 

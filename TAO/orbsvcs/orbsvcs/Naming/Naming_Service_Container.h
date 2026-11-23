@@ -47,7 +47,7 @@ private:
   ACE_NS_Node (ACE_NS_Node<T> *n = nullptr, int = 0);
   ACE_NS_Node (ACE_NS_Node<T> const &n);
 
-  /// Pointer to next element in the list of <ACE_NS_Node>s.
+  /// Pointer to the next @c ACE_NS_Node in the list.
   ACE_NS_Node<T> *next_;
 
   /// Current value of the item in this node.
@@ -95,7 +95,7 @@ public:
   /// Prefix advance.
   ACE_Unbounded_List_Iterator<T>& operator++ ();
 
-  /// Returns a reference to the interal element <this> is pointing to.
+  /// Returns a reference to the element pointed to by this iterator.
   T& operator* ();
 
   /// Check if two iterators point to the same position
@@ -117,7 +117,7 @@ private:
 /**
  * @class ACE_Unbounded_List
  *
- * @brief Implement a simple unordered set of <T> of unbounded size.
+ * @brief Implement a simple unordered set of @c T of unbounded size.
  *
  * This implementation of an unordered set uses a circular
  * linked list with a dummy node.  This implementation does not
@@ -176,7 +176,7 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  /// Reset the <ACE_Unbounded_List> to be empty.
+  /// Reset the @c ACE_Unbounded_List to be empty.
   void reset ();
 
   /// @}

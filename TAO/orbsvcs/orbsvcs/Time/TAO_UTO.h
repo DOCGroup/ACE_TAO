@@ -47,17 +47,17 @@ public:
   TAO_UTO &operator= (TAO_UTO const &) = delete;
   TAO_UTO &operator= (TAO_UTO &&) = delete;
 
-  /// For the readonly attribute <time>.
+  /// For the readonly attribute @c time.
   TimeBase::TimeT time () override;
 
-  /// For the readonly attribute <inaccuracy>.
+  /// For the readonly attribute @c inaccuracy.
   TimeBase::InaccuracyT inaccuracy () override;
 
-  /// For the readonly attribute <tdf>, which is the "time displacement
+  /// For the readonly attribute @c tdf, which is the "time displacement
   /// factor".
   TimeBase::TdfT tdf () override;
 
-  /// For the readonly attribute <utc_time>.
+  /// For the readonly attribute @c utc_time.
   TimeBase::UtcT utc_time () override;
 
   /**

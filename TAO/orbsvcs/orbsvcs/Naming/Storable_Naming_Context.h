@@ -47,7 +47,7 @@ public:
   /// Stringified IOR to be stored in a Persistent Naming Context.
   CORBA::String_var  ref_;
 
-  /// Binding type for <ref_>.
+  /// Binding type for @c ref_.
   CosNaming::BindingType type_;
 };
 
@@ -175,7 +175,7 @@ public:
 
   /// @}
 private:
-  /// Helper: factors common code from <bind> and <rebind>.
+  /// Helper: factors common code from @c bind and @c rebind.
   int shared_bind (char const *id,
                    char const *kind,
                    CORBA::Object_ptr obj,

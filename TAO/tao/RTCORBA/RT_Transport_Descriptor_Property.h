@@ -24,7 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class TAO_RT_Transport_Descriptor_Property
  *
- * @brief Base RT Transport Descriptor Property that can be <insert> ed into the TAO_RT_Transport_Descriptor class.
+ * @brief Base RT Transport Descriptor Property that can be inserted into the TAO_RT_Transport_Descriptor class.
  */
 class TAO_RTCORBA_Export TAO_RT_Transport_Descriptor_Property
 {
@@ -40,7 +40,7 @@ public:
   virtual CORBA::Boolean is_equivalent (TAO_RT_Transport_Descriptor_Property const *other_prop) = 0;
 
 protected:
-  /// Properties can be chanined using the <next_> pointer;
+  /// Properties can be chanined using the @c next_ pointer;
   TAO_RT_Transport_Descriptor_Property* next_ {};
 
 private:

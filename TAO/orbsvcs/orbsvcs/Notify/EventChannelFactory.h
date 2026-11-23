@@ -71,7 +71,7 @@ public:
   void _remove_ref () override;
   /// @}
 
-  /// Remove @a channel from the <ec_container_>
+  /// Remove @a channel from the @c ec_container_
   virtual void remove (TAO_Notify_EventChannel* channel);
 
   /// This method is called by the Notify_Service when the event channel

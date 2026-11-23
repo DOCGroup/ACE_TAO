@@ -96,7 +96,7 @@ public:
 
   /// @}
 private:
-  /// Helper: factors common code from <bind> and <rebind>.
+  /// Helper: factors common code from @c bind and @c rebind.
   int shared_bind (char const *id,
                    char const *kind,
                    CORBA::Object_ptr obj,

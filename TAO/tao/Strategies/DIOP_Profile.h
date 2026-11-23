@@ -61,7 +61,7 @@ public:
 
   explicit TAO_DIOP_Profile (TAO_ORB_Core *orb_core);
 
-  /// Destructor is to be called only through <_decr_refcnt>.
+  /// Destructor is to be called only through @c _decr_refcnt.
   ~TAO_DIOP_Profile ();
 
   /// Template methods. Please tao/Profile.h for documentation.
@@ -109,7 +109,7 @@ protected:
    */
   TAO_DIOP_Endpoint endpoint_;
 
-  /// Number of endpoints in the list headed by <endpoint_>.
+  /// Number of endpoints in the list headed by @c endpoint_.
   CORBA::ULong count_ {1};
 };
 
