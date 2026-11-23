@@ -129,7 +129,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
     }
 
 #if !defined (ACE_WIN32)
-  ACE_HANDLE s = this->get_handle ();
+  ACE_HANDLE const s = this->get_handle ();
 
   char buf[BUFSIZ];
   struct ifconf ifc;
@@ -335,7 +335,7 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
     {
       temp->bcast_addr_.set_port_number (port_number);
 
-      ssize_t bytes_sent = ACE_SOCK_Dgram::send (buf,
+      ssize_t const bytes_sent = ACE_SOCK_Dgram::send (buf,
                                                  n,
                                                  temp->bcast_addr_,
                                                  flags);

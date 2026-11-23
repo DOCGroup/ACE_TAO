@@ -36,7 +36,7 @@ ACE_SOCK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::shared_accept_start");
 
-  ACE_HANDLE handle = this->get_handle ();
+  ACE_HANDLE const handle = this->get_handle ();
 
   // Handle the case where we're doing a timed <accept>.
   if (timeout != nullptr)
@@ -72,7 +72,7 @@ ACE_SOCK_Acceptor::shared_accept_finish (ACE_SOCK_Stream new_stream,
 {
   ACE_TRACE ("ACE_SOCK_Acceptor::shared_accept_finish ()");
 
-  ACE_HANDLE new_handle = new_stream.get_handle ();
+  ACE_HANDLE const new_handle = new_stream.get_handle ();
 
   // Check to see if we were originally in blocking mode, and if so,
   // set the <new_stream>'s handle and <this> handle to be in blocking

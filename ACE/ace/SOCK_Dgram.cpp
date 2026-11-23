@@ -80,7 +80,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
                       -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
-      ssize_t rcv_len = ACE_OS::recvfrom (this->get_handle (),
+      ssize_t const rcv_len = ACE_OS::recvfrom (this->get_handle (),
                                           static_cast<char *> (io_vec->iov_base),
                                           inlen,
                                           flags,
@@ -630,7 +630,7 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
   if (addr_family == AF_INET || addr_family == AF_UNSPEC)
 #   endif
     {
-      ACE_INET_Addr addr (static_cast<u_short> (0));
+      ACE_INET_Addr const addr (static_cast<u_short> (0));
       ip_mreq  send_mreq;
       if (this->make_multicast_ifaddr (&send_mreq, addr, net_if) == -1)
         {

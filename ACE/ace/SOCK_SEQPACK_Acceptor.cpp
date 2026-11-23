@@ -28,7 +28,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_accept_start (ACE_Time_Value *timeout,
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::shared_accept_start");
 
-  ACE_HANDLE handle = this->get_handle ();
+  ACE_HANDLE const handle = this->get_handle ();
 
   // Handle the case where we're doing a timed <accept>.
   if (timeout != nullptr)
@@ -64,7 +64,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_accept_finish (ACE_SOCK_SEQPACK_Association ne
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Acceptor::shared_accept_finish ()");
 
-  ACE_HANDLE new_handle = new_association.get_handle ();
+  ACE_HANDLE const new_handle = new_association.get_handle ();
 
   // Check to see if we were originally in blocking mode, and if so,
   // set the <new_association>'s handle and <this> handle to be in blocking
@@ -349,7 +349,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
         {
           // The total number of addresses is the number of secondary
           // addresses plus one.
-          size_t num_addresses = local_sap.get_num_secondary_addresses() + 1;
+          size_t const num_addresses = local_sap.get_num_secondary_addresses() + 1;
 
           // Create an array of sockaddr_in to hold the underlying
           // representations of the primary and secondary
@@ -415,7 +415,7 @@ ACE_SOCK_SEQPACK_Acceptor::shared_open (const ACE_Multihomed_INET_Addr &local_sa
               }
 #else
               // Call bind
-              size_t name_len = (sizeof local_inet_addr) * num_addresses;
+              size_t const name_len = (sizeof local_inet_addr) * num_addresses;
               if (ACE_OS::bind (this->get_handle (),
                                 reinterpret_cast<sockaddr *> (local_inet_addrs),
                                 static_cast<int> (name_len)) == -1)

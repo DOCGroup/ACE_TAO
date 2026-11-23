@@ -98,7 +98,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
   if (local_sap != ACE_Addr::sap_any)
     {
       sockaddr *laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
-      int size = local_sap.get_size ();
+      int const size = local_sap.get_size ();
 
       if (ACE_OS::bind (new_association.get_handle (),
                         laddr,
@@ -135,7 +135,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
     {
       // The total number of addresses is the number of secondary
       // addresses plus one.
-      size_t num_addresses = local_sap.get_num_secondary_addresses() + 1;
+      size_t const num_addresses = local_sap.get_num_secondary_addresses() + 1;
 
       // Create an array of sockaddr_in to hold the underlying
       // representations of the primary and secondary
@@ -215,7 +215,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
 #else
 
       // Call bind
-      size_t name_len = (sizeof (sockaddr_in)) * num_addresses;
+      size_t const name_len = (sizeof (sockaddr_in)) * num_addresses;
       if (ACE_OS::bind (new_association.get_handle (),
                         reinterpret_cast<sockaddr *> (local_inet_addrs),
                         static_cast<int> (name_len)) == -1)
@@ -322,7 +322,7 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
       return -1;
     }
 
-  int result = ACE_OS::connect (new_association.get_handle (),
+  int const result = ACE_OS::connect (new_association.get_handle (),
                                 reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
@@ -358,7 +358,7 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
       return -1;
     }
 
-  int result = ACE_OS::connect (new_association.get_handle (),
+  int const result = ACE_OS::connect (new_association.get_handle (),
                                 reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
@@ -375,7 +375,7 @@ ACE_SOCK_SEQPACK_Connector::complete (ACE_SOCK_SEQPACK_Association &new_associat
                               const ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::complete");
-  ACE_HANDLE h = ACE::handle_timed_complete (new_association.get_handle (),
+  ACE_HANDLE const h = ACE::handle_timed_complete (new_association.get_handle (),
                                              tv);
   // We failed to get connected.
   if (h == ACE_INVALID_HANDLE)

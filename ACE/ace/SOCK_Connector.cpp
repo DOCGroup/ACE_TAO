@@ -231,7 +231,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
   }
 #endif
 
-  int result = ACE_OS::connect (new_stream.get_handle (),
+  int const result = ACE_OS::connect (new_stream.get_handle (),
                                 reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size ());
 
@@ -282,7 +282,7 @@ ACE_SOCK_Connector::connect (ACE_SOCK_Stream &new_stream,
   }
 #endif
 
-  int result = ACE_OS::connect (new_stream.get_handle (),
+  int const result = ACE_OS::connect (new_stream.get_handle (),
                                 reinterpret_cast<sockaddr *> (remote_sap.get_addr ()),
                                 remote_sap.get_size (),
                                 qos_params);
@@ -297,7 +297,7 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
                               const ACE_Time_Value *tv)
 {
   ACE_TRACE ("ACE_SOCK_Connector::complete");
-  ACE_HANDLE h = ACE::handle_timed_complete (new_stream.get_handle (), tv);
+  ACE_HANDLE const h = ACE::handle_timed_complete (new_stream.get_handle (), tv);
   // We failed to get connected.
   if (h == ACE_INVALID_HANDLE)
     {
