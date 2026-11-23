@@ -31,7 +31,7 @@ namespace ACE
 
     Monitor_Query::Monitor_Query (char const* monitor_name)
     {
-      ACE_CString name_str (monitor_name, nullptr, false);
+      ACE_CString const name_str (monitor_name, nullptr, false);
       this->monitor_ = Monitor_Point_Registry::instance ()->get (name_str);
 
       if (this->monitor_ == nullptr)

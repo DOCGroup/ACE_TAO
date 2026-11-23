@@ -34,7 +34,7 @@ namespace ACE
       this->update_i ();
       this->receive (this->value_);
 #elif defined (ACE_LINUX)
-      std::unique_ptr<FILE, int (*) (FILE *)> file_ptr (
+      std::unique_ptr<FILE, int (*) (FILE *)> const file_ptr (
         ACE_OS::fopen (ACE_TEXT ("/proc/self/status"), ACE_TEXT ("r")), ACE_OS::fclose);
 
       if (!file_ptr)

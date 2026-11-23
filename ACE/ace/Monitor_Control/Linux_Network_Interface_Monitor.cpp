@@ -25,7 +25,7 @@ namespace ACE
     Linux_Network_Interface_Monitor::update_i ()
     {
       char buf[1024] {};
-      std::unique_ptr<FILE, int (*) (FILE *)> fp (
+      std::unique_ptr<FILE, int (*) (FILE *)> const fp (
         ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"), ACE_TEXT ("r")),
         ACE_OS::fclose);
 
@@ -82,7 +82,7 @@ namespace ACE
       /// from subsequent readings to get bytes sent since we started
       /// monitoring.
       char buf[1024] {};
-      std::unique_ptr<FILE, int (*) (FILE *)> fp (
+      std::unique_ptr<FILE, int (*) (FILE *)> const fp (
         ACE_OS::fopen (ACE_TEXT ("/proc/net/dev"), ACE_TEXT ("r")),
         ACE_OS::fclose);
 

@@ -98,7 +98,7 @@ namespace ACE
     void
     CPU_Load_Monitor::access_proc_stat (unsigned long &which_idle)
     {
-      std::unique_ptr<FILE, int (*) (FILE *)> file_ptr (
+      std::unique_ptr<FILE, int (*) (FILE *)> const file_ptr (
         ACE_OS::fopen (ACE_TEXT ("/proc/stat"), ACE_TEXT ("r")), ACE_OS::fclose);
 
       if (!file_ptr)
