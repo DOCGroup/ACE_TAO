@@ -269,8 +269,8 @@ void
 timed_blocking_connect (CONNECTOR &con,
                         const ACE_INET_Addr &server_addr)
 {
-  ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
-  ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
+  ACE_Time_Value const tv (ACE_DEFAULT_TIMEOUT);
+  ACE_Synch_Options const options (ACE_Synch_Options::USE_TIMEOUT, tv);
 
   Svc_Handler *svc_handler;
   ACE_NEW (svc_handler,
@@ -474,7 +474,7 @@ server (void *arg)
   ACE_INET_Addr cli_addr;
   ACE_TCHAR peer_host[MAXHOSTNAMELEN];
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
-  ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
+  ACE_Synch_Options const options (ACE_Synch_Options::USE_TIMEOUT, tv);
 
   Svc_Handler *svc_handler;
   ACE_NEW_RETURN (svc_handler,
@@ -553,14 +553,14 @@ spawn_processes (ACCEPTOR *acceptor,
   ACE_NEW_RETURN (children_ptr,
                   pid_t[n_servers],
                   -1);
-  std::unique_ptr<pid_t[]> children (children_ptr);
+  std::unique_ptr<pid_t[]> const children (children_ptr);
   int i;
 
   // Spawn off a number of server processes all of which will listen
   // on the same port number for clients to connect.
   for (i = 0; i < n_servers; ++i)
     {
-      pid_t pid = ACE_OS::fork (ACE_TEXT ("child"));
+      pid_t const pid = ACE_OS::fork (ACE_TEXT ("child"));
       switch (pid)
         {
         case -1:
@@ -573,7 +573,7 @@ spawn_processes (ACCEPTOR *acceptor,
         case 0:             // In the child.
           {
             // Register a signal handler to close down the child.
-            ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGTERM);
+            ACE_Sig_Action const sa ((ACE_SignalHandler) handler, SIGTERM);
             ACE_UNUSED_ARG (sa);
 
             server (static_cast<void *> (acceptor));

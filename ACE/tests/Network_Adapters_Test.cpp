@@ -1074,7 +1074,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   SetConsoleCtrlHandler(&CtrlHandler, TRUE);
 #else /* #if defined (ACE_WIN32) */
   // Set a handler for SIGSEGV signal to call for abort.
-  ACE_Sig_Action sa1 ((ACE_SignalHandler) sigsegv_handler, SIGSEGV);
+  ACE_Sig_Action const sa1 ((ACE_SignalHandler) sigsegv_handler, SIGSEGV);
 #endif /* #if defined (ACE_WIN32) */
   if (::parse_args (argc, argv) == -1)
     {
@@ -1118,7 +1118,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_OS::exit(-2);
     }
 
-  std::unique_ptr<ACE_TCHAR[]> ping_status (
+  std::unique_ptr<ACE_TCHAR[]> const ping_status (
     new (std::nothrow) ACE_TCHAR[number_of_ping_points]);
   if (!ping_status)
     {
