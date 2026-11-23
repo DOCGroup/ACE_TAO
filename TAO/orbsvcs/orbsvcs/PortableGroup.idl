@@ -195,8 +195,8 @@ module PortableGroup
   }; // end GenericFactory
 
   ///////////////////////
-  /// The following FactoryRegistry interface is not included in the OMG PortableGroup IDL.
-  /// It's an extension needed as part of implementing the FT CORBA specification.
+  // The following FactoryRegistry interface is not included in the OMG PortableGroup IDL.
+  // It's an extension needed as part of implementing the FT CORBA specification.
 
   /**
    * a name for the role the object will play

@@ -14,8 +14,8 @@
 /// These examples test the lookup abilities of the
 /// TAO IDL compiler, with reopened modules.
 
-/// Tests lookup function when modules are reopened by
-/// a chain of inclusions.
+// Tests lookup function when modules are reopened by
+// a chain of inclusions.
 #include "reopen_include2.idl"
 
 module AA

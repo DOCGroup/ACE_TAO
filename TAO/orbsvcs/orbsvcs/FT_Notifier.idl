@@ -21,7 +21,7 @@
 #include "orbsvcs/CosNaming.idl" // 98-10-19.idl
 #include "orbsvcs/CosNotification.idl" // from telecom/98-11-03.idl
 
-/// added to OMG version:
+// added to OMG version:
 #include "orbsvcs/CosNotifyFilter.idl"
 
 #pragma prefix "omg.org"

@@ -388,7 +388,7 @@ interface Param_Test
   /// shutdown is possible.
   void shutdown ();
 
-  /// test simple objects
+  // test simple objects
   //  Object test_object (in Object o1, inout Object o2, out Object o3);
 
 };
