@@ -189,7 +189,7 @@ TAO_EC_Default_ProxyPushSupplier::activate (
 PortableServer::ObjectId
 TAO_EC_Default_ProxyPushSupplier::object_id ()
 {
-  PortableServer::ObjectId_var result =
+  PortableServer::ObjectId_var const result =
     this->default_POA_->servant_to_id (this);
 
   return result.in ();
