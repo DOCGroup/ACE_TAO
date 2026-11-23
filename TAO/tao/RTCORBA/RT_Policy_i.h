@@ -711,7 +711,7 @@ public:
   /**
    * Creates the proper transport ProtocolProperties subclass that matches
    * the IOP::ProfileId.
-   * NOTE: Each IOP::ProfileId corresponds to two sets of protocol
+   * @note Each IOP::ProfileId corresponds to two sets of protocol
    * properties: one describes the transport protocol and the other
    * describes the ORB messaging protocol.
    */
@@ -722,7 +722,7 @@ public:
   /**
    * Creates the proper orb ProtocolProperties subclass for
    * IOP::ProfileId.
-   * NOTE: Each IOP::ProfileId corresponds to two sets of protocol
+   * @note Each IOP::ProfileId corresponds to two sets of protocol
    * properties: one describes the transport protocol and the other
    * describes the ORB messaging protocol.
    */

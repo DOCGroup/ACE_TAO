@@ -56,7 +56,7 @@ public:
                  CORBA::Long init_level = 0);
 
   /// Methods to support chunking.
-  /// Note: These methods are called for both chunking and non-chunking
+  /// @note These methods are called for both chunking and non-chunking
   ///       valuetype. These methods checks the chunking_ flag. If it's
   ///       set to be false the methods return true rightaway.
 

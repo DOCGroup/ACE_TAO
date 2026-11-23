@@ -46,7 +46,7 @@ namespace TAO
 
     /**
     * Connect to the FT::FaultNotifier.
-    * Note: We make the following assumptions about what the
+    * @note We make the following assumptions about what the
     * application will do:
     * - Create an instance of this consumer class.
     * - Obtain the object reference of the FaultNotifier to which this

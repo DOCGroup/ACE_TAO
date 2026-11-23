@@ -143,7 +143,7 @@ private:
    *   ACE_SCOPE_THREAD: sets the scheduling policy for the thread,
    *     if the OS supports it, such as with Posix threads, and the
    *     thread priority.
-   * NOTE:  I don't think that these are the same as POSIX
+   * @note  I don't think that these are the same as POSIX
    *        contention scope.  POSIX users who are interested in,
    *        and understand, contention scope will have to set it
    *        by using system calls outside of ACE.

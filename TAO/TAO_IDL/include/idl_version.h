@@ -16,7 +16,7 @@
  *
  * Order is used to determine how versions compare to each other.
  *
- * NOTE: If updated, idlVersionNames in util/idl_version.cpp must be updated
+ * @note If updated, idlVersionNames in util/idl_version.cpp must be updated
  * as well!
  */
 enum SpecificIdlVersion

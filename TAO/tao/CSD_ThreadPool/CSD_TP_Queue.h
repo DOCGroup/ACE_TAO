@@ -45,7 +45,7 @@ namespace TAO
      * The strategy object will employ a set of worker threads that are
      * responsible for "servicing" the servant requests in the queue.
      *
-     * Note: In the future, support will be added to allow the client
+     * @note In the future, support will be added to allow the client
      *       application inject "custom" TP_Request objects into
      *       a TP_Strategy object, causing them to be placed in
      *       the queue.

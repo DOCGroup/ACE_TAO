@@ -50,7 +50,7 @@ module DsLogNotification
   TimeT   time;
   };
 
-  /// NOTE: cannot say "typedef ObjectCreation ObjectDeletion because
+  /// @note cannot say "typedef ObjectCreation ObjectDeletion because
   /// type would be lost in current C++ mappings for Anys.
 
   struct ObjectDeletion {

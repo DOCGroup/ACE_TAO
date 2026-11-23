@@ -31,7 +31,7 @@ bool destroy_ec_flag {};
  * @brief A simple application for testing federation of Event
  *        Channels via multicast.
  *
- *        NOTE: Contains platform-specific code (event data), i.e.,
+ *        @note Contains platform-specific code (event data), i.e.,
  *              might not work cross-platform.
  *
  * This class acts both as a receiver and a supplier of HEARTBEAT events

@@ -155,7 +155,7 @@ TAO::ServerRequestInterceptor_Adapter_Impl::receive_request_service_contexts (
 
 #elif TAO_HAS_EXTENDED_FT_INTERCEPTORS == 0
 
-/// NOTE: Yes, we have two versions of this. This is easier than
+/// @note Yes, we have two versions of this. This is easier than
 /// messing around things in the same function, which is harder to
 /// read and could make the code buggier.
 void

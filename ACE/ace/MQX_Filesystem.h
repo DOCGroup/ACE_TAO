@@ -212,7 +212,7 @@ private:
   /**
    * Max VALUE for File Descriptors.
    *
-   * NOTE: Max open file count is FOPEN_MAX, defined by DLib. This creates a
+   * @note Max open file count is FOPEN_MAX, defined by DLib. This creates a
    * limit on the number of unique file descriptor values.
    */
   int max_fd_;

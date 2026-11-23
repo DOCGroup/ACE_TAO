@@ -39,7 +39,7 @@ namespace TAO_Notify
    *    -load_base_path   Base path for loading.
    *    -file_count       How many backup copies to keep.  Default is 1
    *    -no_timestamp     Disable timestamping (makes files diffable)
-   *        Note: you can set both saving and storing to the same file using -base_path
+   *        @note you can set both saving and storing to the same file using -base_path
    *              Or you can set them independently using -save_base_path
    *              and -load_base_path
    *

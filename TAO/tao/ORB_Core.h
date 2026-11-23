@@ -616,7 +616,7 @@ public:
   /// Initialize a new object, use the adapter registry to initialize a
   /// collocated object, if not possible then initialize a regular
   /// object.
-  /// NOTE: Why would this method be required? The answer is if the
+  /// @note Why would this method be required? The answer is if the
   /// user decides to use lazy initialization of CORBA object, then
   /// this is the route that we have to take to do the
   /// initialization.

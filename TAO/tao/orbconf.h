@@ -731,7 +731,7 @@ enum TAO_Cached_Policy_Type
 
   TAO_CACHED_COMPRESSION_ID_LEVEL_LIST_POLICY,
 
-  /// NOTE: The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last.
+  /// @note The "TAO_CACHED_POLICY_MAX_CACHED" should always be the last.
   ///       This value is used as the cached_policies_ array size in TAO_Policy_Set,
   ///       Any policy type defined after "TAO_CACHED_POLICY_MAX_CACHED" will cause
   ///       the policy access beyond bound problem.

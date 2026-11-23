@@ -61,7 +61,7 @@ public:
     * otherwise the return value will indicate the resultant
     * @a out_ptr compressed buffer length.
     *
-    * NOTE: it is advisable that the @max_out_len be slightly
+    * @note it is advisable that the @max_out_len be slightly
     * larger of the input @a in_len (i.e. x 1.1F) to cater
     * for the possibility that a reduced compressed length
     * is not possible.

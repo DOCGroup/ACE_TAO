@@ -41,7 +41,7 @@ class TAO_Profile;
  * user can make an instance of this class with the right
  * properties and use the helper methods in the IORManipulation
  *
- * NOTE: This class is NOT thread safe. The range of services that
+ * @note This class is NOT thread safe. The range of services that
  * use this class (like the RM) should use them in a thread safe
  * manner.
  */

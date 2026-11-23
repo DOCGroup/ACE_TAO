@@ -107,7 +107,7 @@ namespace TAO
 
     /**
      * insert existing group.  Take ownership
-     * note: uses group id extracted from group object
+     * @note uses group id extracted from group object
      * @return bool true if insertion successful
      */
     int insert_group (::TAO::PG_Object_Group * group);
@@ -130,7 +130,7 @@ namespace TAO
 
     /**
      * find group
-     * note: uses group id extracted from object_group
+     * @note uses group id extracted from object_group
      * @return bool true if found
      */
     int find_group (
@@ -153,7 +153,7 @@ namespace TAO
 
     /**
      * remove group from map and delete it.
-     * note: uses group id extracted from object_group
+     * @note uses group id extracted from object_group
      * @return bool true if found
      */
     int destroy_group (PortableGroup::ObjectGroup_ptr object_group);

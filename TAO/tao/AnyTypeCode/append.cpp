@@ -1166,7 +1166,7 @@ TAO_Marshal_Alias::append (CORBA::TypeCode_ptr  tc,
 /// at the same time its vtable, refcount, and other state was
 /// established.
 ///
-/// NOTE: This is asymmetric with respect to encoding exceptions.
+/// @note This is asymmetric with respect to encoding exceptions.
 TAO::traverse_status
 TAO_Marshal_Except::append (CORBA::TypeCode_ptr  tc,
                             TAO_InputCDR *src,

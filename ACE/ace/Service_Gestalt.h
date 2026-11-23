@@ -140,7 +140,7 @@ public:
    *        specifies service directives without the need for a configuration
    *        file. Can be specified multiple times.
    *
-   * Note: Options '-f' and '-S' complement each other. Directives
+   * @note Options '-f' and '-S' complement each other. Directives
    * from files and from '-S' option are processed together in the
    * following order. First, the default file "./svc.conf" is
    * evaluated if not ignored, then all files are processed in the

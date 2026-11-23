@@ -38,7 +38,7 @@ template <class LOCK_TYPE> class TAO_Service_Offer_Iterator;
  * maps. Needless to say the locks are acquired when the
  * TAO_Offer_Database performs operations on the structures they
  * guard.
- * NOTE: TAO_Offer_Database needs to be parameterized by a
+ * @note TAO_Offer_Database needs to be parameterized by a
  * READER/WRITER LOCK, a RECURSIVE MUTEX, or a NULL MUTEX, not a
  * simple binary mutex! Mutexes will cause deadlock when you try to
  * contruct an iterator (which acquires a read lock on the map under

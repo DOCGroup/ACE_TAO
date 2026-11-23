@@ -13,9 +13,8 @@ typedef sequence<TestStruct> TestStructSeq;
 typedef map<int32, TestStruct> TestStructMap;
 typedef map<int32, string> TestIntStringMap;
 
+/// @note Bounded maps are not actually bounded as std::map doesn't support that.
 struct DataStruct {
-  /// NOTE: Bounded maps are not actually bounded as std::map doesn't support that
-
   map<int32, int32> intIntMap;
   map<string, int32, 4> stringIntMapBounded;
 

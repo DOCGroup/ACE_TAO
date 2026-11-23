@@ -43,7 +43,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * all components needed to federate an Event Channel.
  * Configuration options are described below.
  *
- * NOTE: This class does not own any of the components it creates and
+ * @note This class does not own any of the components it creates and
  * its lifetime is independent of theirs.  This class acts purely as a
  * wrapper facade for creating and wiring appropriate components
  * together.
@@ -109,7 +109,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * -ECGNonBlocking
  *  Boolean flag to configure if the socket is in blocking or
  *  non-blocking code.  The default is non-blocking.
- *  NOTE: Certain device drivers block the process if the physical
+ *  @note Certain device drivers block the process if the physical
  *        link fails.
  *
  * 2) Create an instance of TAO_ECG_Mcast_Gateway in your code, on the stack or

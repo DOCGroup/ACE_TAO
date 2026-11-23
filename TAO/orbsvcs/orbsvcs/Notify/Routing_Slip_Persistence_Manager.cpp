@@ -102,7 +102,7 @@ Routing_Slip_Persistence_Manager::load(
   Block_Serial_Number expected_serial_number)
 {
   /**
-   * NOTE: There is no need to worry about guarding anything.  We assume
+   * @note There is no need to worry about guarding anything.  We assume
    *       that there will be one and only one thread doing the entire
    *       reload process.
    */

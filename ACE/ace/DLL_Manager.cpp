@@ -99,7 +99,7 @@ ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
           ** rules, etc. except when ACE_MUST_HELP_DLOPEN_SEARCH_PATH is set.
           ** If it is set, then ACE::ldfind() scans the configured path
           ** looking for a match on the name and prefix/suffix applications.
-          ** NOTE: having ACE scan for a file and then pass a fully-qualified
+          ** @note having ACE scan for a file and then pass a fully-qualified
           ** pathname to dlopen() is a potential security hole; therefore,
           ** do not use ACE_MUST_HELP_DLOPEN_SEARCH_PATH unless necessary
           ** and only after considering the risks.

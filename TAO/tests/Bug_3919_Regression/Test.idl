@@ -14,7 +14,7 @@ module Test
     ArvComposition
   };
 
-  /// NOTE: the (deprecated) anonymous sequence type in the union
+  /// @note the (deprecated) anonymous sequence type in the union
   /// is intentional; the IDL compiler generated different
   /// code for this case as compared to using a proper
   /// forward and typedef.

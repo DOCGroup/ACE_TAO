@@ -97,7 +97,7 @@ namespace TAO_Notify
   ///
   /// Topology objects must be derived from this class to allow themselves
   /// to be persisted.
-  /// Note: virtual inheritance from TopologySavable is unnecessary,
+  /// @note virtual inheritance from TopologySavable is unnecessary,
   /// but HP ACC compiler warns if it's not there.
   class TAO_Notify_Serv_Export Topology_Object :
     public virtual TAO_Notify_Object,

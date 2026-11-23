@@ -203,7 +203,7 @@ namespace TAO
 
     /**
      * set the replica at the given location to be primary.
-     * Note: This should return void and throw FT::PrimaryNotSet
+     * @note This should return void and throw FT::PrimaryNotSet
      * but to avoid dependancies between PortableGroup and FaultTolerance
      * it returns a boolean result.  A false return means caller should
      * throw FT::PrimaryNot_Set.
