@@ -578,7 +578,7 @@ FE_Utils::is_include_file_found (std::string &inc_file,
   inc_file += idl_file_name;
   if (ACE_OS::realpath (inc_file.c_str (), abspath) != nullptr)
     {
-      File_Handle test (
+      File_Handle const test (
         ACE_OS::fopen (abspath, "r"), ACE_OS::fclose);
 
       if (!test)

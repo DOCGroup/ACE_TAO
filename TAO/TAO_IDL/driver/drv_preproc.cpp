@@ -1435,7 +1435,7 @@ DRV_pre_proc (std::string const& myfile)
 
   if (idl_global->compile_flags () & IDL_CF_ONLY_PREPROC)
     {
-      FE_Utils::File_Handle preproc (
+      FE_Utils::File_Handle const preproc (
         ACE_OS::fopen (t_file.c_str (), "r"), ACE_OS::fclose);
       char buffer[ACE_MAXLOGMSGLEN];
       size_t bytes;

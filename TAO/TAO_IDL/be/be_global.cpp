@@ -1890,7 +1890,7 @@ BE_GlobalData::ccmobject ()
 {
   if (nullptr == this->ccmobject_)
     {
-      FE_Utils::Scoped_Name_Owner scoped_name_owner =
+      FE_Utils::Scoped_Name_Owner const scoped_name_owner =
         FE_Utils::string_to_scoped_name_owner ("Components::CCMObject");
 
       if (scoped_name_owner == nullptr)
