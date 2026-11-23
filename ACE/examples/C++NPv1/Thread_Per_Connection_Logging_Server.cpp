@@ -85,7 +85,7 @@ Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register to receive the <SIGTERM> signal.
-  ACE_Sig_Action sa (sigterm_handler, SIGTERM);
+  ACE_Sig_Action const sa (sigterm_handler, SIGTERM);
 
   Thread_Per_Connection_Logging_Server server;
 

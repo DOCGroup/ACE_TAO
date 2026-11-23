@@ -22,7 +22,7 @@ namespace {
 int
 RT_Thread_Per_Connection_Logging_Server::open (u_short port)
 {
-  ACE_Sched_Params fifo_sched_params
+  ACE_Sched_Params const fifo_sched_params
     (ACE_SCHED_FIFO,
      ACE_Sched_Params::priority_min (ACE_SCHED_FIFO),
      ACE_SCOPE_PROCESS);
@@ -126,7 +126,7 @@ Thread_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   // Register to receive the <SIGTERM> signal.
-  ACE_Sig_Action sa (sigterm_handler, SIGTERM);
+  ACE_Sig_Action const sa (sigterm_handler, SIGTERM);
 
   RT_Thread_Per_Connection_Logging_Server server;
 
