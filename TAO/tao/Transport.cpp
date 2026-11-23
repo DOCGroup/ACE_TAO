@@ -649,7 +649,7 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *mb,
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->handler_lock_, -1);
 
-  TAO::Transport::Drain_Constraints dc(
+  TAO::Transport::Drain_Constraints const dc(
       max_wait_time, true);
 
   return this->send_message_block_chain_i (mb,
@@ -854,7 +854,7 @@ int
 TAO_Transport::send_synch_message_helper_i (TAO_Synch_Queued_Message &synch_message,
                                             ACE_Time_Value * max_wait_time)
 {
-  TAO::Transport::Drain_Constraints dc(
+  TAO::Transport::Drain_Constraints const dc(
       max_wait_time, this->using_blocking_io_for_synch_messages());
 
   Drain_Result const n = this->drain_queue_i (dc);
@@ -1080,7 +1080,7 @@ TAO_Transport::drain_queue_helper (int &iovcnt, iovec iov[],
   // As a side-effect, this decrements the timeout() pointed-to value by
   // the time used in this function.  That might be important as there are
   // potentially long running system calls invoked from here.
-  TAO::ORB_Countdown_Time countdown(dc.timeout());
+  TAO::ORB_Countdown_Time const countdown(dc.timeout());
 
   size_t byte_count {};
 
@@ -1412,7 +1412,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush)
       ACE_Event_Handler *eh = this->event_handler_i ();
       ACE_Reactor * const reactor = eh->reactor ();
       this->current_deadline_ = new_deadline;
-      ACE_Time_Value delay = new_deadline - ACE_OS::gettimeofday ();
+      ACE_Time_Value const delay = new_deadline - ACE_OS::gettimeofday ();
 
       if (this->flush_timer_pending ())
         {
@@ -1529,7 +1529,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
   bool partially_sent {};
   bool timeout_encountered {};
 
-  TAO::Transport::Drain_Constraints dc(
+  TAO::Transport::Drain_Constraints const dc(
       max_wait_time, this->using_blocking_io_for_asynch_messages());
 
   if (try_sending_first)
