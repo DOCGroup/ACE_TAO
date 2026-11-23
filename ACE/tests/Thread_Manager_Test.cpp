@@ -174,7 +174,7 @@ ThrMgr_Task::svc ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Task %@, thread %t waiting to be cancelled\n"),
               static_cast<void *> (this)));
-  ACE_thread_t me = ACE_Thread::self ();
+  ACE_thread_t const me = ACE_Thread::self ();
   for (int i = 0; i < 30 && !this->thr_mgr ()->testcancel (me); ++i)
     {
       ACE_OS::sleep (1);
@@ -203,7 +203,8 @@ test_task_record_keeping (ACE_Thread_Manager *mgr)
   int status = 0;
 
   ThrMgr_Task t1 (mgr), t2 (mgr);
-  int t1_grp (20), t2_grp (30);
+  int const t1_grp (20);
+  int const t2_grp (30);
 
   // Start two tasks, with multiple threads per task. Make sure that
   // task_all_list() works.
@@ -295,7 +296,7 @@ run_main (int, ACE_TCHAR *[])
                   -1);
 
   // Register a signal handler.
-  ACE_Sig_Action sa ((ACE_SignalHandler) handler, SIGINT);
+  ACE_Sig_Action const sa ((ACE_SignalHandler) handler, SIGINT);
   ACE_UNUSED_ARG (sa);
 
   ACE_Thread_Manager *thr_mgr = ACE_Thread_Manager::instance ();
