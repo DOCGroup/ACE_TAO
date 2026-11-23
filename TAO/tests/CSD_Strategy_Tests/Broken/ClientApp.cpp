@@ -26,7 +26,7 @@ ClientApp::~ClientApp() = default;
 int
 ClientApp::run_i(int argc, ACE_TCHAR* argv[])
 {
-  int result = this->init(argc, argv);
+  const int result = this->init(argc, argv);
   if (result != 0)
     {
       return result;
@@ -59,7 +59,7 @@ ClientApp::init(int argc, ACE_TCHAR* argv[])
   // * Raises -1 if problems are encountered.
   // * Returns 1 if the usage statement was explicitly requested.
   // * Returns 0 otherwise.
-  int result = this->parse_args(argc, argv);
+  const int result = this->parse_args(argc, argv);
   if (result != 0)
     {
       return result;
@@ -256,7 +256,7 @@ ClientApp::set_arg(unsigned&   value,
                    const char* name,
                    int         min)
 {
-  int tmp = ACE_OS::atoi(arg);
+  const int tmp = ACE_OS::atoi(arg);
 
   if (tmp < min)
     {
