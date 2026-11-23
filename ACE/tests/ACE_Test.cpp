@@ -12,8 +12,8 @@
 int
 log2_test ()
 {
-  u_long values[] = {1, 2, 4, 8, 1048576};
-  u_long results[] = {0, 1, 2, 3, 20};
+  u_long const values[] = {1, 2, 4, 8, 1048576};
+  u_long const results[] = {0, 1, 2, 3, 20};
   u_long result = 0;
   int error_count = 0;
 
@@ -36,7 +36,7 @@ log2_test ()
 int
 ace_debug_test ()
 {
-  int test_status = 0;
+  int const test_status = 0;
 
   // Check if ACE::debug() is by default false when no ACE_DEBUG environment variable
   // is there

@@ -19,7 +19,7 @@ public:
 int
 Tester::test ()
 {
-  int retval = 0;
+  int const retval = 0;
 
   // Generate UUID
   std::unique_ptr <ACE_Utils::UUID> uuid (ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID ());

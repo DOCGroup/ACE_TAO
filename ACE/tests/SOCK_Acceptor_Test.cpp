@@ -50,7 +50,7 @@ test_accept (ACE_Addr listen_addr, int v6_only)
                          ACE_LOCALHOST,
                          PF_INET);
   ACE_SOCK_Stream v4_stream;
-  bool v4_ok = (connector.connect (v4_stream, v4_addr) == 0);
+  bool const v4_ok = (connector.connect (v4_stream, v4_addr) == 0);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("v4 connect %s\n"),
               v4_ok ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));
@@ -61,7 +61,7 @@ test_accept (ACE_Addr listen_addr, int v6_only)
                          ACE_IPV6_LOCALHOST,
                          PF_INET6);
   ACE_SOCK_Stream v6_stream;
-  bool v6_ok = (connector.connect (v6_stream, v6_addr) == 0);
+  bool const v6_ok = (connector.connect (v6_stream, v6_addr) == 0);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("v6 connect %s\n"),
               v6_ok ? ACE_TEXT ("OK") : ACE_TEXT ("FAIL")));

@@ -176,7 +176,7 @@ testFailedServiceInit (int, ACE_TCHAR *[])
 void
 testLoadingServiceConfFileAndProcessNo (int argc, ACE_TCHAR *argv[])
 {
-  u_int error0 = error;
+  u_int const error0 = error;
   ACE_ARGV new_argv;
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Starting testLoadingServiceConfFileAndProcessNo\n")));
@@ -386,12 +386,12 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 
   // Ensure no errors are logged while searching for a valid ACE lib name;
   // these skew the scoreboard results.
-  u_long mask = ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
+  u_long const mask = ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
   ACE_LOG_MSG->priority_mask (mask & ~LM_ERROR, ACE_Log_Msg::PROCESS);
   ACE_DEBUG ((LM_DEBUG, "Was %Q, now %Q\n",
               static_cast<ACE_UINT64> (mask),
               static_cast<ACE_UINT64> (mask & ~LM_ERROR)));
-  int error_count = ACE_Service_Config::process_directive (load_logger);
+  int const error_count = ACE_Service_Config::process_directive (load_logger);
   ACE_LOG_MSG->priority_mask (mask);
   if (error_count != 0)
     {
@@ -437,7 +437,7 @@ testLimits (int , ACE_TCHAR *[])
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
     ;
 
-  u_int error0 = error;
+  u_int const error0 = error;
 
   // Ensure enough room for one in a own, the repository can extend
   ACE_Service_Gestalt one (1, true);
@@ -696,7 +696,7 @@ testNonACEThread ()
   ACE_OS_Log_Msg_Attributes log_msg_attrs;
   ACE_Log_Msg::init_hook (log_msg_attrs);
 
-  u_int errors_before = error;
+  u_int const errors_before = error;
 
 #if defined (ACE_HAS_WTHREADS)
   HANDLE thr_h = (HANDLE)_beginthreadex (0,
@@ -717,7 +717,7 @@ testNonACEThread ()
     }
 #elif defined (ACE_HAS_PTHREADS)
   pthread_t thr_id;
-  int status = pthread_create (&thr_id, nullptr, nonacethreadentry, &log_msg_attrs);
+  int const status = pthread_create (&thr_id, nullptr, nonacethreadentry, &log_msg_attrs);
   if (status != 0)
     {
       errno = status;

@@ -34,7 +34,7 @@ struct Worker_Config
 ACE_THR_FUNC_RETURN worker (void* args)
 {
   Worker_Config* config = static_cast<Worker_Config*>(args);
-  int r = config->a + config->b * config->c;
+  int const r = config->a + config->b * config->c;
   config->result.set(r);
 
   return ACE_THR_FUNC_RETURN_NULL;
@@ -65,7 +65,7 @@ ACE_THR_FUNC_RETURN runner (void* args)
     config.c = dis(gen);
     config.result = result;
     ACE_hthread_t thread_id;
-    int expected_res = config.a+config.b*config.c;
+    int const expected_res = config.a+config.b*config.c;
     int actual_res = -1;
     if (ACE_Thread::spawn(worker,
                         static_cast<void*>(&config), THR_NEW_LWP | THR_JOINABLE, nullptr,

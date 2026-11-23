@@ -138,7 +138,7 @@ synchronous_signal_handler (void *)
     {
       // Block waiting for SIGINT, SIGTERM, or SIGHUP, depending on
       // whether we're the parent or child process.
-      int signr = ACE_OS::sigwait (sigset);
+      int const signr = ACE_OS::sigwait (sigset);
       if (signr == -1)
         {
           if (errno != EINTR)
@@ -195,7 +195,7 @@ asynchronous_signal_handler (void *)
 static ACE_THR_FUNC_RETURN
 worker_child (void *arg)
 {
-  long handle_signals_synchronously =
+  long const handle_signals_synchronously =
     reinterpret_cast <long> (arg);
 
   for (size_t i = 0; i < n_iterations; ++i)
@@ -254,7 +254,7 @@ worker_child (void *arg)
 static ACE_THR_FUNC_RETURN
 worker_parent (void *arg)
 {
-  long handle_signals_synchronously =
+  long const handle_signals_synchronously =
     reinterpret_cast <long> (arg);
   ACE_Process_Options options;
 

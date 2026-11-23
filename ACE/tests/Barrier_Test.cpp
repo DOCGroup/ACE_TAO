@@ -84,8 +84,8 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Barrier_Test"));
 
 #if defined (ACE_HAS_THREADS)
-  int n_threads = ACE_MAX_THREADS;
-  int n_iterations = ACE_MAX_ITERATIONS;
+  int const n_threads = ACE_MAX_THREADS;
+  int const n_iterations = ACE_MAX_ITERATIONS;
 
   ACE_Barrier tester_barrier (n_threads);
 

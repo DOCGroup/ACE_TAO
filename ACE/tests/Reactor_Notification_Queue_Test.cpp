@@ -86,7 +86,7 @@ run_main (int, ACE_TCHAR *[])
 
   int max_notifications = 16;
 #else
-  int max_notifications = 1024 * 1024;
+  int const max_notifications = 1024 * 1024;
 #endif /* ACE_HAS_THREADS */
 
   {

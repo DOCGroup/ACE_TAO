@@ -268,7 +268,7 @@ Scheduler::open (void *)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) Scheduler open\n")));
   // Become an Active Object.
-  int num_threads = 3;
+  int const num_threads = 3;
   return this->activate (THR_BOUND | THR_JOINABLE, num_threads);
 }
 

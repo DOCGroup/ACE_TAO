@@ -207,7 +207,7 @@ get_statistics (ACE_TCHAR *f_name)
   ACE_stat buf;
 
   // Get data associated with "file_name":
-  int result = ACE_OS::stat (f_name, &buf);
+  int const result = ACE_OS::stat (f_name, &buf);
 
   // Check if statistics are valid:
   if (result != 0)

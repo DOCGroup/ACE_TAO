@@ -48,7 +48,7 @@ consumer (void *args)
     {
       ACE_Message_Block *mb {};
 
-      int result = msg_queue->dequeue_head (mb);
+      int const result = msg_queue->dequeue_head (mb);
 
       if (result == -1)
       {
@@ -57,7 +57,7 @@ consumer (void *args)
 
       ++local_count;
 
-      size_t length = mb->length ();
+      size_t const length = mb->length ();
 
       if (length > 0)
         {

@@ -105,7 +105,7 @@ Token_Strategy_Test::open (void *)
 int
 Token_Strategy_Test::svc ()
 {
-  int current = this->active_.value ();
+  int const current = this->active_.value ();
   ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int> > active_counter (this->active_);
   this->barrier_.wait ();
 

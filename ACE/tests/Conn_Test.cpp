@@ -158,7 +158,7 @@ Svc_Handler::recv_data ()
 #if defined (ACE_WIN64)
       int select_width = 0;
 #else
-      int select_width = int (handle) + 1;
+      int const select_width = int (handle) + 1;
 #endif /* ACE_WIN64 */
       if (ACE_OS::select (select_width, handle_set) == -1)
         {
@@ -432,7 +432,7 @@ client (void *arg)
   info.strat_connector_ = &strat_connector;
 
 #if defined (ACE_HAS_THREADS)
-  int n_threads = n_clients;
+  int const n_threads = n_clients;
   ACE_Barrier thread_barrier (n_threads);
   info.barrier_ = &thread_barrier;
 
@@ -492,7 +492,7 @@ server (void *arg)
                                      &cli_addr,
                                      options);
 #else  /* ! ACE_LACKS_FORK */
-      int result = acceptor->accept (svc_handler,
+      int const result = acceptor->accept (svc_handler,
                                      &cli_addr);
       ACE_UNUSED_ARG (options);
 #endif /* ! ACE_LACKS_FORK */
@@ -740,7 +740,7 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   ACE_START_TEST (ACE_TEXT ("Conn_Test"));
-  int status = 0;
+  int const status = 0;
 
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Get_Opt getopt (argc, argv, ACE_TEXT ("c:i:s:"));

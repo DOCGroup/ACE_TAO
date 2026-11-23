@@ -16,7 +16,7 @@ run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bug_3500_Regression_Test"));
 
-  int ret = 0;
+  int const ret = 0;
 
 #if defined(ACE_WIN32) && !defined (ACE_LACKS_MMAP)
   ACE_HANDLE  handle = ACE_INVALID_HANDLE;

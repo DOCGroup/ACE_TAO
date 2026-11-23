@@ -28,7 +28,7 @@ int run_main (int, ACE_TCHAR *[])
   sockaddr_in *pointer;
 
   // The port will always be this
-  u_short port = 80;
+  u_short const port = 80;
 
   // The primary address will always be this
   const char *primary_dotted_decimal = "138.38.180.251";

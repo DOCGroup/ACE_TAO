@@ -211,7 +211,7 @@ client (void *arg)
   for (i = 0; i < Test3_Loops; ++i)
     {
       errno = 0;
-      ssize_t sent = cli_stream.send_n (buff, sizeof (buff));
+      ssize_t const sent = cli_stream.send_n (buff, sizeof (buff));
       if (sent != (ssize_t) sizeof (buff) && errno != 0)
         {
           ACE_ERROR ((LM_ERROR,

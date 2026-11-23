@@ -128,7 +128,7 @@ test_caching_utility_ownership ()
 static void
 run_iterator_cache (MAP_CACHE &cache)
 {
-  size_t iterations = cache.current_size ();
+  size_t const iterations = cache.current_size ();
   size_t counter = 0;
   MAP_CACHE::iterator end = cache.end ();
 
@@ -155,7 +155,7 @@ run_iterator_cache (MAP_CACHE &cache)
 static void
 run_iterator_hash_cache (HASH_MAP_CACHE &cache)
 {
-  size_t iterations = cache.current_size ();
+  size_t const iterations = cache.current_size ();
   size_t counter = 0;
   HASH_MAP_CACHE::iterator end = cache.end ();
 
@@ -276,7 +276,7 @@ find_test_hash_cache (HASH_MAP_CACHE &cache)
   for (size_t i = 0; i < no_of_lookups; ++i)
     {
       VALUE j = 0;
-      int result = cache.find (lookup_array[i], j);
+      int const result = cache.find (lookup_array[i], j);
 
       ACE_TEST_ASSERT (result != -1);
       ACE_TEST_ASSERT (j == lookup_array[i]);
@@ -299,16 +299,16 @@ static void
 purge_test_cache (MAP_CACHE &cache)
 {
   // Get the number of entries in the container.
-  size_t current_map_size = cache.current_size ();
+  size_t const current_map_size = cache.current_size ();
 
   // Find the number of entries which will get purged.
-  size_t entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
+  size_t const entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
 
   // Tell the caching strategy how much to purge.
   cache.caching_strategy ().purge_percent (purge_percent);
 
   // Purge from cache.
-  int result = cache.purge ();
+  int const result = cache.purge ();
   ACE_TEST_ASSERT (result != -1);
   ACE_UNUSED_ARG (result);
 
@@ -331,16 +331,16 @@ static void
 purge_test_hash_cache (HASH_MAP_CACHE &cache)
 {
   // Get the number of entries in the container.
-  size_t current_map_size = cache.current_size ();
+  size_t const current_map_size = cache.current_size ();
 
   // Find the number of entries which will get purged.
-  size_t entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
+  size_t const entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
 
   // Tell the caching strategy how much to purge.
   cache.caching_strategy ().purge_percent (purge_percent);
 
   // Purge from cache.
-  int result = cache.purge ();
+  int const result = cache.purge ();
   ACE_TEST_ASSERT (result != -1);
   ACE_UNUSED_ARG (result);
 
@@ -371,7 +371,7 @@ functionality_test_cache (MAP_CACHING_STRATEGY &caching_strategy)
        i < iterations;
        ++i, ++j)
     {
-      int result = cache.bind (i, j);
+      int const result = cache.bind (i, j);
       ACE_TEST_ASSERT (result == 0);
       ACE_UNUSED_ARG (result);
 
@@ -415,7 +415,7 @@ functionality_test_hash_cache (HASH_MAP_CACHING_STRATEGY &caching_strategy)
        i < iterations;
        ++i, ++j)
     {
-      int result = cache.bind (i, j);
+      int const result = cache.bind (i, j);
       ACE_TEST_ASSERT (result == 0);
       ACE_UNUSED_ARG (result);
 
@@ -567,7 +567,7 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   // Validate options.
-  int result = parse_args (argc, argv);
+  int const result = parse_args (argc, argv);
   if (result != 0)
   {
     return result;

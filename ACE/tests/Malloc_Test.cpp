@@ -172,8 +172,8 @@ initialize (MALLOC *allocator)
 
   data1->long_test_= lt;
 
-  long long_cont_1 = *lt->bpl_;
-  long long_cont_2 = lt->bpl_[3];
+  long const long_cont_1 = *lt->bpl_;
+  long const long_cont_2 = lt->bpl_[3];
 
   ACE_TEST_ASSERT (long_cont_1 == 1000);
   ACE_TEST_ASSERT (long_cont_2 == 1003);
@@ -192,8 +192,8 @@ initialize (MALLOC *allocator)
 
   data2->long_test_= lt;
 
-  long long_cont_3 = *lt->bpl_;
-  long long_cont_4 = lt->bpl_[4];
+  long const long_cont_3 = *lt->bpl_;
+  long const long_cont_4 = lt->bpl_[4];
 
   ACE_TEST_ASSERT (long_cont_3 == 2000);
   ACE_TEST_ASSERT (long_cont_4 == 2004);
@@ -244,7 +244,7 @@ parent (Test_Data *data)
   char *big_buf = static_cast<char *> (myalloc->malloc (1024 * 4069));
 #endif /* ACE_TEST_REMAP_ON_FAULT */
 
-  int result = myalloc->bind ("bar", data);
+  int const result = myalloc->bind ("bar", data);
 
 #if defined (ACE_TEST_REMAP_ON_FAULT)
   myalloc->free (big_buf);
@@ -393,7 +393,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       void *data {};
       MALLOC *myalloc = myallocator (CHILD_BASE_ADDR);
-      int result = myalloc->find ("foo", data);
+      int const result = myalloc->find ("foo", data);
       ACE_TEST_ASSERT (result != -1);
 
       ACE_DEBUG ((LM_DEBUG,

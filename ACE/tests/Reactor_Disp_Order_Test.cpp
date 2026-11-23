@@ -150,7 +150,7 @@ Handler::handle_input (ACE_HANDLE fd)
     }
 
   char buffer[BUFSIZ];
-  ssize_t result = ACE::recv (fd, buffer, sizeof buffer);
+  ssize_t const result = ACE::recv (fd, buffer, sizeof buffer);
   if (result != ssize_t (std::strlen (message)))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Handler recv'd %b bytes; expected %B\n"),
@@ -186,7 +186,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
   bool ok_to_go = true;
 
   // This should trigger a call to <handle_input>.
-  ssize_t result =
+  ssize_t const result =
     ACE::send_n (handler.pipe_.write_handle (),
                  message,
                  std::strlen (message));
@@ -267,7 +267,7 @@ test_reactor_dispatch_order (ACE_Reactor &reactor)
       ok_to_go = false;
     }
 
-  int nr_cancelled = reactor.cancel_timer (std::addressof (handler));
+  int const nr_cancelled = reactor.cancel_timer (std::addressof (handler));
   if (nr_cancelled > 0)
     {
       ACE_ERROR ((LM_ERROR,

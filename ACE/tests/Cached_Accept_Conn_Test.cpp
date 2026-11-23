@@ -110,7 +110,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::accept_svc_handler (SVC_HANDL
   // associations.
   bool const reset_new_handle = this->reactor_->uses_event_associations ();
 
-  int result = this->acceptor ().accept (svc_handler->peer (), // stream
+  int const result = this->acceptor ().accept (svc_handler->peer (), // stream
                                          nullptr, // remote address
                                          nullptr, // timeout
                                          true, // restart
@@ -242,7 +242,7 @@ cached_connect (STRATEGY_CONNECTOR &con,
   // Perform a blocking connect to the server using the Strategy
   // Connector with a connection caching strategy.
   Client_Svc_Handler *svc_handler {};
-  int result = con.connect (svc_handler,
+  int const result = con.connect (svc_handler,
                             remote_addr);
   if (result == -1)
     {
@@ -490,7 +490,7 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   // Validate options.
-  int result = parse_args (argc, argv);
+  int const result = parse_args (argc, argv);
   if (result != 0)
   {
     return result;

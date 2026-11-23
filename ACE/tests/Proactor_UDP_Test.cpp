@@ -527,10 +527,10 @@ TestData::TestData ()
 bool
 TestData::testing_done ()
 {
-  int svr_up = this->servers_.sessions_up_.value ();
-  int svr_dn = this->servers_.sessions_down_.value ();
-  int clt_up = this->clients_.sessions_up_.value ();
-  int clt_dn = this->clients_.sessions_down_.value ();
+  int const svr_up = this->servers_.sessions_up_.value ();
+  int const svr_dn = this->servers_.sessions_down_.value ();
+  int const clt_up = this->clients_.sessions_up_.value ();
+  int const clt_dn = this->clients_.sessions_down_.value ();
 
   if (svr_up == 0 && clt_up == 0)      // No connections up yet
   {
@@ -1448,7 +1448,7 @@ Connector::start (const ACE_INET_Addr& addr, int num)
         }
       ACE_INET_Addr me;
       sock.get_local_addr (me);
-      u_short my_port = ACE_HTONS (me.get_port_number ());
+      u_short const my_port = ACE_HTONS (me.get_port_number ());
       ACE_INT32 my_addr = ACE_HTONL (me.get_ip_address ());
       Session_Data session;
       session.direction_ = 0;     // Start
@@ -1808,7 +1808,7 @@ Client::initiate_read ()
 #else /* ACE_HAS_WIN32_OVERLAPPED_IO */
 
   // Try to read more chunks
-  size_t blksize = ( complete_message_length > BUFSIZ ) ?
+  size_t const blksize = ( complete_message_length > BUFSIZ ) ?
                      complete_message_length : BUFSIZ;
 
   ACE_Message_Block *mb {};

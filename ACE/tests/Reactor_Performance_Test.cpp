@@ -84,7 +84,7 @@ Read_Handler::handle_input (ACE_HANDLE handle)
 
   while (true)
     {
-      ssize_t result = this->peer ().recv (buf, sizeof (buf) - 1);
+      ssize_t const result = this->peer ().recv (buf, sizeof (buf) - 1);
 
       if (result > 0)
         {
@@ -156,7 +156,7 @@ Write_Handler::open (void *)
 int
 Write_Handler::send_data ()
 {
-  int send_size = sizeof (ACE_ALPHABET) - 1;
+  int const send_size = sizeof (ACE_ALPHABET) - 1;
 
   if (this->peer ().send_n (ACE_ALPHABET,
                             send_size) != send_size)
@@ -213,7 +213,7 @@ client (void *arg)
     }
 
   // Connection all <opt_nconnections> svc_handlers
-  int result = connector.connect_n (opt_nconnections,
+  int const result = connector.connect_n (opt_nconnections,
                                     writers.get (),
                                     addresses.get (),
                                     failed_svc_handlers.get ());
