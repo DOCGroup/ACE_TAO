@@ -52,7 +52,7 @@ namespace TAO
         if (strat == TAO_CS_THRU_POA_STRATEGY)
           {
             // Perform invocations on the servant through the servant's ORB.
-            CORBA::ORB_var servant_orb =
+            CORBA::ORB_var const servant_orb =
               this->effective_target ()->_stubobj ()->servant_orb_ptr ();
             TAO_ORB_Core * const orb_core = servant_orb->orb_core ();
 
@@ -68,7 +68,7 @@ namespace TAO
             // CORBA::ORB::destroy()) before this thread complete the
             // invocation.
             orb_core->_incr_refcnt ();
-            TAO_ORB_Core_Auto_Ptr my_orb_core (orb_core);
+            TAO_ORB_Core_Auto_Ptr const my_orb_core (orb_core);
 
             dispatcher->dispatch (orb_core, request, this->forwarded_to_.out ());
 

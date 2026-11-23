@@ -655,7 +655,7 @@ TAO_Profile::is_equivalent (TAO_Profile const *other)
   CORBA::Boolean result {};
   if (other != nullptr)
     {
-      TAO_Service_Callbacks::Profile_Equivalence callback
+      TAO_Service_Callbacks::Profile_Equivalence const callback
         = this->is_equivalent_hook (other);
       switch (callback)
         {

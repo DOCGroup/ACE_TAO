@@ -327,7 +327,7 @@ TAO_IIOP_Connector::make_parallel_connection (
               mev.add_event(shlist[count++]);
               if (ep->next() != nullptr)
                 {
-                  struct timespec nsleep = {sec_stagger, ns_stagger};
+                  struct timespec const nsleep = {sec_stagger, ns_stagger};
                   ACE_OS::nanosleep (&nsleep);
                   result = this->active_connect_strategy_->poll (std::addressof (mev));
                   if (result != -1)

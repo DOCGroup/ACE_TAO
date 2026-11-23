@@ -810,7 +810,7 @@ CORBA::Object::tao_object_initialize (CORBA::Object *obj)
 
       for (CORBA::ULong i {}; i != profile_count; ++i)
         {
-          IOP::TaggedProfile &tpfile = obj->ior_->profiles[i];
+          IOP::TaggedProfile const &tpfile = obj->ior_->profiles[i];
 
           // NOTE: This is a place for optimizations. Here we have an
           // 2 allocations and 2 copies. Future optimizations should
