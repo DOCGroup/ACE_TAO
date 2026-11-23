@@ -183,14 +183,14 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
 
   const size_t stotal =
     (total + 10) * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
-  std::unique_ptr<char[]> srcbuf (new (std::nothrow) char[stotal]);
+  std::unique_ptr<char[]> const srcbuf (new (std::nothrow) char[stotal]);
   if (!srcbuf)
     {
       memabort ();
     }
   zero (srcbuf.get (), stotal);
 
-  std::unique_ptr<char[]> dstbuf (new (std::nothrow) char[stotal]);
+  std::unique_ptr<char[]> const dstbuf (new (std::nothrow) char[stotal]);
   if (!dstbuf)
     {
       memabort ();
@@ -221,7 +221,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
               int dk;
               for (dk = 0; dk < delta; ++dk)
                 {
-                  int tdelta = t - mymax(sk, dk);
+                  int const tdelta = t - mymax(sk, dk);
 
                   CDR_Test<T, H>::do_test(tdelta, niter, 1,
                                           srcbuf.get (), dstbuf.get (),
@@ -275,7 +275,7 @@ CDR_Test<T, H>::ttoh (const T& t, char* s)
   const unsigned char *const p =
     reinterpret_cast<const unsigned char*> (&t);
 
-  static char digits[16] = {
+  static char const digits[16] = {
     '0', '1', '2', '3',
     '4', '5', '6', '7',
     '8', '9', 'a', 'b',
@@ -285,7 +285,7 @@ CDR_Test<T, H>::ttoh (const T& t, char* s)
   const unsigned char* q;
   for (q = p; q < p + H::size (); ++q)
     {
-      int k = *q;
+      int const k = *q;
       *s++ = digits[ k >> 4 ];
       *s++ = digits[ k & 15 ];
     }
@@ -347,7 +347,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
 
   if (!use_array && (total % 4) != 0)
     {
-      int lasttotal = total;
+      int const lasttotal = total;
       total -= (total % 4);
       ACE_DEBUG((LM_DEBUG,
                  ACE_TEXT( "Rounding from %d to %d elements.\n" ),
@@ -379,7 +379,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
     int n;
     for (n = 0; n < niter; ++n)
       {
-        size_t size = H::size () * (dst_offset + total) +
+        size_t const size = H::size () * (dst_offset + total) +
                       ACE_CDR::MAX_ALIGNMENT;
         ACE_OutputCDR os (dstbuf, size);
 
@@ -484,7 +484,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
       {
         ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("====== Read iteration %d\n"), n));
 
-        size_t size = (total + dst_offset) * H::size ();
+        size_t const size = (total + dst_offset) * H::size ();
         ACE_InputCDR is (toread, size, opposite_byte_order);
 
         // This is intrusive...
@@ -904,7 +904,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     { 'n', &niter, validiters },
   };
 
-  int n = sizeof(opts)/sizeof(opts[0]);
+  int const n = sizeof(opts)/sizeof(opts[0]);
 
   int opt;
   while ((opt = get_opt ()) != EOF)
@@ -915,7 +915,7 @@ run_main (int argc, ACE_TCHAR *argv[])
         {
           if (opts[i].c == opt)
             {
-              int v = ACE_OS::atoi (get_opt.opt_arg ());
+              int const v = ACE_OS::atoi (get_opt.opt_arg ());
               if (!(opts[i].checkf) (v))
                 {
                   usage(ACE_TEXT("CDR_Array_Test"));
@@ -958,27 +958,27 @@ run_main (int argc, ACE_TCHAR *argv[])
     {
       {
         CDR_Test<ACE_CDR::LongLong, LongLongHelper>
-          test (qtotal, niter, use_array);
+          const test (qtotal, niter, use_array);
       }
       {
         CDR_Test<ACE_CDR::Long, LongHelper>
-          test (wtotal, niter, use_array);
+          const test (wtotal, niter, use_array);
       }
       {
         CDR_Test<ACE_CDR::Short, ShortHelper>
-          test (htotal, niter, use_array);
+          const test (htotal, niter, use_array);
       }
       {
         CDR_Test<ACE_CDR::Char, CharHelper>
-          test (ctotal, niter, use_array);
+          const test (ctotal, niter, use_array);
       }
       {
         CDR_Test<ACE_CDR::Double, DoubleHelper>
-          test (dtotal, niter, use_array);
+          const test (dtotal, niter, use_array);
       }
       {
         CDR_Test<ACE_CDR::Float, FloatHelper>
-          test (ftotal, niter, use_array);
+          const test (ftotal, niter, use_array);
       }
     }
 

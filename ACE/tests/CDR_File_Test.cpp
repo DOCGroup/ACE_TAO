@@ -70,8 +70,8 @@ operator << (ostream &os,
      << "Short:             " << t.word2_ << endl
      << "Long:              " << t.word4_ << endl;
 
-  ACE_CDR::ULongLong hi = (t.word8_ >> 32);
-  ACE_CDR::ULongLong lo = (t.word8_ & 0xffffffff);
+  ACE_CDR::ULongLong const hi = (t.word8_ >> 32);
+  ACE_CDR::ULongLong const lo = (t.word8_ & 0xffffffff);
 
   os << "ULongLong 1st half: "
      << hex
@@ -227,7 +227,7 @@ run_test (int write_file,
                             -1);
         }
 
-      ACE_OFF_T msgsize = info.size_ - 1;
+      ACE_OFF_T const msgsize = info.size_ - 1;
 
       // Allocate the input buffer
       char *buffer {};
@@ -239,7 +239,7 @@ run_test (int write_file,
 #endif /* ACE_INITIALIZE_MEMORY_BEFORE_USE */
 
       // Make sure <buffer> is released automagically.
-      std::unique_ptr<char[]> b (buffer);
+      std::unique_ptr<char[]> const b (buffer);
 
       // Move the file pointer back to the beginning of the file.
       if (file.seek (0,
