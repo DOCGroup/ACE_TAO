@@ -39,6 +39,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 *
 * @param upcall_functor A pointer to a functor to use instead of the default
 * @param freelist       A pointer to a freelist to use instead of the default
+* @param time_policy    The time policy used by this timer queue
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Wheel_T
@@ -62,6 +63,7 @@ ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Wheel_T
 * @param prealloc       The number of entries to prealloc in the free_list
 * @param upcall_functor A pointer to a functor to use instead of the default
 * @param freelist       A pointer to a freelist to use instead of the default
+* @param time_policy    The time policy used by this timer queue
 */
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Wheel_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Wheel_T

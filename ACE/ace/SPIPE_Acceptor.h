@@ -103,6 +103,7 @@ public:
    * @param remote_addr    Optional, accepts the address of the peer.
    * @param timeout        0 means block forever, {0, 0} means poll.
    * @param restart        1 means "restart if interrupted."
+   * @param reset_new_handle Whether to reset the accepted handle before use.
    *
    * @retval 0 for success.
    * @retval -1 for failure.

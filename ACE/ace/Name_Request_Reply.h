@@ -65,6 +65,12 @@ public:
 
   /// Create a ACE_Name_Request message.
   /// @param msg_type Type of request.
+  /// @param name Name associated with the request.
+  /// @param name_length Length of @a name in wide characters.
+  /// @param value Value associated with the request.
+  /// @param value_length Length of @a value in wide characters.
+  /// @param type Type of the value.
+  /// @param type_length Length of @a type.
   /// @param timeout Maximum time willing to wait for the request.
   ACE_Name_Request (ACE_INT32 msg_type,
                     const ACE_WCHAR_T name[],
@@ -192,6 +198,7 @@ public:
 
   /// Create a ACE_Name_Reply message.
   /// @param type Type of reply.
+  /// @param err Error status for the reply.
   ACE_Name_Reply (ACE_UINT32 type, ACE_UINT32 err);
 
   /// Initialize length_ in order to ensure correct byte ordering

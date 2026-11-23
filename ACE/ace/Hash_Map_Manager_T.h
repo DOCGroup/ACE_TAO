@@ -178,6 +178,7 @@ public:
 
   /**
    * Initialize an ACE_Hash_Map_Manager_Ex with @a size elements.
+   * @param size The initial number of entries to allocate.
    *
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
@@ -194,6 +195,7 @@ public:
 
   /**
    * Initialize an ACE_Hash_Map_Manager_Ex with @a size elements.
+   * @param size The number of entries to allocate when opening the map.
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
    *        If @a table_alloc is 0 it defaults to ACE_Allocator::instance().
@@ -340,6 +342,7 @@ public:
   /// corresponding value.
   /**
    * @param pos @a pos will be set to @c end() if not found.
+   * @param ext_id The key to locate in the map.
    */
   void find (EXT_ID const & ext_id, iterator & pos) const;
 
@@ -1109,6 +1112,7 @@ public:
 
   /**
    * Initialize a @c Hash_Map_Manager with @c size elements.
+   * @param size The number of entries to allocate.
    * @param table_alloc is a pointer to a memory allocator used for
    *        table_, so it should supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>).
    * @param entry_alloc is a pointer to an additional allocator for

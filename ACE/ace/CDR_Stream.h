@@ -107,6 +107,13 @@ public:
    *                    @note The @c ACE_ENABLE_SWAP_ON_WRITE config macro
    *                    must be set for any local byte swapping to occur
    *                    as data is inserted into an ACE_OutputCDR object.
+   * @param buffer_allocator Allocator for the message buffer.
+   * @param data_block_allocator Allocator for the data block.
+   * @param message_block_allocator Allocator for the message block.
+   * @param memcpy_tradeoff Threshold used to choose whether to copy or share
+   *                        the CDR buffer.
+   * @param major_version Major GIOP version used by this stream.
+   * @param minor_version Minor GIOP version used by this stream.
    */
   ACE_OutputCDR (size_t size = 0,
                  int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,

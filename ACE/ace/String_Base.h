@@ -609,6 +609,7 @@ public:
    * Initializing constructor
    *
    * @param[in]       str         Target string for iterator.
+   * @param[in]       end         If nonzero, initialize at the end.
    */
   ACE_String_Base_Iterator (ACE_String_Base <ACE_CHAR_T> & str, int end = 0);
 
@@ -737,6 +738,7 @@ public:
    * Initializing constructor
    *
    * @param[in]       str         Target string for iterator.
+   * @param[in]       end         If nonzero, initialize at the end.
    */
   ACE_String_Base_Const_Iterator (const ACE_String_Base <ACE_CHAR_T> & str, int end = 0);
 

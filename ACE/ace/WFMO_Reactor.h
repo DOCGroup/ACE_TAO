@@ -665,6 +665,10 @@ public:
    *              ACE_WFMO_Reactor::DEFAULT_SIZE. Two slots will be
    *              added to the @a size parameter which will store handles
    *              used for internal management purposes.
+   * @param unused Unused compatibility parameter.
+   * @param sh Signal handler used by the reactor.
+   * @param tq Timer queue used by the reactor.
+   * @param notify Notification strategy used by the reactor.
    */
   ACE_WFMO_Reactor (size_t size,
                     int unused = 0,
@@ -680,6 +684,11 @@ public:
    *              ACE_WFMO_Reactor::DEFAULT_SIZE. Two slots will be
    *              added to the @a size parameter which will store handles
    *              used for internal management purposes.
+   * @param restart Whether to restart interrupted event loops.
+   * @param sh Signal handler used by the reactor.
+   * @param tq Timer queue used by the reactor.
+   * @param disable_notify_pipe Whether to disable the notification pipe.
+   * @param notify Notification strategy used by the reactor.
    */
   virtual int open (size_t size = ACE_WFMO_Reactor::DEFAULT_SIZE,
                     bool restart = false,

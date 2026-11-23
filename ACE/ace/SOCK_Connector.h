@@ -99,6 +99,8 @@ public:
    * @param qos_params  Contains QoS parameters that are passed to the
    *                    IntServ (RSVP) and DiffServ protocols.
    *                    @see ACE_QoS_Params.
+   * @param protocolinfo Protocol information used when creating the socket.
+   * @param g Socket group used for QoS.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
    *                    of time to wait to connect. If the pointer is 0
    *                    then the call blocks until the connection attempt
@@ -198,6 +200,8 @@ public:
    * @param qos_params  Contains QoS parameters that are passed to the
    *                    IntServ (RSVP) and DiffServ protocols.
    *                    @see ACE_QoS_Params.
+   * @param protocolinfo Protocol information used when creating the socket.
+   * @param g Socket group used for QoS.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
    *                    of time to wait to connect. If the pointer is 0
    *                    then the call blocks until the connection attempt

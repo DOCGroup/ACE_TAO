@@ -58,6 +58,8 @@ public:
    * @param local_sap   Local address. The local address to receive datagrams
    *                    at. If not specified, an unused address is selected.
    *                    If specified, should be an ACE_UNIX_Addr object.
+   * @param protocol_family The protocol family for the datagram socket.
+   * @param protocol The protocol for the datagram socket.
    *
    * @sa ACE_UNIX_Addr
    */

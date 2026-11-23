@@ -105,6 +105,7 @@ public:
    * Otherwise, timer nodes are allocated as needed.
    * @param freelist is the freelist of timer nodes.
    * @param upcall_functor If nullptr Timer Heap will create a default FUNCTOR.
+   * @param time_policy The time policy used by this timer queue.
    */
   explicit ACE_Timer_Heap_T (size_t size,
                              bool preallocated = false,

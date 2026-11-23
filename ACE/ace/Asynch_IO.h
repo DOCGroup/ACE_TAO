@@ -299,6 +299,8 @@ public:
    *                If handle == @c ACE_INVALID_HANDLE,
    *                ACE_Handler::handle() will be called on @ handler
    *                to get the correct handle.
+   * @param completion_key The completion key associated with the handle.
+   * @param proactor The proactor used to perform the asynchronous reads.
    *
    * @retval 0    for success.
    * @retval -1   for failure; consult @c errno for further information.

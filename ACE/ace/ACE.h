@@ -213,7 +213,7 @@ namespace ACE
    * Accepts a variable, caller-specified, number of pointer/length
    * pairs. Arguments following @a n are char *, size_t pairs.
    *
-   * @param handle The I/O handle to receive on
+   * The @a handle is the I/O handle to receive on.
    * @c n is the total number of char *, size_t pairs following it.
    *
    * @return -1 on error, else total number of bytes received.

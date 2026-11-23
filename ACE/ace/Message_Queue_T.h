@@ -941,6 +941,9 @@ public:
                                  ACE_Notification_Strategy * = nullptr);
 
   /// Factory method for a dynamically prioritized (by time to deadline) ACE_Dynamic_Message_Queue
+  /// @param hwm The high water mark for queued messages.
+  /// @param lwm The low water mark for queued messages.
+  /// @param ns Notification strategy to notify when queue conditions change.
   /// @param static_bit_field_mask Default mask for 10 low-order static bits.
   /// @param static_bit_field_shift Number of low-order bits (10).
   /// @param dynamic_priority_max Maximum value for 22 dynamic bits.
@@ -955,6 +958,9 @@ public:
                                    u_long dynamic_priority_offset =  0x200000UL);
 
   /// Factory method for a dynamically prioritized (by laxity) ACE_Dynamic_Message_Queue
+  /// @param hwm The high water mark for queued messages.
+  /// @param lwm The low water mark for queued messages.
+  /// @param ns Notification strategy to notify when queue conditions change.
   /// @param static_bit_field_mask Default mask for 10 low-order static bits.
   /// @param static_bit_field_shift Number of low-order bits (10).
   /// @param dynamic_priority_max Maximum value for 22 dynamic bits.
