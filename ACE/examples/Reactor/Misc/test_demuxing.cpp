@@ -385,7 +385,7 @@ Message_Handler::handle_input (ACE_HANDLE)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Service_Config daemon (argv [0]);
+  ACE_Service_Config const daemon (argv [0]);
 
   // Optionally start the alarm.
   if (argc > 1)

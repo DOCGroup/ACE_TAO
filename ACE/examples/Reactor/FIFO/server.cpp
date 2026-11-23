@@ -85,7 +85,7 @@ FIFO_Recv_Handler::handle_input (ACE_HANDLE)
 int
 ACE_TMAIN (int, ACE_TCHAR *argv[])
 {
-  ACE_Service_Config daemon (argv[0]);
+  ACE_Service_Config const daemon (argv[0]);
 
   FIFO_Recv_Handler const fr_handler;
 

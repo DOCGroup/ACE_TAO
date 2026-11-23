@@ -88,7 +88,7 @@ worker (void *arg)
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  ACE_Service_Config daemon (argv[0]);
+  ACE_Service_Config const daemon (argv[0]);
 
   parse_args (argc, argv);
   ACE_Recursive_Thread_Mutex rm;
