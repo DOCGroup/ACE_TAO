@@ -60,8 +60,6 @@ module CosPropertyService
   typedef sequence<PropertyMode> PropertyModes;
   typedef sequence<CORBA::TypeCode> PropertyTypes;
 
-  /// @}
-
   interface PropertyNamesIterator;
   interface PropertiesIterator;
   interface PropertySetFactory;
