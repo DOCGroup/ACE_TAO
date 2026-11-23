@@ -1024,7 +1024,7 @@ ACE_TSS_Cleanup::tss_keys ()
                                      &ACE_TSS_Cleanup_keys_destroyer))
             {
               ACE_ASSERT (false);
-              return 0; // Major problems, this should *never* happen!
+              return nullptr; // Major problems, this should *never* happen!
             }
         }
     }
@@ -1033,21 +1033,21 @@ ACE_TSS_Cleanup::tss_keys ()
   if (ACE_OS::thr_getspecific (in_use_, &ts_keys) == -1)
     {
       ACE_ASSERT (false);
-      return 0; // This should not happen!
+      return nullptr; // This should not happen!
     }
 
-  if (ts_keys == 0)
+  if (ts_keys == nullptr)
     {
       ACE_NEW_RETURN (ts_keys,
                       ACE_TSS_Keys,
-                      0);
+                      nullptr);
       // Store the dynamically allocated pointer in thread-specific
       // storage.
       if (ACE_OS::thr_setspecific (in_use_, ts_keys) == -1)
         {
           ACE_ASSERT (false);
           delete reinterpret_cast <ACE_TSS_Keys*> (ts_keys);
-          return 0; // Major problems, this should *never* happen!
+          return nullptr; // Major problems, this should *never* happen!
         }
     }
 

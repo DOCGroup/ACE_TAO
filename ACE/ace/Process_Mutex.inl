@@ -116,7 +116,7 @@ ACE_INLINE const ACE_TCHAR *
 ACE_Process_Mutex::name () const
 {
 #if defined _ACE_USE_SV_SEM || !defined ACE_MUTEX_USE_PROCESS_LOCK
-  return 0;
+  return nullptr;
 #else
   return this->lock_.lockname_;
 #endif

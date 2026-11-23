@@ -443,7 +443,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
   ACE_UNUSED_ARG (rate);
   ACE_UNUSED_ARG (flags);
   ACE_UNUSED_ARG (len);
-  return 0;
+  return nullptr;
 #elif defined (ACE_HAS_FORE_ATM_XTI)
   struct t_opthdr *popt;
   char *buf;
@@ -453,17 +453,17 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
   if (ACE_OS::t_getinfo (fd, &info) == -1)
     {
       ACE_OS::t_error ("t_getinfo");
-      return 0;
+      return nullptr;
     }
 
   buf = static_cast<char *> (ACE_OS::malloc (info.options));
 
-  if (buf == 0)
+  if (buf == nullptr)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Unable to allocate %d bytes for options\n"),
                          info.options),
-                        0);
+                        nullptr);
     }
 
   popt = (struct t_opthdr *) buf;
@@ -500,7 +500,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("Can't get local address!\n")));
           ACE_OS::free (buf);
-          return 0;
+          return nullptr;
         }
 
       ACE_OS::memcpy(source_addr->address, local_addr.sap.t_atm_sap_addr.address, ATMNSAP_ADDR_LEN);
@@ -617,7 +617,7 @@ ACE_ATM_QoS::construct_options (ACE_HANDLE fd,
   ACE_UNUSED_ARG (rate);
   ACE_UNUSED_ARG (flag);
   ACE_UNUSED_ARG (len);
-  return 0;
+  return nullptr;
 #endif /* ACE_HAS_FORE_ATM_WS2 */
 }
 

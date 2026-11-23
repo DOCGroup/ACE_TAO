@@ -135,7 +135,7 @@ ACE_Pagefile_Memory_Pool::init_acquire (size_t nbytes,
   // shared memory.
   if (this->map (first_time) < 0)
     {
-      return 0;
+      return nullptr;
     }
 
   if (first_time != 0)

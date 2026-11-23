@@ -335,7 +335,7 @@ ACE_Process_Options::working_directory ()
 {
   if (working_directory_[0] == '\0')
     {
-      return 0;
+      return nullptr;
     }
   else
     {

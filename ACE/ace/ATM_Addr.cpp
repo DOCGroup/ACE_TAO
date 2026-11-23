@@ -445,7 +445,7 @@ ACE_ATM_Addr::addr_to_string () const
   if (this->addr_to_string (addr,
                             MAXHOSTNAMELEN + 1) < 0)
     {
-      return 0;
+      return nullptr;
     }
 
   return addr;

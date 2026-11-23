@@ -412,7 +412,7 @@ ACE_Remote_Token_Proxy::owner_id ()
   ACE_TRACE ("ACE_Remote_Token_Proxy::owner_id");
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("owner_id called\n")));
   // @@ special operation
-  return 0;
+  return nullptr;
 }
 
 void

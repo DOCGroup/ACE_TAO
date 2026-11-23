@@ -1153,13 +1153,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Proactor *
 ACE_Proactor::instance (size_t /* threads */)
 {
-  return 0;
+  return nullptr;
 }
 
 ACE_Proactor *
 ACE_Proactor::instance (ACE_Proactor *)
 {
-  return 0;
+  return nullptr;
 }
 
 void

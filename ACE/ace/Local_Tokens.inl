@@ -81,9 +81,9 @@ ACE_INLINE const ACE_TPQ_Entry *
 ACE_Token_Proxy_Queue::head ()
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::head");
-  if (this->head_ == 0)
+  if (this->head_ == nullptr)
     {
-      return 0;
+      return nullptr;
     }
   else
     {
