@@ -617,7 +617,7 @@ get_ip_interfaces_getifaddrs (size_t &count,
     {
       return -1;
     }
-  std::unique_ptr<struct ifaddrs, decltype (&::freeifaddrs)> safe_ifap (
+  std::unique_ptr<struct ifaddrs, decltype (&::freeifaddrs)> const safe_ifap (
     ifap, ::freeifaddrs);
 
   // Count number of interfaces.

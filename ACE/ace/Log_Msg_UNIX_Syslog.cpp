@@ -83,8 +83,8 @@ ACE_Log_Msg_UNIX_Syslog::close ()
 ssize_t
 ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
 {
-  int syslog_priority = this->convert_log_priority (log_record.type ());
-  u_long flags = ACE_LOG_MSG->flags ();
+  int const syslog_priority = this->convert_log_priority (log_record.type ());
+  u_long const flags = ACE_LOG_MSG->flags ();
 
   // The UNIX syslog() facility does not support multi-line messages.
   // Break up the message data into separate lines and send each line
