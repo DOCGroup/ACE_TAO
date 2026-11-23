@@ -57,7 +57,7 @@ void Temperature_Grapher::update_graph ()
        set_iterator.next (entry) != 0;
        set_iterator.advance ())
     {
-      Name_Binding binding {entry};
+      Name_Binding const binding {entry};
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%C\t%C\t%C\n"),
                   binding.type (),
                   binding.name (),
