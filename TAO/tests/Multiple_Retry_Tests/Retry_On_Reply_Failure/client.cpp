@@ -114,7 +114,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            "(%P|%t) Cannot activate worker threads\n"),
                           1);
 
-      int timeout = 30;
+      const int timeout = 30;
       int now = 0;
       while (now < timeout &&
              ((options.expected_exception == TAO::FOE_NON && !worker.invocation_completed ()) ||

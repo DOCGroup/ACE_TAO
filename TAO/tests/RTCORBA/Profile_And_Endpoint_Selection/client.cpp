@@ -247,7 +247,7 @@ void
 Client::priority_invocations (int debug)
 {
   ULong_Array priorities;
-  int result =
+  const int result =
     get_values ("client",
                 this->options_.invocation_priorities_file,
                 "invocation priorities",
