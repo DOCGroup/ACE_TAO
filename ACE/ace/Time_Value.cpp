@@ -133,21 +133,21 @@ ACE_Time_Value::operator FILETIME () const
 ACE_Time_Value
 ACE_Time_Value::now () const
 {
-  ACE_System_Time_Policy systp;
+  ACE_System_Time_Policy const systp;
   return systp ();
 }
 
 ACE_Time_Value
 ACE_Time_Value::to_relative_time () const
 {
-  ACE_System_Time_Policy systp;
+  ACE_System_Time_Policy const systp;
   return (*this) - systp ();
 }
 
 ACE_Time_Value
 ACE_Time_Value::to_absolute_time () const
 {
-  ACE_System_Time_Policy systp;
+  ACE_System_Time_Policy const systp;
   return (*this) + systp ();
 }
 
