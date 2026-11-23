@@ -91,7 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try
     {
       // Initialize the ORB
-      CORBA::ORB_var orb = CORBA::ORB_init (argc, argv);
+      CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       Client_Options options;
       // Initialize options based on command-line arguments.
@@ -102,11 +102,11 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
 
       // Get an object reference from the argument string.
-      CORBA::Object_var object =
+      CORBA::Object_var const object =
         orb->string_to_object (options.ior);
 
       // Try to narrow the object reference to a test reference.
-      test_var test =
+      test_var const test =
         test::_narrow (object.in ());
 
       do_calls (test.in (), options.servers, options.iterations);
