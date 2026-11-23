@@ -285,7 +285,7 @@ MCT_Config::open (int argc, ACE_TCHAR *argv[])
           break;
         case 'n':
           {
-            int n = ACE_OS::atoi (getopt.opt_arg ());
+            int const n = ACE_OS::atoi (getopt.opt_arg ());
             // I'm assuming 0 means unlimited, so just use whatever the
             // user provides.
             if (IP_MAX_MEMBERSHIPS == 0)
@@ -720,7 +720,7 @@ MCT_Task::open (void *)
   MCT_Event_Handler *handler;
 
   ACE_INET_Addr addr = this->config_.group_start ();
-  int groups = this->config_.groups ();
+  int const groups = this->config_.groups ();
   for (int i = 0; i < groups; ++i)
     {
       ACE_NEW_RETURN (handler,
@@ -903,9 +903,9 @@ int producer (MCT_Config &config)
     }
 #endif /* ACE_HAS_IPV6 */
 
-  int iterations = config.iterations ();
+  int const iterations = config.iterations ();
   // we add an extra 5 groups for noise.
-  int groups = config.groups () + 5;
+  int const groups = config.groups () + 5;
   for (int i = 0; (i < iterations || iterations == 0) && !finished; ++i)
     {
       ACE_INET_Addr addr = config.group_start ();

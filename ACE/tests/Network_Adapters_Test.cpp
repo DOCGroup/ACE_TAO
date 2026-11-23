@@ -924,7 +924,7 @@ is_ip_address_local (char const * const ip_to_bind)
 {
   ACE_INET_Addr *the_addr_array {};
   size_t how_many = 0;
-  int rc = ACE::get_ip_interfaces (how_many, the_addr_array);
+  int const rc = ACE::get_ip_interfaces (how_many, the_addr_array);
 
   if (rc != 0)
     {

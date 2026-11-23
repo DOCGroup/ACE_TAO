@@ -157,7 +157,7 @@ int FileIOHandler::Connect()
       ACE_NEW_NORETURN(mb, ACE_Message_Block(FILE_FRAME_SIZE));
       if (reader_.read(*mb, mb->space()) != 0)
       {
-        int errnr = ACE_OS::last_error ();
+        int const errnr = ACE_OS::last_error ();
         ACE_DEBUG(
             (LM_INFO, ACE_TEXT("%p [%d]\n"), ACE_TEXT("FileIOHandler begin read failed"), errnr));
         mb->release();
