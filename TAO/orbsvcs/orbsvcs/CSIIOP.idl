@@ -10,8 +10,8 @@
 
 #include "tao/IOP.pidl"
 #include "CSI.idl"
-/// import ::IOP
-/// import ::CSI
+// import ::IOP;
+// import ::CSI;
 
 module IOP
 {

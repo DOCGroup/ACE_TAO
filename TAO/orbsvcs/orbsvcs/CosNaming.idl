@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 
 /**
  *  @file    CosNaming.idl
@@ -212,7 +211,7 @@ module CosNaming
     };
 
   /// Interface for iterating over Bindings returned with the
-  /// <list> operation.
+  /// @c list operation.
   interface BindingIterator
     {
       /// This operation returns the next binding.  If there are no

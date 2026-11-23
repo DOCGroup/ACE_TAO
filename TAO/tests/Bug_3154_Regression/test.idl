@@ -147,7 +147,6 @@ module FT
       *
       * @param object_group Reference for the object group to which the member is
       * to be added.
-      * @param the_location The physical location.
       * @param type_id The repository identifier for the type of the object.
       * @param the_criteria Parameters to be passed to the factory, which the factory
       * evaluates before creating the object.
@@ -170,7 +169,6 @@ module FT
       *
       * @param object_group Reference for the object group to which the existing object
       * is to be added.
-      * @param the_location The physical location of the object to be added.
       * @param member The reference of the object to be added.
       *
       * @return The object group reference of the object group with the object added.
@@ -187,7 +185,6 @@ module FT
       *
       * @param object_group Reference for the object group to which the member
       * is to be removed.
-      * @param the_location The physical location of the member to be removed.
       *
       * @return The object group reference of the member removed.
       */
@@ -201,8 +198,6 @@ module FT
       *
       * @param object_group Reference for the object group whose primary is to be
       * determined.
-      * @param the_location The physical location of the member that is to become
-      * the primary.
       *
       * @return The object group reference with the primary member at the given
       * location.

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /// @file UDP.idl
 /// Defines operations to request the current time from another
 /// machine and shut down the server.

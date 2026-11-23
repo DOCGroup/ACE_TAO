@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 /// Defines operations used to test TAO Pluggable Protocols. The operations
 /// send octets, voids, and octet sequences.
 interface Pluggable_Test
