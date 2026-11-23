@@ -302,7 +302,7 @@ namespace ACE_Utils
       }
 
     /// Support versions 1, 3, and 4 only
-    ACE_UINT16 V1 = this->uuid_.time_hi_and_version_;
+    ACE_UINT16 const V1 = this->uuid_.time_hi_and_version_;
 
     if ((V1 & 0xF000) != 0x1000 &&
         (V1 & 0xF000) != 0x3000 &&
@@ -323,8 +323,8 @@ namespace ACE_Utils
                         "IllegalArgument (Missing Thread and Process Id)\n"));
             return;
           }
-        ACE_CString thr_pid_str (uuid_string.c_str () + uuid_length + 1);
-        ssize_t pos = static_cast<ssize_t> (thr_pid_str.find ('-'));
+        ACE_CString const thr_pid_str (uuid_string.c_str () + uuid_length + 1);
+        ssize_t const pos = static_cast<ssize_t> (thr_pid_str.find ('-'));
         if (pos <= 0 || static_cast<size_t> (pos) + 1 >= thr_pid_str.length ())
           {
             ACELIB_DEBUG ((LM_DEBUG,
@@ -418,7 +418,7 @@ namespace ACE_Utils
 
     if (variant == 0xc0)
       {
-        ACE_Thread_ID thread_id;
+        ACE_Thread_ID const thread_id;
         char buf [BUFSIZ];
         thread_id.to_string (buf, BUFSIZ);
         uuid.thr_id (buf);
@@ -511,7 +511,7 @@ namespace ACE_Utils
       ACE_UINT64_LITERAL (0x1B21DD213814000);
 
     /// Get the time of day, convert to 100ns ticks then add the offset.
-    ACE_Time_Value now = ACE_OS::gettimeofday ();
+    ACE_Time_Value const now = ACE_OS::gettimeofday ();
     ACE_UINT64 time;
     now.to_usec (time);
     time = time * 10;
