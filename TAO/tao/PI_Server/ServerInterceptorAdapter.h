@@ -87,7 +87,7 @@ namespace TAO
 #endif /*TAO_HAS_EXTENDED_FT_INTERCEPTORS*/
 
     /// This method implements the "intermediate" server side
-    /// interception point if the above #ifdef is set to 1 and a
+    /// interception point if the above \#ifdef is set to 1 and a
     /// starting interception point if it is not set to 1.
     ///
     /// @note This method should have been the "starting" interception

@@ -51,6 +51,8 @@ namespace TAO
      * immediately following receive_request_service_contexts() on
      * server side).
      *
+     * @param server_request The server request whose PICurrent data is
+     *                       copied between scopes.
      * @param tsc_to_rsc true when copying TSC slot table to RSC slot
      *                        table, i.e. after target operation
      *                        completes.
