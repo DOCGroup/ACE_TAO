@@ -521,7 +521,7 @@ ACE_OS::getprotobyname_r (const char *name,
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 # else
 #   if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)
@@ -599,7 +599,7 @@ ACE_OS::getprotobynumber_r (int proto,
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 # else
 #   if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)

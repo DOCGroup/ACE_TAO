@@ -244,12 +244,12 @@ MQX_Filesystem::getcwd (char *buf, size_t size)
 {
   if (check_state ())
     {
-      return 0;
+      return nullptr;
     }
-  if (buf == 0)
+  if (buf == nullptr)
     {
       errno = EINVAL;
-      return 0;
+      return nullptr;
     }
 
   char curdirtmp[FS_FILENAME_SIZE];
@@ -258,12 +258,12 @@ MQX_Filesystem::getcwd (char *buf, size_t size)
   if (mqx_error != MFS_NO_ERROR)
     {
       errno = ACE_OS::mqx_error_to_errno (mqx_error);
-      return 0;
+      return nullptr;
     }
   if ((current_fs_name_len_ + ACE_OS::strlen (curdirtmp) + 1) > size)
     {
       errno = ERANGE;
-      return 0;
+      return nullptr;
     }
   ACE_OS::strcpy (buf, current_fs_name_);
   ACE_OS::strcat (buf, curdirtmp);
@@ -458,7 +458,7 @@ MQX_Filesystem::get_file (int fd)
         }
     }
   errno = EBADF;
-  return 0;
+  return nullptr;
 }
 
 MQX_Filesystem::File *

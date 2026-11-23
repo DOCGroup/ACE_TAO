@@ -221,9 +221,9 @@ ACE_Thread_Manager::task ()
 
   ACE_Thread_Descriptor *td = this->thread_desc_self () ;
 
-  if (td == 0)
+  if (td == nullptr)
     {
-      return 0;
+      return nullptr;
     }
   else
     {
