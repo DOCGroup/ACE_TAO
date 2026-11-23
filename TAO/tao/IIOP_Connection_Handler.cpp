@@ -546,7 +546,7 @@ TAO_IIOP_Connection_Handler::process_listen_point_list (
   len = 1;
   for (CORBA::ULong i {}; i < len; ++i)
     {
-      IIOP::ListenPoint listen_point = listen_list[i];
+      IIOP::ListenPoint const listen_point = listen_list[i];
 
       // since the supplied host/port could be unresolvable, the assigning
       // constructor of the INET addr should not be as it will emit an error
