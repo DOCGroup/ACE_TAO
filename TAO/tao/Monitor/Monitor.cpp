@@ -18,10 +18,10 @@ TAO_Monitor_Init::create_object (CORBA::ORB_ptr orb,
       CORBA::Object_var obj =
         orb->resolve_initial_references ("RootPOA");
 
-      PortableServer::POA_var poa =
+      PortableServer::POA_var const poa =
         PortableServer::POA::_narrow (obj.in ());
 
-      PortableServer::POAManager_var mgr =
+      PortableServer::POAManager_var const mgr =
         poa->the_POAManager ();
 
       mgr->activate ();
@@ -33,8 +33,8 @@ TAO_Monitor_Init::create_object (CORBA::ORB_ptr orb,
 
       {
         // Keep a local reference until the POA retains the servant.
-        PortableServer::ServantBase_var safe_servant = servant;
-        PortableServer::ObjectId_var id =
+        PortableServer::ServantBase_var const safe_servant = servant;
+        PortableServer::ObjectId_var const id =
           poa->activate_object (servant);
         obj = servant->_this ();
       }
