@@ -3,7 +3,6 @@ eval '(exit $?0)' && eval 'exec perl -S $0 ${1+"$@"}'
     & eval 'exec perl -S $0 $argv:q'
     if 0;
 
-# -*- perl -*-
 # Replacement for the old trusty GenExportH.bat
 # Creates the nice little *_export file which is used for
 # importing and exporting of symbols in DLLs.
@@ -57,9 +56,7 @@ $ucname = uc $name;
 ##############################################################################
 # Prologue
 
-$prologue = '
-// -*- C++ -*-
-// Definition for Win32 Export directives.
+$prologue = '// Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl '."$flags".'
 // ------------------------------'."
 #ifndef -UC-_EXPORT_H

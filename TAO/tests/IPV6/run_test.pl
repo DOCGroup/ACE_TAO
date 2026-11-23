@@ -24,7 +24,6 @@ my $client_iorfile = $client->LocalFile ($iorbase);
 $server->DeleteFile($iorbase);
 $client->DeleteFile($iorbase);
 
-# -*- perl -*-
 $server_arg = "-ORBdebuglevel $debug_level -o $server_iorfile -ORBUseSharedProfile 0 ";
 $client_arg = "-k file://$client_iorfile ";
 

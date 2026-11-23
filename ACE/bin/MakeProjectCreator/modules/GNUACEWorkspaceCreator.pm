@@ -51,7 +51,6 @@ sub pre_workspace {
   my($fh)   = shift;
   my($crlf) = $self->crlf();
 
-  print $fh '# -*- makefile -*-', $crlf;
   $self->workspace_preamble($fh, $crlf, 'GNU ACE Workspace',
                             '');
   print $fh 'MAKEFILE = ', $self->get_modified_workspace_name($base, '', 1),

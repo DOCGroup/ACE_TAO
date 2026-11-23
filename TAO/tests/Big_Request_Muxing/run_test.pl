@@ -34,8 +34,6 @@ $SV = $server->CreateProcess ("server", "-ORBdebuglevel $debug_level -o $server_
 $CL1 = $client1->CreateProcess ("client", "-k file://$client1_iorfile");
 $CL2 = $client2->CreateProcess ("client", "-k file://$client2_iorfile");
 
-# -*- perl -*-
-
 for ($n = 0; $n < 10; ++$n) {
     print "=================================================================\n";
 

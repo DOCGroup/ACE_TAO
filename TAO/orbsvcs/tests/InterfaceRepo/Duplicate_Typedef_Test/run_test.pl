@@ -87,8 +87,6 @@ $client->DeleteFile($iorbase);
 
 exit $status;
 
-# -*- perl -*-
-
 use lib "$ENV{ACE_ROOT}/bin";
 use PerlACE::TestTarget;
 
