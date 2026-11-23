@@ -81,7 +81,6 @@ public:
     *  Default constructor.
     *
     *  @param the_allocator ACE_Allocator associated with string
-    *  @return Default ACE_String_Base string.
     */
   explicit ACE_String_Base (ACE_Allocator *the_allocator = nullptr);
 
@@ -98,7 +97,6 @@ public:
    * @param the_allocator ACE_Allocator associated with string
    * @param release Allocator responsible(true)/not responsible(false) for
    *    freeing memory.
-   * @return ACE_String_Base containing const ACE_CHAR_T *s
    */
   ACE_String_Base (const ACE_CHAR_T *s,
                    ACE_Allocator *the_allocator = nullptr,
@@ -119,7 +117,6 @@ public:
    * @param the_allocator ACE_Allocator associated with string
    * @param release Allocator responsible(true)/not responsible(false) for
    *    freeing memory.
-   * @return ACE_String_Base containing const ACE_CHAR_T *s
    */
   ACE_String_Base (const ACE_CHAR_T *s,
                    size_type len,
@@ -130,7 +127,6 @@ public:
    *  Copy constructor.
    *
    *  @param s Input ACE_String_Base string to copy
-   *  @return Copy of input string @a s
    */
   ACE_String_Base (const ACE_String_Base <ACE_CHAR_T> &s);
 
@@ -139,7 +135,6 @@ public:
    *
    *  @param c Single input character.
    *  @param the_allocator ACE_Allocator associated with string
-   *  @return ACE_String_Base containing ACE_CHAR_T 'c'
    */
   ACE_String_Base (ACE_CHAR_T c, ACE_Allocator *the_allocator = nullptr);
 
@@ -154,7 +149,6 @@ public:
    *  @param len Amount of space to reserve for the string.
    *  @param c The array is filled with c's
    *  @param the_allocator ACE_Allocator associated with string
-   *  @return Empty ACE_String_Base with room for len CHARs
    */
   ACE_String_Base (size_type len,
                    ACE_CHAR_T c = 0,

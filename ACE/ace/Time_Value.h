@@ -149,8 +149,8 @@ public:
 
   /// Converts from ACE_Time_Value format into milliseconds format.
   /**
-   * @return Sum of second field (in milliseconds) and microsecond field
-   *         (in milliseconds) and return them via the @param ms parameter.
+   * @param ms Receives the sum of the second field and microsecond field,
+   *           in milliseconds.
    *
    * @note The semantics of this method differs from the sec() and
    *       usec() methods.  There is no analogous "millisecond"
@@ -162,8 +162,8 @@ public:
 
   /// Converts from ACE_Time_Value format into milliseconds format.
   /**
-   * @return Sum of second field (in milliseconds) and microsecond field
-   *         (in milliseconds) and return them via the @param ms parameter.
+   * @param ms Receives the sum of the second field and microsecond field,
+   *           in milliseconds.
    *
    * @note The semantics of this method differs from the sec() and
    *       usec() methods.  There is no analogous "millisecond"
@@ -241,8 +241,8 @@ public:
   void usec (suseconds_t usec);
 
   /**
-   * @return Sum of second field (in microseconds) and microsecond field
-   *         and return them via the @param usec parameter.
+   * @param usec Receives the sum of the second field and microsecond field,
+   *             in microseconds.
    */
   void to_usec (ACE_UINT64 &usec) const;
 

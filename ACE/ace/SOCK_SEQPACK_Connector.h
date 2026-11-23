@@ -66,14 +66,14 @@ public:
    *                    *timeout == {0, 0} then the connection is done
    *                    using nonblocking mode.  In this case, if the
    *                    connection can't be made immediately, this method
-   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    the attempt fails with errno == EWOULDBLOCK.
    *                    If *timeout > {0, 0} then this is the maximum amount
    *                    of time to wait before timing out; if the specified
    *                    amount of time passes before the connection is made,
-   *                    this method returns -1 and errno == ETIME. Note
+   *                    the attempt fails with errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attempted that TCP times out - in the latter
-   *                    case, errno will be ETIMEDOUT.
+   *                    connect is attempted that TCP times out - the latter
+   *                    case sets errno to ETIMEDOUT.
    * @param local_sap   (optional) The local address to bind to.  If it's
    *                    the default value of @c ACE_Addr::sap_any then the
    *                    OS will choose an unused port.
@@ -85,9 +85,6 @@ public:
    * @param protocol    (optional) If value is 0, default SOCK_STREAM
    *                    protocol is selected by kernel (typically TCP).
    *
-   * @return            Returns 0 if the connection succeeds. If it fails,
-   *                    -1 is returned and errno contains a specific error
-   *                    code.
    */
   ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
                       const ACE_Addr &remote_sap,
@@ -116,14 +113,14 @@ public:
    *                    *timeout == {0, 0} then the connection is done
    *                    using nonblocking mode.  In this case, if the
    *                    connection can't be made immediately, this method
-   *                    returns -1 and errno == EWOULDBLOCK.
+   *                    the attempt fails with errno == EWOULDBLOCK.
    *                    If *timeout > {0, 0} then this is the maximum amount
    *                    of time to wait before timing out; if the specified
    *                    amount of time passes before the connection is made,
-   *                    this method returns -1 and errno == ETIME. Note
+   *                    the attempt fails with errno == ETIME. Note
    *                    the difference between this case and when a blocking
-   *                    connect is attempted that TCP times out - in the latter
-   *                    case, errno will be ETIMEDOUT.
+   *                    connect is attempted that TCP times out - the latter
+   *                    case sets errno to ETIMEDOUT.
    * @param local_sap   (optional) The set of local addresses for SCTP to
    *                    bind to.
    * @param reuse_addr  (optional) If the value is 1, the local address
@@ -134,9 +131,6 @@ public:
    * @param protocol    (optional) If value is 0, default SOCK_STREAM
    *                    protocol is selected by kernel (typically TCP).
    *
-   * @return            Returns 0 if the connection succeeds. If it fails,
-   *                    -1 is returned and errno contains a specific error
-   *                    code.
    */
   ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
                       const ACE_Addr &remote_sap,
