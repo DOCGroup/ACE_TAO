@@ -40,7 +40,7 @@ bool MyMain::init_server (ACE_TCHAR const *args)
 {
   std::string my_args (ACE_TEXT_ALWAYS_CHAR (args));
   // main thread and extra thread for backdoor operations
-  int thread_pool = 2;
+  const int thread_pool = 2;
 
   server_task_ = std::make_unique<Server_Task> (my_args);
 
@@ -48,7 +48,7 @@ bool MyMain::init_server (ACE_TCHAR const *args)
 
   server_task_->activate (THR_NEW_LWP | THR_JOINABLE | THR_INHERIT_SCHED, thread_pool);
 
-  int duration = 4; // wait 3 seconds for initialization
+  const int duration = 4; // wait 3 seconds for initialization
   ACE_Time_Value current = ACE_High_Res_Timer::gettimeofday_hr ();
   ACE_Time_Value timeout = current + ACE_Time_Value (duration);
 
@@ -78,7 +78,7 @@ bool MyMain::init_server (ACE_TCHAR const *args)
 bool MyMain::init_client (ACE_TCHAR const *args)
 {
   std::string my_args (ACE_TEXT_ALWAYS_CHAR (args));
-  int thread_pool = 1;
+  const int thread_pool = 1;
 
   client_task_ = std::make_unique<Client_Task> (my_args);
 
