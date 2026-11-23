@@ -1341,7 +1341,7 @@ Key_List::output_linear_search_function ()
 
   // Logic to handle the Linear Search.
 
-  ACE_OS::printf ("for (int i=0; i<=%d; i++)",total_keys-1);
+  ACE_OS::printf ("for (int i=0; i<=%d; ++i)",total_keys-1);
   ACE_OS::printf ("\t{\n");
   ACE_OS::printf ("\t   if (%sstrcmp (wordlist[i].%s, str) == 0)\n",
                   string_compare_prefix (false), option.key_name ().c_str ());
