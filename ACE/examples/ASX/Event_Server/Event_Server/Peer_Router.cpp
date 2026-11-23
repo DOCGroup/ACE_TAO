@@ -88,7 +88,7 @@ Peer_Router_Context::release ()
 Peer_Router_Context::Peer_Router_Context (u_short port)
 {
   // Initialize the Acceptor's "listen-mode" socket.
-  ACE_INET_Addr endpoint (port);
+  ACE_INET_Addr const endpoint (port);
   if (this->open (endpoint) == -1)
     {
       ACE_ERROR ((LM_ERROR,
