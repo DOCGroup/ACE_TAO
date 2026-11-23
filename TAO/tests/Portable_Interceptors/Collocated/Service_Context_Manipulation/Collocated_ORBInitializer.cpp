@@ -12,7 +12,7 @@ void
 Collocated_ORBInitializer::post_init (
     PortableInterceptor::ORBInitInfo_ptr info)
 {
-  CORBA::String_var orb_id =
+  CORBA::String_var const orb_id =
     info->orb_id ();
 
   if (std::strcmp (orb_id.in (), "client_orb") == 0)
@@ -25,7 +25,7 @@ Collocated_ORBInitializer::post_init (
                         Echo_Client_Request_Interceptor (orb_id.in ()),
                         CORBA::NO_MEMORY ());
 
-      PortableInterceptor::ClientRequestInterceptor_var
+      PortableInterceptor::ClientRequestInterceptor_var const
         client_interceptor = interceptor;
 
       info->add_client_request_interceptor (client_interceptor.in ());
@@ -41,7 +41,7 @@ Collocated_ORBInitializer::post_init (
                         Echo_Server_Request_Interceptor,
                         CORBA::NO_MEMORY ());
 
-      PortableInterceptor::ServerRequestInterceptor_var
+      PortableInterceptor::ServerRequestInterceptor_var const
         server_interceptor = interceptor;
 
       info->add_server_request_interceptor (server_interceptor.in ());
