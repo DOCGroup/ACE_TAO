@@ -48,7 +48,7 @@ ThreadTest::run(bool doubleLock)
   m_mutex.acquire();
 
   // Start worker thread
-  int rval = ACE_Thread::spawn(workerThreadWrapper, this,
+  int const rval = ACE_Thread::spawn(workerThreadWrapper, this,
      THR_JOINABLE | THR_NEW_LWP, &m_workerThreadId, &m_workerThreadHandle,
      ACE_DEFAULT_THREAD_PRIORITY);
 

@@ -20,7 +20,7 @@ init_test ()
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
-  ACE_MMAP_Memory_Pool_Options options (ACE_DEFAULT_BASE_ADDR);
+  ACE_MMAP_Memory_Pool_Options const options (ACE_DEFAULT_BASE_ADDR);
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_MMAP_Memory_Pool mmap (MMAP_FILENAME, &options);
   //FUZZ: enable check_for_lack_ACE_OS
@@ -47,7 +47,7 @@ protected:
   {
     if (no_crash)
     {
-      ACE_MMAP_Memory_Pool_Options options (ACE_DEFAULT_BASE_ADDR);
+      ACE_MMAP_Memory_Pool_Options const options (ACE_DEFAULT_BASE_ADDR);
       c_memory_pool = new ACE_Malloc_T<ACE_MMAP_MEMORY_POOL,
                       ACE_Null_Mutex,
                       ACE_PI_Control_Block>(MMAP_FILENAME
@@ -145,7 +145,7 @@ run_main (int argc, ACE_TCHAR * argv[])
 
   init_test ();
 
-  bool no_crash = (argc>1 && argv[1][0]=='1');
+  bool const no_crash = (argc>1 && argv[1][0]=='1');
   ShmemMan* smm = ShmemMan::getInstance (no_crash);
 
   void* buf = smm->getMemoryBlock (block_name, 10 * 4096);
