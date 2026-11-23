@@ -173,7 +173,7 @@ TAO_Queued_Data::duplicate (TAO_Queued_Data &sqd)
   // @@ todo: Theoretically this should be within the Message Block,
   // but we dont have much scope to do this in that mess. Probably in
   // the next stage of MB rewrite we should be okay
-  ACE_Message_Block::Message_Flags fl = sqd.msg_block_->self_flags ();
+  ACE_Message_Block::Message_Flags const fl = sqd.msg_block_->self_flags ();
 
   if (ACE_BIT_ENABLED (fl,
                        ACE_Message_Block::DONT_DELETE))
