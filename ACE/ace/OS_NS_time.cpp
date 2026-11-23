@@ -26,9 +26,9 @@ ACE_OS::localtime_r (const time_t *t, struct tm *res)
   ACE_UNUSED_ARG (res);
   struct tm * res_ptr {};
   ACE_OSCALL (::localtime (t), struct tm *, res_ptr);
-  if (res_ptr == 0)
+  if (res_ptr == nullptr)
     {
-      return 0;
+      return nullptr;
     }
   else
     {
@@ -59,9 +59,9 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
   int fi = 0;
   bool percent = false;
 
-  if (!buf || !format)
+  if (buf == nullptr || format == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   while (format[fi] != '\0')

@@ -408,13 +408,13 @@ ACE_OS::realpath (const wchar_t *file_name,
 #    else /* ACE_WIN32 */
   ACE_Wide_To_Ascii n_file_name (file_name);
   char n_resolved[PATH_MAX];
-  if (0 != ACE_OS::realpath (n_file_name.char_rep (), n_resolved))
+  if (ACE_OS::realpath (n_file_name.char_rep (), n_resolved) != nullptr)
     {
       ACE_Ascii_To_Wide w_resolved (n_resolved);
       ACE_OS::strcpy (resolved_name, w_resolved.wchar_rep ());
       return resolved_name;
     }
-  return 0;
+  return nullptr;
 #    endif /* ! ACE_WIN32 */
 }
 #  endif /* ACE_HAS_WCHAR */

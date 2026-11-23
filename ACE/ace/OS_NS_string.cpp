@@ -341,7 +341,7 @@ ACE_OS::strsncpy (ACE_WCHAR_T *dst, const ACE_WCHAR_T *src, size_t maxlen)
 char *
 ACE_OS::strtok_r_emulation (char *s, const char *tokens, char **lasts)
 {
-  if (s == 0)
+  if (s == nullptr)
     {
       s = *lasts;
     }
@@ -351,13 +351,13 @@ ACE_OS::strtok_r_emulation (char *s, const char *tokens, char **lasts)
     }
   if (*s == 0)                  // We have reached the end
     {
-      return 0;
+      return nullptr;
     }
   size_t const l_org = ACE_OS::strlen (s);
   s = ::strtok (s, tokens);
-  if (s == 0)
+  if (s == nullptr)
     {
-      return 0;
+      return nullptr;
     }
   size_t const l_sub = ACE_OS::strlen (s);
   if (s + l_sub < *lasts + l_org)
@@ -378,13 +378,13 @@ ACE_OS::strtok_r_emulation (ACE_WCHAR_T *s,
                             const ACE_WCHAR_T *tokens,
                             ACE_WCHAR_T **lasts)
 {
-  ACE_WCHAR_T* sbegin = s ? s : *lasts;
+  ACE_WCHAR_T* sbegin = s != nullptr ? s : *lasts;
   sbegin += ACE_OS::strspn(sbegin, tokens);
   if (*sbegin == 0)
     {
       static ACE_WCHAR_T empty[1] = { 0 };
       *lasts = empty;
-      return 0;
+      return nullptr;
   }
   ACE_WCHAR_T*send = sbegin + ACE_OS::strcspn(sbegin, tokens);
   if (*send != 0)

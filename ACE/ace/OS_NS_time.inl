@@ -100,9 +100,9 @@ ACE_OS::ctime (const time_t *t)
 #  if defined (ACE_USES_WCHAR)   /* Not Win32, else it would do the above */
   char *narrow_time;
   ACE_OSCALL (::ctime (t), char *, narrow_time);
-  if (narrow_time == 0)
+  if (narrow_time == nullptr)
     {
-      return 0;
+      return nullptr;
     }
   // ACE_Ascii_To_Wide::convert allocates (via new []) a wchar_t[]. If
   // we've done this before, free the previous one. Yes, this leaves a

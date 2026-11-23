@@ -318,14 +318,14 @@ ACE_TCHAR *
 ACE_OS::mktemp (ACE_TCHAR *s)
 {
   ACE_OS_TRACE ("ACE_OS::mktemp");
-  if (s == 0)
+  if (s == nullptr)
     {
       // check for null template string failed!
-      return 0;
+      return nullptr;
     }
 
   ACE_TCHAR *xxxxxx = ACE_OS::strstr (s, ACE_TEXT ("XXXXXX"));
-  if (xxxxxx == 0)
+  if (xxxxxx == nullptr)
     {
       // the template string doesn't contain "XXXXXX"!
       return s;
@@ -381,12 +381,12 @@ ACE_OS::realpath (const char *file_name,
 {
   ACE_OS_TRACE ("ACE_OS::realpath");
 
-  if (file_name == 0)
+  if (file_name == nullptr)
     {
       // Single Unix Specification V3:
       //   Return an error if parameter is a null pointer.
       errno = EINVAL;
-      return 0;
+      return nullptr;
     }
 
   if (*file_name == '\0')
@@ -395,12 +395,12 @@ ACE_OS::realpath (const char *file_name,
       //   Return an error if the file_name argument points
       //   to an empty string.
       errno = ENOENT;
-      return 0;
+      return nullptr;
     }
 
   char* rpath;
 
-  if (resolved_name == 0)
+  if (resolved_name == nullptr)
     {
       // Single Unix Specification V3:
       //   Return an error if parameter is a null pointer.
@@ -413,10 +413,10 @@ ACE_OS::realpath (const char *file_name,
 #else
       rpath = static_cast<char*>(ACE_OS::malloc (PATH_MAX));
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      if (rpath == 0)
+      if (rpath == nullptr)
         {
           errno = ENOMEM;
-          return 0;
+          return nullptr;
         }
     }
   else
@@ -429,15 +429,15 @@ ACE_OS::realpath (const char *file_name,
   if (*file_name != '/')
     {
       // file_name is relative path so CWD needs to be added
-      if (ACE_OS::getcwd (rpath, PATH_MAX) == 0)
+      if (ACE_OS::getcwd (rpath, PATH_MAX) == nullptr)
         {
-          if (resolved_name == 0)
+          if (resolved_name == nullptr)
 #if defined (ACE_HAS_ALLOC_HOOKS)
             ACE_Allocator::instance()->free (rpath);
 #else
             ACE_OS::free (rpath);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-          return 0;
+          return nullptr;
         }
       dest = ACE_OS::strchr (rpath, '\0');
     }
@@ -468,13 +468,13 @@ ACE_OS::realpath (const char *file_name,
           if (dest - rpath > PATH_MAX)
             {
               errno = ENAMETOOLONG;
-              if (resolved_name == 0)
+              if (resolved_name == nullptr)
 #if defined (ACE_HAS_ALLOC_HOOKS)
                 ACE_Allocator::instance()->free (rpath);
 #else
                 ACE_OS::free (rpath);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-              return 0;
+              return nullptr;
             }
         }
 
@@ -507,13 +507,13 @@ ACE_OS::realpath (const char *file_name,
           *dest = '\0';
           if (ACE_OS::lstat(rpath, &st) < 0)
             {
-              if (resolved_name == 0)
+              if (resolved_name == nullptr)
 #if defined (ACE_HAS_ALLOC_HOOKS)
                 ACE_Allocator::instance()->free (rpath);
 #else
                 ACE_OS::free (rpath);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-                return 0;
+                return nullptr;
             }
 
           // Check if current path is a link
@@ -522,13 +522,13 @@ ACE_OS::realpath (const char *file_name,
               if (++nlinks > MAXSYMLINKS)
                 {
                   errno = ELOOP;
-                  if (resolved_name == 0)
+                  if (resolved_name == nullptr)
 #if defined (ACE_HAS_ALLOC_HOOKS)
                     ACE_Allocator::instance()->free (rpath);
 #else
                     ACE_OS::free (rpath);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-                  return 0;
+                  return nullptr;
                 }
 
               char link_buf[PATH_MAX];
@@ -540,13 +540,13 @@ ACE_OS::realpath (const char *file_name,
               if (link_len + tail_len > PATH_MAX)
                 {
                   errno = ENAMETOOLONG;
-                  if (resolved_name == 0)
+                  if (resolved_name == nullptr)
 #if defined (ACE_HAS_ALLOC_HOOKS)
                     ACE_Allocator::instance()->free (rpath);
 #else
                     ACE_OS::free (rpath);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-                  return 0;
+                  return nullptr;
                 }
 
               // Move tail and prefix it with expanded link
