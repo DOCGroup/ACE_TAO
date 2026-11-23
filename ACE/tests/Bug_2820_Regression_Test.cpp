@@ -43,10 +43,10 @@ run_main (int, ACE_TCHAR *[])
 
   std::unique_ptr<ACE_Reactor> reactor =
     std::make_unique<ACE_Reactor> (new ACE_Select_Reactor, true);
-  ACE_Event_Handler_var v =
+  ACE_Event_Handler_var const v =
     ACE::make_event_handler<Simple_Handler> (reactor.get());
 
-  ACE_Event_Handler::Reference_Count pre_notify_count =
+  ACE_Event_Handler::Reference_Count const pre_notify_count =
     v->add_reference();
 
   int const notify_count = 4;
@@ -55,7 +55,7 @@ run_main (int, ACE_TCHAR *[])
       reactor->notify(v.handler());
     }
 
-  ACE_Event_Handler::Reference_Count pos_notify_count =
+  ACE_Event_Handler::Reference_Count const pos_notify_count =
     v->add_reference();
 
   if(pos_notify_count != pre_notify_count + notify_count + 1)
@@ -72,7 +72,7 @@ run_main (int, ACE_TCHAR *[])
   // Reset the reactor in the event handler, since it is gone.p
   v->reactor(nullptr);
 
-  ACE_Event_Handler::Reference_Count pos_release_count =
+  ACE_Event_Handler::Reference_Count const pos_release_count =
     v->add_reference();
 
   // Only our explicit calls to add_reference() should be reflected in
@@ -94,7 +94,7 @@ run_main (int, ACE_TCHAR *[])
   // Remove a reference for each time we explicitly increased it.
   v->remove_reference();
   v->remove_reference();
-  ACE_Event_Handler::Reference_Count pos_remove_count =
+  ACE_Event_Handler::Reference_Count const pos_remove_count =
       v->remove_reference();
 
   ACE_DEBUG ((LM_INFO,

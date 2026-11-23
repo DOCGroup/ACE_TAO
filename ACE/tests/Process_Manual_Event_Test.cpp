@@ -218,7 +218,7 @@ const ACE_TCHAR *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEX
                             options.command_line_buf ()));
 
       // Spawn the child process.
-      pid_t result = child.spawn (options);
+      pid_t const result = child.spawn (options);
       if (result != ACE_INVALID_PID)
         {
           ACE_DEBUG ((LM_DEBUG,
@@ -236,7 +236,7 @@ const ACE_TCHAR *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEX
 
       ACE_exitcode child_status;
       // Wait for the child processes we created to exit.
-      int wait_result = child.wait (&child_status);
+      int const wait_result = child.wait (&child_status);
       ACE_TEST_ASSERT (wait_result != -1);
       if (child_status == 0)
         {
