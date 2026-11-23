@@ -97,7 +97,7 @@ ACE_SOCK_Netlink::recv (iovec iov[],
   recv_msg.msg_controllen = 0;
   recv_msg.msg_flags = 0;
 
-  ssize_t status = ACE_OS::recvmsg (this->get_handle (),
+  ssize_t const status = ACE_OS::recvmsg (this->get_handle (),
                                     &recv_msg,
                                     flags);
 

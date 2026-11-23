@@ -160,7 +160,7 @@ ACE_SOCK_SEQPACK_Association::get_local_addrs (ACE_INET_Addr *addrs, size_t &siz
 
   // Physical size of this array is its logical size multiplied by
   // the physical size of one of its elements.
-  size_t physical_size = size * sizeof(sockaddr_in);
+  size_t const physical_size = size * sizeof(sockaddr_in);
 
   /* Clear the array */
   ACE_OS::memset(addr_structs.get(),
@@ -299,7 +299,7 @@ ACE_SOCK_SEQPACK_Association::get_remote_addrs (ACE_INET_Addr *addrs, size_t &si
 
   // Physical size of this array is its logical size multiplied by
   // the physical size of one of its elements.
-  size_t physical_size = size * sizeof(sockaddr_in);
+  size_t const physical_size = size * sizeof(sockaddr_in);
 
   /* Clear the array */
   ACE_OS::memset(addr_structs.get(),
