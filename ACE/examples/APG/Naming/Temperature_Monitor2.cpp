@@ -60,7 +60,7 @@ void Temperature_Monitor2::reset_device (Name_Binding_Ptr const &resetCount)
 
       if (number_of_resets > this->opt_.excessive_resets ())
         {
-          EMail notification {};
+          EMail const notification {};
 
           char message[BUFSIZ] {};
           std::snprintf (message,
