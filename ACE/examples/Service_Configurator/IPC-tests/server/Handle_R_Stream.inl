@@ -121,13 +121,13 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
   // created handle. This is because the newly created handle will
   // inherit the properties of the listen handle, including its event
   // associations.
-  int const reset_new_handle =
+  bool const reset_new_handle =
     ACE_Reactor::instance ()->uses_event_associations ();
 
   if (this->accept (this->new_remote_stream, // stream
                     nullptr, // remote address
                     nullptr, // timeout
-                    1, // restart
+                    true, // restart
                     reset_new_handle  // reset new handler
                     ) == -1)
     {

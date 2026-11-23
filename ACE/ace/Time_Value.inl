@@ -239,16 +239,16 @@ operator > (ACE_Time_Value const &tv1,
   // ACE_OS_TRACE ("operator >");
   if (tv1.sec () > tv2.sec ())
     {
-      return 1;
+      return true;
     }
   else if (tv1.sec () == tv2.sec ()
            && tv1.usec () > tv2.usec ())
     {
-      return 1;
+      return true;
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 
@@ -260,16 +260,16 @@ operator >= (ACE_Time_Value const &tv1,
   // ACE_OS_TRACE ("operator >=");
   if (tv1.sec () > tv2.sec ())
     {
-      return 1;
+      return true;
     }
   else if (tv1.sec () == tv2.sec ()
            && tv1.usec () >= tv2.usec ())
     {
-      return 1;
+      return true;
     }
   else
     {
-      return 0;
+      return false;
     }
 }
 

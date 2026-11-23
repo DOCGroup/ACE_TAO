@@ -146,14 +146,14 @@ ACE_INLINE void
 TAO_Transport::char_translator (TAO_Codeset_Translator_Base *tf)
 {
   this->char_translator_ = tf;
-  this->tcs_set_ = 1;
+  this->tcs_set_ = true;
 }
 
 ACE_INLINE void
 TAO_Transport::wchar_translator (TAO_Codeset_Translator_Base *tf)
 {
   this->wchar_translator_ = tf;
-  this->tcs_set_ = 1;
+  this->tcs_set_ = true;
 }
 
 /// CodeSet negotiation

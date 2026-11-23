@@ -10,7 +10,7 @@ TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event)
   // If no filter is active, match is successfull.
   if (this->filter_list_.current_size () == 0)
     {
-      return 1;
+      return true;
     }
 
   // We want to return true if atleast one constraint matches.
@@ -22,13 +22,13 @@ TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event)
     {
       ret_val = event->do_match (entry->int_id_.in ());
 
-      if (ret_val == 1)
+      if (ret_val)
         {
-          return 1;
+          return true;
         }
     }
 
-  return 0;
+  return false;
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
