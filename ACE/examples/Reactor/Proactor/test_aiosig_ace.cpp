@@ -5,19 +5,19 @@
  *  This program helps you to test the <aio_*> calls on a
  *  platform.
  *  Before running this test, make sure the platform can
- *  support POSIX <aio_> calls, using ACE_ROOT/tests/Aio_Plaform_Test.cpp
+ *  support POSIX @c aio_ calls, using ACE_ROOT/tests/Aio_Plaform_Test.cpp
  *  This  program tests the Signal based completion approach which
- *  uses <sigtimedwait> for completion querying.
+ *  uses @c sigtimedwait for completion querying.
  *  If this test is successful, ACE_POSIX_SIG_PROACTOR
  *  can be used on this platform.
  *  This program is a ACE version of the
  *  $ACE_ROOT/examples/Reactor/Proactor/test_aiosig.cpp, with
  *  ACE_DEBUGs and Message_Blocks.
  *  This test does the following:
- *  Issue two <aio_read>s.
+ *  Issue two @c aio_reads.
  *  Assign SIGRTMIN as the notification signal.
  *  Mask these signals from delivery.
- *  Receive this signal by doing <sigtimedwait>.
+ *  Receive this signal by doing @c sigtimedwait.
  *  Wait for two completions (two signals)
  *  make
  *  ./test_aiosig_ace

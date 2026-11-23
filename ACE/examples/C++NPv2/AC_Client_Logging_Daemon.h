@@ -24,7 +24,7 @@ public:
   /// Initialization hook method.
   int open (void *) override;
 
-  /// Entry point into the <AC_Output_Handler>.
+  /// Entry point into the @c AC_Output_Handler.
   int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
 protected:

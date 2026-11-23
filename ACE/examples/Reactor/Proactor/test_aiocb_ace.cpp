@@ -6,11 +6,11 @@
  *  platform.
  *
  *  Before running this test, make sure the platform can
- *  support POSIX <aio_> calls, using
+ *  support POSIX @c aio_ calls, using
  *  ACE_ROOT/tests/Aio_Platform_Test.
  *
  *  This program tests the AIOCB (AIO Control Blocks) based
- *  completion approach which uses <aio_suspend> for completion
+ *  completion approach which uses @c aio_suspend for completion
  *  querying.
  *
  *  If this test is successful, ACE_POSIX_AIOCB_PROACTOR

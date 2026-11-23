@@ -19,7 +19,7 @@
  * @brief An abstract base class that defines an iterator.
  *
  * Subclasses of this base class can define what strings
- * to return from <next>.  This class decouples higher-level
+ * to return from @a next.  This class decouples higher-level
  * software from the details of whatever type of URL header or
  * body we're iterating over.
  */
@@ -31,7 +31,7 @@ public:
 
   virtual int destroy ();
 
-  /// Pass back the next <string> that hasn't been seen yet.  Returns 0
+  /// Pass back the next @a string that hasn't been seen yet.  Returns 0
   /// when all items have been seen, else 1.
   virtual int next (ACE_CString &string) = 0;
 
@@ -55,7 +55,7 @@ public:
   /// @{
 
   /**
-   * Pass back the next <url> that hasn't been seen in the
+   * Pass back the next @a url that hasn't been seen in the
    * memory-mapped file.  Returns 0 when all items have been seen,
    * else 1.
    */
@@ -82,7 +82,7 @@ public:
   /// @{
 
   /**
-   * Pass back the next <line> that hasn't been seen in the
+   * Pass back the next @a line that hasn't been seen in the
    * memory-mapped file header.  Returns 0 when we've reached the end
    * of the header.  seen, else 1.
    */
@@ -103,8 +103,8 @@ private:
  * @class URL_Download_Iterator
  *
  * @brief An iterator that iterates over the contents of an entire URL,
- * i.e., both header and body, and returns it in <BUFSIZ>
- * <buffer>s.
+ * i.e., both header and body, and returns it in @c BUFSIZ
+ * @a buffers.
  */
 class URL_Download_Iterator : public URL_Iterator
 {
@@ -115,8 +115,8 @@ public:
   /// @{
 
   /**
-   * Pass back the next <buffer> data from the stream, where
-   * <buffer.size> <= <BUFSIZ> .  Returns 0 when we've reached the end
+   * Pass back the next @a buffer data from the stream, where
+   * <buffer.size> <= @c BUFSIZ .  Returns 0 when we've reached the end
    * of the header, else 1.
    */
   int next (ACE_CString &buffer) override;

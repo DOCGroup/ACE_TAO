@@ -20,7 +20,7 @@ public:
   /// @name Initialization
   /// @{
 
-  /// <iterations> is the number of buffers to send.  If <iterations>
+  /// @a iterations is the number of buffers to send.  If @a iterations
   /// == 0, then read from stdin.
   explicit Peer_Handler (int iterations = 0);
 

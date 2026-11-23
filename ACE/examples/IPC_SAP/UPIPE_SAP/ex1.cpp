@@ -2,7 +2,7 @@
 /**
  *  @file   ex1.cpp
  *
- *  Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for
+ *  Example for using @c ACE_UPIPE_SAP and @c ACE_Thread for
  *  intra-process communication.
  *
  *  @author Gerhard Lenzer and Douglas C. Schmidt

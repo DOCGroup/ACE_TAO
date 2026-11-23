@@ -162,10 +162,10 @@ public:
   /// @name Factory methods
   /// @{
 
-  /// Factory Method that makes an <HTTP_Header_Iterator>.
+  /// Factory Method that makes an @c HTTP_Header_Iterator.
   URL_Iterator *make_header_iterator () override;
 
-  /// Factory Method that makes an <HTML_Body_Iterator>.
+  /// Factory Method that makes an @c HTML_Body_Iterator.
   URL_Iterator *make_body_iterator () override;
 
   /// Factory Method that makes the header processing strategy.
@@ -194,10 +194,10 @@ public:
   /// @name Factory methods
   /// @{
 
-  /// Factory Method that makes an <HTTP_Header_Iterator>.
+  /// Factory Method that makes an @c HTTP_Header_Iterator.
   URL_Iterator *make_header_iterator () override;
 
-  /// Factory Method that makes an <HTML_Body_Iterator>.
+  /// Factory Method that makes an @c HTML_Body_Iterator.
   URL_Iterator *make_body_iterator () override;
 
   /// Factory Method that makes the header processing strategy.
@@ -228,7 +228,7 @@ class URL_Visitor
 public:
   virtual ~URL_Visitor ();
 
-  /// Visit an <HTTP_URL>.
+  /// Visit an @c HTTP_URL.
   virtual int visit (HTTP_URL &http_url) = 0;
 
   // @@
@@ -238,7 +238,7 @@ public:
   virtual int destroy () = 0;
 
 protected:
-  /// Make the appropriate <URL_Visitation_Strategy_Factory>.
+  /// Make the appropriate @c URL_Visitation_Strategy_Factory.
   virtual URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &) = 0;
 };
 
@@ -277,8 +277,8 @@ using CACHED_CONNECT_STRATEGY =
  *
  * @brief Subclass that defines the URL validation visitor.
  *
- * This class checks to make sure that the <HTTP_URL> is valid.
- * If the <HTTP_URL> is an <HTML> file, it can also be used to
+ * This class checks to make sure that the @c HTTP_URL is valid.
+ * If the @c HTTP_URL is an @c HTML file, it can also be used to
  * recursively check that all embedded links in this file are
  * valid.
  */
@@ -288,9 +288,9 @@ public:
   using URL_CACHE = ACE_Hash_Map_Manager<ACE_URL_Addr, URL_Status, ACE_Null_Mutex>;
 
   /**
-   * Visit an <HTTP_URL> to make sure that it's valid.  If the content
-   * type of the <HTTP_URL> is "text/html" and the <recursion> option
-   * is enabled then <visit> recursively checks each link embedded in
+   * Visit an @c HTTP_URL to make sure that it's valid.  If the content
+   * type of the @c HTTP_URL is "text/html" and the @a recursion option
+   * is enabled then @c visit recursively checks each link embedded in
    * the HTML page.
    */
   int visit (HTTP_URL &http_url) override;
@@ -311,14 +311,14 @@ public:
 
 protected:
   /// Factory Method that makes a
-  /// <URL_Validation_Visitation_Strategy_Factory>.
+  /// @c URL_Validation_Visitation_Strategy_Factory.
   ~URL_Validation_Visitor () override;
   URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &) override;
 
   /// Cache the status of URLs we've already validated.
   URL_CACHE url_cache_;
 
-  /// Check to see if the reply status of this <url_addr> is in the
+  /// Check to see if the reply status of this @a url_addr is in the
   /// cache.  Returns 1 if so, 0 if not.
   int in_cache (const ACE_URL_Addr &url_addr);
 
@@ -339,15 +339,15 @@ protected:
  *
  * @brief Subclass for the URL validtion visitor.
  *
- * This class checks to make sure that the <HTTP_URL> is valid.
+ * This class checks to make sure that the @c HTTP_URL is valid.
  */
 class URL_Download_Visitor : public URL_Visitor
 {
 public:
   /**
-   * Visit an <HTTP_URL> to make sure that it's valid.  If the content
-   * type of the <HTTP_URL> is "text/html" and the <recursion> option
-   * is enabled then <visit> recursively checks each link embedded in
+   * Visit an @c HTTP_URL to make sure that it's valid.  If the content
+   * type of the @c HTTP_URL is "text/html" and the @a recursion option
+   * is enabled then @c visit recursively checks each link embedded in
    * the HTML page.
    */
   int visit (HTTP_URL &http_url) override;
@@ -359,14 +359,14 @@ public:
   int destroy () override;
 
 protected:
-  /// Factory Method that makes a <URL_Download_Visitation_Strategy_Factory>.
+  /// Factory Method that makes a @c URL_Download_Visitation_Strategy_Factory.
   URL_Visitation_Strategy_Factory *make_visitation_strategy_factory (URL &) override;
 };
 
 /**
  * @class Destroy_Deleter
  *
- * @brief Simple class that ensures the <destroy> method is called on our
+ * @brief Simple class that ensures the @c destroy method is called on our
  * <URL_*> objects when they go out of scope.
  *
  * Use it as a unique_ptr deleter for objects whose cleanup is

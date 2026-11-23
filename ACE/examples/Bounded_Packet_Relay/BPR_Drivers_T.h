@@ -67,8 +67,8 @@ public:
   virtual int get_next_request ();
 
   /**
-   * Reads input from the user into the buffer <buf> with a maximum of
-   * <bufsiz> bytes.  Returns the amount of bytes actually read
+   * Reads input from the user into the buffer @a buf with a maximum of
+   * @a bufsiz bytes.  Returns the amount of bytes actually read
    * Otherwise, a -1 is returned and errno is set to indicate the
    * error.
    */

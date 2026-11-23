@@ -2,7 +2,7 @@
 /**
  *  @file    test_proactor.cpp
  *
- *  This program illustrates how the <ACE_Proactor> can be used to
+ *  This program illustrates how the @c ACE_Proactor can be used to
  *  implement an application that does various asynchronous
  *  operations.
  *

@@ -8,9 +8,11 @@
  *
  *  When adding ACE tracing to an application one option is to add
  *
+ *  @code
  *  #define ACE_NTRACE 0
+ *  @endcode
  *
- *  in the line above #include "ace/Log_Msg.h".  That's the approach shown below.
+ *  in the line above @c \#include "ace/Log_Msg.h".  That's the approach shown below.
  *
  *  Another option is to add this line in $ACE_ROOT/ace/config.h.
  *  @note however, that if you add the line in config.h, you need to
@@ -19,8 +21,8 @@
  *  showing up as well!  In a nutshell, in this second option you
  *  do this:
  *
- *  1. Build ACE without tracing (i.e., don't #define ACE_NTRACE 0 in config.h)
- *  2. Add #define ACE_NTRACE 0 in config.h
+ *  1. Build ACE without tracing (i.e., don't @c \#define ACE_NTRACE 0 in config.h)
+ *  2. Add @c \#define ACE_NTRACE 0 in config.h
  *  3. Build your app with tracing.
  *
  *  @author Douglas C. Schmidt <d.schmidt@vanderbilt.edu> and Irfan Pyarali <irfan@cs.wustl.edu>

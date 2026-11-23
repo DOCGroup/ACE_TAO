@@ -40,14 +40,14 @@ public:
    */
   virtual int accept (URL_Visitor *visitor) = 0;
 
-  /// Send a <GET> command to fetch the contents in the URI from the
+  /// Send a @c GET command to fetch the contents in the URI from the
   /// server.
   virtual ssize_t send_request () = 0;
 
   /// Returns the URL that we represent.
   virtual const ACE_URL_Addr &url_addr () const = 0;
 
-  /// Returns the <Mem_Map_Stream>.
+  /// Returns the @c Mem_Map_Stream.
   virtual Mem_Map_Stream &stream ();
 
   /// @name Reply status

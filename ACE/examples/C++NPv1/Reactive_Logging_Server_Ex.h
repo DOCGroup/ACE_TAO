@@ -41,7 +41,7 @@ protected:
   /// stream socket handles.
   ACE_Handle_Set master_handle_set_;
 
-  /// Keep track of read handles marked as active by <select>.
+  /// Keep track of read handles marked as active by @c select.
   ACE_Handle_Set active_read_handles_;
 
   int open (u_short port) override {

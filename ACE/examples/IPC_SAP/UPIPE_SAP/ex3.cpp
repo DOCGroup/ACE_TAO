@@ -2,9 +2,9 @@
 /**
  *  @file   ex3.cpp
  *
- *  Example for using <ACE_UPIPE_SAP> and <ACE_Thread> for intra-process
+ *  Example for using @c ACE_UPIPE_SAP and @c ACE_Thread for intra-process
  *  communication.  This example uses char buffers as input/output
- *  interface to the <ACE_UPIPE_Stream>.
+ *  interface to the @c ACE_UPIPE_Stream.
  *
  *  @author Gerhard Lenzer and Prashant Jain.
  */

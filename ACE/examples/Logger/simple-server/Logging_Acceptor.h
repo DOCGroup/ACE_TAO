@@ -46,7 +46,7 @@ private:
   ACE_HANDLE get_handle () const override;
   /// @}
 
-  /// By making this private we ensure that the <Logging_Acceptor> is
+  /// By making this private we ensure that the @c Logging_Acceptor is
   /// allocated dynamically.
   friend struct std::default_delete<Logging_Acceptor>;
   ~Logging_Acceptor () = default;

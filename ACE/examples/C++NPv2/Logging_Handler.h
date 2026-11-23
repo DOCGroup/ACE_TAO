@@ -49,19 +49,19 @@ public:
   int close () { return logging_peer_.close (); }
 
   /// Receive one log record from a connected client.   Returns
-  /// length of record on success and <mblk> contains the
+  /// length of record on success and @a mblk contains the
   /// hostname, <mblk->cont()> contains the log record header
   /// (the byte order and the length) and the data.  Returns -1 on
   /// failure or connection close.
   int recv_log_record (ACE_Message_Block_Unique_Ptr &log_record);
 
-  /// Write one record to the log file.  The <mblk> contains the
+  /// Write one record to the log file.  The @a mblk contains the
   /// hostname and the <mblk->cont> contains the log record.
   /// Returns length of record written on success, or -1 on failure.
   int write_log_record (ACE_Message_Block const &log_record);
 
-  /// Log one record by calling <recv_log_record> and
-  /// <write_log_record>.  Returns 0 on success and -1 on failure.
+  /// Log one record by calling @c recv_log_record and
+  /// @c write_log_record.  Returns 0 on success and -1 on failure.
   int log_record ();
 
   /// Accessor method.

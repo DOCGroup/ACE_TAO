@@ -61,7 +61,7 @@ public:
 
   ~AIO_Output_Handler () override;
 
-  /// Entry point into the <AIO_Output_Handler>.
+  /// Entry point into the @c AIO_Output_Handler.
   int put (ACE_Message_Block *, ACE_Time_Value * = nullptr) override;
 
   /// Hook method called when server connection is established.

@@ -54,17 +54,17 @@ public:
    * "128.252.166.57:80/~schmidt/"), whereas if @a ipaddr_format is 0
    * this produces "ip-name:port-number" (e.g.,
    * "www.cs.wustl.edu:80/~schmidt/").  Returns -1 if the @a size of
-   * the <buffer> is too small, else 0.
+   * the @a buffer is too small, else 0.
    */
   int addr_to_string (ACE_TCHAR *s,
                       size_t size,
                       int ipaddr_format = 1) const override;
 
   /**
-   * Transform the current <ACE_INET_Addr> address into string format.
-   * If <ipaddr_format> is non-0 this produces
+   * Transform the current @c ACE_INET_Addr address into string format.
+   * If @a ipaddr_format is non-0 this produces
    * "ip-number:port-number/path-name" (e.g.,
-   * "128.252.166.57:80/~schmidt/"), whereas if <ipaddr_format> is 0
+   * "128.252.166.57:80/~schmidt/"), whereas if @a ipaddr_format is 0
    * this produces "ip-name:port-number" (e.g.,
    * "www.cs.wustl.edu:80/~schmidt/").  Uses dynamic memory, which
    * is allocated on demand and deallocated when the object is

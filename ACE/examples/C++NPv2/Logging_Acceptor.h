@@ -16,7 +16,7 @@
 class Logging_Acceptor : public ACE_Event_Handler
 {
 protected:
-  /// Factory that connects <ACE_SOCK_Stream>s passively.
+  /// Factory that connects @c ACE_SOCK_Streams passively.
   ACE_SOCK_Acceptor acceptor_;
 
 protected:
@@ -49,7 +49,7 @@ public:
   ACE_HANDLE get_handle () const override
     { return acceptor_.get_handle (); };
 
-  /// Returns a reference to the underlying <acceptor_>.
+  /// Returns a reference to the underlying @c acceptor_.
   ACE_SOCK_Acceptor &acceptor () { return acceptor_; };
 };
 

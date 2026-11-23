@@ -41,8 +41,8 @@ class Input_Handler : public ACE_Event_Handler
 public:
   using ACTION = int (Input_Handler::*) (void *);
 
-  /// Sets <done_> flag to 0, <driver_> to <timer_queue_driver> and
-  /// timer queue <tq_> to <tq>
+  /// Sets @c done_ flag to 0, @c driver_ to @a timer_queue_driver and
+  /// timer queue @c tq_ to @a tq
   Input_Handler (ACE_Timer_Queue *tq,
                  Reactor_Timer_Queue_Test_Driver &timer_queue_driver);
 
@@ -51,12 +51,12 @@ public:
   Input_Handler &operator= (Input_Handler const &) = delete;
   Input_Handler &operator= (Input_Handler &&) = delete;
 
-  /// Hook method for the <ACE_Reactor> to call whenever there is input
+  /// Hook method for the @c ACE_Reactor to call whenever there is input
   /// ready to be read.
   int handle_input (ACE_HANDLE) override;
 
   /**
-   * returns the value for <done_> that indicates whether we are
+   * returns the value for @c done_ that indicates whether we are
    * exiting the program.A value of 0 indicates that we are NOT done,
    * 1 otherwise.
    */
@@ -97,10 +97,10 @@ private:
  * @class Reactor_Timer_Queue_Test_Driver
  *
  * @brief Implements a test driver for a reactive timer queue using
- * <ACE_Reactor>.
+ * @c ACE_Reactor.
  *
  * This class implements the logic to test the reactor
- * implementation of timer queue, using an <ACE_Timer_Heap>.
+ * implementation of timer queue, using an @c ACE_Timer_Heap.
  */
 class ACE_Svc_Export Reactor_Timer_Queue_Test_Driver
   : public Timer_Queue_Test_Driver<ACE_Timer_Heap,
@@ -109,8 +109,8 @@ class ACE_Svc_Export Reactor_Timer_Queue_Test_Driver
 {
 public:
   /**
-   * Sets the input handler <thandler_> with <timer_queue_> from the
-   * <Timer_Queue_Test_Driver> class and a reference to "this", so the
+   * Sets the input handler @c thandler_ with @c timer_queue_ from the
+   * @c Timer_Queue_Test_Driver class and a reference to "this", so the
    * input handler can call hook methods from the driver.  Such
    * methods are the common factored out code from other
    * implementations of timer queues.
@@ -124,8 +124,8 @@ public:
 
   /**
    * Sets the timer queue that the REACTOR will use; registers the
-   * stdin input handler with the REACTOR and sets the <Command>s that
-   * the <Timer_Queue_Test_Driver> will execute().
+   * stdin input handler with the REACTOR and sets the @c Commands that
+   * the @c Timer_Queue_Test_Driver will execute().
    */
   int init () override;
 
@@ -152,7 +152,7 @@ public:
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *) override;
 
-  /// Sets the timer id for this handler <tid_> to <tid>
+  /// Sets the timer id for this handler @c tid_ to @a tid
   void set_timer_id (long tid);
 
 private:

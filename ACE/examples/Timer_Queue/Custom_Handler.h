@@ -20,7 +20,7 @@
  *
  * @brief Custom event handler for the timer queue timeout events.
  *
- * The <on_timeout> hook method prints out the current time,
+ * The @c on_timeout hook method prints out the current time,
  * prints the time when this timer expired and deletes "this".
  */
 class Custom_Handler

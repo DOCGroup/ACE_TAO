@@ -41,14 +41,14 @@ protected:
   ~TP_Logging_Handler () override = default;
 
   /// Number of pointers to this class instance that currently
-  /// reside in the <TP_LOGGING_TASK> singleton's message queue.
+  /// reside in the @c TP_LOGGING_TASK singleton's message queue.
   int queued_count_;
 
   /// Indicates whether <Logging_Event_Handler::handle_close()>
   /// must be called to cleanup and delete this object.
   bool deferred_close_;
 
-  /// Serialize access to <queued_count_> and <deferred_close_>.
+  /// Serialize access to @c queued_count_ and @c deferred_close_.
   ACE_SYNCH_MUTEX lock_;
 
 public:

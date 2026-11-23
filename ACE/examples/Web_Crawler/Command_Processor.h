@@ -25,7 +25,7 @@ class URL;
  *
  * @brief Abstract base class for a command.
  *
- * Each command is executed by a <Command_Processor>.
+ * Each command is executed by a @c Command_Processor.
  */
 class Command
 {
@@ -42,7 +42,7 @@ public:
  *
  * @brief Defines an API for executing a command on a URL.
  *
- * Each command is executed by a <Command_Processor>.
+ * Each command is executed by a @c Command_Processor.
  */
 class URL_Command : public Command
 {
@@ -76,14 +76,14 @@ class Command_Processor
 public:
   Command_Processor ();
 
-  /// Insert a new <Command> into the queue. On success, ownership transfers
+  /// Insert a new @c Command into the queue. On success, ownership transfers
   /// to this Command_Processor; on failure, the caller retains ownership.
   int insert (Command *);
 
-  /// Execute all the <Commands> in the queue.
+  /// Execute all the @c Commands in the queue.
   int execute ();
 
-  /// Destroy the <Command_Processor>.
+  /// Destroy the @c Command_Processor.
   int destroy ();
 
 protected:

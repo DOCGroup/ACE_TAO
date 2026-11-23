@@ -1,8 +1,8 @@
 /**
  *  @file    Thread_Timer_Queue_Custom_Handler_Test.h
  *
- *  This code exercises the <ACE_Thread_Timer_Queue_Adapter> using
- *  an <ACE_Timer_Heap_T>. It also demonstrates using a custom handler for
+ *  This code exercises the @c ACE_Thread_Timer_Queue_Adapter using
+ *  an @c ACE_Timer_Heap_T. It also demonstrates using a custom handler for
  *  timer events.
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>, Sergio Flores-Gaitan
@@ -63,10 +63,10 @@ public:
   /// @name Helper methods
   /// @{
 
-  /// Add a new timer to expire in <seconds> more.
+  /// Add a new timer to expire in @a seconds more.
   int add_timer (void *);
 
-  /// Cancel timer <id>.
+  /// Cancel timer @a id.
   int cancel_timer (void *);
 
   /// List the current scheduled timers.
@@ -94,10 +94,10 @@ private:
  * @class Thread_Timer_Queue_Custom_Handler_Test
  *
  * @brief Implements an example application that exercises
- * <Thread_Timer_Queue> timer queue.
+ * @c Thread_Timer_Queue timer queue.
  *
  * This class implements a simple test driver for the
- * <Thread_Timer_Queue>.  The <display_menu> hook method is
+ * @c Thread_Timer_Queue.  The @c display_menu hook method is
  * called from the base class to print a menu specific to the
  * thread implementation of the timer queue.
  */

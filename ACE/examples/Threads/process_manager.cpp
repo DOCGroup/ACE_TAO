@@ -30,7 +30,7 @@ class ExitHandler : public ACE_Event_Handler
 public:
   explicit ExitHandler (char const *name);
 
-  /// Called when object is removed from the <ACE_Reactor>.
+  /// Called when object is removed from the @c ACE_Reactor.
   ~ExitHandler () override;
   int handle_exit (ACE_Process *proc) override;
   int handle_timeout (ACE_Time_Value const &tv,

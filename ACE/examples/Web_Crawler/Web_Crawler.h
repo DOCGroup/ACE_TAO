@@ -40,7 +40,7 @@ public:
   Web_Crawler &operator= (Web_Crawler &&) = delete;
 
   /// Parses the command-line options and initializes the
-  /// <URL_Visitor_Factory>.
+  /// @c URL_Visitor_Factory.
   int open (int argc, ACE_TCHAR *argv[]);
 
   /// Run the Web Crawler and carries out whatever visitation strategy

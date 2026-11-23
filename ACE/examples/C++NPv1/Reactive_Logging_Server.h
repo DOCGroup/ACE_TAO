@@ -30,7 +30,7 @@ protected:
   /// connected stream socket handles.
   ACE_Handle_Set master_handle_set_;
 
-  /// Keep track of handles marked as active by <select>.
+  /// Keep track of handles marked as active by @c select.
   ACE_Handle_Set active_handles_;
 
   int open (u_short logger_port) override {

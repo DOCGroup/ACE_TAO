@@ -113,7 +113,7 @@
  *
  *  To run example, start an instance of the test with an optional
  *  local port argument (as the acceptor). Start the other instance
- *  with -h <hostname> and -p <server port>. Type in either the
+ *  with -h @a hostname and -p @a server port. Type in either the
  *  client or server windows and your message should show up in the
  *  other window.  Control C to exit.
  *

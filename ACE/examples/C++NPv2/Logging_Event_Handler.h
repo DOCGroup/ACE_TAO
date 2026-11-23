@@ -45,7 +45,7 @@ public:
   int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
                     ACE_Reactor_Mask = 0) override;
 
-  /// Return socket handle of the contained <Logging_Handler>.
+  /// Return socket handle of the contained @c Logging_Handler.
   ACE_HANDLE get_handle () const override {
     // Need a non-const reference to call peer(), but that's
     // safe since we call a const method using it.
@@ -54,10 +54,10 @@ public:
     return h.peer ().get_handle ();
   };
 
-  /// Get a reference to the contained <ACE_SOCK_Stream>.
+  /// Get a reference to the contained @c ACE_SOCK_Stream.
   ACE_SOCK_Stream &peer () { return logging_handler_.peer (); };
 
-  /// Return a reference to the <log_file_>.
+  /// Return a reference to the @c log_file_.
   ACE_FILE_IO &log_file () { return log_file_; };
 };
 

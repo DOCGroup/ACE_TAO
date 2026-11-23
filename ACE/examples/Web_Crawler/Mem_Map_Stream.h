@@ -31,16 +31,16 @@
  * of the connection are buffered incrementally in a memory-mapped
  * file.  This class maintains pointers to two positions in the
  * stream:
- * 1. The <recv> position, which keeps track of the beginning of a
+ * 1. The @c recv position, which keeps track of the beginning of a
  * token that is in the stream.
- * 2. The <get> position, which moves along character-by-character
+ * 2. The @c get position, which moves along character-by-character
  * until the end of the token is reached.
  * Once a token has been located, it can be extracted from the
- * stream by calling the <recv>.  The length of the token, i.e.,
- * the <recv_len>, is the length in bytes between the <get>
- * position and the <recv> position.  Once the token has been
- * extracted, the <recv> and <get> positions can be updated by the
- * <seek> method.
+ * stream by calling the @c recv.  The length of the token, i.e.,
+ * the @a recv_len, is the length in bytes between the @c get
+ * position and the @c recv position.  Once the token has been
+ * extracted, the @c recv and @c get positions can be updated by the
+ * @c seek method.
  */
 class Mem_Map_Stream
 {
@@ -58,7 +58,7 @@ public:
   /// @name Accessor
   /// @{
 
-  /// Returns the underlying <ACE_SOCK_Stream>.
+  /// Returns the underlying @c ACE_SOCK_Stream.
   ACE_SOCK_Stream &stream ();
 
   /// @}
@@ -66,71 +66,71 @@ public:
   /// @name I/O methods
   /// @{
 
-  /// Send <size> bytes in <buf> to the connected peer.  This is a
+  /// Send @a size bytes in @a buf to the connected peer.  This is a
   /// completely unbuffered call.
   virtual ssize_t send_n (const void *buf,
                           size_t size,
                           const ACE_Time_Value *tv = nullptr);
 
   /**
-   * Return the next character in the stream and advance the <get>
-   * position.  Returns EOF when the <get> position reaches the end of
+   * Return the next character in the stream and advance the @c get
+   * position.  Returns EOF when the @c get position reaches the end of
    * the HTTP stream.
    */
   virtual int get_char ();
 
   /**
-   * Returns a pointer to array of at most <len> characters starting
-   * at the <recv> position.  If the <recv> position + <len> extends
-   * past the EOF then <len> is set to the number of characters
-   * between the <recv> position and the EOF and both the <get> and
-   * <recv> positions are advanced by <len>.  Returns 0 if the <recv>
+   * Returns a pointer to array of at most @a len characters starting
+   * at the @c recv position.  If the @c recv position + @a len extends
+   * past the EOF then @a len is set to the number of characters
+   * between the @c recv position and the EOF and both the @c get and
+   * @c recv positions are advanced by @a len.  Returns 0 if the @c recv
    * position is at the EOF.
    */
   virtual const char *recv (size_t &len);
 
-  /// Returns a pointer to array of characters starting at the <recv>
+  /// Returns a pointer to array of characters starting at the @c recv
   /// position.
   virtual const char *recv () const;
 
-  /// Returns the length in bytes between the <get> position and the
-  /// <recv> position.
+  /// Returns the length in bytes between the @c get position and the
+  /// @c recv position.
   virtual size_t recv_len () const;
 
   /**
-   * Resets the <get> and <recv> positions to the beginning of the
+   * Resets the @c get and @c recv positions to the beginning of the
    * stream.  This works since all the data has been cached in the
    * memory-mapped backing store.
    */
   virtual int rewind ();
 
   /**
-   * Returns the nth character <offset> from the <get> position in the
-   * stream without advancing the <get> position.  Automatically
-   * extends the backing store if necessary.  Returns EOF if <offset>
+   * Returns the nth character @a offset from the @c get position in the
+   * stream without advancing the @c get position.  Automatically
+   * extends the backing store if necessary.  Returns EOF if @a offset
    * is past the end of the stream.
    */
   virtual int peek_char (size_t offset);
 
   /**
-   * Return a pointer to an array of <size> characters starting at
-   * <offset> characters from the <get> position in the stream without
-   * advancing the <get> position.  Automatically extends the backing
-   * store if necessary.  Returns 0 if <offset> or <offset + size> is
+   * Return a pointer to an array of @a size characters starting at
+   * @a offset characters from the @c get position in the stream without
+   * advancing the @c get position.  Automatically extends the backing
+   * store if necessary.  Returns 0 if @a offset or <offset + size> is
    * past the end of the stream.
    */
   virtual const char *peek_str (size_t offset, size_t size);
 
   /**
-   * Sets the <get> and <recv> positions as follows:
-   *    o If <whence> is <SEEK_SET>, the positions are set to <offset>
+   * Sets the @c get and @c recv positions as follows:
+   *    o If @a whence is @c SEEK_SET, the positions are set to @a offset
    *      bytes from the start of the stream.
    *
-   *    o  If <whence> is <SEEK_CUR>, the positions are set to the
-   *       current <get> position plus <offset>.
+   *    o  If @a whence is @c SEEK_CUR, the positions are set to the
+   *       current @c get position plus @a offset.
    *
-   *    o  If <whence> is <SEEK_END>, the positions are set to the size
-   *       of the stream plus <offset>.
+   *    o  If @a whence is @c SEEK_END, the positions are set to the size
+   *       of the stream plus @a offset.
    */
   virtual ACE_OFF_T seek (ACE_OFF_T offset, int whence = SEEK_CUR);
 

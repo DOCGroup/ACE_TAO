@@ -266,7 +266,7 @@ class Send_Handler;
  *
  * @brief Event handler for message send timeout events.
  *
- * The <handle_timeout> hook method calls the relay's send
+ * The @c handle_timeout hook method calls the relay's send
  * method and decrements its count of messages to send.
  * If there are still messages to send, it re-registers itself
  * with the timer queue.  Otherwise it calls the relay's end
@@ -319,7 +319,7 @@ private:
  *
  * @brief Event handler for end transmission timeout events.
  *
- * The <handle_timeout> hook method calls the relay's end
+ * The @c handle_timeout hook method calls the relay's end
  * transmission method, then registers a deferred execution
  * callback to clear all timers and then delete "this".
  */
@@ -353,10 +353,10 @@ private:
  * @class Thread_Bounded_Packet_Relay_Driver
  *
  * @brief Implements an example application that exercises
- * <Thread_Timer_Queue> timer queue.
+ * @c Thread_Timer_Queue timer queue.
  *
  * This class implements a simple test driver for the
- * <Thread_Timer_Queue>.  The <display_menu> hook method is
+ * @c Thread_Timer_Queue.  The @c display_menu hook method is
  * called from the base class to print a menu specific to the
  * thread implementation of the timer queue.
  */

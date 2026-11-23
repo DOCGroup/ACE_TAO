@@ -25,7 +25,7 @@
  *
  * @brief Defines an abstract class that allows us to invoke commands
  * without knowing anything about the implementation.  This class
- * is used in the <Timer_Queue_Test_Driver> to invoke operations
+ * is used in the @c Timer_Queue_Test_Driver to invoke operations
  * of the driver.
  *
  * This class declares an interface to execute operations,
@@ -37,8 +37,8 @@ template <class RECEIVER, class ACTION>
 class Command
 {
 public:
-  /// Sets the <receiver_> of the Command to recvr, and the
-  /// <action_> of the Command to <action>.
+  /// Sets the @c receiver_ of the Command to recvr, and the
+  /// @c action_ of the Command to @a action.
   Command (RECEIVER &recvr, ACTION action);
 
   ~Command () = default;
@@ -48,7 +48,7 @@ public:
   Command &operator= (Command const &) = delete;
   Command &operator= (Command &&) = delete;
 
-  /// Invokes the method <action_> from the object <receiver_>.
+  /// Invokes the method @c action_ from the object @c receiver_.
   int execute (void *arg);
 
 private:
@@ -101,8 +101,8 @@ public:
   virtual int get_next_request ();
 
   /**
-   * Reads input from the user into the buffer <buf> with a maximum
-   * of <bufsiz> bytes.  Returns the amount of bytes actually read
+   * Reads input from the user into the buffer @a buf with a maximum
+   * of @a bufsiz bytes.  Returns the amount of bytes actually read
    * Otherwise, a -1 is returned and errno is set to indicate the error.
    */
   virtual ssize_t read_input (char *buf, size_t bufsiz);

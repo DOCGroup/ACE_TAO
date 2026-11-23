@@ -5,8 +5,8 @@
  *  Proactor. To end the event loop, threads that are blocked in
  *  waiting for completions are  woken up and the event loop comes
  *  to the end. This is tested in this program.
- *  Threads are doing <run_event_loop> with/without time_out
- *  values and the main thread calls <end_event_loop>.
+ *  Threads are doing @c run_event_loop with/without time_out
+ *  values and the main thread calls @c end_event_loop.
  *  make
  *  ./test_end_event_loop
  *

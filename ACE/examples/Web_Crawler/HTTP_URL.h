@@ -26,7 +26,7 @@ class HTTP_URL : public URL
 {
 public:
   /**
-   * The <url_addr> is the URL that we're going to be visiting.  We
+   * The @a url_addr is the URL that we're going to be visiting.  We
    * also keep track of the containing page, if any, which is used to
    * print out more meaningful messages.
    */
@@ -40,7 +40,7 @@ public:
    */
   int accept (URL_Visitor *visitor) override;
 
-  /// Send a <GET> command to fetch the contents in the URI from the
+  /// Send a @c GET command to fetch the contents in the URI from the
   /// server.
   ssize_t send_request () override;
 

@@ -1,8 +1,8 @@
 /**
  *  @file    Async_Timer_Queue_Test.h
  *
- *    This test exercises the <ACE_Asynch_Timer_Queue_Adapter>
- *    using an <ACE_Timer_Heap>.
+ *    This test exercises the @c ACE_Asynch_Timer_Queue_Adapter
+ *    using an @c ACE_Timer_Heap.
  *
  *  @author Douglas C. Schmidt and Sergio Flores-Gaitan
  */
@@ -37,7 +37,7 @@ public:
   Async_Timer_Handler &operator= (Async_Timer_Handler const &) = delete;
   Async_Timer_Handler &operator= (Async_Timer_Handler &&) = delete;
 
-  /// Callback hook invoked by the <Timer_Queue>.
+  /// Callback hook invoked by the @c Timer_Queue.
   int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg) override;
 };
@@ -59,29 +59,29 @@ public:
    /// Singleton access point.
   static Async_Timer_Queue *instance ();
 
-  /// Schedule a timer to expire <microsecs> in the future.
+  /// Schedule a timer to expire @a microsecs in the future.
   void schedule (u_int microsecs);
 
-  /// Cancel a timer with <timer_id>.
+  /// Cancel a timer with @a timer_id.
   void cancel (long timer_id);
 
   /// Dump the contents of the queue.
   void dump ();
 
   /// hook method to schedule a timer.  Called from
-  /// <Timer_Queue_Test_Driver>
+  /// @c Timer_Queue_Test_Driver
   int schedule_timer (void *argument);
 
   /// hook method to cancel a timer.  Called from
-  /// <Timer_Queue_Test_Driver>
+  /// @c Timer_Queue_Test_Driver
   int cancel_timer (void *argument);
 
   /// hook method to list timers.  Called from
-  /// <Timer_Queue_Test_Driver>
+  /// @c Timer_Queue_Test_Driver
   int list_timer (void *argument);
 
   /// hook method to exit the timer queue.  Called from
-  /// <Timer_Queue_Test_Driver>
+  /// @c Timer_Queue_Test_Driver
   int shutdown_timer (void *argument);
 
 private:
@@ -103,10 +103,10 @@ private:
  * @brief Async_Timer_Queue_Test_Driver
  *
  * This class implements a test driver for the
- * <Async_Timer_Queue>.  Implements a display_menu() method that
+ * @c Async_Timer_Queue.  Implements a display_menu() method that
  * prints the options for a user. and init() which initializes
  * the driver.  The rest of the common functionality is in the
- * parent class <Timer_Queue_Test_Driver>.
+ * parent class @c Timer_Queue_Test_Driver.
  */
 class ACE_Svc_Export Async_Timer_Queue_Test_Driver
   : public Timer_Queue_Test_Driver<Async_Timer_Queue *,

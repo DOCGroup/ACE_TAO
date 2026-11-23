@@ -1,5 +1,5 @@
 /// @file Dgram.cpp
-/// Exercise the <ACE_SOCK_Dgram> wrapper along with the <ACE_Reactor>.
+/// Exercise the @c ACE_SOCK_Dgram wrapper along with the @c ACE_Reactor.
 /// This test simply ping-pongs datagrams back and forth between the
 /// peer1 and peer2 processes. This test can be run in two ways:
 ///
@@ -57,7 +57,7 @@ public:
   /// @}
 
   //FUZZ: disable check_for_lack_ACE_OS
-  /// Send the <buf> to the peer.
+  /// Send the @a buf to the peer.
   int send (char const *buf, size_t len, ACE_INET_Addr const &);
   //FUZZ: enable check_for_lack_ACE_OS
 

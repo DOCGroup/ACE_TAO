@@ -59,7 +59,7 @@ public:
   /// @}
 
   //FUZZ: disable check_for_lack_ACE_OS
-  /// Send the <buf> to the peer.
+  /// Send the @a buf to the peer.
   int send (char const *buf, size_t len);
   //FUZZ: enable check_for_lack_ACE_OS
 

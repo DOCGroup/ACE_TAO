@@ -3,7 +3,7 @@
  *  @file    test_proactor2.cpp
  *
  *  Alexander Libman <Alibman@baltimore.com> modified
- *  <test_proactor> and made this test. Instead of writing received
+ *  @a test_proactor and made this test. Instead of writing received
  *  data to the file, the receiver sends them back to the
  *  sender,i.e. ACE_Asynch_Write_File wf_  has been changed to
  *  ACE_Asynch_Write_Stream wf_.

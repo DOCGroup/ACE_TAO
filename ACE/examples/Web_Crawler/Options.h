@@ -25,7 +25,7 @@ class URL_Visitor;
  * @brief Maintains the global options.
  *
  * This class is converted into a Singleton by the
- * <ACE_Singleton> template.
+ * @c ACE_Singleton template.
  */
 class Options
 {
@@ -58,8 +58,8 @@ public:
   /// Port #
   int port_no () const;
 
-  /// Return the timeout used to prevent hanging on <recv> and
-  /// <connect> calls to broken servers.
+  /// Return the timeout used to prevent hanging on @c recv and
+  /// @c connect calls to broken servers.
   const ACE_Time_Value *timeout () const;
 
   /// @name Command processor

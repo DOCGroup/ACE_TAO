@@ -25,8 +25,8 @@
  *
  * This class demonstrates how to receive messages from remote
  * clients using the notification mechanisms in the
- * <ACE_Reactor>.  In addition, it also illustrates how to
- * utilize the <ACE_Reactor> timer mechanisms, as well.
+ * @c ACE_Reactor.  In addition, it also illustrates how to
+ * utilize the @c ACE_Reactor timer mechanisms, as well.
  */
 class Logging_Handler : public ACE_Event_Handler
 {

@@ -15,7 +15,7 @@ public:
     : ACE_Service_Object (r) {}
 
 protected:
-  /// Hook methods inherited from <ACE_Service_Object>.
+  /// Hook methods inherited from @c ACE_Service_Object.
   int init (int argc, ACE_TCHAR *argv[]) override;
   int fini () override;
   int info (ACE_TCHAR **, size_t) const override;
