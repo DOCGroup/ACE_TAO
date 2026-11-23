@@ -2,8 +2,8 @@
  * @file    id_map.hpp
  *
  * This file contains the ID_Map class which links XML IDREF objects to their
- * XML ID counterparts. In the output files, this means that a <IDREF
- * name>_ptr() call returns a pointer to the identified object.
+ * XML ID counterparts. In the output files, this means that an
+ * @c IDREF_name_ptr() call returns a pointer to the identified object.
  *
  * NULL_PTR_Entry is thrown when a null pointer is added to either map.
  * Unresolved_IDREF is thrown when an XML document references an ID that does

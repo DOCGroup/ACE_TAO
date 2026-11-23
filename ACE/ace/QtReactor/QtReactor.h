@@ -92,8 +92,8 @@ class ACE_QtReactor_Export ACE_QtReactor
     Q_OBJECT
 
 public:
-    /** \brief Constructor follows  @ACE_Select_Reactor
-        \param QApplication *qapp, qapplication which runs events loop
+    /** \brief Constructor follows @c ACE_Select_Reactor.
+        \param qapp Qt application which runs the event loop.
     */
     explicit ACE_QtReactor (QApplication *qapp = nullptr,
         ACE_Sig_Handler * = nullptr,
@@ -103,8 +103,8 @@ public:
         bool mask_signals = true,
         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
-    /** \brief Constructor follows @ACE_Select_Reactor
-        \param QApplication *qapp, qapplication which runs events loop
+    /** \brief Constructor follows @c ACE_Select_Reactor.
+        \param qapp Qt application which runs the event loop.
     */
     explicit ACE_QtReactor (size_t size,
         QApplication *qapp = nullptr,
@@ -146,16 +146,16 @@ protected:
         ACE_Event_Handler *handler,
         ACE_Reactor_Mask mask) override;
 
-    /// Register a set of <handlers> with Qt.
+    /// Register the set of @a handles with Qt.
     int register_handler_i (ACE_Handle_Set const &handles,
         ACE_Event_Handler *handler,
         ACE_Reactor_Mask mask) override;
 
-    /// Remove the <handler> associated with this @a handle.
+    /// Remove the event handler associated with this @a handle.
     int remove_handler_i (ACE_HANDLE handle,
         ACE_Reactor_Mask mask) override;
 
-    /// Remove a set of <handles>.
+    /// Remove the set of @a handles.
     int remove_handler_i (ACE_Handle_Set const &handles,
         ACE_Reactor_Mask mask) override;
 

@@ -51,8 +51,8 @@ ACE_TkReactor::~ACE_TkReactor ()
     }
 }
 
-/// This is just the <wait_for_multiple_events> from ace/Reactor.cpp
-/// but we use the Tk functions to wait for an event, not <select>.
+/// This is just the @c wait_for_multiple_events() from ace/Reactor.cpp,
+/// but we use the Tk functions to wait for an event, not @c select().
 
 int
 ACE_TkReactor::wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &handle_set,

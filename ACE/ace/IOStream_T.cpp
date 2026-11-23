@@ -152,8 +152,8 @@ ACE_IOStream<STREAM>::operator>> (ACE_Time_Value *&tv)
   return *this;
 }
 
-/// A simple string operator.  The base iostream has 'em for char* but
-/// that isn't always the best thing for a String.  If we don't provide
+/// A simple string operator. The base @c iostream has 'em for char* but
+/// that isn't always the best thing for @c String. If we don't provide
 /// our own here, we may not get what we want.
 template <class STREAM> ACE_IOStream<STREAM> &
 ACE_IOStream<STREAM>::operator>> (ACE_IOStream_String &v)

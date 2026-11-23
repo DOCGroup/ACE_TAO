@@ -46,24 +46,24 @@ public:
 
   /**
    * This is a QoS-enabled method for joining a multicast group, which
-   * passes <qos_params> via <ACE_OS::join_leaf>.  The network
+   * passes @a qos_params via @c ACE_OS::join_leaf(). The network
    * interface device driver is instructed to accept datagrams with
-   * <mcast_addr> multicast addresses.  If the socket has already been
-   * opened, <subscribe> closes the socket and opens a new socket
-   * bound to the <mcast_addr>. The session object specifies the QoS
+   * @a mcast_addr multicast addresses. If the socket has already been
+   * opened, @c subscribe() closes the socket and opens a new socket
+   * bound to @a mcast_addr. The session object specifies the QoS
    * session that the socket wants to subscribe to. A socket may
    * subscribe to multiple QoS sessions by calling this method multiple
    * times with different session objects.
    *
-   * The <net_if> interface is hardware specific, e.g., use "netstat
-   * -i" to find whether your interface is, such as "le0" or something
-   * else.  If @a net_if is @c nullptr, <subscribe> uses the default mcast
+   * The @a net_if interface is hardware specific, e.g., use "netstat
+   * -i" to find the interface name, such as "le0". If @a net_if is
+   * @c nullptr, @c subscribe() uses the default multicast
    * interface.  Returns: -1 if the call fails.
    *
    * @note that some platforms, such as pSoS, support only number, not
-   * names, for network interfaces.  For these platforms, just give
-   * these numbers in alphanumeric form and <subscribe> will convert
-   * them into numbers via <ACE_OS::atoi>.
+   * names, for network interfaces. For these platforms, give the numbers
+   * in alphanumeric form and @c subscribe() converts them via
+   * @c ACE_OS::atoi().
    */
   int subscribe (ACE_INET_Addr const &mcast_addr,
                  ACE_QoS_Params const &qos_params,
@@ -81,8 +81,8 @@ public:
   /// @name Data transfer
   /// @{
 
-  /// Send <buffer_count> worth of @a buffers to @a addr using overlapped
-  /// I/O (uses <WSASentTo>).  Returns 0 on success.
+  /// Send @a buffer_count buffers from @a buffers to @a addr using overlapped
+  /// I/O (uses @c WSASendTo()). Returns 0 on success.
   ssize_t send (iovec const buffers[],
                 int buffer_count,
                 size_t &number_of_bytes_sent,
@@ -91,7 +91,7 @@ public:
                 ACE_OVERLAPPED *overlapped,
                 ACE_OVERLAPPED_COMPLETION_FUNC func) const;
 
-  /// Send an @a n byte @a buf to the datagram socket (uses <WSASentTo>).
+  /// Send @a n bytes from @a buf to the datagram socket (uses @c WSASendTo()).
   ssize_t send (void const *buf,
                 size_t n,
                 ACE_Addr const &addr,

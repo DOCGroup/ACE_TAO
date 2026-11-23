@@ -82,13 +82,13 @@ protected:
  * iostream class and derivatives provide you with a host of
  * convenient operators that access the streambuf.
  *
- * We inherit all characteristics of iostream and your <STREAM>
+ * We inherit all characteristics of @c iostream and your @c STREAM
  * class.  When you create a new class from this template, you
  * can use it anywhere you would have used your original
- * <STREAM> class.
+ * class.
  * To create an iostream for your favorite ACE IPC class (e.g.,
- * ACE_SOCK_Stream), feed that class to this template's
- * <STREAM> parameter, e.g.,
+ * ACE_SOCK_Stream), feed that class to this template's @c STREAM
+ * parameter, e.g.,
  * typedef ACE_Svc_Handler<ACE_SOCK_iostream,
  * ACE_INET_Addr, ACE_NULL_SYNCH>
  * Service_Handler;
@@ -124,23 +124,23 @@ public:
   ACE_IOStream &operator= (ACE_IOStream const &) = delete;
   ACE_IOStream &operator= (ACE_IOStream &&) = delete;
 
-  /// The only ambiguity in the multiple inheritance is the <close>
+  /// The only ambiguity in the multiple inheritance is the @c close()
   /// function.
   virtual int close ();
 
   /**
-   * Returns 1 if we're at the end of the <STREAM>, i.e., if the
+   * Returns 1 if we're at the end of the @c STREAM, i.e., if the
    * connection has closed down or an error has occurred, else 0.
-   * Under the covers, <eof> calls the streambuf's @a timeout function
+   * Under the covers, @c eof() calls the streambuf's @c timeout()
    * which will reset the timeout flag.  As as result, you should save
-   * the return of <eof> and check it instead of calling <eof>
+   * the return of @c eof() and check it instead of calling @c eof()
    * successively.
    */
   int eof () const;
 
   /**
-   * A simple string operator.  The base <iostream> has them for char*
-   * but that isn't always the best thing for a <String>.  If we don't
+   * A simple string operator. The base @c iostream has them for char*
+   * but that isn't always the best thing for @c String. If we don't
    * provide our own here, we may not get what we want.
    */
   virtual ACE_IOStream<STREAM> &operator>> (ACE_IOStream_String &v);

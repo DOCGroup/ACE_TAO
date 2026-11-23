@@ -28,7 +28,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_SSL_SOCK_Connector
  *
- * @brief Defines a factory that creates new <ACE_SSL_SOCK_Stream>s
+ * @brief Defines a factory that creates new @c ACE_SSL_SOCK_Stream objects
  *        actively.
  *
  * The ACE_SSL_SOCK_Connector doesn't have a socket of its own,
@@ -264,8 +264,8 @@ public:
 
   /**
    * Try to complete a non-blocking connection.
-   * If connection completion is successful then <new_stream> contains
-   * the connected ACE_SSL_SOCK_Stream.  If <remote_sap> is non-NULL
+   * If connection completion is successful then @a new_stream contains
+   * the connected ACE_SSL_SOCK_Stream. If @a remote_sap is not @c nullptr
    * then it will contain the address of the connected peer.
    */
   int complete (ACE_SSL_SOCK_Stream &new_stream,

@@ -76,16 +76,16 @@ protected:
                           ACE_Event_Handler *handler,
                           ACE_Reactor_Mask mask) override;
 
-  /// Register a set of <handlers>.
+  /// Register the set of @a handles.
   int register_handler_i (ACE_Handle_Set const &handles,
                           ACE_Event_Handler *handler,
                           ACE_Reactor_Mask mask) override;
 
-  /// Remove the <handler> associated with this @a handle.
+  /// Remove the event handler associated with this @a handle.
   int remove_handler_i (ACE_HANDLE handle,
                         ACE_Reactor_Mask mask) override;
 
-  /// Remove a set of <handles>.
+  /// Remove the set of @a handles.
   int remove_handler_i (ACE_Handle_Set const &handles,
                         ACE_Reactor_Mask) override;
 

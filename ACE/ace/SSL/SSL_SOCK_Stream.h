@@ -42,10 +42,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * Since SSL is record-oriented, some additional steps must be taken
  * to make the ACE_SSL_SOCK_Stream interact properly with the
  * Reactor (if one is used) when performing non-blocking IO.  In
- * particular, if ::SSL_pending (ssl), where "ssl" is a pointer to the
- * SSL data structure returned from ACE_SSL_SOCK_Stream::ssl(),
- * returns a non-zero value then the event handler that calls the IO
- * methods in this class should return a value greater than zero to
+ * In particular, if @c SSL_pending() returns a nonzero value for this
+ * stream, the event handler that calls the IO methods in this class should
+ * return a value greater than zero to
  * force the Reactor to invoke the event handler before polling for
  * additional events (e.g. blocking on select()).
  *
