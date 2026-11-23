@@ -103,24 +103,24 @@ short_stream ()
   ACE_SizeCDR ss;
 
   // Basic types for output
-  ACE_CDR::Char ch = 'A';
+  ACE_CDR::Char const ch = 'A';
   ACE_CDR::Char wchtmp[] = {'\xF3'};
-  ACE_CDR::WChar wch = *wchtmp;
+  ACE_CDR::WChar const wch = *wchtmp;
   ACE_CDR::WChar wchar2[] = {'\x00'};    // empty wide string
   ACE_CDR::WChar *wstr = wchar2;
-  ACE_CString str ("Test String");
-  std::string std_str ("std string");
-  std::string_view std_stringview {"std stringview"};
+  ACE_CString const str ("Test String");
+  std::string const std_str ("std string");
+  std::string_view const std_stringview {"std stringview"};
 #if !defined(ACE_LACKS_STD_WSTRING)
-  std::wstring std_wstr (L"std wstring");
+  std::wstring const std_wstr (L"std wstring");
 #endif
-  ACE_CDR::Short s = -123;
-  ACE_CDR::UShort us =  123;
-  ACE_CDR::Long l = -65800L;
-  ACE_CDR::ULong ul =  65800UL;
-  ACE_CDR::Float f =  1.23f;
-  ACE_CDR::Double d =  123.456789;
-  ACE_CDR::Fixed fx = ACE_CDR::Fixed::from_string ("8158901571290874");
+  ACE_CDR::Short const s = -123;
+  ACE_CDR::UShort const us =  123;
+  ACE_CDR::Long const l = -65800L;
+  ACE_CDR::ULong const ul =  65800UL;
+  ACE_CDR::Float const f =  1.23f;
+  ACE_CDR::Double const d =  123.456789;
+  ACE_CDR::Fixed const fx = ACE_CDR::Fixed::from_string ("8158901571290874");
 
   // Arrays for output
   ACE_CDR::Short s_array[3] = { -1, 0, 1 };
@@ -129,8 +129,8 @@ short_stream ()
   ACE_CDR::Double d_array[3] = { -123.456789, 0.0, 123.456789 };
   ACE_CDR::Boolean b_array[3] = { false, true, false };
 
-  ACE_OutputCDR::from_char fc (ch);
-  ACE_OutputCDR::from_wchar fwc (wch);
+  ACE_OutputCDR::from_char const fc (ch);
+  ACE_OutputCDR::from_wchar const fwc (wch);
   os << fc;
   os << fwc;
   os << str;
@@ -186,7 +186,7 @@ short_stream ()
   }
 
   const ACE_Message_Block *out_mb = os.begin ();
-  size_t len = out_mb->length ();
+  size_t const len = out_mb->length ();
 
   // Create an input stream (copy constructor)
   ACE_InputCDR is (os);
@@ -244,16 +244,16 @@ short_stream ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Checking operators and arrays\n\n")));
 
-  ACE_InputCDR::to_char tc (ch1);
+  ACE_InputCDR::to_char const tc (ch1);
   is >> tc;
-  ACE_InputCDR::to_wchar twc (wch1);
+  ACE_InputCDR::to_wchar const twc (wch1);
   is >> twc;
   is >> str1;
-  ACE_InputCDR::to_wstring twstr (wstr1, 0);
+  ACE_InputCDR::to_wstring const twstr (wstr1, 0);
   is >> twstr;
   // @todo Lose the std::unique_ptr.  We should be using a
   //       std::string, or the like.
-  std::unique_ptr<ACE_CDR::WChar[]> safe_wstr (wstr1);
+  std::unique_ptr<ACE_CDR::WChar[]> const safe_wstr (wstr1);
   is >> std_str1;
   is >> std_stringview1;
 #if !defined(ACE_LACKS_STD_WSTRING)
@@ -598,7 +598,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                            i),
                           1);
       }
-      std::unique_ptr<ACE_CDR::Char[]> auto_xstr (xstr);
+      std::unique_ptr<ACE_CDR::Char[]> const auto_xstr (xstr);
       if (std::strcmp (auto_xstr.get (), this->str) != 0)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -616,7 +616,7 @@ CDR_Test_Types::test_get (ACE_InputCDR &cdr) const
                            1);
       }
       // zero length
-      std::unique_ptr<ACE_CDR::WChar[]> auto_xwstr (wstr1);
+      std::unique_ptr<ACE_CDR::WChar[]> const auto_xwstr (wstr1);
        if (ACE_OS::wslen(auto_xwstr.get () ))
        {
          ACE_ERROR_RETURN ((LM_ERROR,
@@ -1071,8 +1071,8 @@ int boolean_test ()
               ACE_TEXT ("Testing invalid boolean\n")));
 
   ACE_OutputCDR os;
-  ACE_CDR::Boolean bin { true };
-  ACE_CDR::Octet oin { 2 };
+  ACE_CDR::Boolean const bin { true };
+  ACE_CDR::Octet const oin { 2 };
   os.write_boolean(bin);
   os.write_octet(oin);
 
