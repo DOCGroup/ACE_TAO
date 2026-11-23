@@ -308,7 +308,7 @@ run_test (int& test_number, int ordering)
 
   // Now, let's test some error conditions (we turn off report_errors since they are
   // intentional, we don't want to break the test script)
-  int report_errors = 0;
+  int const report_errors = 0;
 
   // Bad short option.
   retval += parse_args (test_number++, ordering, ACE_TEXT ("-X"), 1, report_errors);

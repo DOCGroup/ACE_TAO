@@ -168,7 +168,7 @@ cached_connect (STRATEGY_CONNECTOR &con,
   // Perform a blocking connect to the server using the Strategy
   // Connector with a connection caching strategy.
   Svc_Handler *svc_handler {};
-  int result = con.connect (svc_handler,
+  int const result = con.connect (svc_handler,
                             remote_addr);
   if (result == -1)
     {
@@ -192,7 +192,7 @@ server (ACCEPTOR *acceptor)
   // Create a new <Svc_Handler> to consume the data.
   Svc_Handler svc_handler;
 
-  int result = acceptor->accept (&svc_handler,
+  int const result = acceptor->accept (&svc_handler,
                                  &cli_addr);
   if (result == -1)
     {
@@ -412,7 +412,7 @@ int
 run_main (int argc, ACE_TCHAR *argv[])
 {
   // Validate options.
-  int result = parse_args (argc, argv);
+  int const result = parse_args (argc, argv);
   if (result != 0)
   {
     return result;

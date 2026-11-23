@@ -123,7 +123,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Message 1\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Message 2\n")));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Message 3\n")));
-  unsigned int count = b.log_count ();
+  unsigned int const count = b.log_count ();
   if (count != 3)
     {
       ACE_ERROR ((LM_ERROR,

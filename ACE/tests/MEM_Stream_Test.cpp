@@ -478,7 +478,7 @@ run_main (int argc, ACE_TCHAR *argv[])
       // -m (multithreaded)
 
       ACE_TCHAR lognm[MAXPATHLEN];
-      int mypid (ACE_OS::getpid ());
+      int const mypid (ACE_OS::getpid ());
       ACE_OS::snprintf (lognm, MAXPATHLEN,
                         ACE_TEXT ("MEM_Stream_Test-%d"), mypid);
       ACE_START_TEST (lognm);
