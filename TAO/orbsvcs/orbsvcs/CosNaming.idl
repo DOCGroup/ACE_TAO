@@ -119,7 +119,7 @@ module CosNaming
       /// Create a binding for name @a n and object @a obj in the naming
       /// context.  Compound names are treated as follows: ctx->bind
       /// (<c1; c2; c3; cn>, obj) = (ctx->resolve (<c1; c2;
-      /// cn-1>))->bind (<cn>, obj) if the there already exists a
+      /// cn-1>))->bind (&lt;cn&gt;, obj) if the there already exists a
       /// binding for the specified name, AlreadyBound exception is
       /// thrown.  Naming contexts should be bound using bind_context()
       /// and rebind_context() in order to participate in name
@@ -152,7 +152,7 @@ module CosNaming
 
       /// Return object reference that is bound to the name.  Compound
       /// name resolve is defined as follows: ctx->resolve (<c1; c2;
-      /// cn>) = ctx->resolve (<c1; c2 cn-1>)->resolve (<cn>) The
+      /// cn>) = ctx->resolve (<c1; c2 cn-1>)->resolve (&lt;cn&gt;) The
       /// naming service does not return the type of the object.
       /// Clients are responsible for "narrowing" the object to the
       /// appropriate type.
@@ -166,7 +166,7 @@ module CosNaming
       /// Remove the name binding from the context.  When compound
       /// names are used, unbind is defined as follows: ctx->unbind
       /// (<c1; c2; cn>) = (ctx->resolve (<c1; c2; cn-1>))->unbind
-      /// (<cn>)
+      /// (&lt;cn&gt;)
       void unbind (in Name n)
         raises (NotFound, CannotProceed, InvalidName);
 
@@ -190,9 +190,9 @@ module CosNaming
       /// @name Deleting contexts
       /// @{
 
-      /// Delete the naming context.  @note the user should <unbind>
+      /// Delete the naming context.  @note the user should @c unbind()
       /// any bindings in which the given context is bound to some
-      /// names before invoking <destroy> operation on it.
+      /// names before invoking @c destroy() operation on it.
       void destroy ()
         raises (NotEmpty);
 
