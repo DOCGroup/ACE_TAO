@@ -214,18 +214,18 @@ run_main (int, ACE_TCHAR *[])
 
   {
     /* Set #1 */
-    ACE_CString s0 ("hello");
-    ACE_CString s1 ("hello");
-    ACE_CString s2 ("world");
-    ACE_CString s3 ("ll");
-    ACE_CString s4 ("ello");
-    ACE_CString s5 = s1 + " " + s2;
+    ACE_CString const s0 ("hello");
+    ACE_CString const s1 ("hello");
+    ACE_CString const s2 ("world");
+    ACE_CString const s3 ("ll");
+    ACE_CString const s4 ("ello");
+    ACE_CString const s5 = s1 + " " + s2;
 
     char const single_character = 'z';
-    ACE_CString single_character_string (single_character);
+    ACE_CString const single_character_string (single_character);
 
-    ACE_CString empty_string;
-    ACE_CString zero_size_string (s1.c_str (), 0, nullptr, true);
+    ACE_CString const empty_string;
+    ACE_CString const zero_size_string (s1.c_str (), 0, nullptr, true);
 
     if (ACE_CString::npos == 0)
     {
@@ -374,17 +374,17 @@ run_main (int, ACE_TCHAR *[])
   {
     /* Set #2 */
     ACE_CString s0 = "hello";
-    ACE_CString s1 ("hello", nullptr, false);
-    ACE_CString s2 ("world", nullptr, false);
-    ACE_CString s3 ("ll", nullptr, false);
-    ACE_CString s4 ("ello", nullptr, false);
-    ACE_CString s5 = s1 + " " + s2;
+    ACE_CString const s1 ("hello", nullptr, false);
+    ACE_CString const s2 ("world", nullptr, false);
+    ACE_CString const s3 ("ll", nullptr, false);
+    ACE_CString const s4 ("ello", nullptr, false);
+    ACE_CString const s5 = s1 + " " + s2;
 
     char const single_character = 'z';
-    ACE_CString single_character_string (single_character);
+    ACE_CString const single_character_string (single_character);
 
-    ACE_CString empty_string (nullptr, nullptr, false);
-    ACE_CString zero_size_string (s1.c_str (), 0, nullptr, false);
+    ACE_CString const empty_string (nullptr, nullptr, false);
+    ACE_CString const zero_size_string (s1.c_str (), 0, nullptr, false);
 
     // Not equal comparisons. Error if they are equal
     if (s1 == s2)
@@ -528,13 +528,13 @@ run_main (int, ACE_TCHAR *[])
       }
 
     // Rep. Error if they are not equal
-    std::unique_ptr<char[]> s (s1.rep ());
+    std::unique_ptr<char[]> const s (s1.rep ());
     if (ACE_OS::strlen (s.get ()) != s1.length ())
       {
         ACE_ERROR((LM_ERROR,"Auto_ptr s:\n"));
       };
 
-    ACE_CString s7 (s.get ());
+    ACE_CString const s7 (s.get ());
     if (s1 != s7)
       {
         ACE_ERROR((LM_ERROR,"Set #2:\n"));
@@ -545,18 +545,18 @@ run_main (int, ACE_TCHAR *[])
   {
     /* Set #3 */
     ACE_NS_WString s0 ("hello");
-    ACE_NS_WString s1 ("hello");
-    ACE_NS_WString s2 ("world");
-    ACE_NS_WString s3 ("ll");
-    ACE_NS_WString s4 ("ello");
-    ACE_NS_WString s5 = s1 + " " + s2;
-    ACE_NS_WString s6 = ("hella"); // Same length as s1, off by one char.
+    ACE_NS_WString const s1 ("hello");
+    ACE_NS_WString const s2 ("world");
+    ACE_NS_WString const s3 ("ll");
+    ACE_NS_WString const s4 ("ello");
+    ACE_NS_WString const s5 = s1 + " " + s2;
+    ACE_NS_WString const s6 = ("hella"); // Same length as s1, off by one char.
 
-    ACE_WCHAR_T single_character = 'z';
-    ACE_NS_WString single_character_string (single_character);
+    ACE_WCHAR_T const single_character = 'z';
+    ACE_NS_WString const single_character_string (single_character);
 
-    ACE_NS_WString empty_string;
-    ACE_NS_WString zero_size_string (s1.c_str (), 0, nullptr);
+    ACE_NS_WString const empty_string;
+    ACE_NS_WString const zero_size_string (s1.c_str (), 0, nullptr);
 
     // Not equal comparisons. Error if they are equal
     if (s1 == s2)
@@ -707,8 +707,8 @@ run_main (int, ACE_TCHAR *[])
 
   {
     /* Set #4 */
-    ACE_CString s1("dog");
-    ACE_CString s2("d");
+    ACE_CString const s1("dog");
+    ACE_CString const s2("d");
 
     if (s1 == s2)
       {
@@ -726,8 +726,8 @@ run_main (int, ACE_TCHAR *[])
         return 1;
       }
 
-    ACE_CString s3 ("dog");
-    ACE_CString s4 ("dogbert");
+    ACE_CString const s3 ("dog");
+    ACE_CString const s4 ("dogbert");
 
     if (s3 == s4)
       {
@@ -745,8 +745,8 @@ run_main (int, ACE_TCHAR *[])
         return 1;
       }
 
-    ACE_CString s5 ("dogbert",3);
-    ACE_CString s6 ("dogbert",5);
+    ACE_CString const s5 ("dogbert",3);
+    ACE_CString const s6 ("dogbert",5);
 
     if(s5 == s6)
       {
@@ -764,8 +764,8 @@ run_main (int, ACE_TCHAR *[])
         return 1;
       }
 
-    ACE_CString s7 ("dogbert",4);
-    ACE_CString s8 ("dogbert",2);
+    ACE_CString const s7 ("dogbert",4);
+    ACE_CString const s8 ("dogbert",2);
 
     if(s7 == s8)
       {
@@ -783,8 +783,8 @@ run_main (int, ACE_TCHAR *[])
         return 1;
       }
 
-    ACE_CString s9 ("dogbert",3);
-    ACE_CString s10 ("dogbert");
+    ACE_CString const s9 ("dogbert",3);
+    ACE_CString const s10 ("dogbert");
 
     if(s9 == s10)
       {
@@ -803,7 +803,7 @@ run_main (int, ACE_TCHAR *[])
       }
 
     ACE_CString s11 ("dogbert",5);
-    ACE_CString s12 ("dog");
+    ACE_CString const s12 ("dog");
 
     if(s11 == s12)
       {
@@ -837,7 +837,7 @@ run_main (int, ACE_TCHAR *[])
 
     sstr.rep (const_cast<char *>(str));
 
-    ACE_SString tmp =
+    ACE_SString const tmp =
       sstr.substring (2, 300);
 
     if (tmp.length () == 300)

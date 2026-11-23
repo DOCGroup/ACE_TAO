@@ -208,7 +208,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   create_reactor ();
 
   // Manage memory automagically.
-  std::unique_ptr<ACE_Reactor> reactor (ACE_Reactor::instance ());
+  std::unique_ptr<ACE_Reactor> const reactor (ACE_Reactor::instance ());
 
   // Callback object
   Handler handler;
