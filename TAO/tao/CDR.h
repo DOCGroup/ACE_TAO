@@ -274,13 +274,13 @@ private:
   TAO_GIOP_Fragmentation_Strategy * const fragmentation_strategy_;
 
   /// Are there more data fragments to come?
-  bool more_fragments_;
+  bool more_fragments_ {};
 
   /// Request ID for the request currently being marshaled.
-  CORBA::ULong request_id_;
+  CORBA::ULong request_id_ {};
 
   /// Stub object associated with the request.
-  TAO_Stub * stub_;
+  TAO_Stub * stub_ {};
 
   /// Twoway, oneway, reply?
   /**
@@ -289,7 +289,7 @@ private:
   TAO_Message_Semantics message_semantics_;
 
   /// Request/reply send timeout.
-  ACE_Time_Value * timeout_;
+  ACE_Time_Value * timeout_ {};
   /// @}
 
   /// These maps are used by valuetype indirection support.
