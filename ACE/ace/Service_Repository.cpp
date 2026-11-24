@@ -127,7 +127,7 @@ ACE_Service_Repository::fini ()
   {
     for (size_t i = this->service_array_.size (); i-- != 0;)
     {
-      ACE_Service_Type * const s =
+      auto * const s =
         const_cast<ACE_Service_Type *> (this->service_array_[i]);
       if (s == nullptr)
         {
@@ -145,7 +145,7 @@ ACE_Service_Repository::fini ()
   for (size_t i = this->service_array_.size (); i-- != 0;)
   {
     // <fini> the services in reverse order.
-    ACE_Service_Type * const s =
+    auto * const s =
       const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
     if (s != nullptr &&
@@ -177,7 +177,7 @@ ACE_Service_Repository::fini ()
   for (size_t i = this->service_array_.size (); i-- != 0;)
   {
     // <fini> the services in reverse order.
-    ACE_Service_Type * const s =
+    auto * const s =
       const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
     if (s != nullptr &&
@@ -227,7 +227,7 @@ ACE_Service_Repository::close ()
   for (size_t i = this->service_array_.size(); i-- != 0; )
     {
       // Delete services in reverse order.
-      ACE_Service_Type * const s =
+      auto * const s =
         const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
 #ifndef ACE_NLOGGING
@@ -340,7 +340,7 @@ ACE_Service_Repository::relocate_i (size_t begin,
 
   for (size_t i = begin; i < end; ++i)
     {
-      ACE_Service_Type * const type =
+      auto * const type =
         const_cast<ACE_Service_Type *> (this->service_array_[i]);
 
       ACE_SHLIB_HANDLE const old_handle =

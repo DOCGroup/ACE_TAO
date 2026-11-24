@@ -115,7 +115,7 @@ ACE_THREAD_ADAPTER_NAME (void *args)
   ACE_TSS_Emulation::tss_open (ts_storage);
 #endif /* ACE_HAS_TSS_EMULATION */
 
-  ACE_Base_Thread_Adapter * const thread_args =
+  auto * const thread_args =
     static_cast<ACE_Base_Thread_Adapter *> (args);
 
 #ifdef ACE_USES_GPROF

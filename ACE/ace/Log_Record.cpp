@@ -340,7 +340,7 @@ operator<< (ACE_OutputCDR &cdr,
 {
   // The written message length can't be more than 32 bits (ACE_CDR::ULong)
   // so reduce it here if needed.
-  ACE_CDR::ULong const u_msglen =
+  auto const u_msglen =
     ACE_Utils::truncate_cast<ACE_CDR::ULong> (log_record.msg_data_len ());
 
   // Insert each field from <log_record> into the output CDR stream.

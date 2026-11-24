@@ -199,7 +199,7 @@ ACE_Handle_Set::sync (ACE_HANDLE max)
 {
   ACE_TRACE ("ACE_Handle_Set::sync");
 #if !defined (ACE_HANDLE_SET_USES_FD_ARRAY)
-  fd_mask * const maskp = reinterpret_cast<fd_mask *> (this->mask_.fds_bits);
+  auto * const maskp = reinterpret_cast<fd_mask *> (this->mask_.fds_bits);
   this->size_ = 0;
 
   for (int i = ACE_DIV_BY_WORDSIZE (max - 1);
@@ -222,7 +222,7 @@ ACE_Handle_Set::set_max (ACE_HANDLE current_max)
 {
   ACE_TRACE ("ACE_Handle_Set::set_max");
 #if !defined(ACE_HANDLE_SET_USES_FD_ARRAY)
-  fd_mask * const maskp = reinterpret_cast<fd_mask *> (this->mask_.fds_bits);
+  auto * const maskp = reinterpret_cast<fd_mask *> (this->mask_.fds_bits);
 
   if (this->size_ == 0)
     {

@@ -105,7 +105,7 @@ ACE_FILE::get_local_addr (ACE_Addr &addr) const
 
   // Perform the downcast since <addr> had better be an
   // <ACE_FILE_Addr>.
-  ACE_FILE_Addr *file_addr =
+  auto *file_addr =
     dynamic_cast<ACE_FILE_Addr *> (&addr);
 
   if (file_addr == nullptr)
