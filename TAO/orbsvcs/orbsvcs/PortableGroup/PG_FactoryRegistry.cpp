@@ -315,7 +315,7 @@ void TAO::PG_FactoryRegistry::register_factory (
   infos.length(length + 1);
   infos[length] = factory_info;
 
-  if (safe_entry.get() != nullptr)
+  if (safe_entry)
   {
     this->registry_.bind(role, safe_entry.release());
   }

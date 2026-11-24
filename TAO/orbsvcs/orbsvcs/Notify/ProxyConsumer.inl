@@ -3,7 +3,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE bool
 TAO_Notify_ProxyConsumer::is_connected () const
 {
-  return (this->supplier_.get() != nullptr);
+  return this->supplier_ != nullptr;
 }
 
 ACE_INLINE TAO_Notify_Supplier*

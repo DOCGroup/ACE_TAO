@@ -92,7 +92,7 @@ TAO_Notify_ProxyConsumer::connect (TAO_Notify_Supplier *supplier)
   }
 
   // Inform QoS values.
-  ACE_ASSERT (this->supplier_.get() != nullptr);
+  ACE_ASSERT (this->supplier_);
   this->supplier_->qos_changed (this->qos_properties_);
 
   TAO_Notify_EventTypeSeq removed;
@@ -167,7 +167,7 @@ TAO_Notify_ProxyConsumer::shutdown ()
 
   this->disconnect ();
 
-  if (this->supplier_.get() != nullptr)
+  if (this->supplier_)
   {
     this->supplier_->shutdown ();
   }

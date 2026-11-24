@@ -73,7 +73,7 @@ TAO_Notify_EventChannelFactory::init (PortableServer::POA_ptr poa)
 {
   this->poa_ = PortableServer::POA::_duplicate (poa);
 
-  ACE_ASSERT (this->ec_container_.get() == nullptr);
+  ACE_ASSERT (!this->ec_container_);
 
   // Init ec_container_
   TAO_Notify_EventChannel_Container* ecc {};
@@ -224,7 +224,7 @@ TAO_Notify_EventChannelFactory::load_topology ()
   {
     // create_loader will open and load the persistence file for validation
     std::unique_ptr<TAO_Notify::Topology_Loader> tl(this->topology_factory_->create_loader());
-    if (tl.get () != nullptr)
+    if (tl)
     {
       tl->load (this);
     }
@@ -250,7 +250,7 @@ TAO_Notify_EventChannelFactory::validate ()
 void
 TAO_Notify_EventChannelFactory::stop_validator ()
 {
-  if (this->validate_client_task_.get () != nullptr)
+  if (this->validate_client_task_)
     {
       this->validate_client_task_->shutdown ();
     }
@@ -349,7 +349,7 @@ TAO_Notify_EventChannelFactory::change_to_parent ()
       if (seq == this->topology_save_seq_)
       {
         std::unique_ptr<TAO_Notify::Topology_Saver> saver(this->topology_factory_->create_saver());
-        if (saver.get() != nullptr)
+        if (saver)
         {
           this->save_persistent(*saver);
           saver->close ();
@@ -524,7 +524,7 @@ TAO_Notify_EventChannelFactory::get_id () const
 TAO_Notify_EventChannelFactory::TAO_Notify_EventChannel_Container&
 TAO_Notify_EventChannelFactory::ec_container()
 {
-  ACE_ASSERT( this->ec_container_.get() != nullptr );
+  ACE_ASSERT (this->ec_container_);
   return *ec_container_;
 }
 

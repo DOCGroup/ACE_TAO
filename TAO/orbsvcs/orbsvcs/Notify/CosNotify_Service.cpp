@@ -438,11 +438,11 @@ TAO_CosNotify_Service::init_i (CORBA::ORB_ptr orb)
 
   // Init the factory
   this->factory_.reset (this->create_factory ());
-  ACE_ASSERT( this->factory_.get() != nullptr );
+  ACE_ASSERT (this->factory_);
   TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
 
   this->builder_.reset (this->create_builder ());
-  ACE_ASSERT( this->builder_.get() != nullptr );
+  ACE_ASSERT (this->builder_);
   TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
 }
 
@@ -471,11 +471,11 @@ TAO_CosNotify_Service::init_i2 (CORBA::ORB_ptr orb, CORBA::ORB_ptr dispatching_o
 
   // Init the factory and builder
   this->factory_.reset (this->create_factory ());
-  ACE_ASSERT( this->factory_.get() != nullptr );
+  ACE_ASSERT (this->factory_);
   TAO_Notify_PROPERTIES::instance()->factory (this->factory_.get());
 
   this->builder_.reset (this->create_builder ());
-  ACE_ASSERT( this->builder_.get() != nullptr );
+  ACE_ASSERT (this->builder_);
   TAO_Notify_PROPERTIES::instance()->builder (this->builder_.get());
 }
 
@@ -519,14 +519,14 @@ TAO_CosNotify_Service::remove (TAO_Notify_EventChannelFactory* /*ecf*/)
 TAO_Notify_Factory&
 TAO_CosNotify_Service::factory ()
 {
-  ACE_ASSERT( this->factory_.get() != nullptr );
+  ACE_ASSERT (this->factory_);
   return *this->factory_;
 }
 
 TAO_Notify_Builder&
 TAO_CosNotify_Service::builder ()
 {
-  ACE_ASSERT( this->builder_.get() != nullptr );
+  ACE_ASSERT (this->builder_);
   return *this->builder_;
 }
 

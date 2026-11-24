@@ -52,7 +52,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
                            , const CosNotification::QoSProperties & initial_qos
                            , const CosNotification::AdminProperties & initial_admin)
 {
-  ACE_ASSERT (this->ca_container_.get() == nullptr);
+  ACE_ASSERT (!this->ca_container_);
 
   // this-> on the following line confuses VC6
   initialize (ecf);
@@ -603,14 +603,14 @@ TAO_Notify_EventChannel::reconnect ()
 TAO_Notify_EventChannel::TAO_Notify_ConsumerAdmin_Container&
 TAO_Notify_EventChannel::ca_container()
 {
-  ACE_ASSERT( this->ca_container_.get() != nullptr );
+  ACE_ASSERT (this->ca_container_);
   return *ca_container_;
 }
 
 TAO_Notify_EventChannel::TAO_Notify_SupplierAdmin_Container&
 TAO_Notify_EventChannel::sa_container()
 {
-  ACE_ASSERT( this->sa_container_.get() != nullptr );
+  ACE_ASSERT (this->sa_container_);
   return *sa_container_;
 }
 

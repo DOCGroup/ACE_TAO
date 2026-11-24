@@ -74,7 +74,7 @@ void TAO_Notify_Event_Manager::release()
 void
 TAO_Notify_Event_Manager::init ()
 {
-  ACE_ASSERT (this->consumer_map_.get() == nullptr);
+  ACE_ASSERT (!this->consumer_map_);
 
   TAO_Notify_Consumer_Map* consumer_map {};
   ACE_NEW_THROW_EX (consumer_map,
@@ -225,14 +225,14 @@ TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, 
 TAO_Notify_Consumer_Map&
 TAO_Notify_Event_Manager::consumer_map ()
 {
-  ACE_ASSERT( this->consumer_map_.get() != nullptr );
+  ACE_ASSERT (this->consumer_map_);
   return *this->consumer_map_;
 }
 
 TAO_Notify_Supplier_Map&
 TAO_Notify_Event_Manager::supplier_map ()
 {
-  ACE_ASSERT( this->supplier_map_.get() != nullptr );
+  ACE_ASSERT (this->supplier_map_);
   return *this->supplier_map_;
 }
 
