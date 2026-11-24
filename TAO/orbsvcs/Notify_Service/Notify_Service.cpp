@@ -689,7 +689,7 @@ LoggingWorker::start ()
         if (this->ns_->logging_interval_ > ACE_Time_Value::zero)
         {
           timer_id_ = this->ns_->orb_->orb_core()->reactor()->
-              schedule_timer (logging_strategy, 0, this->ns_->logging_interval_,
+              schedule_timer (logging_strategy, nullptr, this->ns_->logging_interval_,
                               this->ns_->logging_interval_);
           if (timer_id_ == -1)
             {

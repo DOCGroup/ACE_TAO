@@ -90,7 +90,7 @@ void
 TAO_EC_Sched_Filter::push (RtecEventComm::EventSet const &event,
                            TAO_EC_QOS_Info& qos_info)
 {
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->compute_qos_info (qos_info);
 
@@ -102,7 +102,7 @@ void
 TAO_EC_Sched_Filter::push_nocopy (RtecEventComm::EventSet &event,
                                   TAO_EC_QOS_Info& qos_info)
 {
-  if (this->parent () != 0)
+  if (this->parent () != nullptr)
     {
       this->compute_qos_info (qos_info);
 

@@ -125,7 +125,7 @@ namespace TAO_PG
   {
     for (CORBA::ULong id {}; id <= this->last_fragment_id_; ++id)
       {
-        Fragment f = { 0, 0 };
+        Fragment f = { nullptr, 0 };
         this->fragments_.find (id, f);
 
         std::memcpy (buf, f.buf, f.len);

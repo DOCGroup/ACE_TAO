@@ -180,7 +180,7 @@ TAO_MonitorEventChannelFactory::create_named_channel (
   ACE_CString sname (this->name_ + "/");
   sname += name;
 
-  ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
+  ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, nullptr);
 
   // Make sure the name isn't already used.
   if (this->map_.find (sname) == 0)
@@ -247,7 +247,7 @@ TAO_MonitorEventChannelFactory::create_channel (
   const std::string id_name = std::to_string (id);
   sname += id_name.c_str ();
 
-  ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, 0);
+  ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, nullptr);
 
   // Make sure the name isn't already used.
   if (this->map_.find (sname) == 0)

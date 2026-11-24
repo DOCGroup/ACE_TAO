@@ -23,8 +23,8 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
   // @@ Should we throw a system exception here?
   if (CORBA::is_nil (supplier_sched)
       || CORBA::is_nil (consumer_sched)
-      || consumer_name == 0
-      || supplier_name == 0)
+      || consumer_name == nullptr
+      || supplier_name == nullptr)
   {
     throw CORBA::BAD_PARAM ();
   }

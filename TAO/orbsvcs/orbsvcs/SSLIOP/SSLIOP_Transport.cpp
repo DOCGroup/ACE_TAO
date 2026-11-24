@@ -129,7 +129,7 @@ TAO::SSLIOP::Transport::send_request (TAO_Stub *stub,
 
   if (this->send_message (stream,
                           stub,
-                          0,
+                          nullptr,
                           message_semantics,
                           max_wait_time) == -1)
   {
