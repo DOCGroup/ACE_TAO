@@ -33,6 +33,8 @@ public:
 
   int open (void *) override;
 
+  void destroy () override {}
+
   /// This is called when asynchronous read from the socket complete
   /// Handle data from the client.
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
