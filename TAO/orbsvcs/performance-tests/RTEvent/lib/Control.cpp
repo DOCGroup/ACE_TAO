@@ -86,13 +86,13 @@ Control::join (Federated_Test::Peer_ptr peer)
   for (i = 0; i != this->peers_count_; ++i)
     {
       /// ... automatically release the object references ...
-      std::unique_ptr<Federated_Test::Loopback_var[]> loopbacks (
-          new Federated_Test::Loopback_var[2*this->peers_count_]);
+      auto loopbacks = std::make_unique<Federated_Test::Loopback_var[]> (
+        2 * this->peers_count_);
 
       /// ... and automatically disconnect the loopbacks ...
       using Loopback_Disconnect = Auto_Disconnect<Federated_Test::Loopback>;
-      std::unique_ptr<std::unique_ptr<Loopback_Disconnect>[] > disconnects (
-          new std::unique_ptr<Loopback_Disconnect>[2*this->peers_count_]);
+      auto disconnects = std::make_unique<std::unique_ptr<Loopback_Disconnect>[]> (
+        2 * this->peers_count_);
 
       ACE_DEBUG ((LM_DEBUG,
                   "Control (%P|%t) Running test for peer %B\n",
