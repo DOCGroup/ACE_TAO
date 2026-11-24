@@ -110,9 +110,7 @@ Child::Child ()
 {
 }
 
-Child::~Child ()
-{
-}
+Child::~Child () = default;
 
 void
 Child::test ()

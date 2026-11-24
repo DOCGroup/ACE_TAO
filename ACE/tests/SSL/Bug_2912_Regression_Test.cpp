@@ -580,9 +580,7 @@ Acceptor::Acceptor () :
 {
 }
 
-Acceptor::~Acceptor ()
-{
-}
+Acceptor::~Acceptor () = default;
 
 int
 Acceptor::cancel ()
@@ -1063,9 +1061,7 @@ Connector::Connector () :
 {
 }
 
-Connector::~Connector ()
-{
-}
+Connector::~Connector () = default;
 
 int
 Connector::connect (const ACE_INET_Addr &remote_sap,
