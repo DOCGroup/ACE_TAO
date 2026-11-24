@@ -71,7 +71,7 @@ ClientService::handle_input (ACE_HANDLE)
     send_cnt = 0;
   }
   ACE_Message_Block *raw_message_block {};
-  size_t const remaining =
+  auto const remaining =
     static_cast<size_t> ((recv_cnt - send_cnt));
   ACE_NEW_RETURN (raw_message_block, ACE_Message_Block (remaining), -1);
   ACE_Message_Block_Unique_Ptr message_block {raw_message_block};
