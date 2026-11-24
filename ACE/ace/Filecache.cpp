@@ -97,7 +97,7 @@ ACE_Filecache_Handle::handle () const
 {
   if (this->handle_ == ACE_INVALID_HANDLE && this->file_ != nullptr)
     {
-      ACE_Filecache_Handle *mutable_this =
+      auto *mutable_this =
         const_cast<ACE_Filecache_Handle *> (this);
       mutable_this->handle_ = ACE_OS::dup (this->file_->handle ());
     }

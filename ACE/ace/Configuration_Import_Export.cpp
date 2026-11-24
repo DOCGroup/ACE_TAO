@@ -175,7 +175,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
               ACE_TCHAR* endptr {};
               while (remaining)
                 {
-                  u_char const charin = (u_char) ACE_OS::strtoul (inb, &endptr, 16);
+                  auto const charin = (u_char) ACE_OS::strtoul (inb, &endptr, 16);
                   *out = charin;
                   ++out;
                   --remaining;
@@ -332,7 +332,7 @@ ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& sectio
                 std::unique_ptr<char[], ACE_Array_Deleter<char>> const binary_data_owner {
                   static_cast<char *> (binary_data)};
                 line += ACE_TEXT ("hex:");
-                unsigned char const * const data =
+                auto const * const data =
                   reinterpret_cast<unsigned char const *> (binary_data_owner.get ());
                 unsigned char const *ptr = data;
                 while (binary_length)
@@ -630,7 +630,7 @@ ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
                 std::unique_ptr<char[], ACE_Array_Deleter<char>> const binary_data_owner {
                   static_cast<char *> (binary_data)};
                 line += ACE_TEXT ("\"");
-                unsigned char const * const data =
+                auto const * const data =
                   reinterpret_cast<unsigned char const *> (binary_data_owner.get ());
                 unsigned char const *ptr = data;
                 while (binary_length)
