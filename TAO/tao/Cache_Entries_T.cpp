@@ -13,7 +13,6 @@ namespace TAO
   Cache_IntId_T<TRANSPORT_TYPE>::Cache_IntId_T (TRANSPORT_TYPE *transport)
     : transport_ (transport)
     , recycle_state_ (ENTRY_UNKNOWN)
-    , is_connected_ (false)
   {
     this->is_connected_ = transport->is_connected();
     transport->add_reference ();
