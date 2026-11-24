@@ -153,7 +153,7 @@ namespace ACE_TMCast
     {
       //@@ should check for duplicates
       //
-      cond_set_.insert (&c);
+      cond_set_.insert (std::addressof (c));
     }
 
     void
@@ -161,7 +161,7 @@ namespace ACE_TMCast
     {
       //@@ should check for absence
       //
-      cond_set_.remove (&c);
+      cond_set_.remove (std::addressof (c));
     }
 
   private:
