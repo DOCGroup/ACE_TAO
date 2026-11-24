@@ -495,7 +495,7 @@ ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &, const void *)
           output_file = nullptr;
         }
 #else
-      ofstream *output_file = (ofstream *) this->log_msg_->msg_ostream ();
+      auto *output_file = (ofstream *) this->log_msg_->msg_ostream ();
       if (output_file)
         {
           output_file->close ();

@@ -66,7 +66,7 @@ ACE_Log_Msg_IPC::log (ACE_Log_Record &log_record)
   // Get the number of bytes used by the CDR stream. If it becomes desireable
   // to support payloads more than 4GB, this field will need to be changed
   // to a 64-bit value.
-  ACE_CDR::ULong const length =
+  auto const length =
     ACE_Utils::truncate_cast<ACE_CDR::ULong> (payload.total_length ());
 
   // Send a header so the receiver can determine the byte order and
