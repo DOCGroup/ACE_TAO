@@ -15,9 +15,7 @@ TAO_Notify_Tests_SequencePushConsumer::TAO_Notify_Tests_SequencePushConsumer ()
 {
 }
 
-TAO_Notify_Tests_SequencePushConsumer::~TAO_Notify_Tests_SequencePushConsumer ()
-{
-}
+TAO_Notify_Tests_SequencePushConsumer::~TAO_Notify_Tests_SequencePushConsumer () = default;
 
 void
 TAO_Notify_Tests_SequencePushConsumer::connect_to_peer (Proxy_Traits::PTR proxy_ptr, Peer_Traits::PTR peer_ptr)

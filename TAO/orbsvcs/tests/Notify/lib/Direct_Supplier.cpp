@@ -11,9 +11,7 @@ TAO_Notify_Tests_Direct_Supplier::TAO_Notify_Tests_Direct_Supplier (ACE_CString&
 {
 }
 
-TAO_Notify_Tests_Direct_Supplier::~TAO_Notify_Tests_Direct_Supplier ()
-{
-}
+TAO_Notify_Tests_Direct_Supplier::~TAO_Notify_Tests_Direct_Supplier () = default;
 
 void
 TAO_Notify_Tests_Direct_Supplier::connect ()

@@ -7,9 +7,7 @@ TAO_Notify_Tests_Relay_Consumer::TAO_Notify_Tests_Relay_Consumer (ACE_CString& d
 {
 }
 
-TAO_Notify_Tests_Relay_Consumer::~TAO_Notify_Tests_Relay_Consumer ()
-{
-}
+TAO_Notify_Tests_Relay_Consumer::~TAO_Notify_Tests_Relay_Consumer () = default;
 
 void
 TAO_Notify_Tests_Relay_Consumer::connect ()

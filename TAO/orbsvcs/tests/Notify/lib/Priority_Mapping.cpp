@@ -1,8 +1,6 @@
 #include "Priority_Mapping.h"
 
-TAO_Notify_Tests_Priority_Mapping::~TAO_Notify_Tests_Priority_Mapping ()
-{
-}
+TAO_Notify_Tests_Priority_Mapping::~TAO_Notify_Tests_Priority_Mapping () = default;
 
 CORBA::Boolean
 TAO_Notify_Tests_Priority_Mapping::to_native (CORBA::Short corba_priority,

@@ -8,9 +8,7 @@ TAO_Notify_Tests_Filter_Command::TAO_Notify_Tests_Filter_Command ()
 {
 }
 
-TAO_Notify_Tests_Filter_Command::~TAO_Notify_Tests_Filter_Command ()
-{
-}
+TAO_Notify_Tests_Filter_Command::~TAO_Notify_Tests_Filter_Command () = default;
 
 const char*
 TAO_Notify_Tests_Filter_Command::get_name ()

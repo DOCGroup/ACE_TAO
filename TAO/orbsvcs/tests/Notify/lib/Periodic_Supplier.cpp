@@ -25,9 +25,7 @@ TAO_Notify_Tests_Periodic_Supplier::TAO_Notify_Tests_Periodic_Supplier ()
 {
 }
 
-TAO_Notify_Tests_Periodic_Supplier::~TAO_Notify_Tests_Periodic_Supplier ()
-{
-}
+TAO_Notify_Tests_Periodic_Supplier::~TAO_Notify_Tests_Periodic_Supplier () = default;
 
 void
 TAO_Notify_Tests_Periodic_Supplier::task_callback(TAO_Notify_Tests_Task_Callback* client)

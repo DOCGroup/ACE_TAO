@@ -15,9 +15,7 @@ TAO_Notify_Tests_PushSupplier::TAO_Notify_Tests_PushSupplier ()
 {
 }
 
-TAO_Notify_Tests_PushSupplier::~TAO_Notify_Tests_PushSupplier ()
-{
-}
+TAO_Notify_Tests_PushSupplier::~TAO_Notify_Tests_PushSupplier () = default;
 
 void
 TAO_Notify_Tests_PushSupplier::send_event (const CORBA::Any& any)

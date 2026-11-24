@@ -25,9 +25,7 @@ TAO_Notify_Tests_Periodic_Consumer::TAO_Notify_Tests_Periodic_Consumer ()
 {
 }
 
-TAO_Notify_Tests_Periodic_Consumer::~TAO_Notify_Tests_Periodic_Consumer ()
-{
-}
+TAO_Notify_Tests_Periodic_Consumer::~TAO_Notify_Tests_Periodic_Consumer () = default;
 
 void
 TAO_Notify_Tests_Periodic_Consumer::task_callback (TAO_Notify_Tests_Task_Callback* client)
