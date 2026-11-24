@@ -991,7 +991,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (const char *name,
 }
 
 /// Returns a count of the number of available chunks that can hold
-/// <size> byte allocations.  Function can be used to determine if you
+/// @a size byte allocations.  Function can be used to determine if you
 /// have reached a water mark. This implies a fixed amount of allocated
 /// memory.
 ///
