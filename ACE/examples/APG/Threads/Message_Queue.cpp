@@ -162,7 +162,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   report_usage (argc, argv);
 
-  u_short const port = static_cast<u_short> (ACE_OS::atoi (argv[1]));
+  auto const port = static_cast<u_short> (ACE_OS::atoi (argv[1]));
 
   HA_Device_Repository rep;
   HA_CommandHandler handler (rep);

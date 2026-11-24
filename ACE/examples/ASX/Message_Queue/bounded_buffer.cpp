@@ -21,7 +21,7 @@
 static ACE_THR_FUNC_RETURN
 producer (void *arg)
 {
-  ACE_Message_Queue<ACE_MT_SYNCH> * const msg_queue =
+  auto * const msg_queue =
     static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (arg);
   // Keep reading stdin, until we reach EOF.
 
@@ -80,7 +80,7 @@ producer (void *arg)
 static ACE_THR_FUNC_RETURN
 consumer (void *arg)
 {
-  ACE_Message_Queue<ACE_MT_SYNCH> * const msg_queue =
+  auto * const msg_queue =
     static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (arg);
   int result {};
 
