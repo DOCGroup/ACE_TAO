@@ -543,10 +543,10 @@ public:
   Messaging::SyncScope default_sync_scope ();
 
   /// Handle to the factory for protocols_hooks_..
-  TAO_Protocols_Hooks *protocols_hooks_;
+  TAO_Protocols_Hooks *protocols_hooks_ {};
 
   /// Handle to the factory for network_priority_protocols_hooks_..
-  TAO_Network_Priority_Protocols_Hooks *network_priority_protocols_hooks_;
+  TAO_Network_Priority_Protocols_Hooks *network_priority_protocols_hooks_ {};
 
   /// Obtain the TSS resources of this orb.
   TAO_ORB_Core_TSS_Resources* get_tss_resources ();
@@ -1012,20 +1012,20 @@ protected:
   /// Synchronize internal state...
   TAO_SYNCH_MUTEX lock_;
 
-  TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager_;
+  TAO_Thread_Lane_Resources_Manager *thread_lane_resources_manager_ {};
 
-  TAO_Collocation_Resolver *collocation_resolver_;
+  TAO_Collocation_Resolver *collocation_resolver_ {};
 
-  TAO_Stub_Factory *stub_factory_;
+  TAO_Stub_Factory *stub_factory_ {};
 
-  TAO_ProtocolFactorySet *protocol_factories_;
+  TAO_ProtocolFactorySet *protocol_factories_ {};
 
   /// The cached IOR for the Implementation Repository.
   // @@ If this is a _var, where should it get deleted? (brunsch)
   CORBA::Object_ptr implrepo_service_;
 
   /// Flag for whether the implrepo support is enabled or not.
-  int use_implrepo_;
+  int use_implrepo_ {};
 
   /// Flag for whether to put the ImR endpoints into our object refs.
   int imr_endpoints_in_ior_;
@@ -1095,16 +1095,16 @@ protected:
   std::string orbid_;
 
   /// Handle to the factory for resource information..
-  TAO_Resource_Factory *resource_factory_;
+  TAO_Resource_Factory *resource_factory_ {};
 
   /// The server_id_ that was passed via -ORBServerId option
   std::string server_id_;
 
   /// Handle to the factory for Client-side strategies.
-  TAO_Client_Strategy_Factory *client_factory_;
+  TAO_Client_Strategy_Factory *client_factory_ {};
 
   /// Handle to the factory for Server-side strategies.
-  TAO_Server_Strategy_Factory *server_factory_;
+  TAO_Server_Strategy_Factory *server_factory_ {};
 
   /**
    * @name Service Level Hooks
@@ -1118,7 +1118,7 @@ protected:
   /// TRUE transmits a full TAG_FT_GROUP component in place of the FT_GROUP_VERSION
   /// context on FT requests. This is contrary to the spec but enables more effective
   /// fault tolerant stuff. @todo reference to OMG issue. Default false.
-  CORBA::Boolean ft_send_extended_sc_;
+  CORBA::Boolean ft_send_extended_sc_ {};
 
   /// TRUE if we want to take advantage of collocation optimization in
   /// this ORB.
@@ -1134,13 +1134,13 @@ protected:
 #if (TAO_HAS_CORBA_MESSAGING == 1)
 
   /// The Policy_Manager for this ORB.
-  TAO_Policy_Manager *policy_manager_;
+  TAO_Policy_Manager *policy_manager_ {};
 
   /// The default policies.
-  TAO_Policy_Set *default_policies_;
+  TAO_Policy_Set *default_policies_ {};
 
   /// Policy current.
-  TAO_Policy_Current *policy_current_;
+  TAO_Policy_Current *policy_current_ {};
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
 
@@ -1156,7 +1156,7 @@ protected:
   TAO_Adapter_Registry adapter_registry_;
 
   /// An optimization for the POA.
-  TAO_Adapter *poa_adapter_;
+  TAO_Adapter *poa_adapter_ {};
 
   /// The Thread Manager
   ACE_Thread_Manager tm_;
@@ -1183,19 +1183,19 @@ protected:
   /// Mutual exclusion for calling open.
   TAO_SYNCH_MUTEX open_lock_;
 
-  TAO_Endpoint_Selector_Factory *endpoint_selector_factory_;
+  TAO_Endpoint_Selector_Factory *endpoint_selector_factory_ {};
 
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
   /// This strategy will buffer messages.
-  TAO::Transport_Queueing_Strategy *eager_transport_queueing_strategy_;
+  TAO::Transport_Queueing_Strategy *eager_transport_queueing_strategy_ {};
 
   /// This strategy will buffer messages.
-  TAO::Transport_Queueing_Strategy *delayed_transport_queueing_strategy_;
+  TAO::Transport_Queueing_Strategy *delayed_transport_queueing_strategy_ {};
 
   /// This strategy will not queue by default, but will flush the queue
   /// each time
-  TAO::Transport_Queueing_Strategy *flush_transport_queueing_strategy_;
+  TAO::Transport_Queueing_Strategy *flush_transport_queueing_strategy_ {};
 
 #endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
 
@@ -1203,10 +1203,10 @@ protected:
   std::atomic<uint32_t> refcount_;
 
   /// Registry containing all registered policy factories.
-  TAO::PolicyFactory_Registry_Adapter *policy_factory_registry_;
+  TAO::PolicyFactory_Registry_Adapter *policy_factory_registry_ {};
 
   /// Registry containing all orb initializers
-  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_;
+  TAO::ORBInitializer_Registry_Adapter *orbinitializer_registry_ {};
 
   /// Registry containing all service context handlers
   TAO_Service_Context_Registry service_context_registry_;
@@ -1222,51 +1222,51 @@ protected:
   CORBA::Object_ptr pi_current_;
 
   /// Owned client interceptor adapter created by its configured factory.
-  TAO::ClientRequestInterceptor_Adapter *client_request_interceptor_adapter_;
+  TAO::ClientRequestInterceptor_Adapter *client_request_interceptor_adapter_ {};
 
   /// Owned server interceptor adapter created by its configured factory.
-  TAO::ServerRequestInterceptor_Adapter *server_request_interceptor_adapter_;
+  TAO::ServerRequestInterceptor_Adapter *server_request_interceptor_adapter_ {};
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
   /// IORInterceptor adapter.
-  TAO_IORInterceptor_Adapter *ior_interceptor_adapter_;
+  TAO_IORInterceptor_Adapter *ior_interceptor_adapter_ {};
 
   /// Pointer to the valuetype adapter.
-  TAO_Valuetype_Adapter *valuetype_adapter_;
+  TAO_Valuetype_Adapter *valuetype_adapter_ {};
 
   /// The IOR parser registry.
   TAO_Parser_Registry parser_registry_;
 
   /// BiDirectional GIOP factory
-  TAO_BiDir_Adapter *bidir_adapter_;
+  TAO_BiDir_Adapter *bidir_adapter_ {};
 
   /// Bir Dir GIOP policy value
-  CORBA::Boolean bidir_giop_policy_;
+  CORBA::Boolean bidir_giop_policy_ {};
 
   /// ZIOP Adapter
-  TAO_ZIOP_Adapter *ziop_adapter_;
+  TAO_ZIOP_Adapter *ziop_adapter_ {};
 
   /// ZIOP enabled or not
-  CORBA::Boolean ziop_enabled_;
+  CORBA::Boolean ziop_enabled_ {};
 
   /// Hold the flushing strategy
-  TAO_Flushing_Strategy *flushing_strategy_;
+  TAO_Flushing_Strategy *flushing_strategy_ {};
 
   /// Code Set Manager, received from the Resource Factory
-  TAO_Codeset_Manager *codeset_manager_;
+  TAO_Codeset_Manager *codeset_manager_ {};
 
   /// ORB's service configuration
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> config_;
 
   /// The hook to be set for the SyncScopePolicy
-  Sync_Scope_Hook sync_scope_hook_;
+  Sync_Scope_Hook sync_scope_hook_ {};
 
   /// The configured value used as the default sync scope
   Messaging::SyncScope default_sync_scope_;
 
   /// The hook to be set for the RelativeRoundtripTimeoutPolicy.
-  Timeout_Hook timeout_hook_;
+  Timeout_Hook timeout_hook_ {};
 };
 
 // ****************************************************************

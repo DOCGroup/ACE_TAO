@@ -183,20 +183,13 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
 
 TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
                             ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> gestalt)
-  : protocols_hooks_ (nullptr),
-    network_priority_protocols_hooks_ (nullptr),
 #if TAO_USE_LOCAL_MEMORY_POOL == 1
-    use_local_memory_pool_ (true),
+  : use_local_memory_pool_ (true),
 #else
-    use_local_memory_pool_ (false),
+  : use_local_memory_pool_ (false),
 #endif
     lock_ (),
-    thread_lane_resources_manager_ (nullptr),
-    collocation_resolver_ (nullptr),
-    stub_factory_ (nullptr),
-    protocol_factories_ (nullptr),
     implrepo_service_ (CORBA::Object::_nil ()),
-    use_implrepo_ (0),
     imr_endpoints_in_ior_ (1),
     typecode_factory_ (CORBA::Object::_nil ()),
     codec_factory_ (CORBA::Object::_nil ()),
@@ -213,25 +206,12 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
     object_ref_table_ (),
     object_key_table_ (),
     orbid_ (orbid ? orbid : ""),
-    resource_factory_ (nullptr),
-    client_factory_ (nullptr),
-    server_factory_ (nullptr),
-    ft_send_extended_sc_ (false),
     opt_for_collocation_ (true),
     use_global_collocation_ (true),
     collocation_strategy_ (TAO_DEFAULT_COLLOCATION_STRATEGY),
 
-#if (TAO_HAS_CORBA_MESSAGING == 1)
-
-    policy_manager_ (nullptr),
-    default_policies_ (nullptr),
-    policy_current_ (nullptr),
-
-#endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-
     poa_current_ (),
     adapter_registry_ (this),
-    poa_adapter_ (nullptr),
     tm_ (),
     tss_cleanup_funcs_ (),
     tss_resources_ (),
@@ -242,33 +222,13 @@ TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
                            // can only be initialized once.
     thread_per_connection_use_timeout_ (1),
     open_lock_ (),
-    endpoint_selector_factory_ (nullptr),
-#if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
-    eager_transport_queueing_strategy_ (nullptr),
-    delayed_transport_queueing_strategy_ (nullptr),
-    flush_transport_queueing_strategy_ (nullptr),
-#endif /* TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1 */
     refcount_ (1),
-    policy_factory_registry_ (nullptr),
-    orbinitializer_registry_ (nullptr),
 #if (TAO_HAS_INTERCEPTORS == 1)
     pi_current_ (CORBA::Object::_nil ()),
-    client_request_interceptor_adapter_ (nullptr),
-    server_request_interceptor_adapter_ (nullptr),
 #endif  /* TAO_HAS_INTERCEPTORS == 1 */
-    ior_interceptor_adapter_ (nullptr),
-    valuetype_adapter_ (nullptr),
     parser_registry_ (),
-    bidir_adapter_ (nullptr),
-    bidir_giop_policy_ (false),
-    ziop_adapter_ (nullptr),
-    ziop_enabled_ (false),
-    flushing_strategy_ (nullptr),
-    codeset_manager_ (nullptr),
     config_ (gestalt),
-    sync_scope_hook_ (nullptr),
-    default_sync_scope_ (Messaging::SYNC_WITH_TRANSPORT),
-    timeout_hook_ (nullptr)
+    default_sync_scope_ (Messaging::SYNC_WITH_TRANSPORT)
 {
 #if (TAO_HAS_BUFFERING_CONSTRAINT_POLICY == 1)
 
