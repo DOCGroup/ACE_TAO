@@ -512,7 +512,7 @@ ACE_Sig_Handlers::remove_handler (int signum,
            )
         {
           // Type-safe downcast would be nice here...
-          ACE_Sig_Adapter *sh = (ACE_Sig_Adapter *) *eh;
+          auto *sh = (ACE_Sig_Adapter *) *eh;
 
           // Remove the handler if (1) its key matches the key we've
           // been told to remove or (2) if we've been told to remove

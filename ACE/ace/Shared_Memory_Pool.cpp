@@ -42,7 +42,7 @@ ACE_Shared_Memory_Pool::in_use (ACE_OFF_T &offset,
   ACE_NOTSUP_RETURN (-1);
 #else
   offset = 0;
-  SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
+  auto *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
   shmid_ds buf;
 
   for (counter = 0; counter < this->max_segments_ && st[counter].used_ == 1; ++counter)
@@ -73,7 +73,7 @@ ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
   ACE_NOTSUP_RETURN (-1);
 #else
   offset = 0;
-  SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
+  auto *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
   shmid_ds buf;
 
   for (counter = 0; counter < this->max_segments_ && st[counter].used_ == 1; ++counter)
@@ -117,7 +117,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
     }
 
   size_t counter;
-  SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
+  auto *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
 
   if (this->in_use (offset, counter) == -1)
   {
@@ -220,7 +220,7 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
     }
 
   void *address = static_cast<char *> (this->shm_addr_table_[0]) + offset;
-  SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
+  auto *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
 
   void *shmem = ACE_OS::shmat (st[counter].shmid_,
                                static_cast<char *> (address),
@@ -395,7 +395,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
                             this->shm_addr_table_[0]), 0);
         }
 
-      SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
+      auto *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
       st[0].key_ = this->base_shm_key_;
       st[0].shmid_ = shmid;
       st[0].used_ = 1;
@@ -428,7 +428,7 @@ ACE_Shared_Memory_Pool::release (int destroy)
   if (this->shm_addr_table_[0])
     {
       // The shared memory table is store in segment[0]
-      SHM_TABLE *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
+      auto *st = reinterpret_cast<SHM_TABLE *> (this->shm_addr_table_[0]);
 
       // Detach the mapped shared memory segments in reverse order.
       // We store the shared memory table in segment[0], so we have to destroy that
