@@ -644,17 +644,17 @@ Stop_Handler::handle_input (ACE_HANDLE handle)
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%P|%t) Stop_Handler::handle_input - entered\n")));
 
-  for (size_t i = 0; i < HANDLERS_TO_STOP_TABLE_SIZE; ++i)
+  for (ACE_Event_Handler *&handler : this->handlers_to_stop_)
     {
       // remove from the reactor's tables all non-null entries
-      if (this->handlers_to_stop_[i])
+      if (handler)
         {
           // protect from deleted pointer
           try
             {
-              this->reactor ()->cancel_timer (this->handlers_to_stop_[i]);
+              this->reactor ()->cancel_timer (handler);
               this->reactor ()->remove_handler
-                (this->handlers_to_stop_[i],
+                (handler,
                  ACE_Event_Handler::ALL_EVENTS_MASK
                  | ACE_Event_Handler::DONT_CALL);
             }
@@ -665,7 +665,7 @@ Stop_Handler::handle_input (ACE_HANDLE handle)
                           ACE_TEXT ("EXCEPTION CATCHED. Most probably ")
                           ACE_TEXT ("handler's pointer has been deleted.\n")));
             }
-          this->handlers_to_stop_[i] = nullptr;
+          handler = nullptr;
         }
     }
 

@@ -127,11 +127,11 @@ run_main (int argc, ACE_TCHAR *argv[])
   // value because the OS has a finite resolution anyway.
   static u_int const TIMER_RESOLUTION = 10000;
 
-  for (u_int i = 0; i < sizeof intervals / sizeof (u_int); ++i)
+  for (u_int interval_value : intervals)
     {
       for (u_int j = 0; j < iterations; ++j)
         {
-          ACE_Time_Value const interval (0, intervals[i]);
+          ACE_Time_Value const interval (0, interval_value);
           ACE_hrtime_t nanoseconds;
           ACE_hrtime_t microseconds;
           ACE_Time_Value const measured = time_interval (interval,
@@ -146,11 +146,11 @@ run_main (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("interval: %: usec, measured: %: usec %s\n"),
                       interval_usec,
                       measured_usec,
-                      (intervals[i] <= TIMER_RESOLUTION
+                      (interval_value <= TIMER_RESOLUTION
                        ? ACE_TEXT (" (interval and measured may differ)")
                        : ACE_TEXT (""))));
 
-          if (intervals[i] > TIMER_RESOLUTION)
+          if (interval_value > TIMER_RESOLUTION)
             {
               errors += check (interval.sec () * ACE_ONE_SECOND_IN_USECS
                                + interval.usec (),

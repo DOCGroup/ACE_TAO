@@ -45,11 +45,11 @@ run_main (int, ACE_TCHAR *[])
   ACE_RB_Tree<char, int, ACE_Less_Than<char>, ACE_Null_Mutex> tree;
 
   ACE_DEBUG ((LM_DEBUG, "Creating Tree\n"));
-  {for (size_t i= 0u; i < sizeof(nodes)/sizeof(Nodes); ++i)
+  {for (Nodes& node : nodes)
   {
-    if (0 != tree.bind (nodes[i].key, nodes[i].value, nodes[i].node))
+    if (0 != tree.bind (node.key, node.value, node.node))
     {
-      ACE_DEBUG ((LM_ERROR, ": Binding failed for %c=%d\n", nodes[i].key, nodes[i].value));
+      ACE_DEBUG ((LM_ERROR, ": Binding failed for %c=%d\n", node.key, node.value));
       result = 1;
     }
   }}

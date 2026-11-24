@@ -227,9 +227,9 @@ Timer::open (ACE_Reactor * r)
 void
 Timer::close()
 {
-  for (int i = 0; i != nhandlers; ++i)
+  for (Handler& handler : handler_)
     {
-      this->reactor ()->remove_handler (std::addressof (handler_[i]),
+      this->reactor ()->remove_handler (std::addressof (handler),
                                         ACE_Event_Handler::ALL_EVENTS_MASK |
                                         ACE_Event_Handler::DONT_CALL);
     }
@@ -284,9 +284,9 @@ Timer::handle_timeout(ACE_Time_Value const &, void const *)
 void
 Timer::send_data_through_handlers()
 {
-  for (int i = 0; i != nhandlers; ++i)
+  for (Handler& handler : handler_)
     {
-      handler_[i].send_dummy_data();
+      handler.send_dummy_data();
     }
 }
 
