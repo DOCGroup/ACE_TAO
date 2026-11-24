@@ -19,10 +19,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Connection_Handler::TAO_Connection_Handler (TAO_ORB_Core *orb_core)
-  : orb_core_ (orb_core),
-    transport_ (nullptr),
-    connection_pending_ (false),
-    is_closed_ (false)
+  : orb_core_ (orb_core)
 {
   // Put ourselves in the connection wait state as soon as we get
   // created

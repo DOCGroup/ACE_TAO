@@ -179,14 +179,14 @@ private:
   TAO_ORB_Core * const orb_core_;
 
   /// Transport object reference
-  TAO_Transport* transport_;
+  TAO_Transport* transport_ {};
 
   /// Stores the connection pending state
-  bool connection_pending_;
+  bool connection_pending_ {};
 
   /// Once closed make sure the transport is not added back to the cache.
   /// This is distinct from the leader-follower state so it cannot be reset.
-  bool is_closed_;
+  bool is_closed_ {};
 };
 
 /**
