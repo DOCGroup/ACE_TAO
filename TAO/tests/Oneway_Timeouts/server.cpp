@@ -104,7 +104,7 @@ public:
             this->failed_ = true;
           }
         ACE_Time_Value timeout (0, 50 * 1000);
-        this->orb_->orb_core ()->reactor ()->schedule_timer (this, 0, timeout);
+        this->orb_->orb_core ()->reactor ()->schedule_timer (this, nullptr, timeout);
         return id;
       }
 

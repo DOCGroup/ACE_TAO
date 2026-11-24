@@ -46,7 +46,7 @@ Client_Peer::crash ()
   Crasher *const crasher = new Crasher;
   ACE_Time_Value const clk_tck (0, Clock_Ticks::get_usecs_per_tick ());
   ACE_Reactor *const reactor = this->orb_->orb_core ()->reactor ();
-  reactor->schedule_timer (crasher, 0, clk_tck);
+  reactor->schedule_timer (crasher, nullptr, clk_tck);
 }
 
 void

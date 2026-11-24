@@ -444,13 +444,13 @@ A_i::exc_method (::Test::string_field f)
       // not really tested.
       break;
     case ::Test::BOUNDED:
-      throw ::Test::exc (0,
+      throw ::Test::exc (nullptr,
                          ::Test::FailStr,
-                         0);
+                         nullptr);
       break;
     case ::Test::TYPEDEFED:
-      throw ::Test::exc (0,
-                         0,
+      throw ::Test::exc (nullptr,
+                         nullptr,
                          ::Test::FailStr);
       break;
     }
