@@ -285,17 +285,20 @@ public:
   /**
    * Purge entries from the @a container. The Cleanup_Strategy will do
    * the actual job of cleanup once the entries to be cleaned up are
-   * decided. @note Here it is a no-op.
+   * decided.
+   *
+   * @note This is a no-op.
    */
   int clear_cache (CONTAINER &container,
                    double purge_percent);
 
 protected:
   /**
-   * Find the entry with minimum caching attributes.  This is handler
-   * specific since this utility is to be used very specifically for
-   * handler who have caching_attributes for server side acched
-   * connection management.@note Here it is a no-op.
+   * Find the entry with minimum caching attributes. This is handler
+   * specific since this utility is intended for handlers that have
+   * caching attributes for server-side cached connection management.
+   *
+   * @note This method is a no-op.
    */
   void minimum (CONTAINER &container,
                 KEY *&key_to_remove,
