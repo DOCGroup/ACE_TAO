@@ -76,8 +76,14 @@ ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
     }
   else
     {
-      delete element;
+      ACE_Locked_Free_List<T, ACE_LOCK>::delete_element (element);
     }
+}
+
+template <class T, class ACE_LOCK> void
+ACE_Locked_Free_List<T, ACE_LOCK>::delete_element (T *element)
+{
+  delete element;
 }
 
 // Takes a element off the freelist and returns it.  It creates <inc>

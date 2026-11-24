@@ -126,6 +126,11 @@ protected:
   ACE_LOCK mutex_;
 
 private:
+#if defined (__GNUC__)
+  __attribute__ ((noinline))
+#endif
+  static void delete_element (T *element);
+
   ACE_Locked_Free_List (ACE_Locked_Free_List const &) = delete;
   ACE_Locked_Free_List (ACE_Locked_Free_List &&) = delete;
   ACE_Locked_Free_List &operator= (ACE_Locked_Free_List const &) = delete;
