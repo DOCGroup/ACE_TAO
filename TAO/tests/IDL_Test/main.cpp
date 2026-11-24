@@ -26,26 +26,26 @@
 #include <cstring>
 #include <type_traits>
 
-static_assert (std::is_abstract<OBV_Supports_Inherited_Operation>::value,
+static_assert (std::is_abstract_v<OBV_Supports_Inherited_Operation>,
                "A valuetype that supports an inherited operation is abstract");
-static_assert (!std::is_abstract<OBV_Supports_Abstract_Operation>::value,
+static_assert (!std::is_abstract_v<OBV_Supports_Abstract_Operation>,
                "A directly supported abstract-interface operation uses its generated default");
-static_assert (!std::is_abstract<OBV_Copy_Derived>::value,
+static_assert (!std::is_abstract_v<OBV_Copy_Derived>,
                "A concrete derived valuetype gets its own copy implementation");
-static_assert (std::is_abstract<OBV_Copy_Operation_Derived>::value,
+static_assert (std::is_abstract_v<OBV_Copy_Operation_Derived>,
                "A derived operation-bearing valuetype requires its own copy");
-static_assert (std::is_abstract<OBV_Copy_Factory_Derived>::value,
+static_assert (std::is_abstract_v<OBV_Copy_Factory_Derived>,
                "A factory-bearing derived valuetype must provide its own copy");
-static_assert (std::is_abstract<OBV_Copy_Factory_Operation_Derived>::value,
+static_assert (std::is_abstract_v<OBV_Copy_Factory_Operation_Derived>,
                "A derived valuetype must not inherit a sliced copy through a factory base");
-static_assert (std::is_base_of<CORBA::ValueFactoryBase,
-                               Accessor_Optimized_Derived_init>::value,
+static_assert (std::is_base_of_v<CORBA::ValueFactoryBase,
+                                 Accessor_Optimized_Derived_init>,
                "An optimized derived valuetype retains its concrete factory");
-static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Derived>::value,
+static_assert (!std::is_abstract_v<Accessor_Optimized_Refcount_Derived>,
                "An optimized valuetype inherits supported-interface refcount overrides");
-static_assert (!std::is_abstract<Accessor_Optimized_Refcount_Inherited>::value,
+static_assert (!std::is_abstract_v<Accessor_Optimized_Refcount_Inherited>,
                "An optimized valuetype can add a supported interface with an inherited counter");
-static_assert (std::is_abstract<Accessor_Optimized_Operation_Derived>::value,
+static_assert (std::is_abstract_v<Accessor_Optimized_Operation_Derived>,
                "An optimized derived valuetype must not inherit a sliced copy");
 
 class hello_i : public virtual POA_hello

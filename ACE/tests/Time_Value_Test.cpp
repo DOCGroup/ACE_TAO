@@ -279,7 +279,7 @@ run_main (int, ACE_TCHAR *[])
 
   if (sizeof(time_t) < 8)
     {
-      if (std::is_signed<time_t>::value)
+      if (std::is_signed_v<time_t>)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT ("time_t is 32bit signed, this platform will have problems after 2038\n")));

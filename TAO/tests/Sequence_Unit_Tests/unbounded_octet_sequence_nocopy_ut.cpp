@@ -24,10 +24,10 @@
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 using tested_sequence = unbounded_value_sequence<CORBA::Octet>;
-static_assert (std::is_move_constructible<tested_sequence>::value);
-static_assert (!std::is_nothrow_move_constructible<tested_sequence>::value);
-static_assert (std::is_move_assignable<tested_sequence>::value);
-static_assert (!std::is_nothrow_move_assignable<tested_sequence>::value);
+static_assert (std::is_move_constructible_v<tested_sequence>);
+static_assert (!std::is_nothrow_move_constructible_v<tested_sequence>);
+static_assert (std::is_move_assignable_v<tested_sequence>);
+static_assert (!std::is_nothrow_move_assignable_v<tested_sequence>);
 using tested_element_traits = tested_sequence::element_traits;
 using tested_allocation_traits = tested_sequence::allocation_traits;
 using range = details::range_checking<CORBA::Octet,true>;

@@ -23,10 +23,10 @@
 using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 using unbounded_bd_sequence = TAO::unbounded_bd_string_sequence<char, 16>;
-static_assert (std::is_move_constructible<unbounded_bd_sequence>::value);
-static_assert (!std::is_nothrow_move_constructible<unbounded_bd_sequence>::value);
-static_assert (std::is_move_assignable<unbounded_bd_sequence>::value);
-static_assert (!std::is_nothrow_move_assignable<unbounded_bd_sequence>::value);
+static_assert (std::is_move_constructible_v<unbounded_bd_sequence>);
+static_assert (!std::is_nothrow_move_constructible_v<unbounded_bd_sequence>);
+static_assert (std::is_move_assignable_v<unbounded_bd_sequence>);
+static_assert (!std::is_nothrow_move_assignable_v<unbounded_bd_sequence>);
 
 template<class tested_sequence>
 struct Tester

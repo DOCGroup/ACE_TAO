@@ -29,10 +29,10 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   using EH_SH = ACE_Event_Handler_T<ACE_Test_Sig_Handler>;
-  static_assert (!std::is_copy_constructible<EH_SH>::value);
-  static_assert (!std::is_copy_assignable<EH_SH>::value);
-  static_assert (!std::is_move_constructible<EH_SH>::value);
-  static_assert (!std::is_move_assignable<EH_SH>::value);
+  static_assert (!std::is_copy_constructible_v<EH_SH>);
+  static_assert (!std::is_copy_assignable_v<EH_SH>);
+  static_assert (!std::is_move_constructible_v<EH_SH>);
+  static_assert (!std::is_move_assignable_v<EH_SH>);
 
   {
     ACE_Test_Sig_Handler handler;

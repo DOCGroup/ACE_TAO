@@ -176,10 +176,10 @@ public:
 
   // Avoid duplication for the underlying type of size_t
   template <typename Dummy = TAO_OutStream &>
-  typename std::enable_if<std::is_same<Dummy, TAO_OutStream &>::value &&
-                          !std::is_same<ACE_CDR::ULongLong, size_t>::value &&
-                          !std::is_same<ACE_CDR::ULong, size_t>::value,
-                          TAO_OutStream &>::type
+  std::enable_if_t<std::is_same_v<Dummy, TAO_OutStream &> &&
+                   !std::is_same_v<ACE_CDR::ULongLong, size_t> &&
+                   !std::is_same_v<ACE_CDR::ULong, size_t>,
+                   TAO_OutStream &>
   operator << (size_t const num)
   {
     this->flush_pending_whitespace ();

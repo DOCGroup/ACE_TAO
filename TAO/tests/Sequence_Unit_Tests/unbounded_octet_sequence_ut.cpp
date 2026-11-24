@@ -29,7 +29,7 @@ typedef tested_sequence::element_traits tested_element_traits;
 typedef tested_sequence::allocation_traits tested_allocation_traits;
 typedef details::range_checking<CORBA::Octet,true> range;
 
-static_assert (!std::is_nothrow_move_constructible<tested_sequence>::value);
+static_assert (!std::is_nothrow_move_constructible_v<tested_sequence>);
 
 struct Tester
 {

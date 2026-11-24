@@ -16,30 +16,30 @@ using TSS_Singleton = ACE_TSS_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX>;
 using Unmanaged_TSS_Singleton = ACE_Unmanaged_TSS_Singleton<int, ACE_SYNCH_RECURSIVE_MUTEX>;
 using DLL_Singleton = ACE_DLL_Singleton_T<int, ACE_SYNCH_RECURSIVE_MUTEX>;
 
-static_assert (!std::is_copy_constructible<Singleton>::value);
-static_assert (!std::is_move_constructible<Singleton>::value);
-static_assert (!std::is_copy_assignable<Singleton>::value);
-static_assert (!std::is_move_assignable<Singleton>::value);
+static_assert (!std::is_copy_constructible_v<Singleton>);
+static_assert (!std::is_move_constructible_v<Singleton>);
+static_assert (!std::is_copy_assignable_v<Singleton>);
+static_assert (!std::is_move_assignable_v<Singleton>);
 
-static_assert (!std::is_copy_constructible<Unmanaged_Singleton>::value);
-static_assert (!std::is_move_constructible<Unmanaged_Singleton>::value);
-static_assert (!std::is_copy_assignable<Unmanaged_Singleton>::value);
-static_assert (!std::is_move_assignable<Unmanaged_Singleton>::value);
+static_assert (!std::is_copy_constructible_v<Unmanaged_Singleton>);
+static_assert (!std::is_move_constructible_v<Unmanaged_Singleton>);
+static_assert (!std::is_copy_assignable_v<Unmanaged_Singleton>);
+static_assert (!std::is_move_assignable_v<Unmanaged_Singleton>);
 
-static_assert (!std::is_copy_constructible<TSS_Singleton>::value);
-static_assert (!std::is_move_constructible<TSS_Singleton>::value);
-static_assert (!std::is_copy_assignable<TSS_Singleton>::value);
-static_assert (!std::is_move_assignable<TSS_Singleton>::value);
+static_assert (!std::is_copy_constructible_v<TSS_Singleton>);
+static_assert (!std::is_move_constructible_v<TSS_Singleton>);
+static_assert (!std::is_copy_assignable_v<TSS_Singleton>);
+static_assert (!std::is_move_assignable_v<TSS_Singleton>);
 
-static_assert (!std::is_copy_constructible<Unmanaged_TSS_Singleton>::value);
-static_assert (!std::is_move_constructible<Unmanaged_TSS_Singleton>::value);
-static_assert (!std::is_copy_assignable<Unmanaged_TSS_Singleton>::value);
-static_assert (!std::is_move_assignable<Unmanaged_TSS_Singleton>::value);
+static_assert (!std::is_copy_constructible_v<Unmanaged_TSS_Singleton>);
+static_assert (!std::is_move_constructible_v<Unmanaged_TSS_Singleton>);
+static_assert (!std::is_copy_assignable_v<Unmanaged_TSS_Singleton>);
+static_assert (!std::is_move_assignable_v<Unmanaged_TSS_Singleton>);
 
-static_assert (!std::is_copy_constructible<DLL_Singleton>::value);
-static_assert (!std::is_move_constructible<DLL_Singleton>::value);
-static_assert (!std::is_copy_assignable<DLL_Singleton>::value);
-static_assert (!std::is_move_assignable<DLL_Singleton>::value);
+static_assert (!std::is_copy_constructible_v<DLL_Singleton>);
+static_assert (!std::is_move_constructible_v<DLL_Singleton>);
+static_assert (!std::is_copy_assignable_v<DLL_Singleton>);
+static_assert (!std::is_move_assignable_v<DLL_Singleton>);
 
 int
 run_main (int, ACE_TCHAR *[])
