@@ -86,7 +86,7 @@ run_main (int, ACE_TCHAR *[])
                  ACE_TEXT("Destructor count off, expected 1, found %d\n"),
                  Base::destructors));
     }
-  if (x.get())
+  if (x)
     {
       status = 1;
       ACE_ERROR((LM_ERROR,

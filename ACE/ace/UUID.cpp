@@ -41,9 +41,9 @@ namespace ACE_Utils
       {
         // Reset the string version of the UUID a string version
         // exist, and the UUID is not equal to the old UUID.
-        if (nullptr != this->as_string_.get ())
+        if (this->as_string_)
           {
-            if (nullptr == rhs.as_string_.get () || *this != rhs)
+            if (!rhs.as_string_ || *this != rhs)
             {
               this->as_string_.reset ();
             }
@@ -64,7 +64,7 @@ namespace ACE_Utils
   const ACE_CString * UUID::to_string () const
   {
     // Compute the string representation only once.
-    if (nullptr != this->as_string_.get ())
+    if (this->as_string_)
     {
       return this->as_string_.get ();
     }

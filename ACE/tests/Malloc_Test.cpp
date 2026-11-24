@@ -84,7 +84,7 @@ myallocator (const void *base_addr = nullptr)
 {
   static std::unique_ptr<MALLOC> static_allocator;
 
-  if (static_allocator.get () == nullptr)
+  if (!static_allocator)
     {
       ACE_MMAP_Memory_Pool_Options options (base_addr);
 
