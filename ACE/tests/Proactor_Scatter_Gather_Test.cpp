@@ -1507,7 +1507,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   if (!server_only)
     {
-      if (-1 == connector.open (1, ACE_Proactor::instance ()))
+      if (-1 == connector.open (true, ACE_Proactor::instance ()))
         {
           ACE_TEST_ASSERT (0);
           return -1;
