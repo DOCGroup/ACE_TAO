@@ -21,7 +21,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::AbstractBase::AbstractBase (CORBA::AbstractBase const &rhs)
   : is_objref_ (rhs.is_objref_)
-  , refcount_ (1)
   , is_collocated_ (rhs.is_collocated_)
   , servant_ (rhs.servant_)
   , equivalent_obj_ (CORBA::Object::_nil ())
@@ -38,7 +37,6 @@ CORBA::AbstractBase::AbstractBase (TAO_Stub * protocol_proxy,
                                    CORBA::Boolean collocated,
                                    TAO_Abstract_ServantBase * servant)
   : is_objref_ (true)
-  , refcount_ (1)
   , is_collocated_ (collocated)
   , servant_ (servant)
   , equivalent_obj_ (this->create_object (protocol_proxy))
