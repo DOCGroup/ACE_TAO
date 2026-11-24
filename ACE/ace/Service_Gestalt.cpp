@@ -577,7 +577,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
   // any static initializers
   std::unique_ptr<ACE_Service_Type> tmp (stf->make_service_type (this));
 
-  if (tmp.get () != nullptr &&
+  if (tmp &&
       this->initialize_i (tmp.get (), parameters) == 0)
     {
       // All good. Tthe ACE_Service_Type instance is now owned by the
@@ -956,7 +956,7 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
 
   std::unique_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
 
-  if (xml_svc_conf.get () == 0)
+  if (!xml_svc_conf)
     {
       return -1;
     }
@@ -991,7 +991,7 @@ ACE_Service_Gestalt::process_directive (const ACE_TCHAR directive[])
 
   std::unique_ptr<ACE_XML_Svc_Conf> xml_svc_conf (this->get_xml_svc_conf (dll));
 
-  if (xml_svc_conf.get () == 0)
+  if (!xml_svc_conf)
     {
       return -1;
     }
