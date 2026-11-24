@@ -1,4 +1,3 @@
-//
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class MUTEX> ACE_INLINE int

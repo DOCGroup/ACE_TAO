@@ -1,4 +1,3 @@
-//
 /**
  *  @file    RW_Process_Mutex.h
  *

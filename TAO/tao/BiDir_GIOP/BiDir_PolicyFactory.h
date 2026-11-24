@@ -1,4 +1,3 @@
-//
 /**
  *  @file BiDir_PolicyFactory.h
  *

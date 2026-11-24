@@ -1,5 +1,3 @@
-//
-
 #ifndef LOG_WALKER_GIOP_BUFFER_H
 #define LOG_WALKER_GIOP_BUFFER_H
 

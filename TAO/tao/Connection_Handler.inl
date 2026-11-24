@@ -1,4 +1,3 @@
-//
 #include "tao/Transport.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

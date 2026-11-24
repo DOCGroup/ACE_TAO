@@ -1,4 +1,3 @@
-//
 // The following configuration file is designed to work for win32
 // platforms using gcc/g++ with mingw32 (http://www.mingw.org).
 //

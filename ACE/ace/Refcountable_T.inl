@@ -1,4 +1,3 @@
-//
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK>

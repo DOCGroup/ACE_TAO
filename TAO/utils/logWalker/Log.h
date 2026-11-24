@@ -1,5 +1,3 @@
-//
-
 #ifndef LOG_WALKER_LOG_H
 #define LOG_WALKER_LOG_H
 

@@ -1,4 +1,3 @@
-//
 #include <cstring>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL

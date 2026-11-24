@@ -1,5 +1,3 @@
-//
-
 #ifndef LOG_WALKER_HOST_PROCESS_H
 #define LOG_WALKER_HOST_PROCESS_H
 #include "ace/SString.h"

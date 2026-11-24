@@ -1,4 +1,3 @@
-//
 // The actual conversion methods are covered by the copyright information
 // below.
 // Chad Elliott 4/28/2005
