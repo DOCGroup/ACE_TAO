@@ -603,8 +603,9 @@ ACE_Service_Repository_Iterator::dump () const
 }
 
 /// Initializes the iterator and skips over any suspended entries at
-/// the beginning of the table, if necessary.  Note, you must not
-/// perform destructive operations on elements during this iteration...
+/// the beginning of the table, if necessary.
+/// @note Do not perform destructive operations on elements during this
+/// iteration.
 ACE_Service_Repository_Iterator::ACE_Service_Repository_Iterator
   (ACE_Service_Repository &sr, bool ignored_suspended)
   : svc_rep_ (sr),

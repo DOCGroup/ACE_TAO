@@ -26,8 +26,9 @@
  *  dumpable classes.  In such cases we typically want only one
  *  dump, corresponding to the most derived instance.  Thanks to
  *  Christian Millour (chris@etca.fr) for illustrating how to do
- *  this.  Note, however, that this scheme doesn't generalize to
- *  work with multiple-inheritance or virtual base classes.
+ *  this.
+ * @note This scheme doesn't generalize to work with multiple-inheritance
+ * or virtual base classes.
  *
  * Future work includes:
  *

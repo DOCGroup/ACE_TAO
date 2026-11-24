@@ -93,7 +93,8 @@ public:
   char *char_rep () const;
 
   /// Transform into a copy of a USHORT16 representation (caller must
-  /// delete).  Note, behavior is undefined when sizeof (wchar_t) != 2.
+  /// delete).
+  /// @note Behavior is undefined when sizeof (wchar_t) != 2.
   ACE_UINT16 *ushort_rep () const;
 };
 

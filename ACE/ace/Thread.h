@@ -37,10 +37,10 @@ struct cancel_state
  *
  * This class provides a common interface that is mapped onto
  * POSIX Pthreads, Win32 threads, VxWorks
- * threads, or pSoS threads.  Note, however, that it is
- * generally a better idea to use the ACE_Thread_Manager
- * programming API rather than the @c ACE_Thread API since the
- * thread manager is more powerful.
+ * threads, or pSoS threads.
+ * @note It is generally a better idea to use the ACE_Thread_Manager
+ * programming API rather than the @c ACE_Thread API since the thread
+ * manager is more powerful.
  */
 class ACE_Export ACE_Thread
 {

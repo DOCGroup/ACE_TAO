@@ -200,12 +200,13 @@ private:
 
 private:
   /**
-   * Used for chaning references when the current profile is
-   * forwarded.  Note, this will only be valid for an MProfile which
-   * contains a list of forward_profiles for some initial or base
-   * profile.  This is a backward reference to the profile list which
-   * received the relocate message.  The actual profile what was
-   * forwarded will be forward_from_->get_current_profile ()
+   * Used for changing references when the current profile is
+   * forwarded.
+   * @note This will only be valid for an MProfile which contains a list
+   * of forward_profiles for some initial or base profile. This is a
+   * backward reference to the profile list which received the relocate
+   * message. The actual profile that was forwarded will be
+   * forward_from_->get_current_profile ().
    */
   TAO_MProfile  *forward_from_;
 

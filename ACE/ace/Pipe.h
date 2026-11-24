@@ -65,15 +65,15 @@ public:
   /// @{
 
   /**
-   * This is the "read" side of the pipe.  Note, however, that
-   * processes can also write to this handle as well since pipes are
+   * This is the "read" side of the pipe.
+   * @note Processes can also write to this handle since pipes are
    * bi-directional.
    */
   ACE_HANDLE read_handle () const;
 
   /**
-   * This is the "write" side of the pipe.  Note, however, that
-   * processes can also read to this handle as well since pipes are
+   * This is the "write" side of the pipe.
+   * @note Processes can also read from this handle since pipes are
    * bi-directional.
    */
   ACE_HANDLE write_handle () const;
