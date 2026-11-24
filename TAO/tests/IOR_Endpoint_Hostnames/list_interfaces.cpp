@@ -112,8 +112,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // exclude it from the list.
   bool ignore_lo {};
   if (ipv6_only)
-    // only exclude loopback if non-local if exists
-    ignore_lo = ipv6_non_ll;
+    {
+      // only exclude loopback if non-local if exists
+      ignore_lo = ipv6_non_ll;
+    }
   else if (ipv4_only)
     {
       ignore_lo = ipv4_cnt != ipv4_lo_cnt;

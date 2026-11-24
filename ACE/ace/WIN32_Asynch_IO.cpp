@@ -2849,7 +2849,9 @@ ACE_WIN32_Asynch_Connect::handle_output (ACE_HANDLE fd)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
     if (this->result_map_.unbind (fd, result) != 0) // not found
-      return -1;
+      {
+        return -1;
+      }
   }
 
   int sockerror  = 0 ;
@@ -2888,7 +2890,9 @@ ACE_WIN32_Asynch_Connect::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
   {
     ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, 0));
     if (this->result_map_.unbind (fd, result) != 0) // not found
-      return -1;
+      {
+        return -1;
+      }
   }
 
   result->set_bytes_transferred (0);

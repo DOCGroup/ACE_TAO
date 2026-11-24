@@ -737,9 +737,11 @@ Writer::on_delete_receiver ()
   if (0 == this->receiver_count_)
     {
       if (this->io_count_ <= 0)
-        // no pending io, so do the work oursleves
-        // (if pending io, they'll see the zero receiver count)
-        this->initiate_write_file ();
+        {
+          // no pending io, so do the work oursleves
+          // (if pending io, they'll see the zero receiver count)
+          this->initiate_write_file ();
+        }
     }
 }
 

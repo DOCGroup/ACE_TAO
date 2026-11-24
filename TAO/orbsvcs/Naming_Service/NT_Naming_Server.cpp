@@ -157,7 +157,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
             opt_args = nullptr;
           }
         else
-          this->print_usage_and_die ();
+          {
+            this->print_usage_and_die ();
+          }
         break;
       }
 }

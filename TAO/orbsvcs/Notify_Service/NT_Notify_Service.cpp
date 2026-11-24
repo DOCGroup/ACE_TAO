@@ -38,7 +38,9 @@ TAO_NT_Notify_Service::handle_control (DWORD control_code)
       report_status (SERVICE_STOPPED);
     }
   else
-    ACE_NT_Service::handle_control (control_code);
+    {
+      ACE_NT_Service::handle_control (control_code);
+    }
 }
 
 int

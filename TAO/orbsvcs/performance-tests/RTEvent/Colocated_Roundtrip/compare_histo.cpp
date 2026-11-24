@@ -63,7 +63,9 @@ ACE_TMAIN (int, ACE_TCHAR *argv[])
               Z.insert (Element (ki, p));
             }
           else
-            Z[ki] += p;
+            {
+              Z[ki] += p;
+            }
         }
     }
 
