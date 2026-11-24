@@ -31,9 +31,7 @@ ServerAdmin_i::ServerAdmin_i (ArrayTest_ptr target)
 {
 }
 
-ServerAdmin_i::~ServerAdmin_i ()
-{
-}
+ServerAdmin_i::~ServerAdmin_i () = default;
 
 ArrayTest_ptr
 ServerAdmin_i::target()

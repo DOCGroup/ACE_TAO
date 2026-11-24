@@ -57,9 +57,7 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb)
     }
 }
 
-Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler ()
-{
-}
+Fixed_Priority_Scheduler::~Fixed_Priority_Scheduler () = default;
 
 FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
 Fixed_Priority_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority segment_priority)
