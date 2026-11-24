@@ -199,7 +199,7 @@ public:
 
   /// Exit the current thread and return "status".
   /// Should _not_ be called by main thread.
-  static void exit (ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL);
+  static void exit (ACE_THR_FUNC_RETURN status = 0);
 
   /// Get the LWP concurrency level of the process.
   static int getconcurrency ();

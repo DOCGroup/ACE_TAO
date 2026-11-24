@@ -696,7 +696,7 @@ public:
    *                       the exit value of the thread.
    * Should _not_ be called by main thread.
    */
-  ACE_THR_FUNC_RETURN exit (ACE_THR_FUNC_RETURN status = ACE_THR_FUNC_RETURN_NULL,
+  ACE_THR_FUNC_RETURN exit (ACE_THR_FUNC_RETURN status = 0,
                             bool do_thread_exit = true);
 
   /**
