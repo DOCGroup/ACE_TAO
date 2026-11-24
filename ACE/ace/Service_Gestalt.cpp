@@ -912,8 +912,8 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
   int result = 0;
 
-  FILE *fp = ACE_OS::fopen (file,
-                            ACE_TEXT ("r"));
+  std::unique_ptr<FILE, decltype (&ACE_OS::fclose)> fp (
+    ACE_OS::fopen (file, ACE_TEXT ("r")), &ACE_OS::fclose);
 
   if (fp == nullptr)
     {
@@ -943,12 +943,10 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
     }
   else
     {
-      ACE_Svc_Conf_Param f (this, fp);
+      ACE_Svc_Conf_Param f (this, fp.get ());
 
       // Keep track of the number of errors.
       result = this->process_directives_i (&f);
-
-      (void) ACE_OS::fclose (fp);
     }
   return result;
 #else
