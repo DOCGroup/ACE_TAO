@@ -9,9 +9,7 @@ TAO_Notify_Tests_SupplierAdmin_Command::TAO_Notify_Tests_SupplierAdmin_Command (
 {
 }
 
-TAO_Notify_Tests_SupplierAdmin_Command::~TAO_Notify_Tests_SupplierAdmin_Command ()
-{
-}
+TAO_Notify_Tests_SupplierAdmin_Command::~TAO_Notify_Tests_SupplierAdmin_Command () = default;
 
 const char*
 TAO_Notify_Tests_SupplierAdmin_Command::get_name ()

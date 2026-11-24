@@ -11,9 +11,7 @@ TAO_Notify_Tests_EventChannel_Command::TAO_Notify_Tests_EventChannel_Command ()
 {
 }
 
-TAO_Notify_Tests_EventChannel_Command::~TAO_Notify_Tests_EventChannel_Command ()
-{
-}
+TAO_Notify_Tests_EventChannel_Command::~TAO_Notify_Tests_EventChannel_Command () = default;
 
 const char*
 TAO_Notify_Tests_EventChannel_Command::get_name ()

@@ -9,9 +9,7 @@ TAO_Notify_Tests_ConsumerAdmin_Command::TAO_Notify_Tests_ConsumerAdmin_Command (
 {
 }
 
-TAO_Notify_Tests_ConsumerAdmin_Command::~TAO_Notify_Tests_ConsumerAdmin_Command ()
-{
-}
+TAO_Notify_Tests_ConsumerAdmin_Command::~TAO_Notify_Tests_ConsumerAdmin_Command () = default;
 
 const char*
 TAO_Notify_Tests_ConsumerAdmin_Command::get_name ()

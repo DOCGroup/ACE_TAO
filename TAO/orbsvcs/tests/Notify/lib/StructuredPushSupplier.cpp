@@ -15,9 +15,7 @@ TAO_Notify_Tests_StructuredPushSupplier::TAO_Notify_Tests_StructuredPushSupplier
 {
 }
 
-TAO_Notify_Tests_StructuredPushSupplier::~TAO_Notify_Tests_StructuredPushSupplier ()
-{
-}
+TAO_Notify_Tests_StructuredPushSupplier::~TAO_Notify_Tests_StructuredPushSupplier () = default;
 
 void
 TAO_Notify_Tests_StructuredPushSupplier::send_event (

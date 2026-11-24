@@ -4,9 +4,7 @@ TAO_Notify_Tests_StructuredEvent::TAO_Notify_Tests_StructuredEvent ()
 {
 }
 
-TAO_Notify_Tests_StructuredEvent::~TAO_Notify_Tests_StructuredEvent ()
-{
-}
+TAO_Notify_Tests_StructuredEvent::~TAO_Notify_Tests_StructuredEvent () = default;
 
 TAO_Notify_Tests_StructuredEvent::TAO_Notify_Tests_StructuredEvent (const char* name)
 {

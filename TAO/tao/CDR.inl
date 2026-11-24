@@ -4,9 +4,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_OutputCDR::~TAO_OutputCDR ()
-{
-}
+TAO_OutputCDR::~TAO_OutputCDR () = default;
 
 ACE_INLINE bool
 TAO_OutputCDR::more_fragments () const
@@ -257,9 +255,7 @@ TAO_InputCDR::TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
 }
 
 ACE_INLINE
-TAO_InputCDR::~TAO_InputCDR ()
-{
-}
+TAO_InputCDR::~TAO_InputCDR () = default;
 
 ACE_INLINE TAO_ORB_Core*
 TAO_InputCDR::orb_core () const

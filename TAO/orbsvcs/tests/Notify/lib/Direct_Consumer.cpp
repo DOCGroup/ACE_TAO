@@ -6,9 +6,7 @@ TAO_Notify_Tests_Direct_Consumer::TAO_Notify_Tests_Direct_Consumer ()
 {
 }
 
-TAO_Notify_Tests_Direct_Consumer::~TAO_Notify_Tests_Direct_Consumer ()
-{
-}
+TAO_Notify_Tests_Direct_Consumer::~TAO_Notify_Tests_Direct_Consumer () = default;
 
 void
 TAO_Notify_Tests_Direct_Consumer::connect ()

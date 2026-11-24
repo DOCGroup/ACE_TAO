@@ -10,9 +10,7 @@ TAO_Notify_Tests_Command::TAO_Notify_Tests_Command ()
 {
 }
 
-TAO_Notify_Tests_Command::~TAO_Notify_Tests_Command ()
-{
-}
+TAO_Notify_Tests_Command::~TAO_Notify_Tests_Command () = default;
 
 void
 TAO_Notify_Tests_Command::init (ACE_Arg_Shifter& /*arg_shifter*/)

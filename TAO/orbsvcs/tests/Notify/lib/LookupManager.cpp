@@ -7,9 +7,7 @@ TAO_Notify_Tests_LookupManager::TAO_Notify_Tests_LookupManager ()
 {
 }
 
-TAO_Notify_Tests_LookupManager::~TAO_Notify_Tests_LookupManager ()
-{
-}
+TAO_Notify_Tests_LookupManager::~TAO_Notify_Tests_LookupManager () = default;
 
 void
 TAO_Notify_Tests_LookupManager::init (CORBA::ORB_ptr orb)

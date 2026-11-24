@@ -15,9 +15,7 @@ TAO_Notify_Tests_SequencePushSupplier::TAO_Notify_Tests_SequencePushSupplier ()
 {
 }
 
-TAO_Notify_Tests_SequencePushSupplier::~TAO_Notify_Tests_SequencePushSupplier ()
-{
-}
+TAO_Notify_Tests_SequencePushSupplier::~TAO_Notify_Tests_SequencePushSupplier () = default;
 
 void
 TAO_Notify_Tests_SequencePushSupplier::send_events (const CosNotification::EventBatch& events)

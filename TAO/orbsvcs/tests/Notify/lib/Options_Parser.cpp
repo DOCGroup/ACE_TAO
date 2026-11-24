@@ -7,9 +7,7 @@ TAO_Notify_Tests_Options_Parser::TAO_Notify_Tests_Options_Parser ()
 {
 }
 
-TAO_Notify_Tests_Options_Parser::~TAO_Notify_Tests_Options_Parser ()
-{
-}
+TAO_Notify_Tests_Options_Parser::~TAO_Notify_Tests_Options_Parser () = default;
 
 void
 TAO_Notify_Tests_Options_Parser::execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_Arg_Shifter& arg_shifter)

@@ -15,9 +15,7 @@ TAO_Notify_Tests_Peer::TAO_Notify_Tests_Peer ()
 {
 }
 
-TAO_Notify_Tests_Peer::~TAO_Notify_Tests_Peer ()
-{
-}
+TAO_Notify_Tests_Peer::~TAO_Notify_Tests_Peer () = default;
 
 void
 TAO_Notify_Tests_Peer::init (PortableServer::POA_ptr poa)
