@@ -38,7 +38,7 @@ class Exit_Handler : public ACE_Event_Handler
 public:
   Exit_Handler (const char *msg): msg_ (msg) { }
 
-  ~Exit_Handler () override { }
+  ~Exit_Handler () override = default;
 
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override
   {

@@ -17,8 +17,8 @@ const int TEST_MAX_STRING = 256;
 class Config_Test
 {
 public:
-  Config_Test () : equality_tested_ (0) { }
-  ~Config_Test () { }
+  Config_Test () = default;
+  ~Config_Test () = default;
 
   // Used to test the equality and inequality operations.
   int testEquality ();
@@ -60,7 +60,7 @@ private:
 
 private:
   /// Make sure the equality operator works before proceeding.
-  int equality_tested_;
+  int equality_tested_ {};
 };
 
 #endif /* __CONFIG_TEST_H */

@@ -65,8 +65,8 @@ static constexpr int default_niter = 10;
 //
 class Crono {
 public:
-  Crono() {}
-  ~Crono() {}
+  Crono() = default;
+  ~Crono() = default;
   void start ()
     {
 #if defined(USE_CLOCK)

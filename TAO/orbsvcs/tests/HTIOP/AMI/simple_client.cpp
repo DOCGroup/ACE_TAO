@@ -60,9 +60,9 @@ parse_args (int argc, ACE_TCHAR *argv[])
 class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
-  Handler () {};
+  Handler () = default;
 
-    ~Handler () {};
+  ~Handler () override = default;
 
   void foo (CORBA::Long ami_return_val,
             CORBA::Long out_l) override
