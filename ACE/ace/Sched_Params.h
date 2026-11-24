@@ -33,8 +33,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * and a time-slice quantum for round-robin scheduling.  A
  * "scope" parameter specifies whether the ACE_Sched_Params
  * applies to the current process, or current thread.  Please
- * see the "NOTE" below about not all combinations of parameters
- * being legal on a particular platform.
+ * see the note below about combinations of parameters that may not
+ * be legal on a particular platform.
  * For the case of thread priorities, it is intended that
  * <ACE_OS::sched_params> usually be called from @c main before
  * any threads have been spawned.  If spawned threads inherit
