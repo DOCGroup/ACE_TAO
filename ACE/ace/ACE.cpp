@@ -1207,7 +1207,7 @@ ACE::recv_n (ACE_HANDLE handle,
           // Check if this block has any space for incoming data.
           while (current_message_block_length > 0)
             {
-              auto const this_chunk_length =
+              u_long const this_chunk_length =
                 ACE_Utils::truncate_cast<u_long> (
                   current_message_block_length);
 
@@ -1877,7 +1877,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   bytes_transferred = 0;
 
-  auto *iov = const_cast<iovec *> (i);
+  iovec *iov = const_cast<iovec *> (i);
 
   for (int s = 0;
        s < iovcnt;
@@ -1949,7 +1949,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
   int val = 0;
   ACE::record_and_set_non_blocking_mode (handle, val);
 
-  auto *iov = const_cast<iovec *> (i);
+  iovec *iov = const_cast<iovec *> (i);
 
   for (int s = 0;
        s < iovcnt;
@@ -2042,7 +2042,7 @@ ACE::write_n (ACE_HANDLE handle,
           // Check if this block has any data to be sent.
           while (current_message_block_length > 0)
             {
-              auto const this_chunk_length =
+              u_long const this_chunk_length =
                 ACE_Utils::truncate_cast<u_long> (
                   current_message_block_length);
 
@@ -2142,7 +2142,7 @@ ACE::send_n (ACE_HANDLE handle,
           // Check if this block has any data to be sent.
           while (current_message_block_length > 0)
             {
-              auto const this_chunk_length =
+              u_long const this_chunk_length =
                 ACE_Utils::truncate_cast<u_long> (
                   current_message_block_length);
 
@@ -2270,7 +2270,7 @@ ACE::writev_n (ACE_HANDLE handle,
   size_t &bytes_transferred = bt == nullptr ? temp : *bt;
   bytes_transferred = 0;
 
-  auto *iov = const_cast<iovec *> (i);
+  iovec *iov = const_cast<iovec *> (i);
 
   for (int s = 0;
        s < iovcnt;

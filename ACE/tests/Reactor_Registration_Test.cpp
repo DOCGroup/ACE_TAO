@@ -155,7 +155,7 @@ test (ACE_Reactor_Impl &reactor_impl,
   ACE_Reactor reactor (std::addressof (reactor_impl),
                        false);
 
-  auto *e = new Event_Handler (reactor,
+  Event_Handler *e = new Event_Handler (reactor,
                                         ACE_INVALID_HANDLE,
                                         ACE_INVALID_HANDLE);
   if (!e->ok_)

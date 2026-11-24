@@ -145,7 +145,7 @@ cancellation (ACE_Timer_Queue &timer_queue,
       }
     }
 
-  auto *handler =
+  Reference_Counted_Event_Handler *handler =
     new Reference_Counted_Event_Handler (expected_number_of_handle_close_calls);
 
   ACE_Event_Handler_var safe_handler (handler);
@@ -284,7 +284,7 @@ expire (ACE_Timer_Queue &timer_queue,
   int events = 0;
   int result = 0;
 
-  auto *handler =
+  Reference_Counted_Event_Handler *handler =
     new Reference_Counted_Event_Handler (1);
 
   ACE_Event_Handler_var safe_handler (handler);
@@ -429,7 +429,7 @@ simple (ACE_Timer_Queue &timer_queue)
   long timer_id = -1;
 
   {
-    auto *handler =
+    Simple_Event_Handler *handler =
       new Simple_Event_Handler;
 
     timer_id =
@@ -447,7 +447,7 @@ simple (ACE_Timer_Queue &timer_queue)
   }
 
   {
-    auto *handler =
+    Simple_Event_Handler *handler =
       new Simple_Event_Handler;
 
     timer_id =

@@ -41,7 +41,7 @@ ACE_OS::strdup_emulation (const char *s)
 wchar_t *
 ACE_OS::strdup_emulation (const wchar_t *s)
 {
-  auto *buffer = static_cast<wchar_t *> (
+  wchar_t *buffer = static_cast<wchar_t *> (
     ACE_OS::malloc ((ACE_OS::strlen (s) + 1) * sizeof (wchar_t)));
   if (buffer == nullptr)
   {

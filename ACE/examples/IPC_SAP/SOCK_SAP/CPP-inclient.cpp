@@ -262,7 +262,7 @@ Options::oneway_client_test (void *)
 
   // Keep track of return value.
   intptr_t result = 0;
-  auto const len =
+  ACE_INT32 const len =
     ACE_Utils::truncate_cast<ACE_INT32> (options->message_len ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -324,7 +324,7 @@ Options::twoway_client_test (void *)
   // Timer business.
   ACE_High_Res_Timer timer;
 
-  auto const len =
+  ACE_INT32 const len =
     ACE_Utils::truncate_cast<ACE_INT32> (options->message_len ());
 
   ACE_DEBUG ((LM_DEBUG,

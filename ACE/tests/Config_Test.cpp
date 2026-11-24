@@ -136,7 +136,7 @@ test (ACE_Configuration *config,
     data_out = reinterpret_cast <u_char *> (data_tmp);
   }
 
-  auto *the_data = static_cast<u_char *> (data_out);
+  u_char * the_data = static_cast<u_char *> (data_out);
 
   // compare em
   for (size_t j = 0; j < data_len; ++j)
@@ -1348,7 +1348,7 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
                             {
                               ACE_TCHAR bin_value[3];
 
-                              auto *ptr =
+                              unsigned char *ptr =
                                 static_cast<unsigned char *> (binary_data);
                               while (binary_length)
                                 {

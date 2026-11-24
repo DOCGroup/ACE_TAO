@@ -214,7 +214,7 @@ run_main (int, ACE_TCHAR *[])
     ACE_Unbounded_Set<MyNode*> ubs3;
     for (int i = 0; i < 10; ++i)
       {
-        auto * const n = new MyNode (i);
+        MyNode * const n = new MyNode (i);
         ubs3.insert (n);
       }
     MyNode **i_n {};

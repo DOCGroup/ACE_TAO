@@ -373,7 +373,7 @@ cached_connect (STRAT_CONNECTOR &con,
 ACE_THR_FUNC_RETURN
 client_connections (void *arg)
 {
-  auto *info = static_cast<Client_Info *> (arg);
+  Client_Info *info = static_cast<Client_Info *> (arg);
 
   // Run the timed-blocking test.
   ACE_DEBUG ((LM_DEBUG,
@@ -410,7 +410,7 @@ client_connections (void *arg)
 ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  auto *remote_addr = static_cast<ACE_INET_Addr *> (arg);
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   CONNECTOR connector;
@@ -469,7 +469,7 @@ server (void *arg)
               ACE_OS::thr_min_stack ()));
 #endif /* VXWORKS */
 
-  auto *acceptor = static_cast<ACCEPTOR *> (arg);
+  ACCEPTOR *acceptor = static_cast<ACCEPTOR *> (arg);
   ACE_INET_Addr cli_addr;
   ACE_TCHAR peer_host[MAXHOSTNAMELEN];
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);

@@ -31,7 +31,7 @@ static const long max_queue = LONG_MAX;
 static void *
 consumer (void *args)
 {
-  auto *msg_queue =
+  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
     static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
   u_long cur_priority = 27;
@@ -92,7 +92,7 @@ consumer (void *args)
 static ACE_THR_FUNC_RETURN
 producer (void *args)
 {
-  auto *msg_queue =
+  ACE_Message_Queue<ACE_MT_SYNCH> *msg_queue =
     static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (args);
 
   ACE_Message_Block *mb {};

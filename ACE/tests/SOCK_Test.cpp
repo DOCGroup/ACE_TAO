@@ -27,7 +27,7 @@ static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  auto *remote_addr = static_cast<ACE_INET_Addr *> (arg);
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (), ACE_LOCALHOST);
   ACE_SOCK_Stream cli_stream;
   ACE_SOCK_Connector con;
@@ -119,7 +119,7 @@ client (void *arg)
 ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  auto *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
+  ACE_SOCK_Acceptor *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
 
   if (peer_acceptor->enable (ACE_NONBLOCK) == -1)
   {

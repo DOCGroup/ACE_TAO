@@ -123,7 +123,7 @@ test_timed_wait (int nesting_level,
     }
   else
     {
-      auto seed = (u_int) ACE_OS::time (nullptr);
+      u_int seed = (u_int) ACE_OS::time (nullptr);
 
       for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; ++i)
         {
@@ -319,7 +319,7 @@ test_timed_wait (int nesting_level,
 static ACE_THR_FUNC_RETURN
 recursion_worker (void *arg)
 {
-  auto *rm = static_cast<ACE_TEST_MUTEX *> (arg);
+  ACE_TEST_MUTEX *rm = static_cast<ACE_TEST_MUTEX *> (arg);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t) Starting test of recursion depth\n")));
   test_recursion_depth (0, rm);
@@ -330,7 +330,7 @@ recursion_worker (void *arg)
 static ACE_THR_FUNC_RETURN
 timed_worker (void *arg)
 {
-  auto *rm = static_cast<ACE_TEST_MUTEX *> (arg);
+  ACE_TEST_MUTEX *rm = static_cast<ACE_TEST_MUTEX *> (arg);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%P|%t) Starting test of timed wait\n")));
   test_timed_wait (0, rm);

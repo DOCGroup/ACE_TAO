@@ -93,7 +93,7 @@ int
 ACE_POSIX_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor_impl)
 {
   // Get to the platform specific implementation.
-  auto *posix_proactor = dynamic_cast<ACE_POSIX_Proactor *> (proactor_impl);
+  ACE_POSIX_Proactor *posix_proactor = dynamic_cast<ACE_POSIX_Proactor *> (proactor_impl);
 
   if (posix_proactor == nullptr)
   {
@@ -1493,7 +1493,7 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
 
   if (local_sap != ACE_Addr::sap_any)
     {
-      auto *laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
+      sockaddr * laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
       size_t const size = local_sap.get_size ();
 
       if (ACE_OS::bind (handle, laddr, size) == -1)

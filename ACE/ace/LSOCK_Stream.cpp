@@ -22,7 +22,7 @@ ACE_LSOCK_Stream::get_local_addr (ACE_Addr &addr) const
 
   // Perform the downcast since <addr> had better be an
   // <ACE_UNIX_Addr>.
-  auto *rhs_unix_addr = dynamic_cast<ACE_UNIX_Addr *> (&addr);
+  ACE_UNIX_Addr *rhs_unix_addr = dynamic_cast<ACE_UNIX_Addr *> (&addr);
   ACE_UNIX_Addr lhs_unix_addr;
 
   if (rhs_unix_addr == nullptr)
@@ -73,7 +73,7 @@ ACE_LSOCK_Stream::send_msg (const iovec iov[],
   msghdr send_msg;
 #if !defined (ACE_LACKS_SENDMSG) && defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
   char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
-  auto *cmsgptr = (cmsghdr *) cmsgbuf;
+  cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   send_msg.msg_iov = const_cast <iovec *> (iov);
@@ -114,7 +114,7 @@ ACE_LSOCK_Stream::recv_msg (iovec iov[],
   msghdr recv_msg;
 #if !defined (ACE_LACKS_SENDMSG) && defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
   char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
-  auto *cmsgptr = (cmsghdr *) cmsgbuf;
+  cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   recv_msg.msg_iov = (iovec *) iov;

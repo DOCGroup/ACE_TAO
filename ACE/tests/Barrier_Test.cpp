@@ -33,7 +33,7 @@ struct Tester_Args
 static ACE_THR_FUNC_RETURN
 wait_tester (void *arg)
 {
-  auto *args = static_cast<Tester_Args *> (arg);
+  Tester_Args *args = static_cast<Tester_Args *> (arg);
 
   for (int iterations = 1;
        iterations <= args->n_iterations_;
@@ -59,7 +59,7 @@ wait_tester (void *arg)
 static ACE_THR_FUNC_RETURN
 shut_tester (void *arg)
 {
-  auto *args = static_cast<Tester_Args *> (arg);
+  Tester_Args *args = static_cast<Tester_Args *> (arg);
 
   if (args->tester_barrier_.wait () == 0)
     {

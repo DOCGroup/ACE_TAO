@@ -97,7 +97,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
 
   if (local_sap != ACE_Addr::sap_any)
     {
-      auto *laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
+      sockaddr *laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
       int const size = local_sap.get_size ();
 
       if (ACE_OS::bind (new_association.get_handle (),
@@ -404,7 +404,7 @@ ACE_SOCK_SEQPACK_Connector::complete (ACE_SOCK_SEQPACK_Association &new_associat
   if (remote_sap != nullptr)
     {
       int len = remote_sap->get_size ();
-      auto *addr = reinterpret_cast<sockaddr *> (remote_sap->get_addr ());
+      sockaddr *addr = reinterpret_cast<sockaddr *> (remote_sap->get_addr ());
       if (ACE_OS::getpeername (h,
                                addr,
                                &len) == -1)

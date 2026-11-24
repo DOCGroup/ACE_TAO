@@ -61,7 +61,7 @@ ACE_SSL_SOCK_Stream::sendv (const iovec iov[],
   ssize_t bytes_sent {};
 
   ACE_Time_Value t;
-  auto *timeout = const_cast<ACE_Time_Value *> (max_wait_time);
+  ACE_Time_Value *timeout = const_cast<ACE_Time_Value *> (max_wait_time);
 
   if (max_wait_time != nullptr)
     {

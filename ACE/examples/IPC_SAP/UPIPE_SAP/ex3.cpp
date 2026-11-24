@@ -104,7 +104,7 @@ consumer (void *)
 
   ACE_OS::time (&currsec);
 
-  auto start = (time_t) currsec;
+  time_t start = (time_t) currsec;
   int result = 0;
   int blocks = 0;
 

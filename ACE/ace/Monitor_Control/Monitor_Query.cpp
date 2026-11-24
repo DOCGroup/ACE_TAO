@@ -21,7 +21,7 @@ namespace ACE
       ACE_Time_Value const& /* current */,
       void const* monitor_query)
     {
-      auto const * const mq =
+      Monitor_Query const* const mq =
         static_cast<Monitor_Query const*> (monitor_query);
 
       mq->query ();

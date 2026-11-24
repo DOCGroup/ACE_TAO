@@ -15,8 +15,8 @@
 void *
 smemcpy (void *dest, const void *src, const size_t n)
 {
-  auto *to = static_cast<unsigned char*> (dest);
-  auto const *from = static_cast<const unsigned char*> (src);
+  unsigned char *to = static_cast<unsigned char*> (dest);
+  const unsigned char *from = static_cast<const unsigned char*> (src);
   // Unroll the loop...
   switch (n) {
     case 16: to[ 15] = from[ 15];

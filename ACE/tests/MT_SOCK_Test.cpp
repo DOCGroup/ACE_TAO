@@ -38,7 +38,7 @@ static constexpr int NUM_CLIENTS = 30;
 ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  auto *remote_addr = static_cast<ACE_INET_Addr *> (arg);
+  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   ACE_INET_Addr client_addr;
@@ -156,7 +156,7 @@ client (void *arg)
 ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  auto *peer_acceptor =
+  ACE_SOCK_Acceptor *peer_acceptor =
     static_cast<ACE_SOCK_Acceptor *> (arg);
 
   if (peer_acceptor->enable (ACE_NONBLOCK) == -1)

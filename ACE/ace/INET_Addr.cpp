@@ -136,9 +136,9 @@ ACE_INET_Addr::is_ip_equal (const ACE_INET_Addr &sap) const
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET6)
     {
-      auto const *addr =
+      const unsigned int *addr =
         reinterpret_cast<const unsigned int*>(this->ip_addr_pointer());
-      auto const *saddr =
+      const unsigned int *saddr =
         reinterpret_cast<const unsigned int*>(sap.ip_addr_pointer());
       return (addr[0] == saddr[0] &&
               addr[1] == saddr[1] &&
@@ -158,7 +158,7 @@ ACE_INET_Addr::hash () const
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == PF_INET6)
     {
-      auto const *addr
+      const unsigned int *addr
         = static_cast<const unsigned int *> (this->ip_addr_pointer ());
       return addr[0] + addr[1] + addr[2] + addr[3] + this->get_port_number();
     }
@@ -514,7 +514,7 @@ static int get_port_number_from_name (const char port_name[],
 
       // Return the port number.  NOTE: this number must
       // be returned in network byte order!
-      auto n = static_cast<u_short> (port_number);
+      u_short n = static_cast<u_short> (port_number);
       n = ACE_HTONS (n);
       return n;
     }
@@ -692,7 +692,7 @@ void
 ACE_INET_Addr::set_addr (const void *addr, int /* len */, int map)
 {
   ACE_TRACE ("ACE_INET_Addr::set_addr");
-  auto const *getfamily =
+  const struct sockaddr_in *getfamily =
     static_cast<const struct sockaddr_in *> (addr);
 
   if (getfamily->sin_family == AF_INET)
@@ -715,7 +715,7 @@ ACE_INET_Addr::set_addr (const void *addr, int /* len */, int map)
 #if defined (ACE_HAS_IPV6)
   else if (getfamily->sin_family == AF_INET6)
     {
-      auto const *in6 =
+      const struct sockaddr_in6 *in6 =
         static_cast<const struct sockaddr_in6*> (addr);
       this->set_port_number (in6->sin6_port, 0);
       this->set_address (reinterpret_cast<const char*> (&in6->sin6_addr),

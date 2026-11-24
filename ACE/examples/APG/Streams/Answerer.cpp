@@ -383,7 +383,7 @@ public:
     ACE_Message_Block *mb {};
     ACE_NEW_RETURN (mb, ACE_Message_Block (sizeof(Message)), -1);
 
-    auto *message = (Message *)mb->wr_ptr ();
+    Message *message = (Message *)mb->wr_ptr ();
     mb->wr_ptr (sizeof(Message));
 
     ACE_DEBUG ((LM_DEBUG,

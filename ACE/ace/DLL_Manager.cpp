@@ -698,7 +698,7 @@ ACE_DLL_Manager::close ()
         {
           if (this->handle_vector_[i])
             {
-              auto *s =
+              ACE_DLL_Handle *s =
                 const_cast<ACE_DLL_Handle *> (this->handle_vector_[i]);
               this->handle_vector_[i] = nullptr;
               this->unload_dll (s, force_close);
@@ -759,9 +759,9 @@ ACE_DLL_Manager::unload_dll (ACE_DLL_Handle *dll_handle, int force_unload)
 
               void * const unload_policy_ptr =
                 dll_handle->symbol (ACE_TEXT ("_get_dll_unload_policy"), true);
-              auto const temp_p = reinterpret_cast<intptr_t> (unload_policy_ptr);
+              intptr_t const temp_p = reinterpret_cast<intptr_t> (unload_policy_ptr);
 
-              auto const the_policy =
+              dll_unload_policy const the_policy =
                 reinterpret_cast<dll_unload_policy> (temp_p);
 
               if (the_policy != nullptr)

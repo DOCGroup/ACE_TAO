@@ -35,7 +35,7 @@ int CommandTask::close (u_long flags)
   int rval = 0;
   if (flags == 1)
     {
-      auto *hangup = new ACE_Message_Block;
+      ACE_Message_Block *hangup = new ACE_Message_Block;
       hangup->msg_type (ACE_Message_Block::MB_HANGUP);
       if (this->putq (hangup->duplicate ()) == -1)
         {
@@ -90,7 +90,7 @@ int CommandTask::svc ()
       // Listing 061
 
       // Listing 062 code/ch18
-      auto *command = (Command *)message->data_block ();
+      Command *command = (Command *)message->data_block ();
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("CommandTask::svc() - ")

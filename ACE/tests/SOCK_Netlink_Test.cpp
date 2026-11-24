@@ -484,7 +484,7 @@ Secondary_Ipaddr_Handler::handle_input (ACE_HANDLE)
 
       if (hdr->nlmsg_type == NLMSG_ERROR)
         {
-          auto *err = static_cast <struct nlmsgerr*> (NLMSG_DATA(hdr));
+          struct nlmsgerr *err = static_cast <struct nlmsgerr*> (NLMSG_DATA(hdr));
 
           errno = -err->error;
           if (errno == 0)
@@ -714,7 +714,7 @@ Secondary_Ipaddr_Handler::fill_rtnetlink_request (
                                                   int data_length)
 {
   // points to the end of the aligned header
-  auto *rta = reinterpret_cast<struct rtattr *> (
+  struct rtattr *rta = reinterpret_cast<struct rtattr *> (
     reinterpret_cast<char *> (std::addressof (hdr)) + NLMSG_ALIGN (hdr.nlmsg_len));
 
   rta->rta_type = type;

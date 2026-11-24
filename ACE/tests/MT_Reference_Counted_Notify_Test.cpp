@@ -300,7 +300,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
       REACTOR_IMPLEMENTATION impl;
       ACE_Reactor reactor (std::addressof (impl), 0);
 
-      auto *simple_event_handler =
+      Simple_Event_Handler *simple_event_handler =
         new Simple_Event_Handler (iterations);
 
       notify (reactor,
@@ -316,7 +316,7 @@ test<REACTOR_IMPLEMENTATION>::test (int extra_iterations_needed)
       REACTOR_IMPLEMENTATION impl;
       ACE_Reactor reactor (std::addressof (impl), 0);
 
-      auto *reference_counted_event_handler =
+      Reference_Counted_Event_Handler *reference_counted_event_handler =
         new Reference_Counted_Event_Handler;
 
       ACE_Event_Handler_var safe_event_handler (reference_counted_event_handler);

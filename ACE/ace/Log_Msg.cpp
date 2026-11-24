@@ -261,7 +261,7 @@ ACE_TSS_CLEANUP_NAME (void *ptr)
   if (ptr != nullptr)
     {
       // Delegate to thr_desc if this not has terminated
-      auto *log_msg = (ACE_Log_Msg *) ptr;
+      ACE_Log_Msg *log_msg = (ACE_Log_Msg *) ptr;
       if (log_msg->thr_desc () != nullptr)
         {
           log_msg->thr_desc ()->log_msg_cleanup (log_msg);
@@ -307,7 +307,7 @@ ACE_Log_Msg::instance ()
 
   if (!ACE_Log_Msg::key_created_)
     {
-      auto *lock =
+      ACE_thread_mutex_t *lock =
         reinterpret_cast<ACE_thread_mutex_t *> (
           ACE_OS_Object_Manager::preallocated_object
             [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
@@ -505,7 +505,7 @@ ACE_Log_Msg::close ()
 
   if (ACE_Log_Msg::key_created_)
     {
-      auto *lock =
+      ACE_thread_mutex_t *lock =
         reinterpret_cast<ACE_thread_mutex_t *>
   (ACE_OS_Object_Manager::preallocated_object
    [ACE_OS_Object_Manager::ACE_LOG_MSG_INSTANCE_LOCK]);
@@ -528,7 +528,7 @@ ACE_Log_Msg::close ()
          if (ACE_Thread::getspecific (*(log_msg_tss_key ()), &temp) != -1
              && temp)
            {
-             auto *tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
+             ACE_Log_Msg *tss_log_msg = static_cast <ACE_Log_Msg *> (temp);
              // we haven't been cleaned up
              ACE_TSS_CLEANUP_NAME(tss_log_msg);
              if (ACE_Thread::setspecific(*(log_msg_tss_key()), nullptr) != 0)
@@ -1096,7 +1096,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
   // bp is pointer to where to put next part of logged message.
   // bspace is the number of characters remaining in msg_.
-  auto *bp = const_cast<ACE_TCHAR *> (this->msg ());
+  ACE_TCHAR *bp = const_cast<ACE_TCHAR *> (this->msg ());
   size_t bspace = ACE_MAXLOGMSGLEN;  // Leave room for Nul term.
   if (this->msg_off_ <= ACE_Log_Record::MAXLOGMSGLEN)
   {
@@ -2047,7 +2047,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   {
                     // On some platforms sizeof (wchar_t) can be 2
                     // on the others 4 ...
-                    auto const wtchar =
+                    wchar_t const wtchar =
                       static_cast<wchar_t> (va_arg (argp, int));
 #if defined (ACE_WIN32)
 # if defined (ACE_USES_WCHAR)

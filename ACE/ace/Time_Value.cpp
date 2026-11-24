@@ -173,7 +173,7 @@ ACE_Time_Value::normalize (bool saturate)
     {
       time_t const sec = std::abs (this->tv_.tv_usec) /
         ACE_ONE_SECOND_IN_USECS * (this->tv_.tv_usec > 0 ? 1 : -1);
-      auto const usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
+      suseconds_t const usec = static_cast<suseconds_t> (this->tv_.tv_usec - sec * ACE_ONE_SECOND_IN_USECS);
 
       if (saturate && this->tv_.tv_sec > 0 && sec > 0 &&
           (ACE_Numeric_Limits<time_t>::max) () - this->tv_.tv_sec < sec)
@@ -228,7 +228,7 @@ ACE_Time_Value::operator *= (double d)
   // of the computation.
   using float_type = ACE::If_Then_Else<(sizeof(double) > sizeof(time_t)), double, long double>::result_type;
 
-  auto sec_total = static_cast<float_type> (this->sec());
+  float_type sec_total = static_cast<float_type> (this->sec());
   sec_total *= d;
 
   // shall we saturate the result?
@@ -247,7 +247,7 @@ ACE_Time_Value::operator *= (double d)
     }
   else
     {
-      auto time_sec = static_cast<time_t> (sec_total);
+      time_t time_sec = static_cast<time_t> (sec_total);
 
       float_type usec_total = this->usec();
       usec_total *= d;
@@ -285,7 +285,7 @@ ACE_Time_Value::operator *= (double d)
       else
         {
           time_sec = static_cast<time_t> (sec_total);
-          auto time_usec = static_cast<suseconds_t> (usec_total);
+          suseconds_t time_usec = static_cast<suseconds_t> (usec_total);
 
           // round up the result to save the last usec
           if (time_usec > 0 && (usec_total - time_usec) >= 0.5)

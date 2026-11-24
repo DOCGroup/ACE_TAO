@@ -51,7 +51,7 @@ void showRecords ()
 
     for (void *temp {}; iter.next (temp) != 0; iter.advance ())
       {
-        auto *record =
+        Record *record =
           reinterpret_cast<Record *> (temp);
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("Record name: %C|id1:%d|id2:%d\n"),
@@ -78,7 +78,7 @@ int addRecords ()
         }
 
       // Allocate and place record
-      auto *newRecord = new (memory) Record (i, i+1, buf);
+      Record* newRecord = new (memory) Record (i, i+1, buf);
       if (g_allocator->bind (buf, newRecord) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

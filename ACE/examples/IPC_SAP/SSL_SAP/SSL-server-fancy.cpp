@@ -327,7 +327,7 @@ Twoway_Handler::run ()
         }
       else
         {
-          auto s_bytes =
+          ssize_t s_bytes =
             (ssize_t) OPTIONS::instance ()->reply_message_len ();
 
           // Don't try to send more than is in the request buffer!

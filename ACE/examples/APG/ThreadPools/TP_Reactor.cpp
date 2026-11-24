@@ -182,7 +182,7 @@ private:
   {
       ACE_SOCK_Stream stream;
       ACE_SOCK_Connector connect;
-      auto const len = static_cast<size_t> (arg[0]);
+      size_t const len = static_cast<size_t> (arg[0]);
 
       for (size_t i = 0; i < cli_conn_no; ++i)
         {

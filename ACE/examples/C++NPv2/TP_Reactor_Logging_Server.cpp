@@ -40,7 +40,7 @@ protected:
 };
 
 static ACE_THR_FUNC_RETURN event_loop (void *arg) {
-  auto *reactor = static_cast<ACE_Reactor *> (arg);
+  ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
   reactor->owner (ACE_OS::thr_self ());
   reactor->run_reactor_event_loop ();
@@ -48,7 +48,7 @@ static ACE_THR_FUNC_RETURN event_loop (void *arg) {
 }
 
 static ACE_THR_FUNC_RETURN controller (void *arg) {
-  auto *reactor = static_cast<ACE_Reactor *> (arg);
+  ACE_Reactor *reactor = static_cast<ACE_Reactor *> (arg);
 
   Quit_Handler *quit_handler {};
   ACE_NEW_RETURN (quit_handler, Quit_Handler (reactor), ACE_THR_FUNC_RETURN_NULL);

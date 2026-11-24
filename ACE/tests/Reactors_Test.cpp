@@ -172,7 +172,7 @@ Test_Task::handle_input (ACE_HANDLE)
 static ACE_THR_FUNC_RETURN
 worker (void *args)
 {
-  auto *reactor = static_cast<ACE_Reactor *> (args);
+  ACE_Reactor *reactor = static_cast<ACE_Reactor *> (args);
 
   // Make this thread the owner of the Reactor's event loop.
   reactor->owner (ACE_Thread::self ());

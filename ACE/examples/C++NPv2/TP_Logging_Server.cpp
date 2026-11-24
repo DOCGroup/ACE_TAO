@@ -64,7 +64,7 @@ TP_Logging_Handler::handle_close (ACE_HANDLE handle,
 int TP_Logging_Task::svc () {
   for (ACE_Message_Block *log_blk; getq (log_blk) != -1; ) {
     ACE_Message_Block_Unique_Ptr log_blk_owner {log_blk};
-    auto *tp_handler = reinterpret_cast<TP_Logging_Handler *> (log_blk->rd_ptr ());
+    TP_Logging_Handler *tp_handler = reinterpret_cast<TP_Logging_Handler *> (log_blk->rd_ptr ());
     Logging_Handler logging_handler (tp_handler->log_file ());
     logging_handler.write_log_record (*log_blk->cont ());
 

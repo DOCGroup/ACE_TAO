@@ -112,7 +112,7 @@ ACE_Service_Object_Type::init (int argc, ACE_TCHAR *argv[]) const
 
   void * const obj = this->object ();
 
-  auto * const so =
+  ACE_Service_Object * const so =
     static_cast<ACE_Service_Object *> (obj);
 
   if (so == nullptr)
@@ -132,7 +132,7 @@ ACE_Service_Object_Type::fini () const
 
   void * const obj = this->object ();
 
-  auto * const so =
+  ACE_Service_Object * const so =
     static_cast<ACE_Service_Object *> (obj);
 
   // Call fini() if an only if, the object was successfully
@@ -201,7 +201,7 @@ ACE_Module_Type::init (int argc, ACE_TCHAR *argv[]) const
 {
   ACE_TRACE ("ACE_Module_Type::init");
   void *obj = this->object ();
-  auto *mod = (MT_Module *) obj;
+  MT_Module *mod = (MT_Module *) obj;
   //
   // Change the Module's name to what's in the svc.conf file.  We must
   // do this so the names match up so everything shuts down properly
@@ -230,7 +230,7 @@ ACE_Module_Type::suspend () const
 {
   ACE_TRACE ("ACE_Module_Type::suspend");
   void *obj = this->object ();
-  auto *mod = (MT_Module *) obj;
+  MT_Module *mod = (MT_Module *) obj;
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
 
@@ -250,7 +250,7 @@ ACE_Module_Type::resume () const
 {
   ACE_TRACE ("ACE_Module_Type::resume");
   void *obj = this->object ();
-  auto *mod = (MT_Module *) obj;
+  MT_Module *mod = (MT_Module *) obj;
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
 
@@ -273,7 +273,7 @@ ACE_Module_Type::fini () const
 {
   ACE_TRACE ("ACE_Module_Type::fini");
   void *obj = this->object ();
-  auto *mod = (MT_Module *) obj;
+  MT_Module *mod = (MT_Module *) obj;
   MT_Task *reader = mod->reader ();
   MT_Task *writer = mod->writer ();
 
@@ -416,7 +416,7 @@ ACE_Stream_Type::fini () const
 {
   ACE_TRACE ("ACE_Stream_Type::fini");
   void *obj = this->object ();
-  auto *str = (MT_Stream *) obj;
+  MT_Stream *str = (MT_Stream *) obj;
 
   for (ACE_Module_Type *m = this->head_; m != nullptr;)
   {
@@ -441,7 +441,7 @@ ACE_Stream_Type::remove (ACE_Module_Type *mod)
 
   ACE_Module_Type *prev {};
   void *obj = this->object ();
-  auto *str = (MT_Stream *) obj;
+  MT_Stream *str = (MT_Stream *) obj;
   int result = 0;
 
   for (ACE_Module_Type *m = this->head_; m != nullptr; )
@@ -486,7 +486,7 @@ ACE_Stream_Type::push (ACE_Module_Type *new_module)
 {
   ACE_TRACE ("ACE_Stream_Type::push");
   void *obj = this->object ();
-  auto *str = (MT_Stream *) obj;
+  MT_Stream *str = (MT_Stream *) obj;
 
   new_module->link (this->head_);
   this->head_ = new_module;

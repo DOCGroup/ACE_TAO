@@ -298,7 +298,7 @@ Svc_Handler::send_data ()
     {
       buffer_len tryThreshold = 0x7fff;
       ssize_t thresholdActualSend = -1;
-      auto const MAX =
+      const ssize_t MAX =
         static_cast<ssize_t>(
           (static_cast<unsigned long long>(1) <<
             (static_cast<unsigned long long>(sizeof(ssize_t) * 8) -
@@ -670,7 +670,7 @@ Svc_Handler::send (IovecGuard& iovec_array,
         }
       return -1;
     }
-  auto sent_bytes = static_cast<buffer_len>(actual_send_status);
+  buffer_len sent_bytes = static_cast<buffer_len>(actual_send_status);
   if (sent_bytes >= iovec_array.totalBytes_)
     {
 #if defined (ACE_WIN32)
@@ -997,7 +997,7 @@ Svc_Handler::close (u_long side)
 static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  auto *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
+  ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_DEFAULT_SERVER_HOST);
   CONNECTOR connector;
@@ -1029,7 +1029,7 @@ client (void *arg)
 static ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  auto *acceptor = static_cast<ACCEPTOR *> (arg);
+  ACCEPTOR *acceptor = static_cast<ACCEPTOR *> (arg);
   ACE_INET_Addr cli_addr;
   ACE_TCHAR peer_host[MAXHOSTNAMELEN];
   const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);

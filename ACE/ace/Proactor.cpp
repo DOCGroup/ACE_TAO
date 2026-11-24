@@ -820,7 +820,7 @@ ACE_Proactor::timer_queue (ACE_Proactor_Timer_Queue *tq)
   // Set the proactor in the timer queue's functor
   using TQ_Base = ACE_Timer_Queue_Upcall_Base<ACE_Handler *, ACE_Proactor_Handle_Timeout_Upcall>;
 
-  auto *tqb = dynamic_cast<TQ_Base*> (this->timer_queue_);
+  TQ_Base * tqb = dynamic_cast<TQ_Base*> (this->timer_queue_);
 
   if (tqb != nullptr)
     {

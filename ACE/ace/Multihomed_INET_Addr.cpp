@@ -266,7 +266,7 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
   size_t i = 0;
   for (i = 0; i < size; ++i)
     {
-      auto *in4 = reinterpret_cast<sockaddr_in*> (me.get_addr ());
+      sockaddr_in *in4 = reinterpret_cast<sockaddr_in*> (me.get_addr ());
       if (in4->sin_family == AF_INET)
         {
           addrs[i] = *in4;
@@ -285,7 +285,7 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in *addrs,
       ACE_INET_Addr copy (this->secondaries_[j]);
       for (; i < size; ++i)
         {
-          auto *in4 = reinterpret_cast<sockaddr_in*> (copy.get_addr ());
+          sockaddr_in *in4 = reinterpret_cast<sockaddr_in*> (copy.get_addr ());
           if (in4->sin_family == AF_INET)
             {
               addrs[i] = *in4;
@@ -313,7 +313,7 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
   size_t i = 0;
   for (i = 0; i < size; ++i)
     {
-      auto *in6 = reinterpret_cast<sockaddr_in6*> (me.get_addr ());
+      sockaddr_in6 *in6 = reinterpret_cast<sockaddr_in6*> (me.get_addr ());
       if (in6->sin6_family == AF_INET6)
         {
           addrs[i] = *in6;
@@ -332,7 +332,7 @@ ACE_Multihomed_INET_Addr::get_addresses(sockaddr_in6 *addrs,
       ACE_INET_Addr copy (this->secondaries_[j]);
       for (; i < size; ++i)
         {
-          auto *in6 =
+          sockaddr_in6 *in6 =
             reinterpret_cast<sockaddr_in6*> (copy.get_addr ());
           if (in6->sin6_family == AF_INET6)
             {

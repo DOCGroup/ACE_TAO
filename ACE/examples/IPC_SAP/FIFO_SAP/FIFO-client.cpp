@@ -13,7 +13,7 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   while (ACE_OS::fgets (buf, sizeof buf, stdin) != nullptr)
     {
-      auto n = ACE_Utils::truncate_cast<ssize_t> (ACE_OS::strlen (buf));
+      ssize_t n = ACE_Utils::truncate_cast<ssize_t> (ACE_OS::strlen (buf));
 
       if (client.send (buf, n) != n)
       {

@@ -33,7 +33,7 @@ ACE_TSS_C_cleanup (void *object)
 {
   if (object != nullptr)
     {
-      auto * const tss_adapter =
+      ACE_TSS_Adapter * const tss_adapter =
         static_cast<ACE_TSS_Adapter *> (object);
       // Perform cleanup on the real TS object.
       tss_adapter->cleanup ();

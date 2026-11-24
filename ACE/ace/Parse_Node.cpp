@@ -46,7 +46,7 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
   }
 
   sst = this->node_->record (config);
-  auto *st =
+  ACE_Stream_Type *st =
       dynamic_cast<ACE_Stream_Type *> (const_cast<ACE_Service_Type_Impl *> (sst->type ()));
 
   // The modules were linked as popped off the yacc stack, so they're in
@@ -90,10 +90,10 @@ ACE_Stream_Node::apply (ACE_Service_Gestalt *config, int &yyerrno)
           continue;     // Don't try anything else with this one
         }
 
-      auto const * const mt1 =
+      ACE_Module_Type const * const mt1 =
         static_cast <ACE_Module_Type const *> (module->record (config)->type());
 
-      auto *mt = const_cast<ACE_Module_Type *>(mt1);
+      ACE_Module_Type *mt = const_cast<ACE_Module_Type *>(mt1);
 
       if (st->push (mt) == -1)
         {
@@ -171,9 +171,9 @@ ACE_Stream_Node::ACE_Stream_Node (const ACE_Static_Node *str_ops,
 ACE_Stream_Node::~ACE_Stream_Node ()
 {
   ACE_TRACE ("ACE_Stream_Node::~ACE_Stream_Node");
-  auto *n = const_cast<ACE_Static_Node *> (this->node_);
+  ACE_Static_Node *n = const_cast<ACE_Static_Node *> (this->node_);
   delete n;
-  auto *m = const_cast<ACE_Parse_Node *> (this->mods_);
+  ACE_Parse_Node *m = const_cast<ACE_Parse_Node *> (this->mods_);
   delete m;
 }
 
@@ -566,7 +566,7 @@ ACE_Object_Node::symbol (ACE_Service_Gestalt *,
   ACE_TRACE ("ACE_Object_Node::symbol");
   if (this->open_dll (yyerrno) == 0)
     {
-      auto *object_name = const_cast<ACE_TCHAR *> (this->object_name_);
+      ACE_TCHAR *object_name = const_cast<ACE_TCHAR *> (this->object_name_);
 
       this->symbol_ = this->dll_.symbol (object_name);
       if (this->symbol_ == nullptr)
@@ -697,7 +697,7 @@ ACE_Function_Node::symbol (ACE_Service_Gestalt *,
 
       // Locate the factory function <function_name> in the shared
       // object.
-      auto * const function_name =
+      ACE_TCHAR * const function_name =
         const_cast<ACE_TCHAR *> (this->function_name_);
 
       void * const func_p = this->dll_.symbol (function_name);
@@ -720,9 +720,9 @@ ACE_Function_Node::symbol (ACE_Service_Gestalt *,
           return nullptr;
         }
 
-      auto const temp_p = reinterpret_cast<intptr_t> (func_p);
+      intptr_t const temp_p = reinterpret_cast<intptr_t> (func_p);
 
-      auto func = reinterpret_cast<ACE_Service_Factory_Ptr> (temp_p);
+      ACE_Service_Factory_Ptr func = reinterpret_cast<ACE_Service_Factory_Ptr> (temp_p);
 
       // Invoke the factory function and record it's return value.
       this->symbol_ = (*func) (gobbler);
@@ -794,9 +794,9 @@ ACE_Dummy_Node::apply (ACE_Service_Gestalt *, int &yyerrno)
 ACE_Dummy_Node::~ACE_Dummy_Node ()
 {
   ACE_TRACE ("ACE_Dummy_Node::~ACE_Dummy_Node");
-  auto *n = const_cast<ACE_Static_Node *> (this->node_);
+  ACE_Static_Node *n = const_cast<ACE_Static_Node *> (this->node_);
   delete n;
-  auto *m = const_cast<ACE_Parse_Node *> (this->mods_);
+  ACE_Parse_Node *m = const_cast<ACE_Parse_Node *> (this->mods_);
   delete m;
 }
 

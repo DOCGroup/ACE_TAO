@@ -146,7 +146,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
       return -1;
     }
 
-  auto *sa =
+  struct sockaddr* sa =
     (struct sockaddr *) &ifr.ifr_addr;
 
   ACE_OS::close (handle);

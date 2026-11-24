@@ -350,12 +350,12 @@ ACE_High_Res_Timer::elapsed_time (struct timespec &elapsed_time) const
   // avoids a MSVC 4.1 compiler warning about narrowing.
   ACE_hrtime_t const elapsed =
     ACE_High_Res_Timer::elapsed_hrtime (this->end_, this->start_);
-  auto const nseconds = static_cast<u_long> (elapsed %
+  u_long const nseconds = static_cast<u_long> (elapsed %
                                          global_scale_factor () * 1000u /
                                          global_scale_factor ());
 
   // Get just the microseconds (dropping any left over nanoseconds).
-  auto const useconds = (ACE_UINT32) (elapsed / global_scale_factor ());
+  ACE_UINT32 const useconds = (ACE_UINT32) (elapsed / global_scale_factor ());
 
   elapsed_time.tv_sec = (time_t) (useconds / ACE_ONE_SECOND_IN_USECS);
   // Transforms one second in microseconds into nanoseconds.
@@ -415,9 +415,9 @@ ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  auto const total_secs =
+  u_long const total_secs =
     static_cast<u_long> (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
-  auto const extra_nsecs =
+  ACE_UINT32 const extra_nsecs =
     static_cast<ACE_UINT32> (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   ACE_TCHAR buf[100];
@@ -459,9 +459,9 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
   this->elapsed_time (total_nanoseconds);
 
   // Separate to seconds and nanoseconds.
-  auto const total_secs =
+  u_long const total_secs =
     static_cast<u_long> (total_nanoseconds / (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
-  auto const extra_nsecs =
+  ACE_UINT32 const extra_nsecs =
     static_cast<ACE_UINT32> (total_nanoseconds % (ACE_UINT32) ACE_ONE_SECOND_IN_NSECS);
 
   ACE_TCHAR buf[100];

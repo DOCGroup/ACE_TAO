@@ -35,7 +35,7 @@ ACE_POSIX_CB_Proactor::get_impl_type ()
 
 void ACE_POSIX_CB_Proactor::aio_completion_func (sigval cb_data)
 {
-  auto *impl = static_cast<ACE_POSIX_CB_Proactor *> (cb_data.sival_ptr);
+  ACE_POSIX_CB_Proactor * impl = static_cast<ACE_POSIX_CB_Proactor *> (cb_data.sival_ptr);
   if ( impl != nullptr )
   {
     impl->notify_completion (0);

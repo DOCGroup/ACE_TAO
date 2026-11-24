@@ -208,7 +208,7 @@ int TestHandler::handle_timeout (const ACE_Time_Value &,
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) TestHandler::handle_timeout - timeout triggered\n"));
 
-  auto *mb1 = new ACE_Message_Block(S1, sizeof S1);
+  ACE_Message_Block* mb1 = new ACE_Message_Block(S1, sizeof S1);
 
   this->mq_.enqueue_tail (mb1);
 

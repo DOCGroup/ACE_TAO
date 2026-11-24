@@ -198,7 +198,7 @@ Counting_Test_Consumer::svc ()
   // a calculated number of blocks then stop; the test checker will determine
   // if the number consumed plus the number remaining is correct for the
   // number produced.
-  auto seed = static_cast<unsigned int> (ACE_OS::time ());
+  unsigned int seed = static_cast<unsigned int> (ACE_OS::time ());
 
   int const multiple = ACE_OS::rand_r (&seed) % 10;
   int delay_ms = ACE_OS::rand_r (&seed) % 10;
@@ -638,7 +638,7 @@ single_thread_performance_test (int queue_type = 0)
 static ACE_THR_FUNC_RETURN
 receiver (void *arg)
 {
-  auto *queue_wrapper =
+  Queue_Wrapper *queue_wrapper =
     reinterpret_cast<Queue_Wrapper *> (arg);
   int i;
 
@@ -689,7 +689,7 @@ receiver (void *arg)
 static ACE_THR_FUNC_RETURN
 sender (void *arg)
 {
-  auto *queue_wrapper =
+  Queue_Wrapper *queue_wrapper =
     reinterpret_cast<Queue_Wrapper *> (arg);
   int i;
 

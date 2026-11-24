@@ -36,7 +36,7 @@ public:
     ++this->nr_expirations_;
 
     void *nc_arg = const_cast<void *> (arg);
-    auto *timer_queue =
+    Thread_Timer_Queue *timer_queue =
       reinterpret_cast<Thread_Timer_Queue *> (nc_arg);
 
     ACE_Time_Value timeout = ACE_OS::gettimeofday () + ACE_Time_Value (1, 0);

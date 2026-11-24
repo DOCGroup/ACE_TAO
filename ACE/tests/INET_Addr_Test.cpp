@@ -26,7 +26,7 @@ static int check_type_consistency (const ACE_INET_Addr &addr)
 
   if (addr.get_type () == AF_INET)
     {
-      auto *sa4 = (struct sockaddr_in *)addr.get_addr();
+      struct sockaddr_in *sa4 = (struct sockaddr_in *)addr.get_addr();
       family = sa4->sin_family;
     }
 #if defined (ACE_HAS_IPV6)

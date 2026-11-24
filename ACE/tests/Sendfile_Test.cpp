@@ -34,7 +34,7 @@ static int Test_Result = 0;
 static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  auto *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
+  ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr const server_addr (remote_addr->get_port_number (),
                              ACE_LOCALHOST);
   ACE_SOCK_Stream cli_stream;
@@ -169,7 +169,7 @@ cleanup:
 static ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  auto *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
+  ACE_SOCK_Acceptor *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
   ACE_SOCK_Stream sock_str;
   ACE_INET_Addr cli_addr;
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);

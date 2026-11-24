@@ -235,7 +235,7 @@ ACE_Task_Base::activate (long flags,
 void
 ACE_Task_Base::cleanup (void *object, void *)
 {
-  auto *t = (ACE_Task_Base *) object;
+  ACE_Task_Base *t = (ACE_Task_Base *) object;
 
   // The thread count must be decremented first in case the <close>
   // hook does something crazy like "delete this".
@@ -266,7 +266,7 @@ ACE_Task_Base::svc_run (void *args)
 {
   ACE_TRACE ("ACE_Task_Base::svc_run");
 
-  auto *t = (ACE_Task_Base *) args;
+  ACE_Task_Base *t = (ACE_Task_Base *) args;
 
   // Register ourself with our <Thread_Manager>'s thread exit hook
   // mechanism so that our close() hook will be sure to get invoked

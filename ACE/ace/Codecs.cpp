@@ -146,7 +146,7 @@ ACE_Base64::length (ACE_Byte const *input)
     {
       ++ptr;
     }
-  auto len = static_cast<size_t> (ptr - input);
+  size_t len = static_cast<size_t> (ptr - input);
   len = ((len + 3) / 4) * 3 + 1 ;
   return len;
 }
@@ -184,7 +184,7 @@ ACE_Base64::decode (ACE_Byte const *input, size_t *output_len)
     {
       ++ptr;
     }
-  auto const input_len = static_cast<size_t> (ptr - input);
+  size_t const input_len = static_cast<size_t> (ptr - input);
 
   int char_count {};
   int bits {};

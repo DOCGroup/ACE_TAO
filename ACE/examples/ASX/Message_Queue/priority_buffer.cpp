@@ -27,7 +27,7 @@ static constexpr long max_queue = LONG_MAX;
 static ACE_THR_FUNC_RETURN
 consumer (void *arg)
 {
-  auto * const msg_queue =
+  ACE_Message_Queue<ACE_MT_SYNCH> * const msg_queue =
     static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (arg);
   // Keep looping, reading a message out of the queue, until we
   // timeout or get a message with a length == 0, which signals us to
@@ -68,7 +68,7 @@ consumer (void *arg)
 static ACE_THR_FUNC_RETURN
 producer (void *arg)
 {
-  auto * const msg_queue =
+  ACE_Message_Queue<ACE_MT_SYNCH> * const msg_queue =
     static_cast<ACE_Message_Queue<ACE_MT_SYNCH> *> (arg);
   ACE_Read_Buffer rb (ACE_STDIN);
 

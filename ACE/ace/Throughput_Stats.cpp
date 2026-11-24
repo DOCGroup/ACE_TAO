@@ -64,7 +64,7 @@ ACE_Throughput_Stats::dump_throughput (const ACE_TCHAR *msg,
                                        ACE_UINT32 samples_count)
 {
 #ifndef ACE_NLOGGING
-  auto seconds =
+  double seconds =
     static_cast<double> (ACE_UINT64_DBLCAST_ADAPTER (elapsed_time / sf));
   seconds /= ACE_HR_SCALE_CONVERSION;
 

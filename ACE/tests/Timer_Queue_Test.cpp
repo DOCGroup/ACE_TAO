@@ -685,7 +685,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   // @deprecated
   (void) ACE_High_Res_Timer::global_scale_factor ();
 
-  auto *tq_heap =
+  ACE_Timer_Heap *tq_heap =
     new ACE_Timer_Heap;
   tq_heap->gettimeofday(&ACE_High_Res_Timer::gettimeofday_hr);
   ACE_NEW_RETURN (tq_stack,

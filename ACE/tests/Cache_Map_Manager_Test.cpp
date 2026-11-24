@@ -301,7 +301,7 @@ purge_test_cache (MAP_CACHE &cache)
   size_t const current_map_size = cache.current_size ();
 
   // Find the number of entries which will get purged.
-  auto const entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
+  size_t const entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
 
   // Tell the caching strategy how much to purge.
   cache.caching_strategy ().purge_percent (purge_percent);
@@ -333,7 +333,7 @@ purge_test_hash_cache (HASH_MAP_CACHE &cache)
   size_t const current_map_size = cache.current_size ();
 
   // Find the number of entries which will get purged.
-  auto const entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
+  size_t const entries_to_remove = size_t ((double (purge_percent) / 100 * current_map_size) + 0.5);
 
   // Tell the caching strategy how much to purge.
   cache.caching_strategy ().purge_percent (purge_percent);

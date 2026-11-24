@@ -46,7 +46,7 @@ public:
                               -1);
           }
 
-        auto *handler = reinterpret_cast<Test_Handler *> (mb->base ());
+        Test_Handler *handler = reinterpret_cast<Test_Handler *> (mb->base ());
         mb->release ();
 
         ACE_Time_Value timeout = ACE_OS::gettimeofday () + ACE_Time_Value (1, 0);
@@ -106,7 +106,7 @@ public:
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));
 
-    auto *test_task =
+    Test_Task *test_task =
       static_cast<Test_Task *> (const_cast<void *> (arg));
     ACE_Message_Block *mb {};
     ACE_NEW_MALLOC_RETURN (mb,

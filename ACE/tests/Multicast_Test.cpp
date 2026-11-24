@@ -983,7 +983,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_Reactor *reactor = ACE_Reactor::instance ();
 
-  auto *task = new MCT_Task (config, reactor);
+  MCT_Task *task = new MCT_Task (config, reactor);
 
   if (ACE_BIT_ENABLED (role, MCT_Config::CONSUMER))
     {

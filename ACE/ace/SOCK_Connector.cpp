@@ -87,7 +87,7 @@ ACE_SOCK_Connector::shared_connect_start (ACE_SOCK_Stream &new_stream,
 
   if (local_sap != ACE_Addr::sap_any)
     {
-      auto *laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
+      sockaddr *laddr = reinterpret_cast<sockaddr *> (local_sap.get_addr ());
       int const size = local_sap.get_size ();
 
       if (ACE_OS::bind (new_stream.get_handle (), laddr, size) == -1)
@@ -324,7 +324,7 @@ ACE_SOCK_Connector::complete (ACE_SOCK_Stream &new_stream,
   if (remote_sap != nullptr)
     {
       int len = remote_sap->get_size ();
-      auto *addr = reinterpret_cast<sockaddr *> (remote_sap->get_addr ());
+      sockaddr *addr = reinterpret_cast<sockaddr *> (remote_sap->get_addr ());
       if (ACE_OS::getpeername (h,
                                addr,
                                &len) == -1)

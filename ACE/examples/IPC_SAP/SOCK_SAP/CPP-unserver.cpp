@@ -21,7 +21,7 @@ server (void *arg)
 {
   ACE_UNIX_Addr cli_addr;
   ACE_LSOCK_Stream new_stream;
-  auto handle = (ACE_HANDLE) (long) arg;
+  ACE_HANDLE handle = (ACE_HANDLE) (long) arg;
 
   new_stream.set_handle (handle);
 

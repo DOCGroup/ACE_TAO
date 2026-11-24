@@ -91,7 +91,7 @@ run_test (int argc, ACE_TCHAR *argv[])
   //
   // Put our Close_Handler Task into the Module
   //
-  auto *close_test_module =
+  MT_Module* close_test_module =
     static_cast <MT_Module *> (st->type()->object ());
 
   if (close_test_module == nullptr)
@@ -110,7 +110,7 @@ run_test (int argc, ACE_TCHAR *argv[])
   // by getting the close methods called so user shutdown hooks can fire.
   //
 
-  auto const *module_type =
+  const ACE_Module_Type* module_type =
     static_cast< const ACE_Module_Type*>(st->type ());
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test stream\n")));
@@ -123,13 +123,13 @@ run_test (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("ACE_Service_Repository::find")),
                        status);
   }
-  auto const *close_test_stream =
+  const ACE_Stream_Type* close_test_stream =
     static_cast<const ACE_Stream_Type*> (st->type ());
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Removing module\n")));
 
-  auto *nc_stream = const_cast<ACE_Stream_Type*>(close_test_stream);
-  auto *nc_module = const_cast<ACE_Module_Type*>(module_type);
+  ACE_Stream_Type *nc_stream = const_cast<ACE_Stream_Type*>(close_test_stream);
+  ACE_Module_Type *nc_module = const_cast<ACE_Module_Type*>(module_type);
   nc_stream->remove (nc_module);
 
   if (!close_called)

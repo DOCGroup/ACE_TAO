@@ -132,7 +132,7 @@ consumer (void *)
   // Time measurement.
   time_t currsec;
   ACE_OS::time (&currsec);
-  auto start = (time_t) currsec;
+  time_t start = (time_t) currsec;
 
   int received_messages = 0;
 

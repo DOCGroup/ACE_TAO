@@ -17,12 +17,12 @@ run_duplicate_test (const size_t msg_block_count,
 {
     size_t rc = 0;
 
-    auto *mb_top = new ACE_Message_Block ();
+    ACE_Message_Block* mb_top = new ACE_Message_Block ();
     ACE_Message_Block* mb = mb_top;
 
     for (size_t j = 0; j != msg_block_count; ++j)
     {
-      auto *next = new ACE_Message_Block (block, msg_block_size);
+      ACE_Message_Block* next = new ACE_Message_Block (block, msg_block_size);
       next->wr_ptr (msg_block_size);
       mb->cont (next);
       mb = next;
@@ -58,12 +58,12 @@ run_clone_test (const size_t msg_block_count,
 {
     size_t rc = 0;
 
-    auto *mb_top = new ACE_Message_Block ();
+    ACE_Message_Block* mb_top = new ACE_Message_Block ();
     ACE_Message_Block* mb = mb_top;
 
     for (size_t j = 0; j != msg_block_count; ++j)
     {
-      auto *next = new ACE_Message_Block (block, msg_block_size);
+      ACE_Message_Block* next = new ACE_Message_Block (block, msg_block_size);
       next->wr_ptr (msg_block_size);
       mb->cont (next);
       mb = next;

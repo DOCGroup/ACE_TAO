@@ -857,7 +857,7 @@ Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
       else
         {
           ACE_Message_Block *mb = result.message_block ();
-          auto *session =
+          Session_Data *session =
             reinterpret_cast<Session_Data*>(mb->rd_ptr ());
           if (session->direction_ == 0)
             {
@@ -1656,7 +1656,7 @@ Client::initiate_write ()
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) Client %d requesting close\n"),
                   this->id_));
-      auto *mb =
+      ACE_Message_Block *mb =
         new ACE_Message_Block (std::strlen (close_req_msg) + 1);
       mb->copy (close_req_msg);
       size_t unused;   // Number of bytes sent

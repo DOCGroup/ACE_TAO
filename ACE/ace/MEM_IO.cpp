@@ -73,7 +73,7 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
     }
 
   // The offset.
-  auto offset =
+  ACE_OFF_T offset =
     ACE_Utils::truncate_cast<ACE_OFF_T> (
       reinterpret_cast<char *> (buf)
       - static_cast<char *> (this->shm_malloc_->base_addr ()));
@@ -429,7 +429,7 @@ ACE_MEM_IO::send (const ACE_Message_Block *message_block,
 
   if (len != 0)
     {
-      auto *buf =
+      ACE_MEM_SAP_Node *buf =
         reinterpret_cast<ACE_MEM_SAP_Node *> (
           this->deliver_strategy_->acquire_buffer (
             ACE_Utils::truncate_cast<ssize_t> (len)));

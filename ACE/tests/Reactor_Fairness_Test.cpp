@@ -180,7 +180,7 @@ sender (void *arg)
   ACE_Sig_Action original_action;
   no_sigpipe.register_action (SIGPIPE, &original_action);
 
-  auto *connection_addr =
+  ACE_INET_Addr *connection_addr =
     reinterpret_cast<ACE_INET_Addr *> (arg);
 
   int i;
@@ -272,7 +272,7 @@ sender (void *arg)
 ACE_THR_FUNC_RETURN
 reactor_loop (void *p)
 {
-  auto *r = reinterpret_cast<ACE_Reactor *> (p);
+  ACE_Reactor *r = reinterpret_cast<ACE_Reactor *> (p);
   int const me = reactor_thread_nr++;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%t) Reactor loop %d starting...\n"), me));
   if (me == 0)

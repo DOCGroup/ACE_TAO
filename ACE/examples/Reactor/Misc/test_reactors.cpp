@@ -135,7 +135,7 @@ Test_Task::handle_input (ACE_HANDLE)
 static void *
 worker (void *args)
 {
-  auto * const reactor = static_cast<ACE_Reactor *> (args);
+  ACE_Reactor * const reactor = static_cast<ACE_Reactor *> (args);
 
   reactor->owner (ACE_Thread::self ());
 

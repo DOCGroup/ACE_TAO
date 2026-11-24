@@ -78,7 +78,7 @@ recursive_worker (size_t nesting_level,
 static ACE_THR_FUNC_RETURN
 worker (void *arg)
 {
-  auto * const rm =
+  ACE_Recursive_Thread_Mutex * const rm =
     static_cast<ACE_Recursive_Thread_Mutex *> (arg);
 
   recursive_worker (0, rm);

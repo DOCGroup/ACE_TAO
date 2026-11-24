@@ -41,7 +41,7 @@ ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
   msghdr send_msg;
 #if !defined (ACE_LACKS_SENDMSG) && defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
   char cmsgbuf[ACE_BSD_CONTROL_MSG_LEN];
-  auto *cmsgptr = (cmsghdr *) cmsgbuf;
+  cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
 
   a[0] = 0xab;
@@ -62,7 +62,7 @@ ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
   cmsgptr->cmsg_len = sizeof cmsgbuf;
   send_msg.msg_control = cmsgbuf;
   send_msg.msg_controllen = sizeof cmsgbuf;
-  auto *ph = (ACE_HANDLE *) CMSG_DATA (cmsgptr);
+  ACE_HANDLE *ph = (ACE_HANDLE *) CMSG_DATA (cmsgptr);
   *ph = handle;
   send_msg.msg_flags = 0;
 # else
@@ -156,8 +156,8 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
 #ifndef ACE_LACKS_SENDMSG
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
           // Close down the socket that was returned by the MSG_PEEK.
-          auto *cmsgptr = (cmsghdr *) cmsgbuf;
-          auto *ph = (ACE_HANDLE *) CMSG_DATA (cmsgptr);
+          cmsghdr  *cmsgptr = (cmsghdr *) cmsgbuf;
+          ACE_HANDLE * ph = (ACE_HANDLE *) CMSG_DATA (cmsgptr);
           ACE_OS::closesocket (*ph);
           recv_msg.msg_control = cmsgbuf;
           recv_msg.msg_controllen = sizeof cmsgbuf;
@@ -174,8 +174,8 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
           else
             {
 #if defined (ACE_HAS_4_4BSD_SENDMSG_RECVMSG)
-              auto *cmsgptr = (cmsghdr *) cmsgbuf;
-              auto *ph = (ACE_HANDLE *) CMSG_DATA (cmsgptr);
+              cmsghdr *cmsgptr = (cmsghdr *) cmsgbuf;
+              ACE_HANDLE * ph = (ACE_HANDLE *) CMSG_DATA (cmsgptr);
               handle = *ph;
 #endif /* ACE_HAS_4_4BSD_SENDMSG_RECVMSG */
               return 1;

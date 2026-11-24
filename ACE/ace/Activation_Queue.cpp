@@ -79,7 +79,7 @@ ACE_Activation_Queue::dequeue (ACE_Time_Value *tv)
   if (this->queue_->dequeue_head (mb, tv) != -1)
     {
       // Get the next <Method_Request>.
-      auto *mr =
+      ACE_Method_Request *mr =
         reinterpret_cast<ACE_Method_Request *> (mb->base ());
       // Delete the message block.
       mb->release ();

@@ -36,7 +36,7 @@ static constexpr size_t big_size = (BUFSIZ * 4);
 static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  auto *fifo_path = reinterpret_cast <ACE_TCHAR *> (arg);
+  ACE_TCHAR *fifo_path = reinterpret_cast <ACE_TCHAR *> (arg);
   ACE_FIFO_Send_Msg fifo;
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) client opening %s\n"), fifo_path));
   if (fifo.open (fifo_path) == -1)
@@ -47,7 +47,7 @@ client (void *arg)
   // Try some transfers - the server part is expecting this data.
   // First, try a nice, easy send.
   ssize_t send_count;
-  auto expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
+  ssize_t expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
   send_count = fifo.send (ACE_ALPHABET, ACE_OS::strlen (ACE_ALPHABET));
   if (send_count == expect)
     {
@@ -103,7 +103,7 @@ client (void *arg)
 static ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  auto *fifo = reinterpret_cast <ACE_FIFO_Recv_Msg *> (arg);
+  ACE_FIFO_Recv_Msg *fifo = reinterpret_cast <ACE_FIFO_Recv_Msg *> (arg);
 
   // Wait for the client to get going and open the FIFO.
   errno = 0;
@@ -130,7 +130,7 @@ server (void *arg)
   // alphabet.
   char buf[BUFSIZ];
   ssize_t recv_count;
-  auto expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
+  ssize_t expect = static_cast <ssize_t> (ACE_OS::strlen (ACE_ALPHABET));
   recv_count = fifo->recv (buf, sizeof (buf));
   if (recv_count != expect)
     {

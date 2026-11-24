@@ -157,7 +157,7 @@ int CLD_Handler::open (CLD_Connector *connector) {
 }
 
 ACE_THR_FUNC_RETURN CLD_Handler::run_svc (void *arg) {
-  auto *handler = static_cast<CLD_Handler *> (arg);
+  CLD_Handler *handler = static_cast<CLD_Handler *> (arg);
   return handler->forward ();
 }
 

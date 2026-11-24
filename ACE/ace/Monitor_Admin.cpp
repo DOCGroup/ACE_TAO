@@ -18,7 +18,7 @@ namespace ACE
       const ACE_Time_Value& /* current_time */,
       const void* monitor_point)
     {
-      auto * const mp = const_cast<Monitor_Base*> (
+      Monitor_Base* const mp = const_cast<Monitor_Base*> (
         static_cast<Monitor_Base const*> (monitor_point));
       mp->update ();
       return 0;

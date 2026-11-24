@@ -555,7 +555,7 @@ ACE_OS::vaswprintf_emulation(wchar_t **bufp, const wchar_t *format, va_list argp
 
   if (size != -1)
     {
-      auto *buf = reinterpret_cast<wchar_t*>
+      wchar_t *buf = reinterpret_cast<wchar_t*>
         (ACE_OS::malloc((size + 1) * sizeof(wchar_t)));
       if (!buf)
       {

@@ -394,7 +394,7 @@ MQ_Ex_N_Tester::test_enqueue_head ()
 static ACE_THR_FUNC_RETURN
 receiver (void *arg)
 {
-  auto *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
+  Queue_Wrapper *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
   int i;
 
   User_Class **receive_block_p {};
@@ -422,7 +422,7 @@ receiver (void *arg)
 static ACE_THR_FUNC_RETURN
 sender (void *arg)
 {
-  auto *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
+  Queue_Wrapper *queue_wrapper = reinterpret_cast<Queue_Wrapper *> (arg);
   int i;
 
   timer->start ();
@@ -556,7 +556,7 @@ MQ_Ex_N_Tester::performance_test ()
 ACE_THR_FUNC_RETURN
 MQ_Ex_N_Tester::receiver (void *args)
 {
-  auto *tester = reinterpret_cast<MQ_Ex_N_Tester *> (args);
+  MQ_Ex_N_Tester *tester = reinterpret_cast<MQ_Ex_N_Tester *> (args);
 
   User_Class **receive_block_p {};
   ACE_NEW_RETURN (receive_block_p,
@@ -585,7 +585,7 @@ MQ_Ex_N_Tester::receiver (void *args)
 ACE_THR_FUNC_RETURN
 MQ_Ex_N_Tester::sender (void *args)
 {
-  auto *tester_wrapper =
+  MQ_Ex_N_Tester_Wrapper *tester_wrapper =
     reinterpret_cast<MQ_Ex_N_Tester_Wrapper *> (args);
   MQ_Ex_N_Tester *tester = tester_wrapper->tester_;
 

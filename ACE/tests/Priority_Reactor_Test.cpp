@@ -179,7 +179,7 @@ Write_Handler::svc ()
 ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  auto *connection_addr =
+  ACE_INET_Addr *connection_addr =
     reinterpret_cast<ACE_INET_Addr *> (arg);
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) running client\n")));

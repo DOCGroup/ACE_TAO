@@ -377,7 +377,7 @@ Peer_Router::context () const
 int
 Peer_Router::control (ACE_Message_Block *mb)
 {
-  auto * const ioc =
+  ACE_IO_Cntl_Msg * const ioc =
     reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
   ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds const command = ioc->cmd ();
 
