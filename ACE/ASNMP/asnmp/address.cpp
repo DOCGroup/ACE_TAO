@@ -2199,7 +2199,7 @@ SnmpSyntax& GenAddress::operator= (SnmpSyntax& val)
     case sNMP_SYNTAX_OCTETS:
     {
       unsigned long val_len = 0;
-      Address const *address_value = dynamic_cast<Address const *> (&val);
+      Address const *address_value = dynamic_cast<Address const *> (std::addressof (val));
       if (address_value)
         {
           OctetStr octets;
@@ -2208,7 +2208,7 @@ SnmpSyntax& GenAddress::operator= (SnmpSyntax& val)
         }
       else
         {
-          OctetStr const *octets = dynamic_cast<OctetStr const *> (&val);
+          OctetStr const *octets = dynamic_cast<OctetStr const *> (std::addressof (val));
           if (octets == nullptr)
           {
             break;
