@@ -323,13 +323,10 @@ ACE_Message_Block::total_capacity () const
 
 ACE_Data_Block::ACE_Data_Block ()
   : type_ (ACE_Message_Block::MB_DATA),
-    cur_size_ (0),
-    max_size_ (0),
     flags_ (ACE_Message_Block::DONT_DELETE),
     base_ (nullptr),
     allocator_strategy_ (nullptr),
     locking_strategy_ (nullptr),
-    reference_count_ (1),
     data_block_allocator_ (nullptr)
 {
   ACE_TRACE ("ACE_Data_Block::ACE_Data_Block");
@@ -350,13 +347,10 @@ ACE_Data_Block::ACE_Data_Block (size_t size,
                                 ACE_Message_Block::Message_Flags flags,
                                 ACE_Allocator *data_block_allocator)
   : type_ (msg_type),
-    cur_size_ (0),          // Reset later if memory alloc'd ok
-    max_size_ (0),
     flags_ (flags),
     base_ (const_cast <char *> (msg_data)),
     allocator_strategy_ (allocator_strategy),
     locking_strategy_ (locking_strategy),
-    reference_count_ (1),
     data_block_allocator_ (data_block_allocator)
 {
   ACE_TRACE ("ACE_Data_Block::ACE_Data_Block");

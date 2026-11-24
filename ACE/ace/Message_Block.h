@@ -858,10 +858,10 @@ protected:
   ACE_Message_Block::ACE_Message_Type type_;
 
   /// Current size of message block.
-  size_t cur_size_;
+  size_t cur_size_ {};
 
   /// Total size of buffer.
-  size_t max_size_;
+  size_t max_size_ {};
 
   /// Misc flags (e.g., DONT_DELETE and USER_FLAGS).
   ACE_Message_Block::Message_Flags flags_;
@@ -893,7 +893,7 @@ protected:
    * shared by all owners of the @c Data_Block's data, i.e., all the
    * ACE_Message_Blocks.
    */
-  int reference_count_;
+  int reference_count_ {1};
 
   /// The allocator use to destroy ourselves.
   ACE_Allocator *data_block_allocator_;
