@@ -33,7 +33,7 @@
 /**
  * Describes a duplicate entry.
  *
- * This is used for generating code by the <Key_List>.
+ * This is used for generating code by @c Key_List.
  */
 class Duplicate_Entry
 {
