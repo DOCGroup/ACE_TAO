@@ -21,7 +21,6 @@ ACE_DLL::ACE_DLL (bool close_handle_on_destruction)
 }
 
 ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
-  : close_handle_on_destruction_ (false)
 {
   ACE_TRACE ("ACE_DLL::ACE_DLL (const ACE_DLL &)");
 

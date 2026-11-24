@@ -181,7 +181,7 @@ public:
 
   /// This flag keeps track of whether we should close the handle
   /// automatically when the object is destroyed.
-  bool close_handle_on_destruction_;
+  bool close_handle_on_destruction_ {};
 
   ACE_DLL_Handle *dll_handle_ {};
 
