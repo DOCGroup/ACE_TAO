@@ -9,9 +9,7 @@ JAWS_Pipeline_Abstract_Handler<TYPE>::JAWS_Pipeline_Abstract_Handler ()
 }
 
 template <class TYPE>
-JAWS_Pipeline_Abstract_Handler<TYPE>::~JAWS_Pipeline_Abstract_Handler ()
-{
-}
+JAWS_Pipeline_Abstract_Handler<TYPE>::~JAWS_Pipeline_Abstract_Handler () = default;
 
 template <class TYPE> int
 JAWS_Pipeline_Abstract_Handler<TYPE>::put (ACE_Message_Block *mb,

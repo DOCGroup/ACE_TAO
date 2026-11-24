@@ -35,9 +35,7 @@ ACE_URL_Locator::err_name[] =
   "unknown error"
 };
 
-ACE_URL_Locator::~ACE_URL_Locator ()
-{
-}
+ACE_URL_Locator::~ACE_URL_Locator () = default;
 
 const char *
 ACE_URL_Locator::error_status ()

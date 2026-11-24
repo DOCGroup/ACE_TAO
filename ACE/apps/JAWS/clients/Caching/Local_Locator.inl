@@ -37,6 +37,4 @@ ACE_URL_Record::operator!= (const ACE_URL_Record &rhs) const
 }
 
 ACE_INLINE
-ACE_URL_Local_Locator::~ACE_URL_Local_Locator ()
-{
-}
+ACE_URL_Local_Locator::~ACE_URL_Local_Locator () = default;
