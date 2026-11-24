@@ -80,7 +80,7 @@ be_array::create_name ()
       AST_Expression *expr = this->dims ()[i].get ();
 
       // Dimension value.
-      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
+      if (expr == nullptr || expr->ev () == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_array::"
@@ -196,7 +196,7 @@ be_array::gen_dimensions (TAO_OutStream *os,
       AST_Expression *expr = this->dims ()[i].get ();
 
       // Dimension value.
-      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
+      if (expr == nullptr || expr->ev () == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "(%N:%l) be_array::"
