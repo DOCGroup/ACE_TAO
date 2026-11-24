@@ -79,7 +79,7 @@ int Consumer::svc ()
 /// producer function produces user defined messages.
 ACE_THR_FUNC_RETURN producer (void *arg)
 {
-  Consumer* c = static_cast<Consumer*> (arg);
+  auto *c = static_cast<Consumer*> (arg);
   ACE_TEST_ASSERT(c!=nullptr);
   if (c==nullptr)
   {

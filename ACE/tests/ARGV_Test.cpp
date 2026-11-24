@@ -189,7 +189,7 @@ test_argv_quotes ()
                                     ACE_TEXT ("\"third in double quotes\""),
                                     nullptr
                                   };
-  ACE_TCHAR **argv = const_cast<ACE_TCHAR **> (argv_const);
+  auto **argv = const_cast<ACE_TCHAR **> (argv_const);
   // The convoluted argv definition is to silence warnings from gcc 4.3, which
   // warns if the string-literals are not assigned to const char* and also
   // warns if the const char*[] is passed to the ACE_ARGV constructor as in

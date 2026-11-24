@@ -72,7 +72,7 @@ run_main (int, ACE_TCHAR *[])
   Derived d;
   d.value = 24;
   Base * b1 = &d;
-  Derived * d1 = dynamic_cast<Derived*>(b1);
+  auto * d1 = dynamic_cast<Derived*>(b1);
   if (d1 == nullptr)
     {
       status = 1;
@@ -93,7 +93,7 @@ run_main (int, ACE_TCHAR *[])
   // Make sure dynamic cast detects invalid casts
   Another a;
   Base * b2 = &a;
-  Derived * d2 = dynamic_cast<Derived*>(b2);
+  auto * d2 = dynamic_cast<Derived*>(b2);
   if (d2 != nullptr)
     {
       status = 1;

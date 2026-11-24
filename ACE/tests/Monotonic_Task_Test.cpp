@@ -145,7 +145,7 @@ MyTask::put_message ()
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) MyTask::put_message - queueing message\n"));
 
-  ACE_Message_Block* mb1 = new ACE_Message_Block(S1, sizeof S1);
+  auto *mb1 = new ACE_Message_Block(S1, sizeof S1);
 
   if (this->putq (mb1) < 0)
     {

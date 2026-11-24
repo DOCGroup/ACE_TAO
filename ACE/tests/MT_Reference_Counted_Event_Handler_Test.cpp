@@ -631,7 +631,7 @@ Connector::connect (ACE_HANDLE &client_handle,
   ACE_TEST_ASSERT (result == 0);
   ACE_UNUSED_ARG (result);
 
-  Receiver *receiver =
+  auto *receiver =
     new Receiver (this->thread_manager_,
                   pipe.write_handle (),
                   this->nested_upcalls_);
@@ -871,7 +871,7 @@ Invocation_Thread::create_connection ()
   ACE_UNUSED_ARG (result);
 
   // Create a new sender.
-  Sender *sender =
+  auto *sender =
     new Sender (client_handle,
                 this->connection_cache_);
 
@@ -1055,7 +1055,7 @@ Close_Socket_Thread::Close_Socket_Thread (ACE_Thread_Manager &thread_manager,
 int
 Close_Socket_Thread::svc ()
 {
-  unsigned int seed = (unsigned int) ACE_OS::time ();
+  auto seed = (unsigned int) ACE_OS::time ();
   ACE_Time_Value timeout (0, close_timeout * 1000);
   ACE_DEBUG ((LM_DEBUG,
     ACE_TEXT("(%t) Close_Socket_Thread::svc commencing\n")));
