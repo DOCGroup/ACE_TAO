@@ -210,8 +210,8 @@ be_visitor_ccm_pre_proc::visit_provides (be_provides *node)
                       be_operation (node->provides_type (),
                                     AST_Operation::OP_noflags,
                                     nullptr,
-                                    0,
-                                    0),
+                                    false,
+                                    false),
                       -1);
       std::unique_ptr<AST_Operation, BE_AST_Decl_Deleter> provides_op_owner (
         provides_op);
@@ -532,8 +532,8 @@ be_visitor_ccm_pre_proc::gen_connect_single (be_uses *node)
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_defined_in (comp_);
@@ -589,8 +589,8 @@ be_visitor_ccm_pre_proc::gen_disconnect_single (be_uses *node)
                   be_operation (node->uses_type (),
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_full_name);
@@ -630,8 +630,8 @@ be_visitor_ccm_pre_proc::gen_get_connection_single (be_uses *node)
                   be_operation (node->uses_type (),
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_full_name);
@@ -666,8 +666,8 @@ be_visitor_ccm_pre_proc::gen_connect_multiple (be_uses *node)
                   be_operation (this->cookie_,
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_full_name);
@@ -722,8 +722,8 @@ be_visitor_ccm_pre_proc::gen_disconnect_multiple (be_uses *node)
                   be_operation (node->uses_type (),
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_full_name);
@@ -788,8 +788,8 @@ be_visitor_ccm_pre_proc::gen_get_connection_multiple (be_uses *node)
                   be_operation (td,
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_full_name);
@@ -868,8 +868,8 @@ be_visitor_ccm_pre_proc::gen_subscribe (be_publishes *node)
                   be_operation (this->cookie_,
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_defined_in (comp_);
@@ -942,8 +942,8 @@ be_visitor_ccm_pre_proc::gen_unsubscribe (be_publishes *node)
                   be_operation (i,
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_defined_in (comp_);
@@ -993,8 +993,8 @@ be_visitor_ccm_pre_proc::gen_emits_connect (be_emits *node)
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
@@ -1066,8 +1066,8 @@ be_visitor_ccm_pre_proc::gen_emits_disconnect (be_emits *node)
                   be_operation (i,
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
@@ -1118,8 +1118,8 @@ be_visitor_ccm_pre_proc::gen_get_consumer (be_consumes *node)
                   be_operation (i,
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
@@ -1148,8 +1148,8 @@ be_visitor_ccm_pre_proc::gen_create (be_home *node,
                   be_operation (node->managed_component (),
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
@@ -1212,8 +1212,8 @@ be_visitor_ccm_pre_proc::gen_find_by_primary_key (be_home *node,
                   be_operation (node->managed_component (),
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
@@ -1275,8 +1275,8 @@ be_visitor_ccm_pre_proc::gen_remove (be_home *node,
                   be_operation (be_global->void_type (),
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
@@ -1338,8 +1338,8 @@ be_visitor_ccm_pre_proc::gen_get_primary_key (be_home *node,
                   be_operation (node->primary_key (),
                                 AST_Operation::OP_noflags,
                                 nullptr,
-                                0,
-                                0),
+                                false,
+                                false),
                   -1);
   BE_Operation_Owner op_owner (op);
   op->set_name (op_name);
