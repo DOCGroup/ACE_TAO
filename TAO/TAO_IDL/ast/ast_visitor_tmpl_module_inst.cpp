@@ -50,6 +50,7 @@
 #include "nr_extern.h"
 
 #include <memory>
+#include <utility>
 
 namespace
 {
