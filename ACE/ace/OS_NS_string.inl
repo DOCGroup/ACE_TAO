@@ -251,7 +251,16 @@ ACE_OS::strncmp (const ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len)
 ACE_INLINE char *
 ACE_OS::strncpy (char *s, const char *t, size_t len)
 {
-  return std::strncpy (s, t, len);
+  size_t i {};
+  for (; i < len && t[i] != '\0'; ++i)
+    {
+      s[i] = t[i];
+    }
+  for (; i < len; ++i)
+    {
+      s[i] = '\0';
+    }
+  return s;
 }
 
 ACE_INLINE ACE_WCHAR_T *
