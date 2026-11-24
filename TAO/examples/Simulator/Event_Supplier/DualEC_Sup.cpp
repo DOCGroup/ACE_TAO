@@ -26,6 +26,7 @@
 #include "ace/OS_NS_ctype.h"
 
 #include <cstring>
+#include <memory>
 
 //FUZZ: disable check_for_lack_ACE_OS
 constexpr char usage [] =
@@ -721,15 +722,14 @@ DualEC_Supplier::load_schedule_data ()
     {
       // Open the scheduler data input file and read its contents into
       // a queue.
-      FILE *input_file;
-
-      input_file = ACE_OS::fopen(this->input_file_name_, "r");
+      std::unique_ptr<FILE, int (*) (FILE *)> const input_file {
+        ACE_OS::fopen (this->input_file_name_, "r"), ACE_OS::fclose};
 
       if (input_file)
         {
           // Get a line at a time from the data file and parse it.
           char input_buf[BUFSIZ];
-          while (ACE_OS::fgets (input_buf, BUFSIZ, input_file))
+          while (ACE_OS::fgets (input_buf, BUFSIZ, input_file.get ()))
             {
               // Run through leading whitespace.
               char *temp = input_buf;
