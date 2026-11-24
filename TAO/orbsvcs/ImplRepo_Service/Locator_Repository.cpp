@@ -92,13 +92,14 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
   // We write the ior file last so that the tests can know we are ready.
   if (this->opts_.ior_filename ().length () > 0)
     {
-      FILE* orig_fp = ACE_OS::fopen(this->opts_.ior_filename ().c_str(),
-                                    ACE_TEXT("r"));
+      std::unique_ptr<FILE, int (*) (FILE *)> orig_fp (
+        ACE_OS::fopen (this->opts_.ior_filename ().c_str (), ACE_TEXT ("r")),
+        ACE_OS::fclose);
 
       bool write_data = true;
       if (orig_fp != nullptr)
         {
-          ACE_Read_Buffer reader (orig_fp, false);
+          ACE_Read_Buffer reader (orig_fp.get (), false);
 
           ACE_Read_Buffer_Unique_Ptr const string (
             reader.read (), {reader.alloc ()});
@@ -108,21 +109,21 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
               write_data =
                 (ACE_OS::strcasecmp (string.get (), this->imr_ior_.in ()) != 0);
             }
-          ACE_OS::fclose (orig_fp);
         }
+      orig_fp.reset ();
 
       if (write_data)
         {
-          FILE* fp = ACE_OS::fopen (this->opts_.ior_filename ().c_str (),
-                                    ACE_TEXT("w"));
+          std::unique_ptr<FILE, int (*) (FILE *)> fp (
+            ACE_OS::fopen (this->opts_.ior_filename ().c_str (), ACE_TEXT ("w")),
+            ACE_OS::fclose);
           if (fp == nullptr)
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                 ACE_TEXT ("(%P|%t) ImR: Could not open file: %s\n"),
                 this->opts_.ior_filename ().c_str ()), -1);
             }
-          ACE_OS::fprintf (fp, "%s", this->imr_ior_.in ());
-          ACE_OS::fclose (fp);
+          ACE_OS::fprintf (fp.get (), "%s", this->imr_ior_.in ());
         }
     }
 
