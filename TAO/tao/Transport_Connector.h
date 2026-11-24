@@ -216,7 +216,7 @@ private:
   CORBA::ULong const tag_;
 
   /// Pointer to our ORB core
-  TAO_ORB_Core *orb_core_;
+  TAO_ORB_Core *orb_core_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

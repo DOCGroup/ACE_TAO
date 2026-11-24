@@ -67,8 +67,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Connector
 TAO_Connector::TAO_Connector (CORBA::ULong tag)
-  : tag_ (tag),
-    orb_core_ (nullptr)
+  : tag_ (tag)
 {
 }
 
