@@ -985,8 +985,8 @@ sub check_for_improper_main_declaration ()
                         my $arg1 = $1;
                         if ($multi_line =~ s/^(\w[\w\d]*)\s?//) { # Fails if no type for 2nd parameter (ignore this main)
                             my $arg2_type = $1;
-                            $multi_line =~ s!^(?:/+\*.*?\*/\s?)?(\**)(\w[\w\d]*|\s?/\*.*?\*/\s?)?!!;
-                            my $prefix = $1; ## should be * or **
+                            $multi_line =~ s!^(?:/+\*.*?\*/\s?)?(\*+(?:const)?)\s*(\w[\w\d]*|\s?/\*.*?\*/\s?)?!!;
+                            my $prefix = $1; ## should be * or **, optionally const
                             my $name   = $2; ## is now arg2's variable name
                             $multi_line =~ s!\s?\*/\s?/\*\s?! !g;  ## Connect separate adjacent /* ... */ comments
 
@@ -998,7 +998,7 @@ sub check_for_improper_main_declaration ()
 
                             if ($type_of_main ne 'ACE_TMAIN'       ||
                                 $arg2_type ne 'ACE_TCHAR'          ||
-                                !(($prefix eq '*' && $multi_line eq '[]') ||
+                                !(($prefix =~ /^\*(?:const)?$/ && $multi_line eq '[]') ||
                                   ($prefix eq '**' && $multi_line eq '' ))  ) {
                                 print_error ("$file:$.:  $type_of_main ($was)  should be  ACE_TMAIN ($arg1, ACE_TCHAR \*$name\[])");
                            }
