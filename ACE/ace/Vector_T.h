@@ -195,7 +195,7 @@ protected:
   /**
    * Dynamic size (length) of the vector.
    */
-  size_t length_;
+  size_t length_ {};
 
   /**
    * Current capacity (buffer size) of the vector.

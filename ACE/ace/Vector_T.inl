@@ -5,8 +5,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
 ACE_Vector<T, DEFAULT_SIZE>::ACE_Vector (size_t const init_size,
                                          ACE_Allocator *alloc)
-  : ACE_Array<T> (init_size == 0 ? DEFAULT_SIZE : init_size, alloc),
-    length_ (0)
+  : ACE_Array<T> (init_size == 0 ? DEFAULT_SIZE : init_size, alloc)
 {
   this->curr_max_size_ = this->max_size ();
 }
