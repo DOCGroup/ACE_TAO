@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    test.idl
  *
@@ -8,9 +6,6 @@
  *
  *  @author Carlos O'Ryan <coryan@cs.wustl.edu>
  */
-//=============================================================================
-
-
 module Test
 {
   typedef sequence<octet> OctetSeq;
@@ -23,17 +18,14 @@ module Test
     Index max_index;
   };
 
+  /**
+   * @brief Stores octet sequences for transport tests.
+   *
+   * The test checks that octet-sequence optimizations preserve values
+   * across calls.
+   */
   interface Database
   {
-    // = TITLE
-    //   A database of octet sequences
-    //
-    // = DESCRIPTION
-    //   Just a silly IDL file to test if the ORB can hold octet
-    //   sequences intact between calls.  Regularly this wouldn't be a
-    //   problem, but TAO optimizations for octet sequences make that
-    //   a little trickier to ensure.
-    //
     void set (in Index i,
               in OctetSeq value,
               in double verification_token,
@@ -46,7 +38,7 @@ module Test
     unsigned long get_crc (in Index i)
       raises (OutOfRange);
 
+    /// Stops the server.
     oneway void shutdown ();
-    // shutdown the ORB
   };
 };

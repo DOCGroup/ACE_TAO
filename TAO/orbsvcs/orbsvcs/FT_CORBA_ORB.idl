@@ -11,11 +11,9 @@
 
 #include "PortableGroup_Simple_DS.idl"
 
-
 #pragma prefix "omg.org"
 
-
-// These have been moved to the file IOP.pidl
+/// These have been moved to the file IOP.pidl
 module FT
 {
   /// FTDomainId's are denoted as strings

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    DsEventLogAdmin.idl
  *
@@ -9,14 +8,12 @@
  *
  *  @author D A Hanvey (d.hanvey@qub.ac.uk)
  */
-//=============================================================================
-
 
 #ifndef DS_EVENT_LOG_ADMIN_IDL
 #define DS_EVENT_LOG_ADMIN_IDL
 
 #include "CosEventChannelAdmin.idl"
-// CORBA Event Service
+/// CORBA Event Service
 
 #include "DsLogAdmin.idl"
 

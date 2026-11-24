@@ -4,9 +4,11 @@
 typedef short ShortArray_1[1];
 struct MyStruct
 {
-  ShortArray_1 innerArray;             // Must NOT be [2] to show up the problem.
+  /// Must NOT be [2] to show up the problem.
+  ShortArray_1 innerArray;
 };
 
-typedef MyStruct arrayOfStruct[2]; // Must be arrayOfStruct[2] to pass client.cpp test
+/// Must be arrayOfStruct[2] to pass client.cpp test
+typedef MyStruct arrayOfStruct[2];
 
 #endif

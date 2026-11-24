@@ -1,4 +1,3 @@
-// -*- IDL -*-
 module RedirectionTest
 {
   interface test

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    keywords.idl
  *
@@ -9,12 +8,11 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-// All these identifiers should be accepted, but
-// prepended with _cxx_.
+/// All these identifiers should be accepted, but
+/// prepended with _cxx_.
 
-// IDL identifiers are escaped using _
+/// IDL identifiers are escaped using _
 
 struct Keywords
 {

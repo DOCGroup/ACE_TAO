@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    Identity.idl
  *
@@ -10,11 +9,9 @@
  *
  *  @author Marina Spivak <marina@cs.wustl.edu>
  */
-//=============================================================================
-
 
 interface Identity
 {
+  /// Obtain the name of this object.
   void get_name (out string name);
-  // Obtain the name of this object.
 };

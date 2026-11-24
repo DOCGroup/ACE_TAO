@@ -1,4 +1,3 @@
-// -*- IDL -*-
 #include "ImR_Activator.idl"
 
 module ImplementationRepository

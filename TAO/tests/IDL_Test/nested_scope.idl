@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    nested_scope.idl
  *
@@ -11,11 +10,9 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-
-// Tests all the problem datatypes for repeating a scope
-// name after skipping one nesting level.
+/// Tests all the problem datatypes for repeating a scope
+/// name after skipping one nesting level.
 
 module skip
 {
@@ -134,8 +131,8 @@ module bug_1985_c
   };
 };
 
-// This one caused several problems - in the stub declaration of
-// the operation, and in the skeleton body's allocation of return type.
+/// This one caused several problems - in the stub declaration of
+/// the operation, and in the skeleton body's allocation of return type.
 module Negotiator
 {
   interface UAV_Negotiator {};
@@ -146,8 +143,8 @@ module Negotiator
   };
 };
 
-// Caught some generation of arg helper template parameters not using
-// the qualifying '::' on scoped names.
+/// Caught some generation of arg helper template parameters not using
+/// the qualifying '::' on scoped names.
 
 module bug_2125
 {
@@ -175,8 +172,8 @@ module Wow
   };
 };
 
-// This will ensure that we always put the '::'
-// before the 'CORBA' on predefined types.
+/// This will ensure that we always put the '::'
+/// before the 'CORBA' on predefined types.
 module Company
 {
   module CORBA

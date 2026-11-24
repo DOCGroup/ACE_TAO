@@ -1,7 +1,6 @@
-// -*- IDL -*-
-// File: SSLIOP.idl
-// Part of the Security Service with additions from the Firewall
-// specification.
+/// @file SSLIOP.idl
+/// Part of the Security Service with additions from the Firewall
+/// specification.
 
 #ifndef _SSLIOP_IDL
 #define _SSLIOP_IDL
@@ -23,7 +22,8 @@ module SSLIOP {
     unsigned short        _port;
   };
 
-  // const Firewall::IdTag TAG_ID_SSL_CERT = xx;  // OMG allocated
+  // OMG allocated
+  // const Firewall::IdTag TAG_ID_SSL_CERT = xx;
 
   /// A DER encoded X.509 certificate.
   typedef sequence<octet> ASN_1_Cert;
@@ -39,7 +39,6 @@ module SSLIOP {
   /// The SSLIOP::Current interface provides methods to gain access to
   /// the SSL session state for the current execution context.
   local interface Current : CORBA::Current {
-
 
     /// Exception that indicates a SSLIOP::Current operation was
     /// invoked outside of an SSL session.
@@ -74,7 +73,8 @@ module SSLIOP {
   struct File {
     FileType type;
     string filename;
-    string password;   // Only needed for encrypted PEM files.
+    /// Only needed for encrypted PEM files.
+    string password;
   };
 
   /// The AuthData structure is the SSLIOP-specific authentication

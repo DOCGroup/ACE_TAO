@@ -19,7 +19,7 @@ directives:
 #include "tao/RTScheduling/RTScheduler.pidl"
 #endif
 
-// We *are* including these files instead because that's the right thing to do
+/// We *are* including these files instead because that's the right thing to do
 
 #include "tao/PortableServer/PortableServer_include.pidl"
 #include "tao/ObjRefTemplate/ObjectReferenceTemplate_include.pidl"

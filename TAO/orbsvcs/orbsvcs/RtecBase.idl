@@ -52,8 +52,8 @@ module RtecBase
   typedef long handle_t;
 
   enum Dependency_Enabled_Type_t
-  // Specify whether a dependency is enabled, disabled, or
-  // non-volatile (enabled + cannot be disabled automatically).
+  /// Specify whether a dependency is enabled, disabled, or
+  /// non-volatile (enabled + cannot be disabled automatically).
   {
     DEPENDENCY_DISABLED,
     DEPENDENCY_ENABLED,
@@ -73,9 +73,9 @@ module RtecBase
     handle_t rt_info;
 
     handle_t rt_info_depended_on;
+    /// Notice the reference to the RT_Info we
+    /// depend on.
     Dependency_Enabled_Type_t enabled;
-    // Notice the reference to the RT_Info we
-    // depend on.
   };
 
   /// Helper typedef to define the OS priority.

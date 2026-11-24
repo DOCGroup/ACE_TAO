@@ -1,4 +1,4 @@
-// Oh ho, oh ho, what are we gonna do?
+/// Oh ho, oh ho, what are we gonna do?
 union CityBlue
   switch (unsigned long long)
 {
@@ -8,7 +8,7 @@ union CityBlue
     short ucb_short;
 };
 
-// Power, passion, plays a double hand
+/// Power, passion, plays a double hand
 union CityMan
   switch (long long)
 {

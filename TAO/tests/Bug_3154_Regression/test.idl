@@ -101,8 +101,8 @@ module FT
   exception CannotMeetCriteria {
     Criteria unmet_criteria; };
 
-  // Specification of PropertyManager Interface
-  // which ReplicationManager Inherits
+  /// Specification of PropertyManager Interface
+  /// which ReplicationManager Inherits
 
   interface PropertyManager {
 
@@ -130,8 +130,8 @@ module FT
     Properties get_properties(in ObjectGroup object_group)
       raises(ObjectGroupNotFound); };
 
-  // Specification of ObjectGroupManager Interface
-  // which ReplicationManager Inherits
+  /// Specification of ObjectGroupManager Interface
+  /// which ReplicationManager Inherits
   /**
     * This interface provides operations that allow an application to add, remove
     * and locate members of an object group and to obtain the current reference and
@@ -147,7 +147,6 @@ module FT
       *
       * @param object_group Reference for the object group to which the member is
       * to be added.
-      * @param the_location The physical location.
       * @param type_id The repository identifier for the type of the object.
       * @param the_criteria Parameters to be passed to the factory, which the factory
       * evaluates before creating the object.
@@ -170,7 +169,6 @@ module FT
       *
       * @param object_group Reference for the object group to which the existing object
       * is to be added.
-      * @param the_location The physical location of the object to be added.
       * @param member The reference of the object to be added.
       *
       * @return The object group reference of the object group with the object added.
@@ -187,7 +185,6 @@ module FT
       *
       * @param object_group Reference for the object group to which the member
       * is to be removed.
-      * @param the_location The physical location of the member to be removed.
       *
       * @return The object group reference of the member removed.
       */
@@ -201,8 +198,6 @@ module FT
       *
       * @param object_group Reference for the object group whose primary is to be
       * determined.
-      * @param the_location The physical location of the member that is to become
-      * the primary.
       *
       * @return The object group reference with the primary member at the given
       * location.
@@ -222,9 +217,8 @@ module FT
     Object get_member_ref(in ObjectGroup object_group)
       raises(ObjectGroupNotFound, MemberNotFound); };
 
-
-  // Specification of GenericFactory Interface
-  // which ReplicationManager Inherits and Application Objects Implement
+  /// Specification of GenericFactory Interface
+  /// which ReplicationManager Inherits and Application Objects Implement
   /**
     * This interface allows the creation/deletion of replicated objects (object groups),
     * replicas (members of object groups), and unreplicated objects.
@@ -271,7 +265,7 @@ module FT
               InvalidProperty,
               CannotMeetCriteria); };
 
-  // Specification of ReplicationManager Interface
+  /// Specification of ReplicationManager Interface
   interface ReplicationManager : PropertyManager,
     ObjectGroupManager,
     GenericFactory {
@@ -279,7 +273,7 @@ module FT
     FaultNotifier get_fault_notifier()
       raises (InterfaceNotFound); };
 
-    // Specification of FaultNotifier Interface
+    /// Specification of FaultNotifier Interface
     interface FaultNotifier {
     typedef unsigned long long ConsumerId;
 
@@ -291,7 +285,7 @@ module FT
 
     };
 
-  // Specifications for Logging and Recovery
+  /// Specifications for Logging and Recovery
   typedef sequence<octet> State;
 
   exception NoStateAvailable {};
@@ -300,14 +294,14 @@ module FT
   exception NoUpdateAvailable {};
   exception InvalidUpdate {};
 
-  // Specification of Checkpointable Interface
-  // which Updateable and Application Objects Inherit
+  /// Specification of Checkpointable Interface
+  /// which Updateable and Application Objects Inherit
   interface Checkpointable { State get_state()
                                raises(NoStateAvailable);
   void set_state(in State s) raises(InvalidState); };
 
-  // Specification of Updateable Interface
-  // which Application Objects Inherit
+  /// Specification of Updateable Interface
+  /// which Application Objects Inherit
   interface Updateable : Checkpointable { State get_update()
                                             raises(NoUpdateAvailable);
   void set_update(in State s) raises(InvalidUpdate);

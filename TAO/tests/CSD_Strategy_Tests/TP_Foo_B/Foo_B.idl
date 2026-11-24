@@ -4,7 +4,6 @@
 #include "FooException.idl"
 #include "Callback.idl"
 
-
 typedef sequence<char, 32> Bounded_Var_Size;
 typedef sequence<char> Unbounded_Var_Size;
 typedef long Fixed_Array[20];
@@ -12,9 +11,12 @@ typedef string Var_Array [3];
 typedef string<20> string_20;
 
 struct TimeOfDay {
-    short   hour;       // 0 - 23
-    short   minute;     // 0 - 59
-    short   second;     // 0 - 59
+    /// 0 - 23
+    short   hour;
+    /// 0 - 59
+    short   minute;
+    /// 0 - 59
+    short   second;
 };
 interface Foo_B
 {
@@ -65,6 +67,5 @@ interface Foo_B
   /// done will cause the server to shutdown.
   void done();
 };
-
 
 #endif

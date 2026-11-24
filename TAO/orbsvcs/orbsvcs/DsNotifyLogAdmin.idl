@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    DsNotifyLogAdmin.idl
  *
@@ -9,8 +8,6 @@
  *
  *  @author David Hanvey (d.hanvey@qub.ac.uk)
  */
-//=============================================================================
-
 
 #ifndef DS_NOTIFY_LOG_ADMIN_IDL
 #define DS_NOTIFY_LOG_ADMIN_IDL

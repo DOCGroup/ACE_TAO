@@ -417,28 +417,28 @@ public:
   using DCPS_Type_Info_Map =
     std::unordered_map<std::string, std::unique_ptr<DCPS_Data_Type_Info>>;
 
-  /// Record a type when processing #pragma DCPS_DATA_TYPE.
+  /// Record a type when processing \#pragma DCPS_DATA_TYPE.
   void add_dcps_data_type (std::string const& id);
 
-  /// Record a key when processing #pragma DCPS_DATA_KEY.
+  /// Record a key when processing \#pragma DCPS_DATA_KEY.
   bool add_dcps_data_key (std::string const& id, std::string const& key);
 
   /// Return the matching type information, or null if there is no match.
   DCPS_Data_Type_Info* is_dcps_type (UTL_ScopedName* target);
 
-  /// Set zero-copy read support when processing #pragma DCPS_SUPPORT_ZERO_COPY_READ.
+  /// Set zero-copy read support when processing \#pragma DCPS_SUPPORT_ZERO_COPY_READ.
   void dcps_support_zero_copy_read (bool value);
 
   /// Return whether zero-copy read support is enabled.
   bool dcps_support_zero_copy_read () const;
 
-  /// Set the sequence type when processing #pragma DCPS_DATA_SEQUENCE_TYPE.
+  /// Set the sequence type when processing \#pragma DCPS_DATA_SEQUENCE_TYPE.
   void set_dcps_sequence_type (std::string const& seq_type);
 
   /// Return whether the pragma for this sequence type has been set.
   bool dcps_sequence_type_defined (std::string const& seq_type) const;
 
-  /// Set generated zero-copy read support when processing #pragma DCPS_GEN_ZERO_COPY_READ.
+  /// Set generated zero-copy read support when processing \#pragma DCPS_GEN_ZERO_COPY_READ.
   void dcps_gen_zero_copy_read (bool value);
 
   /// Return whether zero-copy read generation is enabled.

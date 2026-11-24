@@ -3,7 +3,7 @@ interface test
   /// Return a simple string
   string get_string ();
 
+  /// A twoway operation.
   void method ();
-  // A twoway operation.
 
 };

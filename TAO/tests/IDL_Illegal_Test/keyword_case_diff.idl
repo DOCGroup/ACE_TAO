@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    keyword_case_diff.idl
  *
@@ -8,11 +7,10 @@
  *  compiler. This test is to make sure the problems
  *  stay fixed.
  */
-//=============================================================================
-
 
 module MyModule {
-  interface PortType { // This type differs from an IDL keyword only in case
+  /// This type differs from an IDL keyword only in case
+  interface PortType {
     exception MyException {
       string myString;
     };

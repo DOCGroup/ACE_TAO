@@ -1,44 +1,31 @@
 
 module Test
 {
+  /// Reports an invalid stock name.
   exception Invalid_Stock_Symbol {};
-  // Used to report an invalid stock name
 
-  // Forward declare the Stock interface
+  /// Forward declaration of the Stock interface.
   interface Stock;
 
+  /// Factory for stock interfaces, returning them by stock name.
   interface StockFactory
   {
-    // = TITLE
-    //   A factory class for the stock interfaces
-    //
-    // = DESCRIPTION
-    //   Return the Stock interfaces based on their names
-    //
     Stock get_stock (in string stock_symbol)
       raises (Invalid_Stock_Symbol);
 
     oneway void shutdown ();
-
   };
 
+  /// Simple interface for querying the name and price of a stock.
   interface Stock
   {
-    // = TITLE
-    //   A simple interface to query the name and price of stock
-    //
-    // = DESCRIPTION
-    //   Return the price and name of a single stock
-    //
-
+    /// Returns the stock symbol.
     readonly attribute string symbol;
-    // Get the stock symbol.
 
+    /// Returns the stock name.
     readonly attribute string full_name;
-    // Get the name.
 
+    /// Returns the stock price.
     double price ();
-    // Get the price
-
   };
 };

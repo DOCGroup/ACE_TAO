@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    array_anon_nested.idl
  *
@@ -11,8 +10,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
-
 
 /// There was a problem generating the *_Forany
 /// for the inner array. This construct is in a separate

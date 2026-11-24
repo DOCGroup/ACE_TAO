@@ -1,16 +1,9 @@
-// ===========================================================================
-//
-// = FILE
-//     Persian.idl
-//
-// = DESCRIPTION
-//     Data struct and termination interface for the
-//     DOVE Persian Recursion Demo.
-
-// = AUTHOR
-//     Chris Gill <cdgill@cs.wustl.edu>
-
-// ============================================================================
+/**
+ * @file Persian.idl
+ * @brief Data struct and termination interface for the DOVE Persian
+ *        Recursion Demo.
+ * @author Chris Gill <cdgill@cs.wustl.edu>
+ */
 
 #ifndef TAO_PERSIAN_RECURSION_IDL
 #define TAO_PERSIAN_RECURSION_IDL
@@ -21,9 +14,8 @@
 
 module PersianRecursion
 {
+  /// Defines the criticality of the operation for use with Dynamic Scheduler.
   enum Line_Color_t
-  // Defines the criticality of the operation.
-  // For use with Dynamic Scheduler.
   {
     BLACK,
     BLUE,
@@ -35,32 +27,31 @@ module PersianRecursion
 
   struct Data
   {
-    // Demuxing part.
+    /// @name Demuxing part
+    /// @{
     RtecScheduler::Criticality_t criticality_level;
-
-    // Data part.
+    /// @}
+    /// @name Data part
+    /// @{
     Line_Color_t line_color;
     short x1;
     short y1;
     short x2;
     short y2;
-
-    // Metrics part.
+    /// @}
+    /// @name Metrics part
+    /// @{
     TimeBase::TimeT computation_time;
+    /// @}
   };
 
-
+  /// This interface provides an operation for cleanly shutting down the ORB
+  /// from a synchronously dispatched servant when a request originates in
+  /// another thread.
   interface Terminator
-      // = DESCRIPTION
-      // This interface specifies a single operation, used
-      // to shut down the orb.  This allows the orb to
-      // be shut down cleanly, from within a synchronously
-      // servant dispatched servant, but with the request
-      // originating from another thread.
   {
-      void shutdown ();
+    void shutdown ();
   };
-
 };
 
 #endif /* TAO_PERSIAN_RECURSION_IDL */

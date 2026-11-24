@@ -26,13 +26,19 @@ const uint64 u64_max = 18446744073709551615;
 const int64 i64_min = -9223372036854775808;
 const int64 i64_max = 9223372036854775807;
 
-const uint8 u8_min_overflow = u8_min - 1; // == u8_max
-const int8 i8_min_overflow = i8_min - 1; // == i8_max
-const uint8 u8_max_overflow = u8_max + 1; // == 0
-const int8 i8_max_overflow = i8_max + 1; // == i8_min
+/// == u8_max
+const uint8 u8_min_overflow = u8_min - 1;
+/// == i8_max
+const int8 i8_min_overflow = i8_min - 1;
+/// == 0
+const uint8 u8_max_overflow = u8_max + 1;
+/// == i8_min
+const int8 i8_max_overflow = i8_max + 1;
 
-const uint8 u8_max_negate = ~u8_max; // == 0
-const int8 i8_max_negate = ~i8_max; // == i8_min
+/// == 0
+const uint8 u8_max_negate = ~u8_max;
+/// == i8_min
+const int8 i8_max_negate = ~i8_max;
 
 const uint8 u8_e1 = 2;
 const uint8 u8_e2 = u8_e1 + 2;
@@ -73,7 +79,7 @@ struct StructWithInts {
   uint64 u64;
   int64 i64;
 
-  // Make sure there's no conflict between uint8, int8, octet, and char.
+  /// Make sure there's no conflict between uint8, int8, octet, and char.
   uint8 u8_arr[3];
   int8 i8_arr[3];
   sequence<uint8> u8_seq;

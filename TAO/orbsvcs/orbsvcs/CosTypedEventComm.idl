@@ -1,12 +1,10 @@
 
-//=============================================================================
 /**
 *  @file  CosTypedEventComm.idl
 *
 *  @brief Part of the Event Service
 *          See https://www.omg.org/spec/EVNT
 */
-//=============================================================================
 
 #ifndef _COS_TYPED_EVENT_COMM_IDL_
 #define _COS_TYPED_EVENT_COMM_IDL_

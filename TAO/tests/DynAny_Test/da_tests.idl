@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #include <orb.idl>
 
 module DynAnyTests
@@ -115,6 +114,5 @@ module DynAnyTests
   {
     long double field_longdouble;
   };
-
 
 };

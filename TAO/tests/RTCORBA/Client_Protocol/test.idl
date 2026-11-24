@@ -1,10 +1,10 @@
 
 interface Test
 {
+  /// Test method.
   void test_method ();
-  // Test method.
 
+  /// Shut down the ORB.
   oneway void shutdown ();
-  // Shut down the ORB.
 
 };

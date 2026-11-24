@@ -1,4 +1,4 @@
-// Interface for TAO's Demux_Test
+/// Interface for TAO's Demux_Test
 
 interface Demux_Test
 {

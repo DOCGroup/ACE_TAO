@@ -1,5 +1,3 @@
-/* -*- IDL -*- */
-//=============================================================================
 /**
  *  @file    FT_Notifier.idl
  *
@@ -8,16 +6,15 @@
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
  */
-//=============================================================================
 
 #ifndef _FT_NOTIFIER_IDL_
 #define _FT_NOTIFIER_IDL_
 
 ///////////////////////////////
-// TAO specific includes
+/// TAO specific includes
 #include "orbsvcs/FT_CORBA_ORB.idl"
 #include "orbsvcs/FT_Replica.idl"
-// end of TAO specific includes
+/// end of TAO specific includes
 ///////////////////////////////
 
 #include "orbsvcs/CosNaming.idl" // 98-10-19.idl
@@ -30,9 +27,9 @@
 
 module FT
 {
-  // Specifications for Fault Management
-  // Specification of FaultNotifier Interface
-  // TAO SPECIFIC:  added inheritence from PullMonitorable
+  /// Specifications for Fault Management
+  /// Specification of FaultNotifier Interface
+  /// TAO SPECIFIC:  added inheritence from PullMonitorable
   interface FaultNotifier  : ::FT::PullMonitorable
   {
     typedef unsigned long long ConsumerId;
@@ -55,6 +52,5 @@ module FT
     raises(CosEventComm::Disconnected);
   };
 };
-
 
 #endif // for #ifndef _FT_NOTIFIER_IDL_

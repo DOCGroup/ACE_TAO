@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    old_struct.idl
  *
@@ -8,8 +7,6 @@
  *
  *  @author Andy Gokhale <gokhale@dre.vanderbilt.edu>
  */
-//=============================================================================
-
 
 typedef string string_20[20];
 
@@ -42,7 +39,6 @@ struct bar4
   long b5;
 };
 
-
 interface foo1
 {
   long op (in bar1 a, out bar2 b);
@@ -54,7 +50,6 @@ interface foo2 : foo1
 
   long op3 (in long a, out char b);
 };
-
 
 typedef unsigned short Coord;
 

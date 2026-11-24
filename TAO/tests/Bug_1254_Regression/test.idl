@@ -1,6 +1,4 @@
-// -*- IDL -*-
 
-//=============================================================================
 /**
  * @file test.idl
  *
@@ -9,8 +7,6 @@
  *
  * @author Kees van Marle <kvmarle@ermedy.nl>
  */
-//=============================================================================
-
 
 typedef sequence<octet> BlobType1;
 typedef sequence<octet> BlobType2;
@@ -25,6 +21,4 @@ interface BlobServer
      */
     oneway void shutdown ();
 };
-
-
 

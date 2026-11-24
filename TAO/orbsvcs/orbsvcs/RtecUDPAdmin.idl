@@ -46,7 +46,8 @@ module RtecUDPAdmin
   typedef char char16[16];
   struct UDP_Addr_v6
   {
-    char16 ipaddr; // used to match with ACE_INET_Addr::set_address
+    /// used to match with ACE_INET_Addr::set_address
+    char16 ipaddr;
     unsigned short _port;
   };
 

@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    anyunion.idl
  *
@@ -11,10 +10,8 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
 
-
-// AnyUnion
+/// AnyUnion
 enum AnyUnionEnum {
   ANYUNIONENUM2
 };

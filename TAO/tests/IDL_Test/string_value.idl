@@ -1,4 +1,3 @@
-//=============================================================================
 
 /**
  *  @file    string_value.idl
@@ -13,9 +12,6 @@
  *  circular dependency between libTAO_AnyTypeCode and libTAO_ValueType. It
  *  also requires an additional -I$TAO_ROOT/tao which is non traditional.
  */
-
-//=============================================================================
-
 
 #ifndef IDL_TEST_STRING_VALUE_IDL
 #define IDL_TEST_STRING_VALUE_IDL

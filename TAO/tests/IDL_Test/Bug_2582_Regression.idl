@@ -1,4 +1,4 @@
-// Test Bug 2582
+/// Test Bug 2582
 
 enum EncodingID_T
   {

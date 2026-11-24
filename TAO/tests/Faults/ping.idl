@@ -1,16 +1,11 @@
 interface PingObject
 {
-  // = DESCRIPTION
-  //   An interface to ping-pong between two objects, it is used to
-  //   test a very interesting use-case reported by Andreas Geisler.
-
+  /// Supports ping-pong callbacks between two objects.
   oneway void ping (in PingObject callback);
-  // The ping method, the server should respond by invoking <pong> on
-  // the <callback> object
 
+  /// Responds to a ping callback.
   oneway void pong ();
-  // A response from the server
 
+  /// Shuts down the peer.
   oneway void shutdown ();
-  // Shutdown the peer
 };

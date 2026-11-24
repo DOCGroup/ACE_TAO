@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    pragma.idl
  *
@@ -11,15 +10,13 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu> and TAO users.
  */
-//=============================================================================
-
 
 #pragma prefix "anvil.com"
 
 interface hello {};
 
-// These declarations all at one time caused the prefix above
-// to be dropped.
+/// These declarations all at one time caused the prefix above
+/// to be dropped.
 
 typedef string FuBar;
 
@@ -50,7 +47,7 @@ module salutation
   interface sayonara {};
 };
 
-// 'anvil.com' returns
+/// 'anvil.com' returns
 interface ciao {};
 
 interface aloha {};

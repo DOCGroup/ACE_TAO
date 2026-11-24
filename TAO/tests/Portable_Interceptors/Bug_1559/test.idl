@@ -1,5 +1,4 @@
 
-//=============================================================================
 /**
  *  @file    test.idl
  *
@@ -8,36 +7,29 @@
  *
  *  @author Nanbor Wang <nanbor@cs.wustl.edu>
  */
-//=============================================================================
-
 
 module Test_Interceptors
 {
   exception Silly
     {};
 
+  /// Tests portable interceptor behavior visually.
   interface Visual
   {
-    // = TITLE
-    //   A test idl for checking interceptor visually.
-    //
-    // = DESCRIPTION
-    //
-
+    /// Normal operation.
     void normal (in long arg);
-    // Normal operation.
 
+    /// Normal operation without a return value.
     void nothing ();
-    // Normal operation without return.
 
+    /// Raises a user exception.
     void user ()
       raises (Silly);
-    // throws a user exception.
 
+    /// Raises a system exception.
     void system ();
-    // thows a system exception.
 
-   oneway void shutdown ();
-    // shutdown the ORB
+    /// Shuts down the ORB.
+    oneway void shutdown ();
   };
 };
