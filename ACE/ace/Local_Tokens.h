@@ -861,10 +861,10 @@ protected:
   ACE_Token_Proxy (const ACE_Token_Proxy &);
 
   /// If this is set, we ignore deadlock.
-  int ignore_deadlock_;
+  int ignore_deadlock_ {};
 
   /// Print a bunch of debug messages.
-  int debug_;
+  int debug_ {};
 
   /// Reference to the actual logical token.  Many ACE_Local_Mutex
   /// proxies can reference the same ACE_Mutex_Token.

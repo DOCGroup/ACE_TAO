@@ -1193,8 +1193,7 @@ ACE_Token_Proxy::ACE_Token_Proxy ()
 // waiter info.  A copied Proxy does *not* inherit client_id.
 
 ACE_Token_Proxy::ACE_Token_Proxy (const ACE_Token_Proxy &)
-  : token_ (nullptr),
-    waiter_ (this, nullptr)
+  : waiter_ (this, nullptr)
 {
   ACE_TRACE ("ACE_Token_Proxy::ACE_Token_Proxy");
 }
