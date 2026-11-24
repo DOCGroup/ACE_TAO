@@ -58,7 +58,7 @@ public:
   _retn_type    ptr () const;
 
 protected:
-  T * ptr_;
+  T * ptr_ {};
 };
 
 /**
