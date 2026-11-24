@@ -494,7 +494,7 @@ Tree_Test::execute (TAO_Naming_Client &root_context)
       level2_context->bind (obj_name, obj1.in ());
 
       // Bind the context we just created under level1.
-      CosNaming::Name level2 (level1);
+      CosNaming::Name level2 (std::move (level1));
       level2.length (2);
       level2[1].id = CORBA::string_dup ("level2_context");
       root_context->bind_context (level2,
