@@ -33,18 +33,18 @@ public:
 
   ~Logger_i () override = default;
 
-  /// Writes the <log_rec> to the standard output.
+  /// Writes the @a log_rec to the standard output.
   void log (Logger::Log_Record const &log_rec) override;
 
-  /// Writes the <log_rec> to the standard output with the given
+  /// Writes the @a log_rec to the standard output with the given
   /// verbosity level
   void logv (Logger::Log_Record const &log_rec,
              Logger::Verbosity_Level verbosity) override;
 
-  /// Writes the <log_rec> to the standard output.
+  /// Writes the @a log_rec to the standard output.
   void log_twoway (Logger::Log_Record const &log_rec) override;
 
-  /// Writes the <log_rec> to the standard output with the given
+  /// Writes the @a log_rec to the standard output with the given
   /// verbosity level
   void logv_twoway (Logger::Log_Record const &log_rec,
                     Logger::Verbosity_Level verbosity) override;
@@ -76,7 +76,7 @@ private:
 /**
  * @class Logger_Factory_i
  *
- * @brief Create a <Logger> of type <name>.
+ * @brief Create a @c Logger of type @a name.
  */
 class Logger_Factory_i : public virtual POA_Logger_Factory
 {
@@ -91,16 +91,16 @@ public:
   ~Logger_Factory_i () override = default;
 
   /**
-   * This function returns a logger with name <name>. If <name> is
+   * This function returns a logger with name @a name. If @a name is
    * unique, a new logger is created; else, a previously created
-   * logger of name <name> is returned
+   * logger of name @a name is returned
    */
   Logger_ptr make_logger (char const *name) override;
 
 private:
   /**
-   * Calls to <make_logger> will create a new instance of <Logger> and
-   * bind into the hash map manager if <name> is unique, else it will
+   * Calls to <make_logger> will create a new instance of @c Logger and
+   * bind into the hash map manager if @a name is unique, else it will
    * return a previously bound entry.
    */
   ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex> hash_map_;

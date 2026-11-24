@@ -91,7 +91,7 @@ public:
   /// Connection_Handler.
   CONNECTION_ID connection_id_;
 
-  /// Event type, e.g., <ROUTING_EVENT> or <SUBSCRIPTION_EVENT>.
+  /// Event type, e.g., @c ROUTING_EVENT or @c SUBSCRIPTION_EVENT.
   ACE_INT32 type_;
 
   /// Event priority.
@@ -150,7 +150,7 @@ public:
   /// Connection_Handler.
   CONNECTION_ID connection_id_;
 
-  /// Event type, e.g., <ROUTING_EVENT> or <SUBSCRIPTION_EVENT>.
+  /// Event type, e.g., @c ROUTING_EVENT or @c SUBSCRIPTION_EVENT.
   ACE_INT32 type_;
 
   /// Event priority.

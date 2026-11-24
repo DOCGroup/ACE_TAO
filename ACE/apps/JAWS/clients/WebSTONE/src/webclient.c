@@ -1079,7 +1079,7 @@ void ClientThread(void *dummy)
   if (uil_filelist_f) /* HAVE FILELIST */
   {
       D_PRINTF( "Have filelist\n" );
-      /* if (testtime != 0) /* RUNNING IN TIMED MODE */
+      /* if (testtime != 0) RUNNING IN TIMED MODE */
             if (1)
       {
     D_PRINTF( "Running in timed mode\n" );

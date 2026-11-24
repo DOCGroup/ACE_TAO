@@ -44,8 +44,8 @@ public:
   Object_Group_Factory_i &operator= (Object_Group_Factory_i &&) = delete;
 
   /**
-   * Creates an <Object_Group> that resolves requests for arbitrary
-   * members in round robin order.  If an <Object_Group>, of any
+   * Creates an @c Object_Group that resolves requests for arbitrary
+   * members in round robin order.  If an @c Object_Group, of any
    * type, with Group_ID <id> has already been created by this
    * factory, and hasn't been destroyed, a <duplicate_group>
    * exception is thrown.
@@ -53,8 +53,8 @@ public:
   Load_Balancer::Object_Group_ptr make_round_robin (char const * id) override;
 
   /**
-   * Creates an <Object_Group> that resolves requests for arbitrary
-   * members in random order.  If an <Object_Group>, of any
+   * Creates an @c Object_Group that resolves requests for arbitrary
+   * members in random order.  If an @c Object_Group, of any
    * type, with Group_ID <id> has already been created by this
    * factory, and hasn't been destroyed, a <duplicate_group>
    * exception is thrown.
@@ -62,36 +62,36 @@ public:
   Load_Balancer::Object_Group_ptr make_random (char const * id) override;
 
   /**
-   * Locates and returns an <Object_Group> by its <Group_ID>.   If
-   * no <Object_Group> has <Group_ID> of <id>, throw a
+   * Locates and returns an @c Object_Group by its <Group_ID>.   If
+   * no @c Object_Group has <Group_ID> of <id>, throw a
    * <no_such_group> exception.
    */
   Load_Balancer::Object_Group_ptr resolve (char const * id) override;
 
   /**
-   * Lists all the round robin <Object_Group>s which were created
+   * Lists all round robin @c Object_Group instances created
    * by this factory, and haven't been destroyed yet, i.e., return
    * a sequence of <Group_ID>s of all existing round robin
-   * <Object_Group>s created by this factory.
+   * @c Object_Group instances created by this factory.
    */
   Load_Balancer::Group_List * round_robin_groups () override;
 
   /**
-   * Lists all the random <Object_Group>s which were created
+   * Lists all random @c Object_Group instances created
    * by this factory, and haven't been destroyed yet, i.e., return
    * a sequence of <Group_ID>s of all existing random
-   * <Object_Group>s created by this factory.
+   * @c Object_Group instances created by this factory.
    */
   Load_Balancer::Group_List * random_groups () override;
 
   /// @name Implementation details
   /// @{
   /**
-   * This method is invoked by an <Object_Group> with group id <id> when it
+   * This method is invoked by an @c Object_Group with group id <id> when it
    * is being destroyed.  The method removes entry corresponding to
    * group <id> from <random_groups_> if <random> is true or from
    * <rr_groups_> if <random> is false.  This recycles <id>, allowing it
-   * to be used for new <Object_Group>, and prevents the destroyed
+   * to be used for new @c Object_Group, and prevents the destroyed
    * group from being included in lists returned from <random_groups>
    * and <round_robin_groups> methods.
    */
@@ -103,8 +103,8 @@ private:
   /// @{
   /**
    * This function factors out common code in <make_round_robin> and
-   * <make_random>.  Creates a random <Object_Group> if <random> parameter is
-   * set to true and round robin <Object_Group> if it is false.
+   * <make_random>.  Creates a random @c Object_Group if <random> parameter is
+   * set to true and round robin @c Object_Group if it is false.
    */
   Load_Balancer::Object_Group_ptr make_group (bool random,
                                               char const * id);
@@ -119,15 +119,15 @@ private:
   /// @}
 
   /// Typedef for ease of use: hash map associating group ids to
-  /// <Object_Group> references.
+  /// @c Object_Group references.
   using HASH_MAP = ACE_Hash_Map_Manager<std::string,
                                         Load_Balancer::Object_Group_var,
                                         ACE_Null_Mutex>;
 
-  /// Map containing all random <Object_Group>s created by this factory.
+  /// Map containing all random @c Object_Group instances created by this factory.
   HASH_MAP random_groups_;
 
-  /// Map containing all round robin <Object_Group>s created by this factory.
+  /// Map containing all round robin @c Object_Group instances created by this factory.
   HASH_MAP rr_groups_;
 };
 
@@ -156,22 +156,22 @@ public:
   char * id () override;
 
   /**
-   * Adds a new <member> to the <Object_Group>.  Note that each
-   * <Member_ID> in an <Object_Group> must be unique.  If the
-   * group already contains a member with the same <Member_ID>, a
+   * Adds a new <member> to the @c Object_Group.  Note that each
+   * @c Member_ID in an @c Object_Group must be unique.  If the
+   * group already contains a member with the same @c Member_ID, a
    * <duplicate_member> exceptions is thrown.
    */
   void bind (Load_Balancer::Member const & member) override;
 
   /**
-   * Removes a member with the specified <Member_ID> from the
-   * <Object_Group>.  If none of the group's members have a
+   * Removes a member with the specified @c Member_ID from the
+   * @c Object_Group.  If none of the group's members have a
    * Member_ID of <id>, <no_such_member> exception is thrown.
    */
   void unbind (char const * id) override;
 
   /**
-   * Returns a member object from this <Object_Group> in accordance with
+   * Returns a member object from this @c Object_Group in accordance with
    * load balancing policy it implements, i.e., ``random'' or
    * ``round robin.''  If the group contains no members, <no_such_member>
    * exception is thrown.
@@ -179,20 +179,20 @@ public:
   CORBA::Object_ptr resolve () override = 0;
 
   /**
-   * Returns an object with the specified <Member_ID>.  If this
-   * <Object_Group> contains no members with the specified
-   * <Member_ID>, <no_such_member> exception is thrown.
+   * Returns an object with the specified @c Member_ID.  If this
+   * @c Object_Group contains no members with the specified
+   * @c Member_ID, <no_such_member> exception is thrown.
    */
   CORBA::Object_ptr resolve_with_id (char const * id) override;
 
-  /// Return a sequence of <Member_ID>s of all of its members.
+  /// Return a sequence of @c Member_ID values for all members.
   Load_Balancer::Member_ID_List * members () override;
 
   /**
-   * Cleanup the resources associated with this <Object_Group>.
-   * Subsequent calls to this <Object_Group> should fail, and its
+   * Cleanup the resources associated with this @c Object_Group.
+   * Subsequent calls to this @c Object_Group should fail, and its
    * <id> should become available.  <Object_Group_Factory>
-   * should no longer list this <Object_Group>.
+   * should no longer list this @c Object_Group.
    */
   void destroy () override;
 
@@ -222,8 +222,8 @@ protected:
 
   /**
    * Pointer to the <Object_Group_Factory> servant, which created this
-   * <Object_Group> servant.  We need this pointer to be able to
-   * notify the factory when this <Object_Group> is destroyed.  Upon
+   * @c Object_Group servant.  We need this pointer to be able to
+   * notify the factory when this @c Object_Group is destroyed.  Upon
    * notification, the factory can update its records and release
    * resources as necessary.
    */
@@ -233,8 +233,8 @@ protected:
 /**
  * @class Random_Object_Group
  *
- * @brief This class implements <Object_Group> idl interface with the
- * random policy for <resolve>.
+ * @brief This class implements @c Object_Group idl interface with the
+ * random policy for @c resolve.
  */
 class Random_Object_Group : public Object_Group_i
 {
@@ -249,15 +249,15 @@ public:
   Random_Object_Group &operator= (Random_Object_Group const &) = delete;
   Random_Object_Group &operator= (Random_Object_Group &&) = delete;
 
-  /// Returns a member object from this <Object_Group> in accordance with
+  /// Returns a member object from this @c Object_Group in accordance with
   /// the "random" load balancing policy.
   CORBA::Object_ptr resolve () override;
 
   /**
-   * Cleanup the resources associated with this <Object_Group>.
-   * Subsequent calls to this <Object_Group> should fail, and its
+   * Cleanup the resources associated with this @c Object_Group.
+   * Subsequent calls to this @c Object_Group should fail, and its
    * <id> should become available.  <Object_Group_Factory>
-   * should no longer list this <Object_Group>.
+   * should no longer list this @c Object_Group.
    */
   void destroy () override;
 };
@@ -265,8 +265,8 @@ public:
 /**
  * @class RR_Object_Group:
  *
- * @brief This class implements <Object_Group> idl interface with the
- * round robin policy for <resolve>.
+ * @brief This class implements @c Object_Group idl interface with the
+ * round robin policy for @c resolve.
  */
 class RR_Object_Group: public Object_Group_i
 {
@@ -283,26 +283,26 @@ public:
 
   /**
    * We need to override the implementation of <unbind> from
-   * Object_Group_i to make sure <resolve>
+   * Object_Group_i to make sure @c resolve
    * works correctly.
    */
   void unbind (char const * id) override;
 
-  /// Returns a member object from this <Object_Group> in accordance with
+  /// Returns a member object from this @c Object_Group in accordance with
   /// the "round robin" load balancing policy.
   CORBA::Object_ptr resolve () override;
 
   /**
-   * Cleanup the resources associated with this <Object_Group>.
-   * Subsequent calls to this <Object_Group> should fail, and its
+   * Cleanup the resources associated with this @c Object_Group.
+   * Subsequent calls to this @c Object_Group should fail, and its
    * <id> should become available.  <Object_Group_Factory>
-   * should no longer list this <Object_Group>.
+   * should no longer list this @c Object_Group.
    */
   void destroy () override;
 
 private:
   /// Index into the Object_Group_i::member_id_list_: keeps track of
-  /// the member_id to return on the next invocation of <resolve>.
+  /// the member_id to return on the next invocation of @c resolve.
   size_t next_ {};
 };
 

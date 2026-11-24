@@ -41,7 +41,7 @@ public:
   /// Initialization.
   int initialize (Notifier_Handler *);
 
-  /// Frame input events and notify <Consumers>.
+  /// Frame input events and notify @c Consumers.
   int handle_input (ACE_HANDLE) override;
 
   /// Close down the handler.

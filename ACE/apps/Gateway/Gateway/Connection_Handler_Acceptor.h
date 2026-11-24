@@ -36,11 +36,11 @@ public:
   Connection_Handler_Acceptor &operator= (Connection_Handler_Acceptor const &) = delete;
   Connection_Handler_Acceptor &operator= (Connection_Handler_Acceptor &&) = delete;
 
-  /// Hook method for creating an appropriate <Connection_Handler>.
+  /// Hook method for creating an appropriate @c Connection_Handler.
   int make_svc_handler (Connection_Handler *&ch) override;
 
   /// Hook method for accepting a connection into the
-  /// <Connection_Handler>.
+  /// @c Connection_Handler.
   int accept_svc_handler (Connection_Handler *ch) override;
 
 protected:
@@ -53,7 +53,7 @@ protected:
   /// Keeps track of what type of proxy we need to create.
   Connection_Config_Info connection_config_info_;
 
-  /// Make the appropriate type of <Connection_Handler>.
+  /// Make the appropriate type of @c Connection_Handler.
   Connection_Handler_Factory connection_handler_factory_;
 };
 

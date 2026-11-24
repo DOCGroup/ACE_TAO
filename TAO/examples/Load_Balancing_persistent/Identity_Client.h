@@ -44,7 +44,7 @@ public:
   Identity_Client &operator= (Identity_Client const &) = delete;
   Identity_Client &operator= (Identity_Client &&) = delete;
 
-  /// Initializes <orb_manager_>, and parses commandline arguments.
+  /// Initializes @c orb_manager_, and parses commandline arguments.
   int init (int argc, ACE_TCHAR *argv[]);
 
   int run ();

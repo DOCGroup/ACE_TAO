@@ -5,14 +5,14 @@
  *  gateway (gatewayd) to its various peers (peerd).  The general
  *  collaboration works as follows:
  *
- *  1. <Peer_Acceptor> creates a listener endpoint and waits
+ *  1. @c Peer_Acceptor creates a listener endpoint and waits
  *     passively for gatewayd to connect with it.
  *
- *  2. When a gatewayd connects, <Peer_Acceptor> creates an
- *     <Peer_Handler> object that sends/receives events from
+ *  2. When a gatewayd connects, @c Peer_Acceptor creates an
+ *     @c Peer_Handler object that sends/receives events from
  *     gatewayd on that connection.
  *
- *  3. The <Peer_Handler> waits for gatewayd to inform it of its
+ *  3. The @c Peer_Handler waits for gatewayd to inform it of its
  *     connection ID, which is prepended to all subsequent outgoing
  *     events sent from peerd.
  *
@@ -25,7 +25,7 @@
  *  cannot serve as both a Consumer and Supplier of Events.  This is
  *  because the gatewayd establishes a separate connection for
  *  Suppliers and Consumers and the peerd only maintains a single
- *  <Peer_Handler> object to handle this one connection.  Enhancing
+ *  @c Peer_Handler object to handle this one connection.  Enhancing
  *  this implementation to be both a Consumer and Supplier
  *  simultaneously is straightforward, however.  In addition,
  *  multiple peerd processes can already work together to play these
@@ -91,7 +91,7 @@ public:
   /// Finish sending a event when flow control conditions abate.
   int handle_output (ACE_HANDLE) override;
 
-  /// Periodically send events via <ACE_Reactor> timer mechanism.
+  /// Periodically send events via @c ACE_Reactor timer mechanism.
   int handle_timeout (ACE_Time_Value const &,
                       void const *arg) override;
 
@@ -102,15 +102,15 @@ public:
 protected:
   using inherited = ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>;
 
-  /// Take ownership of <mb> and transmit it to the gatewayd.
+  /// Take ownership of @a mb and transmit it to the gatewayd.
   int transmit (ACE_Message_Block *mb,
                 size_t n,
                 int event_type);
 
-  /// Transfer a complete Peer event from the gatewayd to <mb>.
+  /// Transfer a complete Peer event from the gatewayd to @a mb.
   virtual int recv (ACE_Message_Block *&mb);
 
-  /// Send an Peer event to gatewayd, using <nonblk_put>.
+  /// Send an Peer event to gatewayd, using @c nonblk_put.
   virtual int send (ACE_Message_Block *mb);
 
   /// Perform a non-blocking <put>, which tries to send an event to the
@@ -158,7 +158,7 @@ template class ACE_Svc_Export ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>;
  * @class Peer_Acceptor
  *
  * @brief Passively accept connections from gatewayd and dynamically
- * create a new <Peer_Handler> object to communicate with the
+ * create a new @c Peer_Handler object to communicate with the
  * gatewayd.
  */
 class ACE_Svc_Export Peer_Acceptor : public ACE_Acceptor<Peer_Handler, ACE_SOCK_ACCEPTOR>
@@ -174,14 +174,14 @@ public:
   /// Start the acceptor on the specified port.
   int start (u_short);
 
-  /// Terminate the <Peer_Acceptor>.
+  /// Terminate the @c Peer_Acceptor.
   int close () override;
 
-  /// Factory method that creates a <Peer_Handler> just once.
+  /// Factory method that creates a @c Peer_Handler just once.
   int make_svc_handler (Peer_Handler *&) override;
 
 private:
-  /// Factor out common code for initializing the <Peer_Acceptor>.
+  /// Factor out common code for initializing the @c Peer_Acceptor.
   int open_acceptor (u_short port);
 
   /// Manually allocated; destroyed and cleared by Peer_Acceptor::close().
@@ -201,7 +201,7 @@ template class ACE_Svc_Export ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>;
  * @class Peer_Connector
  *
  * @brief Actively establish connections with gatewayd and dynamically
- * create a new <Peer_Handler> object to communicate with the
+ * create a new @c Peer_Handler object to communicate with the
  * gatewayd.
  */
 class ACE_Svc_Export Peer_Connector : public ACE_Connector<Peer_Handler, ACE_SOCK_CONNECTOR>
@@ -262,17 +262,17 @@ public:
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;
 
 private:
-  /// Pointer to an instance of our <Peer_Acceptor> that's used to
+  /// Pointer to an instance of our @c Peer_Acceptor that's used to
   /// accept connections and create Consumers.
   Peer_Acceptor consumer_acceptor_;
 
-  /// Pointer to an instance of our <Peer_Acceptor> that's used to
+  /// Pointer to an instance of our @c Peer_Acceptor that's used to
   /// accept connections and create Suppliers.
   Peer_Acceptor supplier_acceptor_;
 
   /**
    * An instance of our <Peer_Connector>.  Note that one
-   * <Peer_Connector> is used to establish <Peer_Handler>s for both
+   * <Peer_Connector> is used to establish @c Peer_Handler objects for both
    * Consumers and Suppliers.
    */
   Peer_Connector connector_;

@@ -82,7 +82,7 @@ class SIPAddress;
 // TODO:
 // class AtmE164Address;
 /**
- * @class
+ * @class Address
  *
  * @brief Defines the member functions for the abstract base class
  * Address. An Address is a unique network endpoint.
@@ -310,7 +310,7 @@ private:
   int query_dns (char const *hostname);
 };
 /**
- * @class
+ * @class UdpAddress
  *
  * @brief Defines the member functions for the concrete class UdpAddress
  * A Udp Address consists of an IP Version 4 Address (IpAddress)
@@ -374,7 +374,7 @@ protected:
   void format_output() override;
 };
 /**
- * @class
+ * @class MacAddress
  *
  * @brief Defines the member functions for the concrete class MacAddress.
  * A Media Access Control Address consists of 48 bits as defined
@@ -430,7 +430,7 @@ protected:
   void format_output() override;
 };
 /**
- * @class
+ * @class NetbiosAddress
  *
  * @brief Defines the member functions for the concrete class NetbiosAddress.
  * The IBM/Microsoft address for NETBIOS, NETBEUI protocol transport.
@@ -485,7 +485,7 @@ protected:
   addr_type get_type() const override;
 };
 /**
- * @class
+ * @class DecNetAddress
  *
  * @brief Defines the member functions for the concrete class DecNetAddress.
  * DecNet Phase ? address consists of two octets (CISCO-TC.my)
@@ -528,7 +528,7 @@ protected:
   char output_buffer[MAX_DISPLAY_SZ] {};
 };
 /**
- * @class
+ * @class AppleTalkAddress
  *
  * @brief Defines the member functions for the concrete class DecNetAddress.
  * DecNet Phase ? address consists of two octets (CISCO-TC.my)

@@ -14,7 +14,7 @@
 /**
  * @class Initiator_i
  *
- * @brief Implement the <Initiator> IDL interface.
+ * @brief Implement the @c Initiator IDL interface.
  */
 class Initiator_i : public POA_Initiator
 {

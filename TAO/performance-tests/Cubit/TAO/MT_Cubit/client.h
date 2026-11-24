@@ -46,7 +46,7 @@ public:
   Client_i &operator= (Client_i const &) = delete;
   Client_i &operator= (Client_i &&) = delete;
 
-  /// Initialize the state of <Client_i>.
+  /// Initialize the state of @c Client_i.
   int init (int argc, ACE_TCHAR *argv[]);
 
   /// Run the tests.

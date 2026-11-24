@@ -14,7 +14,7 @@
 /**
  * @class Object_A_i
  *
- * @brief Implement the <Object_A> IDL interface.
+ * @brief Implement the @c Object_A IDL interface.
  */
 class Object_A_i : public POA_Object_A
 {

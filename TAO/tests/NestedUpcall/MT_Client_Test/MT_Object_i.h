@@ -16,7 +16,7 @@
 /**
  * @class MT_Object_i
  *
- * @brief Implement the <MT_Object> IDL interface.
+ * @brief Implement the @c MT_Object IDL interface.
  */
 class MT_Object_i : public POA_MT_Object
 {

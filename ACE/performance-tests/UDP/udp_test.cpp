@@ -82,7 +82,7 @@ public:
                     ACE_Reactor_Mask close_mask) override;
 
   //FUZZ: disable check_for_lack_ACE_OS
-  /// Send the <buf> to the server.
+  /// Send the @a buf to the server.
   int send (char const *buf, size_t len);
   //FUZZ: enable check_for_lack_ACE_OS
 

@@ -22,7 +22,7 @@ class Grid_i;
 /**
  * @class Grid_Factory_i
  *
- * Create a <Grid>.
+ * Create a @c Grid.
  */
 class Grid_Factory_i : public POA_Grid_Factory
 {
@@ -37,7 +37,7 @@ public:
   Grid_Factory_i& operator= (Grid_Factory_i const&) = delete;
   Grid_Factory_i& operator= (Grid_Factory_i&&) = delete;
 
-  /// This function creates and returns a <Grid>.
+  /// This function creates and returns a @c Grid.
   Grid_ptr make_grid (CORBA::Short,
                       CORBA::Short) override;
 

@@ -28,7 +28,7 @@ public:
   /// @name Initialization
   /// @{
 
-  /// Parses <config_file> from <config_dir>.
+  /// Parses @c config_file from @c config_dir.
   explicit JAWS_Config_File (ACE_TCHAR const *config_file,
                              ACE_TCHAR const *config_dir = "./");
   ~JAWS_Config_File ();
@@ -41,7 +41,7 @@ public:
   /// @name Searching
   /// @{
 
-  /// Finds the value associated with <key>.
+  /// Finds the value associated with @c key.
   int find (const ACE_TCHAR *key, const ACE_TCHAR *&value);
 
   /// Re-reads the configuration file.

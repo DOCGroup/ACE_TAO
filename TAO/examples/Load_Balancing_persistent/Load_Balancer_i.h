@@ -187,14 +187,14 @@ public:
 
   /**
    * Adds a new <member> to the <Object_Group>.  Note that each
-   * <Member_ID> in an <Object_Group> must be unique.  If the
-   * group already contains a member with the same <Member_ID>, a
+   * @c Member_ID in an <Object_Group> must be unique.  If the
+   * group already contains a member with the same @c Member_ID, a
    * <duplicate_member> exceptions is thrown.
    */
   void bind (Load_Balancer::Member const &member) override;
 
   /**
-   * Removes a member with the specified <Member_ID> from the
+   * Removes a member with the specified @c Member_ID from the
    * <Object_Group>.  If none of the group's members have a
    * Member_ID of <id>, <no_such_member> exception is thrown.
    */
@@ -209,13 +209,13 @@ public:
   char * resolve () override = 0;
 
   /**
-   * Returns an object with the specified <Member_ID>.  If this
+   * Returns an object with the specified @c Member_ID.  If this
    * <Object_Group> contains no members with the specified
-   * <Member_ID>, <no_such_member> exception is thrown.
+   * @c Member_ID, <no_such_member> exception is thrown.
    */
   char * resolve_with_id (char const *id) override;
 
-  /// Return a sequence of <Member_ID>s of all of its members.
+  /// Return a sequence of @c Member_ID values for all members.
   Load_Balancer::Member_ID_List * members () override;
 
   /**

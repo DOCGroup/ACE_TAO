@@ -28,7 +28,7 @@ class POA_Holder
   POA_Holder &operator= (POA_Holder const &) = delete;
   POA_Holder &operator= (POA_Holder &&) = delete;
 
-  /// The arg_shifter options are read in the following manner: -POA <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count> (-Lane <priority> ,<static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
+  /// Options are read in this order: -POA name, -PriorityModel CLIENT or SERVER priority, -Lanes count with repeated -Lane priority static_threads dynamic_threads values, and -Bands count with repeated -Band low high values.
   int init (ACE_Arg_Shifter& arg_shifter);
 
   /// Activate the new POA using the parameters initialized before.

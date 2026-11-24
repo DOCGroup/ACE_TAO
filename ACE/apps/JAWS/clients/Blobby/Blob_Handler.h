@@ -48,7 +48,7 @@ public:
   /// returns the number of bytes read/written in the last operation.
   int byte_count () const;
 
-  /// Activate this instance of the <ACE_Blob_Handler>
+  /// Activate this instance of the @c ACE_Blob_Handler
   int open (void * = nullptr) override;
 
   /// Close down the Blob

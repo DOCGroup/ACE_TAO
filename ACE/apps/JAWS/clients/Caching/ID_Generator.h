@@ -29,7 +29,7 @@ class ACE_ID_Generator
 public:
   ACE_ID_Generator () = delete;
 
-  /// allocate a new ID string and point <id> to it.
+  /// allocate a new ID string and point @a id to it.
   static char *get_new_id (char *id);
 
 private:

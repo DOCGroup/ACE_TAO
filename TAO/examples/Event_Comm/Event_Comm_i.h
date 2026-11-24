@@ -56,7 +56,7 @@ public:
   /// set the ACE_Reactor to use when quitting.
   void set_reactor (ACE_Reactor *reactor);
 
-  /// Pass the q event to the <Consumer>.
+  /// Pass the q event to the @c Consumer.
   void push (Event_Comm::Event const &event) override;
 
   /// Disconnect the @a Consumer from the @a Notifier, giving it the

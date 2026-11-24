@@ -33,7 +33,7 @@
 class PP_Test_Client
 {
 public:
-  /// Use <testing_collocation> to control some client's behaviors.
+  /// Use @c testing_collocation to control some client's behaviors.
   explicit PP_Test_Client (bool shutdown = false);
   PP_Test_Client (PP_Test_Client const &) = delete;
   PP_Test_Client (PP_Test_Client &&) = delete;

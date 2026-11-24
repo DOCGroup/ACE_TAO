@@ -117,7 +117,7 @@ private:
 };
 
 /**
- * @class CC_Lock_Cmd:public
+ * @class CC_Lock_Cmd
  *
  * @brief Defines a class for the lock command on the lock set
  *
@@ -145,7 +145,7 @@ private:
 };
 
 /**
- * @class CC_UnLock_Cmd:public
+ * @class CC_UnLock_Cmd
  *
  * @brief Defines a class for the unlock command on the lock set
  *
@@ -176,7 +176,7 @@ private:
 };
 
 /**
- * @class CC_TryLock_Cmd:public
+ * @class CC_TryLock_Cmd
  *
  * @brief Defines a class for the try_lock command on the lock set
  *
@@ -207,7 +207,7 @@ private:
 };
 
 /**
- * @class CC_ChangeMode_Cmd:public
+ * @class CC_ChangeMode_Cmd
  *
  * @brief Defines a class for the change_mode command on the lock set
  *
@@ -242,7 +242,7 @@ private:
 };
 
 /**
- * @class CC_Sleep_Cmd:public
+ * @class CC_Sleep_Cmd
  *
  * @brief Defines a class for the sleep command
  *
@@ -266,7 +266,7 @@ class CC_Sleep_Cmd:public CC_Command
 };
 
 /**
- * @class CC_Repeat_Cmd:public
+ * @class CC_Repeat_Cmd
  *
  * @brief Defines a class for the repeat command
  *
@@ -289,7 +289,7 @@ class CC_Repeat_Cmd:public CC_Command
 };
 
 /**
- * @class CC_Wait_Cmd:public
+ * @class CC_Wait_Cmd
  *
  * @brief Defines a class for the wait command
  *
@@ -385,7 +385,7 @@ private:
 };
 
 /**
- * @class CC_Lookup_Cmd:public
+ * @class CC_Lookup_Cmd
  *
  * @brief Defines a class for the lookup command.
  *

@@ -12,7 +12,7 @@
 /**
  * @class PingObject_i
  *
- * @brief A simple implementation of the <ping> interface
+ * @brief A simple implementation of the @c ping interface
  *
  * Used to verify that the client can tolerate server crashes with
  * oneway invocations and that there are no problems with

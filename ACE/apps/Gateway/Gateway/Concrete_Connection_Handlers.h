@@ -91,7 +91,7 @@ protected:
 /**
  * @class Thr_Consumer_Handler
  *
- * @brief Runs each <Consumer_Handler> in a separate thread.
+ * @brief Runs each @c Consumer_Handler in a separate thread.
  */
 class Thr_Consumer_Handler : public Consumer_Handler
 {
@@ -134,7 +134,7 @@ private:
 /**
  * @class Thr_Supplier_Handler
  *
- * @brief Runs each <Supplier_Handler> in a separate thread.
+ * @brief Runs each @c Supplier_Handler in a separate thread.
  */
 class Thr_Supplier_Handler : public Supplier_Handler
 {

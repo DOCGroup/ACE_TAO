@@ -19,7 +19,7 @@
 /**
  * @class FPRT
  *
- * @brief This class serves as a namespace for the <Return_Type>.
+ * @brief This class serves as a namespace for the @c Return_Type.
  */
 class FPRT
 {
@@ -39,7 +39,7 @@ public:
  * @class File_Parser
  *
  * @brief Class used to parse the configuration file for the
- * <Consumer_Map>.
+ * @c Consumer_Map.
  */
 template <class ENTRY>
 class File_Parser
@@ -88,10 +88,10 @@ protected:
    */
   FPRT::Return_Type readword (char buf[]);
 
-  /// Returns true if <ch> is a delimiter, i.e., ' ', ',', or '\t'.
+  /// Returns true if @a ch is a delimiter: a space, comma, or tab.
   int delimiter (char ch);
 
-  /// Returns true if <ch> is the comment character, i.e., '#'.
+  /// Returns true if @a ch is the comment character, i.e., '#'.
   int comments (char ch);
 
   /// Skips to the remainder of a line, e.g., when we find a comment

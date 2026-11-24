@@ -35,7 +35,7 @@ public:
   Quoter_i (Quoter_i &&) = delete;
   Quoter_i &operator= (Quoter_i &&) = delete;
 
-  /// Returns the current quote for the stock <stock_name>
+  /// Returns the current quote for the stock @a stock_name
   CORBA::Long get_quote (char const *stock_name) override;
 
   /// @name Lifecycle methods
@@ -45,7 +45,7 @@ public:
   CosLifeCycle::LifeCycleObject_ptr copy (CosLifeCycle::FactoryFinder_ptr there,
                                           CosLifeCycle::Criteria const &the_criteria) override;
 
-  /// Move this object using <there>
+  /// Move this object using @a there
   void move (CosLifeCycle::FactoryFinder_ptr there,
              CosLifeCycle::Criteria const &the_criteria) override;
 
@@ -85,7 +85,7 @@ public:
   /// Initialize everything in the factory
   int init ();
 
-  /// Return the quoter by the id <name>.
+  /// Return the quoter by the id @a name.
   Stock::Quoter_ptr create_quoter (char const *name) override;
 
 private:

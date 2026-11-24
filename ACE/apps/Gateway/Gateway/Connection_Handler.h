@@ -25,16 +25,16 @@ class Event_Channel;
 /**
  * @class Connection_Handler
  *
- * @brief <Connection_Handler> contains info about connection state and
+ * @brief @c Connection_Handler contains info about connection state and
  * addressing.
  *
- * The <Connection_Handler> classes process events sent to the
+ * The @c Connection_Handler classes process events sent to the
  * Event Channel from Suppliers and forward them to Consumers.
  */
 class Connection_Handler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_SYNCH>
 {
 public:
-  /// Default constructor (needed to make <ACE_Connector> happy).
+  /// Default constructor (needed to make @c ACE_Connector happy).
   Connection_Handler ();
 
   /// Real constructor.
@@ -44,7 +44,7 @@ public:
   Connection_Handler &operator= (Connection_Handler const &) = delete;
   Connection_Handler &operator= (Connection_Handler &&) = delete;
 
-  /// Initialize and activate a single-threaded <Connection_Handler>
+  /// Initialize and activate a single-threaded @c Connection_Handler
   /// (called by <ACE_Connector::handle_output>).
   int open (void * = nullptr) override;
 
@@ -137,16 +137,16 @@ protected:
 /**
  * @class Connection_Handler_Factory
  *
- * @brief Creates the appropriate type of <Connection_Handler>.
+ * @brief Creates the appropriate type of @c Connection_Handler.
  *
- * <Connection_Handler>s can include <Consumer_Handler>,
+ * @c Connection_Handler objects can include <Consumer_Handler>,
  * <Supplier_Handler>, <Thr_Consumer_Handler>, or
  * <Thr_Supplier_Handler>).
  */
 class Connection_Handler_Factory
 {
 public:
-  /// Make the appropriate type of <Connection_Handler>, based on the
+  /// Make the appropriate type of @c Connection_Handler, based on the
   /// <Connection_Config_Info> parameter.
   Connection_Handler *make_connection_handler (Connection_Config_Info const &);
 };

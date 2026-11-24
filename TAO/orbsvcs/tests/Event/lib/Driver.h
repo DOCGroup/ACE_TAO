@@ -97,12 +97,12 @@ public:
   /// connect itself.
   virtual void connect_consumers ();
 
-  /// Connect consumer number <i> using the consumer_admin provided.
+  /// Connect consumer number @a i using the consumer_admin provided.
   virtual void connect_consumer (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     int i);
 
-  /// Build the QoS requirements for consumer <i>
+  /// Build the QoS requirements for consumer @a i.
   virtual void build_consumer_qos (
       int i,
       RtecEventChannelAdmin::ConsumerQOS& qos,
@@ -112,12 +112,12 @@ public:
   /// connect itself.
   virtual void connect_suppliers ();
 
-  /// Connect supplier number <i> using the supplier_admin provided.
+  /// Connect supplier number @a i using the supplier_admin provided.
   virtual void connect_supplier (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
     int i);
 
-  /// Build the QoS requirements for supplier <i>
+  /// Build the QoS requirements for supplier @a i.
   virtual void build_supplier_qos (
       int i,
       RtecEventChannelAdmin::SupplierQOS& qos,
@@ -198,7 +198,7 @@ public:
   virtual EC_Consumer* allocate_consumer (int i);
   virtual EC_Supplier* allocate_supplier (int i);
 
-  /// Allocate one task for supplier number <i>
+  /// Allocate one task for supplier number @a i.
   virtual int allocate_tasks ();
   virtual ACE_Task_Base* allocate_task (int i);
 

@@ -44,14 +44,14 @@ public:
   virtual int close (u_long = 0);
 
   /**
-   * Initiate the connection of the <Connection_Handler> to its peer.
+   * Initiate the connection of the @c Connection_Handler to its peer.
    * Second paratemer is used for thread connection-handler which will
    * block the connecting procedure directly, need not care
    * Options::blocking_semantics().
    */
   int initiate_connection_connection (Connection_Handler *, bool sync_directly = false);
 
-  /// Complete the initialization of the <Connection_Handler> once it's
+  /// Complete the initialization of the @c Connection_Handler once it's
   /// connected to its Peer.
   int complete_connection_connection (Connection_Handler *);
 
@@ -60,10 +60,10 @@ public:
   int reinitiate_connection_connection (Connection_Handler *);
   int cancel_connection_connection (Connection_Handler *);
 
-  /// Bind the <Connection_Handler> to the <connection_map_>.
+  /// Bind the @c Connection_Handler to the @c connection_map_.
   int bind_proxy (Connection_Handler *);
 
-  /// Locate the <Connection_Handler> with <connection_id>.
+  /// Locate the @c Connection_Handler with @a connection_id.
   int find_proxy (ACE_INT32 connection_id,
                   Connection_Handler *&);
 
@@ -72,7 +72,7 @@ public:
   int subscribe (Event_Key const &event_addr,
                  std::unique_ptr<Consumer_Dispatch_Set> cds);
 
-  /// Pass <mb> to the Event Channel so it can forward it to Consumers.
+  /// Pass @a mb to the Event Channel so it can forward it to Consumers.
   virtual int put (ACE_Message_Block *mb,
                    ACE_Time_Value * = nullptr);
 
@@ -116,7 +116,7 @@ private:
   using CONNECTION_MAP_ITERATOR = ACE_Map_Iterator<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>;
   using CONNECTION_MAP_ENTRY = ACE_Map_Entry<CONNECTION_ID, Connection_Handler *>;
 
-  /// Table that maps <CONNECTION_ID>s to <Connection_Handler> *'s.
+  /// Table that maps <CONNECTION_ID>s to @c Connection_Handler *'s.
   CONNECTION_MAP connection_map_;
 
   /// Map that associates an event to a set of <Consumer_Handler> *'s.

@@ -37,10 +37,10 @@ public:
   /// Get the current balance in the account.
   CORBA::Float balance () override;
 
-  /// Get the name of the <Account> holder.
+  /// Get the name of the @c Account holder.
   char *name () override;
 
-  /// Set the name of the <Account> holder.
+  /// Set the name of the @c Account holder.
   void name (char const *name) override;
 
   /// Deposit money in the account.
@@ -59,7 +59,7 @@ private:
   /// balance for this account
   CORBA::Float balance_ {};
 
-  /// Name of the <Account> holder.
+  /// Name of the @c Account holder.
   CORBA::String_var name_;
 };
 
