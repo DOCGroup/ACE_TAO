@@ -106,12 +106,12 @@ void CNamingTreeCtrl::SetpORB(CORBA::ORB_ptr pORB)
 
 CNamingObject* CNamingTreeCtrl::GetTreeObject(HTREEITEM hItem)
 {
-  if(hItem == 0)
+  if(hItem == nullptr)
   {
     hItem = GetSelectedItem();
     if(!hItem)
     {
-      return 0;
+      return nullptr;
     }
   }
   CNamingObject* pObject = (CNamingObject*)GetItemData(hItem);
@@ -120,7 +120,7 @@ CNamingObject* CNamingTreeCtrl::GetTreeObject(HTREEITEM hItem)
 
 void CNamingTreeCtrl::ClearChildren(HTREEITEM hItem)
 {
-  if(hItem == 0)
+  if(hItem == nullptr)
   {
     HTREEITEM hItem = GetRootItem();
     if(hItem)
