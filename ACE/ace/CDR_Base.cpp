@@ -349,10 +349,10 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
           b = (b84 | b73 | b62 | b51);
 #endif
 
-          ACE_UINT32 const c1 = static_cast<ACE_UINT32> (a >> 32);
-          ACE_UINT32 const c2 = static_cast<ACE_UINT32> (a & 0xffffffff);
-          ACE_UINT32 const c3 = static_cast<ACE_UINT32> (b >> 32);
-          ACE_UINT32 const c4 = static_cast<ACE_UINT32> (b & 0xffffffff);
+          auto const c1 = static_cast<ACE_UINT32> (a >> 32);
+          auto const c2 = static_cast<ACE_UINT32> (a & 0xffffffff);
+          auto const c3 = static_cast<ACE_UINT32> (b >> 32);
+          auto const c4 = static_cast<ACE_UINT32> (b & 0xffffffff);
 
 #if defined (ACE_LITTLE_ENDIAN)
           * reinterpret_cast<ACE_UINT32*> (target + 0) = c2;
@@ -867,7 +867,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
     }
 
   // How many digits are to the left of the decimal point?
-  const size_t digits_left =
+  auto const digits_left =
     static_cast<size_t> (1 + ((val > 0) ? std::log10 (val) : 0));
   if (digits_left > MAX_DIGITS)
     {
@@ -889,7 +889,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
   }
   for (size_t i = 0; i < digits_left; ++i, high = !high)
     {
-      const Octet digit = static_cast<Octet> (std::fmod (int_part, 10));
+      const auto digit = static_cast<Octet> (std::fmod (int_part, 10));
       if (high)
         {
           f.value_[idx--] |= digit << 4;
@@ -907,7 +907,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
   for (size_t i = digits_left; i < MAX_DIGITS; ++i, high = !high)
     {
       frac_part *= 10;
-      const Octet digit = static_cast<Octet> (frac_part);
+      const auto digit = static_cast<Octet> (frac_part);
       frac_part -= digit;
       if (high)
         {
@@ -1538,7 +1538,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
     }
   else if (rhs.scale_)
     {
-      const Octet shifted = static_cast<Octet> (this->lshift (rhs.scale_ - this->scale_));
+      const auto shifted = static_cast<Octet> (this->lshift (rhs.scale_ - this->scale_));
       this->scale_ -= shifted;
     }
 
@@ -1602,7 +1602,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
   const int shift = q.lshift (MAX_DIGITS);
   if (shift)
     {
-      const Octet scale = static_cast<Octet> (r.lshift (shift));
+      const auto scale = static_cast<Octet> (r.lshift (shift));
       r.scale_ = 0;
       Fixed r2;
       r = r.div_helper2 (rhs_no_scale, r2);

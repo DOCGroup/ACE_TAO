@@ -23,7 +23,7 @@ ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
   if (static_cast<ACE_CDR::Short> (major_version_) == 1
           && static_cast<ACE_CDR::Short> (minor_version_) == 2)
     {
-      ACE_CDR::Octet const len =
+      auto const len =
         static_cast<ACE_CDR::Octet> (ACE_OutputCDR::wchar_maxbytes ());
 
       if (this->write_1 (&len))
@@ -39,7 +39,7 @@ ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
             {
               if (ACE_OutputCDR::wchar_maxbytes () == 2)
                 {
-                  ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
+                  auto sx = static_cast<ACE_CDR::Short> (x);
                   return
                     this->write_octet_array (
                       reinterpret_cast<const ACE_CDR::Octet*> (&sx),
@@ -47,7 +47,7 @@ ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
                 }
               else
                 {
-                  ACE_CDR::Octet ox = static_cast<ACE_CDR::Octet> (x);
+                  auto ox = static_cast<ACE_CDR::Octet> (x);
                   return
                     this->write_octet_array (
                       reinterpret_cast<const ACE_CDR::Octet*> (&ox),
@@ -69,11 +69,11 @@ ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
     }
   else if (ACE_OutputCDR::wchar_maxbytes () == 2)
     {
-      ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
+      auto sx = static_cast<ACE_CDR::Short> (x);
       return this->write_2 (reinterpret_cast<const ACE_CDR::UShort *> (&sx));
     }
 
-  ACE_CDR::Octet ox = static_cast<ACE_CDR::Octet> (x);
+  auto ox = static_cast<ACE_CDR::Octet> (x);
   return this->write_1 (reinterpret_cast<const ACE_CDR::Octet *> (&ox));
 }
 
