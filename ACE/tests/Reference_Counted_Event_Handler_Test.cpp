@@ -215,7 +215,7 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
   int events = 0;
   int result = 0;
 
-  Reference_Counted_Event_Handler *handler =
+  auto *handler =
     new Reference_Counted_Event_Handler (events);
 
   ACE_Event_Handler_var const safe_handler (handler);
@@ -322,7 +322,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
 
   if (test_find)
     {
-      Reference_Counted_Event_Handler *handler =
+      auto *handler =
         new Reference_Counted_Event_Handler (events);
 
       ACE_Event_Handler_var const safe_handler (handler);
@@ -393,7 +393,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
 
   if (test_io)
     {
-      Reference_Counted_Event_Handler *handler =
+      auto *handler =
         new Reference_Counted_Event_Handler (events);
 
       ACE_Event_Handler_var const safe_handler (handler);
@@ -427,7 +427,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
 
   if (test_timers)
     {
-      Reference_Counted_Event_Handler *handler =
+      auto *handler =
         new Reference_Counted_Event_Handler (events);
 
       ACE_Event_Handler_var const safe_handler (handler);
@@ -456,7 +456,7 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
 
   if (test_timers)
     {
-      Reference_Counted_Event_Handler *handler =
+      auto *handler =
         new Reference_Counted_Event_Handler (events);
 
       ACE_Event_Handler_var const safe_handler (handler);
@@ -748,7 +748,7 @@ simple_event_handler (ACE_Reactor *reactor)
 
   if (test_io)
     {
-      Simple_Event_Handler *handler =
+      auto *handler =
         new Simple_Event_Handler (events,
                                   2);
 
@@ -781,7 +781,7 @@ simple_event_handler (ACE_Reactor *reactor)
 
   if (test_timers)
     {
-      Simple_Event_Handler *handler =
+      auto *handler =
         new Simple_Event_Handler (events,
                                   1);
 
@@ -809,7 +809,7 @@ simple_event_handler (ACE_Reactor *reactor)
 
   if (test_timers)
     {
-      Simple_Event_Handler *handler =
+      auto *handler =
         new Simple_Event_Handler (events,
                                   1);
 
