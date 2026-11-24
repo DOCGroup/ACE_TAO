@@ -274,7 +274,7 @@ public:
 private:
   /// This element is the one which is the deciding factor for purging
   /// of an ITEM.
-  ATTRIBUTES timer_;
+  ATTRIBUTES timer_ {0};
 
   /// The level about which the purging will happen automagically.
   double purge_percent_ {10};
@@ -478,7 +478,7 @@ public:
 private:
   /// The order is the deciding factor for the item to be removed from
   /// the cache.
-  ATTRIBUTES order_;
+  ATTRIBUTES order_ {0};
 
   /// The level about which the purging will happen automagically.
   double purge_percent_ {10};

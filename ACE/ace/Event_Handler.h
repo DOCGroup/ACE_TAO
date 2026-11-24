@@ -288,7 +288,7 @@ protected:
   using Atomic_Reference_Count = std::atomic<Reference_Count>;
 
   /// Reference count.
-  Atomic_Reference_Count reference_count_;
+  Atomic_Reference_Count reference_count_ {1};
 
 private:
   /// Priority of this Event_Handler.

@@ -20,10 +20,7 @@ ACE_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::~ACE_Caching_Strategy () = de
 //////////////////////////////////////////////////////////////////////////////////
 
 template<class ATTRIBUTES, class CACHING_UTILITY>
-ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::ACE_LRU_Caching_Strategy ()
-  : timer_ (0)
-{
-}
+ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::ACE_LRU_Caching_Strategy () = default;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
@@ -33,10 +30,7 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::ACE_LFU_Caching_Strategy 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
 template<class ATTRIBUTES, class CACHING_UTILITY>
-ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::ACE_FIFO_Caching_Strategy ()
-  : order_ (0)
-{
-}
+ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::ACE_FIFO_Caching_Strategy () = default;
 
 ////////////////////////////////////////////////////////////////////////////////////////////////
 
