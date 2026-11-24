@@ -426,7 +426,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context ()
         fl (
           this->factory_->create_stream (file_name, "r")
           );
-      if (fl.get())
+      if (fl)
         {
           if (TAO_debug_level > 5)
           {
