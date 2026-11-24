@@ -374,13 +374,13 @@ ACE_OS::wcsspn_emulation (const wchar_t *string,
 {
   const wchar_t *p = string;
   const wchar_t *spanp {};
-  wchar_t c, sc;
+  wchar_t c;
 
   // Skip any characters in charset, excluding the terminating \0.
 cont:
   c = *p++;
-  for (spanp = charset; (sc = *spanp++) != 0;)
-    if (sc == c)
+  for (spanp = charset; *spanp != 0; ++spanp)
+    if (*spanp == c)
       {
         goto cont;
       }
@@ -393,21 +393,25 @@ wchar_t *
 ACE_OS::wcsstr_emulation (const wchar_t *string,
                           const wchar_t *charset)
 {
-  wchar_t c, sc;
-  size_t len;
+  wchar_t c;
 
   if ((c = *charset++) != 0)
     {
-      len = ACE_OS::strlen (charset);
+      size_t const len = ACE_OS::strlen (charset);
       do
         {
-          do
+          for (;;)
             {
-              if ((sc = *string++) == 0)
+              wchar_t const sc = *string++;
+              if (sc == 0)
                 {
                   return nullptr;
                 }
-            } while (sc != c);
+              if (sc == c)
+                {
+                  break;
+                }
+            }
         } while (ACE_OS::strncmp (string, charset, len) != 0);
       --string;
     }

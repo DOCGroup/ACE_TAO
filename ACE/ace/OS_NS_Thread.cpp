@@ -1489,6 +1489,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
   int result = 0;
   ACE_Errno_Guard error (errno, 0);
+#     if defined (ACE_WIN32) || defined (ACE_VXWORKS)
   int msec_timeout = 0;
 
   if (timeout != 0 && *timeout != ACE_Time_Value::zero)
@@ -1505,6 +1506,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
           msec_timeout = relative_time.msec ();
         }
     }
+#     endif /* ACE_WIN32 || ACE_VXWORKS */
 
 #     if defined (ACE_HAS_SIGNAL_OBJECT_AND_WAIT)
   if (external_mutex->type_ == USYNC_PROCESS)
@@ -5174,12 +5176,12 @@ spa (FUNCPTR entry, ...)
 static void
 add_to_argv (ACE_VX_USR_ARG_T& argc, char** argv, int max_args, char* string)
 {
-  char indouble   = 0;
-  size_t previous = 0;
-  const size_t length = std::strlen (string);
+  size_t const length = std::strlen (string);
 
   if (length > 0)
     {
+      char indouble = 0;
+      size_t previous = 0;
       // We use <= to make sure that we get the last argument
       for (size_t i = 0; i <= length; ++i)
         {
