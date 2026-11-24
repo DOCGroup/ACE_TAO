@@ -98,7 +98,7 @@ public:
 
   /// The stream with the non-demarshaled reply. This stream will be
   /// passed up to the stubs to demarshal the parameter values.
-  TAO_InputCDR *input_cdr_;
+  TAO_InputCDR *input_cdr_ {};
 
   TAO_Transport *transport_;
 };
