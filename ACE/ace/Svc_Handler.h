@@ -301,6 +301,8 @@ public:
   /// ACE_Message_Blocks to the @c PEER_STREAM.
   virtual int flush ();
 
+  int flush (u_long flag) override;
+
   /// This method is not currently implemented -- this is where the
   /// integration with the @c Reactor would occur.
   int handle_timeout (const ACE_Time_Value &time,

@@ -285,7 +285,7 @@ Task::svc ()
         }
 
       int const wait_result = thread_manager.wait ();
-      ACE_ASSERT (wait_result != -1);
+      ACE_TEST_ASSERT (wait_result != -1);
 
       if (this->options_.shutdown_server)
         {
@@ -364,7 +364,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Wait for task to exit.
       int const wait_result = thread_manager.wait ();
-      ACE_ASSERT (wait_result != -1);
+      ACE_TEST_ASSERT (wait_result != -1);
     }
   catch (CORBA::Exception const &ex)
     {

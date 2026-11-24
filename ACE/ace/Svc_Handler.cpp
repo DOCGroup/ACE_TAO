@@ -480,6 +480,12 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush ()
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> int
+ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush (u_long flag)
+{
+  return ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush (flag);
+}
+
+template <typename PEER_STREAM, typename SYNCH_TRAITS> int
 ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush_i ()
 {
   ACE_Message_Queue_Iterator<SYNCH_TRAITS> iterator (*this->msg_queue ());

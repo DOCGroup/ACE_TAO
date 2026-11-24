@@ -51,8 +51,12 @@ Hello_Impl::operator new (size_t bytes)
 }
 
 /// Overloaded new operator, nothrow_t variant.
+// Keep GCC from treating the forwarding allocator as a mismatched allocation.
+#if defined (__GNUC__)
+__attribute__ ((noinline))
+#endif
 void *
-Hello_Impl::operator new (size_t bytes, const std::nothrow_t &nt)
+Hello_Impl::operator new (size_t bytes, const std::nothrow_t &nt) noexcept
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
   return ::operator new (bytes, nt);
