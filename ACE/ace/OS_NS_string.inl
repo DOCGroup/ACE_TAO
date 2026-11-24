@@ -249,15 +249,14 @@ ACE_OS::strncmp (const ACE_WCHAR_T *s, const ACE_WCHAR_T *t, size_t len)
 ACE_INLINE char *
 ACE_OS::strncpy (char *s, const char *t, size_t len)
 {
-  size_t i {};
-  for (; i < len && t[i] != '\0'; ++i)
+  if (len == 0)
     {
-      s[i] = t[i];
+      return s;
     }
-  for (; i < len; ++i)
-    {
-      s[i] = '\0';
-    }
+
+  size_t const copy_len = ACE_OS::strnlen (t, len);
+  ACE_OS::memcpy (s, t, copy_len);
+  ACE_OS::memset (s + copy_len, 0, len - copy_len);
   return s;
 }
 
