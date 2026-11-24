@@ -49,9 +49,7 @@ TAO_FT_ReplicationManagerController::TAO_FT_ReplicationManagerController ()
 {
 }
 
-TAO_FT_ReplicationManagerController::~TAO_FT_ReplicationManagerController ()
-{
-}
+TAO_FT_ReplicationManagerController::~TAO_FT_ReplicationManagerController () = default;
 
 int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
 {

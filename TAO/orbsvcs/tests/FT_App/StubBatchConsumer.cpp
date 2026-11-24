@@ -7,9 +7,7 @@ StubBatchConsumer::StubBatchConsumer ()
 {
 }
 
-StubBatchConsumer::~StubBatchConsumer ()
-{
-}
+StubBatchConsumer::~StubBatchConsumer () = default;
 
 int StubBatchConsumer::parse_args (int argc, ACE_TCHAR * argv[])
 {

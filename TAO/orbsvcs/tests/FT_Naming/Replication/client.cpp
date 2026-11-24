@@ -42,9 +42,7 @@ My_Test_Object::My_Test_Object (CORBA::Short id)
 {
 }
 
-My_Test_Object::~My_Test_Object ()
-{
-}
+My_Test_Object::~My_Test_Object () = default;
 
 CORBA::Short
 My_Test_Object::id ()

@@ -45,9 +45,7 @@ Server_i::Server_i ()
 {
 }
 
-Server_i::~Server_i()
-{
-}
+Server_i::~Server_i() = default;
 
 int
 Server_i::parse_args (int argc, ACE_TCHAR* argv[])

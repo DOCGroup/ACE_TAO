@@ -13,9 +13,7 @@ IdAssignment::IdAssignment ()
 {
 }
 
-IdAssignment::~IdAssignment ()
-{
-}
+IdAssignment::~IdAssignment () = default;
 
 int
 IdAssignment::parse_args (int argc,

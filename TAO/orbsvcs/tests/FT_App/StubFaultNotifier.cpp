@@ -12,9 +12,7 @@ StubFaultNotifier::StubFaultNotifier ()
 {
 }
 
-StubFaultNotifier::~StubFaultNotifier ()
-{
-}
+StubFaultNotifier::~StubFaultNotifier () = default;
 
 ::PortableServer::POA_ptr StubFaultNotifier::_default_POA ()
 {

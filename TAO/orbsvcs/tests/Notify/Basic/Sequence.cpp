@@ -37,9 +37,7 @@ SequencePushSupplier::SequencePushSupplier (
 {
 }
 
-SequencePushSupplier::~SequencePushSupplier ()
-{
-}
+SequencePushSupplier::~SequencePushSupplier () = default;
 
 /***************************************************************************/
 Sequence::Sequence ()
@@ -49,9 +47,7 @@ Sequence::Sequence ()
 {
 }
 
-Sequence::~Sequence ()
-{
-}
+Sequence::~Sequence () = default;
 
 int
 Sequence::init (int argc,

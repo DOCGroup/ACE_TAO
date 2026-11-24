@@ -137,9 +137,7 @@ AdminProperties::AdminProperties ()
 {
 }
 
-AdminProperties::~AdminProperties ()
-{
-}
+AdminProperties::~AdminProperties () = default;
 
 int
 AdminProperties::parse_args(int argc, ACE_TCHAR *argv[])

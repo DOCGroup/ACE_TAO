@@ -5,9 +5,7 @@ Test_i::Test_i ()
 {
 }
 
-Test_i::~Test_i ()
-{
-}
+Test_i::~Test_i () = default;
 
 void
 Test_i::contact ()

@@ -33,9 +33,7 @@ Event_AnyPushSupplier::Event_AnyPushSupplier (Simple_Test* test_client)
 {
 }
 
-Event_AnyPushSupplier::~Event_AnyPushSupplier ()
-{
-}
+Event_AnyPushSupplier::~Event_AnyPushSupplier () = default;
 
 //***************************************************************************
 
@@ -44,9 +42,7 @@ Simple_Test::Simple_Test ()
 {
 }
 
-Simple_Test::~Simple_Test ()
-{
-}
+Simple_Test::~Simple_Test () = default;
 
 int
 Simple_Test::init (int argc,

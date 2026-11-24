@@ -36,9 +36,7 @@ Event_StructuredPushSupplier::Event_StructuredPushSupplier (
 {
 }
 
-Event_StructuredPushSupplier::~Event_StructuredPushSupplier ()
-{
-}
+Event_StructuredPushSupplier::~Event_StructuredPushSupplier () = default;
 
 /***************************************************************************/
 Events::Events ()
@@ -46,9 +44,7 @@ Events::Events ()
 {
 }
 
-Events::~Events ()
-{
-}
+Events::~Events () = default;
 
 int
 Events::init (int argc,

@@ -8,9 +8,7 @@ Filter::Filter ()
 {
 }
 
-Filter::~Filter ()
-{
-}
+Filter::~Filter () = default;
 
 int
 Filter::init (int argc, ACE_TCHAR* argv [])

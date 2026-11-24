@@ -6,9 +6,7 @@ Test_i::Test_i (CORBA::Short server_num)
 {
 }
 
-Test_i::~Test_i ()
-{
-}
+Test_i::~Test_i () = default;
 
 CORBA::Short
 Test_i::get_server_num (const CORBA::Short delay_secs)

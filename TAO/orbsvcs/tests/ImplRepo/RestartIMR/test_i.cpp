@@ -5,9 +5,7 @@ Test_Dummy_i::Test_Dummy_i ()
 {
 }
 
-Test_Dummy_i::~Test_Dummy_i ()
-{
-}
+Test_Dummy_i::~Test_Dummy_i () = default;
 
 char * Test_Dummy_i::getMessage ()
 {
@@ -19,9 +17,7 @@ Test_Time_i::Test_Time_i ()
 {
 }
 
-Test_Time_i::~Test_Time_i ()
-{
-}
+Test_Time_i::~Test_Time_i () = default;
 
 ::CORBA::Long Test_Time_i::current_time ()
 {

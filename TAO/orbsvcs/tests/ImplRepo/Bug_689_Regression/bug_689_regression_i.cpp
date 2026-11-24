@@ -5,9 +5,7 @@ bug_689_regression_i::bug_689_regression_i (CORBA::ORB_ptr orb)
 {
 }
 
-bug_689_regression_i::~bug_689_regression_i ()
-{
-}
+bug_689_regression_i::~bug_689_regression_i () = default;
 
 void
 bug_689_regression_i::shutdown ()

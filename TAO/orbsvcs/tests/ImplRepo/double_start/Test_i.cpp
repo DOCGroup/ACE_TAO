@@ -8,9 +8,7 @@ Test_i::Test_i (CORBA::ORB_ptr orb)
 {
 }
 
-Test_i::~Test_i ()
-{
-}
+Test_i::~Test_i () = default;
 
 void
 Test_i::arm ()

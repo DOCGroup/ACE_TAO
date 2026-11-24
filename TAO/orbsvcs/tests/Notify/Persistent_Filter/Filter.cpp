@@ -37,9 +37,7 @@ FilterClient::FilterClient ()
   g_result_count = 0;
 }
 
-FilterClient::~FilterClient ()
-{
-}
+FilterClient::~FilterClient () = default;
 
 int
 FilterClient::parse_args (int argc, ACE_TCHAR *argv[])
@@ -609,9 +607,7 @@ Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (FilterClient* filt
 {
 }
 
-Filter_StructuredPushConsumer::~Filter_StructuredPushConsumer ()
-{
-}
+Filter_StructuredPushConsumer::~Filter_StructuredPushConsumer () = default;
 
 void
 Filter_StructuredPushConsumer::connect (CosNotifyChannelAdmin::ConsumerAdmin_ptr consumer_admin)
@@ -690,9 +686,7 @@ Filter_StructuredPushSupplier::Filter_StructuredPushSupplier  (const char* my_na
 {
 }
 
-Filter_StructuredPushSupplier::~Filter_StructuredPushSupplier ()
-{
-}
+Filter_StructuredPushSupplier::~Filter_StructuredPushSupplier () = default;
 
 void
 Filter_StructuredPushSupplier::connect (CosNotifyChannelAdmin::SupplierAdmin_ptr supplier_admin)

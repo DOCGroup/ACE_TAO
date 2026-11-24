@@ -12,9 +12,7 @@ LifeCycle::LifeCycle ()
 {
 }
 
-LifeCycle::~LifeCycle ()
-{
-}
+LifeCycle::~LifeCycle () = default;
 
 int
 LifeCycle::parse_args (int argc,

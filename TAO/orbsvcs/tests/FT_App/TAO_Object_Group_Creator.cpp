@@ -24,9 +24,7 @@ TAO::Object_Group_Creator::Object_Group_Creator ()
 {
 }
 
-TAO::Object_Group_Creator::~Object_Group_Creator ()
-{
-}
+TAO::Object_Group_Creator::~Object_Group_Creator () = default;
 
 int TAO::Object_Group_Creator::set_factory_registry (PortableGroup::FactoryRegistry_ptr factory)
 {

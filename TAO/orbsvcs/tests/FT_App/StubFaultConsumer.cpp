@@ -9,9 +9,7 @@ StubFaultConsumer::StubFaultConsumer ()
 {
 }
 
-StubFaultConsumer::~StubFaultConsumer ()
-{
-}
+StubFaultConsumer::~StubFaultConsumer () = default;
 
 ::PortableServer::POA_ptr StubFaultConsumer::_default_POA ()
 {

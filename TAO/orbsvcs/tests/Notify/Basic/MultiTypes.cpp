@@ -57,9 +57,7 @@ MultiTypes::MultiTypes ()
 {
 }
 
-MultiTypes::~MultiTypes ()
-{
-}
+MultiTypes::~MultiTypes () = default;
 
 void
 MultiTypes::on_received_event (MultiTypes_PushConsumer* consumer)

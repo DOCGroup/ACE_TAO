@@ -27,9 +27,7 @@ Updates_StructuredPushSupplier::Updates_StructuredPushSupplier (Updates* test_cl
 {
 }
 
-Updates_StructuredPushSupplier::~Updates_StructuredPushSupplier ()
-{
-}
+Updates_StructuredPushSupplier::~Updates_StructuredPushSupplier () = default;
 
 void
 Updates_StructuredPushSupplier::subscription_change (
@@ -50,9 +48,7 @@ Updates::Updates ()
 {
 }
 
-Updates::~Updates ()
-{
-}
+Updates::~Updates () = default;
 
 int
 Updates::init (int argc,

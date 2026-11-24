@@ -16,9 +16,7 @@ Test_i::Test_i (Terminator &terminator)
 {
 }
 
-Test_i::~Test_i ()
-{
-}
+Test_i::~Test_i () = default;
 
 CORBA::Boolean
 Test_i::send_message (const char * user_name,

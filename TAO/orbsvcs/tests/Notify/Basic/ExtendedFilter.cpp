@@ -9,9 +9,7 @@ ExtendedFilter::ExtendedFilter ()
 {
 }
 
-ExtendedFilter::~ExtendedFilter ()
-{
-}
+ExtendedFilter::~ExtendedFilter () = default;
 
 int
 ExtendedFilter::init (int argc, ACE_TCHAR* argv [])

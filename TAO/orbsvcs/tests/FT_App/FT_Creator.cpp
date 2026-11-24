@@ -30,9 +30,7 @@ FTAPP::FT_Creator::FT_Creator ()
 {
 }
 
-FTAPP::FT_Creator::~FT_Creator ()
-{
-}
+FTAPP::FT_Creator::~FT_Creator () = default;
 
 int
 FTAPP::FT_Creator::parse_args (int argc, ACE_TCHAR *argv[])

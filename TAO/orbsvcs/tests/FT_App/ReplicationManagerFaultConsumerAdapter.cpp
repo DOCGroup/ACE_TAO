@@ -19,9 +19,7 @@ ReplicationManagerFaultConsumerAdapter::ReplicationManagerFaultConsumerAdapter()
 {
 }
 
-ReplicationManagerFaultConsumerAdapter::~ReplicationManagerFaultConsumerAdapter()
-{
-}
+ReplicationManagerFaultConsumerAdapter::~ReplicationManagerFaultConsumerAdapter() = default;
 
 size_t ReplicationManagerFaultConsumerAdapter::notifications () const
 {
