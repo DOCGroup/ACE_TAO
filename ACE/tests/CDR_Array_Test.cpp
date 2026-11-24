@@ -635,9 +635,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
 }
 
 template <class T, class N>
-CDR_Test<T, N>::~CDR_Test ()
-{
-}
+CDR_Test<T, N>::~CDR_Test () = default;
 
 //
 // Helper Clases for the second template parameter of CDR_Test.

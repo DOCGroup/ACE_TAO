@@ -33,9 +33,7 @@ ThreadTest::ThreadTest() :
 {
 }
 
-ThreadTest::~ThreadTest()
-{
-}
+ThreadTest::~ThreadTest() = default;
 
 int
 ThreadTest::run(bool doubleLock)
