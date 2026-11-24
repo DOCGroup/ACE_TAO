@@ -227,9 +227,7 @@ JAWS_Referenced_Cache_Object_Factory
 }
 
 JAWS_Referenced_Cache_Object_Factory
-::~JAWS_Referenced_Cache_Object_Factory ()
-{
-}
+::~JAWS_Referenced_Cache_Object_Factory () = default;
 
 JAWS_Cache_Object *
 JAWS_Referenced_Cache_Object_Factory::create (const void *data, size_t size)
@@ -259,9 +257,7 @@ JAWS_Counted_Cache_Object_Factory
 }
 
 JAWS_Counted_Cache_Object_Factory
-::~JAWS_Counted_Cache_Object_Factory ()
-{
-}
+::~JAWS_Counted_Cache_Object_Factory () = default;
 
 JAWS_Cache_Object *
 JAWS_Counted_Cache_Object_Factory::create (const void *data, size_t size)
