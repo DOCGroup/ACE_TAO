@@ -142,8 +142,7 @@ Options::reply_message_len () const
 }
 
 Options::~Options ()
-{
-}
+= default;
 
 Options::Options ()
   : verbose_ (0),
