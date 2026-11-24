@@ -32,10 +32,10 @@
  * For XML processing errors, a SAX driver must use this interface
  * instead of throwing an exception: it is up to the application to
  * decide whether to throw an exception for different types of errors
- * and warnings. Note, however, that there is no requirement that the
- * parser continue to provide useful information after a call to
- * fatalError (in other words, a SAX driver class could catch an
- * exception and report a fatalError).
+ * and warnings.
+ * @note There is no requirement that the parser continue to provide
+ * useful information after a call to fatalError (in other words, a SAX
+ * driver class could catch an exception and report a fatalError).
  */
 class ACEXML_Export ACEXML_ErrorHandler
 {

@@ -1017,8 +1017,8 @@ module SecurityLevel3 {
     const FeatureDirective FD_DoNotUse             = -2;
     /**
      * The FD_DoNotUseIfPossible FeatureDirective means not to use
-     * the feature if it is possible. Note, some mechanisms may always
-     * use confidentiality.
+     * the feature if it is possible.
+     * @note Some mechanisms may always use confidentiality.
      */
     const FeatureDirective FD_DoNotUseIfPossible   = -1;
     /**
