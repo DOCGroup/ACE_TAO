@@ -127,7 +127,7 @@ OrbRunThread (void *arg)
                   "In OrbRunThread: Corba Exception: %s\n",
                   ex._info ().c_str ()));
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 ACE_THR_FUNC_RETURN
@@ -155,5 +155,5 @@ TestThread (void *arg)
                   "In TestThread: Corba Exception: %s\n",
                   ex._info ().c_str ()));
     }
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }

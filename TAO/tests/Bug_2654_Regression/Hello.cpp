@@ -9,7 +9,7 @@ ACE_THR_FUNC_RETURN killer (void *arg)
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) server exiting\n"));
   orb->shutdown (true);
 
-  return nullptr;
+  return ACE_THR_FUNC_RETURN_NULL;
 }
 
 Hello::Hello (CORBA::ORB_ptr orb)
