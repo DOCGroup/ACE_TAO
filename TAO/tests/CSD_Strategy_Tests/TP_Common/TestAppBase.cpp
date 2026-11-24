@@ -5,9 +5,7 @@ TestAppBase::TestAppBase(const char* name)
 {
 }
 
-TestAppBase::~TestAppBase()
-{
-}
+TestAppBase::~TestAppBase() = default;
 
 const char*
 TestAppBase::name() const

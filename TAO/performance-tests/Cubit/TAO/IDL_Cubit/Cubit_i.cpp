@@ -107,9 +107,7 @@ Cubit_Factory_i::Cubit_Factory_i (CORBA::ORB_ptr orb)
 {
 }
 
-Cubit_Factory_i::~Cubit_Factory_i ()
-{
-}
+Cubit_Factory_i::~Cubit_Factory_i () = default;
 
 Cubit_ptr
 Cubit_Factory_i::make_cubit ()
@@ -128,9 +126,7 @@ Cubit_i::Cubit_i (CORBA::ORB_ptr orb)
 {
 }
 
-Cubit_i::~Cubit_i ()
-{
-}
+Cubit_i::~Cubit_i () = default;
 
 PortableServer::POA_ptr
 Cubit_i::_default_POA ()

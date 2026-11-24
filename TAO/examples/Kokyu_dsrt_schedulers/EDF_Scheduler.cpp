@@ -75,9 +75,7 @@ EDF_Scheduler::EDF_Scheduler (CORBA::ORB_ptr orb,
   codec_ = codec_factory->create_codec (encoding);
 }
 
-EDF_Scheduler::~EDF_Scheduler ()
-{
-}
+EDF_Scheduler::~EDF_Scheduler () = default;
 
 void
 EDF_Scheduler::shutdown ()

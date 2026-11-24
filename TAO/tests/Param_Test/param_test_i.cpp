@@ -19,9 +19,7 @@ Coffee_i::Coffee_i (const char *name)
 {
 }
 
-Coffee_i::~Coffee_i ()
-{
-}
+Coffee_i::~Coffee_i () = default;
 
 // get attribute
 Coffee::Desc *
@@ -49,9 +47,7 @@ Param_Test_i::Param_Test_i (const char *coffee_name,
 {
 }
 
-Param_Test_i::~Param_Test_i ()
-{
-}
+Param_Test_i::~Param_Test_i () = default;
 
 // test shorts
 CORBA::Short

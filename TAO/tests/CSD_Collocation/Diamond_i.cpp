@@ -4,9 +4,7 @@ Top_i::Top_i ()
 {
 }
 
-Top_i::~Top_i ()
-{
-}
+Top_i::~Top_i () = default;
 
 char *
 Top_i::shape ()
@@ -40,9 +38,7 @@ Right_i::Right_i ()
 {
 }
 
-Right_i::~Right_i ()
-{
-}
+Right_i::~Right_i () = default;
 
 char *
 Right_i::shape ()
@@ -67,9 +63,7 @@ Buttom_i::Buttom_i ()
 {
 }
 
-Buttom_i::~Buttom_i ()
-{
-}
+Buttom_i::~Buttom_i () = default;
 
 char *
 Buttom_i::shape ()

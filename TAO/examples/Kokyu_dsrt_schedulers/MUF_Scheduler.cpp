@@ -105,9 +105,7 @@ MUF_Scheduler::MUF_Scheduler (CORBA::ORB_ptr orb,
   codec_ = codec_factory->create_codec (encoding);
 }
 
-MUF_Scheduler::~MUF_Scheduler ()
-{
-}
+MUF_Scheduler::~MUF_Scheduler () = default;
 
 void
 MUF_Scheduler::shutdown ()

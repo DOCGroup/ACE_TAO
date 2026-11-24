@@ -98,9 +98,7 @@ test_impl::test_impl (CORBA::ORB_ptr orb) : orb_ (CORBA::ORB::_duplicate (orb))
 {
 }
 
-test_impl::~test_impl ()
-{
-}
+test_impl::~test_impl () = default;
 
 void
 test_impl::pass_obj_graph_in (

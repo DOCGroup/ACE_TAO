@@ -28,9 +28,7 @@ Event_impl::do_print ()
 }
 
 /* Not defined, see header
-Event_factory::~Event_factory ()
-{
-}
+Event_factory::~Event_factory () = default;
 
 TAO_OBV_CREATE_RETURN_TYPE (Event)
 Event_factory::create_for_unmarshal ()

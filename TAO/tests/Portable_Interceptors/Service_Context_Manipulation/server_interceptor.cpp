@@ -14,9 +14,7 @@ Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
 {
 }
 
-Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor ()
-{
-}
+Echo_Server_Request_Interceptor::~Echo_Server_Request_Interceptor () = default;
 
 char *
 Echo_Server_Request_Interceptor::name ()

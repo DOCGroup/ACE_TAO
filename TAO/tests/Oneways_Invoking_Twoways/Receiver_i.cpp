@@ -10,9 +10,7 @@ Receiver_i::Receiver_i (CORBA::ORB_ptr orb,
 {
 }
 
-Receiver_i::~Receiver_i ()
-{
-}
+Receiver_i::~Receiver_i () = default;
 
 CORBA::Long
 Receiver_i::receive_call ()

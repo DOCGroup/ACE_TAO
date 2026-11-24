@@ -16,9 +16,7 @@ Echo_Client_Request_Interceptor (const char *id)
 {
 }
 
-Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor ()
-{
-}
+Echo_Client_Request_Interceptor::~Echo_Client_Request_Interceptor () = default;
 
 char *
 Echo_Client_Request_Interceptor::name ()
