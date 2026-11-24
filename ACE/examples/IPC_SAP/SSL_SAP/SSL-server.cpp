@@ -38,7 +38,7 @@ static ACE_THR_FUNC_RETURN
 twoway_server (void *arg)
 {
   ACE_INET_Addr cli_addr;
-  ACE_SSL_SOCK_Stream * new_stream = (ACE_SSL_SOCK_Stream *) arg;
+  auto *new_stream = (ACE_SSL_SOCK_Stream *) arg;
 
   // Make sure we're not in non-blocking mode.
   if (new_stream->disable (ACE_NONBLOCK) == -1)
@@ -159,7 +159,7 @@ static ACE_THR_FUNC_RETURN
 oneway_server (void *arg)
 {
   ACE_INET_Addr cli_addr;
-  ACE_SSL_SOCK_Stream * new_stream = (ACE_SSL_SOCK_Stream *) arg;
+  auto *new_stream = (ACE_SSL_SOCK_Stream *) arg;
 
   // Make sure we're not in non-blocking mode.
   if (new_stream->disable (ACE_NONBLOCK) == -1)

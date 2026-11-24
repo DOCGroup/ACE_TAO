@@ -82,7 +82,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       payload << log_record;
 
       // Get the number of bytes used by the CDR stream.
-      ACE_CDR::ULong const length =
+      auto const length =
         ACE_Utils::truncate_cast<ACE_CDR::ULong> (payload.total_length ());
 
       // Send a header so the receiver can determine the byte order and

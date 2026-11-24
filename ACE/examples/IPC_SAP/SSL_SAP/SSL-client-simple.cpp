@@ -226,7 +226,7 @@ Options::oneway_client_test ()
   // locking.
   size_t iteration = 0;
 
-  ACE_INT32 len =
+  auto len =
     ACE_Utils::truncate_cast<ACE_INT32> (this->message_len ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -282,7 +282,7 @@ Options::twoway_client_test ()
   // Timer business.
   ACE_High_Res_Timer timer;
 
-  ACE_INT32 len =
+  auto len =
     ACE_Utils::truncate_cast<ACE_INT32> (this->message_len ());
 
   ACE_DEBUG ((LM_DEBUG,
@@ -336,7 +336,7 @@ Options::twoway_client_test ()
   ACE_Time_Value tv;
 
   timer.elapsed_time_incr (tv);
-  double const real_time = static_cast<double> (tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ());
+  auto const real_time = static_cast<double> (tv.sec () * ACE_ONE_SECOND_IN_USECS + tv.usec ());
   double const messages_per_sec = iteration * double (ACE_ONE_SECOND_IN_USECS) / real_time;
 
   ACE_DEBUG ((LM_DEBUG,
