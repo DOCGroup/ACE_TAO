@@ -101,8 +101,14 @@
 #if !defined (ACE_GUARD_ACTION)
 #define ACE_GUARD_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \
    ACE_Guard< MUTEX > OBJ (LOCK); \
-   if (OBJ.locked () != 0) { ACTION; } \
-   else { REACTION; }
+   if (OBJ.locked () != 0) \
+     { \
+       ACTION; \
+     } \
+   else \
+     { \
+       REACTION; \
+     }
 #endif /* !ACE_GUARD_ACTION */
 #if !defined (ACE_GUARD_REACTION)
 #define ACE_GUARD_REACTION(MUTEX, OBJ, LOCK, REACTION) \
@@ -119,8 +125,14 @@
 #if !defined (ACE_GUARD_CONST_ACTION)
 #define ACE_GUARD_CONST_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \
    const ACE_Guard< MUTEX > OBJ (LOCK); \
-   if (OBJ.locked () != 0) { ACTION; } \
-   else { REACTION; }
+   if (OBJ.locked () != 0) \
+     { \
+       ACTION; \
+     } \
+   else \
+     { \
+       REACTION; \
+     }
 #endif /* !ACE_GUARD_CONST_ACTION */
 #if !defined (ACE_GUARD_CONST_REACTION)
 #define ACE_GUARD_CONST_REACTION(MUTEX, OBJ, LOCK, REACTION) \
