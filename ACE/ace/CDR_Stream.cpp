@@ -245,7 +245,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
   if (static_cast<ACE_CDR::Short> (major_version_) == 1
       && static_cast<ACE_CDR::Short> (minor_version_) == 2)
     {
-      ACE_CDR::Octet const len =
+      auto const len =
         static_cast<ACE_CDR::Octet> (ACE_OutputCDR::wchar_maxbytes_);
       if (this->write_1 (&len))
         {
@@ -259,7 +259,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
           else
             if (ACE_OutputCDR::wchar_maxbytes_ == 2)
               {
-                ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
+                auto sx = static_cast<ACE_CDR::Short> (x);
                 return
                   this->write_octet_array (
                                            reinterpret_cast<const ACE_CDR::Octet*> (&sx),
@@ -267,7 +267,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
               }
             else
               {
-                ACE_CDR::Octet ox = static_cast<ACE_CDR::Octet> (x);
+                auto ox = static_cast<ACE_CDR::Octet> (x);
                 return
                   this->write_octet_array (
                                            reinterpret_cast<const ACE_CDR::Octet*> (&ox),
@@ -288,10 +288,10 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
     }
   else if (ACE_OutputCDR::wchar_maxbytes_ == 2)
     {
-      ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
+      auto sx = static_cast<ACE_CDR::Short> (x);
       return this->write_2 (reinterpret_cast<const ACE_CDR::UShort *> (&sx));
     }
-  ACE_CDR::Octet ox = static_cast<ACE_CDR::Octet> (x);
+  auto ox = static_cast<ACE_CDR::Octet> (x);
   return this->write_1 (reinterpret_cast<const ACE_CDR::Octet *> (&ox));
 }
 
@@ -597,7 +597,7 @@ ACE_OutputCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
     {
       if (ACE_OutputCDR::wchar_maxbytes_ == 2)
         {
-          ACE_CDR::UShort *sb = reinterpret_cast<ACE_CDR::UShort *> (buf);
+          auto *sb = reinterpret_cast<ACE_CDR::UShort *> (buf);
           for (size_t i = 0; i < length; ++i)
             {
 #if !defined (ACE_ENABLE_SWAP_ON_WRITE)
@@ -1949,7 +1949,7 @@ ACE_InputCDR::read_wchar_array_i (ACE_CDR::WChar* x,
     {
       if (ACE_OutputCDR::wchar_maxbytes_ == 2)
         {
-          ACE_CDR::UShort *sb = reinterpret_cast<ACE_CDR::UShort *> (buf);
+          auto *sb = reinterpret_cast<ACE_CDR::UShort *> (buf);
           for (size_t i = 0; i < length; ++i)
             {
 #if defined (ACE_DISABLE_SWAP_ON_READ)
