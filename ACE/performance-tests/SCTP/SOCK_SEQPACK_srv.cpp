@@ -174,8 +174,8 @@ static void run_server (ACE_HANDLE handle)
   ACE_CDR::ULong const hdrBufSize = 8;
   // allocate a raw buffer large enough to receive the header and be
   // properly aligned for the CDR decoding.
-  std::unique_ptr<ACE_CDR::Char[]> hdrBuf (
-    new ACE_CDR::Char[hdrBufSize + ACE_CDR::MAX_ALIGNMENT]);
+  std::unique_ptr<ACE_CDR::Char[]> hdrBuf =
+    std::make_unique<ACE_CDR::Char[]> (hdrBufSize + ACE_CDR::MAX_ALIGNMENT);
   // align the raw buffer before reading data into it.
   char * hdrBuf_a = ACE_ptr_align_binary(hdrBuf.get (), ACE_CDR::MAX_ALIGNMENT);
 
