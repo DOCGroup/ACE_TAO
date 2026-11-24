@@ -32,7 +32,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             1);
         }
 
-      size_t const total = static_cast<size_t> (parsed_total);
+      auto const total = static_cast<size_t> (parsed_total);
 
       if (!ACE_OS::freopen (argv[2], ACE_TEXT("r"), stdin))
         {

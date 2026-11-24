@@ -109,7 +109,7 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
         }
       else
         {
-          u_short const port = static_cast<u_short> (
+          auto const port = static_cast<u_short> (
             ACE_OS::atoi (parsed_address.c_str () + port_start + 1));
           parsed_address.resize (port_start);
           result = this->ACE_INET_Addr::set (port,

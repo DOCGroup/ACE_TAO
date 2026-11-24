@@ -242,7 +242,7 @@ GUI_Handler::find_employee (std::string const &name)
                              temp) == 0)
     {
       // find () leaves the allocator-owned record bound in the persistent pool.
-      Employee const *const employee = static_cast<Employee const *> (temp);
+      auto const *const employee = static_cast<Employee const *> (temp);
 
       ACE_DEBUG ((LM_DEBUG,
                   "The following employee was found.......\n\n"));
@@ -271,7 +271,7 @@ GUI_Handler::list_employees ()
          iterator.next (temp) != 0;
          iterator.advance ())
       {
-        Employee *const employee = static_cast<Employee *> (temp);
+        auto *const employee = static_cast<Employee *> (temp);
         ACE_DEBUG ((LM_DEBUG,
                     "Employee name: %s\nEmployee id:   %d\n",
                     employee->name (),
@@ -288,7 +288,7 @@ GUI_Handler::list_employees ()
          iterator.next (temp) != 0;
          iterator.advance ())
       {
-        Employee *const employee = static_cast<Employee *> (temp);
+        auto *const employee = static_cast<Employee *> (temp);
         ACE_DEBUG ((LM_DEBUG,
                     "Employee name: %s\nEmployee id:   %d\n",
                     employee->name (),

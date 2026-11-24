@@ -52,7 +52,7 @@ initialize (TEST_MALLOC *allocator)
                         nullptr);
   // Placement-new objects are owned by the ACE_Malloc pool and must not be
   // wrapped in a smart pointer that would call ordinary delete.
-  Test_Data *const data1 = new (ptr) Test_Data {};
+  auto *const data1 = new (ptr) Test_Data {};
 
   data1->i1_ = 111;
   data1->i2_ = 222;
@@ -68,7 +68,7 @@ initialize (TEST_MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         nullptr);
-  Test_Data *const data2 = new (ptr) Test_Data {};
+  auto *const data2 = new (ptr) Test_Data {};
 
   data1->next_ = nullptr;
   data1->i1_ = 111;
@@ -83,7 +83,7 @@ initialize (TEST_MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
                         nullptr);
-  Long_Test *lt = new (ptr) Long_Test {};
+  auto *lt = new (ptr) Long_Test {};
 
   lt->array_[0] = 1000;
   lt->array_[1] = 1001;

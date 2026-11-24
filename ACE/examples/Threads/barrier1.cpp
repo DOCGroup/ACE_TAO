@@ -28,7 +28,7 @@ struct Tester_Args
 static ACE_THR_FUNC_RETURN
 tester (void *arg)
 {
-  Tester_Args * const args = static_cast<Tester_Args *> (arg);
+  auto * const args = static_cast<Tester_Args *> (arg);
   for (int iterations = 1;
        iterations <= args->n_iterations_;
        ++iterations)

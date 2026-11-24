@@ -160,7 +160,7 @@ dispatch (void *arg)
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%t) Dispatcher Thread started!\n")));
   // The caller-owned reactor remains alive until the process is terminated.
-  ACE_Reactor * const r = static_cast<ACE_Reactor *> (arg);
+  auto * const r = static_cast<ACE_Reactor *> (arg);
 
   r->owner (ACE_OS::thr_self ());
 

@@ -37,7 +37,7 @@ cleanup (void *ptr)
 static ACE_THR_FUNC_RETURN
 worker (void *c)
 {
-  intptr_t count = reinterpret_cast<intptr_t> (c);
+  auto count = reinterpret_cast<intptr_t> (c);
 
   ACE_thread_key_t key = ACE_OS::NULL_key;
   int *ip {};
