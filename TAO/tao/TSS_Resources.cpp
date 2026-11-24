@@ -7,10 +7,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_TSS_Resources::TAO_TSS_Resources ()
-  : poa_current_impl_ (nullptr)
-  , rtscheduler_current_impl_ (nullptr)
-  , rtscheduler_previous_current_impl_ (nullptr)
-  , rtcorba_current_priority_ (-1) // RTCORBA::minPriority - 1
+  : rtcorba_current_priority_ (-1) // RTCORBA::minPriority - 1
   , default_environment_ (std::addressof (tss_environment_))
 
 #if (TAO_HAS_CORBA_MESSAGING == 1)
@@ -18,9 +15,6 @@ TAO_TSS_Resources::TAO_TSS_Resources ()
   , policy_current_ (std::addressof (initial_policy_current_))
 
 #endif /* TAO_HAS_CORBA_MESSAGING == 1 */
-#if (TAO_HAS_TRANSPORT_CURRENT == 1)
-  , tsg_ (nullptr)
-#endif /* TAO_HAS_TRANSPORT_CURRENT */
 {
 }
 

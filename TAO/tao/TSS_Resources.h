@@ -65,11 +65,11 @@ public:
    * occupy another TSS slot since there are some platforms where
    * those are precious commodities (e.g., NT).
    */
-  void * poa_current_impl_;
+  void * poa_current_impl_ {};
 
-  void * rtscheduler_current_impl_;
+  void * rtscheduler_current_impl_ {};
 
-  void * rtscheduler_previous_current_impl_;
+  void * rtscheduler_previous_current_impl_ {};
 
   /// The CORBA priority of the thread if set via RTCORBA::Current.
   /// RTCORBA::minPriority - 1 otherwise.
@@ -107,7 +107,7 @@ public:
   /// been selected for use by the current thread, in the context of
   /// an upcall or client-side interceptor.
 
-  TAO::Transport_Selection_Guard* tsg_;
+  TAO::Transport_Selection_Guard* tsg_ {};
 
 #endif  /* TAO_HAS_TRANSPORT_CURRENT == 1 */
 };
