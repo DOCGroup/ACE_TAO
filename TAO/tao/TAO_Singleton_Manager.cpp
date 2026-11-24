@@ -56,13 +56,7 @@ void TAO_SINGLETON_MANAGER_FINI_NAME ()
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Singleton_Manager::TAO_Singleton_Manager ()
-  : default_mask_ (nullptr),
-    thread_hook_ (nullptr),
-    exit_info_ (),
-    registered_with_object_manager_ (-1)
-#if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
-    , internal_lock_ (nullptr)
-# endif /* ACE_MT_SAFE */
+  : exit_info_ ()
 {
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   ACE_NEW (this->internal_lock_,

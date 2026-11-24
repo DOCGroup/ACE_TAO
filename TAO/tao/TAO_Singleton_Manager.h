@@ -131,21 +131,21 @@ private:
 
 private:
   /// Default signal set used, for example, in ACE_Sig_Guard.
-  sigset_t *default_mask_;
+  sigset_t *default_mask_ {};
 
   /// Thread hook that's used by this process.
-  ACE_Thread_Hook *thread_hook_;
+  ACE_Thread_Hook *thread_hook_ {};
 
   /// For at_exit support.
   ACE_OS_Exit_Info exit_info_;
 
   /// Indicates if TAO_Singleton_Manager is registered with the
   /// ACE_Object_Manager.
-  int registered_with_object_manager_;
+  int registered_with_object_manager_ {-1};
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   /// Lock that is used to guard internal structures.
-  TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_;
+  TAO_SYNCH_RECURSIVE_MUTEX *internal_lock_ {};
 #endif /* ACE_MT_SAFE */
 };
 
