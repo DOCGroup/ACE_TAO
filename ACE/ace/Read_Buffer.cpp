@@ -10,6 +10,7 @@
 #include "ace/Malloc_Base.h"
 #include "ace/Service_Config.h"
 #include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_unistd.h"
 
 #include <cstring>
 
@@ -62,6 +63,11 @@ ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
     allocator_ (alloc)
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
+
+  if (this->stream_ == nullptr && this->close_on_delete_)
+    {
+      ACE_OS::close (handle);
+    }
 
   if (this->allocator_ == nullptr)
     {
