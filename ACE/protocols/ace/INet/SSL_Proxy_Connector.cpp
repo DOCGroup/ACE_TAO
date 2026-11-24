@@ -41,18 +41,13 @@ namespace ACE
         }
 
         ACE_HANDLE const handle = new_stream.get_handle ();
-        auto set_handle_bit = [handle] (ACE_Handle_Set &handle_set)
-          {
 #if !defined (ACE_WIN32)
-            if (handle < 0 || handle >= ACE_FD_SETSIZE)
-              {
-                errno = EINVAL;
-                return false;
-              }
+        if (handle < 0 || handle >= ACE_FD_SETSIZE)
+          {
+            errno = EINVAL;
+            return -1;
+          }
 #endif /* ! ACE_WIN32 */
-            handle_set.set_bit (handle);
-            return true;
-          };
 
         // We're going to call SSL_connect, optionally doing ACE::select and
         // retrying the SSL_connect, until the SSL handshake is done or
@@ -105,11 +100,13 @@ namespace ACE
                 break;                    // Done
 
               case SSL_ERROR_WANT_WRITE:
-                status = set_handle_bit (wr_handle) ? 1 : -1;
+                wr_handle.set_bit (handle);
+                status = 1;
                 break;
 
               case SSL_ERROR_WANT_READ:
-                status = set_handle_bit (rd_handle) ? 1 : -1;
+                rd_handle.set_bit (handle);
+                status = 1;
                 break;
 
               case SSL_ERROR_ZERO_RETURN:
@@ -137,11 +134,11 @@ namespace ACE
                     status = 1;               // Wait for more activity
                     if (SSL_want_write (ssl))
                       {
-                        status = set_handle_bit (wr_handle) ? 1 : -1;
+                        wr_handle.set_bit (handle);
                       }
                     else if (SSL_want_read (ssl))
                       {
-                        status = set_handle_bit (rd_handle) ? 1 : -1;
+                        rd_handle.set_bit (handle);
                       }
                     else
                       {
