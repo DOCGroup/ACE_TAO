@@ -130,7 +130,7 @@ private:
   /// Set to 0 when this smart pointer is in the "nil" state.  Otherwise,
   /// this smart pointer always owns a (reference-counted) "copy" of the
   /// object pointed to by the ptr_ data member.
-  T* ptr_;
+  T* ptr_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

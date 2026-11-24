@@ -3,7 +3,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <typename T>
 ACE_INLINE
 TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle ()
-  : ptr_(nullptr)
 {
 }
 
