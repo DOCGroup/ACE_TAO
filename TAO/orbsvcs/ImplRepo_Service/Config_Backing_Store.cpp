@@ -37,9 +37,7 @@ Config_Backing_Store::Config_Backing_Store (const Options& opts,
 {
 }
 
-Config_Backing_Store::~Config_Backing_Store ()
-{
-}
+Config_Backing_Store::~Config_Backing_Store () = default;
 
 namespace {
   int get_cstring_value (ACE_Configuration &config,
@@ -322,9 +320,7 @@ Heap_Backing_Store::Heap_Backing_Store (const Options& opts,
   status_ = heap_.open (this->filename_.c_str());
 }
 
-Heap_Backing_Store::~Heap_Backing_Store ()
-{
-}
+Heap_Backing_Store::~Heap_Backing_Store () = default;
 
 const ACE_TCHAR*
 Heap_Backing_Store::repo_mode() const
@@ -366,9 +362,7 @@ Registry_Backing_Store::Registry_Backing_Store(const Options& opts,
 #endif
 }
 
-Registry_Backing_Store::~Registry_Backing_Store ()
-{
-}
+Registry_Backing_Store::~Registry_Backing_Store () = default;
 
 const ACE_TCHAR*
 Registry_Backing_Store::repo_mode () const
