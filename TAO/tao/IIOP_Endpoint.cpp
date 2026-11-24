@@ -91,7 +91,6 @@ TAO_IIOP_Endpoint::TAO_IIOP_Endpoint (TAO_IIOP_Endpoint const &rhs)
   , object_addr_set_ (rhs.object_addr_set_)
   , object_addr_ (rhs.object_addr_)
   , preferred_path_  (rhs.preferred_path_)
-  , next_ (nullptr)
 {
 }
 
