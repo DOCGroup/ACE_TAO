@@ -24,9 +24,7 @@ ACE::HTBP::Stream::Stream (ACE::HTBP::Session *s)
   session_->stream (this);
 }
 
-ACE::HTBP::Stream::~Stream ()
-{
-}
+ACE::HTBP::Stream::~Stream () = default;
 
   /// Dump the state of an object.
 void

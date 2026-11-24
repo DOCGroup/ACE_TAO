@@ -12,9 +12,7 @@ ACE::HTBP::Filter_Factory::Filter_Factory ()
 {
 }
 
-ACE::HTBP::Filter_Factory::~Filter_Factory ()
-{
-}
+ACE::HTBP::Filter_Factory::~Filter_Factory () = default;
 
 ACE::HTBP::Filter *
 ACE::HTBP::Filter_Factory::get_filter (bool inside)
