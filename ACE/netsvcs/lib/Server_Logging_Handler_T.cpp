@@ -200,7 +200,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
 
         u_long count = this->request_count_;
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("request count = %Q, length = %d\n"),
+                    ACE_TEXT ("request count = %Q, length = %u\n"),
                     static_cast<ACE_UINT64> (count),
                     length));
 
@@ -235,8 +235,8 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
           }
         else
           ACERROR ((LM_ERROR,
-                    ACE_TEXT ("error, lp.length = %d, n = %d\n"),
-                    lp.length (),
+                    ACE_TEXT ("error, lp.length = %q, n = %b\n"),
+                    static_cast<ACE_INT64> (lp.length ()),
                     n));
         return n;
       }
