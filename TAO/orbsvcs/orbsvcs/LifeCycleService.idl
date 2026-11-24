@@ -36,10 +36,10 @@ module LifeCycleService
   /// This interface wraps CosLifeCycle criteria to make access easier.
   interface Criteria_Evaluator
     {
-      /// @@ NOTE: The definition should be this. But see note below!
+      /// @note The definition should be this. See note below.
       // typedef sequence <CosLifeCycle::NameValuePair> SeqNamedValuePair;
 
-      /// @@ NOTE: This is just a workaround for a problem seen with
+      /// @note This is a workaround for a problem seen with
       /// explicit template builds. This file and CosLifeCycle.idl
       /// define a sequence of the same data structure which creates
       /// multiply defined symbols in the above configuration. We need
