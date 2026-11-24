@@ -13,8 +13,7 @@ ACEXML_ZipCharStream::~ACEXML_ZipCharStream ()
 int
 ACEXML_ZipCharStream::open (ACEXML_Char const *name)
 {
-  this->filename_.reset ();
-  this->encoding_.reset ();
+  this->close ();
 
   this->infile_ = zzip_fopen (name, ACE_TEXT ("r"));
   if (this->infile_ == nullptr)
