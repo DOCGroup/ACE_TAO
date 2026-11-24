@@ -6,9 +6,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory ()
-  : activate_server_connections_ (0),
-    thread_flags_ (THR_BOUND | THR_DETACHED),
-    thread_per_connection_use_timeout_ (-1)
 {
 }
 

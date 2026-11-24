@@ -54,13 +54,13 @@ protected:
 
 protected:
   /// Should the server connection handlers run in their own thread?
-  int activate_server_connections_;
+  int activate_server_connections_ {};
 
   /// Default thread flags passed to thr_create().
-  int thread_flags_;
+  int thread_flags_ {THR_BOUND | THR_DETACHED};
 
   /// The timeout flag and value for the thread-per-connection model
-  int thread_per_connection_use_timeout_;
+  int thread_per_connection_use_timeout_ {-1};
   ACE_Time_Value thread_per_connection_timeout_;
 };
 
