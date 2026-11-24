@@ -78,6 +78,4 @@ PM_Server::handle_protocol_entries (char *buf_ptr,
   return buf_ptr;
 }
 
-PM_Server::~PM_Server ()
-{
-}
+PM_Server::~PM_Server () = default;
