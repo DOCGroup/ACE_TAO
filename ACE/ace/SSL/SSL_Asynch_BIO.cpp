@@ -4,9 +4,11 @@
 
 #include "SSL_Asynch_Stream.h"
 #include "ace/Truncate.h"
+#include "ace/Guard_T.h"
+#include "ace/Synch_Traits.h"
+#include "ace/Thread_Mutex.h"
 
 #include <cstring>
-#include <mutex>
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define ACE_ASYNCH_BIO_WRITE_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_Asynch_BIO_write)
@@ -82,9 +84,9 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
   // instances may outlive the call that created them. Retry initialization
   // after a failure so a transient allocation error does not disable all
   // future asynchronous SSL opens.
-  static std::mutex methods_ACE_mutex;
+  static ACE_SYNCH_MUTEX methods_ACE_mutex;
   static BIO_METHOD *methods_ACE {};
-  std::lock_guard<std::mutex> guard (methods_ACE_mutex);
+  ACE_MT (ACE_GUARD_CONST (ACE_SYNCH_MUTEX, ace_mon, methods_ACE_mutex));
 
   if (methods_ACE == nullptr)
     {
