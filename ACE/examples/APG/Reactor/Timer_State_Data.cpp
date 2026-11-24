@@ -62,9 +62,9 @@ public:
   {
     time_t const epoch = static_cast<timespec_t> (current_time).tv_sec;
 
-    TemperatureSensor const *const_sensor =
+    auto const * const const_sensor =
       static_cast<TemperatureSensor const *> (arg);
-    TemperatureSensor *const sensor =
+    auto * const sensor =
       const_cast<TemperatureSensor *> (const_sensor);
 
     int const query_count = sensor->querySensor ();

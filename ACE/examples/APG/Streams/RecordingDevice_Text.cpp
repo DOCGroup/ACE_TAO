@@ -118,7 +118,7 @@ int TextListener::answer_call ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TextListener::answer_call()\n")));
 
-  Command *c = new Command ();
+  auto *c = new Command ();
   c->command_ = Command::CMD_ANSWER_CALL;
   c->extra_data_ = this->acceptor_;
 
@@ -139,12 +139,12 @@ CallerId *TextListener::retrieve_callerId ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TextListener::retrieve_callerId()\n")));
 
-  Command *c = new Command ();
+  auto *c = new Command ();
   c->command_ = Command::CMD_RETRIEVE_CALLER_ID;
 
   c = this->command_stream_->execute (c);
 
-  CallerId *caller_id = new CallerId (c->result_);
+  auto *caller_id = new CallerId (c->result_);
   return caller_id;
 }
 // Listing 03
@@ -155,7 +155,7 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
   MessageType const type = Util::identify_message (addr);
   if (type.is_text ())
     {
-      Command *c = new Command ();
+      auto *c = new Command ();
       c->command_ = Command::CMD_PLAY_MESSAGE;
       c->extra_data_ = &addr;
       c = this->command_stream_->execute (c);
@@ -191,7 +191,7 @@ int TextListener::play_message (ACE_FILE_Addr &addr)
 // Listing 05 code/ch18
 MessageType *TextListener::record_message (ACE_FILE_Addr &addr)
 {
-  Command *c = new Command ();
+  auto *c = new Command ();
   c->command_ = Command::CMD_RECORD_MESSAGE;
   c->extra_data_ = &addr;
   c = this->command_stream_->execute (c);

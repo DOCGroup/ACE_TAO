@@ -126,9 +126,9 @@ HA_Proactive_Acceptor::validate_connection (
    ACE_INET_Addr const &remote,
    ACE_INET_Addr const &local)
 {
-  in_addr const *const remote_addr =
+  auto const * const remote_addr =
     reinterpret_cast<in_addr const *> (remote.get_addr ());
-  in_addr const *const local_addr =
+  auto const * const local_addr =
     reinterpret_cast<in_addr const *> (local.get_addr ());
   if (inet_netof (*local_addr) == inet_netof (*remote_addr))
   {

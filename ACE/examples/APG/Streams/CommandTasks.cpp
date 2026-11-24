@@ -24,10 +24,10 @@ int AnswerCallDownstreamTask::process (Command *command)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Answer Call (downstream)\n")));
 
-  TextListenerAcceptor *acceptor =
+  auto *acceptor =
     (TextListenerAcceptor *)command->extra_data_;
 
-  CommandModule *module =
+  auto *module =
     (CommandModule*)this->module ();
 
   command->numeric_result_ =
@@ -87,7 +87,7 @@ int RetrieveCallerIdUpstreamTask::process (Command *command)
 
   ACE_INET_Addr remote_addr;
 
-  CommandModule *module =
+  auto *module =
     (CommandModule*)this->module ();
 
   module->peer ().get_remote_addr (remote_addr);
@@ -118,7 +118,7 @@ int PlayMessageDownstreamTask::process (Command *command)
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
 
-  ACE_FILE_Addr *addr =
+  auto *addr =
     (ACE_FILE_Addr *)command->extra_data_;
 
   if (connector.connect (file, *addr) == -1)
@@ -129,7 +129,7 @@ int PlayMessageDownstreamTask::process (Command *command)
     {
       command->numeric_result_ = 0;
 
-      CommandModule *module =
+      auto *module =
         (CommandModule*)this->module ();
 
       char rwbuf[512];
@@ -149,7 +149,7 @@ PlayMessageUpstreamTask::PlayMessageUpstreamTask ()
 
 int PlayMessageUpstreamTask::process (Command *command)
 {
-  ACE_FILE_Addr * addr =
+  auto *addr =
     (ACE_FILE_Addr *)command->extra_data_;
 
   ACE_DEBUG ((LM_DEBUG,
@@ -186,7 +186,7 @@ int RecordMessageUpstreamTask::process (Command *command)
   ACE_FILE_Connector connector;
   ACE_FILE_IO file;
 
-  ACE_FILE_Addr *addr =
+  auto *addr =
     (ACE_FILE_Addr *)command->extra_data_;
 
   if (connector.connect (file, *addr) == -1)
@@ -198,7 +198,7 @@ int RecordMessageUpstreamTask::process (Command *command)
     }
   file.truncate (0);
 
-  CommandModule *module =
+  auto *module =
     (CommandModule*)this->module ();
 
   ssize_t total_bytes = 0;
