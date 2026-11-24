@@ -95,7 +95,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (ACE_Thread::spawn (run_test,
                              static_cast<void *> (server.in ()),
                              THR_NEW_LWP | THR_JOINABLE,
-                             0,
+                             nullptr,
                              &thread_handle) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR, "Cannot start thread"), 1);

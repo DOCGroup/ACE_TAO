@@ -28,7 +28,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         ior = get_opts.opt_arg ();
         break;
       case 's':
-        big_msg_size = ACE_OS::strtoul (get_opts.opt_arg (),0,10);
+        big_msg_size = ACE_OS::strtoul (get_opts.opt_arg (),nullptr,10);
         break;
       case 't':
         test = ACE_OS::atoi (get_opts.opt_arg ());

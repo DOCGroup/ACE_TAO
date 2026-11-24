@@ -268,7 +268,7 @@ TestHandler::handle_followup (A::FollowUp fup, CORBA::ULong counter)
     this->set_counter (counter);
     if (fup == A::FU_TIMER)
     {
-      this->orb_->orb_core ()->reactor ()->schedule_timer (this, 0,
+      this->orb_->orb_core ()->reactor ()->schedule_timer (this, nullptr,
                                                            ACE_Time_Value (0, 100),
                                                            ACE_Time_Value (0, 100));
     }

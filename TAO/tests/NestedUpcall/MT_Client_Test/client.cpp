@@ -136,7 +136,7 @@ MT_Client::run ()
         {
           // call the recursive object MT_Object for nested upcalls
           // testing
-          this->mT_Object_var_->yadda (0, 0);
+          this->mT_Object_var_->yadda (0, nullptr);
         }
     }
   catch (CORBA::Exception const &ex)

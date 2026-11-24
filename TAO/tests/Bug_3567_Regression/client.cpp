@@ -158,7 +158,7 @@ public:
                       out_l));
         }
       ACE_OS::sleep (1);
-      ami_test_var_->sendc_set_yadda (0, 5);
+      ami_test_var_->sendc_set_yadda (nullptr, 5);
 
       --state_.replies;
     }

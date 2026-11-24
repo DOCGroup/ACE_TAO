@@ -95,10 +95,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                   ior.in ()));
 
       // If the ior_output_file exists, output the ior to it
-      if (ior_output_file != 0)
+      if (ior_output_file != nullptr)
         {
           FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-          if (output_file == 0)
+          if (output_file == nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  "Cannot open output file for writing IOR: %s",

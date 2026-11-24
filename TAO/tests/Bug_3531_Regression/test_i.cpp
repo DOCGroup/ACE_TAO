@@ -21,7 +21,7 @@ Simple_Server_i::test_method (Simple_Server_ptr objref)
       try
         {
           {
-            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, 0);
+            ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->lock_, nullptr);
             if (!this->timer_registed_)
               {
                 ACE_DEBUG ((LM_DEBUG, "(%P|%t) Scheduling timeout...\n"));

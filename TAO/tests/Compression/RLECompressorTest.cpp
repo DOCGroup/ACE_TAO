@@ -342,7 +342,7 @@ testArray_compressor (::Compression::Compressor_var const& compressor)
         int out_len         = int(out_data.length());
 
         if (out_len > 0) { // We expect out_len == 0 when i == 0.
-            ACE_HEX_DUMP((LM_INFO, out_ptr, out_len, 0)); // Show the hex output
+            ACE_HEX_DUMP((LM_INFO, out_ptr, out_len, nullptr)); // Show the hex output
         } else if (out_len == result.len) { // Hopefully We expected out_len == 0
             continue;      // If So then just continue (nothing to check)
         }

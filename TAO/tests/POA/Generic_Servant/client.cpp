@@ -59,7 +59,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                           -1);
       }
 
-  if (IOR == 0)
+  if (IOR == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Please specify the IOR for the servant\n"), -1);

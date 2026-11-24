@@ -451,7 +451,7 @@ int test_strings (::Test::A_ptr server)
     status |=
       call_method (server,
                    ::Test::A::ARG2,
-                   0,
+                   nullptr,
                    arg2_out,
                    arg3,
                    "exception is thrown in a call "
@@ -459,7 +459,7 @@ int test_strings (::Test::A_ptr server)
     status |=
       call_method_s (server,
                      ::Test::A::ARG2,
-                     0,
+                     nullptr,
                      arg2_out,
                      arg3,
                      "exception is thrown in a call "
@@ -472,7 +472,7 @@ int test_strings (::Test::A_ptr server)
     status |=
       call_method (server,
                    ::Test::A::ARG3,
-                   0,
+                   nullptr,
                    arg2_out,
                    arg3,
                    "exception is thrown in a call "
@@ -480,7 +480,7 @@ int test_strings (::Test::A_ptr server)
     status |=
       call_method_s (server,
                      ::Test::A::ARG3,
-                     0,
+                     nullptr,
                      arg2_out,
                      arg3,
                      "exception is thrown in a call "
@@ -494,7 +494,7 @@ int test_strings (::Test::A_ptr server)
     status |=
       call_method (server,
                    ::Test::A::ARG3,
-                   0,
+                   nullptr,
                    arg2_out,
                    arg3,
                    "exception is thrown in a call "
@@ -502,7 +502,7 @@ int test_strings (::Test::A_ptr server)
     status |=
       call_method_s (server,
                      ::Test::A::ARG3,
-                     0,
+                     nullptr,
                      arg2_out,
                      arg3,
                      "exception is thrown in a call "
@@ -515,7 +515,7 @@ int test_strings (::Test::A_ptr server)
     status |=
       call_method (server,
                    ::Test::A::RETN,
-                   0,
+                   nullptr,
                    arg2_out,
                    arg3,
                    "exception is thrown in a call "
@@ -523,7 +523,7 @@ int test_strings (::Test::A_ptr server)
     status |=
       call_method_s (server,
                      ::Test::A::RETN,
-                     0,
+                     nullptr,
                      arg2_out,
                      arg3,
                      "exception is thrown in a call "

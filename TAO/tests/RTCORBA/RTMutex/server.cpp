@@ -287,7 +287,7 @@ mutex_test_thread (void *args)
       *data->error_flag = 1;
     }
 
-  return 0;
+  return nullptr;
 }
 
 static int
@@ -399,7 +399,7 @@ mutex_test_try_lock_thread (void *args)
       *data->error_flag = 1;
     }
 
-  return 0;
+  return nullptr;
 }
 
 static int

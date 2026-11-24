@@ -12,19 +12,19 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
     {
       ACE_TCHAR const *arg {};
       // IOR File Name Option.
-      if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-POAConfigFile"))))
+      if (nullptr != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-POAConfigFile"))))
         {
           this->rt_poa_properties_ =
             RT_Properties::read_from (ACE_TString (arg));
           this->priority_bands_ =
             this->rt_poa_properties_->priority_bands ().length ();
         }
-      else if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-ObjectConfigFile"))))
+      else if (nullptr != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-ObjectConfigFile"))))
         {
           this->rt_object_properties_ =
             RT_Properties::read_from (ACE_TString (arg));
         }
-      else if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-BaseObjectIOR"))))
+      else if (nullptr != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-BaseObjectIOR"))))
         {
           if (!this->rt_poa_properties_)
             {
@@ -34,7 +34,7 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
           this->base_object_ref_ = ACE_TEXT ("file://");
           this->base_object_ref_ += this->rt_poa_properties_->ior_source ();
         }
-      else if (0 != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-OverriddenIOR"))))
+      else if (nullptr != (arg = arg_shifter.get_the_parameter (ACE_TEXT("-OverriddenIOR"))))
         {
           if (!this->rt_object_properties_)
             {

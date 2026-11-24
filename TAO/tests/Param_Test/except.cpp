@@ -76,7 +76,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
                           mod_value));
             }
 
-          if (reason != 0 && mod_value == 1)
+          if (reason != nullptr && mod_value == 1)
             {
               this->inout_ = this->in_ * 2;
               this->out_ = this->in_ * 3;
@@ -242,7 +242,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
     {
       const char *reason = ex.reason.in ();
 
-      if (reason == 0)
+      if (reason == nullptr)
         {
           return -1;
         }

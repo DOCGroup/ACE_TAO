@@ -28,7 +28,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var first_poa =
         server.create_poa ("firstPOA", 1);
 
-      if (first_poa.in () == 0)
+      if (first_poa.in () == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Failure during first POA creation: create_poa ()\n"),
@@ -40,7 +40,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       PortableServer::POA_var second_poa =
         server.create_poa ("secondPOA", 0);
 
-      if (second_poa.in () == 0)
+      if (second_poa.in () == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                             "Failure during second POA creation: create_poa ()\n"),

@@ -408,7 +408,7 @@ public:
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Wait_For_Event cmd\n")));
     }
-    int const retval = lf_.wait_for_event (&event_, &transport_, 0);
+    int const retval = lf_.wait_for_event (&event_, &transport_, nullptr);
     // The worker has probably been shutdown in order for the client
     // leader event loop to exit - reactivate the worker so it from
     // process msgs once we return
@@ -480,7 +480,7 @@ public:
     {
       ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Executing Event_Loop_Thread cmd\n")));
     }
-    TAO_LF_Event_Loop_Thread_Helper elt (lf_, lf_strategy_, 0);
+    TAO_LF_Event_Loop_Thread_Helper elt (lf_, lf_strategy_, nullptr);
     while (!worker->shutdown ())
       worker->process_cmd ();
     // The worker has been shutdown in order for this event loop

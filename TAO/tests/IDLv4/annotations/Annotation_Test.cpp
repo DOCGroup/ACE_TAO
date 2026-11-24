@@ -11,7 +11,7 @@ Annotation_Test::Annotation_Test (const std::string &name)
     error_count_ (0),
     last_error_ (UTL_Error::EIDL_OK),
     last_warning_ (UTL_Error::EIDL_OK),
-    scope_ (0),
+    scope_ (nullptr),
     disable_output_ (false)
 {
   ++total_test_count_;
@@ -331,7 +331,7 @@ Annotation_Test::get_annotation_member (
 {
   AST_Decl *decl = (*anno_decl)[name];
   AST_Annotation_Member *member = decl ?
-    dynamic_cast<AST_Annotation_Member *> (decl) : 0;
+    dynamic_cast<AST_Annotation_Member *> (decl) : nullptr;
   if (!member)
     {
       ACE_ERROR ((LM_ERROR,

@@ -163,12 +163,12 @@ prepare_tests (CORBA::ORB_ptr orb, PortableServer::POA_ptr root_poa)
       policies[2] = create_compression_enabled_policy (orb);
       policies[3] = create_min_ratio_policy (orb);
 
-      my_compress_poa = root_poa->create_POA("My_Compress_Poa", 0, policies);
+      my_compress_poa = root_poa->create_POA("My_Compress_Poa", nullptr, policies);
     }
   catch(const CORBA::PolicyError&)
     {
       policies.length(0);
-      my_compress_poa = root_poa->create_POA("My_Compress_Poa", 0, policies);
+      my_compress_poa = root_poa->create_POA("My_Compress_Poa", nullptr, policies);
     }
 
   policy_manager->set_policy_overrides (policies, CORBA::ADD_OVERRIDE);
@@ -233,7 +233,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       // Output the IOR to the <ior_output_file>
       FILE *output_file= ACE_OS::fopen (ior_output_file, "w");
-      if (output_file == 0)
+      if (output_file == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Cannot open output file for writing IOR: %s\n",
