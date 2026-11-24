@@ -684,11 +684,6 @@ Key_List::output_cpp17_constants (bool static_storage)
       ACE_OS::printf ("%sconstexpr size_t MIN_WORD_LENGTH {%d};\n"
                       "%sconstexpr size_t MAX_WORD_LENGTH {%d};\n",
                       storage, min_key_len, storage, max_key_len);
-      emitted = true;
-    }
-
-  if (use_word_lengths)
-    {
       ACE_OS::printf ("%sconstexpr int MIN_HASH_VALUE {%d};\n",
                       storage, min_hash_value);
       emitted = true;
