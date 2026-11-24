@@ -123,8 +123,8 @@ protected:
  * useful for BEs to be able to distinguish the real type of a node given only
  * a superclass. Additionally AST_Decl nodes record the scope of definition,
  * the file name and line number where they were defined, whether this was
- * defined by the compiler, whether this is the main file or an #include'd
- * file, among other things.
+ * defined by the compiler, whether this is the main file or an included file,
+ * among other things.
  */
 class TAO_IDL_FE_Export AST_Decl : public virtual COMMON_Base
 {

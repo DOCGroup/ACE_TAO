@@ -619,14 +619,14 @@ public:
   /**
    * Set the directory where all the IDL-Compiler-Generated files are
    * to be kept. Default is current directory from which the
-   * <tao_idl> is called.
+   * @c tao_idl is called.
    */
   void output_dir (std::string const& s);
 
   /**
    * Get the directory where all the IDL-Compiler-Generated files are
    * to be kept. Default is current directory from which the
-   * <tao_idl> is called.
+   * @c tao_idl is called.
    */
   std::string const& output_dir () const;
 

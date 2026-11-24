@@ -97,7 +97,7 @@ class UTL_Error;
 class UTL_Indenter;
 
 /**
- * \file Defines a class containing all front end global data.
+ * @brief Defines a class containing all front end global data.
  *
  * Corresponding source file is util/utl_global.cpp.
  */

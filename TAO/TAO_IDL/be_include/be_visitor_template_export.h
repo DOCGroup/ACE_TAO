@@ -20,7 +20,7 @@
 class AST_Interface;
 
 /**
- * @class :
+ * @class be_visitor_template_export
  *
  * @brief be_visitor_template_export
  *

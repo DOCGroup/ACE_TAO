@@ -47,7 +47,7 @@ protected:
 
   /**
    * The object and TypeCode repository IDs have a mandatory omg.org
-   * prefix, but the default compute_repoID() uses the #pragma's to
+   * prefix, but the default compute_repoID() uses pragma directives to
    * obtain prefixes.
    */
   virtual void compute_repoID ();

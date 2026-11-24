@@ -5,7 +5,7 @@
  *  Concrete visitor for the AMI4CCM Component node.
  *  This provides for code generation of the AMI4CCM reply
  *  handler implementation header, triggered by the presence
- *  of a '#pragma ciao ami4ccm receptacle' directive in
+ *  of the ciao ami4ccm receptacle pragma in
  *  the component's IDL file.
  *
  *  @author Jeff Parsons

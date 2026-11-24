@@ -246,7 +246,7 @@ public:
   int start_ciao_ami_conn_idl (const std::string &fname);
 
   /// Generate code at the end such as the <<= and >>= operators along
-  /// with the ending #endif statement.
+  /// with the closing preprocessor conditional.
   int end_client_header ();
 
   /// Generate necessary code at end of client inline file.

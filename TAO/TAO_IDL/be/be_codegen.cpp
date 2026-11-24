@@ -1551,8 +1551,8 @@ TAO_CodeGen::end_server_header ()
   // before this.
   *os << be_global->versioning_end ();
 
-  /// Otherwise just generate the post_include(), if any,
-  /// and the #endif.
+  /// Otherwise generate the post_include(), if any, and close the
+  /// preprocessor conditional.
   if (be_global->gen_skel_files ())
     {
       // Insert the template header.

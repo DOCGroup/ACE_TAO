@@ -103,6 +103,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  * Use something like this to have backends use the new behavior with tao_idl
  * newer than 2.5.1 but still remain backwards compatible with older versions
  * of tao_idl:
+ * \code{.cpp}
  *   #ifdef TAO_IDL_HAS_PARSE_ARGS_EXIT
  *   #define PARSE_ARGS_ERROR idl_global->parse_args_exit (1);
  *   #else
@@ -110,6 +111,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
  *      idl_global->set_compile_flags ( \
  *        idl_global->compile_flags () | IDL_CF_ONLY_USAGE);
  *   #endif
+ * \endcode
  */
 #define TAO_IDL_HAS_PARSE_ARGS_EXIT
 
