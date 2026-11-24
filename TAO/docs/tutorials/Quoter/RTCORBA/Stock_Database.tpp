@@ -8,6 +8,7 @@
 #include <ace/UUID.h>
 
 #include <fstream>
+#include <memory>
 #include <vector>
 template <typename CALLBACK_TYPE>
 struct Map_Init
@@ -99,7 +100,7 @@ Stock_Database<CALLBACK_TYPE>::register_callback (CALLBACK_TYPE &obj)
   ACE_Utils::UUID_GENERATOR::instance ()->generate_UUID (uuid);
 
   Cookie const cookie (uuid.to_string ()->c_str ());
-  this->callbacks_[cookie] = &obj;
+  this->callbacks_[cookie] = std::addressof (obj);
   return cookie;
 }
 
