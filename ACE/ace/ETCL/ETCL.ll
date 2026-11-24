@@ -121,7 +121,7 @@ extract_string(char* str)
           ++i;
           if (*i == 0)
             {
-              return 0;
+              return nullptr;
             }
           else if (*i == 't')
             {

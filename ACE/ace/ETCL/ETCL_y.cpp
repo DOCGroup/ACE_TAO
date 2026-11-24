@@ -988,7 +988,7 @@ case 45:
     break;}
 case 46:
 //#line 195 "ETCL/ETCL.yy"
-{ yyval.constraint = 0; ;
+{ yyval.constraint = nullptr; ;
     break;}
 case 47:
 //#line 197 "ETCL/ETCL.yy"
@@ -1000,7 +1000,7 @@ case 48:
     break;}
 case 51:
 //#line 207 "ETCL/ETCL.yy"
-{ yyval.constraint = 0; ;
+{ yyval.constraint = nullptr; ;
     break;}
 case 52:
 //#line 209 "ETCL/ETCL.yy"
@@ -1044,7 +1044,7 @@ case 65:
     break;}
 case 66:
 //#line 246 "ETCL/ETCL.yy"
-{ yyval.constraint = 0; ;
+{ yyval.constraint = nullptr; ;
     break;}
 case 67:
 //#line 248 "ETCL/ETCL.yy"

@@ -192,7 +192,7 @@ factor:		ETCL_LPAREN bool_or ETCL_RPAREN
 	;
 
 component:	/* empty */
-	{ $$ = 0; }
+	{ $$ = nullptr; }
 	| ETCL_DOT component_dot
 	{ $$ = new ETCL_DOT_CLASS ($2); }
 
@@ -204,7 +204,7 @@ component:	/* empty */
 	;
 
 component_ext:	/* empty */
-	{ $$ = 0; }
+	{ $$ = nullptr; }
 	| ETCL_DOT component_dot
 	{ $$ = new ETCL_Dot ($2); }
 
@@ -243,7 +243,7 @@ union_pos:  ETCL_LPAREN union_val ETCL_RPAREN component_ext
 	;
 
 union_val:  /* empty */
-	{ $$ = 0; }
+	{ $$ = nullptr; }
 	| ETCL_INTEGER
 	{ $$ = new ETCL_UNION_VALUE_CLASS (+1, $1); }
 	| ETCL_PLUS ETCL_INTEGER
