@@ -63,15 +63,10 @@ run_main (int, ACE_TCHAR *[])
   // failure
   int status = 0;
 
-  // ... this works with the ACE version of unique_ptr (well, the
-  // namespace is broken, but you get the idea) ...
   std::unique_ptr<Base> x = std::make_unique<Base> ();
   std::unique_ptr<Derived> y = std::make_unique<Derived> ();
 
-  // ... with a compliant implementation of std::unique_ptr<> you should be
-  // able to write:
-  //    x = y;
-  x.reset(y.release());
+  x = std::move (y);
 
   // ... there should be just one destruction so far ...
   if (Base::destructors != 1)
