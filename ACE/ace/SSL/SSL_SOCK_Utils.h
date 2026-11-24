@@ -12,6 +12,8 @@
 #include "ace/OS_Errno.h"
 #include "ace/OS_NS_errno.h"
 
+#include <openssl/ssl.h>
+
 namespace ACE_SSL_SOCK_Utils
 {
   inline bool valid_handle (ACE_HANDLE const handle)
@@ -26,6 +28,26 @@ namespace ACE_SSL_SOCK_Utils
     ACE_UNUSED_ARG (handle);
 #endif /* !ACE_WIN32 */
     return true;
+  }
+
+  inline bool set_handle_bit (SSL *session,
+                              ACE_HANDLE handle,
+                              ACE_Handle_Set &read_handles,
+                              ACE_Handle_Set &write_handles)
+  {
+    if (SSL_want_write (session))
+      {
+        write_handles.set_bit (handle);
+        return true;
+      }
+
+    if (SSL_want_read (session))
+      {
+        read_handles.set_bit (handle);
+        return true;
+      }
+
+    return false;
   }
 }
 

@@ -135,15 +135,10 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
               // set correctly, the read/write state should be valid.
               // Use that to decide what to do.
               status = 1;               // Wait for more activity
-              if (SSL_want_write (ssl_session))
-                {
-                  wr_handle.set_bit (handle);
-                }
-              else if (SSL_want_read (ssl_session))
-                {
-                  rd_handle.set_bit (handle);
-                }
-              else
+              if (!ACE_SSL_SOCK_Utils::set_handle_bit (ssl_session,
+                                                       handle,
+                                                       rd_handle,
+                                                       wr_handle))
                 {
                   status = -1;            // Doesn't want anything - bail out
                 }
