@@ -44,9 +44,7 @@ namespace TAO
 #if TAO_HAS_INTERCEPTORS == 1
     , cri_adapter_ (stub_->orb_core ()->clientrequestinterceptor_adapter ())
     , sri_adapter_ (stub_->orb_core ()->serverrequestinterceptor_adapter ())
-    , stack_size_ (0)
     , invoke_status_ (TAO_INVOKE_START)
-    , caught_exception_ (nullptr)
     , is_remote_request_ (request_is_remote)
 #endif /* TAO_HAS_INTERCEPTORS == 1 */
   {

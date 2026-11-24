@@ -219,13 +219,13 @@ namespace TAO
     ClientRequestInterceptor_Adapter *cri_adapter_;
     ServerRequestInterceptor_Adapter *sri_adapter_;
 
-    size_t stack_size_;
+    size_t stack_size_ {};
 
     TAO::Invocation_Status invoke_status_;
 
   private:
     /// Pointer to the caught exception.
-    CORBA::Exception *caught_exception_;
+    CORBA::Exception *caught_exception_ {};
 
     /// Flag used to distinguish a remote invocation versus a collocated
     /// (thru-poa) invocation.
