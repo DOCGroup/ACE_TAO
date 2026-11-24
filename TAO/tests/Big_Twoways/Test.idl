@@ -28,6 +28,8 @@ module Test
      * @param thread_count The number of threads that each session
      *        must create
      * @param message_count How many messages does each thread send.
+     * @param control The control object for the session.
+     * @param peer_count The number of participating peers.
      */
     Session create_session (in Session_Control control,
                             in unsigned long payload_size,
@@ -67,7 +69,7 @@ module Test
   {
     /// Add a new peer.
     /**
-     * The coordinator starts the test by calling <send_oneways> on
+     * The coordinator starts the test by calling @c send_oneways on
      * all peers. How does it decide to do that is application
      * specific.
      */

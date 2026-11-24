@@ -64,7 +64,7 @@ module Stock
   interface StockQuoter
   {
     /// Returns detailed stock information to brokers.
-    /// @param stockname A valid name for a stock.
+    /// @param stock_name A valid name for a stock.
     /// @returns Completed stockinfo struct.
     StockInfo get_stock_info (in string stock_name) raises (Invalid_Stock);
   };

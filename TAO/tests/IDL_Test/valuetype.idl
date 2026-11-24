@@ -153,7 +153,7 @@ union MyValueTypeUnion switch (ValueSort2) {
 /// AST_Field::destroy() which in turn destroyed the member
 /// because it was anonymous. This declaration was copied from
 /// an unautomated TAO/tests directory and authored by Simon McQueen
-/// <sm@prismtechnologies>.
+/// &lt;sm&#64;prismtechnologies&gt;.
 valuetype RecValueType
 {
   private sequence<RecValueType> rec_value_types;

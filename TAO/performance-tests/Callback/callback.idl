@@ -20,8 +20,8 @@ module Test {
     /// Save the callback object for later use
     void set_callback (in Callback callback_object);
 
-    /// Send a request, the Callback::response method is invoked with
-    /// the @param time_stamp value
+    /// Send a request; Callback::response receives the @a time_stamp and
+    /// @a message_payload values.
     oneway void request (in TimeStamp time_stamp,
                          in Payload message_payload);
 
