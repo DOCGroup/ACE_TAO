@@ -48,9 +48,7 @@ DSRT_Dispatcher_Impl (ACE_Sched_Params::Policy sched_policy,
 
 //virtual - so don't inline
 template <class DSRT_Scheduler_Traits>
-DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::~DSRT_Dispatcher_Impl ()
-{
-}
+DSRT_Dispatcher_Impl<DSRT_Scheduler_Traits>::~DSRT_Dispatcher_Impl () = default;
 
 }
 
