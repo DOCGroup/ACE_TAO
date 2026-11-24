@@ -67,9 +67,9 @@ Test_Bounded_Array_Sequence::init_parameters (Param_Test_ptr)
   // now set each individual element
   Param_Test::Fixed_Array tmp;
 
-  for (CORBA::ULong j = 0; j < Param_Test::DIM1; ++j)
+  for (CORBA::Long& value : tmp)
     {
-      tmp[j] = gen->gen_long ();
+      value = gen->gen_long ();
     }
 
   Param_Test::Fixed_Array_copy (this->inout_[0], tmp);
@@ -78,9 +78,9 @@ Test_Bounded_Array_Sequence::init_parameters (Param_Test_ptr)
     {
       // Generate some arbitrary array to be filled into the ith
       // location in the sequence.
-      for (CORBA::ULong j = 0; j < Param_Test::DIM1; ++j)
+      for (CORBA::Long& value : tmp)
         {
-          tmp[j] = gen->gen_long ();
+          value = gen->gen_long ();
         }
 
       Param_Test::Fixed_Array_copy (this->in_[i], tmp);
