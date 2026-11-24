@@ -833,9 +833,7 @@ ActivatorReceiver::ActivatorReceiver (AsyncAccessManager *aam,
 {
 }
 
-ActivatorReceiver::~ActivatorReceiver ()
-{
-}
+ActivatorReceiver::~ActivatorReceiver () = default;
 
 void
 ActivatorReceiver::start_server ()

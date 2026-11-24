@@ -71,9 +71,7 @@ ImR_Locator_i::ImR_Locator_i ()
   ins_locator_ = locator;
 }
 
-ImR_Locator_i::~ImR_Locator_i ()
-{
-}
+ImR_Locator_i::~ImR_Locator_i () = default;
 
 int
 ImR_Locator_i::init_with_orb (CORBA::ORB_ptr orb)
@@ -1810,9 +1808,7 @@ SyncListener::SyncListener (const char *server,
 {
 }
 
-SyncListener::~SyncListener ()
-{
-}
+SyncListener::~SyncListener () = default;
 
 bool
 SyncListener::is_alive ()
@@ -1852,9 +1848,7 @@ ImR_SyncResponseHandler::ImR_SyncResponseHandler (const char *objkey, CORBA::ORB
 {
 }
 
-ImR_SyncResponseHandler::~ImR_SyncResponseHandler ()
-{
-}
+ImR_SyncResponseHandler::~ImR_SyncResponseHandler () = default;
 
 void
 ImR_SyncResponseHandler::send_ior (const char *pior)
@@ -1902,9 +1896,7 @@ ImR_Loc_ResponseHandler::ImR_Loc_ResponseHandler
 {
 }
 
-ImR_Loc_ResponseHandler::~ImR_Loc_ResponseHandler ()
-{
-}
+ImR_Loc_ResponseHandler::~ImR_Loc_ResponseHandler () = default;
 
 void
 ImR_Loc_ResponseHandler::send_ior (const char *)

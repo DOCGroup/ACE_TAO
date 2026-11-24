@@ -25,9 +25,7 @@ TAO_IMR_i::TAO_IMR_i ()
   // Nothing
 }
 
-TAO_IMR_i::~TAO_IMR_i ()
-{
-}
+TAO_IMR_i::~TAO_IMR_i () = default;
 
 int
 TAO_IMR_i::run ()

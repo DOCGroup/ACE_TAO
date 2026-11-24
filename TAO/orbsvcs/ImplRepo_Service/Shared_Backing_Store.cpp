@@ -247,9 +247,7 @@ Shared_Backing_Store::Shared_Backing_Store(const Options& opts,
                    ACE_CString());
 }
 
-Shared_Backing_Store::~Shared_Backing_Store()
-{
-}
+Shared_Backing_Store::~Shared_Backing_Store() = default;
 
 void
 Shared_Backing_Store::shutdown ()

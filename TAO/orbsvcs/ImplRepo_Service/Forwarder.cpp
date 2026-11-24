@@ -32,9 +32,7 @@ ImR_DSI_Forwarder::ImR_DSI_Forwarder (ImR_Locator_i& imr_impl)
 {
 }
 
-ImR_DSI_Forwarder::~ImR_DSI_Forwarder ()
-{
-}
+ImR_DSI_Forwarder::~ImR_DSI_Forwarder () = default;
 
 void
 ImR_DSI_Forwarder::init (CORBA::ORB_ptr orb)
@@ -169,9 +167,7 @@ ImR_DSI_ResponseHandler::ImR_DSI_ResponseHandler (const char *key,
 {
 }
 
-ImR_DSI_ResponseHandler::~ImR_DSI_ResponseHandler ()
-{
-}
+ImR_DSI_ResponseHandler::~ImR_DSI_ResponseHandler () = default;
 
 void
 ImR_DSI_ResponseHandler::send_ior (const char *pior)

@@ -79,9 +79,7 @@ Replicator::Replicator (Shared_Backing_Store &repo, const Options& opts)
 {
 }
 
-Replicator::~Replicator()
-{
-}
+Replicator::~Replicator() = default;
 
 void
 Replicator::init_orb ()

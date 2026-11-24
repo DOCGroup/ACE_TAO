@@ -21,9 +21,7 @@ private:
   ImR_Locator_Loader& service_;
 };
 
-ImR_Locator_Loader::~ImR_Locator_Loader()
-{
-}
+ImR_Locator_Loader::~ImR_Locator_Loader() = default;
 
 int
 ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])

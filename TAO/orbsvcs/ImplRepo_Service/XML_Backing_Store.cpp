@@ -25,9 +25,7 @@ XML_Backing_Store::XML_Backing_Store(const Options& opts,
     }
 }
 
-XML_Backing_Store::~XML_Backing_Store()
-{
-}
+XML_Backing_Store::~XML_Backing_Store() = default;
 
 int
 XML_Backing_Store::persistent_remove (const ACE_CString& , bool )

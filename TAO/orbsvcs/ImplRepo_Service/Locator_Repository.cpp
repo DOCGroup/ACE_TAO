@@ -709,9 +709,7 @@ No_Backing_Store::No_Backing_Store (const Options& opts,
 {
 }
 
-No_Backing_Store::~No_Backing_Store ()
-{
-}
+No_Backing_Store::~No_Backing_Store () = default;
 
 const ACE_TCHAR*
 No_Backing_Store::repo_mode () const
