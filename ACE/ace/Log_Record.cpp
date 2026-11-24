@@ -149,7 +149,6 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
                                 long p)
   : type_ (ACE_UINT32 (lp)),
     secs_ (ts_sec),
-    usecs_ (0),
     pid_ (ACE_UINT32 (p))
 {
   // ACE_TRACE ("ACE_Log_Record::ACE_Log_Record");
