@@ -40,7 +40,7 @@ ACE_MEM_Addr::ACE_MEM_Addr (const ACE_TCHAR port_number[])
   : ACE_Addr (AF_INET, sizeof (ACE_MEM_Addr))
 {
   ACE_TRACE ("ACE_MEM_Addr::ACE_MEM_Addr");
-  u_short const pn = static_cast<u_short> (ACE_OS::strtoul (port_number, nullptr, 10));
+  auto const pn = static_cast<u_short> (ACE_OS::strtoul (port_number, nullptr, 10));
   this->initialize_local (pn);
 }
 
@@ -95,7 +95,7 @@ ACE_MEM_Addr::string_to_addr (const ACE_TCHAR s[])
 {
   ACE_TRACE ("ACE_MEM_Addr::string_to_addr");
 
-  u_short const pn = static_cast<u_short> (ACE_OS::strtoul (s, nullptr, 10));
+  auto const pn = static_cast<u_short> (ACE_OS::strtoul (s, nullptr, 10));
   return this->set (pn);
 }
 
