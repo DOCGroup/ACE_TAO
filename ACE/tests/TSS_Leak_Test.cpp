@@ -43,7 +43,7 @@ int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("TSS_Leak_Test"));
 
-  ACE_TSS<X> *const tss = new ACE_TSS<X>;
+  auto * const tss = new ACE_TSS<X>;
   X *x = *tss;
   ACE_UNUSED_ARG (x);
   Task task (tss);

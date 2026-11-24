@@ -36,9 +36,9 @@ static int reported_notsup = 0;
 static ACE_THR_FUNC_RETURN
 test (void *args)
 {
-  ACE_TEST_MUTEX *mutex = static_cast<ACE_TEST_MUTEX *> (args);
+  auto *mutex = static_cast<ACE_TEST_MUTEX *> (args);
   ACE_UNUSED_ARG (mutex); // Suppress ghs warning about unused local "mutex".
-  u_int seed = static_cast<u_int> (ACE_OS::time (nullptr));
+  auto seed = static_cast<u_int> (ACE_OS::time (nullptr));
 
   for (size_t i = 0; i < ACE_MAX_ITERATIONS / 2; ++i)
     {

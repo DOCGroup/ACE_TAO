@@ -108,7 +108,7 @@ Stream_Order_Test::init (int argc, ACE_TCHAR *argv[])
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot find %s\n"), argv[0]), -1);
   }
   const ACE_Service_Type_Impl *st_impl = st->type ();
-  MT_Stream *str = reinterpret_cast<MT_Stream *>(st_impl->object ());
+  auto *str = reinterpret_cast<MT_Stream *>(st_impl->object ());
   MT_Module *m {};
   if (-1 == str->top (m))
     {
