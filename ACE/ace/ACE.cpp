@@ -498,7 +498,7 @@ ACE::t_rcv (ACE_HANDLE handle,
             int *flags,
             const ACE_Time_Value *timeout)
 {
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       return ACE_OS::t_rcv (handle, static_cast<char *> (buf), len, flags);
     }
@@ -1319,7 +1319,7 @@ ACE::t_snd (ACE_HANDLE handle,
             int flags,
             const ACE_Time_Value *timeout)
 {
-  if (timeout == 0)
+  if (timeout == nullptr)
     {
       return ACE_OS::t_snd (handle, static_cast<char const *> (buf), n, flags);
     }
