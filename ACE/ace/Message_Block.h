@@ -240,7 +240,7 @@ public:
   /**
    * Delete all the resources held in the message.
    *
-   * @note Note that release() is designed to release the continuation
+   * @note release() is designed to release the continuation
    * chain; the destructor is not. See release() for details.
    */
   virtual ~ACE_Message_Block ();
