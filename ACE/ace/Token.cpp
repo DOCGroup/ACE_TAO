@@ -43,11 +43,10 @@ ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                                                          ACE_thread_t t_id)
   : thread_id_ (t_id),
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
-    cv_ (0),
+    cv_ (0)
 #else
-    cv_ (m),
+    cv_ (m)
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
-    runable_ (0)
 {
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
   ACE_UNUSED_ARG (m);
@@ -61,11 +60,10 @@ ACE_Token::ACE_Token_Queue_Entry::ACE_Token_Queue_Entry (ACE_Thread_Mutex &m,
                                                          ACE_Condition_Attributes &attributes)
   : thread_id_ (t_id),
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
-    cv_ (0),
+    cv_ (0)
 #else
-    cv_ (m, attributes),
+    cv_ (m, attributes)
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
-    runable_ (0)
 {
 #if defined (ACE_TOKEN_USES_SEMAPHORE)
   ACE_UNUSED_ARG (m);
@@ -176,9 +174,6 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
 ACE_Token::ACE_Token (const ACE_TCHAR *name, void *any)
   : lock_ (name, (ACE_mutexattr_t *) any),
     owner_ (ACE_OS::NULL_thread),
-    in_use_ (0),
-    waiters_ (0),
-    nesting_level_ (0),
     attributes_ (USYNC_THREAD),
     queueing_strategy_ (FIFO)
 {

@@ -244,7 +244,7 @@ public:
 #endif /* ACE_TOKEN_USES_SEMAPHORE */
 
     /// Ok to run.
-    int runable_;
+    int runable_ {};
   };
 
 private:
@@ -295,13 +295,13 @@ private:
 
   /// Some thread (i.e., @c owner_) is using the token.  We need this
   /// extra variable to deal with POSIX pthreads madness...
-  int in_use_;
+  int in_use_ {};
 
   /// Number of waiters.
-  int waiters_;
+  int waiters_ {};
 
   /// Current nesting level.
-  int nesting_level_;
+  int nesting_level_ {};
 
   /// The attributes for the condition variables, optimizes lock time.
   ACE_Condition_Attributes attributes_;
