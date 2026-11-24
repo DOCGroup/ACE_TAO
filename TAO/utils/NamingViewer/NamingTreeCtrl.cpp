@@ -21,9 +21,7 @@ CNamingTreeCtrl::CNamingTreeCtrl ()
   m_ObjectPopup.LoadMenu (IDR_OBJECT_POPUP);
 }
 
-CNamingTreeCtrl::~CNamingTreeCtrl ()
-{
-}
+CNamingTreeCtrl::~CNamingTreeCtrl () = default;
 
 BEGIN_MESSAGE_MAP(CNamingTreeCtrl, CTreeCtrl)
   //{{AFX_MSG_MAP(CNamingTreeCtrl)

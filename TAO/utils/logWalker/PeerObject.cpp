@@ -8,9 +8,7 @@ PeerObject::PeerObject (long id, const char *name, PeerProcess *)
 {
 }
 
-PeerObject::~PeerObject ()
-{
-}
+PeerObject::~PeerObject () = default;
 
 ACE_CString &
 PeerObject::name ()
