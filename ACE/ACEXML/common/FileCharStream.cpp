@@ -44,6 +44,16 @@ ACEXML_FileCharStream::use_stream_i (FILE* open_file, ACEXML_Char const *name)
 int
 ACEXML_FileCharStream::use_stream (FILE* open_file, ACEXML_Char const *name)
 {
+  if (open_file == this->infile_)
+    {
+      this->size_ = 0;
+      this->peek_ = 0;
+    }
+  else
+    {
+      this->close ();
+    }
+
   if (open_file != nullptr)
   {
     ACE_OS::rewind(open_file);
@@ -56,6 +66,7 @@ ACEXML_FileCharStream::use_stream (FILE* open_file, ACEXML_Char const *name)
 int
 ACEXML_FileCharStream::open (ACEXML_Char const *name)
 {
+  this->close ();
   this->close_infile_ = true;
   return use_stream_i(ACE_OS::fopen (name, ACE_TEXT ("r")), name);
 }
