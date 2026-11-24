@@ -1,4 +1,3 @@
-
 #include "First_i.h"
 #include "tao/debug.h"
 #include "ace/Auto_Event.h"

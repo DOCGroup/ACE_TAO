@@ -1,4 +1,3 @@
-
 /**
  *  @file    Simple_Message_Block_Test.cpp
  *

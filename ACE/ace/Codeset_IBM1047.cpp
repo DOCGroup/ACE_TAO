@@ -1,4 +1,3 @@
-
 /**
  *  @file    Codeset_IBM1047.cpp
  *

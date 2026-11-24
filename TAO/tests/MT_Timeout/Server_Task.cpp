@@ -1,4 +1,3 @@
-
 #include "Server_Task.h"
 
 Server_Task::Server_Task (ACE_Thread_Manager *thr_mgr,

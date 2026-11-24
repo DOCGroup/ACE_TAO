@@ -1,4 +1,3 @@
-
 #ifndef BIG_ONEWAYS_SESSION_TASK_H
 #define BIG_ONEWAYS_SESSION_TASK_H
 #include /**/ "ace/pre.h"

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Logging_Service_i.h
  *

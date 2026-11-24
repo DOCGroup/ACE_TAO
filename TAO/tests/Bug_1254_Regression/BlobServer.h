@@ -1,4 +1,3 @@
-
 #ifndef BLOBSERVER_H
 #define BLOBSERVER_H
 #include /**/ "ace/pre.h"

@@ -1,4 +1,3 @@
-
 interface Test
 {
   /// Shut down the ORB.

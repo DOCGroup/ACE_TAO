@@ -1,4 +1,3 @@
-
 #ifndef MT_BIDIR_RECEIVER_I_H
 #define MT_BIDIR_RECEIVER_I_H
 #include /**/ "ace/pre.h"

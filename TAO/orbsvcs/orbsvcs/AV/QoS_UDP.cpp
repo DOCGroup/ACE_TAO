@@ -1,4 +1,3 @@
-
 #include "orbsvcs/AV/QoS_UDP.h"
 
 #if defined (ACE_HAS_RAPI) || defined (ACE_HAS_WINSOCK2_GQOS)

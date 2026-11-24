@@ -1,4 +1,3 @@
-
 /**
  * @file cdr_op_cs.cpp
  * @brief Visitor that generates client-stub CDR operators for union branches.

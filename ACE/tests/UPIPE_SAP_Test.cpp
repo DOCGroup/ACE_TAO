@@ -1,4 +1,3 @@
-
 /**
  *  @file    UPIPE_SAP_Test.cpp
  *

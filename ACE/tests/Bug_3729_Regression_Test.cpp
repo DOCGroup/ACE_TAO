@@ -1,4 +1,3 @@
-
 /**
  *  @file    Bug_3729_Regression_Test.cpp
  */

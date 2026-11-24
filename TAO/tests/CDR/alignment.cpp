@@ -1,4 +1,3 @@
-
 /**
  *  @file   alignment.cpp
  *

@@ -1,4 +1,3 @@
-
 /*  A Bison parser, made from ETCL/ETCL.yy
     by GNU Bison version 1.28  */
 

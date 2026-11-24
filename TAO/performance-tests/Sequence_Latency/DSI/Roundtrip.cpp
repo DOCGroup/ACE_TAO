@@ -1,4 +1,3 @@
-
 #include "TestC.h"
 #include "tao/AnyTypeCode/TypeCode_Constants.h"
 #include "tao/AnyTypeCode/NVList.h"

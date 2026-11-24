@@ -1,4 +1,3 @@
-
 #ifndef SERVER_LEAKS_PING_SERVICE_H
 #define SERVER_LEAKS_PING_SERVICE_H
 #include /**/ "ace/pre.h"

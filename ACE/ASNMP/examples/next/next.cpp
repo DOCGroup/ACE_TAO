@@ -1,4 +1,3 @@
-
 /**
  *  @file    next.cpp
  *

@@ -1,4 +1,3 @@
-
 #ifndef JAWS_BUILD_DLL
 #define JAWS_BUILD_DLL
 #endif /*JAWS_BUILD_DLL*/

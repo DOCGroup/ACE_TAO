@@ -1,4 +1,3 @@
-
 #ifndef INTERFACE_3_I_H_
 #define INTERFACE_3_I_H_
 #include /**/ "ace/pre.h"

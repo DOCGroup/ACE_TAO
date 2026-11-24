@@ -1,4 +1,3 @@
-
 #include "tao/On_Demand_Fragmentation_Strategy.h"
 
 #include "tao/Transport.h"

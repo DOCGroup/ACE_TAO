@@ -1,4 +1,3 @@
-
 #include "tao/PI/ORBInitInfo.h"
 #include "tao/TransportCurrent/Current_ORBInitializer_Base.h"
 

@@ -1,4 +1,3 @@
-
 #ifndef CRASHED_CALLBACK_CRASHED_CALLBACK_H
 #define CRASHED_CALLBACK_CRASHED_CALLBACK_H
 #include /**/ "ace/pre.h"

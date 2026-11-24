@@ -1,4 +1,3 @@
-
 /**
  *  @file    context_switch_time.cpp
  *

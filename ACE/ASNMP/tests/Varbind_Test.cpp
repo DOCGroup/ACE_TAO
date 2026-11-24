@@ -1,4 +1,3 @@
-
 /**
  *  @file    Varbind_Test.cpp
  *

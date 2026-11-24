@@ -1,4 +1,3 @@
-
 /**
  *  @file    Recursive_Condition_Bug_Test.cpp
  *

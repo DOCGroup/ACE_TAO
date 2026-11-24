@@ -1,4 +1,3 @@
-
 /**
  *  @file    ncontextext_client_i.cpp
  *

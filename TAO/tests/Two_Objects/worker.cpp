@@ -1,4 +1,3 @@
-
 #include "worker.h"
 
 Worker::Worker (CORBA::ORB_ptr const orb)

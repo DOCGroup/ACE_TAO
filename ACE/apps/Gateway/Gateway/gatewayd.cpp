@@ -1,4 +1,3 @@
-
 /**
  *  @file    gatewayd.cpp
  *

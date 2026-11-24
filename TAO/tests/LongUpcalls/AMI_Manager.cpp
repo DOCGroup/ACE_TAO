@@ -1,4 +1,3 @@
-
 #include "AMI_Manager.h"
 #include "ace/OS_NS_unistd.h"
 

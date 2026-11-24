@@ -1,4 +1,3 @@
-
 #ifndef MEMORY_GROWTH_H
 #define MEMORY_GROWTH_H
 #include /**/ "ace/pre.h"

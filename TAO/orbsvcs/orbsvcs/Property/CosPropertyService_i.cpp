@@ -1,4 +1,3 @@
-
 /**
  *  @file   CosPropertyService_i.cpp
  *

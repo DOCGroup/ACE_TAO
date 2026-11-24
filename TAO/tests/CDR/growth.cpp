@@ -1,4 +1,3 @@
-
 /**
  *  @file    growth.cpp
  *

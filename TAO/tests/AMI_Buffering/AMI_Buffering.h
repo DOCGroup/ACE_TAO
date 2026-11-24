@@ -1,4 +1,3 @@
-
 #ifndef AMI_BUFFERING_H
 #define AMI_BUFFERING_H
 #include /**/ "ace/pre.h"

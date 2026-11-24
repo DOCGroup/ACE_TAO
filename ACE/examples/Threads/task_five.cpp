@@ -1,4 +1,3 @@
-
 /**
  *  @file    task_five.cpp
  *

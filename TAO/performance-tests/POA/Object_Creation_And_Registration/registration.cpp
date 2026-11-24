@@ -1,4 +1,3 @@
-
 /**
  *  @file    registration.cpp
  *

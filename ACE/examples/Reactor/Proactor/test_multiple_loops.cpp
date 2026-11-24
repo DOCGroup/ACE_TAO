@@ -1,4 +1,3 @@
-
 /**
  *  @file    test_multiple_loops.cpp
  *

@@ -1,4 +1,3 @@
-
 /**
  * @file Trading_Loader.cpp
  *

@@ -1,4 +1,3 @@
-
 #ifndef SIMPLE_H
 #define SIMPLE_H
 #include /**/ "ace/pre.h"

@@ -1,4 +1,3 @@
-
 #include "Client_Task.h"
 
 Client_Task::Client_Task (Test::Big_Reply_ptr reply_gen,

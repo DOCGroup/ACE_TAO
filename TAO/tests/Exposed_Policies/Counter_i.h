@@ -1,4 +1,3 @@
-
 /**
  *  @file    Counter_i.h
  *

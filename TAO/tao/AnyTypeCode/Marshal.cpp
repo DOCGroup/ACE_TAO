@@ -1,4 +1,3 @@
-
 /**
  *  @file    Marshal.cpp
  *

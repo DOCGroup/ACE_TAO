@@ -1,4 +1,3 @@
-
 #ifndef LONGDOUBLETEST_H
 #define LONGDOUBLETEST_H
 #include /**/ "ace/pre.h"

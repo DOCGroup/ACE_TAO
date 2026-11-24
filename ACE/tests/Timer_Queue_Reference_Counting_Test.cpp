@@ -1,4 +1,3 @@
-
 /**
  *  @file    Timer_Queue_Reference_Counting_Test.cpp
  *

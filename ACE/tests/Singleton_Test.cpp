@@ -1,4 +1,3 @@
-
 /**
  *  @file    Singleton_Test.cpp
  *

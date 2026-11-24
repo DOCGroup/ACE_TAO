@@ -1,4 +1,3 @@
-
 #ifndef MCASTHELLO_H
 #define MCASTHELLO_H
 #include /**/ "ace/pre.h"

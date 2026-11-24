@@ -1,4 +1,3 @@
-
 #ifndef ONEWAYS_INVOKING_TWOWAYS_SERVER_TASK_H
 #define ONEWAYS_INVOKING_TWOWAYS_SERVER_TASK_H
 #include /**/ "ace/pre.h"

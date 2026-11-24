@@ -1,4 +1,3 @@
-
 interface Test
 {
   typedef sequence<octet> data;

@@ -1,4 +1,3 @@
-
 #ifndef BUG_1020_BASIC_REGRESSION_CLIENT_TASK_H
 #define BUG_1020_BASIC_REGRESSION_CLIENT_TASK_H
 #include /**/ "ace/pre.h"

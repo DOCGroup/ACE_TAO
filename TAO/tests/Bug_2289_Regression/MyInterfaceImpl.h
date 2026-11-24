@@ -1,4 +1,3 @@
-
 #include "TestS.h"
 
 class MyInterfaceImpl

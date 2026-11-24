@@ -1,4 +1,3 @@
-
 /**
  *  @file   octet_sequence.cpp
  *

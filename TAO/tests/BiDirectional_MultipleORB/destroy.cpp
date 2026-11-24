@@ -1,4 +1,3 @@
-
 /**
  *  @file     destroy.cpp
  *

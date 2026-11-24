@@ -1,4 +1,3 @@
-
 #ifndef Server_Task__h_
 #define Server_Task__h_
 #include /**/ "ace/pre.h"

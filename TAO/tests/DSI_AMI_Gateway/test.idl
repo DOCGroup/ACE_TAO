@@ -1,4 +1,3 @@
-
 typedef sequence<long> DSI_LongSeq;
 
 struct Structure

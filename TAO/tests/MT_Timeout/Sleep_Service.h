@@ -1,4 +1,3 @@
-
 #ifndef SLEEP_SERVICE_H
 #define SLEEP_SERVICE_H
 #include /**/ "ace/pre.h"

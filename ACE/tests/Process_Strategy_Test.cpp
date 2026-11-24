@@ -1,4 +1,3 @@
-
 /**
  *  @file    Process_Strategy_Test.cpp
  *

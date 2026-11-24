@@ -1,4 +1,3 @@
-
 /**
  *  @file    CC_test_utils.cpp
  *

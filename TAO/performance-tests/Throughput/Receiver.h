@@ -1,4 +1,3 @@
-
 #ifndef THROUGHPUT_RECEIVER_H
 #define THROUGHPUT_RECEIVER_H
 #include /**/ "ace/pre.h"

@@ -1,4 +1,3 @@
-
 #ifndef BLOCKING_SYNC_NONE_H
 #define BLOCKING_SYNC_NONE_H
 #include /**/ "ace/pre.h"

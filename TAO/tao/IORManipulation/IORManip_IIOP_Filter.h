@@ -1,4 +1,3 @@
-
 /**
  *  @file    IORManip_IIOP_Filter.h
  *

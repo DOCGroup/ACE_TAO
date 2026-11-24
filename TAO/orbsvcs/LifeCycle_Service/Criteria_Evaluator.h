@@ -1,4 +1,3 @@
-
 /**
  *  @file    Criteria_Evaluator.h
  *

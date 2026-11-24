@@ -1,4 +1,3 @@
-
 /**
  *  @file    Auto_Event_Test.cpp
  *

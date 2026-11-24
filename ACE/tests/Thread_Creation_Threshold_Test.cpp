@@ -1,4 +1,3 @@
-
 /**
  *  @file    Thread_Creation_Threshold_Test.cpp
  *

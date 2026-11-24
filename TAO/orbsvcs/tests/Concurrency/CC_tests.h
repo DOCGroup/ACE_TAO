@@ -1,4 +1,3 @@
-
 /**
  *  @file    CC_tests.h
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file     MT_Servant_Locator.cpp
  *

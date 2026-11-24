@@ -1,4 +1,3 @@
-
 /**
  *  @file    Refcounted_Event_Handler_Test_DevPoll.cpp
  *

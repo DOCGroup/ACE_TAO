@@ -1,4 +1,3 @@
-
 /**
  *  @file    SOCK_SEQPACK_Association_Test.cpp
  *

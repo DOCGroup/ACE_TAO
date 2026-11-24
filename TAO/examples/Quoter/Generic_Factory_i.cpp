@@ -1,4 +1,3 @@
-
 /**
  *  @file    Generic_Factory_i.cpp
  *

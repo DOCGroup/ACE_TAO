@@ -1,4 +1,3 @@
-
 /**
  *  @file    Message_Queue_Notifications_Test.cpp
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    ami_test_i.cpp
  *

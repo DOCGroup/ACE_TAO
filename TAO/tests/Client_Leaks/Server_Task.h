@@ -1,4 +1,3 @@
-
 #ifndef CLIENT_LEAKS_SERVER_TASK_H
 #define CLIENT_LEAKS_SERVER_TASK_H
 #include /**/ "ace/pre.h"

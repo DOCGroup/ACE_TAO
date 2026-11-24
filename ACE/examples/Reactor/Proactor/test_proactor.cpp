@@ -1,4 +1,3 @@
-
 /**
  *  @file    test_proactor.cpp
  *

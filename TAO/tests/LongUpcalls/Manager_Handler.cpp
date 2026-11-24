@@ -1,4 +1,3 @@
-
 #include "Manager_Handler.h"
 
 Manager_Handler::Manager_Handler (Test::Manager_ptr manager,

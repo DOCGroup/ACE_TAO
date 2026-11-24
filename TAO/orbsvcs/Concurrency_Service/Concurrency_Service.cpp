@@ -1,4 +1,3 @@
-
 /**
  *  @file    Concurrency_Service.cpp
  *

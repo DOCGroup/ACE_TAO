@@ -1,4 +1,3 @@
-
 /**
  *  @file     test_aiosig_ace.cpp
  *

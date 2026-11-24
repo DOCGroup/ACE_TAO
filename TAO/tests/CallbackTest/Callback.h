@@ -1,4 +1,3 @@
-
 #ifndef CALLBACK_CALLBACK_H
 #define CALLBACK_CALLBACK_H
 #include /**/ "ace/pre.h"

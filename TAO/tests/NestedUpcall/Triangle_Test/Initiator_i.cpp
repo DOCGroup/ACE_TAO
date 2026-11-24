@@ -1,4 +1,3 @@
-
 /**
  *  @file    Initiator_i.cpp
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Reference_Counted_Event_Handler_Test.cpp
  *

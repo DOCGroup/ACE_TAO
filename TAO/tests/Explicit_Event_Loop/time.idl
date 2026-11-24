@@ -1,4 +1,3 @@
-
 struct TimeOfDay {
     /// 0 - 23
     short   hour;

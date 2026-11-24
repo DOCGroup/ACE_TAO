@@ -1,4 +1,3 @@
-
 #ifndef FACTORY_H
 #define FACTORY_H
 #include /**/ "ace/pre.h"

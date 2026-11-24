@@ -1,4 +1,3 @@
-
 #include "Stock_Consumer.h"
 #include "QuoterC.h"
 

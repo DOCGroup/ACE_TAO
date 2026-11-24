@@ -1,4 +1,3 @@
-
 // note: This order of header inclusion is required in order to satisfy
 // template instantiation rules.
 #include "tao/CORBA_methods.h"

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Aio_Platform_Test.cpp
  *

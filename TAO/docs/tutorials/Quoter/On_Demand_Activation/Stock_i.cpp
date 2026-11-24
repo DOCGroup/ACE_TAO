@@ -1,4 +1,3 @@
-
 #include "Stock_i.h"
 
 Quoter_Stock_i::Quoter_Stock_i (char const *symbol,

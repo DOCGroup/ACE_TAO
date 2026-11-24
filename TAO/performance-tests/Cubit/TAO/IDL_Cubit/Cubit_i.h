@@ -1,4 +1,3 @@
-
 /**
  *  @file    Cubit_i.h
  *

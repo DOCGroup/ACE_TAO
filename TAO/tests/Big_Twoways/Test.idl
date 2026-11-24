@@ -1,4 +1,3 @@
-
 module Test
 {
   /// The message type, just used to send a lot of data on each

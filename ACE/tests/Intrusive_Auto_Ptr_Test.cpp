@@ -1,4 +1,3 @@
-
 /**
  *  @file    Intrusive_Auto_Ptr_Test.cpp
  *

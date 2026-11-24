@@ -1,4 +1,3 @@
-
 /**
  *  @file    Process_Manual_Event_Test.cpp
  *

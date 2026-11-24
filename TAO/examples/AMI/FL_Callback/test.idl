@@ -1,4 +1,3 @@
-
 interface Peer;
 typedef sequence<Peer> PeerSet;
 

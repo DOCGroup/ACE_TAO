@@ -1,4 +1,3 @@
-
 /**
  *  @file    Simple_util.h
  *

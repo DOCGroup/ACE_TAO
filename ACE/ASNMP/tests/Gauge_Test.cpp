@@ -1,4 +1,3 @@
-
 /**
  *  @file    Gauge_Test.cpp
  *

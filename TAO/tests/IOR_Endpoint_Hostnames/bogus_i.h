@@ -1,4 +1,3 @@
-
 #ifndef bogus_h
 #define bogus_h
 #include /**/ "ace/pre.h"

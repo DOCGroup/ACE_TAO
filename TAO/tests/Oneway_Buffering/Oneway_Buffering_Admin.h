@@ -1,4 +1,3 @@
-
 #ifndef ONEWAY_BUFFERING_ADMIN_H
 #define ONEWAY_BUFFERING_ADMIN_H
 #include /**/ "ace/pre.h"

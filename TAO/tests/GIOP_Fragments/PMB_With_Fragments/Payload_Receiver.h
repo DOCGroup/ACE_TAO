@@ -1,4 +1,3 @@
-
 #ifndef PMB_WITH_FRAGMENTS_PAYLOAD_RECEIVER_H
 #define PMB_WITH_FRAGMENTS_PAYLOAD_RECEIVER_H
 #include /**/ "ace/pre.h"

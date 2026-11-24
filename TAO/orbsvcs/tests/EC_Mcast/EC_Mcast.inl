@@ -1,4 +1,3 @@
-
 ACE_INLINE int
 ECM_Federation::sender_local_addr (ACE_INET_Addr& addr)
 {

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Quoter_i.h
  *

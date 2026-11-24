@@ -1,4 +1,3 @@
-
 /**
  *  @file    MT_Reference_Counted_Notify_Test.cpp
  *

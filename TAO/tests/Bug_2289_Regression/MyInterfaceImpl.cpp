@@ -1,4 +1,3 @@
-
 #include "MyInterfaceImpl.h"
 
 char const * const

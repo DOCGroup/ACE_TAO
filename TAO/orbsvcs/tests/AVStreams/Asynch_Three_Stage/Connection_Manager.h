@@ -1,4 +1,3 @@
-
 /**
  *  @file    Connection_Manager.h
  *

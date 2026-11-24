@@ -1,4 +1,3 @@
-
 #ifndef SESSION_FACTORY_H
 #define SESSION_FACTORY_H
 #include /**/ "ace/pre.h"

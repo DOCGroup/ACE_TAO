@@ -1,4 +1,3 @@
-
 #ifndef OID_CLS_
 #define OID_CLS_
 /**

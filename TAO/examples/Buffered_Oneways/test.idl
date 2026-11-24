@@ -1,4 +1,3 @@
-
 interface test
 {
   oneway void method (in unsigned long request_number);

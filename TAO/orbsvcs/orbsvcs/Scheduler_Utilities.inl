@@ -1,4 +1,3 @@
-
 // Construct a helper class instance from values for
 // the fields of the IDL struct it wraps.
 

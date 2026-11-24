@@ -1,4 +1,3 @@
-
 /**
  *  @file    bpr_thread.cpp
  *

@@ -1,4 +1,3 @@
-
 /**
  *  @file    Map_Manager_Test.cpp
  *

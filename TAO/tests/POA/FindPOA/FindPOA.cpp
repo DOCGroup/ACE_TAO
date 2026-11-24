@@ -1,4 +1,3 @@
-
 /**
  *  @file     FindPOA.cpp
  *

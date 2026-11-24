@@ -1,4 +1,3 @@
-
 /**
  *  @file   simple_test_i.h
  *

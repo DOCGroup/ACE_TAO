@@ -1,4 +1,3 @@
-
 #ifndef ONEWAY_RECEIVER_H
 #define ONEWAY_RECEIVER_H
 #include /**/ "ace/pre.h"

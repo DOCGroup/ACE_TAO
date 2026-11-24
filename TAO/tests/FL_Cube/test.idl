@@ -1,4 +1,3 @@
-
 interface Simple_Server {
 
   oneway void set_x_angle (in long x);

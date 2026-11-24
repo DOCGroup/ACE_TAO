@@ -1,4 +1,3 @@
-
 #ifndef BIG_ONEWAYS_COORDINATOR_H
 #define BIG_ONEWAYS_COORDINATOR_H
 #include /**/ "ace/pre.h"

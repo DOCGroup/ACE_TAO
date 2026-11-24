@@ -1,4 +1,3 @@
-
 /**
  *  @file    Logging_Strategy_Test.cpp
  *

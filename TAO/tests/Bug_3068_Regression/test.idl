@@ -1,4 +1,3 @@
-
 #include "tao/OctetSeq.pidl"
 
 interface Callback

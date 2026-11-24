@@ -1,4 +1,3 @@
-
 interface Simple_Server {
 
   /// Returns <x>, but sleep for <msecs> milliseconds before returning

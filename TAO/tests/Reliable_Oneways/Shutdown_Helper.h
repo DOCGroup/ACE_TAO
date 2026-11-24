@@ -1,4 +1,3 @@
-
 #ifndef SHUTDOWN_HELPER_H
 #define SHUTDOWN_HELPER_H
 #include /**/ "ace/pre.h"

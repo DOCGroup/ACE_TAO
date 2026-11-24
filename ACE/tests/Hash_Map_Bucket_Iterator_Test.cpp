@@ -1,4 +1,3 @@
-
 /**
  *  @file    Hash_Map_Bucket_Iterator_Test.cpp
  *

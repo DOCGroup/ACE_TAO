@@ -1,4 +1,3 @@
-
 /**
  *  @file    Vector_Test.cpp
  *

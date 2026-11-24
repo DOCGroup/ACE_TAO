@@ -1,4 +1,3 @@
-
 /**
  *  @file    main_thread.cpp
  *

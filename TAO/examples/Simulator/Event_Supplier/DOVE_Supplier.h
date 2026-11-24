@@ -1,4 +1,3 @@
-
 /**
  *  @file    DOVE_Supplier.h
  *

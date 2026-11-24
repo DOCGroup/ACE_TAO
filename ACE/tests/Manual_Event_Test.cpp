@@ -1,4 +1,3 @@
-
 /**
  *  @file    Manual_Event_Test.cpp
  *

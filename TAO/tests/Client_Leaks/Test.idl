@@ -1,4 +1,3 @@
-
 module Test
 {
   /// Forward declare the Process interface

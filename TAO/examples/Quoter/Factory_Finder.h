@@ -1,4 +1,3 @@
-
 /**
  *  @file    Factory_Finder.h
  *

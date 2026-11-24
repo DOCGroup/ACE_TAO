@@ -1,4 +1,3 @@
-
 /**
  *  @file    tests_svc_loader.cpp
  *

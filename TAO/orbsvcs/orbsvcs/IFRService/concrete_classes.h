@@ -1,4 +1,3 @@
-
 /**
  *  @file    concrete_classes.h
  *

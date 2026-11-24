@@ -1,4 +1,3 @@
-
 interface Simple_Server
 {
   string test_method (in string str);

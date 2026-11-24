@@ -1,4 +1,3 @@
-
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Naming/FaultTolerant/FT_PG_Object_Group_Storable.h"
 #include "orbsvcs/PortableGroup/PG_Object_Group_Storable.h"

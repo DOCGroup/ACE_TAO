@@ -1,4 +1,3 @@
-
 #ifndef STACK_RECURSION_CLIENT_TASK_H
 #define STACK_RECURSION_CLIENT_TASK_H
 #include /**/ "ace/pre.h"

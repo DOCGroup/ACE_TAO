@@ -1,4 +1,3 @@
-
 #include "MyInterfaceImpl.h"
 #include "TestS.h"
 #include "ace/Get_Opt.h"

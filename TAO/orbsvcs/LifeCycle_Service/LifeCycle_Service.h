@@ -1,4 +1,3 @@
-
 /**
  *  @file    LifeCycle_Service.h
  *

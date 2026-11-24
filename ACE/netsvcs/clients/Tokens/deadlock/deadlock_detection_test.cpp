@@ -1,4 +1,3 @@
-
 /**
  *  @file    deadlock_detection_test.cpp
  *

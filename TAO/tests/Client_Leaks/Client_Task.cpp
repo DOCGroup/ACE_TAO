@@ -1,4 +1,3 @@
-
 #include "Client_Task.h"
 
 Client_Task::Client_Task (Test::Process_Factory_ptr process_factory,

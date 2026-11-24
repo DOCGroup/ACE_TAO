@@ -1,4 +1,3 @@
-
 /**
  *  @file    nsdel.cpp
  *

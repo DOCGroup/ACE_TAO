@@ -1,4 +1,3 @@
-
 /**
  *  @file    CDR_Array_Test.cpp
  *

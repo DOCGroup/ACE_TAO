@@ -1,4 +1,3 @@
-
 #ifndef HELLO_H
 #define HELLO_H
 #include /**/ "ace/pre.h"

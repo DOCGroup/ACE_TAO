@@ -1,4 +1,3 @@
-
 interface Simple_Server
 {
   exception WrongProtocolType {};

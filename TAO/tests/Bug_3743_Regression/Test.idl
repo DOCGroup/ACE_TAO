@@ -1,4 +1,3 @@
-
 #include <orb.idl>
 
 #include <orbsvcs/CosEventChannelAdmin.idl>

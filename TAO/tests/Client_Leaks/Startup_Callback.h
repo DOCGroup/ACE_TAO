@@ -1,4 +1,3 @@
-
 #ifndef CLIENT_LEAKS_STARTUP_CALLBACK_H
 #define CLIENT_LEAKS_STARTUP_CALLBACK_H
 #include /**/ "ace/pre.h"

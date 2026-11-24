@@ -1,4 +1,3 @@
-
 /**
  *  @file    Thread_Attrs_Test.cpp
  *

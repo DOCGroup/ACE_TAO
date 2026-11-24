@@ -1,4 +1,3 @@
-
 /**
  *  @file    Task_Group_Test.cpp
  *

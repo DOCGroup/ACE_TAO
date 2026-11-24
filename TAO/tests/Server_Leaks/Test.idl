@@ -1,4 +1,3 @@
-
 module Test
 {
   /// An interface to communicate and shutdown a process

@@ -1,4 +1,3 @@
-
 #ifndef CLIENT_LEAKS_PROCESS_FACTORY_H
 #define CLIENT_LEAKS_PROCESS_FACTORY_H
 #include /**/ "ace/pre.h"
