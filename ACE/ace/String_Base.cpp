@@ -8,6 +8,7 @@
 #include <algorithm>
 
 #include <cstring>
+#include <limits>
 #include <memory>
 
 #if !defined (__ACE_INLINE__)
@@ -105,7 +106,19 @@ ACE_String_Base<ACE_CHAR_T>::set (const ACE_CHAR_T *s,
                             bool release)
 {
   // Case 1. Going from memory to more memory
-  size_type const new_buf_len = len + 1;
+  size_type new_buf_len {};
+  if (s != nullptr && len != 0 && release)
+    {
+      size_type const max_size = (std::numeric_limits<size_type>::max) ();
+      if (len == max_size
+          || len + 1 > max_size / sizeof (ACE_CHAR_T))
+        {
+          errno = ENOMEM;
+          return;
+        }
+      new_buf_len = len + 1;
+    }
+
   if (s != nullptr && len != 0 && release && this->buf_len_ < new_buf_len)
     {
       ACE_CHAR_T *temp {};
