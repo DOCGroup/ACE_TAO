@@ -15,9 +15,7 @@ ACEXML_Exception::ACEXML_Exception()
 {
 }
 
-ACEXML_Exception::~ACEXML_Exception()
-{
-}
+ACEXML_Exception::~ACEXML_Exception() = default;
 
 bool
 ACEXML_Exception::is_a (ACEXML_Char const *name)
