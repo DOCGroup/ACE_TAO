@@ -31,9 +31,7 @@ TAO_Persistent_IntId::TAO_Persistent_IntId (TAO_Persistent_IntId const &rhs)
   type_ = rhs.type_;
 }
 
-TAO_Persistent_IntId::~TAO_Persistent_IntId ()
-{
-}
+TAO_Persistent_IntId::~TAO_Persistent_IntId () = default;
 
 void
 TAO_Persistent_IntId::operator= (TAO_Persistent_IntId const &rhs)
@@ -67,9 +65,7 @@ TAO_Persistent_ExtId::TAO_Persistent_ExtId (TAO_Persistent_ExtId const &rhs)
   kind_ = rhs.kind_;
 }
 
-TAO_Persistent_ExtId::~TAO_Persistent_ExtId ()
-{
-}
+TAO_Persistent_ExtId::~TAO_Persistent_ExtId () = default;
 
 void
 TAO_Persistent_ExtId::operator= (TAO_Persistent_ExtId const &rhs)
@@ -139,9 +135,7 @@ TAO_Persistent_Index_IntId::TAO_Persistent_Index_IntId (TAO_Persistent_Index_Int
   hash_map_ = rhs.hash_map_;
 }
 
-TAO_Persistent_Index_IntId::~TAO_Persistent_Index_IntId ()
-{
-}
+TAO_Persistent_Index_IntId::~TAO_Persistent_Index_IntId () = default;
 
 void
 TAO_Persistent_Index_IntId::operator= (TAO_Persistent_Index_IntId const &rhs)
@@ -171,9 +165,7 @@ TAO_Persistent_Index_ExtId::TAO_Persistent_Index_ExtId (TAO_Persistent_Index_Ext
   poa_id_ = rhs.poa_id_;
 }
 
-TAO_Persistent_Index_ExtId::~TAO_Persistent_Index_ExtId ()
-{
-}
+TAO_Persistent_Index_ExtId::~TAO_Persistent_Index_ExtId () = default;
 
 void
 TAO_Persistent_Index_ExtId::operator= (TAO_Persistent_Index_ExtId const &rhs)

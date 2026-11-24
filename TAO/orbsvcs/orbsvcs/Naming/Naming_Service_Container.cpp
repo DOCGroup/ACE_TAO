@@ -24,9 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_NS_Node)
 
 template <class T>
-ACE_NS_Node<T>::~ACE_NS_Node ()
-{
-}
+ACE_NS_Node<T>::~ACE_NS_Node () = default;
 
 template <class T>
 ACE_NS_Node<T>::ACE_NS_Node (T const &i, ACE_NS_Node<T> *n)

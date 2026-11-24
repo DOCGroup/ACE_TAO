@@ -68,9 +68,7 @@ TAO_ExtId::TAO_ExtId (TAO_ExtId const &rhs)
 {
 }
 
-TAO_ExtId::~TAO_ExtId ()
-{
-}
+TAO_ExtId::~TAO_ExtId () = default;
 
 char const *
 TAO_ExtId::id ()

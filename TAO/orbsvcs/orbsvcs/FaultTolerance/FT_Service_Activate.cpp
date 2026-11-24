@@ -14,9 +14,7 @@ TAO_FT_Service_Activate::TAO_FT_Service_Activate ()
 {
 }
 
-TAO_FT_Service_Activate::~TAO_FT_Service_Activate ()
-{
-}
+TAO_FT_Service_Activate::~TAO_FT_Service_Activate () = default;
 
 TAO_Service_Callbacks *
 TAO_FT_Service_Activate::activate_services (TAO_ORB_Core *orb_core)
