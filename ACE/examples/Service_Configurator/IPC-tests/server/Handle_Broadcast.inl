@@ -5,9 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_Broadcast::~Handle_Broadcast ()
-{
-}
+Handle_Broadcast::~Handle_Broadcast () = default;
 
 ACE_INLINE
 Handle_Broadcast::Handle_Broadcast ()

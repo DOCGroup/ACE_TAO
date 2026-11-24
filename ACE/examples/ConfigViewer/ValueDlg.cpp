@@ -40,9 +40,7 @@ ValueDlg::ValueDlg(wxWindow* pParent, wxString const &Name, u_int Value)
   m_pCancel = new wxButton(this, wxID_CANCEL, "Cancel", wxPoint(160, 80));
 }
 
-ValueDlg::~ValueDlg()
-{
-}
+ValueDlg::~ValueDlg() = default;
 
 const wxString& ValueDlg::GetName()
 {

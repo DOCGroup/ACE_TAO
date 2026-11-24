@@ -4,9 +4,7 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_L_Pipe::~Handle_L_Pipe ()
-{
-}
+Handle_L_Pipe::~Handle_L_Pipe () = default;
 
 ACE_INLINE
 Handle_L_Pipe::Handle_L_Pipe ()

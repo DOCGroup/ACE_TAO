@@ -5,9 +5,7 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_L_Stream::~Handle_L_Stream ()
-{
-}
+Handle_L_Stream::~Handle_L_Stream () = default;
 
 ACE_INLINE
 Handle_L_Stream::Handle_L_Stream ()

@@ -20,9 +20,7 @@ ValueListCtrl::ValueListCtrl(wxWindow* parent, wxWindowID id, const wxPoint& pos
   InsertColumn(2, "Data");
 }
 
-ValueListCtrl::~ValueListCtrl()
-{
-}
+ValueListCtrl::~ValueListCtrl() = default;
 
 void ValueListCtrl::DisplaySection(const ACE_Configuration_Section_Key& Key)
 {
