@@ -248,7 +248,7 @@ CDR_Test<T, H>::checkval (int i)
   else
     {
       T v;
-      unsigned char* s = reinterpret_cast<unsigned char*> ((&v));
+      auto *s = reinterpret_cast<unsigned char*> ((&v));
       unsigned int j;
       for (j = 0; j < H::size (); ++j)
         {
@@ -271,7 +271,7 @@ CDR_Test<T, H>::checkval (int i)
 template<class T, class H> void
 CDR_Test<T, H>::ttoh (const T& t, char* s)
 {
-  const unsigned char *const p =
+  auto const * const p =
     reinterpret_cast<const unsigned char*> (&t);
 
   static char const digits[16] = {

@@ -28,11 +28,11 @@ test_duplicates (size_t count)
 
   ACE_Handle_Set handle_set;
 
-  u_int seed = (u_int) ACE_OS::time (nullptr);
+  auto seed = (u_int) ACE_OS::time (nullptr);
 
   for (size_t i = 0; i < count; ++i)
     {
-      size_t const handle = static_cast<size_t> (ACE_OS::rand_r (&seed) % ACE_Handle_Set::MAXSIZE);
+      auto const handle = static_cast<size_t> (ACE_OS::rand_r (&seed) % ACE_Handle_Set::MAXSIZE);
 
       if (ACE_ODD (handle))
         {

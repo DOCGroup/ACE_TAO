@@ -98,7 +98,7 @@ long max_connected_port = 0;
 ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
+  auto *remote_addr = reinterpret_cast<ACE_INET_Addr *> (arg);
 
   ACE_INET_Addr const server_addr (remote_addr->get_port_number (),
                              ACE_LOCALHOST,
@@ -192,7 +192,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
       ACE_INET_Addr addr (idx);
 
-      My_Accept_Handler *eh = new My_Accept_Handler (addr);
+      auto *eh = new My_Accept_Handler (addr);
 
       if ( ACE_Reactor::instance()->register_handler (
                                          eh,

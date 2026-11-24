@@ -201,10 +201,10 @@ short_stream ()
 
   for (i = 0; i < len; ++i)
     {
-      unsigned long const in_chunk =
+      auto const in_chunk =
         static_cast<unsigned long> (* (in_mb->rd_ptr () + i));
 
-      unsigned long const out_chunk =
+      auto const out_chunk =
         static_cast<unsigned long> (* (out_mb->rd_ptr () + i));
 
       if (in_chunk != out_chunk)
