@@ -3,20 +3,12 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
-  :  is_policy_list_initialized_ (false),
-     forward_from_(nullptr),
-     current_ (0),
-     last_ (0)
 {
   this->set (sz);
 }
 
 ACE_INLINE
 TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
-  :  is_policy_list_initialized_ (false),
-     forward_from_(nullptr),
-     current_ (0),
-     last_ (0)
 {
   this->set (mprofiles);
 }

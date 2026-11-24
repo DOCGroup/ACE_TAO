@@ -179,7 +179,7 @@ protected:
   friend class TAO_Profile;
   std::unique_ptr<CORBA::PolicyList> policy_list_;
 
-  CORBA::Boolean is_policy_list_initialized_;
+  CORBA::Boolean is_policy_list_initialized_ {};
 
   /// Mutex used to make sure that only one policy list
   /// is created.
@@ -208,16 +208,16 @@ private:
    * message. The actual profile that was forwarded will be
    * forward_from_->get_current_profile ().
    */
-  TAO_MProfile  *forward_from_;
+  TAO_MProfile  *forward_from_ {};
 
   /// Profiles whose reference counts are held by this MProfile.
   std::vector<TAO_Profile *> pfiles_;
 
   /// Points to the next profile to be used.  0 ... pfiles_.size ()
-  TAO_PHandle current_;
+  TAO_PHandle current_ {};
 
   /// Index plus 1 of last valid entry!  May be < pfiles_.size ().
-  TAO_PHandle last_;
+  TAO_PHandle last_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
