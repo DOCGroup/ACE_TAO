@@ -179,7 +179,7 @@ client (void *arg)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%t) running client\n")));
 
-  ACE_INET_Addr *connection_addr = static_cast<ACE_INET_Addr *> (arg);
+  auto *connection_addr = static_cast<ACE_INET_Addr *> (arg);
   CONNECTOR connector;
 
   int i;
