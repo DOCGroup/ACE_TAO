@@ -48,10 +48,6 @@ namespace TAO
     , idle_timeout_ (idle_timeout)
     , idle_scan_interval_ (idle_scan_interval)
     , idle_scanner_ (this)
-#if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
-    , purge_monitor_ (0)
-    , size_monitor_ (0)
-#endif /* TAO_HAS_MONITOR_POINTS==1 */
   {
     if (locked)
       {
