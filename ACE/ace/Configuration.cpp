@@ -216,8 +216,8 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
   bool rc = true;
   int sectionIndex = 0;
   ACE_TString sectionName;
-  ACE_Configuration *nonconst_this = const_cast<ACE_Configuration*> (this);
-  ACE_Configuration &nonconst_rhs  = const_cast<ACE_Configuration&> (rhs);
+  auto *nonconst_this = const_cast<ACE_Configuration*> (this);
+  auto &nonconst_rhs  = const_cast<ACE_Configuration&> (rhs);
 
   const ACE_Configuration_Section_Key& rhsRoot = rhs.root_section ();
   ACE_Configuration_Section_Key rhsSection;
@@ -1382,7 +1382,7 @@ ACE_Configuration_Heap::load_key (const ACE_Configuration_Section_Key& key,
                                   ACE_TString& name)
 {
   ACE_ASSERT (this->allocator_);
-  ACE_Configuration_Section_Key_Heap* pKey =
+  auto * pKey =
     dynamic_cast<ACE_Configuration_Section_Key_Heap*> (get_internal_key (key));
 
   if (!pKey)
@@ -1436,7 +1436,7 @@ ACE_Configuration_Heap::add_section (const ACE_Configuration_Section_Key& base,
   section += sub_section;
 
   // Add it to the base section
-  ACE_TCHAR* pers_name = static_cast<ACE_TCHAR *> (
+  auto * pers_name = static_cast<ACE_TCHAR *> (
     allocator_->malloc ((ACE_OS::strlen (sub_section) + 1) * sizeof (ACE_TCHAR)));
   ACE_OS::strcpy (pers_name, sub_section);
   ACE_Configuration_ExtId const SSExtId (pers_name);
@@ -1457,7 +1457,7 @@ ACE_Configuration_Heap::new_section (const ACE_TString& section,
 
   // Allocate memory for items to be stored in the table.
   size_t const section_len = section.length () + 1;
-  ACE_TCHAR *ptr = static_cast<ACE_TCHAR *> (
+  auto *ptr = static_cast<ACE_TCHAR *> (
     this->allocator_->malloc (section_len * sizeof (ACE_TCHAR)));
 
   int return_value = -1;
@@ -1761,7 +1761,7 @@ ACE_Configuration_Heap::enumerate_values (const ACE_Configuration_Section_Key& k
                                           VALUETYPE& type)
 {
   ACE_ASSERT (this->allocator_);
-  ACE_Configuration_Section_Key_Heap* pKey =
+  auto * pKey =
     dynamic_cast<ACE_Configuration_Section_Key_Heap*> (get_internal_key (key));
   if (!pKey)
   {
@@ -1818,7 +1818,7 @@ ACE_Configuration_Heap::enumerate_sections (const ACE_Configuration_Section_Key&
 {
   ACE_ASSERT (this->allocator_);
   // cast to a heap section key
-  ACE_Configuration_Section_Key_Heap* pKey =
+  auto * pKey =
     dynamic_cast<ACE_Configuration_Section_Key_Heap*> (get_internal_key (key));
   if (!pKey)
   {
@@ -1893,7 +1893,7 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
       // Free the old value
       entry->int_id_.free (allocator_.get ());
       // Allocate the new value in this heap
-      ACE_TCHAR* pers_value =
+      auto * pers_value =
         static_cast<ACE_TCHAR *> (
           allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
@@ -1903,11 +1903,11 @@ ACE_Configuration_Heap::set_string_value (const ACE_Configuration_Section_Key& k
   else
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name =
+      auto * pers_name =
         static_cast<ACE_TCHAR *> (
           allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_name, t_name);
-      ACE_TCHAR* pers_value =
+      auto * pers_value =
         static_cast<ACE_TCHAR *> (
           allocator_->malloc ((value.length () + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_value, value.fast_rep ());
@@ -1964,7 +1964,7 @@ ACE_Configuration_Heap::set_integer_value (const ACE_Configuration_Section_Key& 
   else
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name =
+      auto * pers_name =
         static_cast<ACE_TCHAR *> (
           allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_name, t_name);
@@ -2018,7 +2018,7 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
       // Free the old value
       entry->int_id_.free (allocator_.get ());
       // Allocate the new value in this heap
-      ACE_TCHAR* pers_value = static_cast<ACE_TCHAR *> (allocator_->malloc (length));
+      auto * pers_value = static_cast<ACE_TCHAR *> (allocator_->malloc (length));
       std::memcpy (pers_value, data, length);
       ACE_Configuration_Value_IntId const new_value_int (pers_value, length);
       entry->int_id_ = new_value_int;
@@ -2026,11 +2026,11 @@ ACE_Configuration_Heap::set_binary_value (const ACE_Configuration_Section_Key& k
   else
     {
       // it doesn't exist, bind it
-      ACE_TCHAR* pers_name =
+      auto * pers_name =
         static_cast<ACE_TCHAR *> (
           allocator_->malloc ((ACE_OS::strlen (t_name) + 1) * sizeof (ACE_TCHAR)));
       ACE_OS::strcpy (pers_name, t_name);
-      ACE_TCHAR* pers_value = static_cast<ACE_TCHAR *> (allocator_->malloc (length));
+      auto * pers_value = static_cast<ACE_TCHAR *> (allocator_->malloc (length));
       std::memcpy (pers_value, data, length);
       ACE_Configuration_ExtId const item_name_pers (pers_name);
       ACE_Configuration_Value_IntId const item_value (pers_value, length);
