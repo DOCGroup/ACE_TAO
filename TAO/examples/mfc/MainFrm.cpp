@@ -41,9 +41,7 @@ CMainFrame::CMainFrame()
   // TODO: add member initialization code here
 }
 
-CMainFrame::~CMainFrame()
-{
-}
+CMainFrame::~CMainFrame() = default;
 
 int CMainFrame::OnCreate(LPCREATESTRUCT lpCreateStruct)
 {

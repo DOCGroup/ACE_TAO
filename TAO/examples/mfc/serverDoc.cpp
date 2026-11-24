@@ -31,9 +31,7 @@ CServerDoc::CServerDoc()
   // TODO: add one-time construction code here
 }
 
-CServerDoc::~CServerDoc()
-{
-}
+CServerDoc::~CServerDoc() = default;
 
 BOOL CServerDoc::OnNewDocument()
 {
