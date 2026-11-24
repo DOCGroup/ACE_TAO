@@ -59,15 +59,15 @@ test_bind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the binds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
+  for (int const name_number : array)
     {
-      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", name_number);
       ACE_NS_WString const w_name (name);
 
-      ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", array[i]);
+      ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", name_number);
       ACE_NS_WString const w_value (value);
 
-      ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", array [i]);
+      ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", name_number);
       int const bind_result = ns_context.bind (w_name, w_value, type);
       ACE_TEST_ASSERT (bind_result != -1);
     }
@@ -98,15 +98,15 @@ test_rebind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the rebinds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
+  for (int const name_number : array)
     {
-      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", name_number);
       ACE_NS_WString const w_name (name);
 
-      ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", -array[i]);
+      ACE_OS::snprintf (value, BUFSIZ, "%s%d", "value", -name_number);
       ACE_NS_WString const w_value (value);
 
-      ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", -array[i]);
+      ACE_OS::snprintf (type, BUFSIZ, "%s%d", "type", -name_number);
       int const rebind = ns_context.rebind (w_name, w_value, type);
       ACE_TEST_ASSERT (rebind != -1);
     }
@@ -121,9 +121,9 @@ test_unbind (ACE_Naming_Context &ns_context)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the unbinds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
+  for (int const name_number : array)
     {
-      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", name_number);
       ACE_NS_WString const w_name (name);
       int const unbind = ns_context.unbind (w_name);
       ACE_TEST_ASSERT (unbind != -1);
@@ -142,20 +142,20 @@ test_find (ACE_Naming_Context &ns_context, int sign, int result)
   randomize (array, sizeof (array) / sizeof (array[0]));
 
   // do the finds
-  for (size_t i = 0; i < ACE_NS_MAX_ENTRIES; ++i)
+  for (int const name_number : array)
     {
       if (sign == 1)
         {
-          ACE_OS::snprintf (temp_val, BUFSIZ, "%s%d", "value", array[i]);
-          ACE_OS::snprintf (temp_type, BUFSIZ, "%s%d", "type", array[i]);
+          ACE_OS::snprintf (temp_val, BUFSIZ, "%s%d", "value", name_number);
+          ACE_OS::snprintf (temp_type, BUFSIZ, "%s%d", "type", name_number);
         }
       else
         {
-          ACE_OS::snprintf (temp_val, BUFSIZ, "%s%d", "value", -array[i]);
-          ACE_OS::snprintf (temp_type, BUFSIZ, "%s%d", "type", -array[i]);
+          ACE_OS::snprintf (temp_val, BUFSIZ, "%s%d", "value", -name_number);
+          ACE_OS::snprintf (temp_type, BUFSIZ, "%s%d", "type", -name_number);
         }
 
-      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", array[i]);
+      ACE_OS::snprintf (name, BUFSIZ, "%s%d", "name", name_number);
 
       ACE_NS_WString const w_name (name);
       ACE_NS_WString w_value;

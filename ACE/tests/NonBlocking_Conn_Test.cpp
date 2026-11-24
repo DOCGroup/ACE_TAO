@@ -177,15 +177,15 @@ test (ACE_Reactor_Impl *impl)
   std::vector<ACE_INET_Addr> addresses;
   addresses.reserve (nr_names);
 
-  for (size_t i = 0; i < nr_names; ++i)
+  for (char const *host : hosts)
     {
       addresses.emplace_back ();
-      if (addresses.back ().set (hosts[i]) != 0)
+      if (addresses.back ().set (host) != 0)
         {
           addresses.pop_back ();
           ACE_DEBUG ((LM_INFO,
                       ACE_TEXT ("%p\n"),
-                      ACE_TEXT_CHAR_TO_TCHAR (hosts[i])));
+                      ACE_TEXT_CHAR_TO_TCHAR (host)));
         }
     }
 

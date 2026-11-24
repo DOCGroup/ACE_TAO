@@ -273,9 +273,9 @@ Acceptor::Acceptor ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  for (size_t i = 0; i < MAX_RECEIVERS; ++i)
+  for (auto &receiver : this->list_receivers_)
     {
-      this->list_receivers_[i] = nullptr;
+      receiver = nullptr;
     }
 }
 
@@ -293,10 +293,10 @@ Acceptor::stop ()
 
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  for (size_t i = 0; i < MAX_RECEIVERS; ++i)
+  for (auto &receiver : this->list_receivers_)
     {
-      delete this->list_receivers_[i];
-      this->list_receivers_[i] =nullptr;
+      delete receiver;
+      receiver = nullptr;
     }
 }
 
@@ -682,9 +682,9 @@ Connector::Connector ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  for (size_t i = 0; i < MAX_SENDERS; ++i)
+  for (auto &sender : this->list_senders_)
     {
-      this->list_senders_[i] = nullptr;
+      sender = nullptr;
     }
 }
 
@@ -703,10 +703,10 @@ Connector::stop ()
 
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, this->mutex_);
 
-  for (size_t i = 0; i < MAX_SENDERS; ++i)
+  for (auto &sender : this->list_senders_)
     {
-      delete this->list_senders_[i];
-      this->list_senders_[i] =nullptr;
+      delete sender;
+      sender = nullptr;
     }
 }
 
