@@ -743,7 +743,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
 
   std::unique_ptr<struct IFREQ[]> p_ifs (ifs);
 
-  if (p_ifs.get() == 0)
+  if (!p_ifs)
     {
       ACE_OS::close (handle);
       errno = ENOMEM;
