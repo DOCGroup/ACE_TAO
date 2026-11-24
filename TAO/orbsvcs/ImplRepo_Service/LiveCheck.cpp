@@ -15,9 +15,7 @@ LiveListener::LiveListener (const char *server)
 {
 }
 
-LiveListener::~LiveListener ()
-{
-}
+LiveListener::~LiveListener () = default;
 
 const char *
 LiveListener::server () const
@@ -489,9 +487,7 @@ PingReceiver::PingReceiver (LiveEntry *entry, PortableServer::POA_ptr poa)
 {
 }
 
-PingReceiver::~PingReceiver ()
-{
-}
+PingReceiver::~PingReceiver () = default;
 
 void
 PingReceiver::cancel ()
