@@ -164,7 +164,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
           return nullptr;
         }
       ACE_TCHAR * p = buf_p;
-      size_t const len = static_cast<size_t> (start - str);
+      auto const len = static_cast<size_t> (start - str);
       std::memcpy (p, str, len * sizeof (ACE_TCHAR));
       p += len;
       if (temp != nullptr)
