@@ -40,6 +40,8 @@ namespace TAO
     class Util
     {
     public:
+      Util () = delete;
+
       /// Access Current.
       static TAO::SSLIOP::Current_ptr current (TAO_ORB_Core *orb_core);
     };

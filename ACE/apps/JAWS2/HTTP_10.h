@@ -55,6 +55,8 @@ private:
 class JAWS_HTTP_10_Helper
 {
 public:
+  JAWS_HTTP_10_Helper () = delete;
+
   /// Decode '%' escape codes in a URI.
   static char *HTTP_decode_string (char *path);
 };

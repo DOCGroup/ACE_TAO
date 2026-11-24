@@ -18,6 +18,8 @@ class HTTP_Config_Info;
 class HTTP_Config
 {
 public:
+  HTTP_Config () = delete;
+
   /// Access the Singleton.
   static HTTP_Config_Info *instance ();
 };

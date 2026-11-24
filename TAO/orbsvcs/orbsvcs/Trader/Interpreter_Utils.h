@@ -76,6 +76,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Sequence_Extracter_Base
 {
 public:
+  TAO_Sequence_Extracter_Base () = delete;
+
   /// Return the sequence element type for the sequence whose typecode
   /// is @c code.
   static CORBA::TCKind sequence_type (CORBA::TypeCode* code);

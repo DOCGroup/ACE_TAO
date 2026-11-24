@@ -83,6 +83,8 @@ extern int yylex ();
 class Lex_String_Input
 {
 public:
+  Lex_String_Input () = delete;
+
   /// Reset the lex input.
   static void reset (char const *input_string);
 

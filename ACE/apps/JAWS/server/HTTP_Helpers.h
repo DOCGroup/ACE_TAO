@@ -21,6 +21,8 @@
 class HTTP_Helper
 {
 public:
+  HTTP_Helper () = delete;
+
   /// Convert and HTTP-date into a time_t
   static time_t HTTP_mktime (const char *httpdate);
 
@@ -62,6 +64,8 @@ private:
 class HTTP_Status_Code
 {
 public:
+  HTTP_Status_Code () = delete;
+
   /// Singleton access point.
   static const char **instance ();
 

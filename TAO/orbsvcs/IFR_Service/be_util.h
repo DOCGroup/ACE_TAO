@@ -19,6 +19,8 @@ class AST_Generator;
 class be_util
 {
 public:
+  be_util () = delete;
+
   /// Special BE arg call factored out of DRV_args.
   static TAO_IFR_BE_Export void
   prep_be_arg (std::string const& s);

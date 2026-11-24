@@ -76,6 +76,8 @@ extern int yylex ();
 class TAO_Lex_String_Input
 {
 public:
+  TAO_Lex_String_Input () = delete;
+
   /// Reset the lex input.
   static void reset (char* input_string);
 

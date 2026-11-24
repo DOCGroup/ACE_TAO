@@ -31,6 +31,8 @@ public:
 class Multicast_Manager
 {
 public:
+  Multicast_Manager () = delete;
+
   static void add_host (const char *host_name);
   static void checkoff_host (in_addr host_addr);
   static int get_next_host_addr (in_addr &host_addr);

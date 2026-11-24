@@ -8,6 +8,8 @@ class RecordingDevice;
 class RecordingDeviceFactory
 {
 public:
+  RecordingDeviceFactory () = delete;
+
   /// Instantiate the appropriate RecordingDevice implementation
   static RecordingDevice *instantiate (int argc, ACE_TCHAR *argv[]);
 };

@@ -11,6 +11,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Svc_Utils_Export TAO_Daemon_Utility
 {
 public:
+  TAO_Daemon_Utility () = delete;
+
   static void check_for_daemon (int &argc, ACE_TCHAR* argv[]);
 };
 
