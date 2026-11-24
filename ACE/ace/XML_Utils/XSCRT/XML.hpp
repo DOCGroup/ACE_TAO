@@ -61,13 +61,13 @@ namespace XSCRT
     public:
       template <typename C>
       explicit string (std::basic_string<C> const &s)
-        : s_ (XSCRT::XML::transcode<C> (s), Deleter{std::is_same<C, char>::value})
+        : s_ (XSCRT::XML::transcode<C> (s), Deleter{std::is_same_v<C, char>})
       {
       }
 
       template <typename C>
       explicit string (C const *s)
-        : s_ (XSCRT::XML::transcode<C> (s), Deleter{std::is_same<C, char>::value})
+        : s_ (XSCRT::XML::transcode<C> (s), Deleter{std::is_same_v<C, char>})
       {
       }
 

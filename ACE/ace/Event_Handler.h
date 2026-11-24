@@ -17,6 +17,8 @@
 #include "ace/os_include/os_signal.h"
 #include "ace/OS_NS_Thread.h"
 #include <atomic>
+#include <type_traits>
+#include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -366,8 +368,7 @@ namespace ACE
   /// ACE_Event_Handler_var v =
   ///   ACE::make_event_handler<Simple_Handler> (reactor.get());
   template<class T,
-           typename = typename
-             std::enable_if<std::is_base_of<ACE_Event_Handler, T>::value>::type,
+           typename = std::enable_if_t<std::is_base_of_v<ACE_Event_Handler, T>>,
            typename ...Args> inline
   ACE_Event_Handler_var make_event_handler (Args&& ...args)
   {
