@@ -697,7 +697,6 @@ HTTP_Request::path (const char *uri_string)
             {
               std::string const username_string (username,
                                                  static_cast<size_t> (file_name - username));
-              path = username_string;
 #if !defined (ACE_WIN32) && !defined (VXWORKS)
               char pw_buf[BUFSIZ];
               struct passwd pw_struct;
@@ -712,6 +711,8 @@ HTTP_Request::path (const char *uri_string)
                 return nullptr;
               }
               path = pw_struct.pw_dir;
+#else
+              path = username_string;
 #endif /* NOT ACE_WIN32 AND NOT VXWORKS */
             }
 
