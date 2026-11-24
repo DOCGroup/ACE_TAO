@@ -21,7 +21,6 @@ TAO_Condition<MUTEX>::TAO_Condition (MUTEX &m)
 
 template <class MUTEX>
 TAO_Condition<MUTEX>::TAO_Condition ()
-    : mutex_ (nullptr)
 {
   // @todo: Need to add the allocatore here..
   this->owned_mutex_ = std::make_unique<MUTEX> ();
