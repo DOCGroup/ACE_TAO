@@ -142,7 +142,7 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
 
         // Reduce the echo count by what was received; if not there, send
         // more data and await more echo.
-        size_t ubc = (size_t)bc;
+        auto ubc = (size_t)bc;
         if (ubc <= this->echo_cnt_)
         {
           this->echo_cnt_ -= ubc;
@@ -217,7 +217,7 @@ ClientSvcHandler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
                                                                              mask);
     }
   this->shutdown ();
-  ClientSvcHandler *p = const_cast<ClientSvcHandler *>(this);
+  auto *p = const_cast<ClientSvcHandler *>(this);
   ACE_Connector<ClientSvcHandler, ACE_SOCK_CONNECTOR>
     connector (this->reactor (), ACE_NONBLOCK);
   connector.connect (p, this->server_addr_);
@@ -338,7 +338,7 @@ event_loop(void *arg)
 
   disable_signal (SIGPIPE, SIGPIPE);
 
-  ACE_Reactor *reactor = static_cast<ACE_Reactor*>(arg);
+  auto *reactor = static_cast<ACE_Reactor*>(arg);
   int const s = reactor->run_reactor_event_loop();
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%t: reactor loop done; status %d\n"), s));
@@ -384,7 +384,7 @@ int run_main(int, ACE_TCHAR *[])
   long i;
   for (i = 0; i < NrClients; ++i)
     {
-      ClientSvcHandler *c = new ClientSvcHandler (server_addr, i % 4);
+      auto *c = new ClientSvcHandler (server_addr, i % 4);
       connector.connect(c, server_addr);
     }
 

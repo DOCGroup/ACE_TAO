@@ -107,8 +107,8 @@ int singleton_test ()
     void * const foo = dll.symbol (ACE_TEXT ("get_based_pointer_repository_instance"));
 
     // Cast the void* to function* with a long as intermediate.
-    ptrdiff_t const tmp = reinterpret_cast<ptrdiff_t> (foo);
-    Get_Bp_Repository_Inst const get_bp_repository_inst =
+    auto const tmp = reinterpret_cast<ptrdiff_t> (foo);
+    auto const get_bp_repository_inst =
        reinterpret_cast<Get_Bp_Repository_Inst> (tmp);
     if (get_bp_repository_inst == nullptr)
       {
@@ -304,9 +304,9 @@ mmap_remap_test()
     // sort pools into base address order
     for (i= 0; i<2; ++i)
       {
-        uintptr_t const current_address =
+        auto const current_address =
           reinterpret_cast<uintptr_t> (pool_base[i]);
-        uintptr_t const next_address =
+        auto const next_address =
           reinterpret_cast<uintptr_t> (pool_base[i + 1]);
 
         if (current_address < next_address)
@@ -327,14 +327,14 @@ mmap_remap_test()
     //
     // Calculate maximum space between base addresses
 
-    uintptr_t const first_address =
+    auto const first_address =
       reinterpret_cast<uintptr_t> (pool_base[0]);
-    uintptr_t const second_address =
+    auto const second_address =
       reinterpret_cast<uintptr_t> (pool_base[1]);
-    uintptr_t const third_address =
+    auto const third_address =
       reinterpret_cast<uintptr_t> (pool_base[2]);
-    size_t size = static_cast<size_t> (first_address - second_address);
-    size_t const tmpsize = static_cast<size_t> (second_address - third_address);
+    auto size = static_cast<size_t> (first_address - second_address);
+    auto const tmpsize = static_cast<size_t> (second_address - third_address);
     size= (size < tmpsize) ? tmpsize : size;
 
     // force pool to move
