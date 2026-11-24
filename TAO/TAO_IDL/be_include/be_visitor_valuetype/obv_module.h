@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    obv_module.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_VALUETYPE_OBV_MODULE_H_
 #define _BE_VISITOR_VALUETYPE_OBV_MODULE_H_

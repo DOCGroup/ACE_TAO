@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_predefined_type.h
  *
@@ -8,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_PREDEFINED_TYPE_H
 #define _BE_PREDEFINED_TYPE_H

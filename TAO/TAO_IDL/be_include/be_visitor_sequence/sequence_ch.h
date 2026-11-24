@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    sequence_ch.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_SEQUENCE_SEQUENCE_CH_H_
 #define _BE_VISITOR_SEQUENCE_SEQUENCE_CH_H_

@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    Monitor_Control_export.h
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 // Definition for Win32 Export directives.
 // This file is generated automatically by generate_export_file.pl

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    public_ci.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_UNION_BRANCI_PUBLIC_CI_H_
 #define _BE_VISITOR_UNION_BRANCI_PUBLIC_CI_H_

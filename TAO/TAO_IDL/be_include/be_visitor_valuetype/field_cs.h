@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    field_cs.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_visitor_union_branch/public_ci.h
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_VALUETYPE_FIELD_CS_H_
 #define _BE_VISITOR_VALUETYPE_FIELD_CS_H_

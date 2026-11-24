@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_decl.cpp
  *
@@ -8,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "be_decl.h"
 #include "be_scope.h"
@@ -758,7 +756,6 @@ be_decl::ami4ccm_ex_idl_gen (bool val)
   this->ami4ccm_ex_idl_gen_ = val;
 }
 
-//==========================================
 
 int
 be_decl::accept (be_visitor *visitor)

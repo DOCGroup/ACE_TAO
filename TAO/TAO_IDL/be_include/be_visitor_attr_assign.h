@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_visitor_attr_assign.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef BE_VISITOR_ATTR_ASSIGN_H
 #define BE_VISITOR_ATTR_ASSIGN_H

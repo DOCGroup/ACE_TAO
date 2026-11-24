@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    ami_handler_reply_stub_operation_cs.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu>
  */
-//=============================================================================
 
 #include "operation.h"
 

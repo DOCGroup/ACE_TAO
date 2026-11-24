@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    ast_visitor_reifying.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_AST_VISITOR_REIFYING_H
 #define TAO_AST_VISITOR_REIFYING_H

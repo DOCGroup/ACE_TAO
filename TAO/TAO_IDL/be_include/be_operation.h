@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_operation.h
  *
@@ -8,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef BE_OPERATION_H
 #define BE_OPERATION_H

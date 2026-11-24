@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_valuetype.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
 
 #include "be_valuetype.h"
 #include "be_visitor.h"

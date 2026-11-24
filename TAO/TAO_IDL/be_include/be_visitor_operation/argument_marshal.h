@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    argument_marshal.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_
 #define _BE_VISITOR_OPERATION_ARGUMENT_MARSHAL_H_

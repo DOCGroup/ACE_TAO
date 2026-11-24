@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    valuetype_obv_ci.cpp
  *
@@ -9,7 +8,6 @@
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  *  @author based on interface_ch.cpp from Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "valuetype.h"
 

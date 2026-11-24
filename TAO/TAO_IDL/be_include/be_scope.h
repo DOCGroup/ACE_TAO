@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_scope.h
  *
@@ -7,7 +6,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems Int.
  *  @author and Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef TAO_BE_SCOPE_H
 #define TAO_BE_SCOPE_H

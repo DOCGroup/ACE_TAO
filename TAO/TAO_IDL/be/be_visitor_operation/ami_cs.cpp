@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    ami_cs.cpp
  *
@@ -7,7 +6,6 @@
  *  @author Aniruddha Gokhale
  *  @author Alexander Babu Arulanthu <alex@cs.wustl.edu> Michael Kircher
  */
-//=============================================================================
 
 #include "operation.h"
 

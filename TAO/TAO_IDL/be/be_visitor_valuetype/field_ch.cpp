@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    field_ch.cpp
  *
@@ -8,7 +7,6 @@
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  *   derived from be_visitor_union_branch/public_ch.cpp
  */
-//=============================================================================
 
 #include "valuetype.h"
 

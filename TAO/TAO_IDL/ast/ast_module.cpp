@@ -319,7 +319,6 @@ AST_Module::special_lookup (UTL_ScopedName *e,
   return this->look_in_prev_mods (e, full_def_only, final_parent_decl);
 }
 
-//================================================
 
 AST_PredefinedType *
 AST_Module::fe_add_predefined_type (AST_PredefinedType *t)

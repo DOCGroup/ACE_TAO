@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    home_svs.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "home.h"
 
@@ -410,7 +408,6 @@ be_visitor_home_svs::gen_entrypoint ()
       << "}";
 }
 
-//=======================================================
 
 Home_Op_Attr_Generator::Home_Op_Attr_Generator (
     be_visitor_scope *visitor)
@@ -426,7 +423,6 @@ Home_Op_Attr_Generator::emit (be_interface * /* derived_interface */,
   return visitor_->visit_scope (base_interface);
 }
 
-// ==========================================================
 
 be_visitor_home_attr_set::be_visitor_home_attr_set (
       be_visitor_context *ctx)

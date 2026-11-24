@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_valuetype_fwd.h
  *
@@ -9,7 +8,6 @@
  *  @author Aniruddha Gokhale
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
 
 #ifndef BE_VALUETYPE_FWD_H
 #define BE_VALUETYPE_FWD_H

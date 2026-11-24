@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    field_cdr_cs.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_visitor_field/cdr_op_cs.cpp
  */
-//=============================================================================
 
 #include "valuetype.h"
 

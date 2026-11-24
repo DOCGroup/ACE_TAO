@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    executor_ex_idl.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_EXECUTOR_EX_IDL_H_
 #define _BE_COMPONENT_EXECUTOR_EX_IDL_H_

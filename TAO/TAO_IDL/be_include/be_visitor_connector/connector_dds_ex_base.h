@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    connector_dds_ex_base.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_CONNECTOR_CONNECTOR_DDS_EX_BASE_H_
 #define _BE_CONNECTOR_CONNECTOR_DDS_EX_BASE_H_

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    structure_fwd_ch.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_INTERFACE_STRUCTURE_FWD_CH_H_
 #define _BE_INTERFACE_STRUCTURE_FWD_CH_H_

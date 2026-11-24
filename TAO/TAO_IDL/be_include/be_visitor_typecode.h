@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_visitor_typecode.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_TYPECODE_H
 #define TAO_BE_VISITOR_TYPECODE_H

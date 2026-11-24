@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    servant_svs.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_SERVANT_SVS_H_
 #define _BE_COMPONENT_SERVANT_SVS_H_
@@ -54,7 +52,6 @@ private:
   be_interface *op_scope_ {};
 };
 
-// ======================================================
 
 class be_visitor_obv_factory_reg
   : public be_visitor_component_scope
@@ -76,7 +73,6 @@ private:
   void gen_obv_factory_registration (AST_Type *t);
 };
 
-// ======================================================
 
 class be_visitor_attr_set : public be_visitor_component_scope
 {
@@ -97,7 +93,6 @@ public:
   int visit_component_scope (be_component *node);
 };
 
-// ======================================================
 
 class be_visitor_facet_executor_block
   : public be_visitor_component_scope
@@ -114,7 +109,6 @@ public:
   int visit_provides (be_provides *node) override;
 };
 
-// ======================================================
 
 class be_visitor_connect_block
   : public be_visitor_component_scope
@@ -131,7 +125,6 @@ public:
   int visit_uses (be_uses *node) override;
 };
 
-// ======================================================
 
 class be_visitor_disconnect_block
   : public be_visitor_component_scope
@@ -148,7 +141,6 @@ public:
   int visit_uses (be_uses *node) override;
 };
 
-// ======================================================
 
 class be_visitor_receptacle_desc
   : public be_visitor_component_scope
@@ -170,7 +162,6 @@ private:
   be_component *comp_;
 };
 
-// ======================================================
 
 class be_visitor_subscribe_block
   : public be_visitor_component_scope
@@ -187,7 +178,6 @@ public:
   int visit_publishes (be_publishes *node) override;
 };
 
-// ======================================================
 
 class be_visitor_unsubscribe_block
   : public be_visitor_component_scope
@@ -204,7 +194,6 @@ public:
   int visit_publishes (be_publishes *node) override;
 };
 
-// ======================================================
 
 class be_visitor_event_source_desc
   : public be_visitor_component_scope
@@ -224,7 +213,6 @@ private:
   ACE_CDR::ULong slot_ {};
 };
 
-// ======================================================
 
 class be_visitor_connect_consumer_block
   : public be_visitor_component_scope
@@ -241,7 +229,6 @@ public:
   int visit_emits (be_emits *node) override;
 };
 
-// ======================================================
 
 class be_visitor_disconnect_consumer_block
   : public be_visitor_component_scope
@@ -258,7 +245,6 @@ public:
   int visit_emits (be_emits *node) override;
 };
 
-// ======================================================
 
 class be_visitor_emitter_desc
   : public be_visitor_component_scope
@@ -278,7 +264,6 @@ private:
   ACE_CDR::ULong slot_ {};
 };
 
-// ======================================================
 
 class be_visitor_populate_port_tables
   : public be_visitor_component_scope
@@ -297,7 +282,6 @@ public:
   int visit_consumes (be_consumes *node) override;
 };
 
-// ======================================================
 
 /// Worker class passed to traverse_inheritance_graph(),
 /// collects supported operations and attributes.

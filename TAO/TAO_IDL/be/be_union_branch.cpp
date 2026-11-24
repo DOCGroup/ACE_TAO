@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_union_branch.cpp
  *
@@ -8,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "be_union_branch.h"
 #include "be_union.h"

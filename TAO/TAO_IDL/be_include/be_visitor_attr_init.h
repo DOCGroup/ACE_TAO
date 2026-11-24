@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_visitor_attr_init.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Johnny Willemsen
  */
-//=============================================================================
 
 #ifndef BE_VISITOR_ATTR_INIT_H
 #define BE_VISITOR_ATTR_INIT_H

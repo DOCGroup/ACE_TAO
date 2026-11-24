@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    typecode_defn.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_
 #define _BE_VISITOR_TYPECODE_TYPECODE_DEFN_H_

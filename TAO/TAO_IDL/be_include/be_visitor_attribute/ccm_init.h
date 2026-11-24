@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    ccm_init.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef BE_VISITOR_ATTRIBUTE_CCM_INIT_H
 #define BE_VISITOR_ATTRIBUTE_CCM_INIT_H

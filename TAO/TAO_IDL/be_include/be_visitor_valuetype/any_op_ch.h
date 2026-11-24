@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    any_op_ch.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _BE_VALUETYPE_ANY_OP_CH_H_
 #define _BE_VALUETYPE_ANY_OP_CH_H_

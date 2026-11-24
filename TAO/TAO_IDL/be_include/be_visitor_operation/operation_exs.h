@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    operation_exs.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_OPERATION_EXS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_EXS_H_

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    cdr_op_cs.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_INTERFACE_CDR_OP_CS_H_
 #define _BE_VISITOR_INTERFACE_CDR_OP_CS_H_

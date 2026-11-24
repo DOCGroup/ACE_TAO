@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    exceptlist_ss.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Ossama Othman
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_EXCEPTIONLIST_SS_H_
 #define _BE_VISITOR_OPERATION_EXCEPTIONLIST_SS_H_

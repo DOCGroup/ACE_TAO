@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    cdr_op_ch.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru> base on code from Torsten Kuepper based on code from  Aniruddha Gokhale & Carlos O'Ryan (cdr_op_ci.cpp)
  */
-//=============================================================================
 
 #include "valuetype_fwd.h"
 

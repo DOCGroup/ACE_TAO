@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    operation_svs.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "operation.h"
 #include "be_visitor_operation/operation_svs.h"

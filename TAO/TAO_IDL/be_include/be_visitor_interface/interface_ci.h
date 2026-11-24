@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    interface_ci.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_INTERFACE_INTERFACE_CI_H_
 #define _BE_INTERFACE_INTERFACE_CI_H_

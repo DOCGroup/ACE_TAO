@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    executor_private_exh.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_EXECUTOR_PRIVATE_EXH_H_
 #define _BE_COMPONENT_EXECUTOR_PRIVATE_EXH_H_

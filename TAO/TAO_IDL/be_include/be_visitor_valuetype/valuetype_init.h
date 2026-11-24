@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    valuetype_init.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
-//=============================================================================
 
 #ifndef _BE_VALUETYPE_VALUETYPE_INIT_H_
 #define _BE_VALUETYPE_VALUETYPE_INIT_H_

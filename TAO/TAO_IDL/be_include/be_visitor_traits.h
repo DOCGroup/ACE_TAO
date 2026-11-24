@@ -1,4 +1,3 @@
-//=============================================================================
 /**
 *  @file   be_visitor_traits.h
 *
@@ -8,7 +7,6 @@
 *
 *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
 */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_TRAITS_H
 #define TAO_BE_VISITOR_TRAITS_H

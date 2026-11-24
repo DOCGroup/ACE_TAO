@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    executor_exs.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_EXECUTOR_EXS_H_
 #define _BE_COMPONENT_EXECUTOR_EXS_H_
@@ -40,7 +38,6 @@ private:
   const char *your_code_here_ {"/* Your code here. */"};
 };
 
-// =============================================
 
 /// Worker class passed to traverse_inheritance_graph(),
 /// generates code to initialize attribute members in

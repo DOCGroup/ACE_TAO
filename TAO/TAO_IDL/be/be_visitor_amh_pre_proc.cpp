@@ -9,7 +9,6 @@
 *  @author Mayur Deshpande <mayur@ics.uci.edu>
 *  @author Carlos O'Ryan   <coryan@uci.edu>
 */
-//=============================================================================
 
 #include "be_visitor_amh_pre_proc.h"
 #include "be_visitor_context.h"

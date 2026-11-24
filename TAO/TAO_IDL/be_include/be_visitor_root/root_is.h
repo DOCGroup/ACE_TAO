@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    root_is.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ROOT_ROOT_IS_H_
 #define _BE_VISITOR_ROOT_ROOT_IS_H_

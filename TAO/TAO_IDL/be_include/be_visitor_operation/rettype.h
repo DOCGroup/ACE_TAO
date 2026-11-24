@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    rettype.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_RETTYPE_H_
 #define _BE_VISITOR_OPERATION_RETTYPE_H_

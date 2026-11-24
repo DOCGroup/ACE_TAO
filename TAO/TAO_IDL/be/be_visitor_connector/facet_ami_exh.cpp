@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    facet_ami_exh.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "connector.h"
 
@@ -383,7 +381,6 @@ be_visitor_facet_ami_exh::gen_facet_executor_class ()
 
   return 0;
 }
-// ==================================================
 
 Facet_AMI_ExecH_Op_Attr_Generator::Facet_AMI_ExecH_Op_Attr_Generator (
       be_visitor_scope * visitor)

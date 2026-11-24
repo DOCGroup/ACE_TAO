@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    cdr_op_cs.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ARRAY_CDR_OP_CS_H_
 #define _BE_VISITOR_ARRAY_CDR_OP_CS_H_

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    native_ch.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Johnny Willemsen
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_NATIVE_NATIVE_CH_H_
 #define _BE_VISITOR_NATIVE_NATIVE_CH_H_

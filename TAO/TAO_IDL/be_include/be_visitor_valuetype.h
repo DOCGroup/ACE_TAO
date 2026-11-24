@@ -1,10 +1,8 @@
-//=============================================================================
 /**
  *  @file    be_visitor_valuetype.h
  *
  *  Concrete visitor for the Valuetype class
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_VALUETYPE_H
 #define TAO_BE_VISITOR_VALUETYPE_H

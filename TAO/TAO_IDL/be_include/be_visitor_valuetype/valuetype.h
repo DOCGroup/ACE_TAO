@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    valuetype.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on interface.h from Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VALUETYPE_VALUETYPE_H_
 #define _BE_VALUETYPE_VALUETYPE_H_

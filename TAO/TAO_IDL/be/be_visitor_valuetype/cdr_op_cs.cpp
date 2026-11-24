@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    cdr_op_cs.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru> based on code from Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "valuetype.h"
 

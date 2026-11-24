@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_visitor_structure_fwd.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_STRUCTURE_FWD_H
 #define TAO_BE_VISITOR_STRUCTURE_FWD_H

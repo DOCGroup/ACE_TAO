@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    operation_ch.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_OPERATION_CH_H_
 #define _BE_VISITOR_OPERATION_OPERATION_CH_H_

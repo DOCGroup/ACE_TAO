@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_visitor_null_return_value.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef BE_VISITOR_NULL_RETURN_VALUE_H
 #define BE_VISITOR_NULL_RETURN_VALUE_H

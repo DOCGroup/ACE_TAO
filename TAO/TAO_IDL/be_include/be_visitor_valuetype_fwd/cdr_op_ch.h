@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    cdr_op_ch.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru> based on code from Torsten Kuepper based on code from Aniruddha Gokhale & Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef BE_VISITOR_VALUETYPE_FWD_CDR_OP_CH_H
 #define BE_VISITOR_VALUETYPE_FWD_CDR_OP_CH_H

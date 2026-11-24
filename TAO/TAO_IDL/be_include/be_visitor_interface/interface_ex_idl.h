@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    interface_ex_idl.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef _BE_INTERFACE_INTERFACE_EX_IDL_H_
 #define _BE_INTERFACE_INTERFACE_EX_IDL_H_

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    ast_visitor_tmpl_module_inst.h
  *
@@ -9,7 +8,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_AST_VISITOR_TMPL_MODULE_INST_H
 #define TAO_AST_VISITOR_TMPL_MODULE_INST_H

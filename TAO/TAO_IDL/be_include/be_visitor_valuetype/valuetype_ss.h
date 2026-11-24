@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    valuetype_ss.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_VALUETYPE_VALUETYPE_SS_H_
 #define _BE_VALUETYPE_VALUETYPE_SS_H_

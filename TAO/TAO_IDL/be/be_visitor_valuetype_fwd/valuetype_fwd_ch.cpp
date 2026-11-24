@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    valuetype_fwd_ch.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru> based on code from  Torsten Kuepper based on code from Aniruddha Gokhale (interface_fwd_ch.cpp)
  */
-//=============================================================================
 
 #include "valuetype_fwd.h"
 

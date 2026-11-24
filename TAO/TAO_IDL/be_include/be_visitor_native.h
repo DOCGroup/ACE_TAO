@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_visitor_native.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Johnny Willemsen
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_NATIVE_H
 #define TAO_BE_VISITOR_NATIVE_H

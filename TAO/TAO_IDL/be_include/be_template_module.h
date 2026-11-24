@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_template_module.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_BE_TEMPLATE_MODULE_H
 #define TAO_BE_TEMPLATE_MODULE_H

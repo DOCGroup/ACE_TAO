@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    Latency_Query_Client.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@isis-server.isis.vanderbilt.edu>
  */
-//=============================================================================
 
 #if !defined (LATENCY_QUERY_CLIENT_H)
 #define LATENCY_QUERY_CLIENT_H

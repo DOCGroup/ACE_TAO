@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_null_return_emitter.cpp
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "be_null_return_emitter.h"
 #include "be_visitor_null_return_value.h"

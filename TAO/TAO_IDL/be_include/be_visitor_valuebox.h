@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_visitor_valuebox.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Gary Maxey
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_VALUEBOX_H
 #define TAO_BE_VISITOR_VALUEBOX_H

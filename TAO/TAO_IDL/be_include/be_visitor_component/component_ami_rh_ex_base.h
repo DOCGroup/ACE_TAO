@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    component_ami_rh_ex_base.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_AMI_RH_EX_BASE_H_
 #define _BE_COMPONENT_AMI_RH_EX_BASE_H_
@@ -46,7 +44,6 @@ protected:
   std::string base_class_name_;
 };
 
-// ======================================================
 
 /// Worker class passed to traverse_inheritance_graph(),
 /// collects operations and attributes.

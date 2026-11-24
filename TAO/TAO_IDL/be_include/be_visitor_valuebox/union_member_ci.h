@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    union_member_ci.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Gary Maxey
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_VALUEBOX_UNION_MEMBER_CI_H_
 #define _BE_VISITOR_VALUEBOX_UNION_MEMBER_CI_H_

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    component_svh.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_COMPONENT_SVH_H_
 #define _BE_COMPONENT_COMPONENT_SVH_H_

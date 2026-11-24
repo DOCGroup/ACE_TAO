@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    ifr_removing_visitor.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IFR_REMOVING_VISITOR_H
 #define TAO_IFR_REMOVING_VISITOR_H

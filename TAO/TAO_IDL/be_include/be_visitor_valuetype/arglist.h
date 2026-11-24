@@ -1,11 +1,9 @@
-//=============================================================================
 /**
  *  @file    arglist.h
  *
  *  Visitor for generating code for IDL (valuetype) operations.
  *  This generates the operation signature.
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OBV_OPERATION_ARGLIST_H_
 #define _BE_VISITOR_OBV_OPERATION_ARGLIST_H_

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_visitor_decl.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_DECL_H
 #define TAO_BE_VISITOR_DECL_H

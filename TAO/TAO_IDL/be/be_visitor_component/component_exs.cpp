@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    component_exs.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "component.h"
 
@@ -125,7 +123,6 @@ be_visitor_component_exs::visit_component (be_component *node)
   return 0;
 }
 
-// ==================================================
 
 Component_Exec_Op_Attr_Generator::Component_Exec_Op_Attr_Generator (
       be_visitor_scope * visitor)

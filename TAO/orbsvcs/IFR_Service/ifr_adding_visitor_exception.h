@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    ifr_adding_visitor_exception.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IFR_ADDING_VISITOR_EXCEPTION_H
 #define TAO_IFR_ADDING_VISITOR_EXCEPTION_H

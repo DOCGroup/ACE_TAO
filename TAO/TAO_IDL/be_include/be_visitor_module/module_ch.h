@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    module_ch.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_MODULE_MODULE_CH_H_
 #define _BE_VISITOR_MODULE_MODULE_CH_H_

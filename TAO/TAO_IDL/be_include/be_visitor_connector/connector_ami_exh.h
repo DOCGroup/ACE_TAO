@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    connector_ami_exh.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_CONNECTOR_CONNECTOR_AMI_EXH_H_
 #define _BE_CONNECTOR_CONNECTOR_AMI_EXH_H_

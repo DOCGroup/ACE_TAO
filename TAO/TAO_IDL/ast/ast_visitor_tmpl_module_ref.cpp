@@ -3,7 +3,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "ast_visitor_tmpl_module_ref.h"
 #include "ast_visitor_context.h"

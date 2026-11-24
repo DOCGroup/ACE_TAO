@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_root.h
  *
@@ -7,7 +6,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef TAO_BE_ROOT_H
 #define TAO_BE_ROOT_H

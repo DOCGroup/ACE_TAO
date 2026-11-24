@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_visitor_context.h
  *
@@ -10,7 +9,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_CONTEXT_H
 #define TAO_BE_VISITOR_CONTEXT_H

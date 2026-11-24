@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_null_return_emitter.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef TAO_BE_NULL_RETURN_EMITTER_H
 #define TAO_BE_NULL_RETURN_EMITTER_H

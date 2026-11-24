@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_helper.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
  */
-//=============================================================================
 
 #include "be_helper.h"
 #include "be_codegen.h"

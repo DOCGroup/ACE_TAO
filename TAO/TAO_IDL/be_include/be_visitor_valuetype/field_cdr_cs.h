@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    field_cdr_cs.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> derived from be_visitor_field/cdr_op_cs.h
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_VALUETYPE_FIELD_CDR_CS_H_
 #define _BE_VISITOR_VALUETYPE_FIELD_CDR_CS_H_

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    executor_exs.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "component.h"
 
@@ -387,7 +385,6 @@ be_visitor_executor_exs::visit_consumes (be_consumes *node)
   return 0;
 }
 
-// ==================================================
 
 Component_Exec_Attr_Init_Generator::Component_Exec_Attr_Init_Generator (
       be_visitor_scope * visitor)

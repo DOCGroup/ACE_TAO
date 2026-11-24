@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    buffer_type.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_
 #define _BE_VISITOR_SEQUENCE_BUFFER_TYPE_H_

@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_factory.h
  *
@@ -8,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Boris Kolpackov <bosk@ipmce.ru>
  */
-//=============================================================================
 
 #ifndef BE_FACTORY_H
 #define BE_FACTORY_H

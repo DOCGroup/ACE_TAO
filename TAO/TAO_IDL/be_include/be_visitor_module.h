@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_visitor_module.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_MODULE_H
 #define TAO_BE_VISITOR_MODULE_H

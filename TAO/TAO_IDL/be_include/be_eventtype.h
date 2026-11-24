@@ -1,11 +1,9 @@
-//=============================================================================
 /**
  *  @file    be_eventtype.h
  *
  *  Extension of class AST_EventType and be_valuetype that provides
  *  additional means for C++ mapping of an valuetype.
  */
-//=============================================================================
 
 #ifndef TAO_BE_EVENTTYPE_H
 #define TAO_BE_EVENTTYPE_H

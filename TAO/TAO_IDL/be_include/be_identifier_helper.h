@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_identifier_helper.h
  *
@@ -6,7 +5,6 @@
  *
  *  @author Jeff Parsons <j.parsons@vanderbilt.edu>
  */
-//=============================================================================
 
 #ifndef BE_IDENTIFIER_HELPER_H
 #define BE_IDENTIFIER_HELPER_H

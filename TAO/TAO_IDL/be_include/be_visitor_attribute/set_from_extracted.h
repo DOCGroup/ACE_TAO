@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    set_from_extracted.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef BE_VISITOR_ATTRIBUTE_SET_FROM_EXTRACTED_H
 #define BE_VISITOR_ATTRIBUTE_SET_FROM_EXTRACTED_H

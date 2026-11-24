@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_helper.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale Improvements by Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_BE_OUTSTRM_H
 #define TAO_BE_OUTSTRM_H

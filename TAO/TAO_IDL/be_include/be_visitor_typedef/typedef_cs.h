@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    typedef_cs.h
  *
@@ -8,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_TYPEDEF_TYPEDEF_CS_H_
 #define _BE_VISITOR_TYPEDEF_TYPEDEF_CS_H_

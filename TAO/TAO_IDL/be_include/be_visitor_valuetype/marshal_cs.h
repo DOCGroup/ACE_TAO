@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    marshal_cs.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_VALUETYPE_MARSHAL_CS_H_
 #define _BE_VISITOR_VALUETYPE_MARSHAL_CS_H_

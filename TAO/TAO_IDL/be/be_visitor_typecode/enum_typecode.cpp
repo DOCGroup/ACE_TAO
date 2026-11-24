@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file  enum_typecode.cpp
  *
@@ -6,7 +5,6 @@
  *
  *  @author  Ossama Othman <ossama@dre.vanderbilt.edu>
  */
-//=============================================================================
 
 #include "typecode.h"
 #include "utl_scope.h"

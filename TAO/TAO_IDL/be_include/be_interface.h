@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file    be_interface.h
  *
@@ -9,7 +8,6 @@
  *  @author Inc. and Aniruddha Gokhale
  *  @author Michael Kircher
  */
-//=============================================================================
 
 #ifndef TAO_BE_INTERFACE_H
 #define TAO_BE_INTERFACE_H
