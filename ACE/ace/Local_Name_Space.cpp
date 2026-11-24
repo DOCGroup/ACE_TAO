@@ -126,8 +126,7 @@ ACE_NS_String::ACE_NS_String (ACE_WCHAR_T *dst,
                               const ACE_WCHAR_T *src,
                               size_t bytes)
   : len_ (bytes),
-    rep_ (dst),
-    delete_rep_ (false)
+    rep_ (dst)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
   std::memcpy (this->rep_, src, bytes);
