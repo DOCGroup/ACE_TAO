@@ -1284,7 +1284,7 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
     return -1;
   }
 
-  size_t const index = static_cast<size_t> (slot);
+  auto const index = static_cast<size_t> (slot);
 
   result_list_[index] = result;   //Store result ptr anyway
   ++aiocb_list_cur_size_;

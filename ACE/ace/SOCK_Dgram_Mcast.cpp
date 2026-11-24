@@ -330,7 +330,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
           // address, skip those...
           if (p_if->ifa_addr->sa_family == PF_INET)
             {
-              struct sockaddr_in *addr =
+              auto *addr =
                 reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
 
               if (addr->sin_addr.s_addr == INADDR_ANY)
@@ -341,7 +341,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 #  if defined (ACE_HAS_IPV6)
           else if (p_if->ifa_addr->sa_family == AF_INET6)
             {
-              struct sockaddr_in6 *addr =
+              auto *addr =
                 reinterpret_cast<sockaddr_in6 *> (p_if->ifa_addr);
 
               // Skip the ANY address

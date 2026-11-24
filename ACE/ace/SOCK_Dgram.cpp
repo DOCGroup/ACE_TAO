@@ -58,7 +58,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
       return -1;
     }
 
-  sockaddr *saddr = static_cast<sockaddr *> (addr.get_addr ());
+  auto *saddr = static_cast<sockaddr *> (addr.get_addr ());
   int addr_len = addr.get_size ();
   int inlen;
 
@@ -765,7 +765,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
         }
       else
         {
-          sockaddr_in *socket_address =
+          auto *socket_address =
             reinterpret_cast<sockaddr_in*> (&if_address.ifr_addr);
           lmreq.imr_interface.s_addr = socket_address->sin_addr.s_addr;
         }
