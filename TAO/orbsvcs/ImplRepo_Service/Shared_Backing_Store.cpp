@@ -449,11 +449,17 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
       this->persist (fp, *info, "", this->repo_values_);
 
       // Copy the current file to a backup.
-      FILE* bfp = ACE_OS::fopen (bfname.c_str(),ACE_TEXT("w"));
-      ACE_OS::fprintf (bfp,"<?xml version=\"1.0\"?>\n");
-      this->persist (bfp, *info, "", this->repo_values_);
-      ACE_OS::fflush (bfp);
-      ACE_OS::fclose (bfp);
+      std::unique_ptr<FILE, int (*) (FILE *)> bfp (
+        ACE_OS::fopen (bfname.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+      if (!bfp)
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
+                                 bfname.c_str ()), -1);
+        }
+      ACE_OS::fprintf (bfp.get (), "<?xml version=\"1.0\"?>\n");
+      this->persist (bfp.get (), *info, "", this->repo_values_);
+      ACE_OS::fflush (bfp.get ());
     }
   server_file.release ();
 
@@ -514,11 +520,18 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
   persist (fp, *info, "", this->repo_values_);
 
   // Copy the current file to a backup.
-  FILE* bfp = ACE_OS::fopen (bfname.c_str(),ACE_TEXT("w+"));
-  ACE_OS::fprintf (bfp,"<?xml version=\"1.0\"?>\n");
-  persist (bfp, *info, "", this->repo_values_);
-  ACE_OS::fflush (bfp);
-  ACE_OS::fclose (bfp);
+  std::unique_ptr<FILE, int (*) (FILE *)> bfp (
+    ACE_OS::fopen (bfname.c_str (), ACE_TEXT ("w+")), ACE_OS::fclose);
+  if (!bfp)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
+                             bfname.c_str ()), -1);
+    }
+  ACE_OS::fprintf (bfp.get (), "<?xml version=\"1.0\"?>\n");
+  persist (bfp.get (), *info, "", this->repo_values_);
+  ACE_OS::fflush (bfp.get ());
+  bfp.reset ();
   activator_file.release ();
 
   ImplementationRepository::UpdateInfo entity;
@@ -827,7 +840,8 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
   const ACE_TString bfname = this->listing_file_ + ACE_TEXT (".bak");
 
   // Write backup file
-  FILE* baklist = ACE_OS::fopen (bfname.c_str(), ACE_TEXT("w"));
+  std::unique_ptr<FILE, int (*) (FILE *)> baklist (
+    ACE_OS::fopen (bfname.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
   if (baklist == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR,
@@ -836,9 +850,8 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
       return -1;
     }
 
-  this->write_listing (baklist);
-  ACE_OS::fflush (baklist);
-  ACE_OS::fclose (baklist);
+  this->write_listing (baklist.get ());
+  ACE_OS::fflush (baklist.get ());
 
   return 0;
 }
@@ -857,7 +870,8 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
 
   const char* const replica_name(IMR_REPLICA[this->imr_type_]);
   ACE_CString replica_filename = replica_ior_filename(false);
-  FILE* fp = ACE_OS::fopen (replica_filename.c_str (), "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> fp (
+    ACE_OS::fopen (replica_filename.c_str (), "w"), ACE_OS::fclose);
   if (fp == nullptr)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
@@ -867,8 +881,8 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
 
   CORBA::String_var replica_ior = this->replicator_.ior ();
   ior_table->bind(replica_name, replica_ior.in());
-  ACE_OS::fprintf (fp, "%s", replica_ior.in ());
-  ACE_OS::fclose (fp);
+  ACE_OS::fprintf (fp.get (), "%s", replica_ior.in ());
+  fp.reset ();
 
   int err = 0;
   // only report the imr ior if the fault tolerant ImR is complete

@@ -53,22 +53,23 @@ XML_Backing_Store::persistent_update(const Activator_Info_Ptr& , bool )
 int
 XML_Backing_Store::persist ()
 {
-  FILE* fp = ACE_OS::fopen (this->filename_.c_str (), "w");
+  std::unique_ptr<FILE, int (*) (FILE *)> fp (
+    ACE_OS::fopen (this->filename_.c_str (), "w"), ACE_OS::fclose);
   if (fp == nullptr)
     {
       ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't write to file %C\n"),
         this->filename_.c_str()));
       return -1;
     }
-  ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
-  ACE_OS::fprintf (fp,"<%s>\n", Locator_XMLHandler::ROOT_TAG);
+  ACE_OS::fprintf (fp.get (), "<?xml version=\"1.0\"?>\n");
+  ACE_OS::fprintf (fp.get (), "<%s>\n", Locator_XMLHandler::ROOT_TAG);
 
   // Save servers
   Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::ITERATOR siit (this->servers ());
   for (; siit.next (sientry); siit.advance() )
     {
-      persist(fp, *sientry->int_id_, "\t");
+      persist (fp.get (), *sientry->int_id_, "\t");
     }
 
   // Save Activators
@@ -77,11 +78,10 @@ XML_Backing_Store::persist ()
   for (; aiit.next (aientry); aiit.advance ())
     {
       ACE_CString aname = aientry->ext_id_;
-      persist(fp, *aientry->int_id_, "\t");
+      persist (fp.get (), *aientry->int_id_, "\t");
     }
 
-  ACE_OS::fprintf (fp,"</%s>\n", Locator_XMLHandler::ROOT_TAG);
-  ACE_OS::fclose (fp);
+  ACE_OS::fprintf (fp.get (), "</%s>\n", Locator_XMLHandler::ROOT_TAG);
 
   return 0;
 }
