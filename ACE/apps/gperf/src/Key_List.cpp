@@ -2282,14 +2282,14 @@ Key_List::dump ()
               total_duplicates ? total_duplicates + 1 : 0,
               max_key_len));
 
-  u_int keysig_width = option.max_keysig_size () > std::strlen ("keysig")
-    ? option.max_keysig_size ()
-    : static_cast<u_int> (std::strlen ("keysig"));
+  int const keysig_width = option.max_keysig_size () > std::strlen ("keysig")
+    ? static_cast<int> (option.max_keysig_size ())
+    : static_cast<int> (std::strlen ("keysig"));
 
-  size_t key_length = this->max_key_length ();
-  size_t keyword_width = key_length > std::strlen ("keysig")
+  int const key_length = this->max_key_length ();
+  int const keyword_width = key_length > static_cast<int> (std::strlen ("keysig"))
     ? key_length
-    : std::strlen ("keysig");
+    : static_cast<int> (std::strlen ("keysig"));
 
   ACE_DEBUG ((LM_DEBUG,
               "\nList contents are:\n(hash value, key length, slot, %*s, %*s, duplicates):\n",
