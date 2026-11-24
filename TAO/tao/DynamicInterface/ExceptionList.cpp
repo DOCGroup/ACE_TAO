@@ -10,7 +10,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 CORBA::ExceptionList::ExceptionList (CORBA::ULong len,
                                      CORBA::TypeCode_ptr *tc_list)
-  : refcount_ (1)
 {
   for (CORBA::ULong i {}; i < len; ++i)
     {
