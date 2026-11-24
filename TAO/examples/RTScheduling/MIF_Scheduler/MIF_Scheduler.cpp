@@ -663,7 +663,7 @@ MIF_Scheduler::cancel (const RTScheduling::Current::IdType &)
 CORBA::PolicyList*
 MIF_Scheduler::scheduling_policies ()
 {
-  return 0;
+  return nullptr;
 }
 
 void
@@ -674,20 +674,20 @@ MIF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 CORBA::PolicyList*
 MIF_Scheduler::poa_policies ()
 {
-        return 0;
+        return nullptr;
 }
 
 char *
 MIF_Scheduler::scheduling_discipline_name ()
 {
-        return 0;
+        return nullptr;
 }
 
 RTScheduling::ResourceManager_ptr
 MIF_Scheduler::create_resource_manager (const char *,
                                         CORBA::Policy_ptr)
 {
-        return 0;
+        return nullptr;
 }
 
 void

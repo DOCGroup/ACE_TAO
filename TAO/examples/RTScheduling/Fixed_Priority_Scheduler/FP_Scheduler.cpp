@@ -235,7 +235,7 @@ Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &)
 CORBA::PolicyList*
 Fixed_Priority_Scheduler::scheduling_policies ()
 {
-  return 0;
+  return nullptr;
 }
 
 void
@@ -246,20 +246,20 @@ Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &)
 CORBA::PolicyList*
 Fixed_Priority_Scheduler::poa_policies ()
 {
-  return 0;
+  return nullptr;
 }
 
 char *
 Fixed_Priority_Scheduler::scheduling_discipline_name ()
 {
-  return 0;
+  return nullptr;
 }
 
 RTScheduling::ResourceManager_ptr
 Fixed_Priority_Scheduler::create_resource_manager (const char *,
                                                    CORBA::Policy_ptr)
 {
-  return 0;
+  return nullptr;
 }
 
 void
