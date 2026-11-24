@@ -112,6 +112,9 @@ ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream ()
 {
   ACE_TRACE ("ACE_SSL_Asynch_Stream::~ACE_SSL_Asynch_Stream");
 
+  delete this->ext_read_result_;
+  delete this->ext_write_result_;
+
   // It is safe to delete stream if all notifications are received,
   // i.e., state is SF_DELETE_ENABLE or if proactor event loop is
   // done.
