@@ -70,20 +70,18 @@ namespace {
                   reports.size()));
       unsigned int max_chunks = 0;
       unsigned int min_chunks = (ACE_Numeric_Limits<unsigned int>::max) ();
-      for (report_map::iterator iter = reports.begin();
-           iter != reports.end ();
-           ++iter)
+      for (report_map::value_type const &report : reports)
         {
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("   handle %H: %u\n"),
-                      (*iter).first, (*iter).second));
-          if ((*iter).second > max_chunks)
+                      report.first, report.second));
+          if (report.second > max_chunks)
           {
-            max_chunks = (*iter).second;
+              max_chunks = report.second;
           }
-          if ((*iter).second < min_chunks)
+          if (report.second < min_chunks)
           {
-            min_chunks = (*iter).second;
+              min_chunks = report.second;
           }
         }
       if ((max_chunks - min_chunks) > max_chunks / 10)

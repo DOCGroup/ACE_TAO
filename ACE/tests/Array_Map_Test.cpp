@@ -194,9 +194,9 @@ insertion_removal_test ()
 
   B.erase (first, last);
 
-  for (size_t s = 0; s < removed_len ; ++s)
+  for (Map::value_type const &removed_entry : removed)
     {
-      Map::key_type const key = removed[s].first;
+      Map::key_type const key = removed_entry.first;
 
       if (B.count (key) != 0
           || B.find (key) != B.end ())

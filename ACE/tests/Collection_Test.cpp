@@ -76,12 +76,10 @@ run_main (int, ACE_TCHAR *[])
     unbounded_set.insert (UglyThing (std::addressof (dummyfunc), NO_DFUNC));
 
     {
-      for (UNBOUNDED_SET::iterator iterator = unbounded_set.begin ();
-           iterator != unbounded_set.end ();
-           ++iterator)
+      for (UglyThing const &thing : unbounded_set)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("%@, deletion function set=%d\n"),
-                      (*iterator).alloc_, (*iterator).dfunc_ != nullptr));
+                      thing.alloc_, thing.dfunc_ != nullptr));
         }
     }
 
