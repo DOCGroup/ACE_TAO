@@ -86,7 +86,8 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
   // future asynchronous SSL opens.
   static ACE_SYNCH_MUTEX methods_ACE_mutex;
   static BIO_METHOD *methods_ACE {};
-  ACE_MT (ACE_GUARD_CONST (ACE_SYNCH_MUTEX, ace_mon, methods_ACE_mutex));
+  ACE_MT (ACE_GUARD_RETURN_CONST (ACE_SYNCH_MUTEX, ace_mon,
+                                  methods_ACE_mutex, nullptr));
 
   if (methods_ACE == nullptr)
     {

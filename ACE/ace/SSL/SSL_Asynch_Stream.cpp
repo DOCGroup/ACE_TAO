@@ -738,8 +738,7 @@ ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
 
   int retval {};
 #if defined (ACE_WIN32)
-  // Use dynamic_cast because a failed cast leaves ext_read_result_ untouched.
-  // The stream retains ownership and will clean it up later.
+  // A failed cast leaves the result allocated and owned by this stream.
   ACE_WIN32_Proactor * const proactor =
     dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
   if (proactor == nullptr)
@@ -784,8 +783,7 @@ ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
 
   int retval {};
 #if defined (ACE_WIN32)
-  // Use dynamic_cast because a failed cast leaves ext_write_result_ untouched.
-  // The stream retains ownership and will clean it up later.
+  // A failed cast leaves the result allocated and owned by this stream.
   ACE_WIN32_Proactor * const proactor =
     dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
   if (proactor == nullptr)
