@@ -18,9 +18,7 @@ TAO_Notify_Tests_Command_Factory_T<COMMAND>::TAO_Notify_Tests_Command_Factory_T 
 }
 
 template <class COMMAND>
-TAO_Notify_Tests_Command_Factory_T<COMMAND>::~TAO_Notify_Tests_Command_Factory_T ()
-{
-}
+TAO_Notify_Tests_Command_Factory_T<COMMAND>::~TAO_Notify_Tests_Command_Factory_T () = default;
 
 template <class COMMAND> int
 TAO_Notify_Tests_Command_Factory_T<COMMAND>::init (int /*argc*/, ACE_TCHAR/*argv*/ *[])

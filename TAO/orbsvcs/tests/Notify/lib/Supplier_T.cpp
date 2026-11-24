@@ -9,9 +9,7 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::TAO_Notify_Tests_Supplier_T ()
 }
 
 template <class Supplier_Traits>
-TAO_Notify_Tests_Supplier_T<Supplier_Traits>::~TAO_Notify_Tests_Supplier_T ()
-{
-}
+TAO_Notify_Tests_Supplier_T<Supplier_Traits>::~TAO_Notify_Tests_Supplier_T () = default;
 
 template <class Supplier_Traits> typename TAO_Notify_Tests_Supplier_T<Supplier_Traits>::Proxy_Traits_PTR
 TAO_Notify_Tests_Supplier_T<Supplier_Traits>::get_proxy_consumer ()

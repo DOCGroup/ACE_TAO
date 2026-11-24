@@ -16,9 +16,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::TAO_Notify_Tests_Peer_T ()
 }
 
 template <class Peer_Traits>
-TAO_Notify_Tests_Peer_T<Peer_Traits>::~TAO_Notify_Tests_Peer_T ()
-{
-}
+TAO_Notify_Tests_Peer_T<Peer_Traits>::~TAO_Notify_Tests_Peer_T () = default;
 
 template <class Peer_Traits>
 typename TAO_Notify_Tests_Peer_T<Peer_Traits>::Proxy_Traits_PTR
