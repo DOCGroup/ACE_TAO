@@ -1310,12 +1310,12 @@ namespace TAO
       /// The bytes_rcvd_.samples_count() could have been used instead,
       /// however there was a suspicion that 32 bits would be
       /// insufficient.
-      CORBA::LongLong messages_rcvd_;
+      CORBA::LongLong messages_rcvd_ {};
 
       /// The bytes_sent_.samples_count() could have been used instead,
       /// however there was a suspicion that 32 bits would be
       /// insufficient.
-      CORBA::LongLong messages_sent_;
+      CORBA::LongLong messages_sent_ {};
 
       ACE_Basic_Stats bytes_rcvd_;
       ACE_Basic_Stats bytes_sent_;

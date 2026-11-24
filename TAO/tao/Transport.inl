@@ -210,9 +210,7 @@ TAO_Transport::stats () const
 
 ACE_INLINE
 TAO::Transport::Stats::Stats ()
-  : messages_rcvd_ (0)
-  , messages_sent_ (0)
-  , bytes_rcvd_()
+  : bytes_rcvd_()
   , bytes_sent_ ()
   , opened_since_ ()
 {
