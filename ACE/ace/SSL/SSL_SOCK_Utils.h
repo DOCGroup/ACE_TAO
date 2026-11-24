@@ -19,7 +19,7 @@ namespace ACE_SSL_SOCK_Utils
   inline bool valid_handle (ACE_HANDLE const handle)
   {
 #if !defined (ACE_WIN32)
-    if (handle < 0 || handle >= ACE_FD_SETSIZE)
+    if (handle < 0)
       {
         errno = EINVAL;
         return false;
@@ -30,6 +30,21 @@ namespace ACE_SSL_SOCK_Utils
     return true;
   }
 
+  inline bool set_handle_bit (ACE_HANDLE handle,
+                              ACE_Handle_Set &handles)
+  {
+#if !defined (ACE_WIN32)
+    if (handle >= ACE_FD_SETSIZE)
+      {
+        errno = EINVAL;
+        return false;
+      }
+#endif /* !ACE_WIN32 */
+
+    handles.set_bit (handle);
+    return true;
+  }
+
   inline bool set_handle_bit (SSL *session,
                               ACE_HANDLE handle,
                               ACE_Handle_Set &read_handles,
@@ -37,14 +52,12 @@ namespace ACE_SSL_SOCK_Utils
   {
     if (SSL_want_write (session))
       {
-        write_handles.set_bit (handle);
-        return true;
+        return set_handle_bit (handle, write_handles);
       }
 
     if (SSL_want_read (session))
       {
-        read_handles.set_bit (handle);
-        return true;
+        return set_handle_bit (handle, read_handles);
       }
 
     return false;

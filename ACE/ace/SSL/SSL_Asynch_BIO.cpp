@@ -6,6 +6,7 @@
 #include "ace/Truncate.h"
 
 #include <cstring>
+#include <mutex>
 
 #if (defined (ACE_HAS_VERSIONED_NAMESPACE) && ACE_HAS_VERSIONED_NAMESPACE == 1)
 # define ACE_ASYNCH_BIO_WRITE_NAME ACE_PREPROC_CONCATENATE(ACE_VERSIONED_NAMESPACE_NAME, _ACE_Asynch_BIO_write)
@@ -78,29 +79,36 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
   BIO * const pBIO = BIO_new (&methods_ACE);
 #else
   // Keep the immutable method object alive for the process lifetime; BIO
-  // instances may outlive the call that created them.
-  static BIO_METHOD * const methods_ACE = [] () -> BIO_METHOD *
-  {
-    BIO_METHOD *methods = BIO_meth_new (BIO_TYPE_ACE, "ACE_Asynch_BIO");
-    if (methods == nullptr)
+  // instances may outlive the call that created it. Retry initialization
+  // after a failure so a transient allocation error does not disable all
+  // future asynchronous SSL opens.
+  static std::mutex methods_ACE_mutex;
+  static BIO_METHOD *methods_ACE {};
+  std::lock_guard<std::mutex> guard (methods_ACE_mutex);
+
+  if (methods_ACE == nullptr)
     {
-      return nullptr;
+      BIO_METHOD *methods = BIO_meth_new (BIO_TYPE_ACE, "ACE_Asynch_BIO");
+      if (methods == nullptr)
+        {
+          return nullptr;
+        }
+
+      if (BIO_meth_set_write (methods, ACE_ASYNCH_BIO_WRITE_NAME) != 1
+          || BIO_meth_set_read (methods, ACE_ASYNCH_BIO_READ_NAME) != 1
+          || BIO_meth_set_puts (methods, ACE_ASYNCH_BIO_PUTS_NAME) != 1
+          || BIO_meth_set_ctrl (methods, ACE_ASYNCH_BIO_CTRL_NAME) != 1
+          || BIO_meth_set_create (methods, ACE_ASYNCH_BIO_NEW_NAME) != 1
+          || BIO_meth_set_destroy (methods, ACE_ASYNCH_BIO_FREE_NAME) != 1)
+        {
+          BIO_meth_free (methods);
+          return nullptr;
+        }
+
+      methods_ACE = methods;
     }
 
-    if (BIO_meth_set_write (methods, ACE_ASYNCH_BIO_WRITE_NAME) != 1
-        || BIO_meth_set_read (methods, ACE_ASYNCH_BIO_READ_NAME) != 1
-        || BIO_meth_set_puts (methods, ACE_ASYNCH_BIO_PUTS_NAME) != 1
-        || BIO_meth_set_ctrl (methods, ACE_ASYNCH_BIO_CTRL_NAME) != 1
-        || BIO_meth_set_create (methods, ACE_ASYNCH_BIO_NEW_NAME) != 1
-        || BIO_meth_set_destroy (methods, ACE_ASYNCH_BIO_FREE_NAME) != 1)
-      {
-        BIO_meth_free (methods);
-        return nullptr;
-      }
-
-    return methods;
-  } ();
-  BIO * const pBIO = methods_ACE == nullptr ? nullptr : BIO_new (methods_ACE);
+  BIO * const pBIO = BIO_new (methods_ACE);
 #endif
 
   if (pBIO != nullptr)

@@ -10,6 +10,7 @@ run_main (int, ACE_TCHAR * [])
 
   ACE_Null_Mutex mutex;
 
+  // FUZZ: disable check_for_ACE_Guard
   const ACE_Guard<ACE_Null_Mutex> guard (mutex);
   ACE_TEST_ASSERT (guard.locked () != 0);
 
@@ -18,6 +19,7 @@ run_main (int, ACE_TCHAR * [])
 
   const ACE_Write_Guard<ACE_Null_Mutex> write_guard (mutex);
   ACE_TEST_ASSERT (write_guard.locked () != 0);
+  // FUZZ: enable check_for_ACE_Guard
 
   ACE_END_TEST;
   return 0;

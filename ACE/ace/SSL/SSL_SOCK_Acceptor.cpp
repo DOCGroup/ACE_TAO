@@ -86,13 +86,13 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           break;                    // Done
 
         case SSL_ERROR_WANT_WRITE:
-          wr_handle.set_bit (handle);
-          status = 1;
+          status = ACE_SSL_SOCK_Utils::set_handle_bit (handle, wr_handle)
+                   ? 1 : -1;
           break;
 
         case SSL_ERROR_WANT_READ:
-          rd_handle.set_bit (handle);
-          status = 1;
+          status = ACE_SSL_SOCK_Utils::set_handle_bit (handle, rd_handle)
+                   ? 1 : -1;
           break;
 
         case SSL_ERROR_ZERO_RETURN:

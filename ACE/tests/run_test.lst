@@ -181,6 +181,7 @@ New_Fail_Test: ALL !DISABLED
 NonBlocking_Conn_Test
 Notification_Queue_Unit_Test
 Notify_Performance_Test: !ACE_FOR_TAO
+Null_Mutex_Guard_Test
 OS_Test
 Object_Manager_Test
 Object_Manager_Flipping_Test
