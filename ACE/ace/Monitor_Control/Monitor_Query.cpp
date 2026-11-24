@@ -51,21 +51,19 @@ namespace ACE
 
       Monitor_Base::CONSTRAINTS const& list = this->monitor_->constraints ();
 
-      for (Monitor_Base::CONSTRAINT_ITERATOR i (list.begin ());
-           i != list.end ();
-           ++i)
+      for (auto const &constraint : list)
         {
           Constraint_Interpreter interpreter;
-          interpreter.build_tree (i->second.expr.fast_rep ());
+          interpreter.build_tree (constraint.second.expr.fast_rep ());
 
           Monitor_Control_Types::Data data (this->monitor_->type ());
           this->monitor_->retrieve (data);
           Constraint_Visitor visitor (data);
           bool const satisfied = interpreter.evaluate (visitor);
 
-          if (satisfied && i->second.control_action != nullptr)
+          if (satisfied && constraint.second.control_action != nullptr)
             {
-              i->second.control_action->execute ();
+              constraint.second.control_action->execute ();
             }
         }
     }

@@ -79,14 +79,12 @@ ACE_Local_Memory_Pool::release (int)
   ACE_TRACE ("ACE_Local_Memory_Pool::release");
 
   // Zap the memory we allocated.
-  for (ACE_Unbounded_Set<char *>::iterator i = this->allocated_chunks_.begin ();
-       i != this->allocated_chunks_.end ();
-       ++i)
+  for (char *const allocated_chunk : this->allocated_chunks_)
     {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free(*i);
+      ACE_Allocator::instance()->free (allocated_chunk);
 #else
-      delete [] *i;
+      delete [] allocated_chunk;
 #endif /* ACE_HAS_ALLOC_HOOKS */
     }
 

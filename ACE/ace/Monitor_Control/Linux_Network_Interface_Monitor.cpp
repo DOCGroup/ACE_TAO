@@ -73,9 +73,9 @@ namespace ACE
     void
     Linux_Network_Interface_Monitor::init ()
     {
-      for (unsigned long i = 0UL; i < MAX_INTERFACES; ++i)
+      for (ACE_UINT64 &value : this->value_array_)
         {
-          this->value_array_[i] = 0UL;
+          value = 0UL;
         }
 
       /// Read the file once to get a base value that we can subtract

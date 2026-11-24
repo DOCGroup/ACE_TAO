@@ -924,19 +924,17 @@ ACE_INET_Addr::set_port_number (u_short port_number,
     {
       return;
     }
-  for (std::vector<union ip46>::iterator i = this->inet_addrs_.begin ();
-       i != this->inet_addrs_.end ();
-       ++i)
+  for (union ip46 &inet_addr : this->inet_addrs_)
     {
 #if defined (ACE_HAS_IPV6)
       if (this->get_type () == AF_INET6)
         {
-          i->in6_.sin6_port = port_number;
+          inet_addr.in6_.sin6_port = port_number;
         }
       else
 #endif /* ACE_HAS_IPV6 */
         {
-          i->in4_.sin_port = port_number;
+          inet_addr.in4_.sin_port = port_number;
         }
     }
 }
