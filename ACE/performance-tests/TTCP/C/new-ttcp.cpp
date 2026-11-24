@@ -325,7 +325,7 @@ main (int argc, char *argv[])
 
   // allocate the buffer
   message_buf = static_cast<Data_Control_Message *> (malloc (total_msg_len));
-  if (message_buf == 0)
+  if (message_buf == nullptr)
     {
       err ("malloc");
     }
@@ -566,7 +566,7 @@ main (int argc, char *argv[])
     }
 
 #if defined (LM_RESULTS)
-  if (trans && (title != 0))
+  if (trans && (title != nullptr))
     {
       double tmp;
       FILE *results_file;

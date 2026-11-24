@@ -108,7 +108,7 @@ BOOL CNamingViewerDlg::OnInitDialog()
 
 #if !defined (_WIN32_WCE)
   CMenu* pSysMenu = GetSystemMenu(FALSE);
-  if (pSysMenu != 0)
+  if (pSysMenu != nullptr)
   {
     CString strAboutMenu;
     strAboutMenu.LoadString(IDS_ABOUTBOX);

@@ -83,7 +83,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       Monitor::NameList_var safe_names = names;
 
       // We added 3 to whatever was there already.
-      if (names == 0 || names->length () != start_size + 3)
+      if (names == nullptr || names->length () != start_size + 3)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "get_statistic_names() returned the incorrect number of names\n"), 1);
         }
@@ -103,7 +103,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
         monitor.get_statistics (*names);
 
       // We added 3 monitors to whatever was there already.
-      if (data.ptr () == 0 || data.in ().length () != start_size + 3)
+      if (data.ptr () == nullptr || data.in ().length () != start_size + 3)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "get_statistics() returned the incorrect number of data elements\n"), 1);
         }
@@ -119,7 +119,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       data = monitor.get_and_clear_statistics (*names);
 
       // We added 3 to whatever was there already.
-      if (data.ptr () == 0 || data.in ().length () != start_size + 3)
+      if (data.ptr () == nullptr || data.in ().length () != start_size + 3)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "get_and_clear_statistics() returned the incorrect number of data elements\n"), 1);
         }
