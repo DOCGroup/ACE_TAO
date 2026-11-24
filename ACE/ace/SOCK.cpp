@@ -34,7 +34,7 @@ ACE_SOCK::get_remote_addr (ACE_Addr &sa) const
   ACE_TRACE ("ACE_SOCK::get_remote_addr");
 
   int len = sa.get_size ();
-  sockaddr *addr = reinterpret_cast<sockaddr *> (sa.get_addr ());
+  auto *addr = reinterpret_cast<sockaddr *> (sa.get_addr ());
 
   if (ACE_OS::getpeername (this->get_handle (),
                            addr,
@@ -54,7 +54,7 @@ ACE_SOCK::get_local_addr (ACE_Addr &sa) const
   ACE_TRACE ("ACE_SOCK::get_local_addr");
 
   int len = sa.get_size ();
-  sockaddr *addr = reinterpret_cast<sockaddr *> (sa.get_addr ());
+  auto *addr = reinterpret_cast<sockaddr *> (sa.get_addr ());
 
   if (ACE_OS::getsockname (this->get_handle (),
                            addr,

@@ -659,8 +659,7 @@ get_ip_interfaces_getifaddrs (size_t &count,
 
       if (p_if->ifa_addr->sa_family == AF_INET)
         {
-          struct sockaddr_in *addr =
-            reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
+          auto *addr = reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
 
           // Sometimes the kernel returns 0.0.0.0 as the interface
           // address, skip those...
@@ -675,8 +674,7 @@ get_ip_interfaces_getifaddrs (size_t &count,
 # if defined (ACE_HAS_IPV6)
       else if (p_if->ifa_addr->sa_family == AF_INET6)
         {
-          struct sockaddr_in6 *addr =
-            reinterpret_cast<sockaddr_in6 *> (p_if->ifa_addr);
+          auto *addr = reinterpret_cast<sockaddr_in6 *> (p_if->ifa_addr);
 
           // Skip the ANY address
           if (!IN6_IS_ADDR_UNSPECIFIED(&addr->sin6_addr))
