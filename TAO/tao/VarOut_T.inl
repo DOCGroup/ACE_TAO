@@ -3,7 +3,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename T>
 ACE_INLINE
 TAO_Var_Base_T<T>::TAO_Var_Base_T ()
-  : ptr_ (nullptr)
 {}
 
 template<typename T>

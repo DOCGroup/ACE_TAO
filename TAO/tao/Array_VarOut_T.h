@@ -119,7 +119,7 @@ public:
   _retn_type    ptr () const;
 protected:
   using FORANY = TAO_Array_Forany_T<T, T_slice, TAG>;
-  _slice_type * ptr_;
+  _slice_type * ptr_ {};
 };
 
 /**

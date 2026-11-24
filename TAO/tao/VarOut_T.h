@@ -50,7 +50,7 @@ public:
   operator T *& ();
 
 protected:
-  T * ptr_;
+  T * ptr_ {};
 };
 
 /**

@@ -3,7 +3,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename T, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Var_Base_T<T,T_slice,TAG>::TAO_Array_Var_Base_T ()
-  : ptr_ (nullptr)
 {}
 
 template<typename T, typename T_slice, typename TAG>
