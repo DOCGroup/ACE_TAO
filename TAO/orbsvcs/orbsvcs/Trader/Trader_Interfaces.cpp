@@ -1000,7 +1000,9 @@ withdraw_using_constraint (const char *type,
         }
     }
   else
-    throw CosTrading::Register::NoMatchingOffers (constr);
+    {
+      throw CosTrading::Register::NoMatchingOffers (constr);
+    }
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
@@ -1421,7 +1423,9 @@ list_offers (CORBA::ULong how_many,
         }
     }
   else
-    ids = new CosTrading::OfferIdSeq (0);
+    {
+      ids = new CosTrading::OfferIdSeq (0);
+    }
 }
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>

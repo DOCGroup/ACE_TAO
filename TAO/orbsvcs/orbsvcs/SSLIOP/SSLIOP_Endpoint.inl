@@ -22,7 +22,9 @@ TAO_SSLIOP_Endpoint::iiop_endpoint (TAO_IIOP_Endpoint *iiop_endpoint,
 
         }
       else
-        new_endpoint = iiop_endpoint;
+        {
+          new_endpoint = iiop_endpoint;
+        }
 
       if (this->destroy_iiop_endpoint_)
         {

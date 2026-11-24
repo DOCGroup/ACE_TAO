@@ -79,9 +79,13 @@ operator<< (std::ostream& os, CORBA::Exception const& e)
   CORBA::TypeCode_var tc = tmp.type ();
   char const *p = tc->name ();
   if  (*p != '\0')
-    os << p;
+    {
+      os << p;
+    }
   else
-    os << tc->id ();
+    {
+      os << tc->id ();
+    }
   return os;
 }
 

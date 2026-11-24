@@ -183,7 +183,9 @@ bool
 AST_Map::in_recursion (std::vector<AST_Type *> &list)
 {
   if (list.empty ()) // only structs, unions and valuetypes can be recursive
-    return false;
+    {
+      return false;
+    }
 
   list.push_back (this);
 

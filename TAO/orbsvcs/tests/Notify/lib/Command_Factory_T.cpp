@@ -34,7 +34,9 @@ TAO_Notify_Tests_Command_Factory_T<COMMAND>::init (int /*argc*/, ACE_TCHAR/*argv
       cmd_builder->_register (COMMAND::name(), this);
     }
   else
-    ACE_DEBUG ((LM_DEBUG, "Could not register command builder %s\n", COMMAND::name()));
+    {
+      ACE_DEBUG ((LM_DEBUG, "Could not register command builder %s\n", COMMAND::name()));
+    }
   return 0;
 }
 

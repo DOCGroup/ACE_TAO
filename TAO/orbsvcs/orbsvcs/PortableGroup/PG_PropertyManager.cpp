@@ -196,7 +196,9 @@ TAO_PG_PropertyManager::set_properties_dynamically (
       PortableGroup::Property property = props[i];
 
       if (property.nam == factories)
-        throw PortableGroup::InvalidProperty (property.nam, property.val);
+        {
+          throw PortableGroup::InvalidProperty (property.nam, property.val);
+        }
     }
 
   this->property_validator_.validate_property (overrides);

@@ -145,9 +145,13 @@ Options::key_sort (char *base, int len)
       for (curr = i + 1, tmp = base[curr];
            curr > 0 && tmp >= base[curr - 1];
            --curr)
-        if ((base[curr] = base[curr - 1]) == tmp)
-          // Oh no, a duplicate!!!
-          return 0;
+        {
+          if ((base[curr] = base[curr - 1]) == tmp)
+            {
+              // Oh no, a duplicate!!!
+              return 0;
+            }
+        }
 
       base[curr] = static_cast<char> (tmp);
     }

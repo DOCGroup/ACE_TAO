@@ -98,7 +98,9 @@ SLevel1_Server_i::authorize_level1 ()
       return 0;
     }
   else
-    return 1;
+    {
+      return 1;
+    }
 }
 
 CORBA::Boolean
@@ -111,5 +113,7 @@ SLevel1_Server_i::authorize_level2 ()
       return 0;
     }
   else
-    return 1;
+    {
+      return 1;
+    }
 }

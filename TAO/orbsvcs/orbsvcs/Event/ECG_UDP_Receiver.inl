@@ -43,8 +43,10 @@ TAO_ECG_UDP_Receiver_Disconnect_Command::
 execute ()
 {
   if (CORBA::is_nil (this->proxy_.in ()))
-    // We are not connected.
-    return;
+    {
+      // We are not connected.
+      return;
+    }
 
   RtecEventChannelAdmin::ProxyPushConsumer_var release_proxy =
     this->proxy_._retn ();

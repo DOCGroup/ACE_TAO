@@ -44,8 +44,10 @@ TAO_ECG_Mcast_EH::
 Observer_Disconnect_Command::execute ()
 {
   if (CORBA::is_nil (this->ec_.in ()))
-    // We are not connected.
-    return;
+    {
+      // We are not connected.
+      return;
+    }
 
   RtecEventChannelAdmin::EventChannel_var release_ec =
     this->ec_._retn ();

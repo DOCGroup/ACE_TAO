@@ -90,7 +90,9 @@ ACE_Token_Invariant_Manager::releasing (const ACE_Token_Proxy *proxy)
       this->mutex_releasing (proxy->name ());
     }
   else // ACE_Tokens::RWLOCK.
-    this->rwlock_releasing (proxy->name ());
+    {
+      this->rwlock_releasing (proxy->name ());
+    }
 }
 
 void

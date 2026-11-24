@@ -183,8 +183,10 @@ ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
                 return -1;
               }
           if (modify != nullptr)
-            // In the worst case, all properties in <modify> will be added.
-            psize += modify->size ();
+            {
+              // In the worst case, all properties in <modify> will be added.
+              psize += modify->size ();
+            }
 
           // Now, create a temporary work space.
           ACE_URL_Property_Seq working (psize);

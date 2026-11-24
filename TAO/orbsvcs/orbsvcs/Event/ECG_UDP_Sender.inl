@@ -79,8 +79,10 @@ ACE_INLINE void
 TAO_ECG_UDP_Sender_Disconnect_Command::execute ()
 {
   if (CORBA::is_nil (this->proxy_.in ()))
-    // We are not connected.
-    return;
+    {
+      // We are not connected.
+      return;
+    }
 
   RtecEventChannelAdmin::ProxyPushSupplier_var release_proxy =
     this->proxy_._retn ();

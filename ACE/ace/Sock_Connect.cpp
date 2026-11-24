@@ -584,7 +584,9 @@ get_ip_interfaces_win32 (size_t &count,
 
       addr6p = reinterpret_cast<struct sockaddr_in6 *> (v6info->Address[i].lpSockaddr);
       if (IN6_IS_ADDR_UNSPECIFIED(&addr6p->sin6_addr))  // IN6ADDR_ANY?
-        continue;
+        {
+          continue;
+        }
 
       // Set the address for the caller.
       addr_array[count].set(reinterpret_cast<struct sockaddr_in *> (addr6p), sizeof(sockaddr_in6));

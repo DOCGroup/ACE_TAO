@@ -42,8 +42,10 @@ public:
       // Reactor, lets keep the handle_timeout short for that
       // thread.
       if (std::strcmp (static_cast<char const *> (arg), "Proactor") == 0)
-      // Sleep for a while
-      ACE_OS::sleep (1);
+        {
+          // Sleep for a while
+          ACE_OS::sleep (1);
+        }
     }
 
   // This method is declared in ACE_Event_Handler.

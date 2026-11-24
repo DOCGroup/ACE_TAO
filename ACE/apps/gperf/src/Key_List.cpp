@@ -1468,7 +1468,9 @@ Key_List::output_hash_function ()
       for (count = 0; count < ACE_ASCII_SIZE; ++count)
         {
           if (!(count % max_column))
-            ACE_OS::printf ("\n    ");
+            {
+              ACE_OS::printf ("\n    ");
+            }
 
           target = ascii_to_ebcdic[count];
           ACE_OS::printf ("%*d,",
@@ -1573,7 +1575,9 @@ Key_List::output_hash_function ()
                                     "(charmap[static_cast<unsigned char> (str[%d])]) %% asso_values.size ()];\n",
                                     i, i - 1);
                     if (i > 1)
-                      ACE_OS::printf ("        [[fallthrough]];\n");
+                      {
+                        ACE_OS::printf ("        [[fallthrough]];\n");
+                      }
                   }
               else
                 for (i = max_key_len; i > 0; --i)
@@ -1581,7 +1585,9 @@ Key_List::output_hash_function ()
                     ACE_OS::printf ("      case %d:\n        hval += asso_values[static_cast<unsigned char> "
                                     "(str[%d]) %% asso_values.size ()];\n", i, i - 1);
                     if (i > 1)
-                      ACE_OS::printf ("        [[fallthrough]];\n");
+                      {
+                        ACE_OS::printf ("        [[fallthrough]];\n");
+                      }
                   }
 
               ACE_OS::printf ("    }\n  return hval;\n}\n\n");

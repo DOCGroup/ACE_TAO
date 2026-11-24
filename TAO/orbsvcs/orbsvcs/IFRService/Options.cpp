@@ -41,7 +41,9 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
       case 'r': // win32 registry implementation
 #if defined (ACE_WIN32)
         if (!this->persistent_)
-          this->using_registry_ = true;
+          {
+            this->using_registry_ = true;
+          }
         break;
 #else /* ACE_WIN32 */
         ORBSVCS_ERROR_RETURN ((

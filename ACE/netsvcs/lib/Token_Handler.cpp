@@ -132,8 +132,10 @@ ACE_Token_Handler::acquire (ACE_Token_Proxy *proxy)
   if (proxy->acquire (0, 0, ACE_Synch_Options::asynch) == -1)
     {
       if (errno != EWOULDBLOCK)
-        // bad bad bad
-        return this->send_reply (errno);
+        {
+          // bad bad bad
+          return this->send_reply (errno);
+        }
 
       // acquire would block
       if (request_options_[ACE_Synch_Options::USE_TIMEOUT] == 1)
@@ -158,7 +160,9 @@ ACE_Token_Handler::acquire (ACE_Token_Proxy *proxy)
       return 0;
     }
   else // success
-    return this->send_reply (0);
+    {
+      return this->send_reply (0);
+    }
 }
 
 // Try to acquire the token.  Never block.
@@ -198,8 +202,10 @@ ACE_Token_Handler::release (ACE_Token_Proxy *proxy)
 #endif /* 0 */
 
   if (proxy->release (ACE_Synch_Options::asynch) == -1)
-    // oops, it failed
-    return this->send_reply (ACE_LOG_MSG->errnum ());
+    {
+      // oops, it failed
+      return this->send_reply (ACE_LOG_MSG->errnum ());
+    }
 
   // success
   if (this->timeout_id_ != 0)
@@ -229,8 +235,10 @@ ACE_Token_Handler::renew (ACE_Token_Proxy *proxy)
     {
       int result = ACE_LOG_MSG->errnum ();
       if (result != EWOULDBLOCK)
-        // bad bad bad
-        return this->send_reply (result);
+        {
+          // bad bad bad
+          return this->send_reply (result);
+        }
 
       // acquire would block
       if (request_options_[ACE_Synch_Options::USE_TIMEOUT] == 1)
@@ -249,8 +257,10 @@ ACE_Token_Handler::renew (ACE_Token_Proxy *proxy)
       return 0;
     }
   else
-    // Success, we still hold the token.
-    return this->send_reply (0);
+    {
+      // Success, we still hold the token.
+      return this->send_reply (0);
+    }
 }
 
 /* VIRTUAL */ int
