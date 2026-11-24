@@ -649,9 +649,10 @@ Key_List::reorder ()
 void
 Key_List::output_min_max ()
 {
-  List_Node *temp {};
-  for (temp = head; temp->next; temp = temp->next)
+  List_Node *temp = head;
+  while (temp->next)
     {
+      temp = temp->next;
     }
 
   min_hash_value = head->hash_value;
