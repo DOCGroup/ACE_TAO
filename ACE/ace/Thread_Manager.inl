@@ -64,9 +64,7 @@ ACE_Thread_Descriptor_Base::ACE_Thread_Descriptor_Base ()
 }
 
 ACE_INLINE
-ACE_Thread_Descriptor_Base::~ACE_Thread_Descriptor_Base ()
-{
-}
+ACE_Thread_Descriptor_Base::~ACE_Thread_Descriptor_Base () = default;
 
 ACE_INLINE bool
 ACE_Thread_Descriptor_Base::operator== (

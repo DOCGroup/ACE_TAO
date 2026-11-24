@@ -31,8 +31,6 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::ACE_DLL_Singleton_T ()
 }
 
 template <class TYPE, class ACE_LOCK>
-ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::~ACE_DLL_Singleton_T ()
-{
-}
+ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::~ACE_DLL_Singleton_T () = default;
 
 ACE_END_VERSIONED_NAMESPACE_DECL

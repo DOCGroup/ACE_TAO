@@ -19,9 +19,7 @@ ACE_Sched_Params::ACE_Sched_Params (
 {
 }
 
-ACE_INLINE ACE_Sched_Params::~ACE_Sched_Params ()
-{
-}
+ACE_INLINE ACE_Sched_Params::~ACE_Sched_Params () = default;
 
 ACE_INLINE ACE_Sched_Params::Policy
 ACE_Sched_Params::policy () const
@@ -95,9 +93,7 @@ ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (const ACE_Sched_Params
 }
 
 ACE_INLINE
-ACE_Sched_Priority_Iterator::~ACE_Sched_Priority_Iterator ()
-{
-}
+ACE_Sched_Priority_Iterator::~ACE_Sched_Priority_Iterator () = default;
 
 ACE_INLINE int
 ACE_Sched_Priority_Iterator::more () const

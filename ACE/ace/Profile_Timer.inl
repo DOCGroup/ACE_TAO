@@ -38,9 +38,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Profile_Timer::~ACE_Profile_Timer ()
-{
-}
+ACE_Profile_Timer::~ACE_Profile_Timer () = default;
 
 ACE_INLINE int
 ACE_Profile_Timer::start ()
@@ -89,9 +87,7 @@ ACE_Profile_Timer::stop ()
 }
 
 ACE_INLINE
-ACE_Profile_Timer::~ACE_Profile_Timer ()
-{
-}
+ACE_Profile_Timer::~ACE_Profile_Timer () = default;
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

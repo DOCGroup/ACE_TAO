@@ -62,7 +62,7 @@ public:
       time_policy_ (tp)
   {}
 
-  ~ACE_Time_Value_T () override {}
+  ~ACE_Time_Value_T () override = default;
 
   /// Add @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator += (const ACE_Time_Value &tv);

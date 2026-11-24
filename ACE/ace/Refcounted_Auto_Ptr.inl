@@ -80,9 +80,7 @@ ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::ACE_Refcounted_Auto_Ptr_Rep (X *p)
 }
 
 template <class X, class ACE_LOCK> inline
-ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::~ACE_Refcounted_Auto_Ptr_Rep ()
-{
-}
+ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::~ACE_Refcounted_Auto_Ptr_Rep () = default;
 
 template <class X, class ACE_LOCK> inline X *
 ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK>::get () const
