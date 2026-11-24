@@ -671,7 +671,7 @@ private:
   bool delete_lock_ {};
 
   /// Keep track of failure in constructor.
-  int bad_flag_;
+  int bad_flag_ {};
 };
 
 /*****************************************************************************/
