@@ -1,7 +1,5 @@
 // OS_NS_wchar.h is only needed to get the emulation methods.
 // Perhaps they should be moved.  dhinton
-#include <cstring>
-
 #include "ace/OS_NS_wchar.h"
 #include "ace/os_include/os_string.h"
 
