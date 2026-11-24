@@ -246,31 +246,33 @@ CC_Client::check_extended_test_params(ACE_TCHAR *params)
       switch(state)
         {
         case TAO_START:
-          if(ACE_OS::ace_isdigit(*cp))
+          if (ACE_OS::ace_isdigit (*cp))
             {
               state = TAO_NUMBER;
             }
           else
-          {
-            state = TAO_ERROR;
-          }
-          break;
-
-        case TAO_NUMBER:
-          if((*cp)==';')
-            {
-              state = TAO_ARG;
-              ++no_of_params;
-            }
-          else
-            if(!ACE_OS::ace_isdigit(*cp))
             {
               state = TAO_ERROR;
             }
           break;
 
+        case TAO_NUMBER:
+          if ((*cp) == ';')
+            {
+              state = TAO_ARG;
+              ++no_of_params;
+            }
+          else
+            {
+              if (!ACE_OS::ace_isdigit (*cp))
+                {
+                  state = TAO_ERROR;
+                }
+            }
+          break;
+
         case TAO_ARG:
-          if((*cp)==';')
+          if ((*cp) == ';')
             {
               ++no_of_params;
             }
