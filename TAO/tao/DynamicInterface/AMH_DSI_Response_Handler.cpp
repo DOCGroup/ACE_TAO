@@ -63,7 +63,6 @@ tao_TAO_AMH_DSI_Exception_Holder_remove_ref (TAO_AMH_DSI_Exception_Holder *p)
 }
 
 TAO_AMH_DSI_Exception_Holder_var::TAO_AMH_DSI_Exception_Holder_var ()
-  : ptr_ (nullptr)
 {
 }
 
