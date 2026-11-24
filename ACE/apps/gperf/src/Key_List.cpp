@@ -946,18 +946,33 @@ Key_List::output_switch (int use_keyword_table)
                           lowest_case_value);
 
           for (temp = curr; temp && ++i <= number_of_cases; temp = temp->next)
-            if (option[LENTABLE])
-              ACE_OS::printf ("                case %*d: if (len == %d) s = \"%s\"; else return %s; break;\n",
-                      Key_List::field_width,
-                      temp->hash_value - lowest_case_value,
-                      temp->length,
-                      temp->key.c_str (),
-                      generated_null_pointer ());
-            else
-              ACE_OS::printf ("                case %*d: s = \"%s\"; break;\n",
-                      Key_List::field_width,
-                      temp->hash_value - lowest_case_value,
-                      temp->key.c_str ());
+            {
+              if (option[LENTABLE])
+                {
+                  ACE_OS::printf ("                case %*d:\n"
+                                  "                  if (len == %d)\n"
+                                  "                    {\n"
+                                  "                      s = \"%s\";\n"
+                                  "                    }\n"
+                                  "                  else\n"
+                                  "                    {\n"
+                                  "                      return %s;\n"
+                                  "                    }\n"
+                                  "                  break;\n",
+                                  Key_List::field_width,
+                                  temp->hash_value - lowest_case_value,
+                                  temp->length,
+                                  temp->key.c_str (),
+                                  generated_null_pointer ());
+                }
+              else
+                {
+                  ACE_OS::printf ("                case %*d: s = \"%s\"; break;\n",
+                                  Key_List::field_width,
+                                  temp->hash_value - lowest_case_value,
+                                  temp->key.c_str ());
+                }
+            }
 
           ACE_OS::printf ("                default: return %s;\n                }\n              ",
                           generated_null_pointer ());
@@ -1235,14 +1250,30 @@ Key_List::output_binary_search_function ()
   ACE_OS::printf ("while (last >= first)\n");
   ACE_OS::printf ("\t{\n");
   ACE_OS::printf ("\t   middle = (last + first) / 2;\n");
-  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[middle].%s, str) == 0)\n      break;\n",
+  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[middle].%s, str) == 0)\n"
+                  "\t     {\n"
+                  "\t       break;\n"
+                  "\t     }\n",
                   string_compare_prefix (false), option.key_name ().c_str ());
-  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[middle].%s, str) < 0)\n      first = middle + 1;\n",
+  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[middle].%s, str) < 0)\n"
+                  "\t     {\n"
+                  "\t       first = middle + 1;\n"
+                  "\t     }\n",
                   string_compare_prefix (false), option.key_name ().c_str ());
-  ACE_OS::printf ("\t   else last = middle - 1;\n");
+  ACE_OS::printf ("\t   else\n"
+                  "\t     {\n"
+                  "\t       last = middle - 1;\n"
+                  "\t     }\n");
   ACE_OS::printf ("\t}\n");
-  ACE_OS::printf ("if (last < first)\n  return %s;\n", generated_null_pointer ());
-  ACE_OS::printf ("else\n  return (%swordlist[middle]%s);\n}\n",
+  ACE_OS::printf ("if (last < first)\n"
+                  "  {\n"
+                  "    return %s;\n"
+                  "  }\n",
+                  generated_null_pointer ());
+  ACE_OS::printf ("else\n"
+                  "  {\n"
+                  "    return (%swordlist[middle]%s);\n"
+                  "  }\n}\n",
                   generated_address_prefix (), generated_address_suffix ());
 
   if (additional_code)
@@ -1343,9 +1374,11 @@ Key_List::output_linear_search_function ()
 
   ACE_OS::printf ("for (int i=0; i<=%d; ++i)",total_keys-1);
   ACE_OS::printf ("\t{\n");
-  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[i].%s, str) == 0)\n",
+  ACE_OS::printf ("\t   if (%sstrcmp (wordlist[i].%s, str) == 0)\n"
+                  "\t     {\n",
                   string_compare_prefix (false), option.key_name ().c_str ());
-  ACE_OS::printf ("\t        return %swordlist[i]%s;\n",
+  ACE_OS::printf ("\t       return %swordlist[i]%s;\n"
+                  "\t     }\n",
                   generated_address_prefix (), generated_address_suffix ());
   ACE_OS::printf ("\t}\n");
   ACE_OS::printf ("return %s;\n}\n", generated_null_pointer ());
