@@ -54,7 +54,7 @@ module SecurityReplaceable {
       in   Security::DelegationMode           delegation_mode,
       in   Security::OptionsDirectionPairList association_options,
       in   Security::MechanismType            mechanism,
-      // from IOR
+      /// from IOR
       in   Security::Opaque                   comp_data,
       in   Security::ChannelBindings          chan_binding,
       out  Security::OpaqueBuffer             security_token,

@@ -181,9 +181,8 @@ abstract valuetype Criterion
   boolean is_critical (in Event e);
 };
 
-/// The specialized criterions.
-/// @note A valuetype can only inherit from one non-abstract other valuetype
-/// (which then must be the first
+/// The specialized criterions. Note: A valuetype can only inherit
+/// from one non-abstract other valuetype (which then must be the first
 /// one listed). Further Criterions may only be abstract valuetypes
 /// without the ability to contain state members. (The support of
 /// a CORBA interface is not yet supported.)

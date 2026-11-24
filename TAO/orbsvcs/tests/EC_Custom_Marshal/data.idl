@@ -1,3 +1,4 @@
+
 /// Some simple data types to show how the Events can carry its
 /// payload in the octet sequence.
 module ECM_IDLData
