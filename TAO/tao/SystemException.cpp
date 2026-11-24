@@ -59,8 +59,6 @@ const CORBA::ULong TAO_ENOTSUP_MINOR_CODE            = 0x14U;
 // ****************************************************************
 
 CORBA::SystemException::SystemException ()
-  : minor_ (0),
-    completed_ (CORBA::COMPLETED_NO)
 {
 }
 

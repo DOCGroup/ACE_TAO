@@ -151,10 +151,10 @@ namespace CORBA
 
   private:
     /// Minor code.
-    CORBA::ULong minor_;
+    CORBA::ULong minor_ {};
 
     /// Completion status.
-    CORBA::CompletionStatus completed_;
+    CORBA::CompletionStatus completed_ {CORBA::COMPLETED_NO};
   };
 
   // Declarations for all of the CORBA standard exceptions.
