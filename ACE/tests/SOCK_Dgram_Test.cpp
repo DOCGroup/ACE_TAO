@@ -27,7 +27,7 @@
 static ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
+  auto *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr, peer_addr;
   ACE_SOCK_Dgram cli_dgram;
   ACE_Time_Value const timeout (1);
@@ -167,7 +167,7 @@ client (void *arg)
       else
         {
           // recv() ok, check data, 'from', and 'to' address
-          size_t const rcv_siz = static_cast<size_t> (rcv_cnt);
+          auto const rcv_siz = static_cast<size_t> (rcv_cnt);
           if (rcv_siz != sizeof (TEST_DATA))
             {
               ACE_ERROR ((LM_ERROR,
@@ -218,7 +218,7 @@ client (void *arg)
 static ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  ACE_SOCK_Dgram *server_dgram = static_cast<ACE_SOCK_Dgram *> (arg);
+  auto *server_dgram = static_cast<ACE_SOCK_Dgram *> (arg);
   ACE_INET_Addr peer_addr;
 
   ACE_TCHAR buf[20];
@@ -232,7 +232,7 @@ server (void *arg)
   else
     {
       // recv() ok, check data and 'from' address
-      size_t const rcv_siz = static_cast<size_t> (rcv_cnt);
+      auto const rcv_siz = static_cast<size_t> (rcv_cnt);
       if (rcv_siz != sizeof (TEST_DATA))
         {
           ACE_ERROR ((LM_ERROR,

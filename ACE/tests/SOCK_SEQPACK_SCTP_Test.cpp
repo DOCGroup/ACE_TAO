@@ -52,7 +52,7 @@ using tdesc_t = struct tdesc;
 ACE_THR_FUNC_RETURN
 Server (void *arg)
 {
-  ACE_SOCK_SEQPACK_Acceptor *AcceptorSocket =
+  auto *AcceptorSocket =
     reinterpret_cast<ACE_SOCK_SEQPACK_Acceptor *> (arg);
 
   ACE_SOCK_SEQPACK_Association Stream;
@@ -186,7 +186,7 @@ Server (void *arg)
 ACE_THR_FUNC_RETURN
 Client(void *arg)
 {
-  ACE_Multihomed_INET_Addr *ServerAddr =
+  auto *ServerAddr =
     reinterpret_cast<ACE_Multihomed_INET_Addr *> (arg);
 
   ACE_SOCK_SEQPACK_Connector Connector;

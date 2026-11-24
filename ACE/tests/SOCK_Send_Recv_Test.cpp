@@ -45,7 +45,7 @@ const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 ACE_THR_FUNC_RETURN
 client (void *arg)
 {
-  ACE_INET_Addr *remote_addr = static_cast<ACE_INET_Addr *> (arg);
+  auto *remote_addr = static_cast<ACE_INET_Addr *> (arg);
   ACE_INET_Addr server_addr (remote_addr->get_port_number (),
                              ACE_LOCALHOST);
   ACE_SOCK_Stream cli_stream;
@@ -228,7 +228,7 @@ client (void *arg)
 ACE_THR_FUNC_RETURN
 server (void *arg)
 {
-  ACE_SOCK_Acceptor *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
+  auto *peer_acceptor = static_cast<ACE_SOCK_Acceptor *> (arg);
   ACE_SOCK_Stream sock_str;
   ACE_INET_Addr cli_addr;
   ACE_Time_Value timeout (ACE_DEFAULT_TIMEOUT);
