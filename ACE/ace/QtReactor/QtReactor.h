@@ -48,7 +48,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * etc. They are specific to Qt which uses these as a call back
  * methods implementation mechanism.
  *
- * \note Marek Brudka <mbrudka@elka.pw.edu.pl>: ACE_QtReactor was
+ * @note Marek Brudka <mbrudka@elka.pw.edu.pl>: ACE_QtReactor was
  * quickly bugfixed to meet ACE 5.4.2 (6.0.0?) deadline.
  * While it passes QtReactor_Test now, there is a great
  * room for improvements as the implementation is rather inefficient

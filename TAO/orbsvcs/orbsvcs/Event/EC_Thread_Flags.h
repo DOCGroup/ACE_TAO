@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
   Encapsulate flags used for creating threads with \a
   ACE_OS::thr_create and \a ACE_Task::activate.
 
-  \note On platforms that do not support the thread schedulers, the
+  @note On platforms that do not support the thread schedulers, the
   ACE OS adaptation layer preserves the symbols for THR_SCHED_*, but
   defines them as zero.  Thus, on such platforms, setting a scheduler
   in the flags, then inquiring for the scheduler type will yield the
@@ -59,7 +59,7 @@ public:
 
     \sa TAO_EC_Thread_Flags::supported_flags
 
-    \note The \a sched value only gets set if the scheduler is specified using symbols.
+    @note The \a sched value only gets set if the scheduler is specified using symbols.
   */
   const TAO_EC_Thread_Flags& operator= (const char* symbolic_flags)
     { this->parse_symbols(symbolic_flags); return *this; }

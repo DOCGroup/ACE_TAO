@@ -55,7 +55,7 @@ int send_datagram (ACE_SOCK_Dgram_Bcast &socket, int datagram_no)
 }
 
 /*\brief Send a sequence of datagrams with 1 second period
-  \note Th function employs dgram_port and dgrams_no global variables
+  @note Th function employs dgram_port and dgrams_no global variables
   \retval -1 if error
   \retval 0 if sent
 */
@@ -86,7 +86,7 @@ int run_sender( )
 }
 
 /*\brief Receive single datagram
-  \note The function employes dgram_port and dgram_recv_timeout variables
+  @note The function employes dgram_port and dgram_recv_timeout variables
   \retval -1 if not received,
   \retval 0  received a datagrams
 */
@@ -125,7 +125,7 @@ int run_receiver ()
 
 #if !defined (ACE_HAS_PROCESS_SPAWN) && defined (ACE_HAS_THREADS)
 /* \brief Thread main function to run run_receiver function
-   \note run_receiver return valu is stored in receiver_exit_code global variable
+   @note run_receiver return valu is stored in receiver_exit_code global variable
 */
 static ACE_THR_FUNC_RETURN run_thread_receiver (void *)
 {
