@@ -1006,6 +1006,10 @@ void ClientThread(void *dummy)
   sprintf(file_name, "%s%d", LOG_FILE, (int)getpid());
   returnerr("Log file is %s\n", file_name);
   logfile = fopen(file_name, "w+");
+  if (logfile == 0)
+    {
+      errexit("Can't open log file\n");
+    }
     }
 
     /* Initialize random number generator */
