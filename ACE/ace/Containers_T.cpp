@@ -1067,9 +1067,7 @@ ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::dump_i () const
 
 template <class T, size_t ACE_SIZE>
 ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::ACE_Fixed_Set_Iterator_Base (ACE_Fixed_Set<T, ACE_SIZE> &s)
-  : s_ (s),
-    next_ (-1),
-    iterated_items_ (0)
+  : s_ (s)
 {
   ACE_TRACE ("ACE_Fixed_Set_Iterator_Base<T, ACE_SIZE>::ACE_Fixed_Set_Iterator_Base");
   this->advance ();

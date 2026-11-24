@@ -1278,10 +1278,10 @@ protected:
   ACE_Fixed_Set<T, ACE_SIZE> &s_;
 
   /// How far we've advanced over the set.
-  ssize_t next_;
+  ssize_t next_ {-1};
 
   /// The number of non free items that the iterator had pointed at.
-  size_t iterated_items_;
+  size_t iterated_items_ {};
 
   /// Dump the state of an object.
   void dump_i () const;
