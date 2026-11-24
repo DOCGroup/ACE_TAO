@@ -57,9 +57,18 @@ ACE_Locked_Free_List<T, ACE_LOCK>::add (T *element)
 {
   ACE_MT (ACE_GUARD (ACE_LOCK, ace_mon, this->mutex_));
 
-  // Check to see that we not at the high water mark.
-  if (this->mode_ == ACE_PURE_FREE_LIST
-      || this->size_ < this->hwm_)
+  // A pure free list never owns its elements, so it must not delete them
+  // when the high water mark is reached.
+  if (this->mode_ == ACE_PURE_FREE_LIST)
+    {
+      element->set_next (this->free_list_);
+      this->free_list_ = element;
+      ++this->size_;
+      return;
+    }
+
+  // Check to see that we are not at the high water mark.
+  if (this->size_ < this->hwm_)
     {
       element->set_next (this->free_list_);
       this->free_list_ = element;
