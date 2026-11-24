@@ -76,8 +76,7 @@ ACE_Vector_Iterator<T, DEFAULT_SIZE>::dump () const
 
 template <class T, size_t DEFAULT_SIZE> ACE_INLINE
 ACE_Vector_Iterator<T, DEFAULT_SIZE>::ACE_Vector_Iterator (ACE_Vector<T, DEFAULT_SIZE> &v)
-    : current_ (0),
-      vector_ (v)
+    : vector_ (v)
 {
   // ACE_TRACE ("ACE_Vector_Iterator<T>::ACE_Vector_Iterator");
 }

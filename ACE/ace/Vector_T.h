@@ -242,7 +242,7 @@ public:
 
 private:
   /// Pointer to the current item in the iteration.
-  size_t current_;
+  size_t current_ {};
 
   /// Reference to the vector we're iterating over.
   ACE_Vector<T, DEFAULT_SIZE> &vector_;
