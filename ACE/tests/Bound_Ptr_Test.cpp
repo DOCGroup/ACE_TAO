@@ -65,9 +65,7 @@ struct Child : public Child_Base
   static size_t instance_count_;
 };
 
-Child_Base::~Child_Base ()
-{
-}
+Child_Base::~Child_Base () = default;
 
 size_t Parent::instance_count_ = 0;
 
@@ -230,9 +228,7 @@ Method_Request_end::Method_Request_end (Scheduler *scheduler)
 {
 }
 
-Method_Request_end::~Method_Request_end ()
-{
-}
+Method_Request_end::~Method_Request_end () = default;
 
 int
 Method_Request_end::call ()

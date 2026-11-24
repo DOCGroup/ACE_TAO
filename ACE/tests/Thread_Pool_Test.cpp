@@ -84,9 +84,7 @@ private:
   int n_threads_;
 };
 
-Thread_Pool::~Thread_Pool ()
-{
-}
+Thread_Pool::~Thread_Pool () = default;
 
 int
 Thread_Pool::close (u_long)

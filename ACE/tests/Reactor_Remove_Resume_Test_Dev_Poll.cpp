@@ -63,9 +63,7 @@ Bogus_Handler::Bogus_Handler (ACE_Reactor * reactor,
      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-Bogus_Handler::~Bogus_Handler ()
-{
-}
+Bogus_Handler::~Bogus_Handler () = default;
 
 ACE_HANDLE
 Bogus_Handler::get_handle () const
@@ -157,9 +155,7 @@ Bad_Handler::Bad_Handler (ACE_Reactor * reactor,
      ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 }
 
-Bad_Handler::~Bad_Handler ()
-{
-}
+Bad_Handler::~Bad_Handler () = default;
 
 ACE_HANDLE
 Bad_Handler::get_handle () const

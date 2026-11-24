@@ -93,9 +93,7 @@ Thread_Pool::operator!()
   return ! this->failed_;
 }
 
-Thread_Pool::~Thread_Pool ()
-{
-}
+Thread_Pool::~Thread_Pool () = default;
 
 int
 Thread_Pool::close (u_long)

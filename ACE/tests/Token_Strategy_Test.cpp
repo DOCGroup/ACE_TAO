@@ -87,8 +87,7 @@ Token_Strategy_Test::Token_Strategy_Test (ACE_Token::QUEUEING_STRATEGY strategy,
               this->invocations_));
 }
 
-Token_Strategy_Test::~Token_Strategy_Test ()
-{}
+Token_Strategy_Test::~Token_Strategy_Test () = default;
 
 int
 Token_Strategy_Test::open (void *)

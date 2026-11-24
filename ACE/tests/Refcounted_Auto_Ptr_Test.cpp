@@ -169,9 +169,7 @@ Method_Request_end::Method_Request_end (Scheduler *scheduler)
 {
 }
 
-Method_Request_end::~Method_Request_end ()
-{
-}
+Method_Request_end::~Method_Request_end () = default;
 
 int
 Method_Request_end::call ()

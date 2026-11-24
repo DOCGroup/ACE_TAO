@@ -146,9 +146,7 @@ Request_Handler::open (void *arg)
   return result;
 }
 
-Request_Handler::~Request_Handler ()
-{
-}
+Request_Handler::~Request_Handler () = default;
 
 int
 Request_Handler::resume_handler ()

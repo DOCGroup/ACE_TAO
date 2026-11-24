@@ -711,8 +711,7 @@ MCT_Task::MCT_Task (const MCT_Config &config,
   this->reactor (reactor);
 }
 
-MCT_Task::~MCT_Task ()
-{}
+MCT_Task::~MCT_Task () = default;
 
 int
 MCT_Task::open (void *)
