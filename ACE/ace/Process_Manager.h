@@ -279,8 +279,8 @@ public:
 
   /**
    * Wait indefinitely for a single, specified process to terminate.
-   * If @a pid is 0, waits for any of the managed processes (but see the
-   * note concerning "sloppy process cleanup on unix").
+   * If @a pid is 0, waits for any of the managed processes.
+   * @note Process cleanup on Unix is "sloppy".
    * If @a pid != 0, this method waits for that process only.
    *
    * @retval The pid of the process which exited, or
