@@ -102,14 +102,14 @@ protected:
   TAO_InputCDR reply_cdr_;
 
   /// This invocation is using this transport, may change...
-  TAO_Transport *transport_;
+  TAO_Transport *transport_ {};
 
 private:
   /// Lock to protect @c is_reply_dispatched_ flag.
   std::unique_ptr<ACE_Lock> lock_ {};
 
   /// Has the reply been dispatched?
-  bool is_reply_dispatched_;
+  bool is_reply_dispatched_ {};
 };
 
 namespace TAO

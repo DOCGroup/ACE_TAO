@@ -29,9 +29,7 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
                 TAO_DEF_GIOP_MAJOR,
                 TAO_DEF_GIOP_MINOR,
                 orb_core)
-  , transport_ (nullptr)
   , lock_ (orb_core->resource_factory ()->create_cached_connection_lock ())
-  , is_reply_dispatched_ (false)
 {
 }
 
