@@ -92,7 +92,7 @@ myallocator (const void *base_addr = nullptr)
       options.minimum_bytes_ = 512 * 1024;
 #endif /* ACE_TEST_REMAP_ON_FAULT */
 
-      MALLOC *ptr = new MALLOC (MMAP_FILENAME,
+      auto *ptr = new MALLOC (MMAP_FILENAME,
                                 MUTEX_NAME,
                                 &options);
       static_allocator.reset (ptr);
@@ -131,7 +131,7 @@ initialize (MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         nullptr);
-  Test_Data *data1 = new (ptr) Test_Data;
+  auto *data1 = new (ptr) Test_Data;
 
   data1->i1_ = 111;
   data1->i2_ = 222;
@@ -147,7 +147,7 @@ initialize (MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Test_Data)),
                         nullptr);
-  Test_Data *data2 = new (ptr) Test_Data;
+  auto *data2 = new (ptr) Test_Data;
 
   data1->next_ = nullptr;
   data2->next_ = data1;
@@ -160,7 +160,7 @@ initialize (MALLOC *allocator)
   ACE_ALLOCATOR_RETURN (ptr,
                         allocator->malloc (sizeof (Long_Test)),
                         nullptr);
-  Long_Test *lt = new (ptr) Long_Test;
+  auto *lt = new (ptr) Long_Test;
 
   lt->array_[0] = 1000;
   lt->array_[1] = 1001;
