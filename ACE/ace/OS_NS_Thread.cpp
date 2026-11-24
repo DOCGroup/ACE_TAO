@@ -2504,7 +2504,7 @@ ACE_OS::mutex_lock_cleanup (void *mutex)
   ACE_OS_TRACE ("ACE_OS::mutex_lock_cleanup");
 #if defined (ACE_HAS_THREADS)
 # if defined (ACE_HAS_PTHREADS)
-  ACE_mutex_t *p_lock = (ACE_mutex_t *) mutex;
+  auto *p_lock = (ACE_mutex_t *) mutex;
   ACE_OS::mutex_unlock (p_lock);
 # else
   ACE_UNUSED_ARG (mutex);
@@ -2789,7 +2789,7 @@ ACE_OS::event_init (ACE_event_t *event,
 
       void *const mapped = ACE_OS::mmap (nullptr, sizeof (ACE_eventdata_t),
                                          PROT_RDWR, MAP_SHARED, fd);
-      ACE_eventdata_t *evtdata = reinterpret_cast<ACE_eventdata_t *> (mapped);
+      auto *evtdata = reinterpret_cast<ACE_eventdata_t *> (mapped);
       ACE_OS::close (fd);
       if (evtdata == MAP_FAILED)
         {
