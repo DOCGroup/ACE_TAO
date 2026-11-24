@@ -52,7 +52,6 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
   : mesg_base_ (mesg_base),
     incoming_ (std::addressof (input)),
     outgoing_ (std::addressof (output)),
-    response_expected_ (false),
     orb_core_ (orb_core),
     profile_ (orb_core),
     requesting_principal_ (nullptr)
