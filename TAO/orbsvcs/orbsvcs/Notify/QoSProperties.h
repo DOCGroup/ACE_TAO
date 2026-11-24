@@ -78,7 +78,7 @@ public:
   /// @}
 
 protected:
-  /// Return 1 if <value> is unsupported.
+  /// Return 1 if @c value is unsupported.
   int unsupported (ACE_CString& name);
 
   static constexpr int UNSUPPORTED_PROPERTY_COUNT = 1;
