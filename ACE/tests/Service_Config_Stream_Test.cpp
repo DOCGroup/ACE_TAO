@@ -13,7 +13,7 @@
  * The Decrypter service is static and is configured into a stream
  * dynamically.
  *
- * NOTE! This code is here, and it will trip up while being loaded. If
+ * @note This code is here, and it will trip up while being loaded. If
  * "static Decrypter" is inserted into the .conf file's module list, this
  * test will barf. This is arguably a weird test, but I don't know any
  * reason it should not work; however, this behavior has never been tested
