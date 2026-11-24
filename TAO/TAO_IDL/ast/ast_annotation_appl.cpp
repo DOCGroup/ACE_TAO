@@ -1,6 +1,7 @@
 #include "ast_annotation_appl.h"
 #include "ast_annotation_member.h"
 
+#include <algorithm>
 #include <memory>
 
 AST_Annotation_Appl::Param::~Param ()
@@ -157,13 +158,16 @@ AST_Annotation_Appl::find_param (std::string const& name) const
               return top->used ? nullptr : top;
             }
         }
-      for (std::unique_ptr<Param> const& param : *params_)
+      auto const param = std::find_if (
+        params_->begin (), params_->end (),
+        [&name] (std::unique_ptr<Param> const& candidate)
         {
-          if (param && param->id
-              && param->id->get_string () == name)
-            {
-              return param.get ();
-            }
+          return candidate && candidate->id
+            && candidate->id->get_string () == name;
+        });
+      if (param != params_->end ())
+        {
+          return param->get ();
         }
     }
 
