@@ -784,7 +784,7 @@ class ACE_Export ACE_Log_Formatter
 public:
   ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt);
 
-  /// Notes:
+  /// @note
   /// - ACE_OS::snprintf() is assumed to work.  The fallback to ACE_OS::sprintf()
   ///   is not implemented.
   /// - Other than special cases (listed below), the names of the parameters

@@ -53,7 +53,7 @@ public:
   /**
    * @name I/O operations
    *
-   * Notes on common parameters:
+   * @note Common parameters:
    *
    * @a buf is the buffer to write from or receive into.
    *

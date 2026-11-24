@@ -101,7 +101,7 @@ namespace ACE
   /**
    * @name I/O operations
    *
-   * Notes on common parameters:
+   * @note Common parameters:
    *
    * @a handle is the connected endpoint that will be used for I/O.
    *
