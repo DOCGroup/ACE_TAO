@@ -90,7 +90,7 @@ public:
   ~TAO_ORB_Manager ();
 
   /**
-   *  Put POA manager into the <Active> state, so that incoming corba
+   *  Put POA manager into the Active state, so that incoming corba
    *  requests are processed.  This method is useful for clients,
    *  which are not going to enter "orb->run" loop, yet may want to
    *  service incoming requests while waiting for a result of CORBA
@@ -102,7 +102,7 @@ public:
   int activate_poa_manager ();
 
   /**
-   * Activate <servant>, using the POA <activate_object> call.  Users
+   * Activate @a servant, using the POA @c activate_object() call.  Users
    * can call this method multiple times to activate multiple objects.
    *
    * @return 0 on failure, a string representation of the object ID if
@@ -120,9 +120,9 @@ public:
 
 #if !defined (CORBA_E_MICRO)
   /**
-   * Precondition: init_child_poa has been called.  Activate <servant>
-   * using the POA <activate_object_with_id> created from the string
-   * <object_name>. Users should call this to activate objects under
+   * Precondition: @c init_child_poa() has been called.  Activate @a servant
+   * using the POA @c activate_object_with_id() created from the string
+   * @a object_name. Users should call this to activate objects under
    * the child_poa.
    *
    * @param object_name  String name which will be used to create

@@ -48,7 +48,7 @@ public:
   TAO_Client_Network_Priority_Policy (
     TAO_Client_Network_Priority_Policy const &rhs);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of @c *this.
   TAO_Client_Network_Priority_Policy *clone () const;
 
   TAO::DiffservCodepoint request_diffserv_codepoint () override;
