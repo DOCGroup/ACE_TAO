@@ -86,7 +86,7 @@ ThreadTest::run(bool doubleLock)
 
 ACE_THR_FUNC_RETURN ThreadTest::workerThreadWrapper(void *data)
 {
-   ThreadTest *thisPtr = reinterpret_cast<ThreadTest *>(data);
+   auto *thisPtr = reinterpret_cast<ThreadTest *>(data);
    thisPtr->workerThread();
    return ACE_THR_FUNC_RETURN_NULL;
 }

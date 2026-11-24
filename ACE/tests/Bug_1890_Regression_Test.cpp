@@ -106,7 +106,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_Reactor reactor (impl_ptr);
 
   // Create the timer, this is the main driver for the test
-  Timer * timer = new Timer;
+  auto * timer = new Timer;
 
   // Initialize the timer and register with the reactor
   if (-1 == timer->open (std::addressof (reactor)))
