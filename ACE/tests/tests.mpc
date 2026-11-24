@@ -1294,6 +1294,13 @@ project(Notify Performance Test) : acetest {
   }
 }
 
+project(Null_Mutex_Guard_Test) : acetest {
+  exename = Null_Mutex_Guard_Test
+  Source_Files {
+    Null_Mutex_Guard_Test.cpp
+  }
+}
+
 project(Object Manager Test) : acetest {
   exename = Object_Manager_Test
   Source_Files {
@@ -1784,13 +1791,6 @@ project(Thread Mutex Test) : acetest {
   exename = Thread_Mutex_Test
   Source_Files {
     Thread_Mutex_Test.cpp
-  }
-}
-
-project(Null_Mutex_Guard_Test) : acetest {
-  exename = Null_Mutex_Guard_Test
-  Source_Files {
-    Null_Mutex_Guard_Test.cpp
   }
 }
 

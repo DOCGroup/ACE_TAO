@@ -52,9 +52,9 @@ namespace
 #if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
   /// Array of mutexes used internally by OpenSSL when the SSL
   /// application is multithreaded.
-  std::unique_ptr<ACE_SSL_Context::lock_type[]> ssl_locks;
-
-  // @@ This should also be managed by a singleton.
+  // Keep this as a raw pointer so process shutdown can't destroy the
+  // locks while OpenSSL may still call the registered locking callback.
+  ACE_SSL_Context::lock_type *ssl_locks {};
 #endif /* ACE_HAS_THREADS && OPENSSL_VERSION_NUMBER < 0x10100000L */
 }
 
@@ -158,7 +158,7 @@ ACE_SSL_Context::ssl_library_init ()
 #if defined(ACE_HAS_THREADS) && (OPENSSL_VERSION_NUMBER < 0x10100000L)
       int const num_locks = ::CRYPTO_num_locks ();
 
-      ssl_locks = std::make_unique<lock_type[]> (num_locks);
+      ssl_locks = new lock_type[num_locks];
 
 # if !defined (WIN32)
       // This call isn't necessary on some platforms.  See the CRYPTO
@@ -230,7 +230,8 @@ ACE_SSL_Context::ssl_library_fini ()
       // cleaned up.
 #ifdef ACE_HAS_THREADS
       ::CRYPTO_set_locking_callback (nullptr);
-      ssl_locks.reset ();
+      delete [] ssl_locks;
+      ssl_locks = nullptr;
 #endif /* ACE_HAS_THREADS &&  */
 #endif /* OPENSSL_VERSION_NUMBER < 0x10100000L */
     }

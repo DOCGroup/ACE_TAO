@@ -79,7 +79,7 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
   BIO * const pBIO = BIO_new (&methods_ACE);
 #else
   // Keep the immutable method object alive for the process lifetime; BIO
-  // instances may outlive the call that created it. Retry initialization
+  // instances may outlive the call that created them. Retry initialization
   // after a failure so a transient allocation error does not disable all
   // future asynchronous SSL opens.
   static std::mutex methods_ACE_mutex;

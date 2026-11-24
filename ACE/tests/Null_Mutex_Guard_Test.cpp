@@ -1,5 +1,12 @@
+/**
+ * @file Null_Mutex_Guard_Test.cpp
+ *
+ * @brief Checks const guards with ACE_Null_Mutex.
+ */
+
 #include "test_config.h"
 
+#include "ace/Global_Macros.h"
 #include "ace/Guard_T.h"
 #include "ace/Null_Mutex.h"
 
@@ -10,10 +17,11 @@ run_main (int, ACE_TCHAR * [])
 
   ACE_Null_Mutex mutex;
 
-  // FUZZ: disable check_for_ACE_Guard
-  const ACE_Guard<ACE_Null_Mutex> guard (mutex);
+  ACE_GUARD_RETURN_CONST (ACE_Null_Mutex, guard, mutex, -1);
   ACE_TEST_ASSERT (guard.locked () != 0);
 
+  // Direct const declarations check the specialized guards' const locked ().
+  // FUZZ: disable check_for_ACE_Guard
   const ACE_Read_Guard<ACE_Null_Mutex> read_guard (mutex);
   ACE_TEST_ASSERT (read_guard.locked () != 0);
 
