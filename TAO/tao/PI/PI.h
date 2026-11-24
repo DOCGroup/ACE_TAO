@@ -25,6 +25,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PI_Export TAO_PI_Init
 {
 public:
+  TAO_PI_Init () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int Initializer ();
 };

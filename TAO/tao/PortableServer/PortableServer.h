@@ -21,6 +21,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_PortableServer_Export TAO_POA_Initializer
 {
 public:
+  TAO_POA_Initializer () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int init ();
 };

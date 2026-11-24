@@ -47,6 +47,8 @@ namespace Dynamic
 class TAO_PI_Export TAO_RequestInfo_Util
 {
 public:
+  TAO_RequestInfo_Util () = delete;
+
   /**
    * @name Factory Methods
    *

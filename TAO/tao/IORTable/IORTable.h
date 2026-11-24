@@ -21,6 +21,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_IORTable_Export TAO_IORTable_Initializer
 {
 public:
+  TAO_IORTable_Initializer () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int init ();
 };

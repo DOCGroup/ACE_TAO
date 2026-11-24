@@ -30,6 +30,8 @@ private:
 class TAO_DistributableThread_Factory
 {
 public:
+  TAO_DistributableThread_Factory () = delete;
+
   static RTScheduling::DistributableThread_ptr create_DT ();
 };
 

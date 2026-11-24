@@ -35,6 +35,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Strategies_Export TAO_OC_Endpoint_Selector_Loader
 {
 public:
+  TAO_OC_Endpoint_Selector_Loader () = delete;
+
   static int init();
 };
 

@@ -29,6 +29,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_CSD_TP_Export TAO_CSD_ThreadPool
 {
  public:
+  TAO_CSD_ThreadPool () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int init ();
 };

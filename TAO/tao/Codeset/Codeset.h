@@ -22,6 +22,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Codeset_Export TAO_Codeset_Initializer
 {
 public:
+  TAO_Codeset_Initializer () = delete;
+
   /// Used to force the initialization of the ORB code.
   static int init ();
 };
