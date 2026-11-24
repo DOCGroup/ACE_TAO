@@ -46,7 +46,7 @@ public:
   int acquire () { return 0; }
   int tryacquire () { return 0; }
   int release () { return 0; }
-  int locked () { return 1; }
+  int locked () const { return 1; }
   int remove () { return 0; }
   void dump () const {}
 
