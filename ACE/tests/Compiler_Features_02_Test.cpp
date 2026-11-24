@@ -55,11 +55,9 @@ run_main (int, ACE_TCHAR *[])
 
   // ... add all the numbers to validate that they are there ...
   int sum = 0;
-  for(collection::iterator i = c.begin(), end = c.end();
-      i != end;
-      ++i)
+  for (auto const& entry : c)
     {
-      sum += i->second;
+      sum += entry.second;
     }
 
   // ... remember Euler ...
