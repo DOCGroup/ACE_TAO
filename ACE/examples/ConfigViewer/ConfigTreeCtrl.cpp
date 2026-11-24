@@ -25,9 +25,7 @@ ConfigTreeCtrl::ConfigTreeCtrl(wxWindow* parent, wxWindowID id, const wxPoint& p
   LoadTree();
 }
 
-ConfigTreeCtrl::~ConfigTreeCtrl()
-{
-}
+ConfigTreeCtrl::~ConfigTreeCtrl() = default;
 
 void ConfigTreeCtrl::LoadTree()
 {
