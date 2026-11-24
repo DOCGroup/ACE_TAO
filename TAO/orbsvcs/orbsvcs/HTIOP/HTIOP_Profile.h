@@ -74,7 +74,7 @@ namespace TAO
       Profile& operator= (Profile const&) = delete;
       Profile& operator= (Profile&&) = delete;
 
-      /// Destructor is to be called only through <_decr_refcnt>.
+      /// Destructor is to be called only through @c _decr_refcnt().
       ~Profile () override;
 
       /**
@@ -100,9 +100,9 @@ namespace TAO
       CORBA::ULong endpoint_count () const override;
 
       /**
-       * Add <endp> to this profile's list of endpoints (it is inserted
+       * Add @a endp to this profile's list of endpoints (it is inserted
        * next to the head of the list).  This profiles takes ownership of
-       * <endp>.
+       * @a endp.
        */
       void add_endpoint (Endpoint *endp);
 
@@ -125,12 +125,12 @@ namespace TAO
        *
        * Addressing info of the default endpoint, i.e., head of the list,
        * is transmitted using standard HTIOP ProfileBody components.  See
-       * <encode_endpoints> method documentation above for how the rest of
+       * @c encode_endpoints() method documentation above for how the rest of
        * the endpoint list is transmitted.
        */
       Endpoint endpoint_;
 
-      /// Number of endpoints in the list headed by <endpoint_>.
+      /// Number of endpoints in the list headed by @c endpoint_.
       CORBA::ULong count_;
     };
   }

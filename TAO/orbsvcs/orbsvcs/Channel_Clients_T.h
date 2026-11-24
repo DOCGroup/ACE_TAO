@@ -54,7 +54,7 @@ template <class TARGET>
 class ACE_PushSupplier_Adapter : public POA_RtecEventComm::PushSupplier
 {
 public:
-  /// Forwards all calls to <owner>.
+/// Forwards all calls to @c target_.
   explicit ACE_PushSupplier_Adapter (TARGET *target);
 
   /// Forwards to target_.

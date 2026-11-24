@@ -73,7 +73,7 @@ public:
   /**
    * Accessors and mutators for object references.
    */
-  /// Returns a <NamingContext_ptr> for the root Naming Context.
+  /// Returns a @c CosNaming::NamingContext_ptr for the root Naming Context.
   CosNaming::NamingContext_ptr my_root_context () const;
   CosNaming::NamingContext_ptr ft_root_context () const;
 

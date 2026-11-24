@@ -28,8 +28,8 @@ class TAO_FT_Invocation_Endpoint_Selector;
 /**
  * @class TAO_FT_Endpoint_Selector_Factory
  *
- * @brief Factory for initializing <Endpoint_Selection_State> and
- * obtaining appropriate <Invocation_Endpoint_Selector>.
+ * @brief Factory for initializing @c Endpoint_Selection_State and
+ * obtaining the appropriate @c Invocation_Endpoint_Selector.
  *
  * This class is specifically for the FT_Service in TAO to return the
  * right factory

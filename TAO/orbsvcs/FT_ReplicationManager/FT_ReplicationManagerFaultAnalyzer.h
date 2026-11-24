@@ -138,7 +138,7 @@ namespace TAO
       TAO::FT_FaultEventDescriptor & fault_event_desc);
 
     /// Is the replica at location the primary member of its ObjectGroup?
-    /// Sets <object_is_primary> and returns 0 on success.
+    /// Sets @a object_is_primary and returns 0 on success.
     /// Returns -1 on failure.
     int is_primary_member (
       PortableGroup::ObjectGroup_ptr const iogr,
@@ -152,7 +152,7 @@ namespace TAO
       PortableGroup::ObjectGroup_out new_iogr);
 
     /// Choose a new primary member for the ObjectGroup.
-    /// Sets <new_iogr> and returns 0 on success.
+    /// Sets @a new_iogr and returns 0 on success.
     /// Returns -1 on failure.
     int set_new_primary (
       PortableGroup::ObjectGroup_ptr iogr,

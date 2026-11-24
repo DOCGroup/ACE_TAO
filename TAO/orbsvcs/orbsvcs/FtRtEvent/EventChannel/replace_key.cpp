@@ -5,7 +5,7 @@
 #include <cstring>
 
 /// This function was defined in IOGR_Maker.cpp. It is moved
-/// here because the use of <algorithm> header
+/// here because the use of the @c &lt;algorithm&gt; header
 /// file conflicts with the use of auto_ptr in the
 /// VxWorks5.5.1_PPC85XX_DIAB platform.
 

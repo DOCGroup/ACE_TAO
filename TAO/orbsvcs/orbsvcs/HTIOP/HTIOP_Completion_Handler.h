@@ -60,7 +60,7 @@ namespace TAO
 
       ~Completion_Handler () override;
 
-      /// Called by the <Strategy_Acceptor> when the handler is completely
+      /// Called by @c Strategy_Acceptor when the handler is completely
       /// connected. Argument is unused.
       int open (void *) override;
 

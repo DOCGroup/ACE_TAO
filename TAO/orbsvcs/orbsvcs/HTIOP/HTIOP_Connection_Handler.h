@@ -51,7 +51,7 @@ namespace TAO
 
       ~Connection_Handler () override;
 
-      /// Called by the <Strategy_Acceptor> when the handler is completely
+      /// Called by @c Strategy_Acceptor when the handler is completely
       /// connected.  Argument is unused.
       int open (void *) override;
 
@@ -92,7 +92,7 @@ namespace TAO
       /// Add ourselves to Cache.
       int add_transport_to_cache ();
 
-      /// Process the <listen_list>
+      /// Process @c listen_list.
       int process_listen_point_list (::HTIOP::ListenPointList &listen_list);
 
       ///Set the Diff-Serv codepoint if the Policy dicates the setting of

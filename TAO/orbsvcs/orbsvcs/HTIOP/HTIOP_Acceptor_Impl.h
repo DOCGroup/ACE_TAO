@@ -59,12 +59,12 @@ namespace TAO
       Accept_Strategy& operator= (Accept_Strategy const&) = delete;
       Accept_Strategy& operator= (Accept_Strategy&&) = delete;
 
-      /// Initialize the <peer_acceptor_> with <local_addr>.  If the
+      /// Initialize @c peer_acceptor_ with @a local_addr.  If the
       /// process runs out of handles, purge some "old" connections.
       int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
                 bool restart = false) override;
 
-      /// Delegates to the <accept> method of the PEER_ACCEPTOR. If the
+      /// Delegates to the @c accept() method of the peer acceptor. If the
       /// process runs out of handles, purge some "old" connections.
       int accept_svc_handler (SVC_HANDLER *svc_handler) override;
 

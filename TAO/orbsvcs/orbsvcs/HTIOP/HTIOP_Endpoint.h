@@ -71,7 +71,7 @@ namespace TAO
       int addr_to_string (char *buffer, size_t length) override;
       virtual void reset_hint ();
 
-      /// Makes a copy of <this>
+      /// Makes a copy of @c *this.
       TAO_Endpoint *duplicate () override;
 
       /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
@@ -84,14 +84,14 @@ namespace TAO
 
       /// @name HTIOP_Endpoint-specific methods
       /// @{
-      /// Return a reference to the <object_addr>.
+      /// Return a reference to @c object_addr_.
       const ACE::HTBP::Addr &object_addr () const;
 
       /// Return a pointer to the host string.  This object maintains
       /// ownership of this string.
       const char *host () const;
 
-      /// Copy the string @a h into <host_> and return the resulting pointer.
+      /// Copy the string @a h into @c host_ and return the resulting pointer.
       /// This object maintains ownership of this string.
       const char *host (const char *h);
 
@@ -105,7 +105,7 @@ namespace TAO
       /// ownership of this string.
       const char *htid () const;
 
-      /// Copy the string @a h into <host_> and return the resulting pointer.
+      /// Copy the string @a h into @c host_ and return the resulting pointer.
       /// This object maintains ownership of this string.
       const char *htid (const char *h);
       /// @}

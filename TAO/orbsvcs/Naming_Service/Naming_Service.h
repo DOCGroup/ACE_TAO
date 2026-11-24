@@ -21,7 +21,7 @@
  * @brief Defines a class that encapsulates the implementation of the
  * COS Naming Service.
  *
- * This class makes use of the <TAO_Naming_Server>
+ * This class makes use of @c TAO_Naming_Server
  * to implement the COS Naming Service.
  */
 class TAO_Naming_Service

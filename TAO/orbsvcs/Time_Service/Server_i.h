@@ -22,7 +22,7 @@
  *
  * @brief CORBA Server implementation.
  *
- * A CORBA server that initializes the <TimeService Server>
+ * A CORBA server that initializes the TimeService server
  * servant implementation and the ORB.
  */
 class Server_i

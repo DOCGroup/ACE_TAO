@@ -36,7 +36,7 @@ public:
   /// Helper method for the implementation of CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (CORBA::Any const &val);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of @c *this.
   TAO_FT_Heart_Beat_Enabled_Policy *clone () const;
 
   /// @name FT::HeartbeatEnabledPolicy methods

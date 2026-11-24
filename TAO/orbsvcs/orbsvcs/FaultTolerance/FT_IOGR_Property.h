@@ -63,16 +63,16 @@ public:
   CORBA::Boolean set_property (
       CORBA::Object_ptr& ior) override;
 
-  /// Set <ior1> as  primary which is a part of <ior2>
+  /// Set @a ior1 as the primary, which is a part of @a ior2.
   CORBA::Boolean set_primary (
       CORBA::Object_ptr& ior1,
       CORBA::Object_ptr ior2) override;
 
-  /// Get the primary member from the IOGR <ior>
+  /// Get the primary member from the IOGR @a ior.
   CORBA::Object_ptr get_primary (
       CORBA::Object_ptr ior) override;
 
-  /// Is there a primary available for <ior>
+  /// Is there a primary available for @a ior?
   CORBA::Boolean is_primary_set (
       CORBA::Object_ptr ior) override;
 
@@ -83,13 +83,13 @@ public:
   CORBA::Boolean reset_tagged_components (
       FT::TagFTGroupTaggedComponent& ft_group);
 
-  /// Extract the TagFTGroupTaggedComponent inside the <ior>
+  /// Extract the TagFTGroupTaggedComponent inside @a iogr.
   CORBA::Boolean get_tagged_component (
       CORBA::Object_ptr const iogr,
       FT::TagFTGroupTaggedComponent &ft_group) const;
 
 private:
-  /// An helper function that gets the primary profile from the <ior>
+  /// An helper function that gets the primary profile from @a ior.
   TAO_Profile *get_primary_profile (CORBA::Object_ptr const ior) const;
 
   /// An helper method for encoding the proeprties

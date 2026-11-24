@@ -46,7 +46,7 @@ public:
   CORBA::Boolean select_profile (TAO_MProfile const& mprofile,
                                  TAO_Profile *&pfile) override;
 
-  /// Check whether <obj> is nil or not. FT spec suggests some
+  /// Check whether @a obj is nil or not. FT spec suggests some
   /// extensions for a CORBA::is_nil () operation.
   CORBA::Boolean object_is_nil (CORBA::Object_ptr const obj) override;
 

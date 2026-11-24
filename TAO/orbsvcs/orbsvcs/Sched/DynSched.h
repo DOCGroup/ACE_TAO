@@ -160,9 +160,9 @@ public:
   status_t register_task (RT_Info *, handle_t &handle);
 
   /**
-   * Tries to find the RT_Info corresponding to <name> in the RT_Info
-   * database.  Returns SUCCEEDED if <name> was found and <rtinfo> was
-   * set.  Returns UNKNOWN_TASK if <name> was not found, but <rtinfo>
+   * Tries to find the RT_Info corresponding to @a name in the RT_Info
+   * database.  Returns SUCCEEDED if @a name was found and @a rtinfo was
+   * set.  Returns UNKNOWN_TASK if @a name was not found, but @a rtinfo
    * was set to a newly allocated RT_Info.  In this UNKNOWN_TASK case,
    * the task must call RT_Info::set to fill in execution properties.
    * In the SUCCEEDED and UNKNOWN_TASK cases, this->register_task

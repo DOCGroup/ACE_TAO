@@ -144,7 +144,7 @@ protected:
   std::vector<std::string> notify_channel_name_;
 
   /// true: create an event channel and registers it with the Naming Service
-  /// with the name <notify_channel_name_>
+  /// with the name @c notify_channel_name_.
   bool register_event_channel_ {};
 
   /// The Factory.

@@ -48,7 +48,7 @@ public:
   /// CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (CORBA::Any const &val);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of @c *this.
   TAO_FT_Request_Duration_Policy *clone () const;
 
   /// @name FT::RequestDurationPolicy methods
@@ -93,7 +93,7 @@ public:
   /// CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (CORBA::Any const &val);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of @c *this.
   TAO_FT_Heart_Beat_Policy *clone () const;
 
   /// @name FT::HeartbeatPolicy methods
