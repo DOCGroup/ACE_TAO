@@ -41,7 +41,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * NT Services can be implemented using the framework defined by
  * the ACE_NT_Service class, and the macros defined in this file.
- * Some quick refresher notes on NT Services:
+ * @note Quick refresher on NT Services:
  *
  *   - The main program defines an array of entries describing the
  *     services offered.  The ACE_NT_SERVICE_ENTRY macro can help with

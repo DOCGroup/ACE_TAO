@@ -48,7 +48,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * implementation and does not try to normalize the concept of multicast
  * communications.
  *
- * Usage Notes:
+ * @note Usage:
  * - Send and receive addresses and network interfaces, but not port number,
  *   are independent. While this instance is open, one send interface (and a
  *   default send address) is in effect and 0, 1, or multiple receive
@@ -69,7 +69,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *   However, there are filtering options that can be applied, to narrow it
  *   down considerably.
  *
- * Interface specification notes (for subscribe() and unsubscribe()):
+ * @note Interface specification (for subscribe() and unsubscribe()):
  * - If @a net_if == 0, the @c OPT_NULLIFACE_ALL and @c OPT_NULLIFACE_ONE
  *   options determine whether only the system default interface
  *   (if @c OPT_NULLIFACE_ONE is set) or all interfaces (if
@@ -108,7 +108,7 @@ public:
   {
     /* Define whether a specific multicast address (in addition to the port
      * number) is bound to the socket.
-     * @note:
+     * @note
      * - Effect of doing this is stack/environment dependent, but in most
      *   environments can be used to filter out unwanted unicast, broadcast,
      *   and (other) multicast messages sent to the same port number.
