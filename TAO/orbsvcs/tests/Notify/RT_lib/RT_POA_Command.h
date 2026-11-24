@@ -38,9 +38,11 @@ public:
   TAO_Notify_Tests_RT_POA_Command& operator= (TAO_Notify_Tests_RT_POA_Command&&) = delete;
 
   /// Parse args and populate options.
-  /// The arg_shifter options are read in the following manner:
+  /// The arg_shifter options use this syntax:
+  /// @code
   /// -Create <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count>
   /// (-Lane <priority> <static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
+  /// @endcode
   void init (ACE_Arg_Shifter& arg_shifter) override;
 
   /// Execute the command.

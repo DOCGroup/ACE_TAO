@@ -1,7 +1,7 @@
 /**
  *  @file   Updates.h
  *
- * Test to check if <offer_change> and <subscription_change> messages are
+ * Test to check if @c offer_change() and @c subscription_change() messages are
  * received correctly.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
@@ -101,7 +101,7 @@ protected:
   int added_count_;
 
   /// Count of removed updates received
-  /// Check if these are equal to <update_count_> at the end of the test.
+  /// Check at the end of the test that this equals @c update_count_.
   int removed_count_;
 
   /// The one channel that we create using the factory.

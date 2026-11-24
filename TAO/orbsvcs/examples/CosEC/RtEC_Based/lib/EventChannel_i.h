@@ -51,7 +51,7 @@ public:
   /// Destroys this Event Channel object.
   void destroy () override;
 
-  /// destroys this Event Channel object and <delete>s this object.
+  /// Destroys this Event Channel object and deletes it.
   void shutdown ();
 
 private:

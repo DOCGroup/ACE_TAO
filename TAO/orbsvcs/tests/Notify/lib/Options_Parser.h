@@ -29,10 +29,10 @@ public:
 
   ~TAO_Notify_Tests_Options_Parser ();
 
-  /// Populates <qos> with options apecified in <arg_shifter>
+  /// Populates @a qos with options specified in @a arg_shifter.
   void execute (CosNotification::QoSProperties& qos, ACE_Arg_Shifter& arg_shifter);
 
-  /// Populates <added> and <removed> with options apecified in <arg_shifter>
+  /// Populates @a added and @a removed with options specified in @a arg_shifter.
   void execute (CosNotification::EventTypeSeq& added, CosNotification::EventTypeSeq& removed, ACE_Arg_Shifter& arg_shifter);
 };
 

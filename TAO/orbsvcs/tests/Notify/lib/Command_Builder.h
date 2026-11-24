@@ -54,7 +54,7 @@ public:
   /// Register the factory against the name of the factory.
   void _register (ACE_CString command_factory_name, TAO_Notify_Tests_Command_Factory* command_factory);
 
-  /// Execute the <start_command_>.
+  /// Execute @c start_command_.
   void execute ();
 
 protected:

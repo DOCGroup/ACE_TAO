@@ -52,7 +52,7 @@ public:
 
   ~TAO_Notify_Tests_Supplier_T ();
 
-  /// For backward compatibility. use <get_proxy> instead.
+  /// For backward compatibility. Use @c get_proxy() instead.
   Proxy_Traits_PTR get_proxy_consumer ();
 
   /// Send offer change.

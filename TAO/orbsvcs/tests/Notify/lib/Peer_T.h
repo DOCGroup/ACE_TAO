@@ -63,7 +63,7 @@ public:
   /// Dump status
   void status ();
 
-  /// Accessor for <proxy_>.
+  /// Accessor for @c proxy_.
   Proxy_Traits_PTR get_proxy ();
 
   /// Deactivate the object.
@@ -98,7 +98,7 @@ protected:
   /// The proxy that we are connected to.
    typename Proxy_Traits::VAR proxy_;
 
-  /// This <proxy_> id.
+  /// The ID of @c proxy_.
    typename Proxy_Traits::ID proxy_id_;
   /// @}
 };

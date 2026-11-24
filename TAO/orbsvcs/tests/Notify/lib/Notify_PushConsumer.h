@@ -5,12 +5,12 @@
  * Service to implement the servant for CosNotifyComm::PushConsumer
  *
  * = HOW-TO
- * 1. Derive from Notify_ProxyConsumer and implement <push>.
+ * 1. Derive from Notify_ProxyConsumer and implement @c push().
  * 2. Create the servant on the heap.(refcounted servant).
  * 3. Initialize the object, provide a POA.
- * 4. To connect, call <connect>, this will activate the object in the POA.
- *     You must provide a ConsumerAdmin to <connect>.
- * 5. To disconnect, call <disconnect> this will also deactivate the object.
+ * 4. To connect, call @c connect(), which activates the object in the POA.
+ *     You must provide a ConsumerAdmin to @c connect().
+ * 5. To disconnect, call @c disconnect(), which also deactivates the object.
  *
  *  @author Pradeep Gore <pradeep@cs.wustl.edu>
  */

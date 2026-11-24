@@ -193,10 +193,10 @@ public:
   /// Accessor for the Proxy that we're connected to.
   CosNotifyChannelAdmin::StructuredProxyPushSupplier_ptr get_proxy_supplier ();
 
-  /// Accumulate the throughput statistics into <throughput>
+  /// Accumulate the throughput statistics into @a throughput
   void accumulate_into (ACE_Throughput_Stats& throughput) const;
 
-  /// Accumulate the throughput statistics into <throughput>
+  /// Accumulate the throughput statistics into @a throughput
   void dump_stats (ACE_TCHAR const* msg,
                    ACE_High_Res_Timer::global_scale_factor_type gsf);
 
@@ -210,7 +210,7 @@ protected:
   /// The proxy_supplier id.
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_ {};
 
-  /// callback <done>
+  /// Callback for @c done().
   RedGreen_Test& test_client_;
 
   /// Protect internal state
@@ -272,10 +272,10 @@ public:
   /// Send one event.
   void send_event (CosNotification::StructuredEvent& event);
 
-  /// Accumulate the throughput statistics into <throughput>
+  /// Accumulate the throughput statistics into @a throughput
   void accumulate_into (ACE_Throughput_Stats& throughput) const;
 
-  /// Accumulate the throughput statistics into <throughput>
+  /// Accumulate the throughput statistics into @a throughput
   void dump_stats (ACE_TCHAR const* msg,
                    ACE_High_Res_Timer::global_scale_factor_type gsf);
 

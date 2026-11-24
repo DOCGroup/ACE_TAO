@@ -37,7 +37,7 @@ public:
   /// Ends the event communication and disposes this object.
   void disconnect_push_supplier () override;
 
-  /// Connects the <push_consumer> to the Event Channel.
+  /// Connects @a push_consumer to the Event Channel.
   void connect_push_consumer (CosEventComm::PushConsumer_ptr push_consumer) override;
 
 private:

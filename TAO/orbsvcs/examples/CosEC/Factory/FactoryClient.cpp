@@ -29,7 +29,7 @@ public:
   /// Resolves the factory from the Naming service.
   void resolve_factory ();
 
-  /// Creates a local factory and sets <factory_>.
+  /// Creates a local factory and sets @c factory_.
   CosEventChannelFactory::ChannelFactory_ptr
   create_factory ();
 

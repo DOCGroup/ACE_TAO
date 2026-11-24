@@ -31,7 +31,7 @@ public:
   TAO_CosEventChannelFactory_i &operator= (TAO_CosEventChannelFactory_i &&) = delete;
 
   /**
-   * This method creates a child poa with <poa> as the
+   * This method creates a child POA with @a poa as the
    * parent. It also accepts a Naming_Context which is used to register
    * the event channels if specified.
    * Returns -1 on error, 0 on success.
@@ -39,7 +39,7 @@ public:
    *    raise exceptions, but I'm undecided.
    * @@ Pradeep: when is the child poa destroyed? Maybe we should add
    *    a destroy() method to the factory interface (in IDL).
-   * @@ Carlos: if we add a <destroy> to the factory, any client will be
+   * @@ Carlos: if we add a @c destroy() operation to the factory, any client will be
    * able to destroy the factory!
    * @@ Pradeep: it could be a method of the Factory_i class, it
    *    doesn't have to be exposed through the IDL interface. Anyway,

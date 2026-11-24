@@ -46,20 +46,20 @@ public:
                void* supplier_cookie);
 
   /// The types of the event is chosen by the driver, based on the
-  /// cookie and the <event_number>
+  /// cookie and the @a event_number
   void send_event (int event_number);
 
-  /// Send <event> to the EC.
+  /// Send @a event to the EC.
   void send_event (const RtecEventComm::EventSet& event);
 
-  /// Set the event type and source in <event>
+  /// Set the event type and source in @a event.
   void send_event (int event_number,
                    const RtecEventComm::Event& event);
 
   /// Send a shutdown event.
   void send_shutdown ();
 
-  /// Connect using a <supplier_admin> and publications (<qos>)
+  /// Connect using @a supplier_admin and publications (@a qos)
   /// computed by the user
   virtual void connect (
         RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
@@ -82,7 +82,7 @@ public:
     const ACE_TCHAR* name,
     ACE_High_Res_Timer::global_scale_factor_type global_scale_factor);
 
-  /// Add our statistics to <stats>
+  /// Add our statistics to @a stats.
   void accumulate (ACE_Throughput_Stats& stats) const;
 
   /// Return an event type to push....

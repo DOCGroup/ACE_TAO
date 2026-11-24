@@ -33,10 +33,10 @@ public:
   Nestea_i (Nestea_i &&) = delete;
   Nestea_i &operator= (Nestea_i &&) = delete;
 
-  /// Add <cans> number of cans to the bookshelf.
+  /// Add @a cans cans to the bookshelf.
   void drink (CORBA::Long cans) override;
 
-  /// Removes <cans> number of cans from the bookshelf.
+  /// Remove @a cans cans from the bookshelf.
   void crush (CORBA::Long cans) override;
 
   /// Returns the number of cans in the bookshelf.

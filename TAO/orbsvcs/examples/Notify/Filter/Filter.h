@@ -142,7 +142,7 @@ class Filter_StructuredPushConsumer
   void disconnect ();
 
 protected:
-  /// The callback for <done>
+  /// The callback for @c done().
   FilterClient *filter_ {};
 
   /// The name of this consumer.

@@ -38,7 +38,7 @@ public:
   int fini () override;
   /// @}
 
-  /// Create the <COMMAND> command.
+  /// Create the @c COMMAND command.
   TAO_Notify_Tests_Command* create () override;
 };
 

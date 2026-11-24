@@ -32,7 +32,7 @@ public:
   /// Returns 0 on success, -1 on error.
   int init (int argc, ACE_TCHAR *argv[]);
 
-  /// Calls the ORB's <run> method.
+  /// Calls the ORB's @c run() method.
   int runORB ();
 
   /// Closes down the ORB and exits.

@@ -52,7 +52,7 @@ public:
   /// Connect to the sender that we found.
   void connect_to_sender ();
 
-  /// Destroy streams associated with <flowname>.
+  /// Destroy streams associated with @a flowname.
   void destroy (ACE_CString const &flowname);
 
   /// Unbind the sender from the Naming Service

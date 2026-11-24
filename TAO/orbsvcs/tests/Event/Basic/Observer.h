@@ -94,7 +94,7 @@ public:
   void print_args () const override;
   void print_usage () override;
 
-  /// Run the suppliers, using the <thread_manager> parameter
+  /// Run the suppliers using the @c thread_manager.
   void execute_test () override;
   void run_cleanup () override;
 

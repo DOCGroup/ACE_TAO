@@ -146,7 +146,7 @@ protected:
   /// The proxy_supplier id.
   CosNotifyChannelAdmin::ProxyID proxy_supplier_id_ {};
 
-  /// callback <done>
+  /// Callback for @c done().
   Subscribe *subscribe_ {};
 
   void offer_change (CosNotification::EventTypeSeq const &added,

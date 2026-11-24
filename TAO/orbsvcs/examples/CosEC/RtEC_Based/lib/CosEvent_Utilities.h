@@ -38,9 +38,9 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
 
   /**
    * This method creates a local scheduler, rtec and cosec.
-   * The POA <poa> specified here is used when <activate> is called to
+   * The POA specified by @a poa is used when @c activate() is called to
    * activate the contained servants.
-   * The POA <thispoa> is used to activate this.
+   * The POA specified by @a thispoa is used to activate this servant.
    */
   virtual void init (PortableServer::POA_ptr thispoa,
                      PortableServer::POA_ptr poa,
@@ -48,11 +48,11 @@ class TAO_RTEC_COSEC_Export CosEC_ServantBase :
                      ACE_TCHAR *eventSourceIds,
                      ACE_TCHAR *source_type_pairs);
 
-  /// Activates the CosEC with <thispoa_> and friends with the <poa_>
+  /// Activates the CosEC with @c thispoa_ and friends with @c poa_.
   int activate ();
 
   /// If the servant_id is not nil then it is used to supply the object id
-  /// for <this> servant.
+  /// for this servant.
   int activate (char const *servant_id);
 
   /// Deactivates the CosEC and friends with the POA.

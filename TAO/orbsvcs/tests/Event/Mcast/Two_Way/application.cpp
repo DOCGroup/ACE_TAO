@@ -77,7 +77,7 @@ public:
 
   /// PushConsumer methods.
   /// @{
-  /// Update our <heartbeats_> database to reflect newly received heartbeats.
+  /// Update the @c heartbeats_ database with newly received heartbeats.
   void push (RtecEventComm::EventSet const &events) override;
 
   /// Initiate shutdown().

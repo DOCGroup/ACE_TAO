@@ -37,7 +37,7 @@
 class Naming_Test
 {
 public:
-  /// Execute the test code.  <root_context> is the context to assume
+  /// Execute the test code. @c root_context is the context to assume
   /// as the root for all tests operations.
   Naming_Test () = default;
   virtual ~Naming_Test () = default;
@@ -229,8 +229,8 @@ private:
  * Service test.
  *
  * This test creates the Naming Context hierarchy:
- * root -> level1_context -> level2_context,
- * and prints out the ior of the <level1_context>.
+ * root -> @c level1_context -> @c level2_context,
+ * and prints out the IOR of @c level1_context.
  */
 class Persistent_Test_Begin : public Naming_Test
 {
@@ -259,9 +259,9 @@ private:
  * @brief This class implements the second part of the Persistent Naming
  * Service test.
  *
- * This test attempts to resolve <level2_context> both through the
- * <root> Naming Context, which it gets from <resolve_initial_references>, and
- * through <level1_context> stringified ior, which it gets from part 1 of
+ * This test attempts to resolve @c level2_context both through the
+ * root Naming Context, which it gets from @c resolve_initial_references(), and
+ * through the @c level1_context stringified IOR, which it gets from part 1 of
  * the persistent test.  The results of both methods are then
  * compared for equality.
  */
@@ -269,7 +269,7 @@ class Persistent_Test_End : public Naming_Test
 {
 public:
   /// Constructor.  Takes in an orb pointer and the ior received from
-  /// <Persistent_Test_Begin>.
+  /// @c Persistent_Test_Begin.
   Persistent_Test_End (CORBA::ORB_ptr orb,
                        ACE_TCHAR const *ior);
 
@@ -282,7 +282,7 @@ private:
   /// A pointer to our ORB (used for string/object conversion).
   CORBA::ORB_var orb_;
 
-  /// IOR of <level1_context> recorded during the run of part 1 of
+  /// IOR of @c level1_context recorded during the run of part 1 of
   /// persistent test.
   ACE_TString ior_;
 };
@@ -296,7 +296,7 @@ private:
  *
  * This class declares an interface to run the example client for
  * CosNaming CORBA server.  All the complexity for initializing
- * the server is hidden in the class.  Just the <run> interface
+ * the server is hidden in the class. Just the @c run() interface
  * is needed.
  */
 class CosNaming_Client : public ACE_Task_Base

@@ -73,10 +73,10 @@ public:
   void push_structured_event (CosNotification::StructuredEvent const& notification) override;
   /// @}
 
-  /// Accumulate the throughput statistics into <throughput>
+  /// Accumulate the throughput statistics into @a throughput
   void accumulate_into (ACE_Throughput_Stats& throughput) const;
 
-  /// Accumulate the throughput statistics into <throughput>
+  /// Accumulate the throughput statistics into @a throughput
   void dump_stats (ACE_TCHAR const* msg,
                    ACE_High_Res_Timer::global_scale_factor_type gsf);
 
@@ -118,10 +118,10 @@ public:
   int svc () override;
   /// @}
 
-  /// Accumulate the throughput statistics into <throughput>
+  /// Accumulate the throughput statistics into @a throughput
   void accumulate_into (ACE_Throughput_Stats& throughput) const;
 
-  /// Accumulate the throughput statistics into <throughput>
+  /// Accumulate the throughput statistics into @a throughput
   void dump_stats (ACE_TCHAR const* msg,
                    ACE_High_Res_Timer::global_scale_factor_type gsf);
 

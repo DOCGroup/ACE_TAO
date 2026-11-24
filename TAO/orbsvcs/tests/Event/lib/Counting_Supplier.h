@@ -30,7 +30,7 @@ public:
   EC_Counting_Supplier ();
 
   /**
-   * Connect as a consumer to receive a TIMEOUT every <period>
+   * Connect as a consumer to receive a TIMEOUT every @a period
    * milliseconds.
    * The class pushes an event (in its supplier role) every time it
    * receives the timeout.
