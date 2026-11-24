@@ -48,7 +48,7 @@ namespace TAO
     using character_type = charT;
     using s_traits = TAO::details::string_traits_base<character_type>;
 
-    inline String_var () : ptr_ (0)
+    inline String_var ()
     {
     }
 
@@ -149,7 +149,7 @@ namespace TAO
 
   private:
     /// Instance.
-    character_type *ptr_;
+    character_type *ptr_ {};
   };
 
   /**
