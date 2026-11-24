@@ -65,11 +65,13 @@ public:
     /** Enable/disable input parity checking. This option is only applicable
         on systems which support the POSIX termios API */
     bool inpckenb;
-    /** Enable & set CTS mode. Note that RTS & CTS are enabled/disabled
+    /** Enable & set CTS mode.
+        @note RTS & CTS are enabled/disabled
         together on some systems (RTS/CTS is enabled if either
         <code>ctsenb</code> or <code>rtsenb</code> is set). */
     bool ctsenb;
-    /** Enable & set RTS mode. Note that RTS & CTS are enabled/disabled
+    /** Enable & set RTS mode.
+        @note RTS & CTS are enabled/disabled
         together on some systems (RTS/CTS is enabled if either
         <code>ctsenb</code> or <code>rtsenb</code> is set).
         - 0 = Disable RTS.
