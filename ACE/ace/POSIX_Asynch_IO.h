@@ -697,7 +697,7 @@ private:
 
   /// true  - Accept is registered in ACE_Asynch_Pseudo_Task
   /// false - Accept is deregisted in ACE_Asynch_Pseudo_Task
-  bool flg_open_ ;
+  bool flg_open_ {};
 
   /// Queue of Result pointers that correspond to all the pending
   /// accept operations.
@@ -839,7 +839,7 @@ private:
    */
   int cancel_uncompleted (bool flg_notify, ACE_Handle_Set &set);
 
-  bool flg_open_ ;
+  bool flg_open_ {};
   /// true  - Connect is registered in ACE_Asynch_Pseudo_Task
   /// false - Aceept is deregisted in ACE_Asynch_Pseudo_Task
 
@@ -1220,7 +1220,7 @@ protected:
   /// The address of where the packet came from
   std::unique_ptr<ACE_Addr> remote_address_;
 
-  int addr_len_;
+  int addr_len_ {};
 
   /// The flags used in the read
   int flags_;

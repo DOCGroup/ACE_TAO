@@ -789,8 +789,7 @@ ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result () = default;
 // *********************************************************************
 
 ACE_POSIX_Asynch_Accept::ACE_POSIX_Asynch_Accept (ACE_POSIX_Proactor * posix_proactor)
-  : ACE_POSIX_Asynch_Operation (posix_proactor),
-    flg_open_ (false)
+  : ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 
@@ -1252,8 +1251,7 @@ ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result () = default;
 // *********************************************************************
 
 ACE_POSIX_Asynch_Connect::ACE_POSIX_Asynch_Connect (ACE_POSIX_Proactor * posix_proactor)
-  : ACE_POSIX_Asynch_Operation (posix_proactor),
-    flg_open_ (false)
+  : ACE_POSIX_Asynch_Operation (posix_proactor)
 {
 }
 
@@ -1877,10 +1875,10 @@ protected:
   size_t file_offset_;
 
   /// Total size of the file.
-  size_t file_size_;
+  size_t file_size_ {};
 
   /// Number of bytes transferred on the stream.
-  size_t bytes_transferred_;
+  size_t bytes_transferred_ {};
 
   /// This is called when asynchronous writes from the socket complete.
   void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
@@ -1910,8 +1908,6 @@ ACE_POSIX_Asynch_Transmit_Handler::ACE_POSIX_Asynch_Transmit_Handler
     data_act_ (this->DATA_ACT),
     trailer_act_ (this->TRAILER_ACT),
     file_offset_ (result->offset ()),
-    file_size_ (0),
-    bytes_transferred_ (0),
     rf_ (posix_proactor),
     ws_ (posix_proactor)
 {
@@ -2324,7 +2320,6 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
       (handler_proxy, act, event, 0, 0, priority, signal_number),
     bytes_to_read_ (bytes_to_read),
     message_block_ (message_block),
-    addr_len_ (0),
     flags_ (flags),
     handle_ (handle)
 {
