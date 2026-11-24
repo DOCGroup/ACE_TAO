@@ -426,7 +426,6 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::ACE_Buffered_Svc_Handler (A
                                                                             ACE_Time_Value *timeout)
   : ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS> (tm, mq, reactor),
     maximum_buffer_size_ (maximum_buffer_size),
-    current_buffer_size_ (0),
     timeoutp_ (timeout)
 {
   ACE_TRACE ("ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::ACE_Buffered_Svc_Handler");

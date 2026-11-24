@@ -322,7 +322,7 @@ protected:
   size_t maximum_buffer_size_;
 
   /// Current size in bytes of the @c Message_Queue contents.
-  size_t current_buffer_size_;
+  size_t current_buffer_size_ {};
 
   /// Timeout value used to control when the buffer is flushed.
   ACE_Time_Value next_timeout_;
