@@ -67,70 +67,82 @@ int ACE_TMAIN(int argc, ACE_TCHAR **argv) {
     ACE_SOCK_Connector connector;
 
     // -1 is running indefinitely
-    while ((count == -1) || (count-- != 0)) {
+    while ((count == -1) || (count-- != 0))
+      {
         // some output, that we know something is happening
         //ACE_DEBUG((LM_DEBUG, ACE_TEXT("%N:%l: Passes left: %i\n"), count));
         ACE_DEBUG((LM_DEBUG, ACE_TEXT(".")));
 
         // connect to the server and get the stream
-        if (connector.connect(stream, serverAddr) == -1) {
-          ACE_ERROR((LM_ERROR,
-                     ACE_TEXT("%N:%l: Failed to connect to ")
-                     ACE_TEXT ("server. (errno = %i: %m)\n"), ACE_ERRNO_GET));
+        if (connector.connect(stream, serverAddr) == -1)
+          {
+            ACE_ERROR((LM_ERROR,
+                       ACE_TEXT("%N:%l: Failed to connect to ")
+                       ACE_TEXT ("server. (errno = %i: %m)\n"), ACE_ERRNO_GET));
             break;
-        }
+          }
 
-        try {
+        try
+          {
             // send the request to the server (number of MiB in the next call)
             // Note: only use the sizeof and pointer to int on compatible
             //       platforms (i.e. little-endian/big-endian, data type size)
-            if (stream.send_n(&size, sizeof(size), &connTimeout) != (ssize_t) sizeof(size)) {
+            if (stream.send_n(&size, sizeof(size), &connTimeout) != (ssize_t) sizeof(size))
+              {
                 ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to  send ")
                            ACE_TEXT ("request. (errno = %i: %m)\n"), ACE_ERRNO_GET));
                 throw 1;
-            }
+              }
 
             // receive the answer
-            if (stream.recv_n(&answer, sizeof(answer), &connTimeout) != 1) {
-              ACE_ERROR((LM_ERROR, ACE_TEXT("%N: %l: Failed to receive ")
-                         ACE_TEXT ("1st response. (errno = %i: %m)\n"), ACE_ERRNO_GET));
+            if (stream.recv_n(&answer, sizeof(answer), &connTimeout) != 1)
+              {
+                ACE_ERROR((LM_ERROR, ACE_TEXT("%N: %l: Failed to receive ")
+                           ACE_TEXT ("1st response. (errno = %i: %m)\n"), ACE_ERRNO_GET));
                 throw 1;
-            }
+              }
 
             // server answer, 'K" indicates a positive answer
-            if (answer == 'K') {
+            if (answer == 'K')
+              {
                 // send a huge message to the server
-                if (stream.send_n(someData.get (), size, &connTimeout) != size) {
-                  ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")
-                             ACE_TEXT ("someData. (errno = %i: %m)\n"), ACE_ERRNO_GET));
+                if (stream.send_n(someData.get (), size, &connTimeout) != size)
+                  {
+                    ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to send ")
+                               ACE_TEXT ("someData. (errno = %i: %m)\n"), ACE_ERRNO_GET));
                     throw 1;
-                }
+                  }
 
                 // get an answer
-                if (stream.recv_n(&answer, sizeof(answer), &connTimeout) != 1) {
-                  ACE_ERROR((LM_ERROR, ACE_TEXT("%N: %l: Failed to receive ")
-                             ACE_TEXT ("2nd response. (errno = %i: %m)\n"), ACE_ERRNO_GET));
+                if (stream.recv_n(&answer, sizeof(answer), &connTimeout) != 1)
+                  {
+                    ACE_ERROR((LM_ERROR, ACE_TEXT("%N: %l: Failed to receive ")
+                               ACE_TEXT ("2nd response. (errno = %i: %m)\n"), ACE_ERRNO_GET));
                     throw 1;
-                }
+                  }
 
                 // check the answer
-                if (answer != 'K') {
+                if (answer != 'K')
+                  {
                     cout << "The server was unable to process the data."
                          << endl;
-                }
-            }
-        } catch (...) {
+                  }
+              }
+          }
+        catch (...)
+          {
             // ok we know an error occurred, we need to close the socket.
             // The we'll try again.
-        }
+          }
 
         // close the current stream
-        if (stream.close() == -1) {
-          ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close ")
-                     ACE_TEXT ("socket. (errno = %i: %m)\n"), ACE_ERRNO_GET));
+        if (stream.close() == -1)
+          {
+            ACE_ERROR((LM_ERROR, ACE_TEXT("%N:%l: Failed to close ")
+                       ACE_TEXT ("socket. (errno = %i: %m)\n"), ACE_ERRNO_GET));
             break;
-        }
-    } // while
+          }
+      } // while
 
     cout << "Bye. Bye" << endl;
     return 0;
