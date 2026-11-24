@@ -2,11 +2,11 @@
 /**
  *  @file    string_value.idl
  *
- *  This file contains depends on the TAO supplied StringValue type. Generated
+ *  This IDL file depends on the TAO supplied StringValue type. Generated
  *  code based on such IDL failed to compile since the IDL compiler inserted a
- *  #include of a non-existent StringValueA.h.
+ *  \#include of a non-existent StringValueA.h.
  *
- *  Note that the include must be relative to $TAO_ROOT. If included as
+ *  @note The include path must be relative to $TAO_ROOT. If included as
  *  "Valuetype/StringValue.pidl" The compiler assumes the generated A.h file
  *  is in the tao/AnyTypeCode directory. This cannot work because it sets up a
  *  circular dependency between libTAO_AnyTypeCode and libTAO_ValueType. It
