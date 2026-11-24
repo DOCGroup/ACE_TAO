@@ -324,7 +324,7 @@ namespace ACE_Utils
             return;
           }
         ACE_CString const thr_pid_str (uuid_string.c_str () + uuid_length + 1);
-        ssize_t const pos = static_cast<ssize_t> (thr_pid_str.find ('-'));
+        auto const pos = static_cast<ssize_t> (thr_pid_str.find ('-'));
         if (pos <= 0 || static_cast<size_t> (pos) + 1 >= thr_pid_str.length ())
           {
             ACELIB_DEBUG ((LM_DEBUG,
@@ -403,7 +403,7 @@ namespace ACE_Utils
     uuid.time_low (static_cast<ACE_UINT32> (timestamp & 0xFFFFFFFF));
     uuid.time_mid (static_cast<ACE_UINT16> ((timestamp >> 32) & 0xFFFF));
 
-    ACE_UINT16 tHAV = static_cast<ACE_UINT16> ((timestamp >> 48) & 0xFFFF);
+    auto tHAV = static_cast<ACE_UINT16> ((timestamp >> 48) & 0xFFFF);
     tHAV = static_cast<ACE_UINT16> (tHAV | (version << 12));
     uuid.time_hi_and_version (tHAV);
 
