@@ -19,7 +19,7 @@ Event_Analyzer::close (u_long)
 int
 Event_Analyzer::control (ACE_Message_Block *mb)
 {
-  ACE_IO_Cntl_Msg * const ioc = reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
+  auto * const ioc = reinterpret_cast<ACE_IO_Cntl_Msg *> (mb->rd_ptr ());
   ACE_IO_Cntl_Msg::ACE_IO_Cntl_Cmds const cmd = ioc->cmd ();
 
   switch (cmd)
