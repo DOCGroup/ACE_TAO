@@ -176,9 +176,7 @@ Accept_Handler::handle_input (ACE_HANDLE h)
 Stream_Handler::Stream_Handler (ACE::HTBP::Stream &s)
   :stream_(s)
 {}
-Stream_Handler::~Stream_Handler ()
-{
-}
+Stream_Handler::~Stream_Handler () = default;
 
 int
 Stream_Handler::handle_input (ACE_HANDLE h)
