@@ -31,7 +31,7 @@ ImR_Activator_Loader::init (int argc, ACE_TCHAR *argv[])
       }
 
       // Create a thread in which to run the service
-      ACE_ASSERT (this->runner_.get () == nullptr);
+      ACE_ASSERT (!this->runner_);
       this->runner_ = std::make_unique<ImR_Activator_ORB_Runner> (*this);
       this->runner_->activate ();
     }
@@ -45,7 +45,7 @@ ImR_Activator_Loader::init (int argc, ACE_TCHAR *argv[])
 int
 ImR_Activator_Loader::fini ()
 {
-  ACE_ASSERT (this->runner_.get () != nullptr);
+  ACE_ASSERT (this->runner_);
   try
     {
       int ret = this->service_.fini ();

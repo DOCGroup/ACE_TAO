@@ -32,7 +32,7 @@ TAO_IMR_i::~TAO_IMR_i ()
 int
 TAO_IMR_i::run ()
 {
-  if (this->op_.get () == nullptr)
+  if (!this->op_)
     {
       ORBSVCS_ERROR ((LM_ERROR, "Unknown operation"));
       return TAO_IMR_Op::UNKNOWN;
@@ -110,7 +110,7 @@ TAO_IMR_i::parse_args ()
 
   // Check for unrecognized operation
 
-  if (this->op_.get () == nullptr)
+  if (!this->op_)
     {
       ORBSVCS_ERROR((LM_ERROR, "Error: Unknown operation '%s'.\n", this->argv_[1]));
       this->print_usage ();

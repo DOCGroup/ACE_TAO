@@ -134,7 +134,7 @@ namespace {
         return;
       }
 
-      if (file_lock_.get () == nullptr)
+      if (!file_lock_)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                           ACE_TEXT("(%P|%t) ERROR: Shared_Backing_Store ")
