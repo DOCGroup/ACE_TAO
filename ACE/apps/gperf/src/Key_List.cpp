@@ -242,7 +242,8 @@ Key_List::special_input (char delimiter, std::string& result)
             {
               // Discard the rest of the delimiter line.
               while ((c = getchar ()) != '\n' && c != EOF)
-                continue;
+                {
+                }
 
               if (!result.empty () && result.back () == '\n')
                 {
@@ -650,7 +651,8 @@ Key_List::output_min_max ()
 {
   List_Node *temp {};
   for (temp = head; temp->next; temp = temp->next)
-    continue;
+    {
+    }
 
   min_hash_value = head->hash_value;
   max_hash_value = temp->hash_value;
@@ -1440,7 +1442,8 @@ Key_List::output_hash_function ()
   for (Key_List::field_width = 2;
        (count /= 10) > 0;
        ++Key_List::field_width)
-    continue;
+    {
+    }
 
   if (option[INLINE])
     {
@@ -1824,7 +1827,6 @@ Key_List::output_lookup_array ()
 
       for (Key_List::field_width = 2; (count /= 10) > 0; ++Key_List::field_width)
         {
-          continue;
         }
 
       int const max_column = 15;
