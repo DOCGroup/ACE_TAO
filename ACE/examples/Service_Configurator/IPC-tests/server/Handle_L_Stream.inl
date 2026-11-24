@@ -153,7 +153,7 @@ Handle_L_Stream::handle_input (ACE_HANDLE)
 
   ACE_OS::puts ("----------------------------------------");
 
-  time_t t = ACE_OS::time (0L);
+  time_t t = ACE_OS::time (nullptr);
   ACE_TCHAR *cs = ACE_OS::ctime (&t);
 
   if (new_local_stream.send (4,

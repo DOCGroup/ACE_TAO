@@ -2738,7 +2738,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
     {
       first_item = this->pending_head_;
 
-      if (0 == this->pending_head_->prev ())
+      if (this->pending_head_->prev () == nullptr)
         {
           this->head_ = this->pending_head_->next ();
         }
@@ -2747,7 +2747,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
           this->pending_head_->prev ()->next (this->pending_head_->next ());
         }
 
-      if (0 == this->pending_head_->next ())
+      if (this->pending_head_->next () == nullptr)
         {
           this->tail_ = this->pending_head_->prev ();
           this->pending_head_ = nullptr;
@@ -2770,7 +2770,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
 
       first_item = this->late_head_;
 
-      if (0 == this->late_head_->prev ())
+      if (this->late_head_->prev () == nullptr)
         {
           this->head_ = this->late_head_->next ();
         }
@@ -2779,7 +2779,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
           this->late_head_->prev ()->next (this->late_head_->next ());
         }
 
-      if (0 == this->late_head_->next ())
+      if (this->late_head_->next () == nullptr)
         {
           this->tail_ = this->late_head_->prev ();
         }
@@ -2807,7 +2807,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
       first_item = this->beyond_late_head_;
       this->head_ = this->beyond_late_head_->next ();
 
-      if (0 == this->beyond_late_head_->next ())
+      if (this->beyond_late_head_->next () == nullptr)
         {
           this->tail_ = this->beyond_late_head_->prev ();
         }
