@@ -6,8 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Exclusive_TMS::TAO_Exclusive_TMS (TAO_Transport *transport)
-  : TAO_Transport_Mux_Strategy (transport),
-    rd_ (nullptr)
+  : TAO_Transport_Mux_Strategy (transport)
 {
 }
 

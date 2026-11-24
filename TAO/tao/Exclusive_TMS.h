@@ -76,7 +76,7 @@ protected:
 
   /// Reply Dispatcher corresponding to the request. If this is zero we don't
   /// have a reply, if it not zero we have one
-  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd_;
+  ACE_Intrusive_Auto_Ptr<TAO_Reply_Dispatcher> rd_ {};
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
