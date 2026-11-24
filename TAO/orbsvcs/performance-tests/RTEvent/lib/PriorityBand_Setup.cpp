@@ -37,6 +37,4 @@ PriorityBand_Setup::PriorityBand_Setup (CORBA::ORB_ptr orb,
   policy_list[0]->destroy ();
 }
 
-PriorityBand_Setup::~PriorityBand_Setup ()
-{
-}
+PriorityBand_Setup::~PriorityBand_Setup () = default;

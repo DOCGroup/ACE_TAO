@@ -38,9 +38,7 @@ Peer_Base::Peer_Base (CORBA::ORB_ptr orb,
     RtecEventChannelAdmin::EventChannel::_narrow (ec_object.in ());
 }
 
-Peer_Base::~Peer_Base ()
-{
-}
+Peer_Base::~Peer_Base () = default;
 
 void
 Peer_Base::shutdown ()
