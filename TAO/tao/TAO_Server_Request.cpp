@@ -54,11 +54,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     outgoing_ (std::addressof (output)),
     orb_core_ (orb_core),
     profile_ (orb_core),
-    requesting_principal_ (nullptr)
-#if TAO_HAS_INTERCEPTORS == 1
-  , pi_reply_status_ (-1)
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  , transport_ (transport) // already duplicated in TAO_Transport::process_parsed_messages ()
+    transport_ (transport) // already duplicated in TAO_Transport::process_parsed_messages ()
 {
   ACE_FUNCTION_TIMEPROBE (TAO_SERVER_REQUEST_START);
   // No-op.
@@ -85,11 +81,7 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_GIOP_Message_Base *mesg_base,
     orb_core_ (orb_core),
     request_id_ (request_id),
     profile_ (orb_core),
-    requesting_principal_ (nullptr)
-#if TAO_HAS_INTERCEPTORS == 1
-  , pi_reply_status_ (-1)
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  , transport_ (transport) // already duplicated in TAO_Transport::process_parsed_messages ()
+    transport_ (transport) // already duplicated in TAO_Transport::process_parsed_messages ()
 {
   this->profile_.object_key (object_key);
   parse_error = 0;
@@ -107,12 +99,8 @@ TAO_ServerRequest::TAO_ServerRequest (TAO_ORB_Core * orb_core,
     sync_with_server_ (details.response_flags () == static_cast<CORBA::Octet> (Messaging::SYNC_WITH_SERVER)),
     orb_core_ (orb_core),
     profile_ (orb_core),
-    requesting_principal_ (nullptr),
     operation_details_ (std::addressof (details)),
     argument_flag_ (false)
-#if TAO_HAS_INTERCEPTORS == 1
-  , pi_reply_status_ (-1)
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
   , transport_ (nullptr)
 {
   this->profile_.object_key (

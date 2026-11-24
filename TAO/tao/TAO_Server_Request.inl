@@ -5,12 +5,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /// This constructor is used by the CSD clone.
 ACE_INLINE
 TAO_ServerRequest::TAO_ServerRequest ()
-  : profile_ (nullptr),
-    requesting_principal_ (nullptr)
-#if TAO_HAS_INTERCEPTORS == 1
-  , pi_reply_status_ (-1)
-#endif  /* TAO_HAS_INTERCEPTORS == 1 */
-  , transport_ (nullptr)
+  : transport_ (nullptr)
 {
 }
 

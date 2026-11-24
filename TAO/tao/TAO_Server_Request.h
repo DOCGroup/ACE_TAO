@@ -351,10 +351,10 @@ private:
   CORBA::ULong request_id_ {};
 
   /// The tagged profile that has the addressing information.
-  TAO_Tagged_Profile profile_;
+  TAO_Tagged_Profile profile_ {nullptr};
 
   /// Identifies the requester.
-  CORBA::OctetSeq_var requesting_principal_;
+  CORBA::OctetSeq_var requesting_principal_ {nullptr};
 
   /// Used to pad CDR stream if we have used DSI.
   ptrdiff_t dsi_nvlist_align_ {};
