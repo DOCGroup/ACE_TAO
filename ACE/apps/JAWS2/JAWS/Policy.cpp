@@ -7,9 +7,7 @@ JAWS_Dispatch_Policy::JAWS_Dispatch_Policy ()
 {
 }
 
-JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy ()
-{
-}
+JAWS_Dispatch_Policy::~JAWS_Dispatch_Policy () = default;
 
 JAWS_Default_Dispatch_Policy::JAWS_Default_Dispatch_Policy ()
   : ratio_ (1),
@@ -20,9 +18,7 @@ JAWS_Default_Dispatch_Policy::JAWS_Default_Dispatch_Policy ()
 {
 }
 
-JAWS_Default_Dispatch_Policy::~JAWS_Default_Dispatch_Policy ()
-{
-}
+JAWS_Default_Dispatch_Policy::~JAWS_Default_Dispatch_Policy () = default;
 
 int
 JAWS_Default_Dispatch_Policy::ratio ()

@@ -10,9 +10,7 @@ JAWS_Pipeline_Handler::JAWS_Pipeline_Handler ()
 {
 }
 
-JAWS_Pipeline_Handler::~JAWS_Pipeline_Handler ()
-{
-}
+JAWS_Pipeline_Handler::~JAWS_Pipeline_Handler () = default;
 
 int
 JAWS_Pipeline_Handler::put (ACE_Message_Block *mb, ACE_Time_Value *tv)

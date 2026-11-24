@@ -72,9 +72,7 @@ JAWS_Headers::JAWS_Headers ()
 {
 }
 
-JAWS_Headers::~JAWS_Headers ()
-{
-}
+JAWS_Headers::~JAWS_Headers () = default;
 
 JAWS_Header_Table_Iterator &
 JAWS_Headers::iter ()

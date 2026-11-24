@@ -8,9 +8,7 @@ JAWS_Waiter::JAWS_Waiter ()
 {
 }
 
-JAWS_Waiter::~JAWS_Waiter ()
-{
-}
+JAWS_Waiter::~JAWS_Waiter () = default;
 
 JAWS_Waiter_Base_Iterator &
 JAWS_Waiter::iter ()

@@ -11,13 +11,9 @@
 #include "JAWS/Waiter.h"
 #include "JAWS/Filecache.h"
 
-JAWS_Abstract_IO_Handler::~JAWS_Abstract_IO_Handler ()
-{
-}
+JAWS_Abstract_IO_Handler::~JAWS_Abstract_IO_Handler () = default;
 
-JAWS_IO_Handler_Factory::~JAWS_IO_Handler_Factory ()
-{
-}
+JAWS_IO_Handler_Factory::~JAWS_IO_Handler_Factory () = default;
 
 JAWS_IO_Handler *
 JAWS_IO_Handler_Factory::create_io_handler ()
@@ -230,9 +226,7 @@ JAWS_IO_Handler::release ()
 
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
 
-JAWS_Asynch_IO_Handler_Factory::~JAWS_Asynch_IO_Handler_Factory ()
-{
-}
+JAWS_Asynch_IO_Handler_Factory::~JAWS_Asynch_IO_Handler_Factory () = default;
 
 JAWS_IO_Handler *
 JAWS_Asynch_IO_Handler_Factory::create_io_handler ()
@@ -306,9 +300,7 @@ JAWS_Asynch_Handler::JAWS_Asynch_Handler ()
   this->proactor (ACE_Proactor::instance ());
 }
 
-JAWS_Asynch_Handler::~JAWS_Asynch_Handler ()
-{
-}
+JAWS_Asynch_Handler::~JAWS_Asynch_Handler () = default;
 
 void
 JAWS_Asynch_Handler::open (ACE_HANDLE h,
