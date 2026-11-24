@@ -269,6 +269,8 @@ template <typename PEER_STREAM, typename SYNCH_TRAITS>
 class ACE_Buffered_Svc_Handler : public ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>
 {
 public:
+  using ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush;
+
   /**
    * Constructor initializes the @a thr_mgr and @a mq by passing them
    * down to the ACE_Task base class.  The @a reactor is passed to
