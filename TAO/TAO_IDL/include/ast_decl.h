@@ -93,8 +93,8 @@ namespace tao_yy { class parser; }
 class TAO_IDL_FE_Export COMMON_Base
 {
 protected:
-  COMMON_Base (bool local = false,
-               bool abstract = false);
+  explicit COMMON_Base (bool local = false,
+                        bool abstract = false);
 
   virtual ~COMMON_Base ();
 

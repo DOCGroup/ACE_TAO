@@ -6,7 +6,7 @@
 class IFR_Service_Shutdown_Functor : public Shutdown_Functor
 {
 public:
-  IFR_Service_Shutdown_Functor (IFR_Service & ifr);
+  explicit IFR_Service_Shutdown_Functor (IFR_Service & ifr);
 
   IFR_Service_Shutdown_Functor (IFR_Service_Shutdown_Functor const &) = delete;
   IFR_Service_Shutdown_Functor (IFR_Service_Shutdown_Functor &&) = delete;
