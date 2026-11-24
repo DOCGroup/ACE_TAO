@@ -83,7 +83,7 @@ get_valid_ipv4_interface_names_getifaddrs (nameset &names)
       if (p_if->ifa_flags & IFF_MULTICAST &&
           p_if->ifa_addr->sa_family == AF_INET)
         {
-          sockaddr_in *addr = reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
+          auto *addr = reinterpret_cast<sockaddr_in *> (p_if->ifa_addr);
 
           if (addr->sin_addr.s_addr != INADDR_ANY)
             {
@@ -220,7 +220,7 @@ run_main (int, ACE_TCHAR *[])
   get_valid_ipv4_interface_names (names);
   ACE_INET_Addr const ipv4_mc_addr ("239.255.0.7:1234", AF_INET);
   result |= create_socket_and_join_multicast (ipv4_mc_addr, ACE_TString ());
-  for (nameset::const_iterator it = names.begin (); result == 0 && it != names.end (); ++it)
+  for (auto it = names.begin (); result == 0 && it != names.end (); ++it)
     {
       result |= create_socket_and_join_multicast (ipv4_mc_addr, *it);
     }
