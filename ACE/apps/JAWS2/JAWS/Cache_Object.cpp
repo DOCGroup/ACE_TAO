@@ -100,9 +100,7 @@ JAWS_Referenced_Cache_Object (const void *data, size_t size)
 {
 }
 
-JAWS_Referenced_Cache_Object::~JAWS_Referenced_Cache_Object ()
-{
-}
+JAWS_Referenced_Cache_Object::~JAWS_Referenced_Cache_Object () = default;
 
 ACE_Lock &
 JAWS_Referenced_Cache_Object::lock ()
@@ -157,9 +155,7 @@ JAWS_Counted_Cache_Object (const void *data, size_t size)
 {
 }
 
-JAWS_Counted_Cache_Object::~JAWS_Counted_Cache_Object ()
-{
-}
+JAWS_Counted_Cache_Object::~JAWS_Counted_Cache_Object () = default;
 
 ACE_Lock &
 JAWS_Counted_Cache_Object::lock ()
@@ -209,9 +205,7 @@ JAWS_Cache_Object_Factory::JAWS_Cache_Object_Factory (ACE_Allocator *alloc)
   }
 }
 
-JAWS_Cache_Object_Factory::~JAWS_Cache_Object_Factory ()
-{
-}
+JAWS_Cache_Object_Factory::~JAWS_Cache_Object_Factory () = default;
 
 int
 JAWS_Cache_Object_Factory::open (ACE_Allocator *alloc)

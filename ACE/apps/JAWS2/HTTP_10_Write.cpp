@@ -14,9 +14,7 @@ JAWS_HTTP_10_Write_Task::JAWS_HTTP_10_Write_Task ()
 {
 }
 
-JAWS_HTTP_10_Write_Task::~JAWS_HTTP_10_Write_Task ()
-{
-}
+JAWS_HTTP_10_Write_Task::~JAWS_HTTP_10_Write_Task () = default;
 
 int
 JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)

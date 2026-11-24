@@ -13,9 +13,7 @@ JAWS_HTTP_10_Parse_Task::JAWS_HTTP_10_Parse_Task ()
 {
 }
 
-JAWS_HTTP_10_Parse_Task::~JAWS_HTTP_10_Parse_Task ()
-{
-}
+JAWS_HTTP_10_Parse_Task::~JAWS_HTTP_10_Parse_Task () = default;
 
 int
 JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
