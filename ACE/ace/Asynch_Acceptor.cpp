@@ -66,7 +66,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
   // Initialize the ACE_Asynch_Accept
   if (this->asynch_accept_.open (*this,
                                  this->listen_handle_,
-                                 0,
+                                 nullptr,
                                  this->proactor ()) == -1)
     {
       ACE_Errno_Guard g (errno);
@@ -177,7 +177,7 @@ ACE_Asynch_Acceptor<HANDLER>::set_handle (ACE_HANDLE listen_handle)
   // Reinitialize the ACE_Asynch_Accept
   if (this->asynch_accept_.open (*this,
                                  this->listen_handle_,
-                                 0,
+                                 nullptr,
                                  this->proactor ()) == -1)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,

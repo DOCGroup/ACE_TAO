@@ -157,7 +157,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::cl
 {
   // Protect against "double-deletion" in case the destructor also
   // gets called.
-  if (this->table_ != 0)
+  if (this->table_ != nullptr)
     {
       // Remove all the entries.
       this->unbind_all_i ();
@@ -494,7 +494,7 @@ ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
 {
   ACE_TRACE ("ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::forward_i");
 
-  if (this->map_man_->table_ == 0)
+  if (this->map_man_->table_ == nullptr)
     {
       return -1;
     }
@@ -530,7 +530,7 @@ ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOC
 {
   ACE_TRACE ("ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::reverse_i");
 
-  if (this->map_man_->table_ == 0)
+  if (this->map_man_->table_ == nullptr)
     {
       return -1;
     }
@@ -577,7 +577,7 @@ ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, A
 {
   ACE_TRACE ("ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::forward_i");
 
-  if (this->map_man_->table_ == 0)
+  if (this->map_man_->table_ == nullptr)
     {
       return -1;
     }

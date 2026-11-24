@@ -96,9 +96,9 @@ ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
   lock->overlapped_.hEvent = 0;
 #endif /* ACE_WIN32 */
   lock->handle_ = ACE_INVALID_HANDLE;
-  lock->lockname_ = 0;
+  lock->lockname_ = nullptr;
 
-  if (name != 0)
+  if (name != nullptr)
     {
       ACE_OSCALL (ACE_OS::open (name, flags, perms), ACE_HANDLE, lock->handle_);
       if (lock->handle_ != ACE_INVALID_HANDLE)
@@ -159,7 +159,7 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
       // Close the handle.
       ACE_OS::close (lock->handle_);
       lock->handle_ = ACE_INVALID_HANDLE;
-      if (lock->lockname_ != 0)
+      if (lock->lockname_ != nullptr)
         {
           if (unlink_file)
             {
@@ -173,7 +173,7 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
             static_cast<void *> (const_cast<ACE_TCHAR *> (lock->lockname_)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
         }
-      lock->lockname_ = 0;
+      lock->lockname_ = nullptr;
     }
   return 0;
 }
@@ -390,7 +390,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
     {
       // It doesn't make sense to have a zero length user ID.
       errno = EINVAL;
-      return 0;
+      return nullptr;
     }
 
   struct passwd *pw {};
@@ -406,16 +406,16 @@ ACE_OS::cuserid (char *user, size_t maxlen)
   // Make sure the password file is closed.
   ACE_OS::endpwent ();
 
-  if (pw == 0)
+  if (pw == nullptr)
     {
       errno = ENOENT;
-      return 0;
+      return nullptr;
     }
 
   size_t max_length = 0;
   char *userid {};
 
-  if (user == 0)
+  if (user == nullptr)
     {
       // Not reentrant/thread-safe, but nothing else can be done if a
       // zero pointer was passed in as the destination.
@@ -445,7 +445,7 @@ ACE_OS::cuserid (char *user, size_t maxlen)
   else
     {
       errno = ENOSPC;  // Buffer is not large enough.
-      return 0;
+      return nullptr;
     }
 #else
   // Hackish because of missing buffer size!

@@ -253,7 +253,7 @@ ACE_Future_Rep<T>::operator T ()
   if (this->value_ == nullptr)
     {
       // Constructor of ace_mon acquires the mutex.
-      ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->value_ready_mutex_, 0);
+      ACE_GUARD_RETURN (ACE_SYNCH_RECURSIVE_MUTEX, ace_mon, this->value_ready_mutex_, nullptr);
 
       // If the value is not yet defined we must block until the
       // producer writes to it.
@@ -267,7 +267,7 @@ ACE_Future_Rep<T>::operator T ()
               // What to do in this case since we've got to indicate
               // failure somehow?  Exceptions would be nice, but they're
               // not portable...
-              return 0;
+              return nullptr;
             }
         }
 

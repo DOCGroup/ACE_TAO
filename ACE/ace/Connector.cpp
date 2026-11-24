@@ -118,7 +118,7 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
 
     // Cancel timer.
     if (this->reactor ()->cancel_timer (this->timer_id (),
-                                        0,
+                                        nullptr,
                                         0) == -1)
       {
         return false;
@@ -375,7 +375,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect
 {
   // Initiate connection to peer.
   return this->connect_i (sh,
-                          0,
+                          nullptr,
                           remote_addr,
                           synch_options,
                           local_addr,

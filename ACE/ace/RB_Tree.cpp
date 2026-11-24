@@ -495,9 +495,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_successor (ACE_RB_T
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_successor");
 
-  if (x == 0)
+  if (x == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   if (x->right ())
@@ -521,9 +521,9 @@ template <class EXT_ID, class INT_ID, class COMPARE_KEYS, class ACE_LOCK> ACE_RB
 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_predecessor (ACE_RB_Tree_Node<EXT_ID, INT_ID> *x) const
 {
   ACE_TRACE ("ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::RB_tree_predecessor");
-  if (x == 0)
+  if (x == nullptr)
     {
-      return 0;
+      return nullptr;
     }
 
   if (x->left ())
@@ -592,8 +592,8 @@ void ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::delete_children_i
          this->allocator_->free,
          ACE_RB_Tree_Node,
          EXT_ID, INT_ID);
-      parent->left (0);
-      parent->right (0);
+      parent->left (nullptr);
+      parent->right (nullptr);
     }
   return;
 }
@@ -612,7 +612,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::close_i ()
                           ACE_RB_Tree_Node,
                           EXT_ID, INT_ID);
   this->current_size_ = 0;
-  this->root_ = 0;
+  this->root_ = nullptr;
   return 0;
 }
 
@@ -694,7 +694,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
                  (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
                    (this->allocator_->malloc (sizeof (*tmp)))),
                  (ACE_RB_Tree_Node<EXT_ID, INT_ID>) (k, t),
-                 0);
+                 nullptr);
               current->right (tmp);
 
               // If the node was successfully inserted, set its
@@ -730,7 +730,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
                  (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
                    (this->allocator_->malloc (sizeof (*tmp)))),
                  (ACE_RB_Tree_Node<EXT_ID, INT_ID>) (k, t),
-                 0);
+                 nullptr);
               current->left (tmp);
 
               // If the node was successfully inserted, set its
@@ -754,7 +754,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::insert_i (const EXT_ID &k, 
          (reinterpret_cast<ACE_RB_Tree_Node<EXT_ID, INT_ID>*>
            (this->allocator_->malloc (sizeof (ACE_RB_Tree_Node<EXT_ID, INT_ID>)))),
          (ACE_RB_Tree_Node<EXT_ID, INT_ID>) (k, t),
-         0);
+         nullptr);
       this->root_->color (ACE_RB_Tree_Node_Base::BLACK);
       ++current_size_;
       return std::addressof (this->root_->item ());
@@ -1152,9 +1152,9 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::remove_i (ACE_RB_Tree_Node<
       RB_delete_fixup (x, parent);
     }
 
-  y->parent (0);
-  y->right (0);
-  y->left (0);
+  y->parent (nullptr);
+  y->right (nullptr);
+  y->left (nullptr);
   ACE_DES_FREE_TEMPLATE2 (y,
                           this->allocator_->free,
                           ACE_RB_Tree_Node,

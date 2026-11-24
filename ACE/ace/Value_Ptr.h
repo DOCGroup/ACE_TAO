@@ -108,7 +108,7 @@ namespace ACE
     template <typename U>
     T * create_from (U const * p) const
     {
-      return p ? VP_traits<U>::clone (p) : 0;
+      return p ? VP_traits<U>::clone (p) : nullptr;
     }
 
   private:

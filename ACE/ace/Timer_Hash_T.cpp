@@ -584,7 +584,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (long tim
 #endif /* ACE_WIN64 */
 
   int const result = this->table_[h->pos_]->cancel (h->orig_id_,
-                                                    0,
+                                                    nullptr,
                                                     dont_call);
 
   if (result == 1)
@@ -675,7 +675,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::cancel (TYPE con
     {
       int const result =
         this->table_[timer_ids[i]->pos_]->cancel (timer_ids[i]->orig_id_,
-                                                  0,
+                                                  nullptr,
                                                   dont_call);
       ACE_ASSERT (result == 1);
       ACE_UNUSED_ARG (result);

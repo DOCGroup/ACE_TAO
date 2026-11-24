@@ -92,7 +92,7 @@ ace_create_service_type (ACE_TCHAR const *,
                          int,
                          void *,
                          unsigned int,
-                         ACE_Service_Object_Exterminator = 0);
+                         ACE_Service_Object_Exterminator = nullptr);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

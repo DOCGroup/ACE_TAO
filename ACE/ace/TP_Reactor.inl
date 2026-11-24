@@ -7,9 +7,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE
 ACE_EH_Dispatch_Info::ACE_EH_Dispatch_Info () :
   handle_ (ACE_INVALID_HANDLE),
-  event_handler_ (0),
+  event_handler_ (nullptr),
   mask_ (ACE_Event_Handler::NULL_MASK),
-  callback_ (0),
+  callback_ (nullptr),
   resume_flag_ (ACE_Event_Handler::ACE_REACTOR_RESUMES_HANDLER),
   reference_counting_required_ (false),
   dispatch_ (false)

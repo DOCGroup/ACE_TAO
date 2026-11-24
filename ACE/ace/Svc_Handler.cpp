@@ -96,7 +96,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::destroy ()
 
   // Only delete ourselves if we're not owned by a module and have
   // been allocated dynamically.
-  if (this->mod_ == 0 && this->dynamic_ && !this->closing_)
+  if (this->mod_ == nullptr && this->dynamic_ && !this->closing_)
     {
       // Will call the destructor, which automatically calls <shutdown>.
       // Note that if we are *not* allocated dynamically then the
@@ -431,7 +431,7 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::ACE_Buffered_Svc_Handler (A
 {
   ACE_TRACE ("ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::ACE_Buffered_Svc_Handler");
 
-  if (this->timeoutp_ != 0)
+  if (this->timeoutp_ != nullptr)
     {
       this->interval_ = *timeout;
       this->next_timeout_ = ACE_OS::gettimeofday () + this->interval_;
@@ -457,7 +457,7 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::put (ACE_Message_Block *mb,
       // Flush the buffer when the number of bytes exceeds the maximum
       // buffer size or when the timeout period has elapsed.
       if (this->current_buffer_size_ >= this->maximum_buffer_size_
-          || (this->timeoutp_ != 0
+          || (this->timeoutp_ != nullptr
               && this->next_timeout_ <= ACE_OS::gettimeofday ()))
         {
           return this->flush_i ();
@@ -499,7 +499,7 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::flush_i ()
       this->msg_queue ()->flush_i ();
     }
 
-  if (this->timeoutp_ != 0)
+  if (this->timeoutp_ != nullptr)
     {
       // Update the next timeout period by adding the interval.
       this->next_timeout_ += this->interval_;

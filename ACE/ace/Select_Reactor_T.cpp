@@ -394,7 +394,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
   int result = 0;
 
   // Allows the signal handler to be overridden.
-  if (this->signal_handler_ == 0)
+  if (this->signal_handler_ == nullptr)
     {
       ACE_NEW_RETURN (this->signal_handler_,
                       ACE_Sig_Handler,
@@ -404,7 +404,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
     }
 
   // Allows the timer queue to be overridden.
-  if (result != -1 && this->timer_queue_ == 0)
+  if (result != -1 && this->timer_queue_ == nullptr)
     {
       ACE_NEW_RETURN (this->timer_queue_,
                       ACE_Timer_Heap,
@@ -414,7 +414,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
     }
 
   // Allows the Notify_Handler to be overridden.
-  if (result != -1 && this->notify_handler_ == 0)
+  if (result != -1 && this->notify_handler_ == nullptr)
     {
       ACE_NEW_RETURN (this->notify_handler_,
                       ACE_Select_Reactor_Notify,
@@ -428,7 +428,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
     result = -1;
   }
   else if (this->notify_handler_->open (this,
-                                        0,
+                                        nullptr,
                                         disable_notify_pipe) == -1)
     {
       ACELIB_ERROR ((LM_ERROR,
@@ -584,7 +584,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close ()
   if (this->delete_signal_handler_)
     {
       delete this->signal_handler_;
-      this->signal_handler_ = 0;
+      this->signal_handler_ = nullptr;
       this->delete_signal_handler_ = false;
     }
 
@@ -593,16 +593,16 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close ()
   if (this->delete_timer_queue_)
     {
       delete this->timer_queue_;
-      this->timer_queue_ = 0;
+      this->timer_queue_ = nullptr;
       this->delete_timer_queue_ = false;
     }
   else if (this->timer_queue_)
     {
       this->timer_queue_->close ();
-      this->timer_queue_ = 0;
+      this->timer_queue_ = nullptr;
     }
 
-  if (this->notify_handler_ != 0)
+  if (this->notify_handler_ != nullptr)
   {
     this->notify_handler_->close ();
   }
@@ -610,7 +610,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close ()
   if (this->delete_notify_handler_)
     {
       delete this->notify_handler_;
-      this->notify_handler_ = 0;
+      this->notify_handler_ = nullptr;
       this->delete_notify_handler_ = false;
     }
 
@@ -734,7 +734,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler 
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  if ((this->timer_queue_ != 0) && (handler != nullptr))
+  if ((this->timer_queue_ != nullptr) && (handler != nullptr))
   {
     return this->timer_queue_->cancel (handler, dont_call_handle_close);
   }
@@ -752,7 +752,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (long timer_id,
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  if (this->timer_queue_ != 0)
+  if (this->timer_queue_ != nullptr)
   {
     return this->timer_queue_->cancel (timer_id,
                                        arg,
@@ -774,7 +774,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   ACE_TRACE ("ACE_Select_Reactor_T::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  if (0 != this->timer_queue_)
+  if (nullptr != this->timer_queue_)
   {
     return this->timer_queue_->schedule
       (handler,
@@ -795,7 +795,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::reset_timer_interval
   ACE_TRACE ("ACE_Select_Reactor_T::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
-  if (0 != this->timer_queue_)
+  if (nullptr != this->timer_queue_)
     {
       return this->timer_queue_->reset_interval (timer_id, interval);
     }
@@ -996,7 +996,7 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::resume_i");
-  if (this->handler_rep_.find (handle) == 0)
+  if (this->handler_rep_.find (handle) == nullptr)
   {
     return -1;
   }
@@ -1025,7 +1025,7 @@ template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::suspend_i");
-  if (this->handler_rep_.find (handle) == 0)
+  if (this->handler_rep_.find (handle) == nullptr)
   {
     return -1;
   }
@@ -1059,7 +1059,7 @@ template <class ACE_SELECT_REACTOR_TOKEN> bool
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::is_suspended_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::is_suspended_i");
-  if (this->handler_rep_.find (handle) == 0)
+  if (this->handler_rep_.find (handle) == nullptr)
   {
     return false;
   }
@@ -1169,7 +1169,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
     {
       do
         {
-          if (this->timer_queue_ == 0)
+          if (this->timer_queue_ == nullptr)
           {
             return 0;
           }

@@ -55,7 +55,7 @@ public:
                              const char primary_host_name[],
                              int encode = 1,
                              int address_family = AF_UNSPEC,
-                             const char *(secondary_host_names[]) = 0,
+                             const char *(secondary_host_names[]) = nullptr,
                              size_t size = 0);
 
   /**
@@ -80,14 +80,14 @@ public:
                            const wchar_t primary_host_name[],
                            int encode = 1,
                            int address_family = AF_UNSPEC,
-                           const wchar_t *(secondary_host_names[]) = 0,
+                           const wchar_t *(secondary_host_names[]) = nullptr,
                            size_t size = 0);
 
   int set (u_short port_number,
            const wchar_t primary_host_name[],
            int encode = 1,
            int address_family = AF_UNSPEC,
-           const wchar_t *(secondary_host_names[]) = 0,
+           const wchar_t *(secondary_host_names[]) = nullptr,
            size_t size = 0);
 
 #endif /* ACE_HAS_WCHAR */
@@ -118,7 +118,7 @@ public:
            const char primary_host_name[],
            int encode = 1,
            int address_family = AF_UNSPEC,
-           const char *(secondary_host_names[]) = 0,
+           const char *(secondary_host_names[]) = nullptr,
            size_t size = 0);
 
   /**

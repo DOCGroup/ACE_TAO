@@ -105,10 +105,10 @@ public:
                          void *arg = nullptr,
                          long flags = THR_NEW_LWP | THR_JOINABLE,
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                         void *stack[] = 0,
-                         size_t stack_size[] = 0,
+                         void *stack[] = nullptr,
+                         size_t stack_size[] = nullptr,
                          ACE_Thread_Adapter *thread_adapter = nullptr,
-                         const char *thr_name[] = 0);
+                         const char *thr_name[] = nullptr);
 
   /**
    * Spawn @a n new threads, which execute @a func with argument @a arg
@@ -134,11 +134,11 @@ public:
                          void *arg,
                          long flags,
                          long priority = ACE_DEFAULT_THREAD_PRIORITY,
-                         void *stack[] = 0,
-                         size_t stack_size[] = 0,
-                         ACE_hthread_t thread_handles[] = 0,
+                         void *stack[] = nullptr,
+                         size_t stack_size[] = nullptr,
+                         ACE_hthread_t thread_handles[] = nullptr,
                          ACE_Thread_Adapter *thread_adapter = nullptr,
-                         const char *thr_name[] = 0);
+                         const char *thr_name[] = nullptr);
 
   /**
    * Wait for one or more threads to exit and reap their exit status.
@@ -199,7 +199,7 @@ public:
 
   /// Exit the current thread and return "status".
   /// Should _not_ be called by main thread.
-  static void exit (ACE_THR_FUNC_RETURN status = 0);
+  static void exit (ACE_THR_FUNC_RETURN status = nullptr);
 
   /// Get the LWP concurrency level of the process.
   static int getconcurrency ();

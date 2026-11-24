@@ -58,7 +58,7 @@ ACE_Obstack_T<ACE_CHAR_T>::request (size_t len)
       // Need a new chunk. Save the current one so the current string
       // can be copied to the new chunk.
       ACE_Obchunk *temp = this->curr_;
-      if (this->curr_->next_ == 0)
+      if (this->curr_->next_ == nullptr)
         {
           // We must allocate new memory.
           ACE_Obchunk* tmp = this->new_chunk();
@@ -104,7 +104,7 @@ ACE_Obstack_T<ACE_CHAR_T>::grow (ACE_CHAR_T c)
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -131,7 +131,7 @@ ACE_Obstack_T<ACE_CHAR_T>::ACE_Obstack_T (size_t size,
 {
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::ACE_Obstack");
 
-  if (this->allocator_strategy_ == 0)
+  if (this->allocator_strategy_ == nullptr)
     {
       ACE_ALLOCATOR (this->allocator_strategy_,
                      ACE_Allocator::instance ());

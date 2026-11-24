@@ -132,7 +132,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
   //FUZZ: enable check_for_lack_ACE_OS
   else
     {
-      return (struct hostent *) 0;
+      return (struct hostent *) nullptr;
     }
 #   elif defined (ACE_VXWORKS_HAS_GETHOSTBYADDR_REENTRANT)
   ACE_UNUSED_ARG (h_errnop);
@@ -284,9 +284,9 @@ ACE_OS::gethostbyname_r (const char *name,
   ACE_NOTSUP_RETURN (0);
 # elif defined (ACE_HAS_REENTRANT_FUNCTIONS)
 
-  if (0 == name || '\0' == name[0])
+  if (nullptr == name || '\0' == name[0])
     {
-      return (struct hostent *)0;
+      return (struct hostent *)nullptr;
     }
 
 #   if defined (__GLIBC__)
@@ -306,7 +306,7 @@ ACE_OS::gethostbyname_r (const char *name,
   //FUZZ: enable check_for_lack_ACE_OS
   else
     {
-      return (struct hostent *) 0;
+      return (struct hostent *) nullptr;
     }
 #   elif defined (ACE_VXWORKS_HAS_GETHOSTBYNAME_REENTRANT)
   ACE_UNUSED_ARG (h_errnop);
@@ -411,7 +411,7 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
   ACE_UNUSED_ARG (src);
   ACE_UNUSED_ARG (len);
   ACE_UNUSED_ARG (family);
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (nullptr);
 #  else
   struct hostent *hptr {};
   int errnum;
@@ -682,7 +682,7 @@ ACE_OS::getservbyname_r (const char *svc,
   //FUZZ: enable check_for_lack_ACE_OS
   else
     {
-      return (struct servent *) 0;
+      return (struct servent *) nullptr;
     }
 # else
 #   if defined(ACE_LACKS_NETDB_REENTRANT_FUNCTIONS)

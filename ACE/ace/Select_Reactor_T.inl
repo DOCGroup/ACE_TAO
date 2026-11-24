@@ -195,7 +195,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wakeup_all_threads ()
 {
   // Send a notification, but don't block if there's no one to receive
   // it.
-  this->notify (0,
+  this->notify (nullptr,
                 ACE_Event_Handler::NULL_MASK,
                 const_cast<ACE_Time_Value *> (
                   std::addressof (ACE_Time_Value::zero)));

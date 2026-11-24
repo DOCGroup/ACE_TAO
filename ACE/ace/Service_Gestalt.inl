@@ -41,7 +41,7 @@ ACE_Service_Gestalt::open (int argc,
       return -1;
     }
 
-  return this->open_i (argv == 0 ? 0 : argv[0],
+  return this->open_i (argv == nullptr ? nullptr : argv[0],
                        logger_key,
                        this->no_static_svcs_,
                        ignore_default_svc_conf,
@@ -59,7 +59,7 @@ ACE_Service_Gestalt::find (const ACE_TCHAR name[],
   // repository. If the repository used to be owned by the gestalt, it
   // will also have been destroyed - so just check for repo_ before
   // doing anything with it.
-  if (this->repo_ != 0)
+  if (this->repo_ != nullptr)
     {
       return this->repo_->find (name, srp, ignore_suspended);
     }

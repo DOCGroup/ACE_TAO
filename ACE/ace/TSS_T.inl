@@ -57,7 +57,7 @@ ACE_TSS<TYPE>::ts_value () const
   void *temp {};
   if (ACE_Thread::getspecific (this->key_, &temp) == -1)
     {
-      return 0; // This should not happen!
+      return nullptr; // This should not happen!
     }
   return static_cast <TYPE *> (temp);
 }

@@ -66,7 +66,7 @@ ACE_Process::wait (ACE_exitcode *status,
                   , process_info_.hProcess
 #endif /* ACE_WIN32 */
                   );
-  if (status != 0)
+  if (status != nullptr)
     {
       *status = this->exit_code_;
     }
@@ -252,7 +252,7 @@ ACE_Process_Options::setreugid (const ACE_TCHAR* user)
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
   struct passwd *ent = ACE_OS::getpwnam (ACE_TEXT_ALWAYS_CHAR (user));
 
-  if (ent != 0)
+  if (ent != nullptr)
     {
       this->euid_ = ent->pw_uid;
       this->ruid_ = ent->pw_uid;
@@ -322,7 +322,7 @@ ACE_Process_Options::getegid () const
 ACE_INLINE ACE_TCHAR *
 ACE_Process_Options::command_line_buf (size_t *max_lenp)
 {
-  if (max_lenp != 0)
+  if (max_lenp != nullptr)
     {
       *max_lenp = this->command_line_buf_len_;
     }

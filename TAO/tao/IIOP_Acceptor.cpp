@@ -731,7 +731,7 @@ TAO_IIOP_Acceptor::parse_address (char const *address,
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
       char const * const cp_pos = std::strchr (address, ']');
-      if (cp_pos == 0)
+      if (cp_pos == nullptr)
         {
           // No valid IPv6 address specified.
           TAOLIB_ERROR_RETURN ((LM_ERROR,
@@ -759,7 +759,7 @@ TAO_IIOP_Acceptor::parse_address (char const *address,
             }
           else
             {
-              port_separator_loc = 0;
+              port_separator_loc = nullptr;
             }
           if (def_type)
             {

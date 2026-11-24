@@ -138,7 +138,7 @@ ACE_OS::ctime_r (const time_t *t, ACE_TCHAR *buf, int buflen)
   if (buflen < ctime_buf_size)
     {
       errno = ERANGE;
-      return 0;
+      return nullptr;
     }
 #   if defined (ACE_HAS_2_PARAM_ASCTIME_R_AND_CTIME_R)
   ACE_OSCALL (::ctime_r (t, bufp), char *, bufp);

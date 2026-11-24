@@ -10,7 +10,7 @@ ACE_OS::poll (struct pollfd *pollfds,
 {
   ACE_OS_TRACE ("ACE_OS::poll");
 #if defined (ACE_HAS_POLL)
-  int to = timeout == 0 ? -1 : int (timeout->msec ());
+  int to = timeout == nullptr ? -1 : int (timeout->msec ());
   return ::poll (pollfds, len, to);
 #else
   ACE_UNUSED_ARG (timeout);

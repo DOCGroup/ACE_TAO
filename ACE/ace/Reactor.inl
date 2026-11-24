@@ -10,7 +10,7 @@ ACE_Reactor::run_event_loop ()
   ACE_TRACE ("ACE_Reactor::run_event_loop");
   ACE_Reactor *r = ACE_Reactor::instance ();
 
-  if (r == 0)
+  if (r == nullptr)
     {
       return -1;
     }
@@ -28,7 +28,7 @@ ACE_Reactor::run_event_loop (ACE_Time_Value &tv)
   ACE_TRACE ("ACE_Reactor::run_event_loop");
   ACE_Reactor *r = ACE_Reactor::instance ();
 
-  if (r == 0)
+  if (r == nullptr)
     {
       return -1;
     }
@@ -46,7 +46,7 @@ ACE_Reactor::run_alertable_event_loop ()
   ACE_TRACE ("ACE_Reactor::run_alertable_event_loop");
   ACE_Reactor *r = ACE_Reactor::instance ();
 
-  if (r == 0)
+  if (r == nullptr)
     {
       return -1;
     }
@@ -64,7 +64,7 @@ ACE_Reactor::run_alertable_event_loop (ACE_Time_Value &tv)
   ACE_TRACE ("ACE_Reactor::run_alertable_event_loop");
   ACE_Reactor *r = ACE_Reactor::instance ();
 
-  if (r == 0)
+  if (r == nullptr)
     {
       return -1;
     }

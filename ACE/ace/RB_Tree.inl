@@ -120,7 +120,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::open (ACE_Allocator *alloc)
   // If we were passed an allocator use it,
   // otherwise use the default instance.
 
-  if (alloc == 0)
+  if (alloc == nullptr)
     {
       alloc = ACE_Allocator::instance ();
     }
@@ -599,7 +599,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::find (const EXT_ID &k)
 
   ACE_RB_Tree_Node<EXT_ID, INT_ID> *entry {};
   int result = this->find_i (k, entry);
-  return (result == 0) ? std::addressof (entry->item ()) : 0;
+  return (result == 0) ? std::addressof (entry->item ()) : nullptr;
 }
 
 /// Inserts a *copy* of the key and the item into the tree:
@@ -892,7 +892,7 @@ ACE_INLINE EXT_ID *
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::key ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::key");
-  return this->node_ ? std::addressof (this->node_->key ()) : 0;
+  return this->node_ ? std::addressof (this->node_->key ()) : nullptr;
 }
 
 /// Accessor for item of node under iterator (if any). DEPRECATED.
@@ -902,7 +902,7 @@ ACE_INLINE INT_ID *
 ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::item ()
 {
   ACE_TRACE ("ACE_RB_Tree_Iterator<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::item");
-  return this->node_ ? std::addressof (this->node_->item ()) : 0;
+  return this->node_ ? std::addressof (this->node_->item ()) : nullptr;
 }
 
 /// Move to the first item in the tree. DEPRECATED.

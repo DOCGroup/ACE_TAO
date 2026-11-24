@@ -641,7 +641,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
             }
           else
             {
-              port_separator_loc = 0;
+              port_separator_loc = nullptr;
             }
           if (def_type)
             {

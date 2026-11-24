@@ -482,7 +482,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open ()
                                this->cb_ptr_);
 
       NAME_NODE::init_ptr (&this->cb_ptr_->name_head_,
-                           0,
+                           nullptr,
                            this->cb_ptr_);
 
       this->cb_ptr_->freep_->size_ = 0;
@@ -496,7 +496,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open ()
           MALLOC_HEADER *p = ((MALLOC_HEADER *) (this->cb_ptr_->freep_)) + 1;
 
           MALLOC_HEADER::init_ptr (&p->next_block_,
-                                   0,
+                                   nullptr,
                                    this->cb_ptr_);
 
           p->size_ = (rounded_bytes - sizeof *this->cb_ptr_) / sizeof (MALLOC_HEADER);
@@ -694,7 +694,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
                   currp->size_ -= nunits;
                   currp += currp->size_;
                   MALLOC_HEADER::init_ptr (&currp->next_block_,
-                                           0,
+                                           nullptr,
                                            this->cb_ptr_);
                   currp->size_ = nunits;
                 }
@@ -727,7 +727,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
                   ACE_MALLOC_STATS (++this->cb_ptr_->malloc_stats_.ninuse_);
 
                   MALLOC_HEADER::init_ptr (&currp->next_block_,
-                                           0,
+                                           nullptr,
                                            this->cb_ptr_);
                   // Compute the chunk size in MALLOC_HEADER units.
                   currp->size_ = chunk_bytes / sizeof (MALLOC_HEADER);

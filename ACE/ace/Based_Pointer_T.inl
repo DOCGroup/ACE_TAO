@@ -26,7 +26,7 @@ template <class CONCRETE> ACE_INLINE void
 ACE_Based_Pointer_Basic<CONCRETE>::operator= (CONCRETE *rhs)
 {
   ACE_TRACE ("ACE_Based_Pointer_Basic<CONCRETE>::operator=");
-  if (rhs == 0)
+  if (rhs == nullptr)
     {
       // Store a value of <target_> that indicate "NULL" pointer.
       this->target_ = -1;
@@ -42,7 +42,7 @@ template <class CONCRETE> ACE_INLINE void
 ACE_Based_Pointer<CONCRETE>::operator= (CONCRETE *rhs)
 {
   ACE_TRACE ("ACE_Based_Pointer<CONCRETE>::operator=");
-  if (rhs == 0)
+  if (rhs == nullptr)
     {
       // Store a value of <target_> that indicate "NULL" pointer.
       this->target_ = -1;
@@ -68,7 +68,7 @@ ACE_Based_Pointer_Basic<CONCRETE>::addr () const
 
   if (this->target_ == -1)
     {
-      return 0;
+      return nullptr;
     }
   else
     {

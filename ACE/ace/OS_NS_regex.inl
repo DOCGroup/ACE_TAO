@@ -14,7 +14,7 @@ ACE_OS::compile (const char *instring, char *expbuf, char *endbuf)
   ACE_UNUSED_ARG (expbuf);
   ACE_UNUSED_ARG (endbuf);
 
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (nullptr);
 #endif /* ACE_HAS_REGEX */
 }
 

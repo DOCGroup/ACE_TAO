@@ -36,7 +36,7 @@ t_alloc (ACE_HANDLE handle, int struct_type, int fields)
   ACE_UNUSED_ARG (struct_type);
   ACE_UNUSED_ARG (handle);
 
-  ACE_NOTSUP_RETURN (0);
+  ACE_NOTSUP_RETURN (nullptr);
 #endif /* ACE_HAS_TLI */
 }
 

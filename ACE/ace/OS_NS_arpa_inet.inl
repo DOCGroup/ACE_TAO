@@ -84,13 +84,13 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
           > static_cast<int> (len))
         {
           errno = ENOSPC;
-          return 0; // Failure
+          return nullptr; // Failure
         }
       return strptr;
     }
 
   errno = EAFNOSUPPORT;
-  return 0;
+  return nullptr;
 #endif
 }
 

@@ -289,7 +289,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
       const char *cp_pos = std::strchr(addr_base, ']');
-      if (cp_pos == 0 || cp_pos >= addr_tail)
+      if (cp_pos == nullptr || cp_pos >= addr_tail)
         {
           // No valid IPv6 address specified but that will come out later.
           if (TAO_debug_level > 0)
@@ -298,7 +298,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
                          ACE_TEXT ("TAO (%P|%t) - TAO_CORBALOC_Parser: ")
                          ACE_TEXT ("Invalid IPv6 decimal address specified.\n")));
             }
-          separator = 0;
+          separator = nullptr;
         }
       else
         {
@@ -308,7 +308,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
             }
           else
             {
-              separator = 0;
+              separator = nullptr;
             }
         }
     }

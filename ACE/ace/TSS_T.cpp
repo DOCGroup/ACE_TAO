@@ -45,7 +45,7 @@ ACE_TSS<TYPE>::~ACE_TSS ()
     ACE_TSS_C_cleanup (tss_adapter);
 # else
     TYPE *ts_obj = this->ts_value ();
-    this->ts_value (0);
+    this->ts_value (nullptr);
 #  if !defined ACE_HAS_LYNXOS_178 || defined ACE_HAS_TSS_EMULATION
     // A bug in LynxOS-178 causes pthread_setspecific (called from ts_value(0)
     // above) to call the cleanup function, so we need to avoid calling it here.

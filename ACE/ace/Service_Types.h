@@ -38,7 +38,7 @@ public:
   ACE_Service_Type_Impl (void *object,
                          const ACE_TCHAR *s_name,
                          u_int flags = 0,
-                         ACE_Service_Object_Exterminator gobbler = 0,
+                         ACE_Service_Object_Exterminator gobbler = nullptr,
                          int stype = ACE_Service_Type::INVALID_TYPE);
   virtual ~ACE_Service_Type_Impl ();
 
@@ -114,7 +114,7 @@ public:
   ACE_Service_Object_Type (void *so,
                            const ACE_TCHAR *name,
                            u_int flags = 0,
-                           ACE_Service_Object_Exterminator gobbler = 0,
+                           ACE_Service_Object_Exterminator gobbler = nullptr,
                            int stype = ACE_Service_Type::SERVICE_OBJECT);
 
   ~ACE_Service_Object_Type () override;

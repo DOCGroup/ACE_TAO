@@ -238,7 +238,7 @@ public:
    * <ACE_Proactor::handle_events>
    * method returns -1 or the @c end_proactor_event_loop method is invoked.
    */
-  int proactor_run_event_loop (PROACTOR_EVENT_HOOK = 0);
+  int proactor_run_event_loop (PROACTOR_EVENT_HOOK = nullptr);
 
   /**
    * Run the event loop until the <ACE_Proactor::handle_events>
@@ -248,7 +248,7 @@ public:
    * expires, in which case a 0 is returned.
    */
   int proactor_run_event_loop (ACE_Time_Value &tv,
-                               PROACTOR_EVENT_HOOK = 0);
+                               PROACTOR_EVENT_HOOK = nullptr);
 
   /**
    * Instruct the ACE_Proactor to terminate its event loop

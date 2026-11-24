@@ -31,7 +31,7 @@ ACE_Asynch_Connector<HANDLER>::open (bool pass_addresses,
   // Initialize the ACE_Asynch_Connect
   if (this->asynch_connect_.open (*this,
                                   ACE_INVALID_HANDLE,
-                                  0,
+                                  nullptr,
                                   this->proactor ()) == -1)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,

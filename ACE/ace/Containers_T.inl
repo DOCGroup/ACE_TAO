@@ -224,7 +224,7 @@ ACE_Ordered_MultiSet_Iterator<T>::advance ()
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::advance");
 
-  current_ = current_ ? current_->next_ : 0;
+  current_ = current_ ? current_->next_ : nullptr;
 
   return (current_ ? 1 : 0);
 }
@@ -234,7 +234,7 @@ ACE_Ordered_MultiSet_Iterator<T>::retreat ()
 {
   ACE_TRACE ("ACE_Ordered_MultiSet_Iterator<T>::retreat");
 
-  current_ = current_ ? current_->prev_ : 0;
+  current_ = current_ ? current_->prev_ : nullptr;
 
   return (current_ ? 1 : 0);
 }
@@ -461,7 +461,7 @@ ACE_DLList_Reverse_Iterator<T>::next (T *&ptr)
 {
   ACE_DLList_Node *temp =
     ACE_Double_Linked_List_Reverse_Iterator <ACE_DLList_Node>::next ();
-  if (temp == 0)
+  if (temp == nullptr)
     {
       return 0;
     }

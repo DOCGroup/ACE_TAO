@@ -266,7 +266,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE,
         }
       // Set the Reactor to 0 so that we don't try to close down
       // again.
-      this->reactor (0);
+      this->reactor (nullptr);
     }
   return 0;
 }
@@ -328,8 +328,8 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::accept_svc_handler
     }
 
   if (this->acceptor ().accept (svc_handler->peer (), // stream
-                                0, // remote address
-                                0, // timeout
+                                nullptr, // remote address
+                                nullptr, // timeout
                                 true, // restart
                                 reset_new_handle  // reset new handler
                                 ) == -1)
@@ -584,7 +584,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 {
   ACE_TRACE ("ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open");
   return this->open
-    (local_addr, reactor, 0, 0, 0, 0, 0, 0, use_select, reuse_addr);
+    (local_addr, reactor, nullptr, nullptr, nullptr, nullptr, nullptr, nullptr, use_select, reuse_addr);
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
@@ -765,28 +765,28 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE,
           delete this->creation_strategy_;
         }
       this->delete_creation_strategy_ = false;
-      this->creation_strategy_ = 0;
+      this->creation_strategy_ = nullptr;
 
       if (this->delete_accept_strategy_)
         {
           delete this->accept_strategy_;
         }
       this->delete_accept_strategy_ = false;
-      this->accept_strategy_ = 0;
+      this->accept_strategy_ = nullptr;
 
       if (this->delete_concurrency_strategy_)
         {
           delete this->concurrency_strategy_;
         }
       this->delete_concurrency_strategy_ = false;
-      this->concurrency_strategy_ = 0;
+      this->concurrency_strategy_ = nullptr;
 
       if (this->delete_scheduling_strategy_)
         {
           delete this->scheduling_strategy_;
         }
       this->delete_scheduling_strategy_ = false;
-      this->scheduling_strategy_ = 0;
+      this->scheduling_strategy_ = nullptr;
 
       // We must use the <handle> obtained *before* we deleted the
       // accept_strategy_...
@@ -797,7 +797,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE,
 
       // Set the Reactor to 0 so that we don't try to close down
       // again.
-      this->reactor (0);
+      this->reactor (nullptr);
     }
   return 0;
 }
@@ -966,7 +966,7 @@ template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor ()
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor");
-  this->reactor (0);
+  this->reactor (nullptr);
 }
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
@@ -1009,7 +1009,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE,
     {
       delete this->concurrency_strategy_;
       this->delete_concurrency_strategy_ = false;
-      this->concurrency_strategy_ = 0;
+      this->concurrency_strategy_ = nullptr;
     }
   // Note that if we aren't actually registered with the
   // ACE_Reactor then it's ok for this call to fail...
@@ -1240,8 +1240,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_input (ACE_HANDLE)
     }
 
   if (this->shared_accept (this->svc_handler_, // stream
-                           0, // remote address
-                           0, // timeout
+                           nullptr, // remote address
+                           nullptr, // timeout
                            this->restart_, // restart
                            reset_new_handle // reset new handle
                            ) == -1)

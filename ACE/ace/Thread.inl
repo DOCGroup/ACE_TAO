@@ -159,7 +159,7 @@ ACE_Thread::disablecancel (struct cancel_state *old_state)
   int old_cstate = 0;
   int result = ACE_OS::thr_setcancelstate (THR_CANCEL_DISABLE,
                                            &old_cstate);
-  if (result == 0 && old_state != 0)
+  if (result == 0 && old_state != nullptr)
     {
       std::memset (old_state,
                       0,
@@ -193,7 +193,7 @@ ACE_Thread::enablecancel (struct cancel_state *old_state,
       return result;
     }
 
-  if (old_state != 0)
+  if (old_state != nullptr)
     {
       old_state->cancelstate = old_cstate;
       old_state->canceltype = old_ctype;
@@ -228,7 +228,7 @@ ACE_Thread::setcancelstate (struct cancel_state &new_state,
       return -1;
     }
 
-  if (old_state != 0)
+  if (old_state != nullptr)
     {
       old_state->cancelstate = old_cstate;
       old_state->canceltype = old_ctype;

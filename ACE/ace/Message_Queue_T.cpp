@@ -1557,7 +1557,7 @@ ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_deadline_i (ACE_Message_B
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Message_Block *&first_item)
 {
-  if (this->head_ ==0)
+  if (this->head_ ==nullptr)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Attempting to dequeue from empty queue")),

@@ -168,7 +168,7 @@ private:
   int open_i (const ACE_TCHAR *dll_name,
               int open_mode = ACE_DEFAULT_SHLIB_MODE,
               bool close_handle_on_destruction = true,
-              ACE_SHLIB_HANDLE handle = 0);
+              ACE_SHLIB_HANDLE handle = nullptr);
 
 public:
   /// Open mode.

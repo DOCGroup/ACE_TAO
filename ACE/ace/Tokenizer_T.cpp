@@ -122,13 +122,13 @@ ACE_Tokenizer_T<ACE_CHAR_T>::next ()
   if (index_ == -1)
     {
       index_ = 0;
-      return 0;
+      return nullptr;
     }
 
   // Check if a buffer has been passed
   if (!buffer_)
     {
-      return 0;
+      return nullptr;
     }
 
   ACE_CHAR_T replacement = 0;
@@ -143,7 +143,7 @@ ACE_Tokenizer_T<ACE_CHAR_T>::next ()
         {
           // If we hit EOS at the start, return 0.
           index_ = 0;
-          return 0;
+          return nullptr;
         }
 
       if (this->is_delimiter (buffer_[index_],

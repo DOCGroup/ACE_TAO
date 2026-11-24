@@ -82,7 +82,7 @@ ACE_Select_Reactor_Handler_Repository_Iterator::done () const
 ACE_INLINE
 ACE_Event_Tuple::ACE_Event_Tuple ()
   : handle_ (ACE_INVALID_HANDLE),
-    event_handler_ (0)
+    event_handler_ (nullptr)
 {
 }
 

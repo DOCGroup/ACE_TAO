@@ -17,7 +17,7 @@ ACE_At_Thread_Exit::was_applied (bool applied)
   was_applied_ = applied;
   if (was_applied_)
     {
-      td_ = 0;
+      td_ = nullptr;
     }
   return was_applied_;
 }
@@ -116,7 +116,7 @@ ACE_Thread_Descriptor_Base::reset ()
   this->thr_handle_ = ACE_OS::NULL_hthread;
   this->grp_id_ = 0;
   this->thr_state_ = ACE_Thread_Manager::ACE_THR_IDLE;
-  this->task_ = 0;
+  this->task_ = nullptr;
   this->flags_ = 0;
 }
 
@@ -166,11 +166,11 @@ ACE_Thread_Descriptor::reset (ACE_Thread_Manager *tm)
 {
   ACE_TRACE ("ACE_Thread_Descriptor::reset");
   this->ACE_Thread_Descriptor_Base::reset ();
-  this->at_exit_list_ = 0;
+  this->at_exit_list_ = nullptr;
     // Start the at_exit hook list.
   this->tm_ = tm;
     // Setup the Thread_Manager.
-  this->log_msg_ = 0;
+  this->log_msg_ = nullptr;
   this->terminated_ = false;
 }
 
@@ -241,7 +241,7 @@ ACE_INLINE int
 ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit* at)
 {
   ACE_Thread_Descriptor *td = this->thread_desc_self ();
-  if (td == 0)
+  if (td == nullptr)
     {
       return -1;
     }
@@ -255,7 +255,7 @@ ACE_INLINE int
 ACE_Thread_Manager::at_exit (ACE_At_Thread_Exit& at)
 {
   ACE_Thread_Descriptor *td = this->thread_desc_self ();
-  if (td == 0)
+  if (td == nullptr)
     {
       return -1;
     }
@@ -271,7 +271,7 @@ ACE_Thread_Manager::at_exit (void *object,
                              void *param)
 {
   ACE_Thread_Descriptor *td = this->thread_desc_self ();
-  if (td == 0)
+  if (td == nullptr)
     {
       return -1;
     }

@@ -196,13 +196,13 @@ ACE_InputCDR::Transfer_Contents::Transfer_Contents (ACE_InputCDR &rhs)
 ACE_INLINE
 ACE_OutputCDR::~ACE_OutputCDR ()
 {
-  if (this->start_.cont () != 0)
+  if (this->start_.cont () != nullptr)
     {
       ACE_Message_Block::release (this->start_.cont ());
-      this->start_.cont (0);
+      this->start_.cont (nullptr);
     }
 
-  this->current_ = 0;
+  this->current_ = nullptr;
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   this->monitor_->remove_ref ();
@@ -228,7 +228,7 @@ ACE_OutputCDR::reset ()
   if (cont)
     {
       ACE_Message_Block::release (cont);
-      this->start_.cont (0);
+      this->start_.cont (nullptr);
     }
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
@@ -258,7 +258,7 @@ ACE_OutputCDR::write_boolean (ACE_CDR::Boolean x)
 ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_char (ACE_CDR::Char x)
 {
-  if (this->char_translator_ == 0)
+  if (this->char_translator_ == nullptr)
     {
       ACE_CDR::Octet temp = static_cast<ACE_CDR::Octet> (x);
       return this->write_1 (&temp);
@@ -343,7 +343,7 @@ ACE_OutputCDR::write_string (const ACE_CDR::Char *x)
       return this->write_string (len, x);
     }
 
-  return this->write_string (0, 0);
+  return this->write_string (0, nullptr);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -356,7 +356,7 @@ ACE_OutputCDR::write_wstring (const ACE_CDR::WChar *x)
       return this->write_wstring (len, x);
     }
 
-  return this->write_wstring (0, 0);
+  return this->write_wstring (0, nullptr);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -365,7 +365,7 @@ ACE_OutputCDR::write_string (const std::string &x)
   ACE_CDR::ULong const len =
     static_cast<ACE_CDR::ULong> (x.size ());
   return this->write_string (len,
-                             x.empty () ? 0 : x.c_str ());
+                             x.empty () ? nullptr : x.c_str ());
 }
 
 #if !defined (ACE_LACKS_STD_STRING_VIEW)
@@ -375,7 +375,7 @@ ACE_OutputCDR::write_string_view (const std::string_view &x)
   ACE_CDR::ULong const len =
     static_cast<ACE_CDR::ULong> (x.size ());
   return this->write_string (len,
-                             x.empty () ? 0 : x.data ());
+                             x.empty () ? nullptr : x.data ());
 }
 #endif
 
@@ -386,7 +386,7 @@ ACE_OutputCDR::write_wstring (const std::wstring &x)
   ACE_CDR::ULong const len =
     static_cast<ACE_CDR::ULong> (x.size ());
   return this->write_wstring (len,
-                              x.empty () ? 0 : x.c_str ());
+                              x.empty () ? nullptr : x.c_str ());
 }
 #endif
 
@@ -406,7 +406,7 @@ ACE_INLINE ACE_CDR::Boolean
 ACE_OutputCDR::write_char_array (const ACE_CDR::Char *x,
                                  ACE_CDR::ULong length)
 {
-  if (this->char_translator_ == 0)
+  if (this->char_translator_ == nullptr)
     {
       return this->write_array (x,
                                 ACE_CDR::OCTET_SIZE,
@@ -895,7 +895,7 @@ ACE_InputCDR::read_char_array (ACE_CDR::Char* x,
       return false;
     }
 
-  if (this->char_translator_ == 0)
+  if (this->char_translator_ == nullptr)
     {
       return this->read_array (x,
                                ACE_CDR::OCTET_SIZE,
@@ -917,7 +917,7 @@ ACE_InputCDR::read_wchar_array (ACE_CDR::WChar* x,
       return false;
     }
 
-  if (this->wchar_translator_ != 0)
+  if (this->wchar_translator_ != nullptr)
     {
       return this->wchar_translator_->read_wchar_array (*this, x, length);
     }
@@ -1472,7 +1472,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_string x)
 {
   ACE_CDR::ULong len = 0;
 
-  if (x.val_ != 0)
+  if (x.val_ != nullptr)
     {
       len = static_cast<ACE_CDR::ULong> (std::strlen (x.val_));
     }
@@ -1486,7 +1486,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_wstring x)
 {
   ACE_CDR::ULong len = 0;
 
-  if (x.val_ != 0)
+  if (x.val_ != nullptr)
     {
       len = static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x.val_));
     }

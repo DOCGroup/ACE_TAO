@@ -946,7 +946,7 @@ ACE_OS::sleep (u_int seconds)
   rqtp.tv_sec = seconds;
   rqtp.tv_nsec = 0L;
   //FUZZ: disable check_for_lack_ACE_OS
-  return ::nanosleep (&rqtp, 0);
+  return ::nanosleep (&rqtp, nullptr);
   //FUZZ: enable check_for_lack_ACE_OS
 #elif defined (ACE_LACKS_SLEEP)
   ACE_UNUSED_ARG (seconds);
@@ -975,7 +975,7 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 #elif defined (ACE_HAS_CLOCK_GETTIME)
   timespec_t rqtp = tv;
   //FUZZ: disable check_for_lack_ACE_OS
-  return ::nanosleep (&rqtp, 0);
+  return ::nanosleep (&rqtp, nullptr);
   //FUZZ: enable check_for_lack_ACE_OS
 #else
 # if !defined (ACE_LACKS_SELECT)

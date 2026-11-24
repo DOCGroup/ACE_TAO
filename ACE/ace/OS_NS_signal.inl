@@ -212,7 +212,7 @@ signal (int signum, ACE_SignalHandler func)
 {
   if (signum == 0)
     {
-      return 0;
+      return nullptr;
     }
   else
     {
@@ -246,7 +246,7 @@ sigsuspend (const sigset_t *s)
 #if defined (ACE_HAS_SIGSUSPEND)
   sigset_t sigset;
 
-  if (s == 0)
+  if (s == nullptr)
     {
       ACE_OS::sigemptyset (&sigset);
       s = &sigset;

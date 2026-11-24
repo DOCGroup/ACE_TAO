@@ -599,10 +599,10 @@ public:
                long priority = ACE_DEFAULT_THREAD_PRIORITY,
                int grp_id = -1,
                ACE_Task_Base *task = nullptr,
-               ACE_hthread_t thread_handles[] = 0,
-               void *stack[] = 0,
-               size_t stack_size[] = 0,
-               const char *thr_name[] = 0);
+               ACE_hthread_t thread_handles[] = nullptr,
+               void *stack[] = nullptr,
+               size_t stack_size[] = nullptr,
+               const char *thr_name[] = nullptr);
 
   /**
    * Spawn a specified number of threads, all of which execute @a func
@@ -681,11 +681,11 @@ public:
                long flags,
                long priority = ACE_DEFAULT_THREAD_PRIORITY,
                int grp_id = -1,
-               void *stack[] = 0,
-               size_t stack_size[] = 0,
-               ACE_hthread_t thread_handles[] = 0,
+               void *stack[] = nullptr,
+               size_t stack_size[] = nullptr,
+               ACE_hthread_t thread_handles[] = nullptr,
                ACE_Task_Base *task = nullptr,
-               const char *thr_name[] = 0);
+               const char *thr_name[] = nullptr);
 
   /**
    * Called to clean up when a thread exits.
@@ -696,7 +696,7 @@ public:
    *                       the exit value of the thread.
    * Should _not_ be called by main thread.
    */
-  ACE_THR_FUNC_RETURN exit (ACE_THR_FUNC_RETURN status = 0,
+  ACE_THR_FUNC_RETURN exit (ACE_THR_FUNC_RETURN status = nullptr,
                             bool do_thread_exit = true);
 
   /**

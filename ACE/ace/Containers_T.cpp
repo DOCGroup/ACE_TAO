@@ -427,7 +427,7 @@ ACE_Double_Linked_List_Iterator_Base<T>::not_done () const
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -441,7 +441,7 @@ ACE_Double_Linked_List_Iterator_Base<T>::do_advance ()
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -455,7 +455,7 @@ ACE_Double_Linked_List_Iterator_Base<T>::do_retreat ()
     }
   else
     {
-      return 0;
+      return nullptr;
     }
 }
 
@@ -677,7 +677,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Double_Linked_List)
 ACE_Double_Linked_List<T>:: ACE_Double_Linked_List (ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     {
       this->allocator_ = ACE_Allocator::instance ();
     }
@@ -724,7 +724,7 @@ ACE_Double_Linked_List<T>::~ACE_Double_Linked_List ()
                 this->allocator_->free,
                 T);
 
-  this->head_ = 0;
+  this->head_ = nullptr;
 }
 
 template <class T> bool
@@ -759,7 +759,7 @@ ACE_Double_Linked_List<T>::delete_head ()
 {
   if (this->is_empty ())
     {
-      return 0;
+      return nullptr;
     }
 
   T *temp = static_cast<T *> (this->head_->next_);
@@ -773,7 +773,7 @@ ACE_Double_Linked_List<T>::delete_tail ()
 {
   if (this->is_empty ())
     {
-      return 0;
+      return nullptr;
     }
 
   T *temp = static_cast <T *> (this->head_->prev_);
@@ -864,7 +864,7 @@ ACE_Double_Linked_List<T>::insert_element (T *new_item,
                                            int before,
                                            T *old_item)
 {
-  if (old_item == 0)
+  if (old_item == nullptr)
     {
       old_item = this->head_;
     }
@@ -888,15 +888,15 @@ ACE_Double_Linked_List<T>::remove_element (T *item)
   // Notice that you have to ensure that item is an element of this
   // list.  We can't do much checking here.
 
-  if (item == this->head_ || item->next_ == 0
-      || item->prev_ == 0 || this->size () == 0)      // Can't remove head
+  if (item == this->head_ || item->next_ == nullptr
+      || item->prev_ == nullptr || this->size () == 0)      // Can't remove head
     {
       return -1;
     }
 
   item->prev_->next_ = item->next_;
   item->next_->prev_ = item->prev_;
-  item->next_ = item->prev_ = 0; // reset pointers to prevent double removal.
+  item->next_ = item->prev_ = nullptr; // reset pointers to prevent double removal.
   --this->size_;
   return 0;
 }
@@ -1551,7 +1551,7 @@ ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet (ACE_Allocator *alloc)
 {
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::ACE_Ordered_MultiSet");
 
-  if (this->allocator_ == 0)
+  if (this->allocator_ == nullptr)
     {
       this->allocator_ = ACE_Allocator::instance ();
     }
@@ -1596,7 +1596,7 @@ ACE_Ordered_MultiSet<T>::insert (const T &item)
 {
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert");
 
-  return this->insert_from (item, this->head_, 0);
+  return this->insert_from (item, this->head_, nullptr);
 }
 
 template <class T> int
@@ -1615,7 +1615,7 @@ ACE_Ordered_MultiSet<T>::remove (const T &item)
 
   ACE_DNode<T> *node {};
 
-  int result = locate (item, 0, node);
+  int result = locate (item, nullptr, node);
 
   // if we found the node, remove from list and free it
   if (node && (result == 0))
@@ -1858,7 +1858,7 @@ ACE_Ordered_MultiSet<T>::delete_nodes ()
 {
   // iterate through list, deleting nodes
   for (ACE_DNode<T> *curr = this->head_;
-       curr != 0;
+       curr != nullptr;
        )
     {
       ACE_DNode<T> *temp = curr;
@@ -1869,8 +1869,8 @@ ACE_Ordered_MultiSet<T>::delete_nodes ()
                              <T>);
     }
 
-  this->head_ = 0;
-  this->tail_ = 0;
+  this->head_ = nullptr;
+  this->tail_ = nullptr;
   this->cur_size_ = 0;
 }
 
@@ -1917,7 +1917,7 @@ ACE_DLList<T>::insert_tail (T *new_item)
   ACE_NEW_MALLOC_RETURN (temp1,
                          static_cast<ACE_DLList_Node *> (this->allocator_->malloc (sizeof (ACE_DLList_Node))),
                          ACE_DLList_Node (new_item),
-                         0);
+                         nullptr);
   ACE_DLList_Node *temp2 = ACE_DLList_Base::insert_tail (temp1);
   return static_cast<T *> (temp2 ? temp2->item_ : nullptr);
 }
@@ -1929,7 +1929,7 @@ ACE_DLList<T>::insert_head (T *new_item)
   ACE_NEW_MALLOC_RETURN (temp1,
                          static_cast<ACE_DLList_Node *> (
                            this->allocator_->malloc (sizeof (ACE_DLList_Node))),
-                         ACE_DLList_Node (new_item), 0);
+                         ACE_DLList_Node (new_item), nullptr);
   ACE_DLList_Node *temp2 = ACE_DLList_Base::insert_head (temp1);
   return static_cast<T *> (temp2 ? temp2->item_ : nullptr);
 }

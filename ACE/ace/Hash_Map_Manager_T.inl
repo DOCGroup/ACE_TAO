@@ -492,9 +492,9 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID,
   bool head)
   : map_man_ (std::addressof (mm)),
     index_ (head ? -1 : (ssize_t) mm.total_size_),
-    next_ (0)
+    next_ (nullptr)
 {
-  if (mm.table_ != 0)
+  if (mm.table_ != nullptr)
     {
       this->next_ = std::addressof (mm.table_[head ? 0 : mm.total_size_ - 1]);
     }
@@ -530,7 +530,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::next");
 
-  if (this->map_man_->table_ != 0
+  if (this->map_man_->table_ != nullptr
       && this->index_ < static_cast<ssize_t> (this->map_man_->total_size_)
       && this->index_ >= 0
       && this->next_ != std::addressof (this->map_man_->table_[this->index_]))
@@ -549,7 +549,7 @@ ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>:
 {
   ACE_TRACE ("ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::done");
 
-  return this->map_man_->table_ == 0
+  return this->map_man_->table_ == nullptr
     || this->index_ >= static_cast<ssize_t> (this->map_man_->total_size_)
     || this->index_ < 0;
 }
@@ -617,11 +617,11 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
                                                                                                                             bool head)
   : map_man_ (std::addressof (mm)),
     index_ (head ? -1 : (ssize_t) mm.total_size_),
-    next_ (0)
+    next_ (nullptr)
 {
   ACE_TRACE ("ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::ACE_Hash_Map_Const_Iterator_Base_Ex");
 
-  if (mm.table_ != 0)
+  if (mm.table_ != nullptr)
     {
       this->next_ = std::addressof (mm.table_[head ? 0 : mm.total_size_ - 1]);
     }
@@ -632,7 +632,7 @@ ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_
 {
   ACE_TRACE ("ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::next");
 
-  if (this->map_man_->table_ != 0
+  if (this->map_man_->table_ != nullptr
       && this->index_ < (ssize_t) this->map_man_->total_size_
       && this->index_ >= 0
       && this->next_ != std::addressof (this->map_man_->table_[this->index_]))
