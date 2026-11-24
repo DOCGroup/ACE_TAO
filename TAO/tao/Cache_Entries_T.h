@@ -110,14 +110,14 @@ namespace TAO
 
   private:
     /// The transport that needs to be cached.
-    transport_type *transport_;
+    transport_type *transport_ {};
 
     /// The state of the handle
-    Cache_Entries_State recycle_state_;
+    Cache_Entries_State recycle_state_ {ENTRY_UNKNOWN};
 
     /// This is an analog for the transport::is_connected(), which is
     /// guarded by a mutex.
-    bool is_connected_;
+    bool is_connected_ {};
   };
 
   /**
@@ -173,10 +173,10 @@ namespace TAO
 
   private:
     /// A property object that we represent.
-    transport_descriptor_type *transport_property_;
+    transport_descriptor_type *transport_property_ {};
 
     /// Do we need to delete transport_property?
-    bool is_delete_;
+    bool is_delete_ {};
 
     /**
      * This is a supplementary index. Would be set to zero by
@@ -184,7 +184,7 @@ namespace TAO
      * see the documentation of TAO_Transport_Cache_Manager for
      * details.
      */
-    CORBA::ULong index_;
+    CORBA::ULong index_ {};
   };
 }
 

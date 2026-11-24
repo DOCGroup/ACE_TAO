@@ -8,17 +8,11 @@ namespace TAO
 {
   template <typename TRANSPORT_TYPE> ACE_INLINE
   Cache_IntId_T<TRANSPORT_TYPE>::Cache_IntId_T ()
-    : transport_ (nullptr),
-      recycle_state_ (ENTRY_UNKNOWN),
-      is_connected_ (false)
   {
   }
 
   template <typename TRANSPORT_TYPE> ACE_INLINE
   Cache_IntId_T<TRANSPORT_TYPE>::Cache_IntId_T (const Cache_IntId_T &rhs)
-    : transport_ (nullptr),
-      recycle_state_ (ENTRY_UNKNOWN),
-      is_connected_ (false)
   {
     *this = rhs;
   }
@@ -99,18 +93,13 @@ namespace TAO
   /*******************************************************/
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::Cache_ExtId_T ()
-    : transport_property_ (0),
-      is_delete_ (false),
-      index_ (0)
   {
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::Cache_ExtId_T (
     typename Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::transport_descriptor_type *prop)
-    : transport_property_ (prop),
-      is_delete_ (false),
-      index_ (0)
+    : transport_property_ (prop)
   {
   }
 
@@ -149,9 +138,6 @@ namespace TAO
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::Cache_ExtId_T (const Cache_ExtId_T &rhs)
-    : transport_property_ (0),
-      is_delete_ (false),
-      index_ (0)
   {
     *this = rhs;
   }
