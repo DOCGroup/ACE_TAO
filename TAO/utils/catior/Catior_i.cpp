@@ -34,6 +34,22 @@
 #include <memory>
 #include <string>
 
+namespace
+{
+  std::string read_poop_field (char const *&string)
+  {
+    char const *delimiter = std::strchr (string, ':');
+    if (delimiter == nullptr)
+      {
+        throw CORBA::DATA_CONVERSION ();
+      }
+
+    std::string field (string, static_cast<size_t> (delimiter - string));
+    string = delimiter + 1;
+    return field;
+  }
+}
+
 Catior_i::Catior_i()
  : trace_depth_ {},
    buffer_ {}
@@ -408,44 +424,31 @@ Catior_i::catpoop (char const *string)
 
   string += 2;
 
-  auto read_field = [&string] ()
-    {
-      char const *delimiter = std::strchr (string, ':');
-      if (delimiter == nullptr)
-      {
-        throw CORBA::DATA_CONVERSION ();
-      }
-
-      std::string field (string, static_cast<size_t> (delimiter - string));
-      string = delimiter + 1;
-      return field;
-    };
-
-  std::string hostname = read_field ();
+  std::string hostname = read_poop_field (string);
 
   buffer_ += "Host Name:\t";
   buffer_ += hostname.c_str ();
   buffer_ += "\n";
 
-  std::string server_name = read_field ();
+  std::string server_name = read_poop_field (string);
 
   buffer_ += "Server Name:\t";
   buffer_ += server_name.c_str ();
   buffer_ += "\n";
 
-  std::string marker = read_field ();
+  std::string marker = read_poop_field (string);
 
   buffer_ += "Marker:\t\t";
   buffer_ += marker.c_str ();
   buffer_ += "\n";
 
-  std::string IR_host = read_field ();
+  std::string IR_host = read_poop_field (string);
 
   buffer_ += "IR Host:\t\t";
   buffer_ += IR_host.c_str ();
   buffer_ += "\n";
 
-  std::string IR_server = read_field ();
+  std::string IR_server = read_poop_field (string);
 
   buffer_ += "IR Server:\t\t";
   buffer_ += IR_server.c_str ();
