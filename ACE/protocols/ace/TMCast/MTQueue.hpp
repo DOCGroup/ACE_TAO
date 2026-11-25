@@ -14,7 +14,7 @@ namespace ACE_TMCast
   template <typename T,
             typename M,
             typename C,
-            typename Q = ACE_Unbounded_Queue<T> >
+            typename Q = ACE_Unbounded_Queue<T>>
   class MTQueue
   {
   public:

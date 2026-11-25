@@ -99,7 +99,7 @@ CORBA::Boolean operator>> (TAO_InputCDR &, mock_reference *&);
 namespace TAO
 {
   template<>
-  struct Objref_Traits< mock_reference>
+  struct Objref_Traits<mock_reference>
   {
     static mock_reference_ptr duplicate (mock_reference_ptr);
     static void release (mock_reference_ptr);

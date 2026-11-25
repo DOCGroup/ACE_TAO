@@ -15,7 +15,7 @@
 template<typename charT>
 struct testing_string_traits
   : public TAO::details::string_traits_base<charT>
-  , public TAO::details::string_traits_decorator<charT,testing_string_traits<charT> >
+  , public TAO::details::string_traits_decorator<charT,testing_string_traits<charT>>
 {
   static call_counter default_initializer_calls;
   static call_counter duplicate_calls;

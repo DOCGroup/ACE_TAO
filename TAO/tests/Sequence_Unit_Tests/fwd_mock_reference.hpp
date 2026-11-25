@@ -24,7 +24,7 @@ using fwd_mock_reference_out = TAO_Objref_Out_T<fwd_mock_reference>;
 namespace TAO
 {
 template<>
-struct Objref_Traits< fwd_mock_reference>
+struct Objref_Traits<fwd_mock_reference>
 {
   static fwd_mock_reference_ptr duplicate (fwd_mock_reference_ptr);
   static void release (fwd_mock_reference_ptr);

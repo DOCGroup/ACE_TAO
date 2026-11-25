@@ -16,7 +16,7 @@
 template<typename object_t, typename object_t_var>
 struct testing_object_reference_traits
   : public TAO::details::object_reference_traits_base<object_t, object_t_var>
-  , public TAO::details::object_reference_traits_decorator<object_t, object_t_var, testing_object_reference_traits<object_t, object_t_var> >
+  , public TAO::details::object_reference_traits_decorator<object_t, object_t_var, testing_object_reference_traits<object_t, object_t_var>>
 {
   static call_counter default_initializer_calls;
   static call_counter duplicate_calls;
