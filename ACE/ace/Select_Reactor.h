@@ -51,8 +51,8 @@ public:
   void dump () const {}
 
 private:
-  ACE_Guard (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &) = delete;
-  void operator= (const ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > &) = delete;
+  ACE_Guard (ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > const &) = delete;
+  void operator= (ACE_Guard< ACE_Reactor_Token_T<ACE_Noop_Token> > const &) = delete;
   ACE_Guard (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token> > &&) = delete;
   void operator= (ACE_Guard<ACE_Reactor_Token_T<ACE_Noop_Token> > &&) = delete;
 };
