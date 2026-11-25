@@ -75,6 +75,7 @@ class AST_Expression;
 class TAO_IDL_FE_Export UTL_ExprList : public UTL_List
 {
 public:
+  UTL_ExprList () = delete;
   UTL_ExprList (AST_Expression *s,
                 UTL_ExprList *cdr);
   UTL_ExprList (UTL_ExprList const &) = delete;

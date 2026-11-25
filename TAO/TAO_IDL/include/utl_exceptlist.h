@@ -76,6 +76,7 @@ class AST_Type;
 class TAO_IDL_FE_Export UTL_ExceptList : public UTL_List
 {
 public:
+  UTL_ExceptList () = delete;
   UTL_ExceptList (AST_Type *s,
                   UTL_ExceptList *cdr);
 

@@ -76,6 +76,7 @@ class Identifier;
 class TAO_IDL_FE_Export UTL_IdList : public UTL_List
 {
 public:
+  UTL_IdList () = delete;
   explicit UTL_IdList (Identifier *car, UTL_IdList *cdr = nullptr);
 
   ~UTL_IdList () override = default;

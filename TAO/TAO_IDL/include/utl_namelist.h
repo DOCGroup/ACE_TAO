@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export UTL_NameList : public UTL_List
 {
 public:
+  UTL_NameList () = delete;
   UTL_NameList (UTL_ScopedName *s,
                 UTL_NameList *cdr);
 

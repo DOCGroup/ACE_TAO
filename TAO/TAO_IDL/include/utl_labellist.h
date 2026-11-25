@@ -75,6 +75,7 @@ class AST_UnionLabel;
 class TAO_IDL_FE_Export UTL_LabelList : public UTL_List
 {
 public:
+  UTL_LabelList () = delete;
   UTL_LabelList (AST_UnionLabel *s,
                  UTL_LabelList *cdr);
   UTL_LabelList (UTL_LabelList const &) = delete;

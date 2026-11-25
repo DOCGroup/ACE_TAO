@@ -76,6 +76,7 @@ class FE_Declarator;
 class TAO_IDL_FE_Export UTL_DeclList : public UTL_List
 {
 public:
+  UTL_DeclList () = delete;
   // Operations
 
   UTL_DeclList (FE_Declarator *s,
