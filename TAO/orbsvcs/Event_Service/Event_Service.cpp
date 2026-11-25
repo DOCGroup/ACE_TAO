@@ -254,12 +254,23 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
             ACE_OS::fclose);
           if (output_file == nullptr)
             {
+              root_poa->destroy (true, true);
+              this->orb_->destroy ();
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  "Cannot open output file for writing IOR: %s",
                                  this->ior_file_name_.c_str()),
                                 1);
             }
-          ACE_OS::fprintf (output_file.get (), "%s", str.in ());
+          int const write_result = ACE_OS::fprintf (output_file.get (), "%s", str.in ());
+          int const close_result = ACE_OS::fclose (output_file.release ());
+          if (write_result < 0 || close_result != 0)
+            {
+              root_poa->destroy (true, true);
+              this->orb_->destroy ();
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("Cannot write IOR file: %s\n"),
+                                     this->ior_file_name_.c_str ()), 1);
+            }
         }
 
       if (!this->pid_file_name_.empty ())
@@ -268,11 +279,24 @@ Event_Service::run (int argc, ACE_TCHAR *argv[])
             ACE_OS::fopen (this->pid_file_name_.c_str (),
                            ACE_TEXT ("w")),
             ACE_OS::fclose);
-          if (pidf != nullptr)
+          if (pidf == nullptr)
             {
-              ACE_OS::fprintf (pidf.get (),
-                               "%ld\n",
-                               static_cast<long> (ACE_OS::getpid ()));
+              root_poa->destroy (true, true);
+              this->orb_->destroy ();
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("Cannot open PID file: %s\n"),
+                                     this->pid_file_name_.c_str ()), 1);
+            }
+          int const write_result = ACE_OS::fprintf (pidf.get (), "%ld\n",
+                                                    static_cast<long> (ACE_OS::getpid ()));
+          int const close_result = ACE_OS::fclose (pidf.release ());
+          if (write_result < 0 || close_result != 0)
+            {
+              root_poa->destroy (true, true);
+              this->orb_->destroy ();
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("Cannot write PID file: %s\n"),
+                                     this->pid_file_name_.c_str ()), 1);
             }
         }
 
