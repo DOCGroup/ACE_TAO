@@ -15,9 +15,8 @@ static IOGR_Maker* maker;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-IOGR_Maker::IOGR_Maker()
-{
-}
+IOGR_Maker::IOGR_Maker ()
+= default;
 
 void
 IOGR_Maker::init(CORBA::ORB_ptr orb)

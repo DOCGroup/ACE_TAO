@@ -58,9 +58,8 @@ CORBA::Object_ptr get_forward(PortableInterceptor::ServerRequestInfo_ptr ri)
   return forward._retn();
 }
 
-ForwardCtrlServerInterceptor::ForwardCtrlServerInterceptor()
-{
-}
+ForwardCtrlServerInterceptor::ForwardCtrlServerInterceptor ()
+= default;
 
 char * ForwardCtrlServerInterceptor::name ()
 {
