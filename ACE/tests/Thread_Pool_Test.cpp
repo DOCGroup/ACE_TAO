@@ -47,7 +47,7 @@ public:
   /**
    * Activate the task's thread pool, produce the messages that are
    * consumed by the threads in the thread pool, and demonstate how to
-   * shutdown using the <ACE_Message_Queue::deactivate> method.
+   * shutdown using the @c ACE_Message_Queue::deactivate method.
    */
   int test_queue_deactivation_shutdown ();
 

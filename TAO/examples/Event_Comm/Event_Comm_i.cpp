@@ -14,7 +14,7 @@ struct Compiled_Regex_Deleter
 
 /**
  * Keeps track of context information associated with
- * a <Event_Comm::Consumer> entry.
+ * a @c Event_Comm::Consumer entry.
  */
 class Consumer_Entry
 {

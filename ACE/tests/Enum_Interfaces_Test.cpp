@@ -1,7 +1,7 @@
 /**
  *  @file    Enum_Interfaces_Test.cpp
  *
- *   This is a simple test of <ACE::get_ip_interfaces>.  This call
+ *   This is a simple test of @c ACE::get_ip_interfaces.  This call
  *   retrieves the IP addresses assigned to the host by
  *   interrogating the kernel.  Network applications typically
  *   assume gethostbyname(uname()) will work, but this is just a
