@@ -103,7 +103,8 @@ namespace XSCRT
 
       for (ExtendedTypeInfo::BaseIterator i = ti.begin_base (); i != ti.end_base (); ++i)
       {
-        if (size_t const t (compute_levels (i->type_info (), cur + 1, map)); t > ret)
+        size_t const t (compute_levels (i->type_info (), cur + 1, map));
+        if (t > ret)
         {
           ret = t;
         }

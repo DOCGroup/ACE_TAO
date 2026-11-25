@@ -231,7 +231,8 @@ namespace XSCRT
     {
       if (map_)
       {
-        if (Map_::iterator const it (map_->find (std::addressof (id))); it != map_->end ())
+        Map_::iterator const it (map_->find (std::addressof (id)));
+        if (it != map_->end ())
         {
           map_->erase (it);
 
@@ -251,7 +252,8 @@ namespace XSCRT
     {
       if (map_)
       {
-        if (Map_::const_iterator const it (map_->find (std::addressof (id))); it != map_->end ())
+        Map_::const_iterator const it (map_->find (std::addressof (id)));
+        if (it != map_->end ())
         {
           return it->second;
         }
@@ -264,9 +266,9 @@ namespace XSCRT
     Type *get_idref (char const *name) const
     {
       std::basic_string<ACE_TCHAR> const name_string (ACE_TEXT_CHAR_TO_TCHAR (name));
-      if (std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
-            this->idref_map_.find (name_string);
-          i != idref_map_.end ())
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
+        this->idref_map_.find (name_string);
+      if (i != idref_map_.end ())
       {
         return i->second;
       }
@@ -278,8 +280,9 @@ namespace XSCRT
 
     Type *get_idref (std::basic_string<ACE_TCHAR> const &name) const
     {
-      if (std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i = this->idref_map_.find (name);
-          i != idref_map_.end ())
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
+        this->idref_map_.find (name);
+      if (i != idref_map_.end ())
       {
         return i->second;
       }
@@ -292,9 +295,9 @@ namespace XSCRT
     Type *get_idref (wchar_t const *name) const
     {
       std::basic_string<ACE_TCHAR> const name_string (ACE_TEXT_WCHAR_TO_TCHAR (name));
-      if (std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
-            this->idref_map_.find (name_string);
-          i != idref_map_.end ())
+      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
+        this->idref_map_.find (name_string);
+      if (i != idref_map_.end ())
       {
         return i->second;
       }
