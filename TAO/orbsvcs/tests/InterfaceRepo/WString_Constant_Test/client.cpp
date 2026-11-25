@@ -18,7 +18,7 @@ check_wstring_constant (CORBA::Repository_ptr repository,
   CORBA::ConstantDef_var const constant = CORBA::ConstantDef::_narrow (contained.in ());
   CORBA::Any_var const value = constant->value ();
   CORBA::WChar const *wstring {};
-  if (!(value.in () >>= wstring))
+  if (!(value.in () >>= wstring) || wstring == nullptr)
     {
       std::fprintf (stderr, "constant %s is not a wide string\n", id);
       return false;
