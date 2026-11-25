@@ -35,7 +35,7 @@ void
 MPC_Generator::write_prolog (ACE_CString const &path)
 {
   ACE_CString const fname (path + "/" + mpcfilename_);
-  ACE_DEBUG ((LM_DEBUG, "writing file %s\n",fname.c_str()));
+  ACE_DEBUG ((LM_DEBUG, "writing file %C\n",fname.c_str()));
   mpcfile_.open(fname.c_str());
   if (!mpcfile_)
   {
@@ -301,7 +301,7 @@ Library::write_export_list (bool show_ref_counts)
   }
 
   if (show_ref_counts) {
-    ACE_DEBUG ((LM_DEBUG, "Making directory %s\n", rcpath.c_str ()));
+    ACE_DEBUG ((LM_DEBUG, "Making directory %C\n", rcpath.c_str ()));
     if (ACE_OS::mkdir (ACE_TEXT_CHAR_TO_TCHAR (rcpath.c_str ())) == -1 &&
         errno != EEXIST)
     {
@@ -309,7 +309,7 @@ Library::write_export_list (bool show_ref_counts)
     }
   }
 
-  ACE_DEBUG ((LM_DEBUG, "%s: %B out of %B modules required\n",
+  ACE_DEBUG ((LM_DEBUG, "%C: %B out of %B modules required\n",
               name_.c_str (), num_extrefs_, modules_.size ()));
 
   mpcfile_->write_prolog (path_);
