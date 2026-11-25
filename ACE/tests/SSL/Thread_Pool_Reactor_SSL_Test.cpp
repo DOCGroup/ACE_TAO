@@ -36,6 +36,7 @@
 #include "ace/Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
+#include "ace/Signal.h"
 #include "ace/SSL/SSL_SOCK_Connector.h"
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
 
@@ -232,6 +233,13 @@ cli_worker (void *arg)
           ACE_OS::sleep (delay);
         }
 
+      // Complete the TLS shutdown so the peer receives all sent records.
+      ::SSL_shutdown (stream.ssl ());
+      ACE_Time_Value const timeout (5);
+      char drain[BUFSIZ];
+      while (stream.recv (drain, sizeof (drain), std::addressof (timeout)) > 0)
+        {
+        }
       stream.close ();
     }
 
@@ -309,6 +317,12 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   parse_arg (argc, argv);
+
+#if defined (SIGPIPE)
+  ACE_Sig_Action no_sigpipe (reinterpret_cast<ACE_SignalHandler> (SIG_IGN));
+  ACE_Sig_Action original_sigpipe;
+  no_sigpipe.register_action (SIGPIPE, std::addressof (original_sigpipe));
+#endif
 
   // Changed the default
   ACE_TP_Reactor sr;
