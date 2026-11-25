@@ -25,14 +25,6 @@ namespace
     using TAO_Connector::active_connect_strategy_;
   };
 
-  struct Legacy_Acceptor_Filter : TAO_Acceptor_Filter
-  {
-    int fill_profile (TAO::ObjectKey const &, TAO_MProfile &,
-                      TAO_Acceptor **, TAO_Acceptor **,
-                      CORBA::Short) override;
-    int encode_endpoints (TAO_MProfile &) override;
-  };
-
   struct Object_Adapter : TAO_Adapter
   {
     void open () override;
@@ -77,7 +69,7 @@ namespace
     {
       return nullptr;
     }
-    bool factory_exists (CORBA::PolicyType &) const override
+    bool factory_exists (CORBA::PolicyType) const override
     {
       return false;
     }
@@ -104,17 +96,14 @@ namespace
   static_assert (std::is_move_assignable<TAO_Default_Acceptor_Filter>::value);
   static_assert (std::is_copy_constructible<Object_Adapter>::value);
   static_assert (std::is_move_assignable<Object_Adapter>::value);
-  static_assert (!std::is_abstract<Legacy_Acceptor_Filter>::value);
-  static_assert (std::is_same<decltype (std::declval<TAO_Acceptor_Registry &> ().begin ()),
-                              TAO_AcceptorSetIterator>::value);
   static_assert (std::is_same<decltype (std::declval<TAO_Acceptor &> ().is_collocated (nullptr)),
-                              int>::value);
-  using Match_Prefix = int (TAO_Protocol_Factory::*) (ACE_CString const &);
+                              bool>::value);
+  using Match_Prefix = int (TAO_Protocol_Factory::*) (std::string const &);
   static_assert (std::is_same<decltype (&TAO_Protocol_Factory::match_prefix),
                               Match_Prefix>::value);
-  static_assert (std::is_constructible<TAO_Protocol_Item, ACE_CString const &>::value);
+  static_assert (std::is_constructible<TAO_Protocol_Item, std::string const &>::value);
   static_assert (std::is_same<decltype (std::declval<TAO_Protocol_Item &> ().protocol_name ()),
-                              ACE_CString const &>::value);
+                              std::string const &>::value);
   static_assert (std::is_same<decltype (Connector_Probe::active_connect_strategy_),
-                              TAO_Connect_Strategy *>::value);
+                              std::unique_ptr<TAO_Connect_Strategy>>::value);
 }

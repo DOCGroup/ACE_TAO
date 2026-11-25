@@ -6,6 +6,7 @@
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
 #include "tao/Endpoint.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -18,15 +19,13 @@ TAO_Endpoint_Acceptor_Filter::TAO_Endpoint_Acceptor_Filter (
 int
 TAO_Endpoint_Acceptor_Filter::fill_profile (TAO::ObjectKey const& object_key,
                                             TAO_MProfile &mprofile,
-                                            TAO_Acceptor **acceptors_begin,
-                                            TAO_Acceptor **acceptors_end,
+                                            TAO_AcceptorSet const& acceptors,
                                             CORBA::Short priority)
 {
   CORBA::ULong const num_endpoints = endpoints_.length ();
 
-  for (TAO_Acceptor **entry = acceptors_begin; entry != acceptors_end; ++entry)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : acceptors)
     {
-      TAO_Acceptor *const acceptor = *entry;
       bool tagfound {};
       for (CORBA::ULong epx {}; !tagfound && epx < num_endpoints; ++epx)
         {

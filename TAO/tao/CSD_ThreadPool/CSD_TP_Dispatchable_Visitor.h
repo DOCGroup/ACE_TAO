@@ -47,7 +47,9 @@ namespace TAO
 
       ~TP_Dispatchable_Visitor() override = default;
       TP_Dispatchable_Visitor (TP_Dispatchable_Visitor const &) = default;
+      TP_Dispatchable_Visitor (TP_Dispatchable_Visitor &&) = default;
       TP_Dispatchable_Visitor &operator= (TP_Dispatchable_Visitor const &) = default;
+      TP_Dispatchable_Visitor &operator= (TP_Dispatchable_Visitor &&) = default;
 
       /// Reset this visitor object in order to re-use it for another
       /// visitation of the request queue.  This sets the visitor's "result"

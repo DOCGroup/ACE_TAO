@@ -350,14 +350,13 @@ TAO_RT_POA::create_stub_object (TAO::ObjectKey const &object_key,
 
       if (this->lane_required (lane.get (), priority_bands))
         {
-          TAO_Acceptor_Registry &acceptor_registry =
+          TAO_Acceptor_Registry const &acceptor_registry =
             lane->resources ().acceptor_registry ();
 
           result =
             filter->fill_profile (object_key,
                                   mprofile,
-                                  acceptor_registry.begin (),
-                                  acceptor_registry.end (),
+                                  acceptor_registry.acceptors (),
                                   lane->lane_priority ());
           if (result == -1)
             {

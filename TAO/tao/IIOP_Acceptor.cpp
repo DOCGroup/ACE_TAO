@@ -233,7 +233,7 @@ TAO_IIOP_Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
   return 0;
 }
 
-int
+bool
 TAO_IIOP_Acceptor::is_collocated (TAO_Endpoint const *endpoint)
 {
   TAO_IIOP_Endpoint const *endp =

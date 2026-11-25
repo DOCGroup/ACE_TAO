@@ -102,6 +102,7 @@ namespace TAO
     Transport_Selection_Guard () = delete;
     Transport_Selection_Guard (Transport_Selection_Guard const &) = delete;
     Transport_Selection_Guard (Transport_Selection_Guard &&) = delete;
+    Transport_Selection_Guard &operator= (Transport_Selection_Guard &&) = delete;
 
 #if TAO_HAS_TRANSPORT_CURRENT == 1
     /// Non-owning pointer to the previous guard in the current thread's stack.

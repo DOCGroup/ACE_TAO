@@ -41,8 +41,6 @@ class TAO_Protocol_Item;
 
 using TAO_ProtocolFactorySetItor = ACE_Unbounded_Set<TAO_Protocol_Item *>::iterator;
 using TAO_AcceptorSet = std::vector<std::unique_ptr<TAO_Acceptor>>;
-using TAO_AcceptorSetIterator = TAO_Acceptor **;
-using TAO_AcceptorView = std::vector<TAO_Acceptor *>;
 
 /**
  * @class TAO_Acceptor_Registry
@@ -81,8 +79,6 @@ public:
   TAO_Acceptor *get_acceptor (CORBA::ULong tag);
 
   TAO_AcceptorSet const& acceptors () const;
-  TAO_AcceptorSetIterator begin ();
-  TAO_AcceptorSetIterator end ();
 
 private:
   TAO_Acceptor_Registry (TAO_Acceptor_Registry const &) = delete;
@@ -134,12 +130,9 @@ private:
 private:
   /// List of acceptors that are currently open.
   TAO_AcceptorSet acceptors_;
-  /// Non-owning pointers exposed through the legacy iterator interface.
-  TAO_AcceptorView acceptor_view_;
 
   /// Reserve storage for the maximum number of acceptors needed.
   bool reserve_acceptors (size_t count);
-  void add_acceptor (std::unique_ptr<TAO_Acceptor> acceptor);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

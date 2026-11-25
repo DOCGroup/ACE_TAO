@@ -82,6 +82,7 @@ namespace ACE_RMCast
   public:
     Profile (Profile const&) = default;
     Profile& operator= (Profile const&) = delete;
+    Profile (Profile&&) = delete;
     Profile& operator= (Profile&&) = delete;
 
     class Header
@@ -252,6 +253,7 @@ namespace ACE_RMCast
     using Profiles = ACE_Hash_Map_Manager<u16, Profile_ptr, ACE_Null_Mutex>;
 
   public:
+    Message (Message&&) = delete;
     Message& operator= (Message const&) = delete;
     Message& operator= (Message&&) = delete;
 
@@ -538,6 +540,7 @@ namespace ACE_RMCast
     ~Data () override = default;
 
     Data& operator= (Data const&) = delete;
+    Data (Data&&) = delete;
     Data& operator= (Data&&) = delete;
 
     Data (Header const& h, istream& is)

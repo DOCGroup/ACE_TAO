@@ -2,22 +2,21 @@
 #include "tao/Transport_Acceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_Default_Acceptor_Filter::fill_profile (TAO::ObjectKey const &object_key,
                                            TAO_MProfile &mprofile,
-                                           TAO_Acceptor **acceptors_begin,
-                                           TAO_Acceptor **acceptors_end,
+                                           TAO_AcceptorSet const &acceptors,
                                            CORBA::Short priority)
 {
   // Go through all the acceptors.
-  for (TAO_Acceptor **acceptor = acceptors_begin;
-       acceptor != acceptors_end; ++acceptor)
+  for (std::unique_ptr<TAO_Acceptor> const& acceptor : acceptors)
     {
       // Ask each acceptor to make a profile.
-      if ((*acceptor)->create_profile (object_key, mprofile, priority) == -1)
+      if (acceptor->create_profile (object_key, mprofile, priority) == -1)
       {
         return -1;
       }

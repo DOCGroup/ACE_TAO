@@ -43,7 +43,9 @@ class TAO_Export TAO_Adapter
 public:
   TAO_Adapter () = default;
   TAO_Adapter (TAO_Adapter const &) = default;
+  TAO_Adapter (TAO_Adapter &&) = default;
   TAO_Adapter &operator= (TAO_Adapter const &) = default;
+  TAO_Adapter &operator= (TAO_Adapter &&) = default;
   virtual ~TAO_Adapter ();
 
   /// Initialize the Adapter

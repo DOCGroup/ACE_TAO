@@ -344,7 +344,7 @@ TAO::SSLIOP::Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
   return 0;
 }
 
-int
+bool
 TAO::SSLIOP::Acceptor::is_collocated (TAO_Endpoint const *endpoint)
 {
   TAO_SSLIOP_Endpoint const *endp =

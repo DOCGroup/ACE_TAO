@@ -50,7 +50,9 @@ namespace TAO
 
       ~TP_Cancel_Visitor() override = default;
       TP_Cancel_Visitor (TP_Cancel_Visitor const &) = default;
+      TP_Cancel_Visitor (TP_Cancel_Visitor &&) = default;
       TP_Cancel_Visitor &operator= (TP_Cancel_Visitor const &) = default;
+      TP_Cancel_Visitor &operator= (TP_Cancel_Visitor &&) = default;
 
       /// Returns true to continue visitation.  Returns false to stop
       /// visitation.  Sets the remove_flag to true if the request should

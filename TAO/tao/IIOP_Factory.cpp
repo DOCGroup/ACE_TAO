@@ -19,7 +19,7 @@ TAO_IIOP_Protocol_Factory::TAO_IIOP_Protocol_Factory ()
 TAO_IIOP_Protocol_Factory::~TAO_IIOP_Protocol_Factory () = default;
 
 int
-TAO_IIOP_Protocol_Factory::match_prefix (ACE_CString const &prefix)
+TAO_IIOP_Protocol_Factory::match_prefix (std::string const &prefix)
 {
   // Check for the proper prefix for this protocol.
   return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix) == 0);

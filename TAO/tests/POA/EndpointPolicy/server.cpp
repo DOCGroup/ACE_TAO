@@ -5,16 +5,12 @@
 #include "tao/Strategies/advanced_resource.h"
 #include "tao/PI_Server/PI_Server.h"
 #include "tao/ORB_Constants.h"
-#include "tao/ORB_Core.h"
-#include "tao/Thread_Lane_Resources.h"
-#include "tao/Acceptor_Registry.h"
 #include "tao/IIOP_Factory.h"
 #include "tao/Resource_Factory.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
 
-#include <memory>
 #include <string>
 #include <vector>
 
@@ -170,7 +166,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Counting_Protocol_Factory *const factory =
     new Counting_Protocol_Factory (factory_destroyed);
   {
-    TAO_Protocol_Item item (ACE_CString ("test"));
+    TAO_Protocol_Item item ("test");
     item.factory (factory, 1);
     item.factory (factory, 0);
   }
@@ -268,23 +264,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_ERROR_RETURN ((LM_ERROR,
                              " (%P|%t) Panic: nil RootPOA\n"),
                             1);
-        }
-
-      TAO_Acceptor_Registry &registry =
-        orb->orb_core ()->lane_resources ().acceptor_registry ();
-      TAO_AcceptorSet const &owned_acceptors = registry.acceptors ();
-      TAO_AcceptorSetIterator entry = registry.begin ();
-      for (std::unique_ptr<TAO_Acceptor> const &acceptor : owned_acceptors)
-        {
-          if (entry == registry.end () || *entry != acceptor.get ())
-            {
-              ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Acceptor view mismatch\n")), 1);
-            }
-          ++entry;
-        }
-      if (owned_acceptors.empty () || entry != registry.end ())
-        {
-          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unexpected acceptor view size\n")), 1);
         }
 
       poa_manager_factory

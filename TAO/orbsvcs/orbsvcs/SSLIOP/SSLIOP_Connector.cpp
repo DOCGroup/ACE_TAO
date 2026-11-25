@@ -45,7 +45,7 @@ TAO::SSLIOP::Connector::open (TAO_ORB_Core *orb_core)
   ACE_NEW_RETURN (connect_strategy,
                   TAO_Blocked_Connect_Strategy (orb_core),
                   -1);
-  this->active_connect_strategy_ = connect_strategy;
+  this->active_connect_strategy_.reset (connect_strategy);
 
   if (this->TAO::IIOP_SSL_Connector::open (orb_core) == -1)
   {

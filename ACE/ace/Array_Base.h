@@ -73,6 +73,7 @@ public:
    * return true.
    */
   ACE_Array_Base (ACE_Array_Base<T> const &s);
+  ACE_Array_Base (ACE_Array_Base<T> &&) = delete;
 
   /**
    * Assignment operator performs an assignment by making an exact
@@ -83,6 +84,7 @@ public:
    * reallocate a new @c array_, and then copy the contents of @a s.
    */
   void operator= (ACE_Array_Base<T> const &s);
+  void operator= (ACE_Array_Base<T> &&) = delete;
 
   /// Clean up the array (e.g., delete dynamically allocated memory).
   ~ACE_Array_Base ();

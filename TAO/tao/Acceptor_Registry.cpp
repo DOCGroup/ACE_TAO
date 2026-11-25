@@ -49,8 +49,7 @@ TAO_Acceptor_Registry::endpoint_count ()
 bool
 TAO_Acceptor_Registry::reserve_acceptors (size_t count)
 {
-  if (count > this->acceptors_.max_size () - this->acceptors_.size ()
-      || count > this->acceptor_view_.max_size () - this->acceptor_view_.size ())
+  if (count > this->acceptors_.max_size () - this->acceptors_.size ())
   {
     return false;
   }
@@ -58,7 +57,6 @@ TAO_Acceptor_Registry::reserve_acceptors (size_t count)
   try
     {
       this->acceptors_.reserve (this->acceptors_.size () + count);
-      this->acceptor_view_.reserve (this->acceptor_view_.size () + count);
     }
   catch (std::bad_alloc const&)
     {
@@ -66,21 +64,6 @@ TAO_Acceptor_Registry::reserve_acceptors (size_t count)
     }
 
   return true;
-}
-
-void
-TAO_Acceptor_Registry::add_acceptor (std::unique_ptr<TAO_Acceptor> acceptor)
-{
-  this->acceptors_.push_back (std::move (acceptor));
-  try
-    {
-      this->acceptor_view_.push_back (this->acceptors_.back ().get ());
-    }
-  catch (...)
-    {
-      this->acceptors_.pop_back ();
-      throw;
-    }
 }
 
 bool
@@ -195,7 +178,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         orb_core->protocol_factories ()->end ();
 
       // extract the protocol prefix
-      ACE_CString const prefix (iop.c_str (), slot);
+      std::string const prefix (iop.c_str (), slot);
 
       for (TAO_ProtocolFactorySetItor factory =
              orb_core->protocol_factories ()->begin ();
@@ -263,7 +246,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             CORBA::COMPLETED_NO);
         }
 
-      ACE_CString const prefix (iop.c_str (), slot);
+      std::string const prefix (iop.c_str (), slot);
 
       // @@ We could move the protocol factory loop to the outermost
       //    level but for now we leave it inside the endpoint loop
@@ -621,7 +604,7 @@ TAO_Acceptor_Registry::open_default_i (TAO_ORB_Core *orb_core,
       return -1;
     }
 
-  this->add_acceptor (std::move (acceptor));
+  this->acceptors_.push_back (std::move (acceptor));
 
   return 0;
 }
@@ -637,7 +620,6 @@ TAO_Acceptor_Registry::close_all ()
       }
     }
 
-  this->acceptor_view_.clear ();
   this->acceptors_.clear ();
   return 0;
 }
@@ -877,7 +859,7 @@ TAO_Acceptor_Registry::open_i (TAO_ORB_Core *orb_core,
             }
 
           // add acceptor to list
-          this->add_acceptor (std::move (acceptor));
+          this->acceptors_.push_back (std::move (acceptor));
         }
       else
         {

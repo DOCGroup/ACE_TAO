@@ -71,10 +71,7 @@ TAO_Connector::TAO_Connector (CORBA::ULong tag)
 {
 }
 
-TAO_Connector::~TAO_Connector ()
-{
-  delete this->active_connect_strategy_;
-}
+TAO_Connector::~TAO_Connector () = default;
 
 TAO_Profile *
 TAO_Connector::corbaloc_scan (const char *str, size_t &len)
@@ -1035,9 +1032,9 @@ TAO_Connector::create_connect_strategy ()
 {
   if (this->active_connect_strategy_ == nullptr)
     {
-      this->active_connect_strategy_ =
+      this->active_connect_strategy_.reset (
         this->orb_core_->client_factory ()->create_connect_strategy (
-          this->orb_core_);
+          this->orb_core_));
     }
 
   if (this->active_connect_strategy_ == nullptr)

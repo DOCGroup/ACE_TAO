@@ -36,6 +36,7 @@ class TAO_Export TAO_Connection_Purging_Strategy
 public:
   explicit TAO_Connection_Purging_Strategy (int cache_maximum);
   TAO_Connection_Purging_Strategy (TAO_Connection_Purging_Strategy const &) = default;
+  TAO_Connection_Purging_Strategy (TAO_Connection_Purging_Strategy &&) = default;
 
   virtual ~TAO_Connection_Purging_Strategy () = default;
 

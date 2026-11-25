@@ -34,7 +34,9 @@ class TAO_Export TAO_Service_Context_Handler
   public:
     TAO_Service_Context_Handler ();
     TAO_Service_Context_Handler (TAO_Service_Context_Handler const &) = default;
+    TAO_Service_Context_Handler (TAO_Service_Context_Handler &&) = default;
     TAO_Service_Context_Handler &operator= (TAO_Service_Context_Handler const &) = default;
+    TAO_Service_Context_Handler &operator= (TAO_Service_Context_Handler &&) = default;
     virtual int process_service_context (
       TAO_Transport &transport,
       IOP::ServiceContext const &context,

@@ -6,9 +6,9 @@
 
 using namespace TAO;
 
-static_assert (std::is_assignable<Transport_Selection_Guard &,
-                                  Transport_Selection_Guard &&>::value,
-               "Transport selection guards must remain assignable from rvalues");
+static_assert (!std::is_assignable<Transport_Selection_Guard &,
+                                   Transport_Selection_Guard &&>::value,
+               "Transport selection guards must not be move-assigned");
 
 /// Test referencing the TC data outside of the context of an upcall,
 /// or a client-side interceptor
