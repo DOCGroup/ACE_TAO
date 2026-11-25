@@ -491,10 +491,10 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             connection_stream.send_n (message_buf.get (), total_msg_len);
           if (send_result != total_msg_len)
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "%p only sent %b of %B bytes on call %B\n",
+                               "%p only sent %b of %Ld bytes on call %Lu\n",
                                "ttcp", send_result,
-                               static_cast<size_t> (total_msg_len),
-                               static_cast<size_t> (numCalls + 1)),
+                               total_msg_len,
+                               numCalls + 1),
                               -1);
           ++numCalls;
           nbytes += data_buf_len;

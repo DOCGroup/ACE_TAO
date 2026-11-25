@@ -130,11 +130,11 @@ UDP_PerformanceClient::svc ()
               (1000L * burst_messages_) / elapsed_time_value.msec ();
 
             ACE_DEBUG ((LM_DEBUG,
-                        "\n  Time needed %: s %d us  (%B ms) for %u messages"
+                        "\n  Time needed %: s %d us  (%Lu ms) for %u messages"
                         "\n  Performance = %u asynch calls per second\n\n",
                         elapsed_sec,
                         static_cast<int> (elapsed_usec),
-                        static_cast<size_t> (elapsed_msec),
+                        elapsed_msec,
                         static_cast<unsigned int> (burst_messages_),
                         static_cast<unsigned int> (calls_per_second)));
           }
