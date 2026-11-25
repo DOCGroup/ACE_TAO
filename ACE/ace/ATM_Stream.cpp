@@ -158,7 +158,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
     }
 
   char *buf_req = static_cast<char *> (ACE_OS::malloc (info.options));
-  if (buf_req == 0)
+  if (buf_req == nullptr)
     {
       ACE_OS::fprintf (stderr,
                       "Unable to allocate %ld bytes for options\n",
@@ -167,7 +167,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
     }
 
   char *buf_ret = static_cast<char *> (ACE_OS::malloc (info.options));
-  if (buf_ret == 0)
+  if (buf_ret == nullptr)
     {
       ACE_OS::fprintf (stderr,
                       "Unable to allocate %ld bytes for options\n",

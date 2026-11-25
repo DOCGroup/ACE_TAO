@@ -112,12 +112,13 @@ ACE_ATM_QoS::ACE_ATM_QoS(int rate,
   size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
 
   qos_.ProviderSpecific.buf = static_cast<char *> (ACE_OS::malloc(size));
-  if (qos_.ProviderSpecific.buf == 0) {
-    ACELIB_ERROR((LM_ERROR,
-               ACE_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
-               size));
-    return;
-  }
+  if (qos_.ProviderSpecific.buf == nullptr)
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
+                     size));
+      return;
+    }
   qos_.ProviderSpecific.len = size;
   ACE_OS::memset(qos_.ProviderSpecific.buf, 0, size);
 
@@ -290,12 +291,13 @@ ACE_ATM_QoS::set_cbr_rate (int rate,
   size += sizeof(Q2931_IE_TYPE) + sizeof(ULONG) + sizeof(ATM_QOS_CLASS_IE);
 
   qos_.ProviderSpecific.buf = static_cast<char *> (ACE_OS::malloc(size));
-  if (qos_.ProviderSpecific.buf == 0) {
-    ACELIB_ERROR((LM_ERROR,
-               ACE_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
-               size));
-    return;
-  }
+  if (qos_.ProviderSpecific.buf == nullptr)
+    {
+      ACELIB_ERROR ((LM_ERROR,
+                     ACE_TEXT ("ACE_ATM_QoS::ACE_ATM_QoS: Unable to allocate %d bytes for qos_.ProviderSpecific.buf\n"),
+                     size));
+      return;
+    }
   qos_.ProviderSpecific.len = size;
   ACE_OS::memset(qos_.ProviderSpecific.buf, 0, size);
 
