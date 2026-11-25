@@ -51,6 +51,7 @@ FOO_IORInterceptor::establish_components (
   component.component_data = std::move (*encoded_data.ptr ());
 
   ACE_ASSERT (component.component_data.length () == length);
+  ACE_UNUSED_ARG (length);
 
   // Add the tagged component to all profiles.
   info->add_ior_component (component);
