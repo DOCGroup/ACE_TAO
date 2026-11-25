@@ -48,7 +48,7 @@ public:
     : msgs_sent_ (0),
       stream_ (ACE_SSL_Asynch_Stream::ST_CLIENT),
       block_ (1024) {}
-  ~Client_Handler ();
+  ~Client_Handler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (ACE_HANDLE);
@@ -70,7 +70,7 @@ public:
     : msgs_rcvd_ (0),
       stream_ (ACE_SSL_Asynch_Stream::ST_SERVER),
       block_ (1024) {}
-  ~Server_Handler ();
+  ~Server_Handler () override;
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (ACE_HANDLE);
