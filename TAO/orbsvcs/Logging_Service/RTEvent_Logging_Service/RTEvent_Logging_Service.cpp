@@ -142,14 +142,27 @@ RTEvent_Logging_Service::init (int argc, ACE_TCHAR * argv[])
 
   if (this->pid_file_name_)
     {
-      std::unique_ptr<FILE, int (*) (FILE *)> const pidf (
+      std::unique_ptr<FILE, int (*) (FILE *)> pidf (
         ACE_OS::fopen (this->pid_file_name_->c_str (), ACE_TEXT ("w")),
         ACE_OS::fclose);
-      if (pidf)
+      if (!pidf)
         {
-          ACE_OS::fprintf (pidf.get (),
-                           "%ld\n",
-                           static_cast<long> (ACE_OS::getpid ()));
+          this->poa_->destroy (true, true);
+          this->orb_->destroy ();
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open PID file: %s\n"),
+                                 this->pid_file_name_->c_str ()), -1);
+        }
+      int const write_result = ACE_OS::fprintf (pidf.get (), "%ld\n",
+                                                static_cast<long> (ACE_OS::getpid ()));
+      int const close_result = ACE_OS::fclose (pidf.release ());
+      if (write_result < 0 || close_result != 0)
+        {
+          this->poa_->destroy (true, true);
+          this->orb_->destroy ();
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot write PID file: %s\n"),
+                                 this->pid_file_name_->c_str ()), -1);
         }
     }
 
