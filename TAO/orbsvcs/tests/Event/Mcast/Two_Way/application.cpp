@@ -46,7 +46,7 @@ class Heartbeat_Application :
 public:
   Heartbeat_Application ();
 
-  ~Heartbeat_Application () = default;
+  ~Heartbeat_Application () override = default;
 
   Heartbeat_Application (Heartbeat_Application const &) = delete;
   Heartbeat_Application (Heartbeat_Application &&) = delete;

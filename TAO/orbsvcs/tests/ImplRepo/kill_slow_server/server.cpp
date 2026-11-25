@@ -16,7 +16,7 @@ class ORB_Runner : public ACE_Task_Base
 {
 public:
   ORB_Runner (CORBA::ORB_var orb) : orb_(orb) {}
-  int svc ()
+  int svc () override
   {
     this->orb_->run ();
     return 0;

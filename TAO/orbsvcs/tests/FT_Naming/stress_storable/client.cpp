@@ -32,7 +32,7 @@ public:
     return 0;
   }
 
-  int svc ()
+  int svc () override
   {
     for (int g = 0, i = 0; i < 100; ++i)
       {

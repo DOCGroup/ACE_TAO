@@ -17,11 +17,11 @@ public:
   {
   }
 
-  virtual ~test_i ()
+  ~test_i () override
   {
   }
 
-  virtual CORBA::Long get ()
+  CORBA::Long get () override
   {
     ++n_;
     return n_;

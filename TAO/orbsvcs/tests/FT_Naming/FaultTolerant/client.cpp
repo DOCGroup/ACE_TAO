@@ -33,7 +33,7 @@ class My_Test_Object :
 public:
   My_Test_Object (CORBA::Short id = 0);
 
-  ~My_Test_Object ();
+  ~My_Test_Object () override;
 
   /// Sets the test object's id.
   void id (CORBA::Short id) override;
