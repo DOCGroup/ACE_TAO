@@ -98,10 +98,10 @@ TAO::Security::AccessDecision::ReferenceKeyType::operator==
   if (olen == other.oid_->length() &&
       alen == other.adapter_id_->length())
     {
-      return (std::memcmp (this->oid_->get_buffer(),
-                           other.oid_->get_buffer(),olen) == 0 &&
-              std::memcmp (this->adapter_id_->get_buffer(),
-                           other.adapter_id_->get_buffer(),alen) == 0 &&
+      return ((olen == 0 || std::memcmp (this->oid_->get_buffer (),
+                                         other.oid_->get_buffer (), olen) == 0) &&
+              (alen == 0 || std::memcmp (this->adapter_id_->get_buffer (),
+                                         other.adapter_id_->get_buffer (), alen) == 0) &&
               std::strcmp (this->orbid_.in(), other.orbid_.in()) == 0);
     }
   return false;
