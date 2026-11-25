@@ -53,6 +53,14 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Complete SFP header was rejected\n")), 1);
     }
 
+  char const reply[] = {'=', 'S', 'T', 'R', 0};
+  Test_Transport complete_reply (reply, sizeof (reply));
+  if (TAO_SFP_Base::peek_message_type (std::addressof (complete_reply), type) != 0
+      || type != flowProtocol::StartReply_Msg)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Complete start reply was rejected\n")), 1);
+    }
+
   // Truncated headers are expected to fail; suppress their error messages.
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::SILENT);
   bool accepted_short {};

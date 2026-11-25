@@ -740,7 +740,7 @@ TAO_SFP_Base::peek_message_type (TAO_AV_Transport *transport,
   // The flags and message type follow the magic number.
   char peek_buffer[TAO_SFP_MAGIC_NUMBER_LEN + 2];
   ssize_t const n = transport->recv (peek_buffer, sizeof (peek_buffer), MSG_PEEK);
-  if (n != static_cast<ssize_t> (sizeof (peek_buffer)))
+  if (n < TAO_SFP_MAGIC_NUMBER_LEN)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR, "SFP::handle_input - incomplete header\n"), -1);
     }
@@ -767,6 +767,10 @@ TAO_SFP_Base::peek_message_type (TAO_AV_Transport *transport,
     }
   else if (std::strcmp (magic_number,TAO_SFP_MAGIC_NUMBER) == 0)
     {
+      if (n < static_cast<ssize_t> (sizeof (peek_buffer)))
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, "SFP::handle_input - incomplete frame header\n"), -1);
+        }
       if (TAO_debug_level > 0)
       {
         ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t) frameHeader received\n"));
