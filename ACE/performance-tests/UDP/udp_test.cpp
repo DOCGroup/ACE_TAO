@@ -281,8 +281,8 @@ Client::run ()
               ACE_Time_Value over_time;
               since_over.elapsed_time (over_time);
               ACE_DEBUG ((LM_DEBUG,
-                          "\tTime since last over = %Q msec!\n",
-                          static_cast<ACE_UINT64> (over_time.msec ())));
+                          "\tTime since last over = %Lu msec!\n",
+                          over_time.msec ()));
               since_over.reset ();
             }
 

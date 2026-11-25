@@ -268,9 +268,9 @@ Sender::pace_data ()
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "Frame Rate = %f / second\nInter Frame Time = %Q (msec)\n",
+                  "Frame Rate = %f / second\nInter Frame Time = %Lu (msec)\n",
                   this->options_.frame_rate,
-                  static_cast<ACE_UINT64> (this->inter_frame_time_.msec ())));
+                  this->inter_frame_time_.msec ()));
     }
 
   try

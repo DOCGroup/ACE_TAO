@@ -179,8 +179,8 @@ TimeoutClient::send (bool async,
   if (async)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  " .. needed %Qms\n",
-                  static_cast<ACE_UINT64> (elapsed_time.msec ())));
+                  " .. needed %Lums\n",
+                  elapsed_time.msec ()));
     }
   else
     {
