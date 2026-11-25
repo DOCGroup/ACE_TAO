@@ -406,7 +406,11 @@ CORBA::ValueBase::_tao_unmarshal_find_factory (
     }
 
   // Obtain the actual ValueType from the factory
-  if (factory.in () == nullptr || (valuetype = factory->create_for_unmarshal ()) == nullptr)
+  if (factory.in () != nullptr)
+    {
+      valuetype = factory->create_for_unmarshal ();
+    }
+  if (valuetype == nullptr)
     {
       if (TAO_debug_level)
         {
