@@ -32,7 +32,7 @@ class Auto_Disconnect : public ACE_Utils::Auto_Functor<Client,Disconnect<Client>
 {
 public:
   /**
-   * @param client The client
+   * @param s The client
    */
   explicit Auto_Disconnect (Client *s = nullptr);
 

@@ -52,7 +52,6 @@ public:
   int group_bind (ACE_TCHAR const *group, ACE_TCHAR const *path);
 
   /**
-   *  @param group    group name
    *  @param path     stringified name in the naming service
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
@@ -135,7 +134,7 @@ public:
   int member_show (ACE_TCHAR const *group, ACE_TCHAR const *location);
 
   /**
-   *  @param group    group name
+   *  @param group_name group name
    *
    *  @return true if the specified object group name is found
    */

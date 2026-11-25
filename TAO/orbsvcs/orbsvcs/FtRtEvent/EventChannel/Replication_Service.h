@@ -52,7 +52,7 @@ namespace FTRTEC
    /**
     * Replicate a request.
     *
-    * @param state The request to be replicated.
+    * @param update The request to be replicated.
     * @param rollback The rollback operation when the replication failed.
     */
     void replicate_request(FtRtecEventChannelAdmin::Operation const& update,

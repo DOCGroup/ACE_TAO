@@ -18,7 +18,7 @@ class TAO_RTEC_Perf_Export Implicit_Deactivator
 {
 public:
   /**
-   * @param client The client
+   * @param servant The servant to deactivate
    */
   explicit Implicit_Deactivator (PortableServer::Servant servant = nullptr);
   Implicit_Deactivator (Implicit_Deactivator& rhs);

@@ -55,7 +55,7 @@ public:
 
   /// Initialize the consumer/supplier pair(s)
   /**
-   * @param event_type_range The supplier declares more events than it
+   * @param base_event_type_range The supplier declares more events than it
    *        generates.
    */
   void init (CORBA::Long experiment_id,

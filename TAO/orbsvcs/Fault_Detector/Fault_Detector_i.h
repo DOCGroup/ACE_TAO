@@ -74,7 +74,7 @@ namespace TAO
 
     /**
      * Start the thread associated with this fault detector.
-     * @param threadManager to track this thread.
+     * @param thread_manager to track this thread.
      */
     int start (ACE_Thread_Manager & thread_manager);
 
