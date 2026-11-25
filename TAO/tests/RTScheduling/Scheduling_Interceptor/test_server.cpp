@@ -138,7 +138,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "IOR = %s\n",
+                  "IOR = %C\n",
                   ior.in ()));
 
       CORBA::Object_var manager_obj = orb->resolve_initial_references ("RTSchedulerManager");

@@ -21,7 +21,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
   CORBA::String_var const s = PortableServer::ObjectId_to_string (oid);
 
   ACE_DEBUG ((LM_DEBUG,
-              "The OID is <%s>\n", s.in ()));
+              "The OID is <%C>\n", s.in ()));
   if (std::strstr (s.in (), "Simple_Server") == nullptr)
     {
       throw CORBA::OBJECT_NOT_EXIST ();

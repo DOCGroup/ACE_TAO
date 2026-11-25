@@ -191,7 +191,7 @@ Initiator_Server::init (int argc,
 
 #if 0
   ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
+              "The IOR is: <%C>\n",
               this->str_.in ()));
 #endif /*if 0*/
 
