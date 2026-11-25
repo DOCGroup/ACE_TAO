@@ -5,7 +5,6 @@
 #include "utils.h"
 #include "tao/ORB_Core.h"
 #include "tao/default_ports.h"
-#include "ace/Read_Buffer.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_ctype.h"
@@ -13,7 +12,9 @@
 #include "ace/Vector_T.h"
 
 #include <cstdlib>
+#include <cstring>
 #include <memory>
+#include <string>
 
 Locator_Repository::Locator_Repository (const Options& opts,
                                         CORBA::ORB_ptr orb)
@@ -99,15 +100,23 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
       bool write_data = true;
       if (orig_fp != nullptr)
         {
-          ACE_Read_Buffer reader (orig_fp.get (), false);
-
-          ACE_Read_Buffer_Unique_Ptr const string (
-            reader.read (), {reader.alloc ()});
-
-          if (string != nullptr)
+          // Reading one byte beyond the expected IOR is enough to detect a
+          // different value without reading an unbounded input stream.
+          size_t const expected_length = std::strlen (this->imr_ior_.in ());
+          std::string existing (expected_length + 1, '\0');
+          size_t const bytes_read = ACE_OS::fread (existing.data (), 1,
+                                                   existing.size (), orig_fp.get ());
+          existing.resize (bytes_read);
+          for (char &ch : existing)
             {
-              write_data =
-                (ACE_OS::strcasecmp (string.get (), this->imr_ior_.in ()) != 0);
+              if (ch == '\n')
+                {
+                  ch = '\0';
+                }
+            }
+          if (!existing.empty ())
+            {
+              write_data = ACE_OS::strcasecmp (existing.c_str (), this->imr_ior_.in ()) != 0;
             }
         }
       orig_fp.reset ();
