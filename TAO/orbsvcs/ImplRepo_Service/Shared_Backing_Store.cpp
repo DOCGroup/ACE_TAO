@@ -60,14 +60,17 @@ namespace {
       if (this->file_ != nullptr)
         {
           close_file ();
-          this->file_lock_.reset ();
         }
+      this->file_lock_.reset ();
       this->locked_ = false;
     }
 
     FILE* get_file ()
     {
-      lock ();
+      if (this->file_ != nullptr)
+        {
+          lock ();
+        }
 
       return this->file_;
     }
@@ -103,7 +106,18 @@ namespace {
 
       // Truncating output so this will not allow reading then writing
       ACE_OS::ftruncate (this->file_lock_->get_handle (), 0);
-      this->file_ = ACE_OS::fdopen (this->file_lock_->get_handle (), flags_str);
+      // The stream and the file lock each own their descriptor.
+      ACE_HANDLE const stream_handle = ACE_OS::dup (this->file_lock_->get_handle ());
+      if (stream_handle != ACE_INVALID_HANDLE)
+        {
+          this->file_ = ACE_OS::fdopen (stream_handle, flags_str);
+          if (this->file_ == nullptr)
+            {
+              int const saved_errno = errno;
+              ACE_OS::close (stream_handle);
+              errno = saved_errno;
+            }
+        }
 #endif
     }
 
