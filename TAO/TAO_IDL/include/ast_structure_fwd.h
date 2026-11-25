@@ -34,25 +34,24 @@ public:
   // Visiting.
   int ast_accept (ast_visitor *visitor) override;
 
-  // Is this decl a forward declared type (Yes)
+  /// Whether this declaration is a forward-declared type.
   bool is_fwd () const override;
 
-  // We don't actually want the forward declaration,
-  // but want to return the full definition member,
-  // whether defined yet or not.
+  /// Return the full definition member rather than the forward declaration,
+  /// whether the full definition is complete yet or not.
   AST_Decl *adjust_found (bool ignore_fwd, bool full_def_only) override;
 
   static AST_Decl::NodeType const NT;
 
 private:
+  /// The structure this is a forward declaration of.
   AST_Structure *pd_full_definition;
-  // The structure this is a forward declaration of.
 
+  /// The dummy structure while this forward declaration owns it.
   std::unique_ptr<AST_Structure> owned_full_definition_;
-  // The owned dummy structure, while this forward declaration owns it.
 
+  /// The full-definition pointer alone does not indicate completeness.
   bool is_defined_ {};
-  // Checking the member above isn't good enough.
 };
 
 #endif           // _AST_STRUCTURE_FWD_AST_STRUCTURE_FWD_HH

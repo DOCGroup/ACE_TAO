@@ -113,17 +113,17 @@ public:
 private:
   friend class tao_yy::parser;
 
+  /// Value for the next enumerator.
   unsigned long pd_enum_counter {};
-  // Value for next enumerator.
 
+  /// Number of members.
   int member_count_ {-1};
-  // Number of members.
 
+  /// Count the number of members.
   int compute_member_count ();
-  // Count the number of members.
 
-  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v) override;
   // Scope Management.
+  AST_EnumVal *fe_add_enum_val (AST_EnumVal *v) override;
 };
 
 #endif           // _AST_ENUM_AST_ENUM_HH
