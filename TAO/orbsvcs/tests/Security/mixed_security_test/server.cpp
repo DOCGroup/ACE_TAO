@@ -157,6 +157,38 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_DEBUG ((LM_DEBUG, "mixed_security/server: "
                   "init and setup complete\n"));
 
+      // Exercise access-map keys with empty and non-empty octet sequences.
+      CORBA::OctetSeq empty_id;
+      CORBA::OctetSeq nonempty_id;
+      nonempty_id.length (1);
+      nonempty_id[0] = 42;
+      SecurityLevel2::CredentialsList credentials;
+      CORBA::Boolean const saved_default = sl2ad->default_decision ();
+      sl2ad->default_decision (false);
+      sl2ad->add_object ("empty-key-test", empty_id, empty_id, true);
+      sl2ad->add_object ("empty-key-test", empty_id, nonempty_id, true);
+      sl2ad->add_object ("empty-key-test", nonempty_id, empty_id, true);
+      if (!sl2ad->access_allowed_ex ("empty-key-test", empty_id, empty_id,
+                                     credentials, "test", false)
+          || !sl2ad->access_allowed_ex ("empty-key-test", empty_id, nonempty_id,
+                                       credentials, "test", false)
+          || !sl2ad->access_allowed_ex ("empty-key-test", nonempty_id, empty_id,
+                                       credentials, "test", false)
+          || sl2ad->access_allowed_ex ("empty-key-test", nonempty_id, nonempty_id,
+                                      credentials, "test", false))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "mixed_security: access-map key comparison failed\n"), 1);
+        }
+      sl2ad->remove_object ("empty-key-test", empty_id, empty_id);
+      sl2ad->remove_object ("empty-key-test", empty_id, nonempty_id);
+      sl2ad->remove_object ("empty-key-test", nonempty_id, empty_id);
+      if (sl2ad->access_allowed_ex ("empty-key-test", empty_id, empty_id,
+                                    credentials, "test", false))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "mixed_security: access-map removal failed\n"), 1);
+        }
+      sl2ad->default_decision (saved_default);
+
       // 2. Create servant #1 of Foo_i, and its associated Object
       ACE_NEW_RETURN (server1, Foo_i (orb.in (), sl3current.in ()), 1);
       server1_owner = server1;
