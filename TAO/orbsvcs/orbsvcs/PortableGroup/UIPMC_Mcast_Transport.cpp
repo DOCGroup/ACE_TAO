@@ -165,7 +165,7 @@ TAO_UIPMC_Mcast_Transport::recv_packet (
         {
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%B]::")
-                      ACE_TEXT ("recv_packet, packet of size %B is ")
+                      ACE_TEXT ("recv_packet, packet of size %b is ")
                       ACE_TEXT ("too small\n"),
                       this->id (),
                       n));

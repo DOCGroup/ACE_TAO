@@ -155,8 +155,8 @@ client (void *arg)
   else if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) test 1 recvd %d; should be 255\n"),
-                  static_cast<int> (len)));
+                  ACE_TEXT ("(%P|%t) test 1 recvd %b; should be 255\n"),
+                  len));
     }
 
   //*******************   TEST 2   ******************************
@@ -293,8 +293,8 @@ server (void *arg)
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Test 1 recvd %d; should be 255\n"),
-                  static_cast<int> (len)));
+                  ACE_TEXT ("(%P|%t) Test 1 recvd %b; should be 255\n"),
+                  len));
       Test_Result = 1;
     }
   for (i = 0; i < 255; ++i)
@@ -327,8 +327,8 @@ server (void *arg)
   if (len != 255)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Test 2 sent %d; should be 255\n"),
-                  static_cast<int> (len)));
+                  ACE_TEXT ("(%P|%t) Test 2 sent %b; should be 255\n"),
+                  len));
       Test_Result = 1;
     }
 

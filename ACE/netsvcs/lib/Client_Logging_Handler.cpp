@@ -262,7 +262,7 @@ ACE_Client_Logging_Handler::handle_input (ACE_HANDLE handle)
            | ACE_Event_Handler::EXCEPT_MASK
            | ACE_Event_Handler::DONT_CALL) == -1)
         ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%n: result %d, length %d %p\n"),
+                           ACE_TEXT ("%n: result %b, length %d %p\n"),
                            result,
                            payload_msg.len,
                            ACE_TEXT ("remove_handler")),

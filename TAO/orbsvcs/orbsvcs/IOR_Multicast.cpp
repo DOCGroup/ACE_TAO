@@ -205,7 +205,7 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   if (n <= 0)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             "TAO_IOR_Multicast::handle_input recv = %d\n",
+                             "TAO_IOR_Multicast::handle_input recv = %b\n",
                              n),
                             0);
     }

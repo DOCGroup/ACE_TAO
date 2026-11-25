@@ -204,8 +204,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) Client: ")
-              ACE_TEXT("After wait for ack, n = %d, retry = %d\n"),
-              n,retrycount,ACE_ERRNO_GET));
+              ACE_TEXT("After wait for ack, n = %b, retry = %d\n"),
+              n, retrycount));
 
   return 0;
 }

@@ -178,8 +178,7 @@ reverse_map_effectiveness (test_i const *servants,
         {
           ACE_DEBUG ((LM_DEBUG, "\n"));
         }
-      ACE_DEBUG ((LM_DEBUG, "%B = %B, ", static_cast<size_t> (i),
-                  static_cast<size_t> (hash_counter[i])));
+      ACE_DEBUG ((LM_DEBUG, "%Lu = %Lu, ", i, hash_counter[i]));
     }
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
 }
