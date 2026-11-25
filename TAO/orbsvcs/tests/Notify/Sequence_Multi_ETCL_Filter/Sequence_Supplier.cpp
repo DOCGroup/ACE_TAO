@@ -235,7 +235,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         if (!output_file)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("Cannot open output file %s for writing IOR: %s"),
+                               ACE_TEXT ("Cannot open output file %s for writing IOR: %C"),
                                client.options ().ior_output_file,
                                ior.in ()),
                               1);
