@@ -280,7 +280,7 @@ RTCP_BYE_Packet::dump ()
       ORBSVCS_DEBUG ((LM_DEBUG, "%u ", this->ssrc_list_[i]));
     }
   ORBSVCS_DEBUG ((LM_DEBUG,
-              "\n    Reason '%s'\n",
+              "\n    Reason '%C'\n",
               this->reason_));
 }
 
@@ -872,42 +872,42 @@ RTCP_SDES_Packet::dump ()
              break;
         case RTCP_SDES_CNAME:
              ORBSVCS_DEBUG ((LM_DEBUG,
-                         "    CNAME '%s'\n",
+                         "    CNAME '%C'\n",
                          ip->data_.get ()));
              break;
         case RTCP_SDES_NAME:
              ORBSVCS_DEBUG ((LM_DEBUG,
-                         "    NAME '%s'\n",
+                         "    NAME '%C'\n",
                          ip->data_.get ()));
              break;
         case RTCP_SDES_EMAIL:
              ORBSVCS_DEBUG ((LM_DEBUG,
-                         "    EMAIL '%s'\n",
+                         "    EMAIL '%C'\n",
                          ip->data_.get ()));
              break;
         case RTCP_SDES_PHONE:
              ORBSVCS_DEBUG ((LM_DEBUG,
-                         "    PHONE '%s'\n",
+                         "    PHONE '%C'\n",
                          ip->data_.get ()));
              break;
         case RTCP_SDES_LOC:
              ORBSVCS_DEBUG ((LM_DEBUG,
-                         "    LOC '%s'\n",
+                         "    LOC '%C'\n",
                          ip->data_.get ()));
              break;
         case RTCP_SDES_TOOL:
              ORBSVCS_DEBUG ((LM_DEBUG,
-                         "    TOOL '%s'\n",
+                         "    TOOL '%C'\n",
                          ip->data_.get ()));
              break;
         case RTCP_SDES_NOTE:
              ORBSVCS_DEBUG ((LM_DEBUG,
-                         "    NOTE '%s'\n",
+                         "    NOTE '%C'\n",
                          ip->data_.get ()));
              break;
         case RTCP_SDES_PRIV:
              ORBSVCS_DEBUG ((LM_DEBUG,
-                         "    '%s' '%s'\n",
+                         "    '%C' '%C'\n",
                          ip->data_.get (),
                          ip->priv_data_.get ()));
              break;
