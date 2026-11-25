@@ -91,7 +91,7 @@ private:
   /// 2 fields are used only on the server side to simplify lookups.
   struct Transfer
   {
-    /// Type of the request (i.e., <TIME_UPDATE>)
+    /// Type of the request (i.e., @c TIME_UPDATE)
     ACE_INT32 msg_type_;
 
     /// Indicates if we should block forever.  If 0, then sec_timeout_
@@ -104,7 +104,7 @@ private:
     /// Max micro seconds to wait for name if not blocking forever.
     ACE_UINT32 usec_timeout_;
 
-    /// The data portion contains <time_>
+    /// The data portion contains @c time_
     ACE_UINT64 time_;
   };
 

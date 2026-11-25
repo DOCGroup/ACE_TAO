@@ -53,7 +53,7 @@ public:
 
   /**
    * Write the address in the scheme specific representation.
-   * <flags> provides control over scheme specific features (such as
+   * @a flags provides control over scheme specific features (such as
    * using numeric vs. fully qualified host names).
    */
   virtual int addr_to_string (ACE_TCHAR *s,

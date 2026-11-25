@@ -25,8 +25,8 @@
 /**
  * @class ACE_Token_Handler
  *
- * @brief Product object created by an <ACE_Token_Acceptor>.  A
- * <Token_Handler> exchanges messages with a <Token_Proxy> object
+ * @brief Product object created by an @c ACE_Token_Acceptor.  A
+ * @c ACE_Token_Handler exchanges messages with an @c ACE_Token_Proxy object
  * on the client-side.
  *
  * This class is the main workhorse of the ACE Token service.  It
@@ -101,7 +101,7 @@ protected:
   /// @name Demultiplexing hooks.
   /// @{
 
-  /// Callback method invoked by the <ACE_Reactor> when client events
+  /// Callback method invoked by the @c ACE_Reactor when client events
   /// arrive.
   virtual int handle_input (ACE_HANDLE);
   /// @}
@@ -256,7 +256,7 @@ private:
  * @class ACE_Token_Acceptor
  *
  * @brief This class contains the service-specific methods that can't
- * easily be factored into the <ACE_Strategy_Acceptor>.
+ * easily be factored into the @c ACE_Strategy_Acceptor.
  */
 class ACE_Token_Acceptor : public ACE_Strategy_Acceptor<ACE_Token_Handler, ACE_SOCK_ACCEPTOR>
 {

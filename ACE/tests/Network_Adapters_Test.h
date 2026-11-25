@@ -38,17 +38,17 @@ public:
    * SINGLE echo-point (supposed to be a really reliable, like hub,
    * router).
    *
-   * <reactor> - to be used for demultiplexing of any input and
+   * @a reactor to be used for demultiplexing of any input and
    * timeout
-   * <reply_wait> - time to wait for reply
-   * <remote_addr> - pointer to the remote address to sent to ICMP
-   * ECHO_CHECK datagram
-   * <success_status> - a pointer to char to be set as a 0 - on
+   * @a reply_wait time to wait for reply
+   * @a remote_addr the remote address to which ICMP ECHO_CHECK
+   * datagrams are sent
+   * @a success_status a pointer to ACE_TCHAR to be set as a 0 - on
    * success, and 1 - when failed
-   * <max_attempts_num> - maximum number of attempts to perform
-   * <local_addr> - the local address to bind the underlaying
+   * @a max_attempts_num maximum number of attempts to perform
+   * @a local_addr the local address to bind the underlaying
    * ACE::Ping_Socket; useful for checks of local network adapters
-   * <connect_to_remote> - whether to connect the underlaying
+   * @a connect_to_remote whether to connect the underlaying
    * ACE::Ping_Socket to the remote address (1), or not (0)
    */
   int open (ACE_Reactor * const    reactor,
@@ -63,16 +63,16 @@ public:
    * Initialization of a handler, performing echo-checks against
    * MULTIPLE echo-points.
    *
-   * <reactor> - to be used for demultiplexing of any input and
+   * @a reactor to be used for demultiplexing of any input and
    * timeout;
-   * <reply_wait> - time to wait for reply;
-   * <remote_addrs> - an array of remote addresses to sent to ICMP
-   * ECHO_CHECK datagram;
-   * <success_status> - an array of chars, each of them representing
+   * @a reply_wait time to wait for reply;
+   * @a remote_addrs an array of remote addresses to which ICMP
+   * ECHO_CHECK datagrams are sent;
+   * @a success_status an array of ACE_TCHAR values, each of them representing
    * a respective remote address to be set as a 0 - on success, and
    * 1 - when failed;
-   * <max_attempts_num> - maximum number of attempts to perform;
-   * <local_addr> - the local address to bind the underlaying
+   * @a max_attempts_num maximum number of attempts to perform;
+   * @a local_addr the local address to bind the underlaying
    * ACE::Ping_Socket; useful for checks of the local network adapters
    * connectivity;
    */

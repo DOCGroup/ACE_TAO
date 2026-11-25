@@ -48,7 +48,7 @@ public:
  *
  * @brief Defines a property of a URL.
  *
- * A property contains a @c name and a <value>.
+ * A property contains a @c name and a @c value.
  * A URL may contain some properties and we can "locate"
  * the URL's we are looking for by examming URL for certain
  * properties that match our need.

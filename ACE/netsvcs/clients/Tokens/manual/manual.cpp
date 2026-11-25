@@ -64,12 +64,12 @@ private:
   /// Display options.
   void display_menu ();
 
-  /// Get or make a proxy to <token> with a <tid> client id.
+  /// Get or make a proxy to @a token with a @a tid client ID.
   ACE_Token_Proxy *get_proxy (std::string const &tid,
                               std::string const &token,
                               char type);
 
-  /// Create a proxy to <token> with a <tid> client id.
+  /// Create a proxy to @a token.
   std::unique_ptr<ACE_Token_Proxy> create_proxy (std::string const &token, char type);
 
   /// @name Token collections indexed by client ID.
@@ -79,7 +79,7 @@ private:
 
   /// Owns collections whose pointers are stored in collections_.
   std::vector<std::unique_ptr<ACE_Token_Collection>> owned_collections_;
-  /// A collection for each <tid>.
+  /// A collection for each client ID.
   COLLECTIONS collections_;
   /// @}
 

@@ -207,7 +207,7 @@ public:
                              JAWS_IO &io) override;
 
   /**
-   * <open> is called by <ACE_Asynch_Acceptor> to initialize a new
+   * @c open() is called by @c ACE_Asynch_Acceptor to initialize a new
    * instance of ACE_Service_Handler that has been created after the a
    * new connection is accepted.
    *
