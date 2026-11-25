@@ -121,9 +121,6 @@ public:
       : counter_ (r.counter_),
         ptr_ (dynamic_cast<X*>(r.ptr_))
   {
-    // This ctor is temporarily defined here to increase our chances
-    // of being accepted by broken compilers.
-    //
     COUNTER::attach_strong (this->counter_);
   }
 
@@ -138,13 +135,9 @@ public:
   /// Assignment operator that binds @c this and @a r to the same object
   /// if Y* can be implicitly converted to X*.
   template <class Y>
-  ACE_Weak_Bound_Ptr<X, ACE_LOCK>&
+  ACE_Strong_Bound_Ptr<X, ACE_LOCK>&
   operator= (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
   {
-    // This operator is temporarily defined here to increase our chances
-    // of being accepted by broken compilers.
-    //
-
     COUNTER *new_counter = r.counter_;
     X* new_ptr = dynamic_cast<X*> (r.ptr_);
     COUNTER::attach_strong (new_counter);
