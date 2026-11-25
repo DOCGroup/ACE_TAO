@@ -98,8 +98,8 @@ int MyTask::svc ()
           seconds_tracker.set (0, 0);
           ACE_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%t) Currently running guid=%d")
-                      ACE_TEXT (", qos_.importance=%q\n"),
-                      guid_, static_cast<ACE_INT64> (qos_.importance_)));
+                      ACE_TEXT (", qos_.importance=%Ld\n"),
+                      guid_, qos_.importance_));
         }
       timer.reset ();
       timer.start ();
