@@ -17,6 +17,7 @@
 #include "ace/Task.h"
 
 #include <memory>
+#include <type_traits>
 
 // The following Parent and Child classes illustrate how you might use the
 // ACE_Strong_Bound_Ptr and ACE_Weak_Bound_Ptr together in cyclic
@@ -66,6 +67,13 @@ struct Child : public Child_Base
 
   static size_t instance_count_;
 };
+
+using Child_Ptr = ACE_Strong_Bound_Ptr<Child, ACE_Null_Mutex>;
+using Child_Base_Ptr = ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex>;
+static_assert (std::is_constructible_v<Child_Base_Ptr, Child_Ptr const &>);
+static_assert (std::is_assignable_v<Child_Base_Ptr &, Child_Ptr const &>);
+static_assert (!std::is_constructible_v<Child_Ptr, Child_Base_Ptr const &>);
+static_assert (!std::is_assignable_v<Child_Ptr &, Child_Base_Ptr const &>);
 
 Child_Base::~Child_Base () = default;
 
@@ -348,10 +356,12 @@ run_main (int, ACE_TCHAR *[])
   {
     ACE_Strong_Bound_Ptr<Child, ACE_Null_Mutex> const derived (
       new Child (parent1->weak_self_));
+    ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> const converted (derived);
     ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> base;
     ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> &result = (base = derived);
     ACE_TEST_ASSERT (std::addressof (result) == std::addressof (base));
     ACE_TEST_ASSERT (base.get () == derived.get ());
+    ACE_TEST_ASSERT (converted.get () == derived.get ());
   }
   ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> p8;
   {

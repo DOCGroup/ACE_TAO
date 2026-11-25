@@ -13,6 +13,7 @@
 #include /**/ "ace/config-all.h"
 
 #include <memory>
+#include <type_traits>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -116,10 +117,10 @@ public:
 
   /// Copy constructor binds @c this and @a r to the same object if
   /// Y* can be implicitly converted to X*.
-  template <class Y>
+  template <class Y, std::enable_if_t<std::is_convertible_v<Y *, X *>, int> = 0>
   ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
       : counter_ (r.counter_),
-        ptr_ (dynamic_cast<X*>(r.ptr_))
+        ptr_ (r.ptr_)
   {
     COUNTER::attach_strong (this->counter_);
   }
@@ -134,12 +135,12 @@ public:
 
   /// Assignment operator that binds @c this and @a r to the same object
   /// if Y* can be implicitly converted to X*.
-  template <class Y>
+  template <class Y, std::enable_if_t<std::is_convertible_v<Y *, X *>, int> = 0>
   ACE_Strong_Bound_Ptr<X, ACE_LOCK>&
   operator= (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
   {
     COUNTER *new_counter = r.counter_;
-    X* new_ptr = dynamic_cast<X*> (r.ptr_);
+    X* new_ptr = r.ptr_;
     COUNTER::attach_strong (new_counter);
     if (COUNTER::detach_strong (this->counter_) == 0)
       {
