@@ -12,6 +12,23 @@
 
 namespace
 {
+  // Match XSC-generated writers: the derived writer default-constructs its
+  // intermediate base while initializing their shared virtual writer base.
+  class Generated_Base_Writer : public virtual XSCRT::Writer<char>
+  {
+  protected:
+    Generated_Base_Writer () = default;
+  };
+
+  class Generated_Derived_Writer : public Generated_Base_Writer
+  {
+  public:
+    explicit Generated_Derived_Writer (XSCRT::XML::Element<char> const &element)
+      : XSCRT::Writer<char> (element)
+    {
+    }
+  };
+
   class Type_Probe : public XSCRT::Type
   {
   public:
@@ -79,7 +96,9 @@ run_main (int, ACE_TCHAR *[])
       ACE_TCHAR const *const filename = ACE_TEXT ("XML_Utils_Test.xml");
       xercesc::DOMDocument *document = helper.create_dom (ACE_TEXT ("root"), ACE_TEXT ("urn:test"));
       ACE_TEST_ASSERT (document != nullptr);
-      XSCRT::XML::Element<char> root (document->getDocumentElement ());
+      xercesc::DOMElement *const document_root = document->getDocumentElement ();
+      ACE_TEST_ASSERT (document_root != nullptr);
+      XSCRT::XML::Element<char> root (document_root);
       XMLSchema::Writer::IDREF<char> writer (root);
       XMLSchema::IDREF<char> const value (std::string ("reference"));
       writer.traverse (value);
@@ -90,10 +109,12 @@ run_main (int, ACE_TCHAR *[])
       parser.parse (ACE_TEXT_ALWAYS_CHAR (filename));
       xercesc::DOMDocument *parsed = parser.getDocument ();
       ACE_TEST_ASSERT (parsed != nullptr);
+      xercesc::DOMElement *const parsed_root = parsed->getDocumentElement ();
+      ACE_TEST_ASSERT (parsed_root != nullptr);
       ACE_TEST_ASSERT (xercesc::XMLString::equals (
-        parsed->getDocumentElement ()->getTagName (), XML::XStr (ACE_TEXT ("root"))));
+        parsed_root->getTagName (), XML::XStr (ACE_TEXT ("root"))));
       ACE_TEST_ASSERT (xercesc::XMLString::equals (
-        parsed->getDocumentElement ()->getTextContent (), XML::XStr (ACE_TEXT ("reference"))));
+        parsed_root->getTextContent (), XML::XStr (ACE_TEXT ("reference"))));
       ACE_TEST_ASSERT (ACE_OS::unlink (filename) == 0);
     }
 

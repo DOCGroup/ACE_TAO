@@ -3,6 +3,7 @@
 #ifndef XSCRT_WRITER_HPP
 #define XSCRT_WRITER_HPP
 
+#include <cstdlib>
 #include <stack>
 
 #include "ace/XML_Utils/XSCRT/XML.hpp"
@@ -19,7 +20,12 @@ namespace XSCRT
     }
 
   protected:
-    Writer () = delete;
+    // Intermediate derived writers need this constructor for the virtual base;
+    // the most-derived writer must initialize the base with an element.
+    Writer ()
+    {
+      std::abort ();
+    }
 
   public:
     void push_ (XML::Element<C> const &e)
