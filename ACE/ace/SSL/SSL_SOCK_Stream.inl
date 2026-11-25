@@ -342,8 +342,9 @@ ACE_SSL_SOCK_Stream::close ()
   if (ssl_error == SSL_ERROR_SYSCALL
       && ACE_BIT_ENABLED (::SSL_get_shutdown (this->ssl_.get ()), SSL_RECEIVED_SHUTDOWN))
     {
-      int const socket_error = ACE_OS::set_errno_to_last_error ();
-      if (socket_error == EPIPE || socket_error == ECONNRESET)
+      int const socket_error = ACE_OS::set_errno_to_wsa_last_error ();
+      if (socket_error == EPIPE || socket_error == ECONNRESET
+          || socket_error == ECONNABORTED)
         {
           ::ERR_clear_error ();
           ssl_error = SSL_ERROR_NONE;
@@ -359,7 +360,14 @@ ACE_SSL_SOCK_Stream::close ()
       // using this ACE_SSL_SOCK_Stream instance.  This prevents the
       // previous SSL session state from being associated with the new
       // SSL session/connection.
-      ::SSL_clear (this->ssl_.get ());
+      if (::SSL_clear (this->ssl_.get ()) != 1)
+        {
+          ACE_SSL_Context::report_error ();
+          ACE_Errno_Guard error (errno);
+          this->set_handle (ACE_INVALID_HANDLE);
+          this->stream_.close ();
+          return -1;
+        }
       this->set_handle (ACE_INVALID_HANDLE);
       return this->stream_.close ();
 
