@@ -1314,7 +1314,7 @@ private:
   typedef ACE_Map_Manager<ACE_HANDLE, ACE_WIN32_Asynch_Connect_Result *, ACE_SYNCH_NULL_MUTEX>
           MAP_MANAGER;
 
-  /// Map of Result pointers that correspond to all the <accept>'s
+  /// Map of Result pointers that correspond to all the accepts
   /// pending.
   MAP_MANAGER result_map_;
 

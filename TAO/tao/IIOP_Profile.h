@@ -105,7 +105,7 @@ public:
   CORBA::ULong hash (CORBA::ULong max) override;
 
 protected:
-  /// Destructor is to be called only through <_decr_refcnt>.
+  /// Destructor is to be called only through @c _decr_refcnt.
   ~TAO_IIOP_Profile ();
 
   /**
@@ -166,7 +166,7 @@ protected:
   /// For efficient insertion at the end of the list
   TAO_IIOP_Endpoint *last_endpoint_;
 
-  /// Number of endpoints in the list headed by <endpoint_>.
+  /// Number of endpoints in the list headed by @c endpoint_.
   CORBA::ULong count_ {1};
 
 private:

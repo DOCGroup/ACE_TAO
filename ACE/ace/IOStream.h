@@ -196,8 +196,8 @@ protected:
   /// overflow.
   virtual int overflow (int c = EOF);
 
-  /// Resets the <base> pointer and streambuf mode.  This is used
-  /// internally when get/put buffers are allocatd.
+  /// Resets the base pointer and streambuf mode.  This is used
+  /// internally when get/put buffers are allocated.
   void reset_base ();
 
 protected:

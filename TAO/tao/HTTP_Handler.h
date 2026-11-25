@@ -45,7 +45,7 @@ public:
   /// returns the number of bytes read/written in the last operation.
   size_t byte_count () const;
 
-  /// Activate this instance of the <HTTP_Handler>
+  /// Activate this instance of the HTTP handler
   int open (void * = nullptr) override;
 
   /// Close down the Blob

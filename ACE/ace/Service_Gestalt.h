@@ -413,11 +413,11 @@ protected:
   size_t svc_repo_size_;
 
   /// Keep track of the number of times the instance has been
-  /// initialized (opened). "If so, we can't allow <yyparse> to be called since
+  /// initialized (opened). "If so, we can't allow @c yyparse to be called since
   /// it's not reentrant" is the original motivation, but that does not seem
   /// to be the case anymore. This variable is incremented by the
-  /// <ACE_Service_Gestalt::open> method and decremented by the
-  /// <ACE_Service_Gestalt::close> method.
+  /// @c ACE_Service_Gestalt::open method and decremented by the
+  /// @c ACE_Service_Gestalt::close method.
   int is_opened_ {};
 
   /// Indicates where to write the logging output.  This is typically

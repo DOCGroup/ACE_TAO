@@ -60,7 +60,7 @@ public:
   /// CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (CORBA::Any const &val);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of this object.
   virtual TAO_ConnectionTimeoutPolicy *clone () const;
 
   TimeBase::TimeT relative_expiry () override;
