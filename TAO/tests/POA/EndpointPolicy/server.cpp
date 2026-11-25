@@ -8,6 +8,8 @@
 #include "tao/ORB_Core.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Registry.h"
+#include "tao/IIOP_Factory.h"
+#include "tao/Resource_Factory.h"
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_unistd.h"
@@ -26,6 +28,22 @@ ACE_Service_Config::process_directive (ace_svc_desc_TAO_Advanced_Resource_Factor
 
 CORBA::Short endpoint_port = 12345;
 bool verbose = false;
+
+class Counting_Protocol_Factory : public TAO_IIOP_Protocol_Factory
+{
+public:
+  explicit Counting_Protocol_Factory (bool &destroyed) : destroyed_ (destroyed)
+  {
+  }
+
+  ~Counting_Protocol_Factory () override
+  {
+    this->destroyed_ = true;
+  }
+
+private:
+  bool &destroyed_;
+};
 
 enum class HostNameForm
   {
@@ -148,6 +166,24 @@ make_ior (CORBA::ORB_ptr orb,
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
+  bool factory_destroyed = false;
+  Counting_Protocol_Factory *const factory =
+    new Counting_Protocol_Factory (factory_destroyed);
+  {
+    TAO_Protocol_Item item (ACE_CString ("test"));
+    item.factory (factory, 1);
+    item.factory (factory, 0);
+  }
+  if (factory_destroyed)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Factory ownership was not released\n")), 1);
+    }
+  delete factory;
+  if (!factory_destroyed)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Factory was not destroyed\n")), 1);
+    }
+
   CORBA::ORB_var orb;
   CORBA::Object_var obj;
   PortableServer::POA_var root_poa;

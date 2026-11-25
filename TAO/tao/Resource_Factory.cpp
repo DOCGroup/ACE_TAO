@@ -5,17 +5,29 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Protocol_Item::TAO_Protocol_Item (std::string const &name)
+TAO_Protocol_Item::TAO_Protocol_Item (ACE_CString const &name)
   : name_ (name)
 {
 }
 
 TAO_Protocol_Item::~TAO_Protocol_Item () = default;
 
-std::string const &
+ACE_CString const &
+TAO_Protocol_Item::protocol_name ()
+{
+  return this->name_;
+}
+
+ACE_CString const &
 TAO_Protocol_Item::protocol_name () const
 {
   return this->name_;
+}
+
+TAO_Protocol_Factory *
+TAO_Protocol_Item::factory ()
+{
+  return this->factory_;
 }
 
 TAO_Protocol_Factory *
@@ -35,7 +47,11 @@ TAO_Protocol_Item::factory (TAO_Protocol_Factory *factory,
         this->owned_factory_.reset (factory);
       }
     }
-  else if (this->owned_factory_.get () != factory)
+  else if (this->owned_factory_.get () == factory)
+    {
+      this->owned_factory_.release ();
+    }
+  else
     {
       this->owned_factory_.reset ();
     }

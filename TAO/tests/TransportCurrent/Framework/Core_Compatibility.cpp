@@ -11,6 +11,7 @@
 #include "tao/PolicyFactory_Registry_Adapter.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/Protocol_Factory.h"
+#include "tao/Resource_Factory.h"
 #include "tao/Service_Context_Handler.h"
 #include "tao/Transport_Acceptor.h"
 
@@ -111,6 +112,9 @@ namespace
   using Match_Prefix = int (TAO_Protocol_Factory::*) (ACE_CString const &);
   static_assert (std::is_same<decltype (&TAO_Protocol_Factory::match_prefix),
                               Match_Prefix>::value);
+  static_assert (std::is_constructible<TAO_Protocol_Item, ACE_CString const &>::value);
+  static_assert (std::is_same<decltype (std::declval<TAO_Protocol_Item &> ().protocol_name ()),
+                              ACE_CString const &>::value);
   static_assert (std::is_same<decltype (Connector_Probe::active_connect_strategy_),
                               TAO_Connect_Strategy *>::value);
 }
