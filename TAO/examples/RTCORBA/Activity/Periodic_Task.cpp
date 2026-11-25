@@ -73,12 +73,10 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
           if (TAO_debug_level > 0)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("name %C, priority %d, period %QuS, ")
-                          ACE_TEXT ("exec_time %QuS, phase %quS, iter %d, load %d\n"),
+                          ACE_TEXT ("name %C, priority %d, period %LuuS, ")
+                          ACE_TEXT ("exec_time %LuuS, phase %LduS, iter %d, load %d\n"),
                           name_.c_str (), task_priority_,
-                          static_cast<ACE_UINT64> (period_),
-                          static_cast<ACE_UINT64> (exec_time_),
-                          static_cast<ACE_INT64> (phase_), iter_, load_));
+                          period_, exec_time_, phase_, iter_, load_));
             }
           break;
         }
