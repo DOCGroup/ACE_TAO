@@ -20,7 +20,12 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
   int guid {};
   RTScheduling::Current::IdType_var id = this->current_->id ();
 
-  std::memcpy (&guid, id->get_buffer (), sizeof (id->length ()));
+  size_t const length = id->length () < sizeof (guid)
+    ? id->length () : sizeof (guid);
+  if (length != 0)
+    {
+      std::memcpy (&guid, id->get_buffer (), length);
+    }
 
   ACE_High_Res_Timer timer;
   ACE_Time_Value elapsed_time {};
