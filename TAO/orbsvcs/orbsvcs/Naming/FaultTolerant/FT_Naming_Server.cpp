@@ -786,7 +786,7 @@ TAO_FT_Naming_Server::update_naming_context (
   { // Another type of class was used as the servant. Should not happen.
     ORBSVCS_ERROR ((LM_ERROR,
                ACE_TEXT ("(%P|%t) ERROR: Invalid servant type registered")
-               ACE_TEXT (" with oid: %s"),
+               ACE_TEXT (" with oid: %C"),
                context_info.context_name.in ()));
     return -1;
   }
@@ -795,7 +795,7 @@ TAO_FT_Naming_Server::update_naming_context (
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("%T %n (%P|%t) - ")
-                  ACE_TEXT ("An update of naming context with name %s ")
+                  ACE_TEXT ("An update of naming context with name %C ")
                   ACE_TEXT ("has been made by the peer"),
                   context_info.context_name.in ()
                   ));
