@@ -19,10 +19,12 @@
 #include "valuetype_opt_accessorC.h"
 #include "fixedA.h"
 #include "keywordsS.h"
+#include "array_anon_nestedC.h"
 
 #include "ace/Log_Msg.h"
 #include "tao/AnyTypeCode/Any.h"
 #include "tao/BD_String_Argument_T.h"
+#include "tao/Vector_CDR_T.h"
 
 #include <cstring>
 #include <memory>
@@ -957,6 +959,33 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int error_count = 0;
+
+  teststruct::_b array = {'a', 'b', 'c', 'd'};
+  using array_vector = std::vector<teststruct::_b_slice *>;
+  array_vector const source {array};
+  TAO_OutputCDR output;
+  if (!TAO::marshal_array_vector<teststruct::_b_forany> (output, source))
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Failed to marshal array vector\n"));
+    }
+  else
+    {
+      TAO_InputCDR input (output);
+      array_vector target;
+      bool const decoded =
+        TAO::demarshal_array_vector<teststruct::_b_forany> (input, target);
+      if (!decoded || target.size () != 1
+          || std::memcmp (target[0], array, sizeof array) != 0)
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Array vector round trip failed\n"));
+        }
+      for (teststruct::_b_slice * const element : target)
+        {
+          teststruct::_b_free (element);
+        }
+    }
 
   const ACE_CDR::ULongLong test_ull =
     ACE_UINT64_LITERAL (122192928000000000);
