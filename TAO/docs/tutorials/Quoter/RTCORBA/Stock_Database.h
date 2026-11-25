@@ -116,7 +116,7 @@ private:
   /// Keep track of the stock names and information about them.
   Stock_Map stock_map_;
 
-  /// Lock to protect concurrent access to the <stock_map_>.
+  /// Lock to protect concurrent access to the @c stock_map_.
   ACE_RW_Thread_Mutex lock_;
 
   /// Rate at which updates are made.

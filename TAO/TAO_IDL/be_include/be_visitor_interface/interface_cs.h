@@ -42,9 +42,7 @@ public:
                                       TAO_OutStream *os);
 
 private:
-  /// Helper method to generate _narrow and _unchecked_narrow. The
-  /// string <n> will contain the needed predicate that needs to be
-  /// generated.
+  /// Helper method to generate _narrow and _unchecked_narrow.
   bool gen_xxx_narrow (std::string const& pre,
                        be_interface *node);
 };

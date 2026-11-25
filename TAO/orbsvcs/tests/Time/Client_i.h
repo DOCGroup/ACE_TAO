@@ -74,7 +74,7 @@ private:
   /// IOR of the obj ref of the server.
   std::string ior_ {};
 
-  /// Number of times to invoke the <time> operation.
+  /// Number of times to invoke the @c time operation.
   u_int loop_count_ {10};
 
   /// Flag for server shutdown.

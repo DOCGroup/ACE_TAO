@@ -117,7 +117,7 @@ private:
   bool run_extended_tests_ {};
 
   /// Parameters to the extended tests. The parameters are of the
-  /// following format: <test>:<parm1>:<parm2>...
+  /// following format: &lt;test&gt;:&lt;parm1&gt;:&lt;parm2&gt;...
   ACE_TCHAR *extended_tests_params_ {};
 
   /// Flag to tell whethter to use a script file to run the tests.

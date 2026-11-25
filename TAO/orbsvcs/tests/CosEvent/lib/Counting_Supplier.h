@@ -87,7 +87,7 @@ private:
   /// Count the number of push() calls
   CORBA::ULong push_count_ {};
 
-  /// If nonzero, pause for <milliseconds> before each
+  /// If nonzero, pause for @c milliseconds_ before each
   /// event.
   int const milliseconds_;
 

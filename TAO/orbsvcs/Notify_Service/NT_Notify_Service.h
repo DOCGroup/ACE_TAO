@@ -36,11 +36,11 @@ public:
   TAO_NT_Notify_Service &operator= (TAO_NT_Notify_Service &&) = delete;
   ~TAO_NT_Notify_Service () override;
 
-  /// We override <handle_control> because it handles stop requests
+  /// We override @c handle_control() because it handles stop requests
   /// privately.
   void handle_control (DWORD control_code) override;
 
-  /// We override <handle_exception> so a 'stop' control code can pop
+  /// We override @c handle_exception() so a 'stop' control code can pop
   /// the reactor off of its wait.
   int handle_exception (ACE_HANDLE h) override;
 

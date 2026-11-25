@@ -37,11 +37,11 @@ class Activator_NT_Service : public ACE_NT_Service
 public:
   using MUTEX = TAO_SYNCH_RECURSIVE_MUTEX;
 
-  /// We override <handle_control> because it handles stop requests
+  /// We override @c handle_control() because it handles stop requests
   /// privately.
   void handle_control (DWORD control_code) override;
 
-  /// We override <handle_exception> so a 'stop' control code can wake
+  /// We override @c handle_exception() so a 'stop' control code can wake
   /// the reactor off of its wait.
   int handle_exception (ACE_HANDLE h) override;
 

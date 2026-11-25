@@ -46,7 +46,6 @@ public:
   int run ();
 
   /// Initialize the client communication endpoint with server.
-  /// <collocation_test_ior> is used to pass in the ior file name.
   int init (int argc, ACE_TCHAR **argv);
 
 private:
@@ -68,7 +67,7 @@ private:
   /// This method runs only the send_oneway() test.
   int run_oneway ();
 
-  /// Invoke the method with <do_shutdown> != 0 to shutdown the server.
+  /// Invoke the method with @a do_shutdown set to true to shut down the server.
   int shutdown_server (bool do_shutdown);
 
   /// Remember our orb.

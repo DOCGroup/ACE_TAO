@@ -967,8 +967,8 @@ public:
 private:
   /**
    * To switch between changing or non-changing standard include
-   * files (e.g. tao/corba.h)  so that #include statements can be
-   * generated with ""s or <>s respectively.
+   * files (e.g. @c tao/corba.h) so that \#include statements can use
+   * quotes or angle brackets, respectively.
    */
   size_t changing_standard_include_files_ {1};
 
@@ -1114,7 +1114,7 @@ private:
   /**
    * Directory where all the IDL-Compiler-Generated files are to be
    * kept. Default value is 0 for this string which means the current
-   * directory from which the <tao_idl> is called.
+   * directory from which the @c tao_idl is called.
    */
   std::string output_dir_;
 

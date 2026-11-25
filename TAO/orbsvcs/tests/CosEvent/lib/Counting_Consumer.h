@@ -144,7 +144,7 @@ private:
   /// Count the number of pull() calls
   CORBA::ULong pull_count_ {};
 
-  /// If nonzero, pause for <milliseconds> before each
+  /// If nonzero, pause for @c milliseconds_ before each
   /// event.
   int const milliseconds_;
 
