@@ -78,6 +78,8 @@ namespace XSCRT
 
   class Type
   {
+    using Idref_Map = std::map<std::basic_string<ACE_TCHAR>, Type *>;
+
   public:
     virtual ~Type () = default;
 
@@ -263,7 +265,7 @@ namespace XSCRT
     Type *get_idref (char const *name) const
     {
       std::basic_string<ACE_TCHAR> const name_string (ACE_TEXT_CHAR_TO_TCHAR (name));
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
+      Idref_Map::const_iterator const i =
         this->idref_map_.find (name_string);
       if (i != idref_map_.end ())
       {
@@ -277,7 +279,7 @@ namespace XSCRT
 
     Type *get_idref (std::basic_string<ACE_TCHAR> const &name) const
     {
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
+      Idref_Map::const_iterator const i =
         this->idref_map_.find (name);
       if (i != idref_map_.end ())
       {
@@ -292,7 +294,7 @@ namespace XSCRT
     Type *get_idref (wchar_t const *name) const
     {
       std::basic_string<ACE_TCHAR> const name_string (ACE_TEXT_WCHAR_TO_TCHAR (name));
-      std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *>::const_iterator const i =
+      Idref_Map::const_iterator const i =
         this->idref_map_.find (name_string);
       if (i != idref_map_.end ())
       {
@@ -311,7 +313,7 @@ namespace XSCRT
 
   private:
     /// IDREF targets and the parent container are borrowed from the parsed graph.
-    std::map<std::basic_string<ACE_TCHAR>, XSCRT::Type *> idref_map_{};
+    Idref_Map idref_map_{};
 
     Type *container_{};
 
