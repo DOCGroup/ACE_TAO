@@ -968,7 +968,8 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
         break;
       }
 
-      auto result_deleter = [] (ACE_POSIX_Asynch_Accept_Result *result)
+      void (*result_deleter) (ACE_POSIX_Asynch_Accept_Result *) =
+        [] (ACE_POSIX_Asynch_Accept_Result *result)
         {
           delete result;
         };
@@ -1119,7 +1120,8 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
   // should be the same as the <listen_handle>.
 
   ACE_POSIX_Asynch_Accept_Result* result {};
-  auto result_deleter = [] (ACE_POSIX_Asynch_Accept_Result *result)
+  void (*result_deleter) (ACE_POSIX_Asynch_Accept_Result *) =
+    [] (ACE_POSIX_Asynch_Accept_Result *result)
     {
       delete result;
     };
@@ -1332,7 +1334,8 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
                                                    priority,
                                                    signal_number),
                   -1);
-  auto result_deleter = [] (ACE_POSIX_Asynch_Connect_Result *result)
+  void (*result_deleter) (ACE_POSIX_Asynch_Connect_Result *) =
+    [] (ACE_POSIX_Asynch_Connect_Result *result)
     {
       const ACE_HANDLE handle = result->connect_handle ();
       if (handle != ACE_INVALID_HANDLE)
@@ -1406,7 +1409,8 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
 int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * result,
                                            bool post_enable)
 {
-  auto result_deleter = [] (ACE_POSIX_Asynch_Connect_Result *result)
+  void (*result_deleter) (ACE_POSIX_Asynch_Connect_Result *) =
+    [] (ACE_POSIX_Asynch_Connect_Result *result)
     {
       delete result;
     };
@@ -2227,7 +2231,8 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                          priority,
                                                          signal_number),
                   -1);
-  auto result_deleter = [] (ACE_POSIX_Asynch_Transmit_File_Result *result)
+  void (*result_deleter) (ACE_POSIX_Asynch_Transmit_File_Result *) =
+    [] (ACE_POSIX_Asynch_Transmit_File_Result *result)
     {
       delete result;
     };
