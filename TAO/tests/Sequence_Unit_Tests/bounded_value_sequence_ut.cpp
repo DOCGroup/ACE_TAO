@@ -33,7 +33,7 @@ struct Tester
   int test_move_borrowed_buffer ()
   {
     value_type const initial[] {1, 4, 9, 16};
-    value_type buffer[8] {1, 4, 9, 16};
+    value_type buffer[MAXIMUM] {1, 4, 9, 16};
     tested_sequence source;
     source.replace (4, buffer, false);
 
@@ -52,7 +52,7 @@ struct Tester
     buffer[0] = 25;
     CHECK_EQUAL (initial[0], destination[0]);
 
-    value_type assignment_buffer[8] {1, 4, 9, 16};
+    value_type assignment_buffer[MAXIMUM] {1, 4, 9, 16};
     tested_sequence assignment_source;
     assignment_source.replace (4, assignment_buffer, false);
     tested_sequence assignment_destination;
