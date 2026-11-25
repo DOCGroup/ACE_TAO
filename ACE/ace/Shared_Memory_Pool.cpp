@@ -156,7 +156,7 @@ ACE_Shared_Memory_Pool::commit_backing_store_name (size_t rounded_bytes,
       if (shmem != address)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                                ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::commit_backing_store_name, %p, shmem = %u, address = %u\n"),
+                                ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::commit_backing_store_name, %p, shmem = %@, address = %@\n"),
                                 ACE_TEXT("shmat"),
                                 shmem,
                                 address),
@@ -374,7 +374,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
       if (this->shm_addr_table_[0] == reinterpret_cast<void *> (-1))
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                            ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p, base_addr = %u\n"),
+                            ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p, base_addr = %@\n"),
                             ACE_TEXT("shmat"),
                             this->shm_addr_table_[0]),
                             0);
@@ -390,7 +390,7 @@ ACE_Shared_Memory_Pool::init_acquire (size_t nbytes,
       if (this->shm_addr_table_[0] == reinterpret_cast<char *> (-1))
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                            ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p, base_addr = %u\n"),
+                            ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::init_acquire, %p, base_addr = %@\n"),
                             ACE_TEXT("shmat"),
                             this->shm_addr_table_[0]), 0);
         }
