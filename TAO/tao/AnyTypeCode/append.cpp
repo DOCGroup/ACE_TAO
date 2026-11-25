@@ -294,18 +294,18 @@ TAO_Marshal_ObjRef::append (CORBA::TypeCode_ptr,
       CORBA::ULong tag {};
 
       // get the profile ID tag
-      if (!(continue_append = src->read_ulong (tag)
-                            && dest->write_ulong (tag)))
-      {
-        continue;
-      }
+      continue_append = src->read_ulong (tag) && dest->write_ulong (tag);
+      if (!continue_append)
+        {
+          continue;
+        }
 
       CORBA::ULong length {};
-      if (!(continue_append = src->read_ulong (length)
-                            && dest->write_ulong (length)))
-      {
-        continue;
-      }
+      continue_append = src->read_ulong (length) && dest->write_ulong (length);
+      if (!continue_append)
+        {
+          continue;
+        }
 
       // @@ This can be optimized! Pre-allocating on the destination
       //    and then copying directly into that.
