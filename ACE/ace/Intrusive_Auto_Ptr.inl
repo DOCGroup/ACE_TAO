@@ -106,7 +106,10 @@ ACE_Intrusive_Auto_Ptr<X>::operator = (ACE_Intrusive_Auto_Ptr<X> const &rhs)
   X * const old_rep = this->rep_;
   this->rep_ = rhs.rep_;
   X::intrusive_add_ref (this->rep_);
-  X::intrusive_remove_ref (old_rep);
+  if (old_rep != nullptr)
+    {
+      X::intrusive_remove_ref (old_rep);
+    }
 }
 
 /// Copy constructor from a derived class.

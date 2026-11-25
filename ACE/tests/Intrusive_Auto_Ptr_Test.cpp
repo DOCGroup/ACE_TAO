@@ -94,6 +94,10 @@ int run_main (int, ACE_TCHAR *[])
     assigned = std::move (source);
     ACE_TEST_ASSERT (theone->has_refs (3));
     ACE_TEST_ASSERT (source.get () == theone);
+    ACE_Intrusive_Auto_Ptr<One> empty;
+    empty = source;
+    ACE_TEST_ASSERT (theone->has_refs (4));
+    ACE_TEST_ASSERT (empty.get () == theone);
   }
   ACE_TEST_ASSERT (One::was_released ());
 
