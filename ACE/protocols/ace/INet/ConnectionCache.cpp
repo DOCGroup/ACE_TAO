@@ -194,7 +194,8 @@ namespace ACE
                     if (this->condition_.wait () != 0)
                       {
                         INET_ERROR (1, (LM_ERROR, DLINFO ACE_TEXT ("(%P|%t) ConnectionCache::claim_connection - ")
-                                                  ACE_TEXT ("error waiting for connection condition (%p)\n")));
+                                                  ACE_TEXT ("error waiting for connection condition (%p)\n"),
+                                    ACE_TEXT ("wait")));
                         return false;
                       }
                     INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("ConnectionCache::claim_connection - ")

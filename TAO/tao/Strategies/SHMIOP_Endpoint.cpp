@@ -86,7 +86,8 @@ TAO_SHMIOP_Endpoint::set (const ACE_INET_Addr &addr,
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - SHMIOP_Endpoint::set, ")
-                      ACE_TEXT ("- %p cannot determine hostname\n")));
+                      ACE_TEXT ("- %p cannot determine hostname\n"),
+                      ACE_TEXT ("get_host_name")));
         }
 
       char const *tmp = addr.get_host_addr ();
