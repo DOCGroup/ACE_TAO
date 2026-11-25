@@ -229,7 +229,7 @@ TAO_SHMIOP_Profile::parse_string_i (const char *string)
       }
       else
         {
-          this->endpoint_.host_ = (const char *) tmp_host;
+          this->endpoint_.host_ = static_cast<char const *> (tmp_host);
         }
     }
 

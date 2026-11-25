@@ -248,9 +248,9 @@ ACE_INLINE ssize_t
 ACE::send_i (ACE_HANDLE handle, const void *buf, size_t len)
 {
 #if defined (ACE_WIN32) || defined (ACE_MQX) || defined (__ghs__)
-  return ACE_OS::send (handle, (const char *) buf, len);
+  return ACE_OS::send (handle, static_cast<char const *> (buf), len);
 #else
-  return ACE_OS::write (handle, (const char *) buf, len);
+  return ACE_OS::write (handle, static_cast<char const *> (buf), len);
 #endif /* ACE_WIN32 */
 }
 
@@ -258,9 +258,9 @@ ACE_INLINE ssize_t
 ACE::recv_i (ACE_HANDLE handle, void *buf, size_t len)
 {
 #if defined (ACE_WIN32) || defined (ACE_MQX) || defined (__ghs__)
-  return ACE_OS::recv (handle, (char *) buf, len);
+  return ACE_OS::recv (handle, static_cast<char *> (buf), len);
 #else
-  return ACE_OS::read (handle, (char *) buf, len);
+  return ACE_OS::read (handle, static_cast<char *> (buf), len);
 #endif /* ACE_WIN32 */
 }
 
