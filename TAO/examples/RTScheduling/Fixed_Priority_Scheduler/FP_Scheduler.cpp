@@ -1,4 +1,5 @@
 #include "FP_Scheduler.h"
+#include "../Guid_Utils.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 #include "test.h"
 #include <atomic>
@@ -138,11 +139,12 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
               ACE_DEFAULT_THREAD_PRIORITY));
 
   RTScheduling::Current::IdType_var guid = this->current_->id ();
-  IOP::ServiceContext* srv_con = new IOP::ServiceContext;
-  srv_con->context_id = Client_Interceptor::SchedulingInfo;
-  srv_con->context_data.length (sizeof (size_t));
-  ACE_OS::memcpy (srv_con->context_data.get_buffer (), guid->get_buffer (), sizeof (size_t));
-  request_info->add_request_service_context (*srv_con,
+  rtscheduling_guid_value (guid.in ());
+  IOP::ServiceContext srv_con;
+  srv_con.context_id = Client_Interceptor::SchedulingInfo;
+  srv_con.context_data.length (sizeof (size_t));
+  std::memcpy (srv_con.context_data.get_buffer (), guid->get_buffer (), sizeof (size_t));
+  request_info->add_request_service_context (srv_con,
                                              false);
 }
 
@@ -153,13 +155,18 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                                            CORBA::Policy_out /*sched_param*/,
                                            CORBA::Policy_out /*implicit_sched_param*/)
 {
-  IOP::ServiceContext* serv_cxt =
+  IOP::ServiceContext_var serv_cxt =
     request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
 
   if (serv_cxt != 0)
     {
-      size_t gu_id;
-      ACE_OS::memcpy (&gu_id, serv_cxt->context_data.get_buffer (), serv_cxt->context_data.length ());
+      if (serv_cxt->context_data.length () != sizeof (size_t))
+        {
+          throw CORBA::BAD_PARAM ();
+        }
+
+      size_t gu_id {};
+      std::memcpy (&gu_id, serv_cxt->context_data.get_buffer (), sizeof (gu_id));
 
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,
@@ -169,14 +176,16 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
       DT_TEST::instance ()->dt_creator ()->log_msg (ACE_TEXT_ALWAYS_CHAR(msg));
 
-      RTScheduling::Current::IdType *guid {};
-      ACE_NEW (guid,
-               RTScheduling::Current::IdType);
+      RTScheduling::Current::IdType *guid_ptr {};
+      ACE_NEW_THROW_EX (guid_ptr,
+                        RTScheduling::Current::IdType,
+                        CORBA::NO_MEMORY ());
+      RTScheduling::Current::IdType_var guid = guid_ptr;
 
       // Generate GUID.
       guid->length (sizeof(size_t));
 
-      ACE_OS::memcpy (guid->get_buffer (), &gu_id, sizeof(size_t));
+      std::memcpy (guid->get_buffer (), &gu_id, sizeof (gu_id));
 
       if (TAO_debug_level > 0)
         {
@@ -185,7 +194,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                       gu_id));
         }
 
-      guid_out.ptr () = guid;
+      guid_out = guid._retn ();
     }
 
 }
