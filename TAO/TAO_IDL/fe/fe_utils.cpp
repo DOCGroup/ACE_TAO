@@ -65,7 +65,7 @@ FE_Utils::Temp_File_Guard::register_created_file (std::string const& filename)
 void
 FE_Utils::Temp_File_Guard::unregister_file (std::string const& filename)
 {
-  for (auto i = this->created_files_.begin ();
+  for (File_List::iterator i = this->created_files_.begin ();
        i != this->created_files_.end ();
        ++i)
     {

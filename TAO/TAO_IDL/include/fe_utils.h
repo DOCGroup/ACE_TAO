@@ -54,7 +54,8 @@ struct TAO_IDL_FE_Export FE_Utils
     void release ();
 
   private:
-    std::vector<std::string> created_files_;
+    using File_List = std::vector<std::string>;
+    File_List created_files_;
     bool active_ {true};
   };
 
