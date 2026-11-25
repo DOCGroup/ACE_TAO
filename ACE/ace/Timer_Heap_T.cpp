@@ -96,7 +96,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
   size_t size,
   bool preallocated,
   FUNCTOR *upcall_functor,
-  ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
+  ACE_Free_List<ACE_Timer_Node_T <TYPE>> *freelist,
   TIME_POLICY const &time_policy)
   : Base_Time_Policy (upcall_functor,
       freelist,
@@ -172,7 +172,7 @@ ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Heap_T (
   FUNCTOR *upcall_functor,
-  ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
+  ACE_Free_List<ACE_Timer_Node_T <TYPE>> *freelist,
   TIME_POLICY const &time_policy)
   : Base_Time_Policy (upcall_functor,
           freelist,

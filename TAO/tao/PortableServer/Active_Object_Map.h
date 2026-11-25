@@ -225,14 +225,14 @@ public:
     TAO_Active_Object_Map_Entry *,
     TAO_Servant_Hash,
     ACE_Equal_To<PortableServer::Servant>,
-    ACE_Noop_Key_Generator<PortableServer::Servant> >;
+    ACE_Noop_Key_Generator<PortableServer::Servant>>;
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Servant linear map.
   using servant_linear_map = ACE_Map_Manager_Adapter<
     PortableServer::Servant,
     TAO_Active_Object_Map_Entry *,
-    ACE_Noop_Key_Generator<PortableServer::Servant> >;
+    ACE_Noop_Key_Generator<PortableServer::Servant>>;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Id map.

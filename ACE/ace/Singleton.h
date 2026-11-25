@@ -33,7 +33,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This implementation is a slight variation on the GoF
  * Singleton pattern.  In particular, a single
- * <ACE_Singleton<TYPE, ACE_LOCK> > instance is allocated here,
+ * <ACE_Singleton<TYPE, ACE_LOCK>> instance is allocated here,
  * not a @c TYPE instance.  The reason for this is to allow
  * registration with the ACE_Object_Manager, so that the
  * Singleton can be cleaned up when the process exits.  For this
@@ -164,7 +164,7 @@ protected:
  *
  * This implementation is another variation on the GoF Singleton
  * pattern.  In this case, a single <ACE_TSS_Singleton<TYPE,
- * LOCK> > instance is allocated here, not a @c TYPE instance.
+ * LOCK>> instance is allocated here, not a @c TYPE instance.
  * Each call to the @c instance static method returns a Singleton
  * whose pointer resides in thread-specific storage.  As with
  * ACE_Singleton, we use the ACE_Object_Manager so that the

@@ -98,7 +98,7 @@ private:
   bool initialized_ {};
 
   /// Helper data structure to minimize memory allocations...
-  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> > data_block_;
+  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX>> data_block_;
   /// Declared after the data block and allocator so it is destroyed first.
   std::unique_ptr<ACE_Message_Queue<ACE_SYNCH>> owned_queue_;
 };

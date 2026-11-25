@@ -32,7 +32,7 @@ class TAO_Notify_Peer;
 class TAO_Notify_Serv_Export TAO_Notify_Peer
 {
 public:
-  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Peer >;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Peer>;
   TAO_Notify_Peer ();
 
   virtual ~TAO_Notify_Peer ();

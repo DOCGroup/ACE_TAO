@@ -189,7 +189,7 @@ ACE_TSS<TYPE>::ts_get () const
   if (!this->once_)
     {
       // Create and initialize thread-specific ts_obj.
-      if (const_cast< ACE_TSS < TYPE > * >(this)->ts_init () == -1)
+      if (const_cast<ACE_TSS < TYPE> * >(this)->ts_init () == -1)
         {
           // Seriously wrong..
           return nullptr;

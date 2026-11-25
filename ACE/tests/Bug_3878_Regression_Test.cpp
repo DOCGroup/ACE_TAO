@@ -181,7 +181,7 @@ private:
   int shutdown_;
   ACE_Mutex workers_lock_;
   ACE_Condition<ACE_Mutex> workers_cond_;
-  ACE_Unbounded_Queue<Worker* > workers_;
+  ACE_Unbounded_Queue<Worker*> workers_;
 };
 // Listing 1
 
@@ -194,7 +194,7 @@ int
 Manager::shut_down ()
 {
   ACE_TRACE ("Manager::shut_down");
-  ACE_Unbounded_Queue<Worker* >::ITERATOR iter =
+  ACE_Unbounded_Queue<Worker*>::ITERATOR iter =
     this->workers_.begin ();
   Worker **worker_ptr {};
   do

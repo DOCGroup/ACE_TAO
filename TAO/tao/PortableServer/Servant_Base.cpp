@@ -92,8 +92,8 @@ TAO_ServantBase::_is_a_skel (TAO_ServerRequest & server_request,
                              TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR(servant_upcall),
                              TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
-  TAO::SArg_Traits< char *>::in_arg_val _tao_repository_id;
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits<char *>::in_arg_val _tao_repository_id;
 
   TAO::Argument * const args[] =
     {
@@ -123,8 +123,8 @@ TAO_ServantBase::_is_a_thru_poa_skel (TAO_ServerRequest & server_request,
                                       TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                       TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
-  TAO::SArg_Traits< char *>::in_arg_val _tao_repository_id;
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits<char *>::in_arg_val _tao_repository_id;
 
   TAO::Argument * const args[] =
     {
@@ -156,7 +156,7 @@ TAO_ServantBase::_non_existent_skel (TAO_ServerRequest & server_request,
                                     TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                     TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -184,7 +184,7 @@ void TAO_ServantBase::_non_existent_thru_poa_skel (TAO_ServerRequest & server_re
                                                   TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                                   TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -244,7 +244,7 @@ TAO_ServantBase::_component_skel (TAO_ServerRequest & server_request,
                                   TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                   TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
+  TAO::SArg_Traits<::CORBA::Object>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -273,7 +273,7 @@ TAO_ServantBase::_component_thru_poa_skel (TAO_ServerRequest & server_request,
                                           TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                           TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
+  TAO::SArg_Traits<::CORBA::Object>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -305,7 +305,7 @@ TAO_ServantBase::_repository_id_skel (TAO_ServerRequest & server_request,
                                       TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                       TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< char *>::ret_val retval;
+  TAO::SArg_Traits<char *>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -334,7 +334,7 @@ TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_reques
                                               TAO::Portable_Server::Servant_Upcall* TAO_INTERCEPTOR (servant_upcall),
                                               TAO_ServantBase *servant)
 {
-  TAO::SArg_Traits< char *>::ret_val retval;
+  TAO::SArg_Traits<char *>::ret_val retval;
 
   TAO::Argument * const args[] =
     {

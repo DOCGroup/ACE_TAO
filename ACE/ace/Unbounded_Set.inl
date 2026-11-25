@@ -37,7 +37,7 @@ ACE_Unbounded_Set_Const_Iterator<T>::ACE_Unbounded_Set_Const_Iterator (base_type
 
 template<typename T>
 ACE_Unbounded_Set<T>::ACE_Unbounded_Set (ACE_Allocator *alloc)
-  : ACE_Unbounded_Set_Ex<T, ACE_Unbounded_Set_Default_Comparator<T> > (alloc)
+  : ACE_Unbounded_Set_Ex<T, ACE_Unbounded_Set_Default_Comparator<T>> (alloc)
 {
 }
 

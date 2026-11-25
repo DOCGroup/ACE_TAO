@@ -27,7 +27,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 using ALLOCATOR = ACE_Allocator_Adapter <ACE_Malloc<ACE_MMAP_MEMORY_POOL,
-  TAO_SYNCH_MUTEX> >;
+  TAO_SYNCH_MUTEX>>;
 
 using HASH_MAP = ACE_Hash_Map_With_Allocator<char *, char *>;
 

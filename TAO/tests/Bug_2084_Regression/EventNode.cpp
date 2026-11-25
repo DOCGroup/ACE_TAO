@@ -46,7 +46,7 @@ EventNode::registerHello (::Test::Hello_ptr hello)
     }
 
   CORBA::String_var const str =
-    hello->get_string (ACE_thread_t_to_integer< ::Test::ThreadId> (ACE_Thread::self ()));
+    hello->get_string (ACE_thread_t_to_integer<::Test::ThreadId> (ACE_Thread::self ()));
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) - EventNode: string returned <%C>\n",
               str.in ()));

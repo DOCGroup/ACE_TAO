@@ -86,7 +86,7 @@ public:
     Test::Session_var session =
       this->session_factory_->create_new_session (cb.in ());
 
-    ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
+    ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session>> auto_shutdown (session.in ());
 
     for (int i = 0; i != this->iterations_; ++i)
       {
@@ -145,7 +145,7 @@ public:
     Test::Session_var session =
       this->session_factory_->create_new_session (cb.in ());
 
-    ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session> > auto_shutdown (session.in ());
+    ACE_Utils::Auto_Functor<Test::Session,Shutdown<Test::Session>> auto_shutdown (session.in ());
 
     for (;;)
       {

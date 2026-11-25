@@ -88,7 +88,7 @@ TAO::Any_Array_Impl_T<T_slice, T_forany>::extract (CORBA::Any const & any,
                                       T_forany::tao_alloc ()),
                       false);
 
-      std::unique_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany> > replacement_safety (replacement);
+      std::unique_ptr<TAO::Any_Array_Impl_T<T_slice, T_forany>> replacement_safety (replacement);
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =

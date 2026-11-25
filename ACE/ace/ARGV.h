@@ -302,7 +302,7 @@ private:
 
   /// Queue which keeps user supplied arguments.  This is only
   /// active in the "iterative" mode.
-  ACE_Unbounded_Queue<ACE_ARGV_Queue_Entry_T<CHAR_TYPE> > queue_;
+  ACE_Unbounded_Queue<ACE_ARGV_Queue_Entry_T<CHAR_TYPE>> queue_;
 };
 
 using ACE_ARGV_Queue_Entry = ACE_ARGV_Queue_Entry_T<ACE_TCHAR>;

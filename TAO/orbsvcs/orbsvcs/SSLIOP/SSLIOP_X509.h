@@ -28,7 +28,7 @@ namespace TAO
   {
     // OpenSSL @c X509 structure traits specialization.
     template <>
-    struct OpenSSL_traits< ::X509 >
+    struct OpenSSL_traits<::X509>
     {
       /// Increase the reference count on the given OpenSSL structure.
       /**
@@ -55,7 +55,7 @@ namespace TAO
       /// Perform deep copy of the given OpenSSL structure.
       static ::X509 * copy (::X509 const & st)
       {
-        return ::X509_dup (const_cast< ::X509 *> (&st));
+        return ::X509_dup (const_cast<::X509 *> (&st));
       }
 
       /// Decrease the reference count on the given OpenSSL
@@ -66,7 +66,7 @@ namespace TAO
       }
     };
 
-    using X509_var = OpenSSL_st_var< ::X509 >;
+    using X509_var = OpenSSL_st_var<::X509>;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

@@ -49,7 +49,7 @@ namespace CORBA
 class TAO_Notify_Serv_Export TAO_Notify_Event_Manager : public TAO_Notify_Refcountable
 {
 public:
-  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Event_Manager >;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event_Manager>;
   TAO_Notify_Event_Manager ();
 
   virtual ~TAO_Notify_Event_Manager ();

@@ -179,25 +179,25 @@ ACE_Reverse_Iterator<T>::impl ()
   return *this->implementation_;
 }
 
-template <class KEY, class VALUE> ACE_INLINE ACE_Iterator<ACE_Reference_Pair<const KEY, VALUE> >
+template <class KEY, class VALUE> ACE_INLINE ACE_Iterator<ACE_Reference_Pair<const KEY, VALUE>>
 ACE_Map<KEY, VALUE>::begin ()
 {
   return iterator (this->begin_impl ());
 }
 
-template <class KEY, class VALUE> ACE_INLINE ACE_Iterator<ACE_Reference_Pair<const KEY, VALUE> >
+template <class KEY, class VALUE> ACE_INLINE ACE_Iterator<ACE_Reference_Pair<const KEY, VALUE>>
 ACE_Map<KEY, VALUE>::end ()
 {
   return iterator (this->end_impl ());
 }
 
-template <class KEY, class VALUE> ACE_INLINE ACE_Reverse_Iterator<ACE_Reference_Pair<const KEY, VALUE> >
+template <class KEY, class VALUE> ACE_INLINE ACE_Reverse_Iterator<ACE_Reference_Pair<const KEY, VALUE>>
 ACE_Map<KEY, VALUE>::rbegin ()
 {
   return reverse_iterator (this->rbegin_impl ());
 }
 
-template <class KEY, class VALUE> ACE_INLINE ACE_Reverse_Iterator<ACE_Reference_Pair<const KEY, VALUE> >
+template <class KEY, class VALUE> ACE_INLINE ACE_Reverse_Iterator<ACE_Reference_Pair<const KEY, VALUE>>
 ACE_Map<KEY, VALUE>::rend ()
 {
   return reverse_iterator (this->rend_impl ());
@@ -285,7 +285,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::ACE_Active_Map_Manager_
 {
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE ACE_Active_Map_Manager<std::pair<KEY, VALUE> > &
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_INLINE ACE_Active_Map_Manager<std::pair<KEY, VALUE>> &
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::impl ()
 {
   return this->implementation_;

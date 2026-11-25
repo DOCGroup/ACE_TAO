@@ -498,7 +498,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::instance ()
         }
       //ACE_REGISTER_FRAMEWORK_COMPONENT(ACE_DLL_Singleton<TYPE,ACE_LOCK>, singleton);
       ACE_Framework_Repository::instance ()->register_component
-        (new ACE_Framework_Component_T<ACE_DLL_Singleton_T<TYPE, ACE_LOCK> > (singleton));
+        (new ACE_Framework_Component_T<ACE_DLL_Singleton_T<TYPE, ACE_LOCK>> (singleton));
     }
 
   return std::addressof (singleton->instance_);

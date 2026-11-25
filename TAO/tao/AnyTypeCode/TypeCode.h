@@ -535,7 +535,7 @@ namespace TAO
   };
 
   template<>
-  struct TAO_AnyTypeCode_Export Objref_Traits< ::CORBA::TypeCode>
+  struct TAO_AnyTypeCode_Export Objref_Traits<::CORBA::TypeCode>
   {
     static ::CORBA::TypeCode_ptr duplicate (::CORBA::TypeCode_ptr);
     static void release (::CORBA::TypeCode_ptr);

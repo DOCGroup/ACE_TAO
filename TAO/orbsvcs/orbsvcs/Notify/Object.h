@@ -187,7 +187,7 @@ private:
 
   /// The event manager.
   /// TAO_Notify_Event_Manager inl includes Object.h
-  TAO_Notify_Refcountable_Guard_T< TAO_Notify_Event_Manager > event_manager_;
+  TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event_Manager> event_manager_;
 
   /// Admin Properties.
   TAO_Notify_AdminProperties::Ptr admin_properties_;

@@ -12,7 +12,7 @@
 
 using namespace std;
 
-template<template<typename U, typename = std::allocator<U> > class container, typename DT>
+template<template<typename U, typename = std::allocator<U>> class container, typename DT>
 container<DT> initializer(const DT &d)
 {
   container<DT> t ;

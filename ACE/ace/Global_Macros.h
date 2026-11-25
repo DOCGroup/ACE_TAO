@@ -100,7 +100,7 @@
  */
 #if !defined (ACE_GUARD_ACTION)
 #define ACE_GUARD_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \
-   ACE_Guard< MUTEX > OBJ (LOCK); \
+   ACE_Guard<MUTEX> OBJ (LOCK); \
    if (OBJ.locked () != 0) \
      { \
        ACTION; \
@@ -124,7 +124,7 @@
 #endif /* !ACE_GUARD_RETURN */
 #if !defined (ACE_GUARD_CONST_ACTION)
 #define ACE_GUARD_CONST_ACTION(MUTEX, OBJ, LOCK, ACTION, REACTION) \
-   const ACE_Guard< MUTEX > OBJ (LOCK); \
+   ACE_Guard<MUTEX> const OBJ (LOCK); \
    if (OBJ.locked () != 0) \
      { \
        ACTION; \
@@ -148,7 +148,7 @@
 #endif /* !ACE_GUARD_RETURN_CONST */
 #if !defined (ACE_WRITE_GUARD)
 # define ACE_WRITE_GUARD(MUTEX,OBJ,LOCK) \
-  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
+  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
     if (OBJ.locked () == 0) \
       { \
         return; \
@@ -156,7 +156,7 @@
 #endif /* !ACE_WRITE_GUARD */
 #if !defined (ACE_WRITE_GUARD_RETURN)
 # define ACE_WRITE_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Write_Guard< MUTEX > OBJ (LOCK); \
+  ACE_Write_Guard<MUTEX> OBJ (LOCK); \
     if (OBJ.locked () == 0) \
       { \
         return RETURN; \
@@ -164,7 +164,7 @@
 #endif /* ACE_WRITE_GUARD_RETURN */
 #if !defined (ACE_READ_GUARD)
 # define ACE_READ_GUARD(MUTEX,OBJ,LOCK) \
-  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
+  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
     if (OBJ.locked () == 0) \
       { \
         return; \
@@ -172,7 +172,7 @@
 #endif /* !ACE_READ_GUARD */
 #if !defined (ACE_READ_GUARD_RETURN)
 # define ACE_READ_GUARD_RETURN(MUTEX,OBJ,LOCK,RETURN) \
-  ACE_Read_Guard< MUTEX > OBJ (LOCK); \
+  ACE_Read_Guard<MUTEX> OBJ (LOCK); \
     if (OBJ.locked () == 0) \
       { \
         return RETURN; \
@@ -593,7 +593,7 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #define ACE_FACTORY_DEFINE(CLS,SERVICE_CLASS) \
 void ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (void *p) { \
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * _p = \
-    static_cast< ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *> (p); \
+    static_cast<ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *> (p); \
   ACE_ASSERT (_p != 0); \
   delete _p; } \
 extern "C" CLS##_Export ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *\
@@ -634,7 +634,7 @@ ACE_MAKE_SVC_CONFIG_FACTORY_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (AC
 #define ACE_FACTORY_NAMESPACE_DEFINE(CLS,SERVICE_CLASS,NAMESPACE_CLASS) \
 void ACE_MAKE_SVC_CONFIG_GOBBLER_NAME(ACE_VERSIONED_NAMESPACE_NAME,SERVICE_CLASS) (void *p) { \
   ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object * _p = \
-    static_cast< ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *> (p); \
+    static_cast<ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *> (p); \
   ACE_ASSERT (_p != 0); \
   delete _p; } \
 extern "C" CLS##_Export ACE_VERSIONED_NAMESPACE_NAME::ACE_Service_Object *\

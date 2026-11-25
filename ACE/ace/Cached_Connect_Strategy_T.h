@@ -110,7 +110,7 @@ public:
 protected:
   /// Find an idle handle.
   int find (ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR> &search_addr,
-            ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry);
+            ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES>> *&entry);
 
   /// Remove from cache (non-locking version).
   int purge_i (const void *recycling_act) override;
@@ -137,7 +137,7 @@ protected:
                     bool reuse_addr,
                     int flags,
                     int perms,
-                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
+                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES>> *&entry,
                     int &found);
 
   virtual int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
@@ -147,7 +147,7 @@ protected:
                                     bool reuse_addr,
                                     int flags,
                                     int perms,
-                                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
+                                    ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>, std::pair<SVC_HANDLER *, ATTRIBUTES>> *&entry,
                                     int &found);
 
   int connect_svc_handler_i (SVC_HANDLER *&sh,
@@ -245,7 +245,7 @@ protected:
                                             int flags,
                                             int perms,
                                             ACE_Hash_Map_Entry<ACE_Refcounted_Hash_Recyclable<ACE_PEER_CONNECTOR_ADDR>,
-                                            std::pair<SVC_HANDLER *, ATTRIBUTES> > *&entry,
+                                            std::pair<SVC_HANDLER *, ATTRIBUTES>> *&entry,
                                             int &found);
 
 protected:

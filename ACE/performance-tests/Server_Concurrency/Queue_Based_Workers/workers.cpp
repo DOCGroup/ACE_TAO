@@ -355,7 +355,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   size_t i {};
 
   ACE_NEW_RETURN (data_block,
-                  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >,
+                  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX>>,
                   -1);
 
   for (i = 0; i < number_of_messages; ++i)

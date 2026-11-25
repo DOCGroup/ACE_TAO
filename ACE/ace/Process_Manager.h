@@ -243,7 +243,7 @@ public:
   int wait (const ACE_Time_Value &timeout = ACE_Time_Value::max_time);
 
   /// @sa wait
-  template< class Rep, class Period >
+  template<class Rep, class Period>
   int wait (const std::chrono::duration<Rep, Period>& timeout)
   {
     ACE_Time_Value const tv (timeout);
@@ -268,7 +268,7 @@ public:
               ACE_exitcode *status = nullptr);
 
   /// @sa wait
-  template< class Rep, class Period >
+  template<class Rep, class Period>
   pid_t wait (pid_t pid,
               const std::chrono::duration<Rep, Period>& timeout,
               ACE_exitcode *status = nullptr)

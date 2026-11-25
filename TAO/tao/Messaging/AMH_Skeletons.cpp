@@ -23,13 +23,13 @@
 void
 _is_a_amh_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-    TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_arg_type retval =
+    TAO::Portable_Server::get_ret_arg<::ACE_InputCDR::to_boolean> (
       this->operation_details_,
       this->args_);
 
-  TAO::SArg_Traits< char *>::in_arg_type arg_1 =
-    TAO::Portable_Server::get_in_arg< char *> (
+  TAO::SArg_Traits<char *>::in_arg_type arg_1 =
+    TAO::Portable_Server::get_in_arg<char *> (
       this->operation_details_,
       this->args_,
       1);
@@ -49,8 +49,8 @@ TAO_AMH_Skeletons::_is_a_amh_skel (TAO_ServerRequest & server_request,
   static ::CORBA::ULong const nexceptions {};
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
-  TAO::SArg_Traits< char *>::in_arg_val _tao_repository_id;
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits<char *>::in_arg_val _tao_repository_id;
 
   TAO::Argument * const args[] =
     {
@@ -83,8 +83,8 @@ TAO_AMH_Skeletons::_is_a_amh_skel (TAO_ServerRequest & server_request,
 void
 _non_existent_amh_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-    TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_arg_type retval =
+    TAO::Portable_Server::get_ret_arg<::ACE_InputCDR::to_boolean> (
       this->operation_details_,
       this->args_);
 
@@ -101,7 +101,7 @@ void TAO_AMH_Skeletons::_non_existent_amh_skel (TAO_ServerRequest & server_reque
   static ::CORBA::ULong const nexceptions {};
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val retval;
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -162,8 +162,8 @@ TAO_AMH_Skeletons::_interface_amh_skel (TAO_ServerRequest & server_request,
 void
 _get_component_amh_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-    TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
+  TAO::SArg_Traits<::CORBA::Object>::ret_arg_type retval =
+    TAO::Portable_Server::get_ret_arg<::CORBA::Object> (
       this->operation_details_,
       this->args_);
 
@@ -181,7 +181,7 @@ TAO_AMH_Skeletons::_component_amh_skel (TAO_ServerRequest & server_request,
   static ::CORBA::ULong const nexceptions {};
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  TAO::SArg_Traits< ::CORBA::Object>::ret_val retval;
+  TAO::SArg_Traits<::CORBA::Object>::ret_val retval;
 
   TAO::Argument * const args[] =
     {
@@ -212,8 +212,8 @@ TAO_AMH_Skeletons::_component_amh_skel (TAO_ServerRequest & server_request,
 void
 _repository_id_amh_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< char *>::ret_arg_type retval =
-    TAO::Portable_Server::get_ret_arg< char *> (
+  TAO::SArg_Traits<char *>::ret_arg_type retval =
+    TAO::Portable_Server::get_ret_arg<char *> (
       this->operation_details_,
       this->args_);
 
@@ -231,7 +231,7 @@ TAO_AMH_Skeletons::_repository_id_amh_skel (TAO_ServerRequest & server_request,
   static ::CORBA::ULong const nexceptions {};
 #endif /* TAO_HAS_INTERCEPTORS */
 
-  TAO::SArg_Traits< char *>::ret_val retval;
+  TAO::SArg_Traits<char *>::ret_val retval;
 
   TAO::Argument * const args[] =
     {

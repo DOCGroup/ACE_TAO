@@ -71,7 +71,7 @@ struct string_traits_decorator
 template<class charT, bool dummy>
 struct string_traits
   : public string_traits_base<charT>
-  , public string_traits_decorator<charT,string_traits<charT,dummy> >
+  , public string_traits_decorator<charT,string_traits<charT,dummy>>
 {
 };
 } // namespace details

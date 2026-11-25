@@ -73,7 +73,7 @@ TAO::Any_Basic_Impl_T<T>::extract (CORBA::Any const & any,
       TAO::Any_Basic_Impl_T<T> * const replacement =
         TAO::Any_Basic_Impl_T<T>::create_empty (any_tc);
 
-      std::unique_ptr<TAO::Any_Basic_Impl_T<T> > replacement_safety (replacement);
+      std::unique_ptr<TAO::Any_Basic_Impl_T<T>> replacement_safety (replacement);
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =

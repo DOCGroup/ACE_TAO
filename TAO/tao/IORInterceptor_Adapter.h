@@ -35,7 +35,7 @@ namespace PortableInterceptor
 namespace TAO
 {
   using ObjectReferenceTemplate_Array =
-    std::vector< ::PortableInterceptor::ObjectReferenceTemplate*>;
+    std::vector<::PortableInterceptor::ObjectReferenceTemplate*>;
 }
 
 class TAO_Root_POA;

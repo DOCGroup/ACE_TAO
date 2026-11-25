@@ -31,7 +31,7 @@ namespace ACE
         * @brief Abstract base for stream interceptors.
         *
         */
-        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T> >
+        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T>>
         class StreamInterceptorBase
           {
             public:

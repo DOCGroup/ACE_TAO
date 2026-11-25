@@ -38,7 +38,7 @@ namespace ACE
         * driven by overloading the @c write_to_stream or @c read_from_stream
         * methods.
         */
-        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T> >
+        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T>>
         class BasicBufferedStreamBuffer
           : public std::basic_streambuf<ACE_CHAR_T, TR>
           {
@@ -92,7 +92,7 @@ namespace ACE
           };
 
         /// char specialization
-        using BufferedStreamBuffer = BasicBufferedStreamBuffer<char, std::char_traits<char> >;
+        using BufferedStreamBuffer = BasicBufferedStreamBuffer<char, std::char_traits<char>>;
       }
   }
 

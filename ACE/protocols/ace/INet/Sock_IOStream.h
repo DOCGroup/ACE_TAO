@@ -35,7 +35,7 @@ namespace ACE
         */
         template <ACE_SYNCH_DECL>
         class Sock_StreamBufferBase
-          : public BidirStreamBuffer<StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE> >
+          : public BidirStreamBuffer<StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE>>
           {
             public:
               using stream_type = StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE>;

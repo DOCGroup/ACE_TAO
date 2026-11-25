@@ -37,7 +37,7 @@ class ACE_Unbounded_Set;
  */
 template <typename T>
 class ACE_Unbounded_Set_Iterator : public
-  ACE_Unbounded_Set_Ex_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> >
+  ACE_Unbounded_Set_Ex_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>
 {
 public:
   using base_type = ACE_Unbounded_Set_Ex_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>;
@@ -53,7 +53,7 @@ public:
  */
 template <class T>
 class ACE_Unbounded_Set_Const_Iterator : public
-  ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T> >
+  ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>
 {
 public:
   using base_type = ACE_Unbounded_Set_Ex_Const_Iterator<T, ACE_Unbounded_Set_Default_Comparator<T>>;
@@ -70,7 +70,7 @@ public:
  */
 template<typename T>
 class ACE_Unbounded_Set : public
-  ACE_Unbounded_Set_Ex<T, ACE_Unbounded_Set_Default_Comparator<T> >
+  ACE_Unbounded_Set_Ex<T, ACE_Unbounded_Set_Default_Comparator<T>>
 {
 public:
   ACE_Unbounded_Set (ACE_Allocator *alloc = nullptr);

@@ -226,7 +226,7 @@ ACE_UPIPE_Stream::recv_n (char *buf,
         }
     }
 
-  return static_cast< ssize_t> (bytes_read);
+  return static_cast<ssize_t> (bytes_read);
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

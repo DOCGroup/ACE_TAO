@@ -52,7 +52,7 @@ static ACE_TSS<Errno> *tss_error;
 
 // This is for testing/demonstrating ACE_TSS_Type_Adapter.  It's
 // dynamically allocated to avoid static objects, also.
-static ACE_TSS<ACE_TSS_Type_Adapter<u_int> > *u;
+static ACE_TSS<ACE_TSS_Type_Adapter<u_int>> *u;
 
 // Serializes output.
 static ACE_Thread_Mutex output_lock;
@@ -260,7 +260,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_NEW_RETURN (tss_error, ACE_TSS<Errno>, 1);
 
   // Similarly, dynamically allocate u.
-  ACE_NEW_RETURN (u, ACE_TSS<ACE_TSS_Type_Adapter<u_int> >, 1);
+  ACE_NEW_RETURN (u, ACE_TSS<ACE_TSS_Type_Adapter<u_int>>, 1);
 
   int iterations = ITERATIONS;
   if (ACE_Thread_Manager::instance ()->spawn_n

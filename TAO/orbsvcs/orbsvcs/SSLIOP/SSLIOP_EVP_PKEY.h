@@ -28,7 +28,7 @@ namespace TAO
   {
     // OpenSSL @c EVP_PKEY structure traits specialization.
     template <>
-    struct OpenSSL_traits< ::EVP_PKEY >
+    struct OpenSSL_traits<::EVP_PKEY>
     {
       /// Increase the reference count on the given OpenSSL structure.
       /**
@@ -63,7 +63,7 @@ namespace TAO
       }
     };
 
-    using EVP_PKEY_var = OpenSSL_st_var< ::EVP_PKEY >;
+    using EVP_PKEY_var = OpenSSL_st_var<::EVP_PKEY>;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

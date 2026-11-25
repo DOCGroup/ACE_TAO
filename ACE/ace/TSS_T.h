@@ -20,7 +20,7 @@
 // 'ACE_TSS_GET()->xyz_ = value', so the macro would have been too
 // complicated.
 # if defined (ACE_HAS_THREADS) && (defined (ACE_HAS_THREAD_SPECIFIC_STORAGE) || defined (ACE_HAS_TSS_EMULATION))
-#   define ACE_TSS_TYPE(T) ACE_TSS< T >
+#   define ACE_TSS_TYPE(T) ACE_TSS<T>
 #   define ACE_TSS_GET(I, T) ((I)->operator T * ())
 # else
 #   define ACE_TSS_TYPE(T) T
@@ -215,12 +215,12 @@ protected:
  *
  * Wraps a value of a built-in type, providing conversions to
  * and from the type.  Example use with ACE_TSS:
- * ACE_TSS<ACE_TSS_Type_Adapter<int> > i;
+ * ACE_TSS<ACE_TSS_Type_Adapter<int>> i;
  * *i = 37;
  * ACE_OS::fprintf (stderr, "%d\n", *i);
  * Unfortunately, though, some compilers have trouble with the
  * implicit type conversions.  This seems to work better:
- * ACE_TSS<ACE_TSS_Type_Adapter<int> > i;
+ * ACE_TSS<ACE_TSS_Type_Adapter<int>> i;
  * i->operator int & () = 37;
  * ACE_OS::fprintf (stderr, "%d\n", i->operator int ());
  */

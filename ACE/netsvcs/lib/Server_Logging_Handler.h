@@ -30,18 +30,18 @@ using Synch_Thr_Logging_Handler_Static_Receiver = ACE_Thr_Server_Logging_Handler
 using Null_Synch_Logging_Handler_Static_Receiver_Acceptor =
   ACE_Server_Logging_Acceptor_T<Null_Synch_Logging_Handler_Static_Receiver,
                                 Null_Synch_Static_Receiver,
-                                ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver> >;
+                                ACE_Schedule_All_Reactive_Strategy<Null_Synch_Logging_Handler_Static_Receiver>>;
 
 // NULL synched logging acceptors
 using Synch_Logging_Handler_Static_Receiver_Acceptor =
   ACE_Server_Logging_Acceptor_T<Synch_Logging_Handler_Static_Receiver,
                                 Synch_Static_Receiver,
-                                ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver> >;
+                                ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Static_Receiver>>;
 
 using Synch_Thr_Logging_Handler_Static_Receiver_Acceptor =
   ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Static_Receiver,
                                 Synch_Static_Receiver,
-                                ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver> >;
+                                ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Static_Receiver>>;
 
 // typedefs for Logging Handlers & acceptors using a instance based
 // log message receivers.
@@ -57,12 +57,12 @@ using Synch_Thr_Logging_Handler_Receiver = ACE_Thr_Server_Logging_Handler<Synch_
 using Synch_Logging_Handler_Receiver_Acceptor =
   ACE_Server_Logging_Acceptor_T<Synch_Logging_Handler_Receiver,
                                 Synch_Receiver,
-                                ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Receiver> >;
+                                ACE_Schedule_All_Reactive_Strategy<Synch_Logging_Handler_Receiver>>;
 
 using Synch_Thr_Logging_Handler_Receiver_Acceptor =
   ACE_Server_Logging_Acceptor_T<Synch_Thr_Logging_Handler_Receiver,
                                 Synch_Receiver,
-                                ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Receiver> >;
+                                ACE_Schedule_All_Threaded_Strategy<Synch_Thr_Logging_Handler_Receiver>>;
 
 // Define external acceptors
 

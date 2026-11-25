@@ -519,14 +519,14 @@ int ACE_TMAIN(int,ACE_TCHAR*[])
   try
     {
       {
-        using nTester = Tester<unbounded_basic_string_sequence <char> >;
+        using nTester = Tester<unbounded_basic_string_sequence <char>>;
         nTester ntester;
         status += ntester.test_all ();
       }
 
 #if defined(ACE_HAS_WCHAR) && !defined(TAO_LACKS_WCHAR_CXX_STDLIB)
       {
-        using wTester = Tester<unbounded_basic_string_sequence <CORBA::WChar> >;
+        using wTester = Tester<unbounded_basic_string_sequence <CORBA::WChar>>;
         wTester wtester;
         status += wtester.test_all ();
       }

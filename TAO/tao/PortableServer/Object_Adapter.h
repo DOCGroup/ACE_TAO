@@ -337,14 +337,14 @@ protected:
     TAO_Root_POA *,
     TAO_ObjectId_Hash,
     ACE_Equal_To<PortableServer::ObjectId>,
-    ACE_Noop_Key_Generator<poa_name> >;
+    ACE_Noop_Key_Generator<poa_name>>;
 
 #if (TAO_HAS_MINIMUM_POA_MAPS == 0)
   /// Id linear map.
   using persistent_poa_name_linear_map = ACE_Map_Manager_Adapter<
     poa_name,
     TAO_Root_POA *,
-    ACE_Noop_Key_Generator<poa_name> >;
+    ACE_Noop_Key_Generator<poa_name>>;
 #endif /* TAO_HAS_MINIMUM_POA_MAPS == 0 */
 
   /// Strategy for dispatching a request to a servant.

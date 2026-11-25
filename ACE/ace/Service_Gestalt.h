@@ -491,7 +491,7 @@ private:
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 // FUZZ: disable check_for_ACE_Guard
-  ACE_Guard< ACE_Recursive_Thread_Mutex > repo_monitor_;
+  ACE_Guard<ACE_Recursive_Thread_Mutex> repo_monitor_;
 // FUZZ: enable check_for_ACE_Guard
 #endif
 };

@@ -74,7 +74,7 @@ public:
   ACE_Time_Value (ACE_Time_Value &&) = default;
 
   /// Construct the ACE_Time_Value object from a chrono duration.
-  template< class Rep, class Period >
+  template<class Rep, class Period>
   explicit ACE_Time_Value (std::chrono::duration<Rep, Period> const &duration)
   {
     this->set (duration);
@@ -109,7 +109,7 @@ public:
 # endif /* ACE_WIN32 */
 
   /// Initializes the ACE_Time_Value object from a std::duration.
-  template< class Rep, class Period >
+  template<class Rep, class Period>
   void set (std::chrono::duration<Rep, Period> const &duration)
   {
     using std::chrono::seconds;
@@ -268,14 +268,14 @@ public:
   ACE_Time_Value &operator -= (time_t tv);
 
   /// Add @a std::duration to this.
-  template< class Rep, class Period >
+  template<class Rep, class Period>
   ACE_Time_Value &operator += (std::chrono::duration<Rep, Period> const &duration)
   {
     return *this += ACE_Time_Value (duration);
   }
 
   /// Assign @a std::duration to this
-  template< class Rep, class Period >
+  template<class Rep, class Period>
   ACE_Time_Value &operator = (std::chrono::duration<Rep, Period> const &duration)
   {
     this->set (duration);
@@ -283,7 +283,7 @@ public:
   }
 
   /// Subtract @a std::duration to this.
-  template< class Rep, class Period >
+  template<class Rep, class Period>
   ACE_Time_Value &operator -= (std::chrono::duration<Rep, Period> const &duration)
   {
     return *this -= ACE_Time_Value (duration);

@@ -13,7 +13,7 @@ namespace IDL
 {
   template<typename _CharT, const uint32_t _Bound,
            typename _Traits = std::char_traits<_CharT>,
-           typename _Alloc = std::allocator<_CharT> >
+           typename _Alloc = std::allocator<_CharT>>
     class bounded_basic_string : public std::basic_string<_CharT, _Traits, _Alloc>
     {
       using _String = std::basic_string<_CharT, _Traits, _Alloc>;

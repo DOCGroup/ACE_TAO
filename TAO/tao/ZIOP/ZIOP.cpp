@@ -360,8 +360,8 @@ TAO_ZIOP_Loader::get_ratio (CORBA::OctetSeq const &uncompressed,
   // All ratios are computed via (ratio = Compressed_size / Uncompressed_size)
   // and so are valid between ("Smaller Size" 0.0 < ratio < 1.0 "Full size").
 
-  return static_cast< ::Compression::CompressionRatio> (compressed.length ()) /
-         static_cast< ::Compression::CompressionRatio> (uncompressed.length ());
+  return static_cast<::Compression::CompressionRatio> (compressed.length ()) /
+         static_cast<::Compression::CompressionRatio> (uncompressed.length ());
 }
 
 bool

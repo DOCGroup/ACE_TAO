@@ -62,7 +62,7 @@ class Routing_Slip_Queue;
 class TAO_Notify_Serv_Export Routing_Slip : public Persistent_Callback
 {
 // FUZZ: disable check_for_ACE_Guard
-  using Routing_Slip_Guard = ACE_Guard< TAO_SYNCH_MUTEX >;
+  using Routing_Slip_Guard = ACE_Guard<TAO_SYNCH_MUTEX>;
 // FUZZ: enable check_for_ACE_Guard
 public:
   /// "Factory" method for normal use.

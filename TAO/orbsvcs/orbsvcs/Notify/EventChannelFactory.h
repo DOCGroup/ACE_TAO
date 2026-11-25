@@ -51,7 +51,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannelFactory
   using Routing_Slip_Set = ACE_Unbounded_Set <TAO_Notify::Routing_Slip_Ptr>;
 
 public:
-  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannelFactory >;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_EventChannelFactory>;
 
   TAO_Notify_EventChannelFactory ();
 
@@ -160,7 +160,7 @@ private:
   TAO_Notify_EventChannel_Container& ec_container();
 
   /// Container for Event Channels.
-  std::unique_ptr< TAO_Notify_EventChannel_Container > ec_container_;
+  std::unique_ptr<TAO_Notify_EventChannel_Container> ec_container_;
 
   TAO_SYNCH_MUTEX topology_save_lock_;
 

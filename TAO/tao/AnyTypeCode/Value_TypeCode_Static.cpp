@@ -246,7 +246,7 @@ TAO::TypeCode::Value<char const *,
                                                 CORBA::TypeCode_ptr const *> const *,
                      TAO::Null_RefCount_Policy>::get_compact_typecode_i () const
 {
-  std::vector<Value_Field<CORBA::String_var, CORBA::TypeCode_var> >
+  std::vector<Value_Field<CORBA::String_var, CORBA::TypeCode_var>>
     tc_fields (this->nfields_);
 
   if (this->nfields_ > 0)

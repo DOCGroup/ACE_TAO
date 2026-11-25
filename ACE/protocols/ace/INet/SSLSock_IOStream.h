@@ -36,7 +36,7 @@ namespace ACE
         */
         template <ACE_SYNCH_DECL>
         class SSLSock_StreamBufferBase
-          : public BidirStreamBuffer<StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE> >
+          : public BidirStreamBuffer<StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE>>
           {
             public:
               using stream_type = StreamHandler<ACE_SSL_SOCK_Stream, ACE_SYNCH_USE>;

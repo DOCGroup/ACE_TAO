@@ -426,7 +426,7 @@ namespace ACE_Utils
     using truncator = typename ACE::If_Then_Else<
       (sizeof (FROM) < sizeof (TO)),
       Noop_Truncator<FROM, TO>,
-      Truncator<FROM, TO> >::result_type;
+      Truncator<FROM, TO>>::result_type;
 
     return truncator() (val);
   }

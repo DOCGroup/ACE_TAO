@@ -68,7 +68,7 @@ be_visitor_servant_svs::visit_component (be_component *node)
       << "::CIAO::" << be_global->ciao_container_type ()
       << "_Container, ::CIAO::" << be_global->ciao_container_type () << "_Context_Impl_T<"
       << be_idt_nl << global << sname_str << "::CCM_" << lname << "_Context," << be_nl
-      << global << sname_str << "::" << lname << "> > > (exe, h, ins_name, hs, c)"
+      << global << sname_str << "::" << lname << ">>> (exe, h, ins_name, hs, c)"
       << be_uidt << be_uidt << be_uidt << be_uidt << be_uidt_nl
       << "{" << be_idt_nl;
 

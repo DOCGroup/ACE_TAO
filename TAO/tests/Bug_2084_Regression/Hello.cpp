@@ -15,7 +15,7 @@ Hello::get_string (::Test::ThreadId caller_threadid)
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) Upcall in process ..\n"));
 
-      if (ACE_thread_t_to_integer< ::Test::ThreadId> (ACE_Thread::self ()) != caller_threadid)
+      if (ACE_thread_t_to_integer<::Test::ThreadId> (ACE_Thread::self ()) != caller_threadid)
     {
       // this means a remote call was made
 

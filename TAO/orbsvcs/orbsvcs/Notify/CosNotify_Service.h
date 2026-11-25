@@ -86,10 +86,10 @@ private:
   TAO_Notify_Builder& builder();
 
   /// Service component for object factory operations.
-  std::unique_ptr< TAO_Notify_Factory > factory_;
+  std::unique_ptr<TAO_Notify_Factory> factory_;
 
   /// Service component for building NS participants.
-  std::unique_ptr< TAO_Notify_Builder > builder_;
+  std::unique_ptr<TAO_Notify_Builder> builder_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

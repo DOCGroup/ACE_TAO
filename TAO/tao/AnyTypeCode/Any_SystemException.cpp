@@ -110,7 +110,7 @@ TAO::Any_SystemException::extract (CORBA::Any const & any,
                                                 empty_value),
                       false);
 
-      std::unique_ptr<TAO::Any_SystemException > replacement_safety (replacement);
+      std::unique_ptr<TAO::Any_SystemException> replacement_safety (replacement);
 
       // We know this will work since the unencoded case is covered above.
       TAO::Unknown_IDL_Type * const unk =

@@ -374,7 +374,7 @@ ACE_ARGV_T<CHAR_TYPE>::create_buf_from_queue ()
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
   // Get an iterator over the queue
-  ACE_Unbounded_Queue_Iterator<ACE_ARGV_Queue_Entry_T<CHAR_TYPE> > iter (this->queue_);
+  ACE_Unbounded_Queue_Iterator<ACE_ARGV_Queue_Entry_T<CHAR_TYPE>> iter (this->queue_);
 
   ACE_ARGV_Queue_Entry_T<CHAR_TYPE> *arg {};
   CHAR_TYPE *ptr = this->buf_;

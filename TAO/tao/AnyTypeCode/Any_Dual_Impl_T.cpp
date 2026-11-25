@@ -163,7 +163,7 @@ TAO::Any_Dual_Impl_T<T>::replace (TAO_InputCDR &cdr,
                                            empty_value),
                   false);
 
-  std::unique_ptr<TAO::Any_Dual_Impl_T<T> > replacement_safety (replacement);
+  std::unique_ptr<TAO::Any_Dual_Impl_T<T>> replacement_safety (replacement);
 
   CORBA::Boolean const good_decode = replacement->demarshal_value (cdr);
 

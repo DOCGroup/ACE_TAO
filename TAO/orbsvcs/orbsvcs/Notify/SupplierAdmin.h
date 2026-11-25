@@ -37,7 +37,7 @@ class TAO_Notify_Serv_Export TAO_Notify_SupplierAdmin
     public virtual TAO_Notify_Admin
 {
 public:
-  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_SupplierAdmin >;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_SupplierAdmin>;
 
   TAO_Notify_SupplierAdmin ();
 

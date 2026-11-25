@@ -110,7 +110,7 @@ public:
   explicit ACE_Timer_Heap_T (size_t size,
                              bool preallocated = false,
                              FUNCTOR *upcall_functor = nullptr,
-                             ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
+                             ACE_Free_List<ACE_Timer_Node_T <TYPE>> *freelist = nullptr,
                              TIME_POLICY const &time_policy = TIME_POLICY());
 
   /**
@@ -121,7 +121,7 @@ public:
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
   ACE_Timer_Heap_T (FUNCTOR *upcall_functor = nullptr,
-                             ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
+                             ACE_Free_List<ACE_Timer_Node_T <TYPE>> *freelist = nullptr,
                              TIME_POLICY const &time_policy = TIME_POLICY());
 
   ACE_Timer_Heap_T (ACE_Timer_Heap_T const &) = delete;

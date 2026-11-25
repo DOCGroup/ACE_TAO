@@ -40,7 +40,7 @@ namespace ACE
         * any streamed connection that can be represented by a stream
         * handler.
         */
-        template <class ACE_CHAR_T, class STREAM_HANDLER, class TR = std::char_traits<ACE_CHAR_T> >
+        template <class ACE_CHAR_T, class STREAM_HANDLER, class TR = std::char_traits<ACE_CHAR_T>>
         class BasicBidirStreamBuffer
           : public std::basic_streambuf<ACE_CHAR_T, TR>
           {
@@ -112,7 +112,7 @@ namespace ACE
           : public BasicBidirStreamBuffer<char, STREAM_HANDLER>
           {
             public:
-              using super = BasicBidirStreamBuffer< char, STREAM_HANDLER>;
+              using super = BasicBidirStreamBuffer<char, STREAM_HANDLER>;
               using openmode = typename super::openmode;
 
               BidirStreamBuffer (STREAM_HANDLER* sh, std::streamsize bufsz, openmode mode);

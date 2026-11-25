@@ -111,7 +111,7 @@ run_test (int argc, ACE_TCHAR *argv[])
   //
 
   const ACE_Module_Type* module_type =
-    static_cast< const ACE_Module_Type*>(st->type ());
+    static_cast<const ACE_Module_Type*>(st->type ());
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test stream\n")));
 

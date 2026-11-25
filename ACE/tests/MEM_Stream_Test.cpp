@@ -516,7 +516,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 }
 
 #define ACE_Atomic_Op_type \
-    ACE_Atomic_Op< ACE_SYNCH_MUTEX, u_short>
+    ACE_Atomic_Op<ACE_SYNCH_MUTEX, u_short>
 ACE_SINGLETON_TEMPLATE_INSTANTIATE(ACE_Singleton, ACE_Atomic_Op_type, ACE_SYNCH_RECURSIVE_MUTEX);
 
 #else

@@ -131,11 +131,11 @@ init_unit_test_suite(int, char*[])
   test_suite * ts =
       BOOST_TEST_SUITE("string unit test");
 
-  boost::shared_ptr<Tester<char> > char_tester(
+  boost::shared_ptr<Tester<char>> char_tester(
       Tester<char>::allocate());
   char_tester->add_all(ts);
 
-  boost::shared_ptr<Tester<CORBA::WChar> > wchar_tester(
+  boost::shared_ptr<Tester<CORBA::WChar>> wchar_tester(
       Tester<CORBA::WChar>::allocate());
   wchar_tester->add_all(ts);
 

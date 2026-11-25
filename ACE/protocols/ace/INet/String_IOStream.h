@@ -27,7 +27,7 @@ namespace ACE
         * @brief
         *
         */
-        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T> >
+        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T>>
         class String_StreamBufferBase
           : public BasicBufferedStreamBuffer<ACE_CHAR_T, TR>
           {
@@ -80,7 +80,7 @@ namespace ACE
         * @brief
         *
         */
-        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T> >
+        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T>>
         class String_IOSBase
           : public virtual std::basic_ios<ACE_CHAR_T, TR>
           {
@@ -110,7 +110,7 @@ namespace ACE
         * @brief
         *
         */
-        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T> >
+        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T>>
         class String_OStreamBase
           : public String_IOSBase<ACE_CHAR_T, TR>,
             public std::basic_ostream<ACE_CHAR_T, TR>
@@ -134,7 +134,7 @@ namespace ACE
         * @brief
         *
         */
-        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T> >
+        template <class ACE_CHAR_T, class TR = std::char_traits<ACE_CHAR_T>>
         class String_IStreamBase
           : public String_IOSBase<ACE_CHAR_T, TR>,
             public std::basic_istream<ACE_CHAR_T, TR>

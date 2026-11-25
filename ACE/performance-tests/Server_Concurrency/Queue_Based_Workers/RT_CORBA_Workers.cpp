@@ -497,7 +497,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // Create the datablocks. IF we use the default Message Blocks Ctor,
   // it is going to do an extra allocation for the data block
   ACE_NEW_RETURN (data_block,
-                  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX> >,
+                  ACE_Locked_Data_Block<ACE_Lock_Adapter<ACE_SYNCH_MUTEX>>,
                   -1);
 
   // Increment the reference count so that we can share the

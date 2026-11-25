@@ -74,7 +74,7 @@ struct object_reference_traits_decorator
 template<typename object_t, typename object_t_var, bool dummy>
 struct object_reference_traits
   : public object_reference_traits_base<object_t, object_t_var>
-  , public object_reference_traits_decorator<object_t, object_t_var, object_reference_traits<object_t,object_t_var,dummy> >
+  , public object_reference_traits_decorator<object_t, object_t_var, object_reference_traits<object_t,object_t_var,dummy>>
 {
   using object_type = object_t;
   using value_type = object_type *;

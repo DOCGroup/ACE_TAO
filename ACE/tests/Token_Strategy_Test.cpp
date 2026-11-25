@@ -105,7 +105,7 @@ int
 Token_Strategy_Test::svc ()
 {
   int const current = this->active_.value ();
-  ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int> > active_counter (this->active_);
+  ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int>> active_counter (this->active_);
   this->barrier_.wait ();
 
   //ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (tid = %t) starting loop\n")));
@@ -113,7 +113,7 @@ Token_Strategy_Test::svc ()
     {
       ACE_GUARD_RETURN (ACE_Token, lock, this->token_, -1);
       ++this->vec_token_count_[current];
-      ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int> > token_count_counter (this->counter_);
+      ACE_Auto_IncDec<ACE_Atomic_Op<ACE_Thread_Mutex, int>> token_count_counter (this->counter_);
 
       // Turn this on to watch each thread grab the token.  LIFO has the interesting
       // behavior that two thread seem to take turns while all the other threads wait.

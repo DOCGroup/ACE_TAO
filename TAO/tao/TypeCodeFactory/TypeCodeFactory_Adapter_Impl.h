@@ -154,7 +154,7 @@ public:
     char const * name,
     std::vector<
       TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                  CORBA::TypeCode_var> > const & fields,
+                                  CORBA::TypeCode_var>> const & fields,
     CORBA::ULong nfields) override;
 
   /// Create a union TypeCode.
@@ -163,7 +163,7 @@ public:
     char const * name,
     CORBA::TypeCode_ptr discriminant_type,
     std::vector<TAO::TypeCode::Case<CORBA::String_var,
-                                    CORBA::TypeCode_var> > const & cases,
+                                    CORBA::TypeCode_var>> const & cases,
     CORBA::ULong ncases,
     CORBA::Long default_index,
     char const * default_case_name,
@@ -178,7 +178,7 @@ public:
     CORBA::TypeCode_ptr concrete_base,
     std::vector<
       TAO::TypeCode::Value_Field<CORBA::String_var,
-                                 CORBA::TypeCode_var> > const & fields,
+                                 CORBA::TypeCode_var>> const & fields,
     CORBA::ULong nfields) override;
   /// @}
 

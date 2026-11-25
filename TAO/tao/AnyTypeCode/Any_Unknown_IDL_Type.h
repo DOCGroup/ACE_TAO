@@ -66,7 +66,7 @@ namespace TAO
     /// the reference-counted pointer keeps the lock alive while instances
     /// use it.
     using LOCK = ACE_Refcounted_Auto_Ptr<ACE_Lock,
-                                         ACE_Lock_Adapter<TAO_SYNCH_MUTEX> >;
+                                         ACE_Lock_Adapter<TAO_SYNCH_MUTEX>>;
     static LOCK const lock_i ();
     LOCK const lock_;
     mutable TAO_InputCDR cdr_;

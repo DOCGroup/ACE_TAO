@@ -8,7 +8,7 @@
 
 #define JAWS_DEFAULT_ALLOCATOR_CHUNKS 10
 #define JAWS_CACHED_ALLOCATOR(T) \
-        JAWS_Cached_Allocator< T, ACE_SYNCH_NULL_MUTEX >
+        JAWS_Cached_Allocator<T, ACE_SYNCH_NULL_MUTEX>
 
 /// Caches dynamically allocated objects of fixed size in a pool of
 /// @c n_chunks chunks, each sized for @c T.

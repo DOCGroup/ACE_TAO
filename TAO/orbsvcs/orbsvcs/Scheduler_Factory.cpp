@@ -100,7 +100,7 @@ struct ACE_Scheduler_Factory_Data
   TAO_Reconfig_Scheduler<TAO_MUF_FAIR_Reconfig_Sched_Strategy, TAO_SYNCH_MUTEX> scheduler_;
 
   /// Dispatch queue number for the calling thread, set by the application or Event Channel.
-  ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t> >
+  ACE_TSS<ACE_TSS_Type_Adapter<RtecScheduler::Preemption_Priority_t>>
   preemption_priority_;
 
   ACE_Scheduler_Factory_Data ()

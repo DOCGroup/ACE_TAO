@@ -53,7 +53,7 @@ public:
   };
 
 public:
-using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_Consumer >;
+using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Consumer>;
 
   explicit TAO_Notify_Consumer (TAO_Notify_ProxySupplier* proxy);
 

@@ -17,13 +17,13 @@
 void
 _is_a_thru_poa_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-    TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_arg_type retval =
+    TAO::Portable_Server::get_ret_arg<::ACE_InputCDR::to_boolean> (
       this->operation_details_,
       this->args_);
 
-  TAO::SArg_Traits< char *>::in_arg_type arg_1 =
-    TAO::Portable_Server::get_in_arg< char *> (
+  TAO::SArg_Traits<char *>::in_arg_type arg_1 =
+    TAO::Portable_Server::get_in_arg<char *> (
       this->operation_details_,
       this->args_,
       1);
@@ -36,11 +36,11 @@ _is_a_thru_poa_Upcall_Command::execute ()
 void
 _is_a_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-    static_cast<TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val *> (this->args_[0])->arg ();
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_arg_type retval =
+    static_cast<TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val *> (this->args_[0])->arg ();
 
-  TAO::SArg_Traits< char *>::in_arg_type arg_1 =
-    static_cast<TAO::SArg_Traits< char *>::in_arg_val *> (this->args_[1])->arg ();
+  TAO::SArg_Traits<char *>::in_arg_type arg_1 =
+    static_cast<TAO::SArg_Traits<char *>::in_arg_val *> (this->args_[1])->arg ();
 
   retval =
     this->servant_-> _is_a (
@@ -51,8 +51,8 @@ _is_a_Upcall_Command::execute ()
 void
 _non_existent_thru_poa_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-    TAO::Portable_Server::get_ret_arg< ::ACE_InputCDR::to_boolean> (
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_arg_type retval =
+    TAO::Portable_Server::get_ret_arg<::ACE_InputCDR::to_boolean> (
       this->operation_details_,
       this->args_);
 
@@ -63,8 +63,8 @@ _non_existent_thru_poa_Upcall_Command::execute ()
 void
 _non_existent_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_arg_type retval =
-    static_cast<TAO::SArg_Traits< ::ACE_InputCDR::to_boolean>::ret_val *> (this->args_[0])->arg ();
+  TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_arg_type retval =
+    static_cast<TAO::SArg_Traits<::ACE_InputCDR::to_boolean>::ret_val *> (this->args_[0])->arg ();
 
   retval =
     this->servant_-> _non_existent ();
@@ -74,8 +74,8 @@ _non_existent_Upcall_Command::execute ()
 void
 _get_component_thru_poa_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-    TAO::Portable_Server::get_ret_arg< ::CORBA::Object> (
+  TAO::SArg_Traits<::CORBA::Object>::ret_arg_type retval =
+    TAO::Portable_Server::get_ret_arg<::CORBA::Object> (
       this->operation_details_,
       this->args_);
 
@@ -86,8 +86,8 @@ _get_component_thru_poa_Upcall_Command::execute ()
 void
 _get_component_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< ::CORBA::Object>::ret_arg_type retval =
-    static_cast<TAO::SArg_Traits< ::CORBA::Object>::ret_val *> (this->args_[0])->arg ();
+  TAO::SArg_Traits<::CORBA::Object>::ret_arg_type retval =
+    static_cast<TAO::SArg_Traits<::CORBA::Object>::ret_val *> (this->args_[0])->arg ();
 
   retval =
     this->servant_-> _get_component ();
@@ -98,8 +98,8 @@ _get_component_Upcall_Command::execute ()
 void
 _repository_id_thru_poa_Upcall_Command::execute ()
 {
-  TAO::SArg_Traits< char *>::ret_arg_type retval =
-    TAO::Portable_Server::get_ret_arg< char *> (
+  TAO::SArg_Traits<char *>::ret_arg_type retval =
+    TAO::Portable_Server::get_ret_arg<char *> (
       this->operation_details_,
       this->args_);
 
@@ -110,8 +110,8 @@ _repository_id_thru_poa_Upcall_Command::execute ()
 void
 _repository_id_Upcall_Command::execute( )
 {
-  TAO::SArg_Traits< char *>::ret_arg_type retval =
-    static_cast<TAO::SArg_Traits< char *>::ret_val *> (this->args_[0])->arg ();
+  TAO::SArg_Traits<char *>::ret_arg_type retval =
+    static_cast<TAO::SArg_Traits<char *>::ret_val *> (this->args_[0])->arg ();
 
   retval =
     this->servant_-> _repository_id ();

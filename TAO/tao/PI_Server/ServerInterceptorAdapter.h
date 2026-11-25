@@ -35,7 +35,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO
 {
   using ServerRequestInterceptor_List =
-    Interceptor_List< ::PortableInterceptor::ServerRequestInterceptor,
+    Interceptor_List<::PortableInterceptor::ServerRequestInterceptor,
                       ServerRequestDetails>;
 }
 

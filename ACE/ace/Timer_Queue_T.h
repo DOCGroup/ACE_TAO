@@ -80,7 +80,7 @@ public:
    * timer nodes.  If nullptr, then a default freelist will be created.
    */
   ACE_Timer_Queue_T (FUNCTOR *upcall_functor = nullptr,
-                    ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
+                    ACE_Free_List<ACE_Timer_Node_T <TYPE>> *freelist = nullptr,
                     TIME_POLICY const &time_policy = TIME_POLICY());
 
   ACE_Timer_Queue_T (ACE_Timer_Queue_T const &) = delete;
@@ -215,7 +215,7 @@ protected:
   ACE_LOCK mutex_;
 
   /// Borrowed when supplied to the constructor; otherwise owned by this queue.
-  ACE_Free_List<ACE_Timer_Node_T<TYPE> > *free_list_ {};
+  ACE_Free_List<ACE_Timer_Node_T<TYPE>> *free_list_ {};
 
   /// The policy to return the current time of day
   TIME_POLICY time_policy_;

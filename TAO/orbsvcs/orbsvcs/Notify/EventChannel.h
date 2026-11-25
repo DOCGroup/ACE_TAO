@@ -49,7 +49,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventChannel
   friend class TAO_Notify_Builder;
 
 public:
-  using Ptr = TAO_Notify_Refcountable_Guard_T< TAO_Notify_EventChannel >;
+  using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_EventChannel>;
   using SEQ = CosNotifyChannelAdmin::ChannelIDSeq;
   using SEQ_VAR = CosNotifyChannelAdmin::ChannelIDSeq_var;
 

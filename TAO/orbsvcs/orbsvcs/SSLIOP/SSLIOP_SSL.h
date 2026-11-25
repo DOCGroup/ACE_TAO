@@ -30,7 +30,7 @@ namespace TAO
   {
     // OpenSSL @c SSL structure traits specialization.
     template <>
-    struct OpenSSL_traits< ::SSL >
+    struct OpenSSL_traits<::SSL>
     {
       /// Increase the reference count on the given OpenSSL structure.
       /**
@@ -57,7 +57,7 @@ namespace TAO
       /// Perform deep copy of the given OpenSSL structure.
       static ::SSL * copy (::SSL const & st)
       {
-        return ::SSL_dup (const_cast< ::SSL * > (&st));
+        return ::SSL_dup (const_cast<::SSL *> (&st));
       }
 
       /// Decrease the reference count on the given OpenSSL
@@ -68,7 +68,7 @@ namespace TAO
       }
     };
 
-    using SSL_var = OpenSSL_st_var< ::SSL >;
+    using SSL_var = OpenSSL_st_var<::SSL>;
   }  // End SSLIOP namespace.
 }  // End TAO namespace.
 

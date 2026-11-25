@@ -235,14 +235,14 @@ test256_compressor (::Compression::Compressor_var const& compressor)
                     ACE_TEXT("Original (test256) Buffer")
                     ));
 
-    ::CORBA::ULong  in_len = static_cast< CORBA::ULong>(sizeof(test256_array));
+    ::CORBA::ULong  in_len = static_cast<CORBA::ULong>(sizeof(test256_array));
     ::CORBA::Octet const* in_buf = reinterpret_cast<::CORBA::Octet const*> (test256_array);
 
     ::Compression::Buffer in_data(in_len, in_len, const_cast<CORBA::Octet*>(in_buf), false);
 
     ::Compression::Buffer comp_out;
 
-    comp_out.length(static_cast< ::CORBA::ULong>(in_len * 1.1));
+    comp_out.length(static_cast<::CORBA::ULong>(in_len * 1.1));
 
     {
       HRTimer _hrt(ACE_TEXT("Compress Time - "));
@@ -391,7 +391,7 @@ test128_compressor (::Compression::Compressor_var const& compressor)
 
     ::Compression::Buffer comp_out;
 
-    comp_out.length(static_cast< ::CORBA::ULong>(sizeof(comp_128_out)));  // SHould Compress to 2
+    comp_out.length(static_cast<::CORBA::ULong>(sizeof(comp_128_out)));  // SHould Compress to 2
 
     {
       HRTimer _hrt(ACE_TEXT("Compress Time - "));
@@ -453,7 +453,7 @@ test129A_compressor (::Compression::Compressor_var const& compressor)
 
     ::Compression::Buffer comp_out;
 
-    comp_out.length(static_cast< ::CORBA::ULong>(sizeof(comp_129A_out)));
+    comp_out.length(static_cast<::CORBA::ULong>(sizeof(comp_129A_out)));
 
     {
       HRTimer _hrt(ACE_TEXT("Compress Time - "));
@@ -517,7 +517,7 @@ test129B_compressor (::Compression::Compressor_var const& compressor)
 
     ::Compression::Buffer comp_out;
 
-    comp_out.length(static_cast< ::CORBA::ULong>(sizeof(comp_129B_out)));
+    comp_out.length(static_cast<::CORBA::ULong>(sizeof(comp_129B_out)));
 
     {
       HRTimer _hrt(ACE_TEXT("Compress Time - "));

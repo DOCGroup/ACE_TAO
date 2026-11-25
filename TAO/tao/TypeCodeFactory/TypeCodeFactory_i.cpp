@@ -44,7 +44,7 @@ namespace TCF
   {
     using field_array_type =
       std::vector<TAO::TypeCode::Struct_Field<CORBA::String_var,
-                                               CORBA::TypeCode_var> >;
+                                               CORBA::TypeCode_var>>;
 
     using typecode_type = TAO::TypeCode::Struct<CORBA::String_var,
                                                 CORBA::TypeCode_var,
@@ -77,7 +77,7 @@ namespace TCF
   {
     using field_array_type =
       std::vector<TAO::TypeCode::Value_Field<CORBA::String_var,
-                                              CORBA::TypeCode_var> >;
+                                              CORBA::TypeCode_var>>;
 
     using typecode_type = TAO::TypeCode::Value<CORBA::String_var,
                                                CORBA::TypeCode_var,

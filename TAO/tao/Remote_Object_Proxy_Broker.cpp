@@ -106,7 +106,7 @@ namespace TAO
   char *
   Remote_Object_Proxy_Broker::_repository_id (CORBA::Object_ptr target)
   {
-    TAO::Arg_Traits< ::CORBA::Char *>::ret_val _tao_retval;
+    TAO::Arg_Traits<::CORBA::Char *>::ret_val _tao_retval;
 
     TAO::Argument *_tao_signature [] =
       {

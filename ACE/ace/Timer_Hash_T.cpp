@@ -272,7 +272,7 @@ template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T (
   size_t table_size,
   FUNCTOR *upcall_functor,
-  ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
+  ACE_Free_List<ACE_Timer_Node_T <TYPE>> *freelist,
   TIME_POLICY const &time_policy)
   : Base_Timer_Queue (upcall_functor, freelist, time_policy),
     table_size_ (table_size),
@@ -301,7 +301,7 @@ ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T
 template <class TYPE, class FUNCTOR, class ACE_LOCK, class BUCKET, typename TIME_POLICY>
 ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>::ACE_Timer_Hash_T (
   FUNCTOR *upcall_functor,
-  ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
+  ACE_Free_List<ACE_Timer_Node_T <TYPE>> *freelist,
   TIME_POLICY const &time_policy)
   : Base_Timer_Queue (upcall_functor, freelist, time_policy),
     table_size_ (ACE_DEFAULT_TIMER_HASH_TABLE_SIZE),

@@ -27,7 +27,7 @@ template <class T, class IMPLEMENTATION, class ENTRY> int
 ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::compare (const ACE_Iterator_Impl<T> &rhs) const
 {
   const ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &rhs_local
-    = dynamic_cast<const ACE_Map_Impl_Iterator_Adapter< T, IMPLEMENTATION, ENTRY> &> (rhs);
+    = dynamic_cast<const ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -69,7 +69,7 @@ template <class T, class IMPLEMENTATION, class ENTRY> int
 ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const
 {
   const ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &rhs_local
-    = dynamic_cast<const ACE_Map_Impl_Reverse_Iterator_Adapter< T, IMPLEMENTATION, ENTRY> &> (rhs);
+    = dynamic_cast<const ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -241,40 +241,40 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::dum
 #endif /* ACE_HAS_DUMP */
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::begin_impl ()
 {
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   iterator_impl (this->implementation_.begin ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::end_impl ()
 {
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   iterator_impl (this->implementation_.end ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rbegin_impl ()
 {
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   reverse_iterator_impl (this->implementation_.rbegin ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rend_impl ()
 {
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   reverse_iterator_impl (this->implementation_.rend ()),
                   nullptr);
@@ -295,7 +295,7 @@ template <class T, class VALUE> int
 ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::compare (const ACE_Iterator_Impl<T> &rhs) const
 {
   const ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE> &rhs_local
-    = dynamic_cast<const ACE_Active_Map_Manager_Iterator_Adapter< T, VALUE> &> (rhs);
+    = dynamic_cast<const ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE> &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -339,7 +339,7 @@ template <class T, class VALUE> int
 ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const
 {
   const ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE> &rhs_local
-    = dynamic_cast<const ACE_Active_Map_Manager_Reverse_Iterator_Adapter< T, VALUE> &> (rhs);
+    = dynamic_cast<const ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE> &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -673,40 +673,40 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::begin_impl ()
 {
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   iterator_impl (this->implementation_.begin ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::end_impl ()
 {
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   iterator_impl (this->implementation_.end ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rbegin_impl ()
 {
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   reverse_iterator_impl (this->implementation_.rbegin ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class KEY_ADAPTER> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class KEY_ADAPTER> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rend_impl ()
 {
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   reverse_iterator_impl (this->implementation_.rend ()),
                   nullptr);
@@ -731,7 +731,7 @@ template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> i
 ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::compare (const ACE_Iterator_Impl<T> &rhs) const
 {
   const ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &rhs_local
-    = dynamic_cast<const ACE_Hash_Map_Manager_Ex_Iterator_Adapter< T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &> (rhs);
+    = dynamic_cast<const ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -775,7 +775,7 @@ template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> i
 ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const
 {
   const ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &rhs_local
-    = dynamic_cast<const ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter< T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &> (rhs);
+    = dynamic_cast<const ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -961,40 +961,40 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 #endif /* ACE_HAS_DUMP */
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::begin_impl ()
 {
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   iterator_impl (this->implementation_.begin ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::end_impl ()
 {
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   iterator_impl (this->implementation_.end ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rbegin_impl ()
 {
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   reverse_iterator_impl (this->implementation_.rbegin ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rend_impl ()
 {
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   reverse_iterator_impl (this->implementation_.rend ()),
                   nullptr);
@@ -1018,7 +1018,7 @@ template <class T, class KEY, class VALUE> int
 ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Iterator_Impl<T> &rhs) const
 {
   const ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE> &rhs_local
-    = dynamic_cast<const ACE_Map_Manager_Iterator_Adapter< T, KEY, VALUE> &> (rhs);
+    = dynamic_cast<const ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE> &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -1061,7 +1061,7 @@ template <class T, class KEY, class VALUE> int
 ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const
 {
   const ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE> &rhs_local
-    = dynamic_cast<const ACE_Map_Manager_Reverse_Iterator_Adapter< T, KEY, VALUE> &> (rhs);
+    = dynamic_cast<const ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE> &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -1246,40 +1246,40 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::begin_impl ()
 {
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   iterator_impl (this->implementation_.begin ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::end_impl ()
 {
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   iterator_impl (this->implementation_.end ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rbegin_impl ()
 {
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   reverse_iterator_impl (this->implementation_.rbegin ()),
                   nullptr);
   return temp;
 }
 
-template <class KEY, class VALUE, class KEY_GENERATOR> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *
+template <class KEY, class VALUE, class KEY_GENERATOR> ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *
 ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rend_impl ()
 {
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE> > *temp {};
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *temp {};
   ACE_NEW_RETURN (temp,
                   reverse_iterator_impl (this->implementation_.rend ()),
                   nullptr);

@@ -99,7 +99,7 @@ namespace ACE
 #if defined (ACE_HAS_ALLOC_HOOKS)
       using ConstraintList =
         ACE_Array_Map<long, Constraint, std::equal_to<long>,
-                      ACE_Allocator_Std_Adapter<std::pair<long, Constraint> > >;
+                      ACE_Allocator_Std_Adapter<std::pair<long, Constraint>>>;
 #else
       using ConstraintList = ACE_Array_Map<long, Constraint>;
 #endif /* ACE_HAS_ALLOC_HOOKS */

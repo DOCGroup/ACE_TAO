@@ -203,7 +203,7 @@ private:
   TCPConnectorHandler  *connectors_[ HandlersNo ];
 };
 
-class TCPAcceptorHandler : public ACE_Acceptor< TCPConnectionHandler, ACE_SOCK_ACCEPTOR >
+class TCPAcceptorHandler : public ACE_Acceptor<TCPConnectionHandler, ACE_SOCK_ACCEPTOR>
 {
 public:
   using inherited = ACE_Acceptor<TCPConnectionHandler, ACE_SOCK_Acceptor>;
@@ -291,8 +291,8 @@ int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void
     }
 
   ACE_SOCK_Dgram socket;
-  if (-1 == socket.open (ACE_INET_Addr (static_cast< u_short > (0),
-                                        static_cast< ACE_UINT32 > (INADDR_ANY)),
+  if (-1 == socket.open (ACE_INET_Addr (static_cast<u_short> (0),
+                                        static_cast<ACE_UINT32> (INADDR_ANY)),
                                         ACE_PROTOCOL_FAMILY_INET, 0, 1))
     ACE_ERROR ((LM_ERROR,
                 ACE_TEXT (" (%P) %p\n"),
@@ -463,7 +463,7 @@ int TCPConnectionHandler::open (void * )
       int i;
 
       for (i = buffer->size () - 1; i >= 0; --i)
-        bufferData[ i ] = static_cast< char > (i);
+        bufferData[ i ] = static_cast<char> (i);
       buffer->wr_ptr (buffer->size ());
       if (0 != (scheduleSend (buffer)))
         {
@@ -512,7 +512,7 @@ int TCPConnectionHandler::sendBuffers ()
         {
           totalSent_ += result;
           while (buffers_ &&
-                 static_cast< size_t > (result) >= buffers_->length ())
+                 static_cast<size_t> (result) >= buffers_->length ())
             {
               ACE_Message_Block *buffer = buffers_;
               result -= buffers_->length ();

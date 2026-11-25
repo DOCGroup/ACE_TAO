@@ -42,7 +42,7 @@ namespace TAO_Notify
   {
     using Queue = std::deque<Routing_Slip_Ptr>;
 // FUZZ: disable check_for_ACE_Guard
-    using Guard = ACE_Guard< TAO_SYNCH_MUTEX >;
+    using Guard = ACE_Guard<TAO_SYNCH_MUTEX>;
 // FUZZ: enable check_for_ACE_Guard
   public:
     /**

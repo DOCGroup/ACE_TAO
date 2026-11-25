@@ -186,7 +186,7 @@ ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::dump () const
 
 template <class TYPE, class FUNCTOR, class ACE_LOCK, typename TIME_POLICY>
 ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>::ACE_Timer_Queue_T (FUNCTOR *upcall_functor,
-                                          ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist,
+                                          ACE_Free_List<ACE_Timer_Node_T <TYPE>> *freelist,
                                           TIME_POLICY const &time_policy)
   : ACE_Timer_Queue_Upcall_Base<TYPE,FUNCTOR>(upcall_functor),
     time_policy_ (time_policy),

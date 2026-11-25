@@ -79,7 +79,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     // on GCC (and possibly others) due to:
     // error: conversion from
     // 'TAO::details::object_reference_sequence_element<
-    //   TAO::details::object_reference_traits<X, TAO_Objref_Var_T<X>, true> >'
+    //   TAO::details::object_reference_traits<X, TAO_Objref_Var_T<X>, true>>'
     // to non-scalar type 'X_var' requested
     // When the bug is fixed, the #ifdef should be removed.  Until then, the
     // test will appear to pass on other compilers, but the MSVC failures should

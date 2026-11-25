@@ -13,7 +13,7 @@ namespace ACE
   {
     template <ACE_SYNCH_DECL>
     Sock_StreamBufferBase<ACE_SYNCH_USE>::Sock_StreamBufferBase (stream_type* stream)
-      : BidirStreamBuffer<StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE> > (
+      : BidirStreamBuffer<StreamHandler<ACE_SOCK_STREAM, ACE_SYNCH_USE>> (
             stream,
             BUFFER_SIZE,
             std::ios::in | std::ios::out)
