@@ -3,6 +3,8 @@
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstdio>
+
 const char* TT_Info::INTERFACE_NAMES[] =
 {
   "TAO_Trader_Test::Remote_IO",
@@ -303,9 +305,9 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
               arg_shifter.consume_arg ();
             }
           else
-          {
-            ior_file = ACE_OS::fdopen (ACE_STDIN, ACE_TEXT("r"));
-          }
+            {
+              ior_file = stdin;
+            }
 
           if (ior_file != nullptr)
             {
@@ -314,9 +316,9 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
                 read_buffer.read (), {read_buffer.alloc ()});
             }
           else
-          {
-            ACE_ERROR ((LM_ERROR, "Couldn't load ior.\n"));
-          }
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Couldn't load ior.\n")));
+            }
         }
       else
         {
