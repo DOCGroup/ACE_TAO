@@ -12,6 +12,7 @@
 #include "ace/OS_NS_string.h"
 #include <memory>
 #include "ace/SString.h"
+#include "ace/Local_Name_Space.h"
 
 static int testConcatenation() {
 #ifdef ACE_HAS_WCHAR
@@ -211,6 +212,17 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SString_Test"));
+
+  {
+    ACE_NS_String const empty;
+    ACE_NS_String const empty_copy (nullptr, nullptr, 0);
+    ACE_NS_String const nonempty (ACE_NS_WString ("value"));
+    if (!(empty == empty_copy) || empty != empty_copy
+        || empty == nonempty || !(empty != nonempty))
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Empty namespace string comparison failed\n")), 1);
+      }
+  }
 
   {
     /* Set #1 */

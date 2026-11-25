@@ -112,7 +112,7 @@ ACE_NS_String::operator == (const ACE_NS_String &s) const
 {
   ACE_TRACE ("ACE_NS_String::operator ==");
   return this->len_ == s.len_
-    && std::memcmp (this->rep_, s.rep_, this->len_) == 0;
+    && (this->len_ == 0 || std::memcmp (this->rep_, s.rep_, this->len_) == 0);
 }
 
 bool
@@ -129,7 +129,10 @@ ACE_NS_String::ACE_NS_String (ACE_WCHAR_T *dst,
     rep_ (dst)
 {
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
-  std::memcpy (this->rep_, src, bytes);
+  if (bytes != 0)
+    {
+      std::memcpy (this->rep_, src, bytes);
+    }
 }
 
 u_long
