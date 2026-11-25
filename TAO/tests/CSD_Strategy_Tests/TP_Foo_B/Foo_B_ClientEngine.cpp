@@ -86,7 +86,7 @@ Foo_B_ClientEngine::execute()
   ACE_OS::sprintf (buffer, "%d %s %d:%d:%d", this->client_id_, ONEWAY_ARG_TEST_STR,
     t.hour, t.minute, t.second);
 
-  if (std::strncmp (message.in (), buffer, std::strlen (buffer)) != 0)
+  if (std::strcmp (message.in (), buffer) != 0)
     {
       check_validity = false;
     }
