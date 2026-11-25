@@ -26,7 +26,7 @@ Clerk_i::read_ior (ACE_TCHAR const * filename)
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                        ACE_TEXT("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for reading: %p\n"),
-                       filename),
+                       filename, ACE_TEXT ("fopen")),
                       -1);
   }
   this->ior_file_provided_ = true;
@@ -114,7 +114,7 @@ Clerk_i::parse_args (int argc,
           {
             ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT("[CLERK] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n"),
-                               get_opts.opt_arg ()),
+                               get_opts.opt_arg (), ACE_TEXT ("read")),
                               -1);
           }
         }

@@ -1068,7 +1068,7 @@ TAO_IMR_Op_IOR::run ()
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
             ACE_TEXT ("Error: Unable to open %s for writing: %p\n"),
-            this->filename_.c_str ()),
+            this->filename_.c_str (), ACE_TEXT ("fopen")),
             -1);
         }
 
