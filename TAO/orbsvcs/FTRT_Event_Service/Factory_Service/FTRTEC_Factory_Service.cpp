@@ -116,12 +116,21 @@ int ACE_TMAIN (int argc, ACE_TCHAR * argv[])
         ACE_OS::fopen (options.output.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
       if (!output_file)
         {
+          orb->shutdown (true);
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                                  options.output.c_str ()),
                                 1);
         }
-      ACE_OS::fprintf (output_file.get (), "%s", str.in ());
+      int const write_result = ACE_OS::fprintf (output_file.get (), "%s", str.in ());
+      int const close_result = ACE_OS::fclose (output_file.release ());
+      if (write_result < 0 || close_result != 0)
+        {
+          orb->shutdown (true);
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot write IOR file: %s\n"),
+                                 options.output.c_str ()), 1);
+        }
     }
 
     orb->run ();
