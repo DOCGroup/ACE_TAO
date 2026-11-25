@@ -285,7 +285,7 @@ HTTP_Connector::parseurl (std::string const &url,
     {
       std::string const port_text = authority.substr (port_separator + 1);
       unsigned int parsed_port {};
-      auto const result = std::from_chars (port_text.data (),
+      std::from_chars_result const result = std::from_chars (port_text.data (),
                                            port_text.data () + port_text.size (),
                                            parsed_port);
       if (port_text.empty ()

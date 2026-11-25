@@ -38,7 +38,7 @@ supplier (void *)
                   "ACE_UPIPE_Acceptor.connect failed"));
     }
 
-  auto mybuf = std::make_unique<char[]> (size);
+  std::unique_ptr<char[]> mybuf = std::make_unique<char[]> (size);
 
   for (int i = 0; i < size; ++i)
     {
@@ -99,7 +99,7 @@ consumer (void *)
     }
 
   // Ensure deletion upon exit.
-  auto mybuf = std::make_unique<char[]> (size);
+  std::unique_ptr<char[]> mybuf = std::make_unique<char[]> (size);
   time_t currsec;
 
   ACE_OS::time (&currsec);

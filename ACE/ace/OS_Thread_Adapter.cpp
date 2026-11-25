@@ -43,7 +43,7 @@ ACE_OS_Thread_Adapter::invoke ()
   this->inherit_log_msg ();
 
   // Extract the arguments.
-  auto func = reinterpret_cast<ACE_THR_FUNC_INTERNAL> (this->user_func_);
+  ACE_THR_FUNC_INTERNAL func = reinterpret_cast<ACE_THR_FUNC_INTERNAL> (this->user_func_);
   void *arg = this->arg_;
 
   // Pick up the cancel-related flags before deleting this.

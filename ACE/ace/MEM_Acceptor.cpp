@@ -240,7 +240,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
   }
 
   // @@ Need to handle timeout here.
-  auto buf_len = static_cast<ACE_UINT16> ((ACE_OS::strlen (buf) + 1) *
+  ACE_UINT16 buf_len = static_cast<ACE_UINT16> ((ACE_OS::strlen (buf) + 1) *
                                          sizeof (ACE_TCHAR));
 
   // No need to worry about byte-order because both parties should always

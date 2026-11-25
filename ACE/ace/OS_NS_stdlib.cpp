@@ -150,7 +150,7 @@ ACE_OS::strenvdup (const ACE_TCHAR *str)
           errno = ENOMEM;
           return nullptr;
         }
-      auto *buf_p =
+      ACE_TCHAR *buf_p =
 #if defined (ACE_HAS_ALLOC_HOOKS)
         static_cast<ACE_TCHAR *> (
           ACE_Allocator::instance ()->malloc (buf_len * sizeof (ACE_TCHAR)));
