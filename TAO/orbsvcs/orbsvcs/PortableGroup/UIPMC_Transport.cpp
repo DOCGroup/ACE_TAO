@@ -111,11 +111,11 @@ TAO_UIPMC_Transport::throttle_send_rate (
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%B]::")
                         ACE_TEXT ("throttle_send_rate, Previous data ")
-                        ACE_TEXT ("(%Q bytes) has cleared ")
+                        ACE_TEXT ("(%Lu bytes) has cleared ")
                         ACE_TEXT ("(could have sent %Q bytes over ")
                         ACE_TEXT ("the last %Q uSecs)\n"),
                         this->id (),
-                        static_cast<ACE_UINT64> (this->total_bytes_outstanding_),
+                        this->total_bytes_outstanding_,
                         octets_processed,
                         how_long_in_micro_seconds));
           }
@@ -128,10 +128,10 @@ TAO_UIPMC_Transport::throttle_send_rate (
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%B]::")
                         ACE_TEXT ("throttle_send_rate, Previous data ")
-                        ACE_TEXT ("(%Q bytes) has reduced by %Q bytes ")
+                        ACE_TEXT ("(%Lu bytes) has reduced by %Q bytes ")
                         ACE_TEXT ("over the last %Q uSecs\n"),
                         this->id (),
-                        static_cast<ACE_UINT64> (this->total_bytes_outstanding_),
+                        this->total_bytes_outstanding_,
                         octets_processed,
                         how_long_in_micro_seconds));
           }
@@ -180,11 +180,11 @@ TAO_UIPMC_Transport::throttle_send_rate (
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%B]::")
                         ACE_TEXT ("throttle_send_rate, SendHighWaterMark ")
-                        ACE_TEXT ("(%Q) exceeded by %Q bytes, delaying ")
+                        ACE_TEXT ("(%Lu) exceeded by %Lu bytes, delaying ")
                         ACE_TEXT ("for %Q uSecs\n"),
                         this->id (),
-                        static_cast<ACE_UINT64> (hwm),
-                        static_cast<ACE_UINT64> (bytes_over_by),
+                        hwm,
+                        bytes_over_by,
                         delay_in_micro_seconds));
           }
 
@@ -236,22 +236,22 @@ TAO_UIPMC_Transport::send (
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%B]::send, ")
-                      ACE_TEXT ("Did not send MIOP message of size %Q ")
-                      ACE_TEXT ("(it was too large, needing %Q fragments).\n")
+                      ACE_TEXT ("Did not send MIOP message of size %Lu ")
+                      ACE_TEXT ("(it was too large, needing %Lu fragments).\n")
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%B]::send, ")
                       ACE_TEXT ("You maybe able to increase ")
-                      ACE_TEXT ("MIOP_Resource_Factory -ORBMaxFragments %Q"),
+                      ACE_TEXT ("MIOP_Resource_Factory -ORBMaxFragments %Lu"),
                       this->id (),
-                      static_cast<ACE_UINT64> (bytes_to_send),
-                      static_cast<ACE_UINT64> (number_of_packets_required),
+                      bytes_to_send,
+                      number_of_packets_required,
                       this->id (),
-                      static_cast<ACE_UINT64> (factory->max_fragments ())));
+                      factory->max_fragments ()));
 
           if (max_fragment_size < MIOP_MAX_DGRAM_SIZE)
           {
             ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT (" or -ORBMaxFragmentSize %Q\n"),
-                        static_cast<ACE_UINT64> (max_fragment_size)));
+                        ACE_TEXT (" or -ORBMaxFragmentSize %Lu\n"),
+                        max_fragment_size));
           }
           else
           {
@@ -398,11 +398,11 @@ TAO_UIPMC_Transport::send (
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%B]::send, ")
-                          ACE_TEXT ("Partial fragment (%b/%Q bytes), ")
+                          ACE_TEXT ("Partial fragment (%b/%Lu bytes), ")
                           ACE_TEXT ("reattempting remainder.\n"),
                           this->id (),
                           already_sent,
-                          static_cast<ACE_UINT64> (this_fragment_size)));
+                          this_fragment_size));
             }
 
           // Keep a note of the number of bytes we have just buffered
@@ -421,11 +421,11 @@ TAO_UIPMC_Transport::send (
           addr.get_host_addr (tmp, sizeof tmp);
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Transport[%B]::send, ")
-                      ACE_TEXT ("Sent %d bytes payload (fragment %Q/%Q) to <%C:%d>\n"),
+                      ACE_TEXT ("Sent %d bytes payload (fragment %Lu/%Lu) to <%C:%d>\n"),
                       this->id (),
                       *packet_length,
-                      static_cast<ACE_UINT64> (*packet_number + 1uL),
-                      static_cast<ACE_UINT64> (number_of_packets_required),
+                      *packet_number + 1uL,
+                      number_of_packets_required,
                       tmp,
                       static_cast<int> (addr.get_port_number ())));
         }
