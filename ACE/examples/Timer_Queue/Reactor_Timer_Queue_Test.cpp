@@ -29,8 +29,8 @@ Reactor_Timer_Handler::handle_timeout (ACE_Time_Value const &,
 {
   ACE_Time_Value const txv = ACE_OS::gettimeofday ();
   ACE_DEBUG ((LM_DEBUG,
-              "\nTimer #%q fired at %:.%06d (%T)!\n",
-              static_cast<ACE_INT64> (this->tid_),
+              "\nTimer #%Ld fired at %:.%06d (%T)!\n",
+              this->tid_,
               txv.sec (),
               static_cast<int> (txv.usec ())));
   // Reactor callbacks own and delete their one-shot handler.
@@ -78,8 +78,8 @@ Input_Handler::schedule_timer (void *argument)
   handler->set_timer_id (tid);
   handler.release ();
   ACE_DEBUG ((LM_DEBUG,
-              "Timer #%q scheduled to fire after %u usec from now.\n",
-              static_cast<ACE_INT64> (tid),
+              "Timer #%Ld scheduled to fire after %u usec from now.\n",
+              tid,
               delay));
   return 0;
 }
@@ -117,8 +117,8 @@ Input_Handler::list_timer (void *)
   for (; !iter.isdone (); iter.next ())
     {
       ACE_Timer_Node *tn = iter.item ();
-      ACE_DEBUG ((LM_DEBUG, "Timer #%q: %:.%06d\n",
-                  static_cast<ACE_INT64> (tn->get_timer_id ()),
+      ACE_DEBUG ((LM_DEBUG, "Timer #%Ld: %:.%06d\n",
+                  tn->get_timer_id (),
                   tn->get_timer_value ().sec (),
                   static_cast<int> (tn->get_timer_value ().usec ())));
     }

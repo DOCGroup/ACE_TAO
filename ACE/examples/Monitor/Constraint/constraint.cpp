@@ -124,12 +124,12 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */[])
   Control_Action_Reference const trigger8k (new Trigger8k);
   long const id8 = bytes_monitor->add_constraint ("value > 8192", trigger8k.get ());
 
-  ACE_DEBUG ((LM_DEBUG, "trigger8k id = %q\n", static_cast<ACE_INT64> (id8)));
+  ACE_DEBUG ((LM_DEBUG, "trigger8k id = %Ld\n", id8));
 
   Control_Action_Reference const trigger16k (new Trigger16k);
   long const id16 = bytes_monitor->add_constraint ("value > 16384", trigger16k.get ());
 
-  ACE_DEBUG ((LM_DEBUG, "trigger16k id = %q\n", static_cast<ACE_INT64> (id16)));
+  ACE_DEBUG ((LM_DEBUG, "trigger16k id = %Ld\n", id16));
 
   /// Create a query and register it to be called periodically.
   Monitor_Query query ("OS/Network/BytesReceived");

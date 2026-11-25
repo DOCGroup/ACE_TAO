@@ -112,8 +112,8 @@ void
 Async_Timer_Queue::cancel (long timer_id)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "canceling %q\n",
-              static_cast<ACE_INT64> (timer_id)));
+              "canceling %Ld\n",
+              timer_id));
 
   void const *act {};
 

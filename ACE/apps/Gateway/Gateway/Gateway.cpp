@@ -119,8 +119,8 @@ Gateway::init (int argc, ACE_TCHAR *argv[])
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("starting timer for %q seconds...\n"),
-                      static_cast<ACE_INT64> (Options::instance ()->performance_window ())));
+                      ACE_TEXT ("starting timer for %Ld seconds...\n"),
+                      Options::instance ()->performance_window ()));
         }
     }
 

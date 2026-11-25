@@ -139,8 +139,8 @@ Timer_Queue_Test_Driver<TQ, RECEIVER, ACTION>::parse_commands (char const *buf)
         if (cancel_cmd_->execute (&id) == -1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Timer #%q is not valid\n",
-                      static_cast<ACE_INT64> (id)));
+                      "Timer #%Ld is not valid\n",
+                      id));
         }
       }
       break;

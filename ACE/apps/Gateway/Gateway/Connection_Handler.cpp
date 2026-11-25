@@ -131,9 +131,9 @@ Connection_Handler::handle_timeout (ACE_Time_Value const &,
                                     void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) attempting to reconnect Connection_Handler %d with timeout = %q\n",
+              "(%t) attempting to reconnect Connection_Handler %d with timeout = %Ld\n",
               this->connection_id (),
-              static_cast<ACE_INT64> (this->timeout_)));
+              this->timeout_));
 
   // Delegate the re-connection attempt to the Event Channel.
   this->event_channel_->initiate_connection_connection (this);
