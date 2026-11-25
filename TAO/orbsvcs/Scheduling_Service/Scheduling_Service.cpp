@@ -249,15 +249,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       TAO_Scheduling_Service scheduling_service;
 
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "%s; initializing scheduling service\n", __FILE__));
+                  "%C; initializing scheduling service\n", __FILE__));
 
       if (scheduling_service.init (argc, argv) < 0)
       {
-        ORBSVCS_ERROR_RETURN ((LM_ERROR, "%p\n", "init"), 1);
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, "%p\n", ACE_TEXT ("init")), 1);
       }
 
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "%s; running scheduling service\n", __FILE__));
+                  "%C; running scheduling service\n", __FILE__));
 
       scheduling_service.run ();
     }
