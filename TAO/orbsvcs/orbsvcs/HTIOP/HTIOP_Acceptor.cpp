@@ -217,7 +217,7 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   return 0;
 }
 
-bool
+int
 TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO::HTIOP::Endpoint *endp =

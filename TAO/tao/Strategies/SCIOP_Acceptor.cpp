@@ -174,7 +174,7 @@ TAO_SCIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
   return 0;
 }
 
-bool
+int
 TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_SCIOP_Endpoint *endp =

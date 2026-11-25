@@ -103,7 +103,7 @@ namespace TAO
                                   TAO_MProfile &mprofile,
                                   CORBA::Short priority) override;
 
-      bool is_collocated (const TAO_Endpoint *endpoint) override;
+      int is_collocated (const TAO_Endpoint *endpoint) override;
 
       CORBA::ULong endpoint_count () override;
 

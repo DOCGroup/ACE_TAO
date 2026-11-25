@@ -54,7 +54,7 @@ TAO_UIPMC_Acceptor::create_profile (
   return 0;
 }
 
-bool
+int
 TAO_UIPMC_Acceptor::is_collocated (TAO_Endpoint const *)
 {
   // @@ Not clear how

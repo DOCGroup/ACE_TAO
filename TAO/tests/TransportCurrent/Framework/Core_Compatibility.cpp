@@ -10,6 +10,7 @@
 #include "tao/PolicyFactory_Registry_Adapter.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/Service_Context_Handler.h"
+#include "tao/Transport_Acceptor.h"
 
 #include <type_traits>
 #include <utility>
@@ -98,4 +99,6 @@ namespace
   static_assert (!std::is_abstract<Legacy_Acceptor_Filter>::value);
   static_assert (std::is_same<decltype (std::declval<TAO_Acceptor_Registry &> ().begin ()),
                               TAO_AcceptorSetIterator>::value);
+  static_assert (std::is_same<decltype (std::declval<TAO_Acceptor &> ().is_collocated (nullptr)),
+                              int>::value);
 }

@@ -143,7 +143,7 @@ TAO_SHMIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
     }
 }
 
-bool
+int
 TAO_SHMIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
 {
   const TAO_SHMIOP_Endpoint *endp =
