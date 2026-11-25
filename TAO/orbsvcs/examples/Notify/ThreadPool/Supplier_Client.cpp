@@ -25,38 +25,43 @@ TAO_Notify_ThreadPool_Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Consumers"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Consumers"));
+      if (current_arg != nullptr)
         {
           this->options_.consumer_count = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (
-                  ACE_TEXT ("-EventChannel_ThreadPool"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-EventChannel_ThreadPool"));
+      if (current_arg != nullptr)
         {
           this->options_.event_channel_thread_count = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (
-                  ACE_TEXT ("-ProxyConsumer_ThreadPool"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ProxyConsumer_ThreadPool"));
+      if (current_arg != nullptr)
         {
           this->options_.proxy_consumer_thread_count = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-IORoutput"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-IORoutput"));
+      if (current_arg != nullptr)
         {
           this->options_.ior_file_name = current_arg;
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-MaxEvents"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-MaxEvents"));
+      if (current_arg != nullptr)
         {
           this->options_.max_events = ACE_OS::atoi (current_arg);
 
           arg_shifter.consume_arg ();
+          continue;
         }
-      else
-        {
-          arg_shifter.ignore_arg ();
-        }
+      arg_shifter.ignore_arg ();
     }
 
   if (this->options_.consumer_count > 0

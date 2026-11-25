@@ -20,17 +20,16 @@ TAO_Notify_Lanes_Consumer_Client::parse_args (int argc, ACE_TCHAR *argv[])
   while (arg_shifter.is_anything_left ())
     {
       ACE_TCHAR const *current_arg {};
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-LanePriority"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-LanePriority"));
+      if (current_arg != nullptr)
         {
           this->lane_priority_ = ACE_OS::atoi (current_arg);
           this->event_type_ = "TEST_TYPE_" + std::to_string (this->lane_priority_);
 
           arg_shifter.consume_arg ();
+          continue;
         }
-      else
-        {
-          arg_shifter.ignore_arg ();
-        }
+      arg_shifter.ignore_arg ();
     }
 
   return 0;

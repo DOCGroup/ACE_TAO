@@ -26,20 +26,21 @@ TAO_Notify_Lanes_Supplier_Client::parse_args (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Consumers"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Consumers"));
+      if (current_arg != nullptr)
         {
           this->options_.consumer_count = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-IORoutput"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-IORoutput"));
+      if (current_arg != nullptr)
         {
           this->options_.ior_file_name = current_arg;
           arg_shifter.consume_arg ();
+          continue;
         }
-      else
-        {
-          arg_shifter.ignore_arg ();
-        }
+      arg_shifter.ignore_arg ();
     }
 
   return 0;
