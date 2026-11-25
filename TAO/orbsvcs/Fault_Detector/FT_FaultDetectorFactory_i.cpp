@@ -572,7 +572,7 @@ CORBA::Object_ptr TAO::FT_FaultDetectorFactory_i::create_object (
   if (missingParameter)
   {
     ORBSVCS_ERROR ((LM_ERROR,
-      "Throwing 'InvalidCriteria' due to missing %s\n",
+      ACE_TEXT ("Throwing 'InvalidCriteria' due to missing %C\n"),
       missingParameterName
       ));
     throw PortableGroup::InvalidCriteria();

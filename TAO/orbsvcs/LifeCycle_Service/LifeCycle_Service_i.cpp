@@ -158,9 +158,9 @@ Life_Cycle_Service_i::register_factory (char const * name,
 
   if (this->debug_level_ >= 1)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG, "LifeCycle Server: Registered %s\n"
-                               "                  Location: %s\n"
-                               "                  Description: %s\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("LifeCycle Server: Registered %C\n")
+                               ACE_TEXT ("                  Location: %C\n")
+                               ACE_TEXT ("                  Description: %C\n"),
                       name, location, description));
     }
 }
