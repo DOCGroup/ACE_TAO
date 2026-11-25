@@ -9,8 +9,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE::HTBP::Filter_Factory::Filter_Factory ()
-{
-}
+= default;
 
 ACE::HTBP::Filter_Factory::~Filter_Factory () = default;
 
