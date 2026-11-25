@@ -198,7 +198,12 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
 {
   try
     {
-      this->timeout_handler_.reset ();
+      // The reactor has already removed the expired timer from its queue.
+      TAO_Asynch_Timeout_Handler * const handler = this->timeout_handler_.release ();
+      if (handler != nullptr)
+        {
+          handler->remove_reference ();
+        }
 
       // With Asynch requests the invocation handler can't call idle_after_reply ()
       // since it does not handle the reply.
