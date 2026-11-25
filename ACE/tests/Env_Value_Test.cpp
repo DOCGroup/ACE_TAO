@@ -61,6 +61,26 @@ run_main (int, ACE_TCHAR* [])
       TEST_THIS (short, ACE_TEXT ("TEST_VALUE_NEGATIVE"), 0, -10);
       TEST_THIS (unsigned short, ACE_TEXT ("TEST_VALUE_NEGATIVE"), 0, (unsigned short) -10);
 
+      struct Expansion_Case
+      {
+        ACE_TCHAR const *input;
+        ACE_TCHAR const *expected;
+      };
+      Expansion_Case const expansion_cases[] = {
+        {ACE_TEXT ("$TEST_VALUE_POSITIVE"), ACE_TEXT ("10.2")},
+        {ACE_TEXT ("prefix/$TEST_VALUE_NEGATIVE/suffix"),
+         ACE_TEXT ("prefix/-10.2/suffix")},
+        {ACE_TEXT ("plain text"), ACE_TEXT ("plain text")},
+        {ACE_TEXT (""), ACE_TEXT ("")}
+      };
+      for (Expansion_Case const &test_case : expansion_cases)
+        {
+          ACE_TCHAR *expanded = ACE_OS::strenvdup (test_case.input);
+          ACE_TEST_ASSERT (expanded != nullptr);
+          ACE_TEST_ASSERT (ACE_OS::strcmp (expanded, test_case.expected) == 0);
+          ACE_OS::free (expanded);
+        }
+
       const ACE_TCHAR* const defstr = ACE_TEXT ("Sarah Cleeland is Two!");
 
       ACE_Env_Value<ACE_TString> sval1 (ACE_TEXT ("This_Shouldnt_Be_Set_Hopefully"),
