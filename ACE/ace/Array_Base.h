@@ -59,7 +59,7 @@ public:
   /// @}
 
   /// Dynamically create an uninitialized array.
-  explicit ACE_Array_Base (size_type size = 0,
+  ACE_Array_Base (size_type size = 0,
                            ACE_Allocator *the_allocator = nullptr);
 
   /// Dynamically initialize the entire array to the @a default_value.

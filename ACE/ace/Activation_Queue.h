@@ -67,7 +67,7 @@ public:
    *                  wrap the method requests queued to this activation queue.
    *                  Defaults to ACE_Allocator::instance().
    */
-  explicit ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = nullptr,
+  ACE_Activation_Queue (ACE_Message_Queue<ACE_SYNCH> *new_queue = nullptr,
                                  ACE_Allocator *alloc = nullptr,
                                  ACE_Allocator *db_alloc = nullptr);
 
