@@ -260,7 +260,7 @@ NotificationServiceMonitor_i::get_invalid_names (
           if (TAO_debug_level > 7)
             {
               ORBSVCS_DEBUG((LM_INFO,
-                ACE_TEXT("(%P|%t) TAO_NotificationServiceMonitor: Client requested invalid statistic name: %s"),
+                ACE_TEXT("(%P|%t) TAO_NotificationServiceMonitor: Client requested invalid statistic name: %C"),
                   names[i].in ()));
             }
           invalid.length (ilength + 1);

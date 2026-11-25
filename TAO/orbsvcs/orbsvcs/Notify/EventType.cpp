@@ -126,7 +126,7 @@ void
 TAO_Notify_EventType::dump () const
 {
   ORBSVCS_DEBUG ((LM_DEBUG,
-              "(%s,%s)",
+              "(%C,%C)",
               this->event_type_.domain_name.in (),
               this->event_type_.type_name.in ()));
 }

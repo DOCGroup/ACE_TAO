@@ -395,7 +395,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
         }
 
       ORBSVCS_DEBUG ((LM_ERROR,
-                  "RT_Infos \"%s\" and \"%s\" are part of dependency cycle %d.\n",
+                  "RT_Infos \"%C\" and \"%C\" are part of dependency cycle %d.\n",
                   entry.actual_rt_info ()->entry_point.in (),
                   successor.actual_rt_info ()->entry_point.in (),
                   this->number_of_cycles_));
@@ -568,7 +568,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
                 ++this->unresolved_remotes_;
 
                 ORBSVCS_DEBUG ((LM_ERROR,
-                            "RT_Info \"%s\" has unresolved "
+                            "RT_Info \"%C\" has unresolved "
                             "remote dependencies.\n",
                             rse.actual_rt_info ()->entry_point.in ()));
               }
@@ -577,7 +577,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
                 ++this->unresolved_locals_;
 
                 ORBSVCS_DEBUG ((LM_ERROR,
-                            "RT_Info \"%s\" has unresolved "
+                            "RT_Info \"%C\" has unresolved "
                             "local dependencies.\n",
                             rse.actual_rt_info ()->entry_point.in ()));
               }
@@ -588,7 +588,7 @@ prefix_action (TAO_Reconfig_Scheduler_Entry &rse)
             // must also specify a period.
             ++this->thread_specification_errors_;
             ORBSVCS_DEBUG ((LM_ERROR,
-                        "RT_Info \"%s\" specifies %1d "
+                        "RT_Info \"%C\" specifies %1d "
                         "threads, but no period.\n",
                         rse.actual_rt_info ()->entry_point.in (),
                         rse.actual_rt_info ()->threads));
@@ -713,7 +713,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
   int result {};
 #ifdef SCHEDULER_LOGGING
   ORBSVCS_DEBUG ((LM_DEBUG,
-              "Priority_Visitor visiting %s[%d],crit=%d,period=%d\n",
+              "Priority_Visitor visiting %C[%d],crit=%d,period=%d\n",
               rse.actual_rt_info ()->entry_point.in(),
               rse.actual_rt_info ()->handle,
               rse.actual_rt_info ()->criticality,
@@ -734,7 +734,7 @@ TAO_RSE_Priority_Visitor<RECONFIG_SCHED_STRATEGY, ACE_LOCK>::visit (TAO_Reconfig
     {
 #ifdef SCHEDULER_LOGGING
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "Previous entry %s[%d],crit=%d,period=%d\n",
+                  "Previous entry %C[%d],crit=%d,period=%d\n",
                   previous_entry_->actual_rt_info ()->entry_point.in(),
                   previous_entry_->actual_rt_info ()->handle,
                   previous_entry_->actual_rt_info ()->criticality,
@@ -946,7 +946,7 @@ pre_recurse_action (TAO_Reconfig_Scheduler_Entry &entry,
 {
 #ifdef SCHEDULER_LOGGING
   ORBSVCS_DEBUG ((LM_DEBUG,
-              "Crit Prop_Visitor visiting %s[%d], successor is %s[%d]\n",
+              "Crit Prop_Visitor visiting %C[%d], successor is %C[%d]\n",
               entry.actual_rt_info ()->entry_point.in(),
               entry.actual_rt_info ()->handle,
               successor.actual_rt_info ()->entry_point.in(),

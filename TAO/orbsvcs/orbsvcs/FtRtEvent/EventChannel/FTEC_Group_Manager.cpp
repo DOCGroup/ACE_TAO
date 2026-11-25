@@ -30,7 +30,7 @@ void print(const FTRT::Location& location)
 {
   ORBSVCS_DEBUG((LM_DEBUG, "{"));
   for (size_t i = 0; i < location.length(); ++i) {
-    ORBSVCS_DEBUG((LM_DEBUG, "<%s,%s>", location[i].id.in(), location[i].kind.in()));
+    ORBSVCS_DEBUG((LM_DEBUG, "<%C,%C>", location[i].id.in(), location[i].kind.in()));
   }
   ORBSVCS_DEBUG((LM_DEBUG, "}"));
 }

@@ -319,7 +319,7 @@ void ACE_Config_Scheduler::compute_scheduling (CORBA::Long minimum_priority,
 
         // Output the anomaly message
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    "%s: %s\n",
+                    "%C: %C\n",
                     anomaly_severity_msg,
                     (*anomaly)->description.in ()));
 
