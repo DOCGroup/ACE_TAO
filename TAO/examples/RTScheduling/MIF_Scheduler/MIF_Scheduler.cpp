@@ -297,31 +297,11 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
   RTScheduling::Current::IdType_var guid = current_->id ();
 
   rtscheduling_guid_value (guid.in ());
-  int const guid_length = guid->length ();
-
-  CORBA::OctetSeq seq_buf (guid_length);
-  seq_buf.length (seq_buf.maximum ());
-  std::memcpy (seq_buf.get_buffer (), guid->get_buffer (), guid_length);
-
-  int cxt_data_length = sizeof (int) + guid_length;
-  srv_con.context_data.length (cxt_data_length);
-
-  int i = 0;
-  for (;i < guid_length;++i)
-    {
-      srv_con.context_data [i] = seq_buf [i];
-    }
-
-  int importance = sched_param_var->importance ();
-  CORBA::OctetSeq int_buf (sizeof (importance));
-  int_buf.length (int_buf.maximum ());
-  std::memcpy (int_buf.get_buffer (), &importance, sizeof (importance));
-
-  int j = 0;
-  for (;i < cxt_data_length;++i)
-    {
-      srv_con.context_data [i] = int_buf [j++];
-    }
+  int const importance = sched_param_var->importance ();
+  srv_con.context_data.length (sizeof (size_t) + sizeof (importance));
+  CORBA::Octet * const data = srv_con.context_data.get_buffer ();
+  std::memcpy (data, guid->get_buffer (), sizeof (size_t));
+  std::memcpy (data + sizeof (size_t), &importance, sizeof (importance));
 
   request_info->add_request_service_context (srv_con,
                                              false);
@@ -395,31 +375,27 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
           throw CORBA::BAD_PARAM ();
         }
 
-      RTScheduling::Current::IdType* guid;
-      ACE_NEW (guid,
-               RTScheduling::Current::IdType);
+      RTScheduling::Current::IdType *guid_ptr {};
+      ACE_NEW_THROW_EX (guid_ptr,
+                        RTScheduling::Current::IdType,
+                        CORBA::NO_MEMORY ());
+      RTScheduling::Current::IdType_var guid = guid_ptr;
 
       guid->length (sizeof(size_t));
       std::memcpy (guid->get_buffer (), serv_cxt->context_data.get_buffer (), sizeof (size_t));
 
-      size_t const gu_id = rtscheduling_guid_value (*guid);
+      size_t const gu_id = rtscheduling_guid_value (guid.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "MIF_Scheduler::receive_request %B\n",
                   gu_id));
 
-      CORBA::OctetSeq int_buf (sizeof (int));
-      int_buf.length (int_buf.maximum ());
-      size_t i = sizeof (size_t);
-      for (unsigned int j = 0;j < sizeof (int);++j)
-        {
-          int_buf [j] = serv_cxt->context_data [i++];
-        }
-
       int importance = 0;
-      std::memcpy (&importance, int_buf.get_buffer (), sizeof (importance));
+      std::memcpy (&importance,
+                   serv_cxt->context_data.get_buffer () + sizeof (size_t),
+                   sizeof (importance));
 
-      guid_out = guid;
+      guid_out = guid._retn ();
       sched_param_out = DT_TEST::instance ()->scheduler ()->create_segment_scheduling_parameter (importance);
 
       if (TAO_debug_level > 0)
