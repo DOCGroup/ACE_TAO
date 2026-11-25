@@ -261,8 +261,14 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                      "(%P|%t) ImR Activator: Could not open file <%s>\n", opts.ior_filename ().c_str ()), -1);
             }
-          ACE_OS::fprintf (fp, "%s", ior.in ());
-          ACE_OS::fclose (fp);
+          int const write_result = ACE_OS::fprintf (fp, "%s", ior.in ());
+          int const close_result = ACE_OS::fclose (fp);
+          if (write_result < 0 || close_result != 0)
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("(%P|%t) ImR Activator: Could not write file <%s>\n"),
+                                     opts.ior_filename ().c_str ()), -1);
+            }
         }
     }
   catch (const CORBA::Exception& ex)
@@ -286,6 +292,10 @@ ImR_Activator_i::init (Activator_Options& opts)
   CORBA::ORB_var orb = CORBA::ORB_init (argc, av.argv (), "TAO_ImR_Activator");
 
   int const ret = this->init_with_orb(orb.in (), opts);
+  if (ret != 0)
+    {
+      this->fini ();
+    }
 
   return ret;
 }
