@@ -39,7 +39,7 @@ public:
 /**
  * @class Consumer_i
  *
- * @brief Defines the implementation class for event <Consumers>.
+ * @brief Defines the implementation class for event consumers.
  */
 class Consumer_i : public POA_Event_Comm::Consumer
 {
@@ -76,7 +76,7 @@ class Consumer_Entry;
 /**
  * @class Notifier_i
  *
- * @brief Defines the implementation class for event <Notifiers>.
+ * @brief Defines the implementation class for event notifiers.
  */
 class Notifier_i : public POA_Event_Comm::Notifier
 {
@@ -99,7 +99,7 @@ public:
   void push (Event_Comm::Event const &event) override;
 
   /// Subscribe the @a consumer to receive events that match
-  /// @a filtering_criteria applied by the <Notifier>.
+  /// @a filtering_criteria applied by the @c Notifier.
   void subscribe (Event_Comm::Consumer_ptr consumer,
                   char const *filtering_criteria) override;
 

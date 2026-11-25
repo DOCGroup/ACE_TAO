@@ -9,8 +9,8 @@
  *
  * @brief Supplier driver for the TAO Publish/Subscribe example.
  *
- * This class starts up the <Supplier_Input_Handler> and
- * <Notifier_Handler> objects.
+ * This class starts up the @c Supplier_Input_Handler and
+ * @c Notifier_Handler objects.
  */
 class Supplier : public ACE_Event_Handler, public ShutdownCallback
 {

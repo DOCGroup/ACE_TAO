@@ -48,7 +48,7 @@ public:
   int close ();
 
 protected:
-  /// Pointer to a <Notifier_Handler> that's used to inform Consumers
+  /// Pointer to a @c Notifier_Handler that's used to inform Consumers
   /// that events of interest have occurred.
   Notifier_Handler *notifier_ {};
 };

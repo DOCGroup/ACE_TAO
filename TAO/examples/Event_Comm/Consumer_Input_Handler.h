@@ -21,8 +21,8 @@ class Consumer_Handler;
  *
  * @brief Handles input events generated from a keyboard.
  *
- * This class holds a <Consumer_Handler> object. It accepts input
- * from the user and passes events to the <Notifier>. It also
+ * This class holds a @c Consumer_Handler object. It accepts input
+ * from the user and passes events to the @c Notifier. It also
  * initiates shutdown.
  */
 class Consumer_Input_Handler : public ACE_Event_Handler
@@ -54,8 +54,8 @@ public:
   void consumer_initiated_shutdown (bool);
 
 private:
-  /// Pointer to the <Consumer_Handler> that receives notifications
-  /// from the <Event_Comm::Notifier>.
+  /// Pointer to the @c Consumer_Handler that receives notifications
+  /// from the @c Event_Comm::Notifier.
   Consumer_Handler *receiver_handler_ {};
 
   /// Keep track of whether the Consumer initiated the shutdown.

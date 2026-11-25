@@ -19,8 +19,8 @@
  *
  * @brief The Consumer_Handler class.
  *
- * Starts up the ORB, registers the <Event_Comm::Consumer>
- * servant with the orb and gets a reference to a <Notifier>
+ * Starts up the ORB, registers the @c Event_Comm::Consumer
+ * servant with the orb and gets a reference to a @c Notifier
  * from the Naming Service.
  */
 class Consumer_Handler
@@ -62,13 +62,13 @@ private:
   /// Remember our orb.
   CORBA::ORB_var orb_ {};
 
-  /// The <Consumer> implementation.
+  /// The @c Consumer implementation.
   Consumer_i receiver_i_;
 
-  /// Pointer to an IDL <Consumer> proxy object.
+  /// Pointer to an IDL @c Consumer proxy object.
   Event_Comm::Consumer_var receiver_ {};
 
-  /// Pointer to an IDL <Notifier> proxy object.
+  /// Pointer to an IDL @c Notifier proxy object.
   Event_Comm::Notifier_var notifier_ {};
 
   /// An instance of the name client used for resolving the factory
