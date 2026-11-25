@@ -237,8 +237,10 @@ template <class KEY, class VALUE>
 class ACE_Map
 {
 public:
-  ACE_Map (ACE_Map const &) = default;
-  ACE_Map &operator= (ACE_Map const &) = default;
+  ACE_Map (ACE_Map const &) = delete;
+  ACE_Map (ACE_Map &&) = delete;
+  ACE_Map &operator= (ACE_Map const &) = delete;
+  ACE_Map &operator= (ACE_Map &&) = delete;
 
   /// Type aliases.
   using key_type = KEY;
