@@ -123,7 +123,14 @@ Locator_Repository::report_ior (PortableServer::POA_ptr )
                 ACE_TEXT ("(%P|%t) ImR: Could not open file: %s\n"),
                 this->opts_.ior_filename ().c_str ()), -1);
             }
-          ACE_OS::fprintf (fp.get (), "%s", this->imr_ior_.in ());
+          int const write_result = ACE_OS::fprintf (fp.get (), "%s", this->imr_ior_.in ());
+          int const close_result = ACE_OS::fclose (fp.release ());
+          if (write_result < 0 || close_result != 0)
+            {
+              ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                ACE_TEXT ("(%P|%t) ImR: Could not write file: %s\n"),
+                this->opts_.ior_filename ().c_str ()), -1);
+            }
         }
     }
 
