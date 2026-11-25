@@ -18,7 +18,7 @@ public:
 
   /// Return true if the process has started already
   /**
-   * If the process has started then <the_process> returns the object
+   * If the process has started then @c the_process returns the object
    * reference for the new process
    */
   bool process_has_started (Test::Process_out the_process);

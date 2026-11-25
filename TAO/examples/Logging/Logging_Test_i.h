@@ -29,7 +29,7 @@
  *
  * This class declares an interface to run the example client for
  * Logger CORBA server.  All the complexity for initializing the
- * server is hidden in the class.  Just the <run> interface is
+ * server is hidden in the class.  Just the @c run interface is
  * needed.
  */
 class Logger_Client
@@ -54,7 +54,7 @@ private:
   /// Parses the arguments passed on the command line.
   int parse_args ();
 
-  /// Prepares the <Log_Record> for logging.
+  /// Prepares the @c Log_Record for logging.
   void init_record (Logger::Log_Record &newrec,
                     Logger::Log_Priority lp,
                     char const *msg);

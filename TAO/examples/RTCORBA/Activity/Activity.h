@@ -90,7 +90,7 @@ protected:
   /// Check if we should process exit
   void check_ifexit ();
 
-  /// Create a file whose name is specified in the -Started_Flag <file_name> argument at startup.
+  /// Create a file whose name is specified in the @c -Started_Flag option argument at startup.
   /// This file flags that the Activity has finished its bootstrapping step.
   void create_started_flag_file (int argc, ACE_TCHAR *argv[]);
   /// @}

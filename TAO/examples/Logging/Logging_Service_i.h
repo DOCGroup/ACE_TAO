@@ -53,8 +53,8 @@ public:
   /// Run the ORB.
   int run ();
 
-  /// This function creates and returns a logger with the given <name>.
-  /// Currently, <name> is unused.
+  /// This function creates and returns a logger with the given @a name.
+  /// Currently, @a name is unused.
   Logger_ptr make_logger (char const *name);
 
 private:

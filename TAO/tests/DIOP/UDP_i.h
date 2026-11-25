@@ -21,7 +21,7 @@
  * @brief UDP Object Implementation
  *
  * This class implements the UDP object, which accepts two methods.
- * The first, <invoke> accepts a string identifying the client
+ * The first, @c invoke accepts a string identifying the client
  * and a request_id so that the server can verify if the requests
  * arrived in order.
  */
