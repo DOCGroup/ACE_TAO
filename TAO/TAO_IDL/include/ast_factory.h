@@ -77,6 +77,7 @@ class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
 {
 public:
+  AST_Factory () = delete;
   explicit AST_Factory (UTL_ScopedName *n);
 
   ~AST_Factory () override;

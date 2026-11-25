@@ -77,6 +77,7 @@ class AST_Expression;
 class TAO_IDL_FE_Export AST_String : public virtual AST_ConcreteType
 {
 public:
+  AST_String () = delete;
   AST_String (AST_Decl::NodeType nt,
               UTL_ScopedName *n,
               AST_Expression *max_size,

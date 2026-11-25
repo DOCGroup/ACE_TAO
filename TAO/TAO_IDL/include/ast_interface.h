@@ -81,6 +81,7 @@ class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {
 public:
+  AST_Interface () = delete;
   AST_Interface (AST_Interface const &) = delete;
   AST_Interface (AST_Interface &&) = delete;
   AST_Interface &operator= (AST_Interface const &) = delete;

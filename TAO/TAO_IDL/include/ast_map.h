@@ -75,6 +75,7 @@ class AST_Type;
 class TAO_IDL_FE_Export AST_Map : public virtual AST_ConcreteType
 {
 public:
+  AST_Map () = delete;
   AST_Map (AST_Expression *max_size,
            AST_Type *key_bt,
            AST_Type *val_bt,

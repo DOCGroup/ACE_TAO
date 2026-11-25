@@ -81,6 +81,7 @@ class TAO_IDL_FE_Export AST_Structure
     public virtual UTL_Scope
 {
 public:
+  AST_Structure () = delete;
   AST_Structure (AST_Structure const &) = delete;
   AST_Structure (AST_Structure &&) = delete;
   AST_Structure &operator= (AST_Structure const &) = delete;

@@ -74,6 +74,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Exception : public virtual AST_Structure
 {
 public:
+  AST_Exception () = delete;
   AST_Exception (AST_Exception const &) = delete;
   AST_Exception (AST_Exception &&) = delete;
   AST_Exception &operator= (AST_Exception const &) = delete;
