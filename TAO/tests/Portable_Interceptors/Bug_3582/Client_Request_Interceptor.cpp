@@ -53,7 +53,7 @@ Client_Request_Interceptor::receive_exception (
 
   CORBA::String_var const exception_id = ri->received_exception_id ();
   ACE_DEBUG ((LM_DEBUG,
-              "Client_Request_Interceptor::receive_exception (%s)\n",
+              "Client_Request_Interceptor::receive_exception (%C)\n",
               exception_id.in ()));
 
   if (std::strcmp (exception_id.in (), "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)

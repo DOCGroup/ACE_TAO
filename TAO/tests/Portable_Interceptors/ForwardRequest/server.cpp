@@ -172,7 +172,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         if (!output_file)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file for writing IOR: %s",
+                               "Cannot open output file for writing IOR: %C",
                                ior2.in ()),
                               1);
           }

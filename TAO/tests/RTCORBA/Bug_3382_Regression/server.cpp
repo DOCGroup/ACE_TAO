@@ -192,7 +192,7 @@ Task::svc ()
       CORBA::String_var const ior =
         this->orb_->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n\n", ior.in ()));
 
       if (this->ior_output_file_ != nullptr)
         {
