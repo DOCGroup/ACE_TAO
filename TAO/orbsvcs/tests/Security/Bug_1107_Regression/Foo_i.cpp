@@ -22,7 +22,7 @@ Foo_i::baz ()
               "\n"
               "ClientCredentials ID\n"
               "====================\n"
-              "%s\n",
+              "%C\n",
               id.in ()));
 }
 

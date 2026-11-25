@@ -25,7 +25,7 @@ Foo_i::baz ()
       CORBA::String_var id = credentials->creds_id ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  "FOO (%P|%t) ClientCredentials ID: %s\n", id.in ()));
+                  "FOO (%P|%t) ClientCredentials ID: %C\n", id.in ()));
       return;
     }
   catch (CORBA::BAD_INV_ORDER const &ex)
