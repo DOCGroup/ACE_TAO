@@ -224,7 +224,7 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
       table->bind ("LoadManager", str.in ());
 
       {
-        std::unique_ptr<FILE, int (*) (FILE *)> const lm_ior (
+        std::unique_ptr<FILE, int (*) (FILE *)> lm_ior (
           ACE_OS::fopen (options.ior_file.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
         if (!lm_ior)
           {
@@ -233,7 +233,15 @@ ACE_TMAIN (int argc, ACE_TCHAR * argv[])
                                    options.ior_file.c_str ()),
                                   -1);
           }
-        ACE_OS::fprintf (lm_ior.get (), "%s", str.in ());
+        int const write_result = ACE_OS::fprintf (lm_ior.get (), "%s", str.in ());
+        int const close_result = ACE_OS::fclose (lm_ior.release ());
+        if (write_result < 0 || close_result != 0)
+          {
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                   ACE_TEXT ("Unable to write IOR output file: %s\n"),
+                                   options.ior_file.c_str ()),
+                                  -1);
+          }
       }
 
 #if defined (ACE_LINUX) && defined (ACE_HAS_THREADS)
