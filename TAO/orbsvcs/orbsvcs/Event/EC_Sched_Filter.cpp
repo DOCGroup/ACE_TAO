@@ -144,7 +144,7 @@ TAO_EC_Sched_Filter::add_dependencies (RtecEventComm::EventHeader const &header,
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (qos_info.rt_info);
-      ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%C] ----> [%C]\n",
                   this->name_.c_str (),
                   info->entry_point.in ()));
     }
@@ -201,7 +201,7 @@ TAO_EC_Sched_Filter::init_rt_info ()
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (child.rt_info);
-      ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%C] ----> [%C]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
     }
@@ -217,7 +217,7 @@ TAO_EC_Sched_Filter::init_rt_info ()
 
       RtecScheduler::RT_Info_var info =
         this->scheduler_->get (this->body_info_);
-      ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "[%C] ----> [%C]\n",
                   info->entry_point.in (),
                   this->name_.c_str ()));
     }
@@ -231,7 +231,7 @@ TAO_EC_Sched_Filter::init_rt_info ()
 
   RtecScheduler::RT_Info_var info =
     this->scheduler_->get (this->parent_info_);
-  ORBSVCS_DEBUG ((LM_DEBUG, "[%s] ----> [%s]\n",
+  ORBSVCS_DEBUG ((LM_DEBUG, "[%C] ----> [%C]\n",
               this->name_.c_str (),
               info->entry_point.in ()));
 #endif /* 0 */
