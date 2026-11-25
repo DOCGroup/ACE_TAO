@@ -577,23 +577,23 @@ public:
   /// Return whether this include has been seen before.
   long seen_include_file_before (std::string const& filename);
 
+  /// @name Accessors for the last-seen include index
+  /// @{
   long last_seen_index () const;
   void last_seen_index (long val);
-  // Accessors for last_seen_index_ member.
+  /// @}
 
+  /// Return whether IDL names that are C++ keywords retain their names
+  /// instead of receiving an _cxx_ prefix. This should be true for the IFR service.
   bool preserve_cpp_keywords ();
-  // Whether we should not mung idl element names that are
-  // C++ keywords e.g. delete, operator etc. with _cxx_ prefix.
-  // Should be true when being used by the IFR Service
 
+  /// Set whether IDL names that are C++ keywords retain their names.
+  /// This is set by the IFR service.
   void preserve_cpp_keywords (bool);
-  // Set whether we should not mung idl element names that are C++
-  // keywords e.g. delete, operator etc. with _cxx_ prefix.
-  // Is set by the IFR Service.
 
+  /// Add an include path. @a is_system is true for TAO/CIAO paths and
+  /// false for paths provided by the user.
   void add_include_path (std::string const& path, bool is_system);
-  // Add another path to 'include_paths_'. is_system is true for TAO/CIAO
-  // specific paths and false for paths provided by user.
 
   void add_rel_include_path (std::string const& path);
   std::vector<std::string> const & rel_include_paths () const;
@@ -662,20 +662,18 @@ public:
   void ignore_idl3 (bool val);
   // Accessor for the ignore_idl3_ member.
 
+  /// Currently called only from the IDL backend, but could be useful elsewhere.
   int check_gperf ();
-  // Currently called only from IDL backend, but could be useful elsewhere.
 
+  /// Perform final cleanup before the process exits.
   void fini ();
-  // Do final cleanup just before process exits.
 
+  /// Access the primary key list.
   std::deque<AST_ValueType *> &primary_keys ();
-  // Accessor for the member.
 
+  /// Check the primary key list after yy_parse() returns, when forward-declared
+  /// structs or unions used in a valuetype have been fully defined.
   void check_primary_keys ();
-  // Called affer yy_parse() returns - iterates over our list
-  // of primary keys. Must be called this late so that we can
-  // be sure that all forward declared stucts or unions that
-  // might be used in such a valuetype are fully defined.
 
   std::optional<std::string> const& recursion_start () const;
   void recursion_start (std::string const& val);
@@ -688,28 +686,29 @@ public:
   std::string const& big_file_name () const;
   // Just get the const string.
 
+  /// @name Current template module parameters
+  /// If UTL_Scope::lookup_by_name() finds no match, it checks this list
+  /// when processing a referenced parameter of the enclosing template module.
+  /// @{
   FE_Utils::T_PARAMLIST_INFO const *current_params () const;
   void current_params (FE_Utils::T_PARAMLIST_INFO *params);
-  // Accessors for the member. If UTL_Scope::lookup_by_name()
-  // has a 0 result, it will check this param list (if it is not
-  // 0, meaning we are in the scope of a template module) for a
-  // match before returning, in case it is processing a
-  // referenced template parameter of the eclosing template
-  // module.
+  /// @}
 
+  /// @name Template module reference aliases
+  /// When parsing a reference, the referenced template module's scope is
+  /// traversed, but parameter holders are created with the alias names.
+  /// @{
   std::optional<UTL_StrList> const& alias_params () const;
   void alias_params (std::optional<UTL_StrList> params);
-  // Accessors for the member. If we are parsing a template
-  // module reference, we traverse the scope of the referenced
-  // template module, but create param holders with the
-  // alias names.
+  /// @}
 
+  /// @name Parameter holders for lookup
+  /// If a lookup matches current_params(), the created parameter holder
+  /// must match the corresponding element of this list when it is present.
+  /// @{
   std::optional<UTL_StrList> const& for_new_holder () const;
   void for_new_holder (std::optional<UTL_StrList> params);
-  // Accessors for the member. If a lookup matches something
-  // from current_params(), the actual created param holder must
-  // match the corresponding element on this list, if it is
-  // non-zero.
+  /// @}
 
   AST_Module *corba_module () const;
   void corba_module (AST_Module *m);
@@ -724,14 +723,13 @@ public:
   std::vector<Include_Path_Info> const& include_paths () const;
   // Accessor for the member.
 
+  /// Determines which diagnostic, if any, to emit for an anonymous IDL construct.
   enum class Anon_Type_Diagnostic
   {
     Error,
     Warning,
     Silent
   };
-  // Determines which type of diagnostic to emit, if any, upon
-  // detecting the presence of an anonymous IDL construct.
 
   void anon_type_diagnostic (Anon_Type_Diagnostic val);
   // Mutator for the member.
