@@ -493,9 +493,9 @@ ACE_Name_Options::namespace_dir (ACE_TCHAR const *dir)
 {
   ACE_TRACE ("ACE_Name_Options::namespace_dir");
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->namespace_dir_ );
+  ACE_Allocator::instance()->free (this->namespace_dir_);
 #else
-  ACE_OS::free ((void *) this->namespace_dir_ );
+  ACE_OS::free (this->namespace_dir_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
   this->namespace_dir_ = ACE_OS::strdup (dir);
 }
@@ -506,9 +506,9 @@ ACE_Name_Options::process_name (ACE_TCHAR const *pname)
   ACE_TRACE ("ACE_Name_Options::process_name");
   ACE_TCHAR const *t = ACE::basename (pname, ACE_DIRECTORY_SEPARATOR_CHAR);
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->process_name_ );
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->process_name_));
 #else
-  ACE_OS::free ((void *) this->process_name_ );
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->process_name_));
 #endif /* ACE_HAS_ALLOC_HOOKS */
   this->process_name_ = ACE_OS::strdup (t);
 }
@@ -518,9 +518,9 @@ ACE_Name_Options::nameserver_host (ACE_TCHAR const *host)
 {
   ACE_TRACE ("ACE_Name_Options::nameserver_host");
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->nameserver_host_ );
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->nameserver_host_));
 #else
-  ACE_OS::free ((void *) this->nameserver_host_ );
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->nameserver_host_));
 #endif /* ACE_HAS_ALLOC_HOOKS */
   this->nameserver_host_ = ACE_OS::strdup (host);
 }
@@ -544,9 +544,9 @@ ACE_Name_Options::database (ACE_TCHAR const *db)
 {
   ACE_TRACE ("ACE_Name_Options::database");
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->database_);
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->database_));
 #else
-  ACE_OS::free ((void *) this->database_);
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->database_));
 #endif /* ACE_HAS_ALLOC_HOOKS */
   this->database_ = ACE_OS::strdup (db);
 }
