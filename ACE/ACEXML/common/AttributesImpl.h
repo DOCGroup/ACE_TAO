@@ -142,7 +142,7 @@ public:
    */
   explicit ACEXML_AttributesImpl (int size = ACEXML_AttributesImpl_Default_Size);
   ACEXML_AttributesImpl (ACEXML_AttributesImpl const &attrs);
-  virtual ~ACEXML_AttributesImpl ();
+  ~ACEXML_AttributesImpl () override;
 
   /**
    * Add a new attribute using the argument(s) supplied.

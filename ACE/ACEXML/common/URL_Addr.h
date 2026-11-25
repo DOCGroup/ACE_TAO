@@ -91,7 +91,7 @@ public:
 
   void operator= (const ACEXML_URL_Addr &addr);
 
-  ~ACEXML_URL_Addr ();
+  ~ACEXML_URL_Addr () override;
 
   /**
    *  Compare two addresses for equality.  The addresses are considered

@@ -78,7 +78,7 @@ public:
   ACEXML_LocatorImpl &operator= (const ACEXML_LocatorImpl &) = delete;
   ACEXML_LocatorImpl &operator= (ACEXML_LocatorImpl &&) = delete;
 
-  virtual ~ACEXML_LocatorImpl ();
+  ~ACEXML_LocatorImpl () override;
 
   /*
    * Return the column number where the current document event ends.

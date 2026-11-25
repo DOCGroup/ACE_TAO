@@ -37,7 +37,7 @@ public:
 
   ACEXML_SAXException (const ACEXML_SAXException &ex);
 
-  virtual ~ACEXML_SAXException ();
+  ~ACEXML_SAXException () override;
 
   /// Throw the exception.
   void _raise () override;
@@ -82,7 +82,7 @@ public:
   /// Constructor which accepts an informational message
   explicit ACEXML_SAXNotSupportedException (const ACEXML_Char* msg);
 
-  virtual ~ACEXML_SAXNotSupportedException ();
+  ~ACEXML_SAXNotSupportedException () override;
 
   /// Throw the exception.
   void _raise () override;
@@ -120,7 +120,7 @@ public:
 
   ACEXML_SAXNotRecognizedException& operator= (const ACEXML_SAXNotRecognizedException &ex);
 
-  virtual ~ACEXML_SAXNotRecognizedException ();
+  ~ACEXML_SAXNotRecognizedException () override;
 
   /// Throw the exception.
   void _raise () override;
@@ -158,7 +158,7 @@ public:
 
   ACEXML_SAXParseException& operator= (const ACEXML_SAXParseException &ex);
 
-  virtual ~ACEXML_SAXParseException ();
+  ~ACEXML_SAXParseException () override;
 
   /// Throw the exception.
   void _raise () override;

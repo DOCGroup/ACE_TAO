@@ -45,7 +45,7 @@ class ACEXML_Export ACEXML_DefaultHandler
 public:
   ACEXML_DefaultHandler ();
 
-  virtual ~ACEXML_DefaultHandler ();
+  ~ACEXML_DefaultHandler () override;
 
   /// @name Methods inherited from ACEXML_ContentHandler.
   /// @{

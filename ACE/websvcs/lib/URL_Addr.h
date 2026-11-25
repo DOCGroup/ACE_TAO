@@ -36,7 +36,7 @@ public:
 
   ACE_URL_Addr& operator= (const ACE_URL_Addr& address);
 
-  virtual ~ACE_URL_Addr ();
+  ~ACE_URL_Addr () override;
 
   /// Get the original URL
   const ACE_TCHAR *get_url () const;
@@ -178,7 +178,7 @@ public:
   /// Essentially the copy constructor.
   int set (const ACE_HTTP_Addr &addr);
 
-  virtual ~ACE_HTTP_Addr ();
+  ~ACE_HTTP_Addr () override;
 
   /**
    * Build the INET_Address implicit in the URL, notice that we
@@ -280,7 +280,7 @@ public:
   /// Essentially the copy constructor.
   int set (const ACE_FTP_Addr &addr);
 
-  virtual ~ACE_FTP_Addr ();
+  ~ACE_FTP_Addr () override;
 
   /// Get the host name component in the URL
   const ACE_TCHAR *get_hostname () const;
@@ -358,7 +358,7 @@ public:
   /// Essentially the copy constructor.
   int set (const ACE_Mailto_Addr &addr);
 
-  virtual ~ACE_Mailto_Addr ();
+  ~ACE_Mailto_Addr () override;
 
   /// Get the username component in the URL
   const ACE_TCHAR *get_user () const;

@@ -37,7 +37,7 @@ namespace ACE_RMCast
   class Socket_Impl : protected Element
   {
   public:
-    ~Socket_Impl ();
+    ~Socket_Impl () override;
 
     Socket_Impl (Address const& a, bool loop, Parameters const& params);
 

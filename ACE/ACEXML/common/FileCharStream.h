@@ -33,7 +33,7 @@ public:
   ACEXML_FileCharStream& operator= (ACEXML_FileCharStream const&) = delete;
   ACEXML_FileCharStream& operator= (ACEXML_FileCharStream&&) = delete;
 
-  virtual ~ACEXML_FileCharStream ();
+  ~ACEXML_FileCharStream () override;
 
   /// Open a file.
   int open (ACEXML_Char const *name);
