@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file   Connection_Timeout_Policy_i.h
  *
@@ -44,6 +42,8 @@ class TAO_ConnectionTimeoutPolicy
 public:
   explicit TAO_ConnectionTimeoutPolicy (TimeBase::TimeT const &relative_expiry);
 
+  TAO_ConnectionTimeoutPolicy () = delete;
+
   TAO_ConnectionTimeoutPolicy (TAO_ConnectionTimeoutPolicy const &rhs);
   TAO_ConnectionTimeoutPolicy &operator= (TAO_ConnectionTimeoutPolicy const &) = delete;
   TAO_ConnectionTimeoutPolicy (TAO_ConnectionTimeoutPolicy &&) = delete;
@@ -60,7 +60,7 @@ public:
   /// CORBA::ORB::create_policy.
   static CORBA::Policy_ptr create (CORBA::Any const &val);
 
-  /// Returns a copy of <this>.
+  /// Returns a copy of this object.
   virtual TAO_ConnectionTimeoutPolicy *clone () const;
 
   TimeBase::TimeT relative_expiry () override;

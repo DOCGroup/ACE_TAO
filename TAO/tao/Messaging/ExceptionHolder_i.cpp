@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Messaging/ExceptionHolder_i.h"
 
 #include "tao/Messaging/Messaging.h"
@@ -66,20 +65,22 @@ namespace TAO
               throw ::CORBA::MARSHAL (TAO::VMCID, CORBA::COMPLETED_MAYBE);
             }
 
-          CORBA::SystemException* exception = TAO::create_system_exception (type_id.in ());
+          std::unique_ptr<CORBA::SystemException> exception (
+            TAO::create_system_exception (type_id.in ()));
 
           if (!exception)
             {
               // @@ We should raise a CORBA::NO_MEMORY, but we ran out
               //    of memory already. We need a pre-allocated, TSS,
               //    CORBA::NO_MEMORY instance
-              ACE_NEW (exception, CORBA::UNKNOWN);
+              CORBA::SystemException *fallback {};
+              ACE_NEW (fallback, CORBA::UNKNOWN);
+              exception.reset (fallback);
             }
           exception->minor (minor);
           exception->completed (CORBA::CompletionStatus (completion));
 
           // Raise the exception.
-          std::unique_ptr<CORBA::SystemException> const e_ptr (exception);
           exception->_raise ();
 
           return;
@@ -91,9 +92,11 @@ namespace TAO
       for (CORBA::ULong i {}; i != this->count_; ++i)
         {
           if (this->data_[i].id.compare(type_id.in ()) != 0)
+          {
             continue;
+          }
 
-          CORBA::Exception * const exception = this->data_[i].alloc ();
+          std::unique_ptr<CORBA::Exception> exception (this->data_[i].alloc ());
 
           if (!exception)
             {
@@ -105,7 +108,6 @@ namespace TAO
             }
 
           // Raise the exception.
-          std::unique_ptr<CORBA::Exception> const e_ptr (exception);
           exception->_raise ();
 
           return;
@@ -134,6 +136,7 @@ namespace TAO
     ACE_NEW_THROW_EX (ret_val,
                       ExceptionHolder,
                       CORBA::NO_MEMORY ());
+    CORBA::ValueBase_var safe_ret_val (ret_val);
 
     // @todo According to the latest corba spec we should be able to
     // pass this to the ExceptionHolder constructor but the TAO_IDL
@@ -142,7 +145,7 @@ namespace TAO
     ret_val->byte_order (this->byte_order ());
     ret_val->marshaled_exception (this->marshaled_exception ());
 
-    return ret_val;
+    return safe_ret_val._retn ();
   }
 
   CORBA::ValueBase *

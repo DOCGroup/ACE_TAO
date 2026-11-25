@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "tao/Messaging/Asynch_Invocation_Adapter.h"
 #include "tao/Messaging/Asynch_Reply_Dispatcher.h"
 #include "tao/Messaging/Asynch_Invocation.h"

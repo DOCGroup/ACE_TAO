@@ -88,8 +88,7 @@ TAO_RelativeRoundtripTimeoutPolicy::hook (TAO_ORB_Core *orb_core,
 
       if (TAO_debug_level > 0)
         {
-          ACE_UINT64 msecs {};
-          const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
+          ACE_UINT64 const msecs = time_value.get_msec ();
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - Request timeout is ")
                       ACE_TEXT ("%Q milliseconds\n"),
@@ -109,7 +108,9 @@ TAO_RelativeRoundtripTimeoutPolicy::create (CORBA::Any const &val)
   // exception safe!
   TimeBase::TimeT value {};
   if (!(val >>= value))
+  {
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+  }
 
   TAO_RelativeRoundtripTimeoutPolicy *tmp {};
   ACE_NEW_THROW_EX (tmp,
@@ -166,8 +167,7 @@ TAO_RelativeRoundtripTimeoutPolicy::set_time_value (ACE_Time_Value &time_value)
 
   if (TAO_debug_level > 0)
     {
-      ACE_UINT64 msecs;
-      const_cast<ACE_Time_Value const &> (time_value).msec (msecs);
+      ACE_UINT64 const msecs = time_value.get_msec ();
       TAOLIB_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("TAO (%P|%t) - Request timeout is ")
                   ACE_TEXT ("%Q milliseconds\n"),
@@ -237,11 +237,13 @@ TAO_Sync_Scope_Policy::hook (TAO_ORB_Core *orb_core,
         Messaging::SyncScopePolicy::_narrow (policy.in ());
 
       if (CORBA::is_nil (p.in ()))
-        throw ::CORBA::INTERNAL (
+        {
+          throw ::CORBA::INTERNAL (
                 CORBA::SystemException::_tao_minor_code (
                   TAO_POLICY_NARROW_CODE,
                   0),
                 CORBA::COMPLETED_NO);
+        }
 
       has_synchronization = true;
       scope = p->synchronization ();
@@ -257,7 +259,9 @@ TAO_Sync_Scope_Policy::create (CORBA::Any const &val)
 {
   Messaging::SyncScope synchronization {};
   if (!(val >>= synchronization))
+  {
     throw ::CORBA::PolicyError (CORBA::BAD_POLICY_VALUE);
+  }
 
   TAO_Sync_Scope_Policy *servant {};
   ACE_NEW_THROW_EX (servant,

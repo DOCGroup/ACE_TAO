@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file    Asynch_Invocation.h
  *
@@ -45,6 +43,7 @@ namespace TAO
                               TAO_Asynch_Reply_Dispatcher_Base *rd,
                               bool response_expected = true);
 
+    Asynch_Remote_Invocation () = delete;
     Asynch_Remote_Invocation (Asynch_Remote_Invocation const &) = delete;
     Asynch_Remote_Invocation &operator= (Asynch_Remote_Invocation const &) = delete;
     Asynch_Remote_Invocation (Asynch_Remote_Invocation &&) = delete;
@@ -53,8 +52,7 @@ namespace TAO
     Invocation_Status remote_invocation (ACE_Time_Value *value);
 
   protected:
-    // To prevent leaking memory from the reply dispatcher that we
-    // are given
+    /// Prevents leaking memory from the reply dispatcher that was given.
     ACE_Utils::Auto_Functor <TAO_Asynch_Reply_Dispatcher_Base,
                              ARDB_Refcount_Functor> safe_rd_;
   };

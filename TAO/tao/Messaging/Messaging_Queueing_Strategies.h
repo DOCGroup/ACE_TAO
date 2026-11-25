@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file    Messaging_Queueing_Strategies.h
  *

@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  *  @file Messaging.h
  *
@@ -30,6 +28,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Messaging_Export TAO_Messaging_Initializer
 {
 public:
+  TAO_Messaging_Initializer () = delete;
+
   /// Used to force the initialisation of the ORB code.
   static int init ();
 };
