@@ -179,8 +179,8 @@ Client::handle_input (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) buf of size %d = %*s\n",
-                  static_cast<int> (n),
+                  "(%P|%t) buf of size %b = %*s\n",
+                  n,
                   static_cast<int> (n),
                   buf.data ()));
     }

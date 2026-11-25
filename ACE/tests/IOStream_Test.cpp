@@ -245,10 +245,10 @@ client (void *arg)
   server >> d;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) Client Received: int %d float %f long %d float %f double %f\n"),
+              ACE_TEXT (" (%P|%t) Client Received: int %d float %f long %Ld float %f double %f\n"),
               i,
               f1,
-              static_cast<int> (l),
+              l,
               f2,
               d));
 
@@ -385,10 +385,10 @@ server (void *arg)
   client_handler >> i >> f1 >> l >> f2 >> d;
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT (" (%P|%t) Server Received: int %d float %f long %d float %f double %f\n"),
+              ACE_TEXT (" (%P|%t) Server Received: int %d float %f long %Ld float %f double %f\n"),
               i,
               f1,
-              static_cast<int> (l),
+              l,
               f2,
               d));
 
