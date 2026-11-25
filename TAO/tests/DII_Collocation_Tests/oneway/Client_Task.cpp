@@ -115,8 +115,8 @@ Client_Task::svc ()
 
       std::unique_ptr<::Test::Unbounded_Var_Size_Arg> ub_var_size =
         std::make_unique<::Test::Unbounded_Var_Size_Arg> ();
-      ub_var_size->replace (ub_var_size->maximum (),
-        std::strlen (TEST_STR),
+      ub_var_size->replace (static_cast<CORBA::ULong> (std::strlen (TEST_STR)),
+        static_cast<CORBA::ULong> (std::strlen (TEST_STR)),
         TEST_STR);
 
       req->add_in_arg ("ub_var_size") <<= ub_var_size.release ();
@@ -168,8 +168,8 @@ Client_Task::svc ()
         bvs.data ());
 
       ub_var_size = std::make_unique<::Test::Unbounded_Var_Size_Arg> ();
-      ub_var_size->replace (ub_var_size->maximum (),
-        std::strlen (TEST_STR),
+      ub_var_size->replace (static_cast<CORBA::ULong> (std::strlen (TEST_STR)),
+        static_cast<CORBA::ULong> (std::strlen (TEST_STR)),
         TEST_STR);
 
       for (CORBA::ULong j = 0; j < ::Test::VAR_ARRAY_SIZE; ++j)
