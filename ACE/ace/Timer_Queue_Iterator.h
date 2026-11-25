@@ -170,7 +170,9 @@ public:
   ACE_Timer_Queue_Iterator_T () = default;
 
   ACE_Timer_Queue_Iterator_T (ACE_Timer_Queue_Iterator_T const &) = default;
+  ACE_Timer_Queue_Iterator_T (ACE_Timer_Queue_Iterator_T &&) = default;
   ACE_Timer_Queue_Iterator_T &operator= (ACE_Timer_Queue_Iterator_T const &) = default;
+  ACE_Timer_Queue_Iterator_T &operator= (ACE_Timer_Queue_Iterator_T &&) = default;
 
   virtual ~ACE_Timer_Queue_Iterator_T ();
 
