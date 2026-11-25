@@ -4,6 +4,12 @@
 
 #include "ace/OS_NS_string.h"
 
+#if defined (ACE_HAS_FORE_ATM_WS2)
+#include "ace/OS_NS_ctype.h"
+#include <cassert>
+#include <fstream>
+#endif
+
 #if !defined (__ACE_INLINE__)
 #include "ace/ATM_Stream.inl"
 #endif /* __ACE_INLINE__ */
@@ -66,17 +72,20 @@ ACE_ATM_Stream::get_peer_name () const
     }
 
   char buffer[256];
-  for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; ++index) {
-    buffer[ index * 3 ] = '\0';
-    ACE_OS::sprintf (buffer, "%s%02x.", buffer, name.satm_number.Addr[ index ]);
-  }
+  for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; ++index)
+    {
+      buffer[ index * 3 ] = '\0';
+      ACE_OS::sprintf (buffer, "%s%02x.", buffer, name.satm_number.Addr[ index ]);
+    }
   buffer[ (ATM_ADDR_SIZE - 1) * 3 ] = '\0';
   ACE_OS::sprintf (buffer, "%s%02x.", buffer, 0);
   buffer[ ATM_ADDR_SIZE * 3 - 1 ] = '\0';
-  for (index = 0; index < ACE_OS::strlen (buffer); ++index)
-    buffer[index] = ACE_OS::ace_tolower (buffer[index]);
+  for (size_t index = 0; index < ACE_OS::strlen (buffer); ++index)
+    {
+      buffer[index] = ACE_OS::ace_tolower (buffer[index]);
+    }
 
-  ifstream atm_hosts ("C:/WINNT/atmhosts");
+  std::ifstream atm_hosts ("C:/WINNT/atmhosts");
   assert (atm_hosts.is_open ());
 
   // Find the host address in the ATM hosts file and return the
@@ -88,14 +97,16 @@ ACE_ATM_Stream::get_peer_name () const
   while (!atm_hosts.eof ()) {
     atm_hosts.getline (line, 256);
     // Convert the line to lower case to ease comparison
-    for (index = 0; index < ACE_OS::strlen (line); ++index)
-      line[index] = ACE_OS::ace_tolower (line[index]);
+    for (size_t index = 0; index < ACE_OS::strlen (line); ++index)
+      {
+        line[index] = ACE_OS::ace_tolower (line[index]);
+      }
     if (ACE_OS::strstr (line, buffer) != nullptr)
       {
         char *strtok_p;
         // Grab the second token which is the host name
         ACE_OS::strtok_r (line, " \t", &strtok_p);
-        host_ptr = ACE_OS::strtok (nullptr, " \t", &strtok_p);
+        host_ptr = ACE_OS::strtok_r (nullptr, " \t", &strtok_p);
         ACE_OS::strcpy (host_name, host_ptr);
         break;
       }
