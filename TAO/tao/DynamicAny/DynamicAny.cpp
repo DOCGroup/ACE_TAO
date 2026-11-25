@@ -9,8 +9,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_DynamicAny_Loader::TAO_DynamicAny_Loader ()
-{
-}
+= default;
 
 CORBA::Object_ptr
 TAO_DynamicAny_Loader::create_object (CORBA::ORB_ptr,

@@ -6,13 +6,10 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Default_Server_Strategy_Factory::TAO_Default_Server_Strategy_Factory ()
-{
-}
+= default;
 
 TAO_Default_Server_Strategy_Factory::~TAO_Default_Server_Strategy_Factory ()
-{
-  // Perform appropriate cleanup.
-}
+= default;
 
 int
 TAO_Default_Server_Strategy_Factory::activate_server_connections ()

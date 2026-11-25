@@ -4,8 +4,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ORB_Core_TSS_Resources::TAO_ORB_Core_TSS_Resources ()
-{
-}
+= default;
 
 TAO_ORB_Core_TSS_Resources::~TAO_ORB_Core_TSS_Resources ()
 {
