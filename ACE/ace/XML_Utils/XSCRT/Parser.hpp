@@ -36,8 +36,7 @@ namespace XSCRT
     {
       while (ei_ < e_->getLength ())
       {
-        xercesc::DOMNode *const n (e_->item (ei_));
-        ++ei_;
+        xercesc::DOMNode *const n (e_->item (ei_++));
         if (n->getNodeType () == xercesc::DOMNode::ELEMENT_NODE)
         {
           return XML::Element<C> (XML::dom_cast<xercesc::DOMElement *> (n));
@@ -53,9 +52,7 @@ namespace XSCRT
 
     XML::Attribute<C> next_attribute ()
     {
-      xercesc::DOMNode *const n (a_->item (ai_));
-      ++ai_;
-      return XML::Attribute<C> (XML::dom_cast<xercesc::DOMAttr *> (n));
+      return XML::Attribute<C> (XML::dom_cast<xercesc::DOMAttr *> (a_->item (ai_++)));
     }
 
   private:

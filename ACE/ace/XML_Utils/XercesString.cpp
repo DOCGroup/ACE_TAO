@@ -38,10 +38,10 @@ namespace XML
   XStr &XStr::operator= (XStr const &rhs)
   {
     if (std::addressof (rhs) != this)
-    {
-      XStr temp (rhs);
-      std::swap (this->_wstr, temp._wstr);
-    }
+      {
+        XStr temp (rhs);
+        std::swap (this->_wstr, temp._wstr);
+      }
 
     return *this;
   }
@@ -49,9 +49,9 @@ namespace XML
   XStr &XStr::operator= (XStr &&rhs) noexcept
   {
     if (this != std::addressof (rhs))
-    {
-      _wstr = std::move (rhs._wstr);
-    }
+      {
+        _wstr = std::move (rhs._wstr);
+      }
 
     return *this;
   }
@@ -72,9 +72,9 @@ namespace XML
   bool XStr::append (XMLCh const *tail)
   {
     if (tail == nullptr)
-    {
-      return false;
-    }
+      {
+        return false;
+      }
 
     XMLSize_t const iTailLen (xercesc::XMLString::stringLen (tail));
     XMLSize_t const iWorkLen (
@@ -86,15 +86,15 @@ namespace XML
     };
 
     if (!result)
-    {
-      return false;
-    }
+      {
+        return false;
+      }
 
     XMLCh *target = result.get ();
     if (iWorkLen != 0)
-    {
-      xercesc::XMLString::moveChars (target, _wstr.get (), iWorkLen);
-    }
+      {
+        xercesc::XMLString::moveChars (target, _wstr.get (), iWorkLen);
+      }
     target += iWorkLen;
     xercesc::XMLString::moveChars (target, tail, iTailLen);
     target += iTailLen;
@@ -106,9 +106,9 @@ namespace XML
   bool XStr::erase (XMLCh const *head, XMLCh const *tail)
   {
     if (!(head <= tail && head >= begin () && tail <= end ()))
-    {
-      return false;
-    }
+      {
+        return false;
+      }
 
     XMLSize_t const bytes ((size () - (tail - head) + 1) * sizeof (XMLCh));
     detail::Xerces_String result {
@@ -116,9 +116,9 @@ namespace XML
     };
 
     if (!result)
-    {
-      return false;
-    }
+      {
+        return false;
+      }
 
     XMLCh *target = result.get ();
     XMLCh const *cursor = begin ();
@@ -141,9 +141,9 @@ namespace XML
   XMLSize_t XStr::size () const
   {
     if (_wstr == nullptr)
-    {
-      return XMLSize_t{};
-    }
+      {
+        return XMLSize_t{};
+      }
 
     return xercesc::XMLString::stringLen (_wstr.get ());
   }

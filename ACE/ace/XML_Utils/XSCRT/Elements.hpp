@@ -105,9 +105,6 @@ namespace XSCRT
       return *this;
     }
 
-    Type (Type &&) = delete;
-    Type &operator= (Type &&) = delete;
-
   public:
     Type const *container () const
     {
