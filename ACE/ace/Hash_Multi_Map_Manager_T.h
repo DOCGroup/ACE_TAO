@@ -401,7 +401,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  /// STL styled iterator factory functions.
+  /// @name STL styled iterator factory functions.
+  /// @{
 
   /// Return forward iterator.
   ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> begin ();
@@ -410,13 +411,12 @@ public:
   /// Return reverse iterator.
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> rbegin ();
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> rend ();
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// The following methods do the actual work.
-
   /// Returns 1 if @a id1 == @a id2, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
   int equal (const EXT_ID &id1, const EXT_ID &id2);
@@ -425,7 +425,8 @@ protected:
   /// separate method to facilitate template specialization.
   u_long hash (const EXT_ID &ext_id);
 
-  /// These methods assume locks are held by private methods.
+  /// @name Methods called with locks held
+  /// @{
 
   /// Performs bind.  Must be called with locks held.
   int bind_i (const EXT_ID &ext_id,
@@ -534,6 +535,7 @@ protected:
   /// Removes all the entries in Map_Manager.  Must be called with
   /// locks held.
   int unbind_all_i ();
+  /// @}
 
   /// Pointer to a memory allocator used for table_, so it should
   /// supply size*sizeof (@c ACE_Hash_Multi_Map_Entry<@c EXT_ID, @c INT_ID>),
@@ -742,7 +744,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  /// STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -755,6 +758,8 @@ public:
 
   /// Postfix reverse.
   ACE_Hash_Multi_Map_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -787,7 +792,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  /// STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -800,6 +806,8 @@ public:
 
   /// Postfix reverse.
   ACE_Hash_Multi_Map_Const_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -832,7 +840,8 @@ public:
                                       const EXT_ID &ext_id,
                                       int tail = 0);
 
-  /// STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -859,6 +868,8 @@ public:
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
   bool operator!= (const ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+
+  /// @}
 
 protected:
   /// Move forward by one element in the set.  Returns 0 when there's
@@ -907,7 +918,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  /// STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix reverse.
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -920,6 +932,8 @@ public:
 
   /// Postfix advance.
   ACE_Hash_Multi_Map_Reverse_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
