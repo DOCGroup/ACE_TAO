@@ -290,9 +290,8 @@ public:
 
 protected:
   /// @name Internal map operations
-  /// @{
-
   /// These methods assume that the locks are held by the private methods.
+  /// @{
 
   /// Performs the binding of @a ext_id to @a int_id.  Must be called
   /// with locks held.

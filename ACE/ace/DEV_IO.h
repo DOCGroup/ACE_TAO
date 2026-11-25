@@ -151,8 +151,8 @@ public:
   void dump () const;
 
   /// @name Connector compatibility accessors
-  /// @{
   /// These methods are no-ops to keep ACE_Connector happy.
+  /// @{
   /// Return the local endpoint address.
   int get_local_addr (ACE_DEV_Addr &) const;
 

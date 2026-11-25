@@ -542,9 +542,8 @@ protected:
   /// @}
 
   /// @name Queue activation implementation
-  /// @{
-
   /// These methods assume the queue locks are held.
+  /// @{
 
   /**
    * Notifies all waiting threads that the queue has been deactivated

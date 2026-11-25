@@ -167,8 +167,8 @@ protected:
   /// @}
 
   /// @name Queue synchronization helpers
-  /// @{
   /// These methods assume the queue locks are held.
+  /// @{
   /// Wait for the queue to become non-full.
   virtual int wait_not_full_cond (ACE_Time_Value *tv);
 
