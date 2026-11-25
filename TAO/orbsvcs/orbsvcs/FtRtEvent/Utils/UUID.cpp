@@ -125,11 +125,13 @@ bytes_to_hex (unsigned char const *bytes,
 void
 UUID::to_string (char *string_rep) const
 {
+  size_t offset {};
   for (int i {}; i < 5; ++i)
   {
-    string_rep = bytes_to_hex(rep_.uuid,
+    string_rep = bytes_to_hex(rep_.uuid + offset,
                               string_rep,
                               counts[i]);
+    offset += counts[i];
     *string_rep++ = seperators[i];
   }
 }

@@ -1,5 +1,4 @@
 #include <cstring>
-#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace TAO_FtRt
@@ -50,8 +49,9 @@ void UUID::to_binary(unsigned char *binary_rep) const
 ACE_INLINE
 void UUID::to_string(ACE_CString& string) const
 {
-  string.resize(STRING_LENGTH-1);
-  this->to_string (std::addressof (string[0]));
+  char buffer[STRING_LENGTH] {};
+  this->to_string (buffer);
+  string = buffer;
 }
 }
 TAO_END_VERSIONED_NAMESPACE_DECL
