@@ -55,9 +55,11 @@ Request_Handler::handle_input (ACE_HANDLE fd)
 {
   std::array<ACE_TCHAR, BUFSIZ> buffer {};
   ACE_TCHAR len {};
-  ssize_t const result = this->peer ().recv (&len, sizeof (ACE_TCHAR));
+  ssize_t const result = this->peer ().recv_n (&len, sizeof (ACE_TCHAR));
 
-  if (result > 0
+  if (result == static_cast<ssize_t> (sizeof (ACE_TCHAR))
+      && len > 0
+      && static_cast<size_t> (len) < buffer.size ()
       && this->peer ().recv_n (buffer.data (), len * sizeof (ACE_TCHAR))
       == static_cast<ssize_t> (len * sizeof (ACE_TCHAR)))
     {
