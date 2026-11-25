@@ -6,8 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_Pull_Handler::TAO_LB_Pull_Handler ()
-{
-}
+= default;
 
 void
 TAO_LB_Pull_Handler::initialize (TAO_LB_MonitorMap * monitor_map,

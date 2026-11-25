@@ -4,8 +4,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Persistent_Naming_Context_Factory::TAO_Persistent_Naming_Context_Factory ()
-{
-}
+= default;
 
 /// Destructor.  Does not deallocate the hash map: if an instance of
 /// this class goes out of scope, its hash_map remains in persistent storage.

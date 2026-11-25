@@ -10,8 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Constraint_Evaluator::Operand_Queue::Operand_Queue ()
-{
-}
+= default;
 
 bool
 TAO_Constraint_Evaluator::Operand_Queue::empty () const

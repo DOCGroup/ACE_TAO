@@ -3,8 +3,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_ECG_ConsumerEC_Control::TAO_ECG_ConsumerEC_Control ()
-{
-}
+= default;
 
 int
 TAO_ECG_ConsumerEC_Control::activate ()
