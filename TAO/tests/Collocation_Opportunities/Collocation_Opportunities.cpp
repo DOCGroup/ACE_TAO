@@ -224,8 +224,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       orb->shutdown (true);
 
       int const wait_result = task.wait ();
-      ACE_ASSERT (wait_result != -1);
-      ACE_UNUSED_ARG (wait_result);
+      ACE_TEST_ASSERT (wait_result != -1);
     }
   catch (CORBA::Exception const &ex)
     {
