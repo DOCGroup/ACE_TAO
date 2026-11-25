@@ -56,8 +56,8 @@ public:
   ///   A set of values for the execution of the consumer.
   ///
   ///   Used so that the process of registering, unregistering
-  ///   and exiting neednt be dependent on 'r' 'u' and 'q'.
-  ///   Also, #define clutters up the global namespace.
+  ///   and exiting need not depend on 'r' 'u' and 'q'.
+  ///   Also, \#define clutters up the global namespace.
 enum
   {
     /// The character that the user must type to register the consumer with

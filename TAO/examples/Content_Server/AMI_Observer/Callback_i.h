@@ -50,8 +50,8 @@ public:
 
   explicit Callback_i (std::atomic<int>& request_count);
 
-  /// This operation returns the next @a chunk of the file starting at
-  /// the file offset.  If there are no more bindings, false is returned.
+  /// Receives the next @a chunk of the file.
+  /// @a last_chunk indicates that no more chunks will follow.
   void next_chunk (Web_Server::Chunk_Type const& chunk,
                    CORBA::Boolean last_chunk) override;
 
