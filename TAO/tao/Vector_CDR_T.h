@@ -20,7 +20,7 @@ namespace TAO
   bool
   marshal_value_vector (
     TAO_OutputCDR &strm,
-    const std::vector<T> &source)
+    std::vector<T> const &source)
   {
     ::CORBA::ULong const length = source.size ();
 
@@ -75,7 +75,7 @@ namespace TAO
         tmp[i] = tmp_elem;
       }
 
-    tmp.swap(target);
+    tmp.swap (target);
     return true;
   }
 
@@ -83,7 +83,7 @@ namespace TAO
   bool
   marshal_objref_vector (
     TAO_OutputCDR &strm,
-    const std::vector<typename T::_ptr_type> &source)
+    std::vector<typename T::_ptr_type> const &source)
   {
     ::CORBA::ULong const length = source.size ();
 
@@ -146,7 +146,7 @@ namespace TAO
   bool
   marshal_array_vector (
     TAO_OutputCDR &strm,
-    const std::vector<typename T_forany::_slice_type *> &source)
+    std::vector<typename T_forany::_slice_type *> const &source)
   {
     using var_type = TAO_FixedArray_Var_T<typename T_forany::_array_type,
                                           typename T_forany::_slice_type,
