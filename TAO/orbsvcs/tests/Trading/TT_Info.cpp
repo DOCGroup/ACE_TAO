@@ -297,7 +297,7 @@ TT_Parse_Args::TT_Parse_Args (int& argc, ACE_TCHAR** argv)
                 {
                   ACE_ERROR ((LM_ERROR,
                               "Unable to open %s for reading: %p\n",
-                              file_name));
+                              file_name, ACE_TEXT ("fopen")));
                 }
 
               arg_shifter.consume_arg ();

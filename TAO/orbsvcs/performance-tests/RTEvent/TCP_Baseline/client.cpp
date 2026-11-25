@@ -250,7 +250,7 @@ Measuring_Task::svc ()
       } else if (n == -1) {
         ACE_ERROR((LM_ERROR,
                    "Error writing data to server <%s> %p\n",
-                   endpoint_));
+                   endpoint_, ACE_TEXT ("write")));
         break;
       }
       if (n == 0 || n == -1)
@@ -270,7 +270,7 @@ Measuring_Task::svc ()
       } else if (n == -1) {
         ACE_ERROR((LM_ERROR,
                    "Error reading data from server <%s> %p\n",
-                   endpoint_));
+                   endpoint_, ACE_TEXT ("read")));
         break;
       }
 
