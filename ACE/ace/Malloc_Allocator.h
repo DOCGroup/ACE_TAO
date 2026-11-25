@@ -48,13 +48,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_New_Allocator : public ACE_Allocator
 {
 public:
-  /// These methods are defined.
+  /// @name Memory allocation operations
+  /// @{
   void *malloc (size_t nbytes) override;
   void *calloc (size_t nbytes, char initial_value = '\0') override;
   void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0') override;
   void free (void *ptr) override;
+  /// @}
 
-  /// These methods are no-ops.
+  /// @name Unsupported operations
+  /// @{
   int remove () override;
   int bind (const char *name, void *pointer, int duplicates = 0) override;
   int trybind (const char *name, void *&pointer) override;
@@ -66,6 +69,7 @@ public:
   int sync (void *addr, size_t len, int flags = MS_SYNC) override;
   int protect (ssize_t len = -1, int prot = PROT_RDWR) override;
   int protect (void *addr, size_t len, int prot = PROT_RDWR) override;
+  /// @}
 #if defined (ACE_HAS_MALLOC_STATS)
   virtual void print_stats () const;
 #endif /* ACE_HAS_MALLOC_STATS */
