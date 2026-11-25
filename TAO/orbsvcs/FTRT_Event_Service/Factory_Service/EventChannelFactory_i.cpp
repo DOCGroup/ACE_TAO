@@ -12,6 +12,23 @@
 
 constexpr int WAIT_FOR_REGISTRATION_TIME = 10; //sec
 
+namespace
+{
+  template <typename SOCKET>
+  struct Socket_Closer
+  {
+    SOCKET &socket;
+
+    ~Socket_Closer ()
+    {
+      if (this->socket.get_handle () != ACE_INVALID_HANDLE)
+        {
+          this->socket.close ();
+        }
+    }
+  };
+}
+
 EventChannelFactory_i::EventChannelFactory_i (std::string const &conf_filename,
                                               CORBA::ORB_ptr orb_ptr)
   : conf_file (conf_filename)
@@ -100,9 +117,15 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   // create an acceptor and get the listen address
 
   ACE_SOCK_Acceptor acceptor {};
+  Socket_Closer<ACE_SOCK_Acceptor> const acceptor_closer {acceptor};
   ACE_INET_Addr server_addr {};
-  acceptor.open(server_addr);
-  acceptor.get_local_addr(server_addr);
+  if (acceptor.open (server_addr) == -1
+      || acceptor.get_local_addr (server_addr) == -1)
+    {
+      ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Cannot create event factory listener: %p\n"),
+                      ACE_TEXT ("acceptor")));
+      return CORBA::Object::_nil ();
+    }
 
   ACE_Process_Options options {};
   ACE_TString str {};
@@ -171,6 +194,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
 
   ACE_INET_Addr client_addr {};
   ACE_SOCK_Stream stream {};
+  Socket_Closer<ACE_SOCK_Stream> const stream_closer {stream};
 
   ORBSVCS_DEBUG((LM_DEBUG, "accepting connection from event channel\n"));
   if (acceptor.accept (stream, std::addressof (client_addr),
