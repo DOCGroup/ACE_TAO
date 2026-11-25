@@ -27,8 +27,8 @@ public:
   BS_Server &operator= (BS_Server &&) = delete;
 
   /**
-   * This function is used to merge the <key_name> from server
-   * <host_name> into the sorted list of userids kept on the client's
+   * This function is used to merge the @c key_name from server
+   * @c host_name into the sorted list of userids kept on the client's
    * side.
    */
   Protocol_Record *insert (char const *key_name,

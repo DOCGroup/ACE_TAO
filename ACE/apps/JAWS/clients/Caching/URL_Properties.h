@@ -31,7 +31,7 @@ public:
   /// ACE_WString.
   static size_t size (const ACE_WString &wstr);
 
-  /// Encode <wstr> into <buf> for network communication.
+  /// Encode @c wstr into @c buf for network communication.
   /// Return total octets consumed.
   static size_t encode (void *buf, const ACE_WString &wstr);
 
@@ -48,7 +48,7 @@ public:
  *
  * @brief Defines a property of a URL.
  *
- * A property contains a <name> and a <value>.
+ * A property contains a @c name and a <value>.
  * A URL may contain some properties and we can "locate"
  * the URL's we are looking for by examming URL for certain
  * properties that match our need.
@@ -133,8 +133,8 @@ using ACE_URL_Property_Seq = ACE_Array<ACE_URL_Property>;
  *
  * @brief Defines a URL offer.
  *
- * A URL offer is defined by a <url> and an
- * <ACE_URL_Property_Seq>.  An offer is stored at server end
+ * A URL offer is defined by a @c url and an
+ * @c ACE_URL_Property_Seq.  An offer is stored at server end
  * thru registering or reported back to querying client from the
  * sever.
  */

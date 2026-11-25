@@ -40,8 +40,8 @@ protected:
   virtual int recv (ACE_Message_Block *&);
 
   /**
-   * This delegates to the <Event_Channel> to do the actual
-   * processing.  Typically, it forwards the <event> to its
+   * This delegates to the @c Event_Channel to do the actual
+   * processing.  Typically, it forwards the @c event to its
    * appropriate Consumer.
    */
   int process (ACE_Message_Block *event);

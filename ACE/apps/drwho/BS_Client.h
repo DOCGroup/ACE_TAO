@@ -25,8 +25,8 @@ public:
   BS_Client &operator= (BS_Client &&) = delete;
 
   /**
-   * This function is used to merge the <key_name> from server
-   * <host_name> into the sorted list of userids kept on the client's
+   * This function is used to merge the @c key_name from server
+   * @c host_name into the sorted list of userids kept on the client's
    * side.  Since we *know* we are going to find the name we use the
    * traditional binary search.
    */

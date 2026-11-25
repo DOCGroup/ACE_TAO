@@ -49,17 +49,17 @@ public:
   HTTP_Handler &operator= (HTTP_Handler &&) = delete;
 
   /**
-   * The handler is initialized with a connection <handle> of a new
-   * client and any <initial_data> that came across. The
-   * <initial_data> block will be of MAX_REQUEST_SIZE and the number
-   * of bytes in <initial_data> can be found from
-   * <initial_data>.length ()
+   * The handler is initialized with a connection @c handle of a new
+   * client and any @c initial_data that came across. The
+   * @c initial_data block will be of MAX_REQUEST_SIZE and the number
+   * of bytes in @c initial_data can be found from
+   * @c initial_data.length ()
    */
   virtual void open (ACE_HANDLE handle,
                      ACE_Message_Block &initial_data);
 
 protected:
-  /// The constructor is passed the factory that created <this> and the
+  /// The constructor is passed the factory that created @c this and the
   /// IO mechanism that the handler should use.
   HTTP_Handler (JAWS_IO &io,
                 HTTP_Handler_Factory &factory);

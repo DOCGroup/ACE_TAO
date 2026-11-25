@@ -81,10 +81,10 @@ protected:
   FPRT::Return_Type getint (ACE_INT32 &value);
 
   /**
-   * Read the next "word," which is demarcated by <delimiter>s.
+   * Read the next "word," which is demarcated by @c delimiters.
    *
    * @@ This function is inherently flawed since it doesn't take a
-   * count of the size of <buf>...
+   * count of the size of @c buf...
    */
   FPRT::Return_Type readword (char buf[]);
 

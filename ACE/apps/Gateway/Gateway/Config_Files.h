@@ -76,7 +76,7 @@ public:
   ACE_INT32 type_ {};
 
   /// Connection ids for consumers that will be routed information
-  /// containing this <connection_id_>
+  /// containing this @c connection_id_
   ACE_INT32 consumers_[MAX_CONSUMERS] {};
 
   /// Total number of these consumers.

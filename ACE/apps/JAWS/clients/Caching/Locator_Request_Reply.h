@@ -30,8 +30,8 @@ public:
   /**
    * Query the locator for HTTP with designate properties (none, some,
    * or all).  The locator being queried will return a sequence of
-   * offers with <how_many> offers in it.  This interface allocates
-   * <offer> so users must deallocate it after use.
+   * offers with @c how_many offers in it.  This interface allocates
+   * @c offer so users must deallocate it after use.
    */
   int url_query (const int how,
                  const ACE_URL_Property_Seq &pseq,
