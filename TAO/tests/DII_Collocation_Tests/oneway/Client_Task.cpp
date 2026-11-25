@@ -99,13 +99,11 @@ Client_Task::svc ()
 
       req = obj->_request ("test_bounded_var_size_arg");
 
-      std::string bvs = std::string (TEST_STR).substr (0, ::Test::BOUNDED_VAR_SIZE);
-
       std::unique_ptr<::Test::Bounded_Var_Size_Arg> bd_var_size =
         std::make_unique<::Test::Bounded_Var_Size_Arg> ();
 
-      bd_var_size->replace (::Test::BOUNDED_VAR_SIZE,
-        bvs.data ());
+      bd_var_size->length (::Test::BOUNDED_VAR_SIZE);
+      std::memcpy (bd_var_size->get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE);
 
       // The generated noncopying Any insertion takes ownership of each value.
       req->add_in_arg ("bd_var_size") <<= bd_var_size.release ();
@@ -164,8 +162,8 @@ Client_Task::svc ()
       req = obj->_request ("test_args_3");
 
       bd_var_size = std::make_unique<::Test::Bounded_Var_Size_Arg> ();
-      bd_var_size->replace (::Test::BOUNDED_VAR_SIZE,
-        bvs.data ());
+      bd_var_size->length (::Test::BOUNDED_VAR_SIZE);
+      std::memcpy (bd_var_size->get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE);
 
       ub_var_size = std::make_unique<::Test::Unbounded_Var_Size_Arg> ();
       ub_var_size->replace (static_cast<CORBA::ULong> (std::strlen (TEST_STR)),

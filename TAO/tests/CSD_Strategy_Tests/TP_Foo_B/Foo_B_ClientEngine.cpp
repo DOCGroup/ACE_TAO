@@ -123,12 +123,12 @@ Foo_B_ClientEngine::execute()
 
   Bounded_Var_Size_var bd_var_size_string = new Bounded_Var_Size();
 
-  bd_var_size_string->replace (std::strlen (test_str) + 1,
-                               test_str);
+  CORBA::ULong const test_str_length = static_cast<CORBA::ULong> (std::strlen (test_str) + 1);
+  bd_var_size_string->length (test_str_length);
+  std::memcpy (bd_var_size_string->get_buffer (), test_str, test_str_length);
   this->obj_->test_bounded_var_size_arg (bd_var_size_string.in ());
 
   Unbounded_Var_Size_var ub_var_size_string = new Unbounded_Var_Size(100);
-  CORBA::ULong const test_str_length = static_cast<CORBA::ULong> (std::strlen (test_str) + 1);
   ub_var_size_string->replace (test_str_length,
                                test_str_length,
                                test_str);
