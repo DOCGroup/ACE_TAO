@@ -16,6 +16,8 @@
 class RT_Properties
 {
 public:
+  ~RT_Properties () = default;
+
   static std::unique_ptr<RT_Properties> create ();
   static std::unique_ptr<RT_Properties> read_from (ACE_TString const &file_name);
 

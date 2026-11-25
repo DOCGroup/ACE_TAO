@@ -11,6 +11,7 @@ class RolyPoly_i : public virtual POA_RolyPoly,
 {
 public:
   explicit RolyPoly_i (CORBA::ORB_ptr orb);
+  ~RolyPoly_i () override = default;
 
   // Checkpointable
   CORBA::Any *get_state () override;

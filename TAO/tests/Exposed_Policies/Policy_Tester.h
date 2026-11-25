@@ -23,6 +23,7 @@ class Policy_Tester
 {
 public:
   Policy_Tester () = default;
+  ~Policy_Tester () = default;
   Policy_Tester (Policy_Tester const &) = delete;
   Policy_Tester (Policy_Tester &&) = delete;
   Policy_Tester &operator= (Policy_Tester const &) = delete;

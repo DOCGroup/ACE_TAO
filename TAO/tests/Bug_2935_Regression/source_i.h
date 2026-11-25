@@ -23,6 +23,7 @@ class Source_i
 {
 public:
   explicit Source_i (ThreeTier_ptr target);
+  ~Source_i () = default;
   Source_i (Source_i const &) = delete;
   Source_i &operator= (Source_i const &) = delete;
   Source_i (Source_i &&) = delete;

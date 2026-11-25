@@ -24,6 +24,7 @@ class Middle_i : public POA_ThreeTier
 {
 public:
   Middle_i (CORBA::ORB_ptr orb, ThreeTier_ptr target);
+  ~Middle_i () override = default;
   Middle_i (Middle_i const &) = delete;
   Middle_i &operator= (Middle_i const &) = delete;
   Middle_i (Middle_i &&) = delete;

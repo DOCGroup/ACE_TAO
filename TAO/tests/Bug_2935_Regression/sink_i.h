@@ -19,6 +19,7 @@ public:
   /// Construct
   /// @param orb An initialized ORB
   explicit Sink_i (CORBA::ORB_ptr orb);
+  ~Sink_i () override = default;
   Sink_i (Sink_i const &) = delete;
   Sink_i &operator= (Sink_i const &) = delete;
   Sink_i (Sink_i &&) = delete;
