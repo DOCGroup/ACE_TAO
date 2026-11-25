@@ -41,11 +41,9 @@ public:
   explicit SnmpUInt32 (unsigned long const i = 0);
 
   SnmpUInt32 (SnmpUInt32 const &c);
-  SnmpUInt32 (SnmpUInt32 &&) = delete;
 
   ~SnmpUInt32 () override = default;
 
-  SnmpUInt32 &operator= (SnmpUInt32 &&) = delete;
 
   /// syntax type
   SmiUINT32 get_syntax() override;
@@ -88,11 +86,9 @@ public:
   SnmpInt32 (long const i = 0);
 
   SnmpInt32 (SnmpInt32 const &c);
-  SnmpInt32 (SnmpInt32 &&) = delete;
 
   ~SnmpInt32 () override = default;
 
-  SnmpInt32 &operator= (SnmpInt32 &&) = delete;
 
   /// syntax type
   SmiUINT32 get_syntax() override;

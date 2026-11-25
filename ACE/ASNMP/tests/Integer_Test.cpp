@@ -32,9 +32,28 @@ DAMAGES.
 #include <cstring>
 #include <memory>
 #include <string>
+#include <type_traits>
 #include "ace/OS_main.h"
 #include "asnmp/integer.h"
+#include "asnmp/counter.h"
+#include "asnmp/ctr64.h"
+#include "asnmp/gauge.h"
+#include "asnmp/timetick.h"
 #include "test_config.h"
+
+static_assert (std::is_move_constructible_v<SnmpUInt32>
+               && std::is_move_assignable_v<SnmpUInt32>
+               && std::is_move_constructible_v<SnmpInt32>
+               && std::is_move_assignable_v<SnmpInt32>
+               && std::is_move_constructible_v<Counter32>
+               && std::is_move_assignable_v<Counter32>
+               && std::is_move_constructible_v<Counter64>
+               && std::is_move_assignable_v<Counter64>
+               && std::is_move_constructible_v<Gauge32>
+               && std::is_move_assignable_v<Gauge32>
+               && std::is_move_constructible_v<TimeTicks>
+               && std::is_move_assignable_v<TimeTicks>,
+               "ASNMP numeric values accept rvalues through their copy operations");
 
 #if !defined (ACE_WIN32)
 static constexpr long l = LONG_MAX, nl = LONG_MIN;  // limits.h

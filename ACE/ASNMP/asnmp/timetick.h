@@ -41,11 +41,9 @@ public:
   TimeTicks (unsigned long const i = 0);
 
   TimeTicks (TimeTicks const &t);
-  TimeTicks (TimeTicks &&) = delete;
 
   ~TimeTicks () override = default;
 
-  TimeTicks &operator= (TimeTicks &&) = delete;
 
   /// syntax type
   SmiUINT32 get_syntax() override;

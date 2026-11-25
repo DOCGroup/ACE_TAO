@@ -43,8 +43,6 @@ public:
   Counter64 (unsigned long hiparm, unsigned long loparm);
 
   Counter64 (Counter64 const &ctr64);
-  Counter64 (Counter64 &&) = delete;
-  Counter64 &operator= (Counter64 &&) = delete;
 
   ~Counter64 () override = default;
 

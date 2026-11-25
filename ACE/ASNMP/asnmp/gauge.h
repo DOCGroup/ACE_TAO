@@ -41,8 +41,6 @@ public:
   explicit Gauge32 (unsigned long i = 0);
 
   Gauge32 (Gauge32 const &g);
-  Gauge32 (Gauge32 &&) = delete;
-  Gauge32 &operator= (Gauge32 &&) = delete;
 
   ~Gauge32 () override = default;
 
