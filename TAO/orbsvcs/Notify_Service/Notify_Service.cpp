@@ -320,8 +320,14 @@ TAO_Notify_Service_Driver::init (int argc, ACE_TCHAR * argv[])
                              -1);
         }
 
-      ACE_OS::fprintf (ior_output_file, "%s", str.in ());
-      ACE_OS::fclose (ior_output_file);
+      int const write_result = ACE_OS::fprintf (ior_output_file, "%s", str.in ());
+      int const close_result = ACE_OS::fclose (ior_output_file);
+      if (write_result < 0 || close_result != 0)
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Unable to write IOR file %s\n"),
+                                 this->ior_output_file_name_), -1);
+        }
     }
   else if (TAO_debug_level > 0)
     {
