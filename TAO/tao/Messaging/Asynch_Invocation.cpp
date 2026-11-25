@@ -41,9 +41,9 @@ namespace TAO
     s = this->send_request_interception ();
 
     if (s != TAO_INVOKE_SUCCESS)
-    {
-      return s;
-    }
+      {
+        return s;
+      }
 
     // We have started the interception flow. We need to call the
     // ending interception flow if things go wrong. The purpose of the
@@ -128,18 +128,18 @@ namespace TAO
 
         // We got an error during the interception.
         if (s == TAO_INVOKE_SUCCESS && tmp != TAO_INVOKE_SUCCESS)
-        {
-          s = tmp;
-        }
+          {
+            s = tmp;
+          }
 #endif /* TAO_HAS_INTERCEPTORS */
 
         // If an error occurred just return. At this point all the
         // endpoint interception would have been invoked. The callee
         // would take care of the rest.
         if (s != TAO_INVOKE_SUCCESS)
-        {
-          return s;
-        }
+          {
+            return s;
+          }
 
         // transport strategy takes care of idling transport or not
         transport->idle_after_send ();
@@ -180,9 +180,9 @@ namespace TAO
              s = TAO_INVOKE_RESTART;
            }
          else
-         {
-           throw;
-         }
+           {
+             throw;
+           }
       }
 #endif /* TAO_HAS_INTERCEPTORS */
 

@@ -66,6 +66,7 @@ private:
     {
       if (handler != nullptr)
         {
+          handler->cancel ();
           handler->remove_reference ();
         }
     }

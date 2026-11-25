@@ -92,9 +92,9 @@ namespace TAO
       for (CORBA::ULong i {}; i != this->count_; ++i)
         {
           if (this->data_[i].id.compare(type_id.in ()) != 0)
-          {
-            continue;
-          }
+            {
+              continue;
+            }
 
           std::unique_ptr<CORBA::Exception> exception (this->data_[i].alloc ());
 

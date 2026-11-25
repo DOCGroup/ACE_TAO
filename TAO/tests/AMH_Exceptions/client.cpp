@@ -69,6 +69,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       if (!received_no_response)
         {
+          roundtrip->shutdown ();
           ACE_ERROR_RETURN ((LM_ERROR, "ERROR, expecting NO_RESPONSE\n"), 1);
         }
 
