@@ -57,6 +57,21 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             1);
         }
 
+      bool received_no_response = false;
+      try
+        {
+          roundtrip->test_method (0);
+        }
+      catch (CORBA::NO_RESPONSE const &)
+        {
+          received_no_response = true;
+        }
+
+      if (!received_no_response)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "ERROR, expecting NO_RESPONSE\n"), 1);
+        }
+
       try{
           Test::Timestamp time = 10;
           roundtrip->test_method (time);

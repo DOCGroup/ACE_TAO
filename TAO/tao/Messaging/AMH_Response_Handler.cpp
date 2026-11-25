@@ -18,7 +18,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler ()
 {
-  this->transport_->remove_reference ();
+  std::unique_ptr<TAO_Transport, void (*) (TAO_Transport *)> const transport (
+    this->transport_, [] (TAO_Transport *t) { t->remove_reference (); });
 
   // Since we are destroying the object we put a huge lock around the
   // whole destruction process (just paranoid).
