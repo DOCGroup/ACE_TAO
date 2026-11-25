@@ -115,7 +115,7 @@ print_results (int const how, ExpectedValues const& expected, ExpectedValues con
     (how == ThreadFlagsTest::BOTH) ? "BOTH" :
     "unk?";
 
-  ACE_DEBUG ((LM_DEBUG, "  %s: expected {%Ld,%Ld,%Ld} got {%Ld,%Ld,%Ld}",
+  ACE_DEBUG ((LM_DEBUG, "  %C: expected {%Ld,%Ld,%Ld} got {%Ld,%Ld,%Ld}",
               op,
               expected.flags,
               expected.scope,
