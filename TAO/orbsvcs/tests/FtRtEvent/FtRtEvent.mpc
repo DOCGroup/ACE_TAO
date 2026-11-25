@@ -23,3 +23,11 @@ project(*Supplier):  orbsvcsexe, ftrteventclient, strategies {
     PushSupplier.h
   }
 }
+
+project(*UUID_Test): orbsvcsexe, ftrtevent {
+  exename = uuid_test
+
+  Source_Files {
+    UUID_Test.cpp
+  }
+}

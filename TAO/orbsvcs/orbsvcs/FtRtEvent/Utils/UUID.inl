@@ -38,7 +38,7 @@ bool UUID::operator != (UUID const &other) const
 ACE_INLINE
 bool UUID::is_valid() const
 {
-  return !this->rep_.timestamp.hi;
+  return this->rep_.timestamp.hi != 0;
 }
 
 ACE_INLINE
