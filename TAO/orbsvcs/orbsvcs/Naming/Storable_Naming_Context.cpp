@@ -430,7 +430,7 @@ TAO_Storable_Naming_Context::~TAO_Storable_Naming_Context ()
         {
           if (TAO_debug_level > 5)
           {
-            ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) NameService: removing file %s\n",
+            ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) NameService: removing file %C\n",
                         file_name.c_str ()));
           }
           fl->remove ();

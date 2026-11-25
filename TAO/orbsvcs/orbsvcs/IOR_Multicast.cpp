@@ -319,8 +319,8 @@ TAO_IOR_Multicast::handle_input (ACE_HANDLE)
   if (TAO_debug_level > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      "(%P|%t) TAO_IOR_Multicast::handle_input() ior_: <%s>\n"
-                      "sent to %s:%u.\n"
+                      "(%P|%t) TAO_IOR_Multicast::handle_input() ior_: <%C>\n"
+                      "sent to %C:%u.\n"
                       "result from send = %b\n",
                       this->ior_.c_str (),
                       peer_addr.get_host_name (),
