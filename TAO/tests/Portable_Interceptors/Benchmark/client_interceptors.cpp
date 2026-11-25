@@ -101,7 +101,7 @@ Vault_Client_Request_Interceptor::receive_exception (
   if (std::strcmp (id, exception_id.in ()) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Mismatched exception IDs: %s != %s\n",
+                  "Mismatched exception IDs: %C != %C\n",
                   id,
                   exception_id.in ()));
     }
@@ -177,7 +177,7 @@ Vault_Client_Request_Context_Interceptor::receive_exception (
   if (std::strcmp (id, exception_id.in ()) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Mismatched exception IDs %s != %s\n",
+                  "Mismatched exception IDs %C != %C\n",
                   id,
                   exception_id.in ()));
     }
@@ -282,7 +282,7 @@ Vault_Client_Request_Dynamic_Interceptor::receive_exception (
   if (std::strcmp (id, exception_id.in ()) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Mismatched exception IDs %s != %s\n",
+                  "Mismatched exception IDs %C != %C\n",
                   id,
                   exception_id.in ()));
     }
@@ -343,7 +343,7 @@ Vault_Client_Request_NOOP_Interceptor::receive_exception (
   if (std::strcmp (id, exception_id.in ()) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Mismatched exception IDs %s != %s\n",
+                  "Mismatched exception IDs %C != %C\n",
                   id,
                   exception_id.in ()));
     }

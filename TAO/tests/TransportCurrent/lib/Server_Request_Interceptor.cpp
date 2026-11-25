@@ -19,7 +19,7 @@ namespace Test
   {
     CORBA::String_var name (this->name ());
     ACE_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("%s (%P|%t) Test accessing Transport Current from %s\n"),
+                ACE_TEXT ("%C (%P|%t) Test accessing Transport Current from %s\n"),
                 name.in (),
                 amethod));
 
@@ -28,7 +28,7 @@ namespace Test
      if (TAO_debug_level >=1)
        {
          ACE_DEBUG ((LM_DEBUG,
-                     ACE_TEXT ("%s (%P|%t) Getting the ORB\n"),
+                     ACE_TEXT ("%C (%P|%t) Getting the ORB\n"),
                      name.in ()));
        }
 
@@ -40,7 +40,7 @@ namespace Test
     if (TAO_debug_level >=1)
       {
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s (%P|%t) Resolving the TC\n"),
+                    ACE_TEXT ("%C (%P|%t) Resolving the TC\n"),
                     name.in ()));
       }
 
@@ -51,7 +51,7 @@ namespace Test
    (*this->test_) (orb.in ());
 
    ACE_DEBUG ((LM_DEBUG,
-               ACE_TEXT ("%s (%P|%t) Success - Transport Current from %s\n"),
+               ACE_TEXT ("%C (%P|%t) Success - Transport Current from %s\n"),
                name.in (),
                amethod));
   }

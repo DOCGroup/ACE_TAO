@@ -99,7 +99,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (server.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Test_Interceptors::Secure_Vault: <%s>\n",
+                  "Test_Interceptors::Secure_Vault: <%C>\n",
                   ior.in ()));
 
       // Write the IOR to the configured output file.
