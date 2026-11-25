@@ -1,7 +1,7 @@
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"
-#include "context_match.h"
+#include "../context_match.h"
 
 #include "tao/ORBInitializer_Registry.h"
 
