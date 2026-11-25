@@ -347,9 +347,7 @@ public:
    */
   void dump_annotations (ACE_OSTREAM_TYPE &o, bool print_inline = false);
 
-  /**
-   * Dump Object with Annotations
-   */
+  /// Dump the object with annotations.
   void dump_with_annotations (ACE_OSTREAM_TYPE &o, bool inline_annotations= false);
 
   /**
@@ -361,29 +359,19 @@ public:
   friend ACE_OSTREAM_TYPE &
   operator<< (ACE_OSTREAM_TYPE &o, AST_Decl &d);
 
-  /**
-   * Returns true if annotations are valid to use on this
-   */
+  /// Whether annotations are valid for this declaration.
   virtual bool annotatable () const;
 
-  /**
-   * Return true if annotations are dumped inline when using <<
-   */
+  /// Whether annotations are dumped inline when using operator<<.
   virtual bool dump_annotations_inline () const;
 
-  /**
-   * Return true if annotations are dumped at all when using <<
-   */
+  /// Whether annotations are dumped when using operator<<.
   virtual bool auto_dump_annotations () const;
 
-  /**
-   * True if defined using idl_global->eval()
-   */
+  /// Whether this declaration was defined using idl_global->eval().
   virtual bool builtin () const;
 
-  /**
-   * True if the node should be dumped
-   */
+  /// Whether the node should be dumped.
   virtual bool should_be_dumped () const;
 
   /**
@@ -393,9 +381,7 @@ public:
    */
   virtual AST_Annotation_Appls &annotations ();
 
-  /**
-   * Should AMI visit this node?
-   */
+  /// Whether AMI should visit this node.
   virtual bool ami_visit () const;
 
   virtual std::string node_type_name () const;
@@ -405,84 +391,82 @@ protected:
   // be_predefined_type' constructor and can be called
   // from be_decl.
 
+  /// Repository ID.
   mutable std::string repoID_;
-  // Repository ID.
 
+  /// Flattened fully scoped name.
   mutable std::string flat_name_;
-  // Flattened fully scoped name.
 
+  /// Whether this scope contains a wstring at some level.
   int contains_wstring_ {-1};
-  // If we are a scope, do we contain a wstring at some level?
 
   void dump_i (ACE_OSTREAM_TYPE &o, std::string const& s) const;
 
+  /// Compute the repository ID.
   void compute_repoID () const;
-  // Computes the repoID.
 
+  /// Compute the stringified scoped name.
   void compute_full_name ();
-  // Computes the stringified scoped name.
 
+  /// Compute the flattened fully scoped name.
   void compute_flat_name () const;
-  // Compute the flattened fully scoped name.
 
+  /// Convert a NodeType to a string for dumping.
   static std::string node_type_to_string (NodeType nt);
-  // Convert a NodeType to a string for dumping.
 
   /// Annotations applied to this IDL element
   std::unique_ptr<AST_Annotation_Appls> annotation_appls_;
 
-  /**
-   * True if defined using idl_global->eval()
-   */
+  /// Whether this declaration was defined using idl_global->eval().
   bool builtin_;
 
 private:
   // Data
 
+  /// Whether this declaration was imported.
   bool pd_imported;
-  // Imported?
 
+  /// Whether this declaration is defined in the main file.
   bool pd_in_main_file;
-  // Defined in main file?
 
+  /// Scope.
   UTL_Scope *pd_defined_in;
-  // Scope.
 
+  /// Node type.
   NodeType pd_node_type;
-  // What kind of node.
 
+  /// Line defined in.
   long pd_line;
-  // Line defined in.
 
+  /// File defined in.
   std::string pd_file_name;
-  // What file defined in.
 
   std::unique_ptr<UTL_ScopedName> pd_name;
 
+  /// Name in scope.
   std::unique_ptr<Identifier> pd_local_name;
-  // Name in scope.
 
+  /// Local name with any _cxx_ prefix removed.
   std::string pd_original_local_name;
-  // _cxx_ removed if any.
 
+  /// Full scoped name.
   std::string full_name_;
-  // Our full scoped name.
 
+  /// Repository ID prefix.
   std::string prefix_;
-  // The repository ID prefix.
 
+  /// Version set by \#pragma version.
   mutable std::string version_;
-  // Set by #pragma version.
 
+  /// Whether this is an anonymous type without a repository ID.
   bool anonymous_;
-  // Are we an anonymous (no repo ID) type?
 
+  /// Whether the repository ID was set by a typeId declaration.
   bool typeid_set_ {};
-  // Has our repo id been set by a typeId declaration?
 
+  /// Most recent reference name; its top-level component is added to
+  /// pd_name_referenced.
   std::unique_ptr<UTL_ScopedName> last_referenced_as_;
-  // Temporary holder of the most recent way we were reference.
-  // The top level component of this is added to pd_name_referenced.
 
   // The scope in which our prefix, if any, was assigned.
   UTL_Scope *prefix_scope_ {};
@@ -490,11 +474,11 @@ private:
   void set_prefix_with_typeprefix_r (std::string const& value,
                                      UTL_Scope *appeared_in);
 
+  /// If true, this declaration cannot be referenced. False by default.
   bool in_tmpl_mod_not_aliased_;
-  // false by default - if true, we can't be referenced.
 
+  /// Compute the full name of an AST node.
   void compute_full_name (UTL_ScopedName *n);
-  // Compute the full name of an AST node.
 
 };
 
