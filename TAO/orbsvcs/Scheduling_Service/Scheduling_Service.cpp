@@ -99,30 +99,65 @@ TAO_Scheduling_Service::init (int argc, ACE_TCHAR * argv[])
       schedule_name[0].id = CORBA::string_dup (this->service_name_.c_str ());
       naming_context->rebind (schedule_name, scheduler.in ());
 
+      bool output_failed = false;
       if (this->ior_file_name_)
         {
-          std::unique_ptr<FILE, int (*) (FILE *)> const iorf (
+          std::unique_ptr<FILE, int (*) (FILE *)> iorf (
             ACE_OS::fopen (this->ior_file_name_->c_str (), ACE_TEXT ("w")),
             ACE_OS::fclose);
-          if (iorf)
+          if (iorf == nullptr)
             {
-              ACE_OS::fprintf (iorf.get (),
-                               "%s\n",
-                               scheduler_ior_string.in ());
+              output_failed = true;
+            }
+          else
+            {
+              int const write_result = ACE_OS::fprintf (iorf.get (), "%s\n",
+                                                        scheduler_ior_string.in ());
+              int const close_result = ACE_OS::fclose (iorf.release ());
+              output_failed = write_result < 0 || close_result != 0;
+            }
+          if (output_failed)
+            {
+              ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Cannot write IOR file: %s\n"),
+                              this->ior_file_name_->c_str ()));
             }
         }
 
-      if (this->pid_file_name_)
+      if (!output_failed && this->pid_file_name_)
         {
-          std::unique_ptr<FILE, int (*) (FILE *)> const pidf (
+          std::unique_ptr<FILE, int (*) (FILE *)> pidf (
             ACE_OS::fopen (this->pid_file_name_->c_str (), ACE_TEXT ("w")),
             ACE_OS::fclose);
-          if (pidf)
+          if (pidf == nullptr)
             {
-              ACE_OS::fprintf (pidf.get (),
-                               "%ld\n",
-                               static_cast<long> (ACE_OS::getpid ()));
+              output_failed = true;
             }
+          else
+            {
+              int const write_result = ACE_OS::fprintf (pidf.get (), "%ld\n",
+                                                        static_cast<long> (ACE_OS::getpid ()));
+              int const close_result = ACE_OS::fclose (pidf.release ());
+              output_failed = write_result < 0 || close_result != 0;
+            }
+          if (output_failed)
+            {
+              ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Cannot write PID file: %s\n"),
+                              this->pid_file_name_->c_str ()));
+            }
+        }
+
+      if (output_failed)
+        {
+          try
+            {
+              naming_context->unbind (schedule_name);
+            }
+          catch (CORBA::Exception const &ex)
+            {
+              ex._tao_print_exception ("Unable to unbind scheduling service");
+            }
+          this->orb_manager_.fini ();
+          return -1;
         }
     }
   catch (CORBA::Exception const &ex)
