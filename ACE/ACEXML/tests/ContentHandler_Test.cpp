@@ -154,6 +154,22 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to create input stream\n")));
       return -1;
     }
+
+  int const first_char = test_stream->peek ();
+  if (test_stream->read (nullptr, 0) != 0 || test_stream->peek () != first_char)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Zero-length stream read failed\n")));
+      return -1;
+    }
+
+  ACEXML_Char prefix[2] {};
+  if (test_stream->read (prefix, 2) != 2 || prefix[0] != first_char)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Stream read failed\n")));
+      return -1;
+    }
+  test_stream->rewind ();
+
   // ACEXML_InputSource takes ownership of the stream.
   ACEXML_InputSource input (test_stream.release ());
   ACEXML_Parser parser;

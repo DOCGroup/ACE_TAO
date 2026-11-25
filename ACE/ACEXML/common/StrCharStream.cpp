@@ -105,6 +105,11 @@ ACEXML_StrCharStream::get (ACEXML_Char& ch)
 int
 ACEXML_StrCharStream::read (ACEXML_Char *str, size_t len)
 {
+  if (len == 0)
+    {
+      return 0;
+    }
+
   if (this->start_ != nullptr &&
       this->ptr_ != this->end_)
     {
