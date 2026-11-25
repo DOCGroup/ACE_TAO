@@ -8,7 +8,7 @@
 std::atomic<long> server_guid_counter;
 
 DT::DT (TAO_SYNCH_MUTEX &lock,
-        int guid)
+        size_t guid)
   : dt_cond_ (lock),
     guid_ (guid),
     eligible_ (0)

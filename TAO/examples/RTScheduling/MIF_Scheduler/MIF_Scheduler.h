@@ -17,14 +17,14 @@ class DT : public ACE_Message_Block
 {
  public:
   DT (TAO_SYNCH_MUTEX &lock,
-      int guid);
+      size_t guid);
 
   void suspend ();
   void resume ();
 
  private:
   TAO_SYNCH_CONDITION dt_cond_;
-  int guid_;
+  size_t guid_;
   int eligible_;
 };
 
