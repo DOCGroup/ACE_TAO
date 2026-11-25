@@ -23,14 +23,14 @@ class Callback_i;
 /// Implements the Web_Server::Iterator_Factory AMI reply handler.
 ///
 /// This class asynchronously registers a reference to the client-side
-/// <Callback> object in the Content Server. Once registered, the <Callback>
+/// @c Callback object in the Content Server. Once registered, the @c Callback
 /// begins receiving chunks pushed from the Content Server.
 ///
 /// Since registration is asynchronous, metadata returned from the
-/// <Iterator_Factory> may arrive after the file content. The <Callback>
+/// @c Iterator_Factory may arrive after the file content. The @c Callback
 /// handles this possibility. The register_callback() reply handler receives
-/// the metadata and passes it to the <Callback>. After the metadata arrives,
-/// this <Push_Iterator_Handler> is no longer needed and is deactivated.
+/// the metadata and passes it to the @c Callback. After the metadata arrives,
+/// this @c Push_Iterator_Handler is no longer needed and is deactivated.
 class Push_Iterator_Handler
   : public virtual POA_Web_Server::AMI_Iterator_FactoryHandler
 {
@@ -49,7 +49,7 @@ public:
 
   /**
    * Activate and run this Reply Handler.  The contents (not the
-   * pointer itself) of the <request_count> parameter will be
+   * pointer itself) of the @a request_count parameter will be
    * incremented when file retrieval begins, and decremented when file
    * retrieval completes.
    */

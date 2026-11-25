@@ -19,19 +19,19 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 /// Class that asynchronously sends chunks of data to the client-side
-/// <Callback> object and handles all asynchronous replies from it.
+/// @c Callback object and handles all asynchronous replies from it.
 ///
-/// The <Push_Iterator_Factory_i> object in the Content Server creates a
-/// <Callback_Handler> instance for each requested file and executes its
+/// The @c Push_Iterator_Factory_i object in the Content Server creates a
+/// @c Callback_Handler instance for each requested file and executes its
 /// run() method. To let the Content Server service other requests while a
 /// file is being sent, run() invokes next_chunk(), which reads the first
-/// chunk and sends it asynchronously to the client-side <Callback> object
+/// chunk and sends it asynchronously to the client-side @c Callback object
 /// using sendc_next_chunk().
 ///
 /// The next_chunk() method also handles replies from sendc_next_chunk(). Its
 /// initial invocation starts asynchronous chunk sending; subsequent calls
 /// happen asynchronously. A new chunk is sent only after the client-side
-/// <Callback> replies, which keeps chunks in order. This cycle continues
+/// @c Callback replies, which keeps chunks in order. This cycle continues
 /// until the last chunk is sent.
 ///
 /// No threads are explicitly created at the application level; concurrency

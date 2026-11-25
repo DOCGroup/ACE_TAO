@@ -22,19 +22,19 @@
 
 /// @brief Implements the Web_Server::Callback interface.
 ///
-/// A <Callback> object implements the Observer pattern. It simply
+/// A @c Callback object implements the Observer pattern. It simply
 /// "watches" while the Content Server pushes chunks of data to it. Once the
-/// Content Server pushes the last chunk of data, the <Callback> object spawns
+/// Content Server pushes the last chunk of data, the @c Callback object spawns
 /// an external viewer to display the pushed data based on the data content
 /// type returned by the Iterator_Factory::register_callback() method.
 ///
-/// Since the server pushes data to the <Callback> object asynchronously, and
-/// since instances of this <Callback> class are registered with the Content
+/// Since the server pushes data to the @c Callback object asynchronously, and
+/// since instances of this @c Callback class are registered with the Content
 /// Server asynchronously, there is no guarantee that the metadata containing
 /// the content type will arrive before the content of the file. As such, this
 /// class atomically sets and checks the flags that provide the current
 /// condition of the metadata and content, in case two concurrently running
-/// threads attempt to update the state contained within a given <Callback>
+/// threads attempt to update the state contained within a given @c Callback
 /// object.
 class Callback_i :
   public virtual POA_Web_Server::Callback
@@ -50,8 +50,8 @@ public:
 
   explicit Callback_i (std::atomic<int>& request_count);
 
-  /// This operation returns the next <chunk> of the file starting at
-  /// <offset>.  If there are no more bindings, false is returned.
+  /// This operation returns the next @a chunk of the file starting at
+  /// the file offset.  If there are no more bindings, false is returned.
   void next_chunk (Web_Server::Chunk_Type const& chunk,
                    CORBA::Boolean last_chunk) override;
 

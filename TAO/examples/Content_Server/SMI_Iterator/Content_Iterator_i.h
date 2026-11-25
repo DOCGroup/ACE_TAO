@@ -39,8 +39,8 @@ public:
 
   ~Content_Iterator_i () override;
 
-  /// This operation returns the next <chunk> of the file starting at
-  /// <offset>.  If there are no more bindings, false is returned.
+  /// This operation returns the next @a chunk of the file starting at
+  /// @a offset.  If there are no more bindings, false is returned.
   CORBA::Boolean next_chunk (CORBA::ULongLong offset,
                              Web_Server::Chunk_Type_out chunk) override;
 
