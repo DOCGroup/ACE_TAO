@@ -136,13 +136,16 @@ ACE_PI_Control_Block::ACE_Name_Node::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::dump");
 
+  char * const pointer = this->pointer_;
+  char * const name = this->name_;
+  ACE_Name_Node * const next = this->next_;
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT("pointer = %@"), (const char *) this->pointer_));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT("\nnext_ = %@"), (ACE_Name_Node *) this->next_));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT("pointer = %@"), static_cast<void *> (pointer)));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT("\nnext_ = %@"), static_cast<void *> (next)));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT("\nname_ = (%@, %s)"),
-              (const char *) this->name_,
-              (const char *) this->name_));
+              ACE_TEXT("\nname_ = (%@, %C)"),
+              static_cast<void *> (name),
+              name));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

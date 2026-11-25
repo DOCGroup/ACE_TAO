@@ -328,9 +328,9 @@ ACE::ldfind (const ACE_TCHAR* filename,
                 }
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-              ACE_Allocator::instance()->free ((void *) ld_path);
+              ACE_Allocator::instance()->free (ld_path);
 #else
-              ACE_OS::free ((void *) ld_path);
+              ACE_OS::free (ld_path);
 #endif /* ACE_HAS_ALLOC_HOOKS */
 #if defined (ACE_LD_DECORATOR_STR) && !defined (ACE_DISABLE_DEBUG_DLL_CHECK)
               if (result == 0 || tag == 0)
@@ -543,7 +543,7 @@ ACE::strsplit_r (char *str,
       else
         {
           result = next_start;
-          next_start = (char *) nullptr;
+          next_start = nullptr;
         }
     }
 
