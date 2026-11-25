@@ -222,13 +222,13 @@ ACE_Mutex::remove ()
 # ifdef ACE_MUTEX_PROCESS_LOCK_IS_MUTEX
           if (!this->lockname_)
             {
-              ACE_OS::munmap ((void *) this->process_lock_,
+              ACE_OS::munmap (this->process_lock_,
                               sizeof (ACE_mutex_t));
             }
           else
             {
               result = ACE_OS::mutex_destroy (this->process_lock_);
-              ACE_OS::munmap ((void *) this->process_lock_,
+              ACE_OS::munmap (this->process_lock_,
                               sizeof (ACE_mutex_t));
               ACE_OS::shm_unlink (this->lockname_);
             }

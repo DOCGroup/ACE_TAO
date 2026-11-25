@@ -475,7 +475,7 @@ ACE_MMAP_Memory_Pool::remap (void *addr)
     ACE_Utils::truncate_cast<size_t> (ACE_OS::filesize (this->mmap_.handle ()));
   // ACE_OS::lseek (this->mmap_.handle (), 0, SEEK_END);
 
-  if (!(addr < (void *) ((char *) this->mmap_.addr () + current_map_size)
+  if (!(addr < static_cast<void *> (static_cast<char *> (this->mmap_.addr ()) + current_map_size)
         && addr >= this->mmap_.addr ()))
   {
     return -1;
