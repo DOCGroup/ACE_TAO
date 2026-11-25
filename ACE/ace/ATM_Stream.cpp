@@ -60,9 +60,10 @@ ACE_ATM_Stream::get_peer_name () const
 
   if (ACE_OS::getpeername (this->get_handle (),
                            (struct sockaddr *) &name,
-                           &nameSize) != 0) {
-    return 0;
-  }
+                           &nameSize) != 0)
+    {
+      return nullptr;
+    }
 
   char buffer[256];
   for (unsigned int index = 0; index < ATM_ADDR_SIZE - 1; ++index) {
@@ -106,24 +107,25 @@ ACE_ATM_Stream::get_peer_name () const
   int nameSize = sizeof (name.sockaddratmsvc);
 
   if (ACE_OS::getpeername (this->get_handle (),
- (struct sockaddr *) & (name.sockaddratmsvc),
-                          &nameSize) < 0) {
-    ACE_OS::perror ("ACE_ATM_Stream (get_peer_name) : ");
-    return 0;
-  }
+                           (struct sockaddr *) & (name.sockaddratmsvc),
+                           &nameSize) < 0)
+    {
+      ACE_OS::perror ("ACE_ATM_Stream (get_peer_name) : ");
+      return nullptr;
+    }
 
   static ACE_TCHAR buffer[MAX_ATM_ADDR_LEN + 1];
-  int total_len;
-  if ((total_len = atm2text (buffer,sizeof buffer,
- (struct sockaddr *) & (name.sockaddratmsvc),
-                            A2T_PRETTY|A2T_NAME)) < 0) {
-    ACELIB_DEBUG ((LM_DEBUG,ACE_TEXT ("ACE_ATM_Stream (get_peer_name) :%d"),errno));
-    return 0;
-  }
+  if (atm2text (buffer, sizeof buffer,
+                (struct sockaddr *) & (name.sockaddratmsvc),
+                A2T_PRETTY | A2T_NAME) < 0)
+    {
+      ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("ACE_ATM_Stream (get_peer_name) :%d"), errno));
+      return nullptr;
+    }
 
   return (char*) buffer;
 #else
-  return 0;
+  return nullptr;
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
 }
 
