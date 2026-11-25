@@ -124,7 +124,7 @@ ACE_Configuration::get_internal_key (ACE_Configuration_Section_Key const & key)
 
 int
 ACE_Configuration::expand_path (ACE_Configuration_Section_Key const & key,
-                                const ACE_TString& path_in,
+                                ACE_TString const & path_in,
                                 ACE_Configuration_Section_Key& key_out,
                                 bool create)
 {
@@ -211,7 +211,7 @@ ACE_Configuration::root_section () const
  * Returns 1 (True) if they are equal and 0 (False) if they are not equal
  */
 bool
-ACE_Configuration::operator== (const ACE_Configuration& rhs) const
+ACE_Configuration::operator== (ACE_Configuration const & rhs) const
 {
   bool rc = true;
   int sectionIndex = 0;
@@ -431,7 +431,7 @@ ACE_Configuration::operator== (const ACE_Configuration& rhs) const
 }
 
 bool
-ACE_Configuration::operator!= (const ACE_Configuration& rhs) const
+ACE_Configuration::operator!= (ACE_Configuration const & rhs) const
 {
   return !(*this == rhs);
 }
@@ -464,14 +464,14 @@ ACE_Section_Key_Win32::~ACE_Section_Key_Win32 ()
 //////////////////////////////////////////////////////////////////////////////
 
 bool
-ACE_Configuration_Win32Registry::operator== (const ACE_Configuration_Win32Registry &rhs) const
+ACE_Configuration_Win32Registry::operator== (ACE_Configuration_Win32Registry const &rhs) const
 {
   ACE_UNUSED_ARG (rhs);
   return true;
 }
 
 bool
-ACE_Configuration_Win32Registry::operator!= (const ACE_Configuration_Win32Registry &rhs) const
+ACE_Configuration_Win32Registry::operator!= (ACE_Configuration_Win32Registry const &rhs) const
 {
   ACE_UNUSED_ARG (rhs);
   return true;
@@ -694,7 +694,7 @@ ACE_Configuration_Win32Registry::enumerate_sections (ACE_Configuration_Section_K
 int
 ACE_Configuration_Win32Registry::set_string_value (ACE_Configuration_Section_Key const & key,
                                                    ACE_TCHAR const * name,
-                                                   const ACE_TString& value)
+                                                   ACE_TString const & value)
 {
   ACE_TCHAR const *t_name = temp_name (name);
   if (validate_value_name (t_name))
@@ -761,7 +761,7 @@ ACE_Configuration_Win32Registry::set_integer_value (ACE_Configuration_Section_Ke
 int
 ACE_Configuration_Win32Registry::set_binary_value (ACE_Configuration_Section_Key const & key,
                                                    ACE_TCHAR const * name,
-                                                   const void* data,
+                                                   void const * data,
                                                    size_t length)
 {
   ACE_TCHAR const *t_name = temp_name (name);
@@ -1136,9 +1136,9 @@ ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (void* data, size_t
   this->data_.ptr_ = data;
 }
 
-ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs) = default;
+ACE_Configuration_Value_IntId::ACE_Configuration_Value_IntId (ACE_Configuration_Value_IntId const & rhs) = default;
 
-ACE_Configuration_Value_IntId& ACE_Configuration_Value_IntId::operator= (const ACE_Configuration_Value_IntId& rhs)
+ACE_Configuration_Value_IntId& ACE_Configuration_Value_IntId::operator= (ACE_Configuration_Value_IntId const & rhs)
 {
   if (this != std::addressof (rhs))
     {
@@ -1165,9 +1165,9 @@ ACE_Configuration_ExtId::ACE_Configuration_ExtId (ACE_TCHAR const * name)
 {
 }
 
-ACE_Configuration_ExtId::ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs) = default;
+ACE_Configuration_ExtId::ACE_Configuration_ExtId (ACE_Configuration_ExtId const & rhs) = default;
 
-ACE_Configuration_ExtId& ACE_Configuration_ExtId::operator= (const ACE_Configuration_ExtId& rhs)
+ACE_Configuration_ExtId& ACE_Configuration_ExtId::operator= (ACE_Configuration_ExtId const & rhs)
 {
   if (this != std::addressof (rhs))
   {
@@ -1178,13 +1178,13 @@ ACE_Configuration_ExtId& ACE_Configuration_ExtId::operator= (const ACE_Configura
 }
 
 bool
-ACE_Configuration_ExtId::operator== (const ACE_Configuration_ExtId& rhs) const
+ACE_Configuration_ExtId::operator== (ACE_Configuration_ExtId const & rhs) const
 {
   return (ACE_OS::strcasecmp (name_, rhs.name_) == 0);
 }
 
 bool
-ACE_Configuration_ExtId::operator!= (const ACE_Configuration_ExtId& rhs) const
+ACE_Configuration_ExtId::operator!= (ACE_Configuration_ExtId const & rhs) const
 {
   return !this->operator== (rhs);
 }
@@ -1212,10 +1212,10 @@ ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (VALUE_MAP* val
 {
 }
 
-ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs) = default;
+ACE_Configuration_Section_IntId::ACE_Configuration_Section_IntId (ACE_Configuration_Section_IntId const & rhs) = default;
 
 ACE_Configuration_Section_IntId&
-ACE_Configuration_Section_IntId::operator= (const ACE_Configuration_Section_IntId& rhs)
+ACE_Configuration_Section_IntId::operator= (ACE_Configuration_Section_IntId const & rhs)
 {
   if (this != std::addressof (rhs))
     {
@@ -1449,7 +1449,7 @@ ACE_Configuration_Heap::add_section (ACE_Configuration_Section_Key const & base,
 }
 
 int
-ACE_Configuration_Heap::new_section (const ACE_TString& section,
+ACE_Configuration_Heap::new_section (ACE_TString const & section,
                                      ACE_Configuration_Section_Key& result)
 {
   ACE_ASSERT (this->allocator_);
@@ -1862,7 +1862,7 @@ ACE_Configuration_Heap::enumerate_sections (ACE_Configuration_Section_Key const 
 int
 ACE_Configuration_Heap::set_string_value (ACE_Configuration_Section_Key const & key,
                                           ACE_TCHAR const * name,
-                                          const ACE_TString& value)
+                                          ACE_TString const & value)
 {
   ACE_ASSERT (this->allocator_);
   ACE_TCHAR const *t_name = name ? name : std::addressof (this->NULL_String_);
@@ -1984,7 +1984,7 @@ ACE_Configuration_Heap::set_integer_value (ACE_Configuration_Section_Key const &
 int
 ACE_Configuration_Heap::set_binary_value (ACE_Configuration_Section_Key const & key,
                                           ACE_TCHAR const * name,
-                                          const void* data,
+                                          void const * data,
                                           size_t length)
 {
   ACE_ASSERT (this->allocator_);

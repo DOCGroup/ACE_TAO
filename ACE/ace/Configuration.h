@@ -72,7 +72,7 @@ public:
   virtual int dec_ref ();
 protected:
   ACE_Section_Key_Internal () = default;
-  ACE_Section_Key_Internal (const ACE_Section_Key_Internal& rhs);
+  ACE_Section_Key_Internal (ACE_Section_Key_Internal const & rhs);
   ACE_Section_Key_Internal& operator= (ACE_Section_Key_Internal& rhs);
 
   u_int ref_count_ {};
@@ -239,7 +239,7 @@ public:
    */
   virtual int set_string_value (ACE_Configuration_Section_Key const & key,
                                 ACE_TCHAR const * name,
-                                const ACE_TString& value) = 0;
+                                ACE_TString const & value) = 0;
 
   /// Sets a integer-typed value.
   /**
@@ -268,7 +268,7 @@ public:
    */
   virtual int set_binary_value (ACE_Configuration_Section_Key const & key,
                                 ACE_TCHAR const * name,
-                                const void* data,
+                                void const * data,
                                 size_t length) = 0;
 
   /// Gets a string-typed value.
@@ -352,7 +352,7 @@ public:
    * a non-existent section
    */
   int expand_path (ACE_Configuration_Section_Key const & key,
-                   const ACE_TString& path_in,
+                   ACE_TString const & path_in,
                    ACE_Configuration_Section_Key& key_out,
                    bool create = true);
 
@@ -361,14 +361,14 @@ public:
    * contents of the object on the right hand side.
    * Returns true if they are equal and false if they are not equal
    */
-  bool operator==(const ACE_Configuration& rhs) const;
+  bool operator==(ACE_Configuration const & rhs) const;
 
   /**
    * Determine if the contents of this object are different from the
    * contents of the object on the right hand side.
    * Returns false if they are equal and true if they are not equal
    */
-  bool operator!=(const ACE_Configuration& rhs) const;
+  bool operator!=(ACE_Configuration const & rhs) const;
 
   /**
    *    *  Represents the "NULL" string to simplify the internal logic.
@@ -400,8 +400,8 @@ protected:
   int validate_value_name (ACE_TCHAR const * name);
 
   // Not used
-  ACE_Configuration (const ACE_Configuration& rhs);
-  ACE_Configuration& operator= (const ACE_Configuration& rhs);
+  ACE_Configuration (ACE_Configuration const & rhs);
+  ACE_Configuration& operator= (ACE_Configuration const & rhs);
 
   ACE_Configuration_Section_Key root_;
 };
@@ -428,8 +428,8 @@ protected:
   virtual ~ACE_Section_Key_Win32 ();
 
   // Not used
-  ACE_Section_Key_Win32 (const ACE_Section_Key_Win32& rhs);
-  ACE_Section_Key_Win32& operator= (const ACE_Section_Key_Win32& rhs);
+  ACE_Section_Key_Win32 (ACE_Section_Key_Win32 const & rhs);
+  ACE_Section_Key_Win32& operator= (ACE_Section_Key_Win32 const & rhs);
 };
 
 /**
@@ -474,7 +474,7 @@ public:
 
   virtual int set_string_value (ACE_Configuration_Section_Key const & key,
                                 ACE_TCHAR const * name,
-                                const ACE_TString& value);
+                                ACE_TString const & value);
 
   virtual int set_integer_value (ACE_Configuration_Section_Key const & key,
                                  ACE_TCHAR const * name,
@@ -482,7 +482,7 @@ public:
 
   virtual int set_binary_value (ACE_Configuration_Section_Key const & key,
                                 ACE_TCHAR const * name,
-                                const void* data,
+                                void const * data,
                                 size_t length);
 
   virtual int get_string_value (ACE_Configuration_Section_Key const & key,
@@ -518,8 +518,8 @@ public:
                            ACE_TCHAR const * path,
                            bool create = true,
                            u_long security_access = KEY_ALL_ACCESS);
-  virtual bool operator== (const ACE_Configuration_Win32Registry &rhs) const;
-  virtual bool operator!= (const ACE_Configuration_Win32Registry &rhs) const;
+  virtual bool operator== (ACE_Configuration_Win32Registry const &rhs) const;
+  virtual bool operator!= (ACE_Configuration_Win32Registry const &rhs) const;
 
 protected:
   /// Gets the HKEY for a configuration section
@@ -527,8 +527,8 @@ protected:
 
   // Not used
   ACE_Configuration_Win32Registry ();
-  ACE_Configuration_Win32Registry (const ACE_Configuration_Win32Registry& rhs);
-  ACE_Configuration_Win32Registry& operator= (const ACE_Configuration_Win32Registry& rhs);
+  ACE_Configuration_Win32Registry (ACE_Configuration_Win32Registry const & rhs);
+  ACE_Configuration_Win32Registry& operator= (ACE_Configuration_Win32Registry const & rhs);
 
   const u_long security_access_;
 };
@@ -556,17 +556,17 @@ public:
   explicit ACE_Configuration_ExtId (ACE_TCHAR const * name);
 
   /// Copy ctor
-  ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs);
+  ACE_Configuration_ExtId (ACE_Configuration_ExtId const & rhs);
 
   ~ACE_Configuration_ExtId () = default;
 
-  ACE_Configuration_ExtId& operator= (const ACE_Configuration_ExtId& rhs);
+  ACE_Configuration_ExtId& operator= (ACE_Configuration_ExtId const & rhs);
 
   /// Equality comparison operator (must match name_).
-  bool operator==  (const ACE_Configuration_ExtId &rhs) const;
+  bool operator==  (ACE_Configuration_ExtId const &rhs) const;
 
   /// Inequality comparison operator.
-  bool operator!= (const ACE_Configuration_ExtId &rhs) const;
+  bool operator!= (ACE_Configuration_ExtId const &rhs) const;
 
   /// Frees the name of the value.  needed since we don't know the
   /// allocator name_ was created in
@@ -613,12 +613,12 @@ public:
   ACE_Configuration_Value_IntId (void* data, size_t length);
 
   /// Copy ctor
-  ACE_Configuration_Value_IntId (const ACE_Configuration_Value_IntId& rhs);
+  ACE_Configuration_Value_IntId (ACE_Configuration_Value_IntId const & rhs);
 
   ~ACE_Configuration_Value_IntId () = default;
 
   ACE_Configuration_Value_IntId& operator= (
-    const ACE_Configuration_Value_IntId& rhs);
+    ACE_Configuration_Value_IntId const & rhs);
 
   void free (ACE_Allocator *alloc);
 
@@ -661,12 +661,12 @@ public:
                                    SUBSECTION_MAP* section_hash_map);
 
   /// Copy ctor
-  ACE_Configuration_Section_IntId (const ACE_Configuration_Section_IntId& rhs);
+  ACE_Configuration_Section_IntId (ACE_Configuration_Section_IntId const & rhs);
 
   ~ACE_Configuration_Section_IntId () = default;
 
   ACE_Configuration_Section_IntId& operator= (
-    const ACE_Configuration_Section_IntId& rhs);
+    ACE_Configuration_Section_IntId const & rhs);
 
   /// Frees the hash table and all its values
   void free (ACE_Allocator *alloc);
@@ -720,8 +720,8 @@ protected:
   ~ACE_Configuration_Section_Key_Heap () override = default;
 
   // Not used
-  ACE_Configuration_Section_Key_Heap (const ACE_Configuration_Section_Key_Heap& rhs);
-  ACE_Configuration_Section_Key_Heap& operator= (const ACE_Configuration_Section_Key_Heap& rhs);
+  ACE_Configuration_Section_Key_Heap (ACE_Configuration_Section_Key_Heap const & rhs);
+  ACE_Configuration_Section_Key_Heap& operator= (ACE_Configuration_Section_Key_Heap const & rhs);
 };
 
 /**
@@ -799,7 +799,7 @@ public:
 
   int set_string_value (ACE_Configuration_Section_Key const & key,
                                 ACE_TCHAR const * name,
-                                const ACE_TString& value) override;
+                                ACE_TString const & value) override;
 
   int set_integer_value (ACE_Configuration_Section_Key const & key,
                                  ACE_TCHAR const * name,
@@ -807,7 +807,7 @@ public:
 
   int set_binary_value (ACE_Configuration_Section_Key const & key,
                                 ACE_TCHAR const * name,
-                                const void* data,
+                                void const * data,
                                 size_t length) override;
 
   int get_string_value (ACE_Configuration_Section_Key const & key,
@@ -854,11 +854,11 @@ private:
 
   int load_key (ACE_Configuration_Section_Key const & key, ACE_TString& name);
 
-  int new_section (const ACE_TString& section,
+  int new_section (ACE_TString const & section,
                    ACE_Configuration_Section_Key& result);
 
-  ACE_Configuration_Heap (const ACE_Configuration_Heap& rhs);
-  ACE_Configuration_Heap& operator= (const ACE_Configuration_Heap& rhs);
+  ACE_Configuration_Heap (ACE_Configuration_Heap const & rhs);
+  ACE_Configuration_Heap& operator= (ACE_Configuration_Heap const & rhs);
 
   std::unique_ptr<ACE_Allocator> allocator_ {};
   SECTION_MAP *index_ {};
