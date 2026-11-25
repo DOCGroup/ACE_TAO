@@ -11,6 +11,14 @@ project(*application): messaging, rteventexe, rtevent_serv, naming {
   }
 }
 
+project(*payload_test): rteventexe {
+  exename = heartbeat_payload_test
+
+  Source_Files {
+    heartbeat_payload_test.cpp
+  }
+}
+
 project(*gateway-ec): messaging, rteventexe, rtevent_serv, naming {
   after  += ECMcastTests_lib
   libs     += ECMcastTests

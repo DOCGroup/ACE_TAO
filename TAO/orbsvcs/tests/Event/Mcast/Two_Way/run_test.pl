@@ -20,6 +20,11 @@ my $apps_number = 3;
 
 $test = PerlACE::TestTarget::create_target (1) || die "Create target 1 failed\n";
 $test->AddLibPath ("../Common");
+my $payload_test = $test->CreateProcess ("heartbeat_payload_test");
+if ($payload_test->SpawnWaitKill ($test->ProcessStartWaitInterval ()) != 0) {
+    print STDERR "ERROR: heartbeat payload validation failed\n";
+    exit 1;
+}
 # Variables for command-line arguments to client and server executables.
 my $ec_ior  = "ec.ior";
 my $gw_conf = "gateway.conf";
@@ -145,6 +150,19 @@ sub analyze_results {
     }
     close (TEST_OUTPUT);
 
+    if ($status != 0) {
+        print STDERR "ERROR - check $filename for full output.\n";
+    }
+    return $status;
+}
+
+sub check_heartbeats {
+    my $status = 0;
+    if (scalar (keys %heartbeats) != $apps_number) {
+        print STDERR "ERROR: expected heartbeats from $apps_number applications\n";
+        $status = -1;
+    }
+
     foreach $pid (keys %heartbeats) {
         my $ideal_heartbeats = $apps_number * 50;
         my $received_heartbeats = $heartbeats{$pid};
@@ -165,8 +183,6 @@ sub analyze_results {
         print STDERR "SUCCESS\n";
         return 0;
     }
-
-    print STDERR "ERROR - check $filename for full output.\n";
     return -1;
 }
 
@@ -182,6 +198,10 @@ for ($i = 0; $i < 2*$apps_number; $i++) {
     if (analyze_results ($test_results[$i]) == -1) {
         $status = 1;
     }
+}
+
+if (check_heartbeats () == -1) {
+    $status = 1;
 }
 
 exit $status;

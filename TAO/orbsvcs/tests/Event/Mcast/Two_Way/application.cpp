@@ -1,4 +1,5 @@
 #include "Constants.h"
+#include "Heartbeat_Payload.h"
 
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Event/EC_Lifetime_Utils_T.h"
@@ -403,27 +404,14 @@ Heartbeat_Application::push (RtecEventComm::EventSet const &events)
   for (CORBA::ULong i {}; i < events.length (); ++i)
     {
       // Figure out heartbeat source.
-      RtecEventComm::EventData const &data = events[i].data;
-      size_t const payload_length = data.payload.length ();
-      if (payload_length <= sizeof (pid_t))
-        {
-          ACE_ERROR ((LM_ERROR, "Heartbeat payload is too short\n"));
-          continue;
-        }
-
-      u_char const * const buffer = data.payload.get_buffer ();
       pid_t pid {};
-      std::memcpy (&pid, buffer, sizeof (pid));
-      char const * const host = reinterpret_cast<char const *> (buffer + sizeof (pid));
-      size_t const host_capacity = payload_length - sizeof (pid);
-      char const * const end = static_cast<char const *> (
-        std::memchr (host, '\0', host_capacity));
-      if (end == nullptr || static_cast<size_t> (end - host) > MAXHOSTNAMELEN)
+      char const *host {};
+      size_t host_length {};
+      if (!Heartbeat_Payload::decode (events[i].data.payload, pid, host, host_length))
         {
-          ACE_ERROR ((LM_ERROR, "Heartbeat hostname is invalid\n"));
+          ACE_ERROR ((LM_ERROR, "Heartbeat payload is invalid\n"));
           continue;
         }
-      size_t const host_length = static_cast<size_t> (end - host);
 
       // Update heartbeat database.
       bool found {};
