@@ -17,7 +17,7 @@ Simple_Server_i::test_method (CORBA::Long exec_duration)
   ACE_hthread_t thr_handle;
   ACE_Thread::self (thr_handle);
   int prio {};
-  int guid {};
+  size_t guid {};
   RTScheduling::Current::IdType_var id = this->current_->id ();
 
   size_t const length = id->length () < sizeof (guid)

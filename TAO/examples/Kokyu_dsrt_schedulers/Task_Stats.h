@@ -33,14 +33,14 @@ class Kokyu_DSRT_Schedulers_Export Task_Stats
   int init (size_t max_samples);
 
   /// Record a sample
-  int sample (ACE_UINT32 thr_run_time, int thr_count);
+  int sample (ACE_UINT32 thr_run_time, size_t thr_count);
 
   void dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg);
  protected:
   struct Sample
   {
     ACE_UINT32 run_time {};
-    int count {};
+    size_t count {};
   };
 
   /// The number of samples

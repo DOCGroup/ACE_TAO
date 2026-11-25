@@ -51,7 +51,7 @@ Task_Stats::dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg)
   for (size_t i = 0; i < this->samples_count_; ++i)
     {
       ACE_OS::fprintf (output_file.get (),
-                       "%u \t %d\n",
+                       "%u \t " ACE_SIZE_T_FORMAT_SPECIFIER "\n",
                        this->samples_[i].run_time,
                        this->samples_[i].count);
     }
