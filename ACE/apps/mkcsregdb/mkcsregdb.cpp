@@ -88,7 +88,7 @@ csdb_generator::csdb_generator ()
 void
 csdb_generator::fail (char const *msg)
 {
-  ACE_ERROR ((LM_ERROR, "Error, line %B: %s\n", this->linecounter_, msg));
+  ACE_ERROR ((LM_ERROR, "Error, line %B: %C\n", this->linecounter_, msg));
   this->outf_.reset ();
   ACE_OS::unlink (this->tempfilename_.c_str ());
   ACE_OS::exit (-1);
@@ -318,7 +318,7 @@ csdb_generator::init_output (char const *srcfile)
   ACE_stat buf;
   if (ACE_OS::stat (srcfile, &buf) != 0)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,"Unable to open %s\n",srcfile),-1);
+      ACE_ERROR_RETURN ((LM_ERROR,"Unable to open %C\n",srcfile),-1);
     }
 
   if (this->ace_src_.empty ())
@@ -450,18 +450,18 @@ csdb_generator::fini_output (char const *tgt)
         }
       while (ACE_OS::stat (fname.c_str (), &buf) == 0);
       std::string const backup_suffix = fname.substr (target.size ());
-      ACE_DEBUG ((LM_DEBUG, "Moving $ACE_ROOT/ace/%s to $ACE_ROOT/ace%s\n",
+      ACE_DEBUG ((LM_DEBUG, "Moving $ACE_ROOT/ace/%C to $ACE_ROOT/ace%C\n",
                   tgt, backup_suffix.c_str ()));
       if (ACE_OS::rename (target.c_str (), fname.c_str ()) == -1)
         {
-          ACE_ERROR_RETURN ((LM_ERROR,"Could not create %s\n, output stored in %s",
+          ACE_ERROR_RETURN ((LM_ERROR,"Could not create %C\n, output stored in %C",
                              fname.c_str (), this->tempfilename_.c_str ()), -1);
         }
     }
-  ACE_DEBUG ((LM_DEBUG,"writing $ACE_ROOT/ace/%s\n",tgt));
+  ACE_DEBUG ((LM_DEBUG,"writing $ACE_ROOT/ace/%C\n",tgt));
   if (ACE_OS::rename (this->tempfilename_.c_str (), target.c_str ()) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR,"Could not create %s\n, output stored in %s",
+      ACE_ERROR_RETURN ((LM_ERROR,"Could not create %C\n, output stored in %C",
                          target.c_str (), this->tempfilename_.c_str ()), -1);
     }
   return 0;
