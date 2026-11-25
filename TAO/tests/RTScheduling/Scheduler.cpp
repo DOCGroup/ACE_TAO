@@ -111,8 +111,14 @@ TAO_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
     {
       serv_cxt = request_info->get_request_service_context (Server_Interceptor::SchedulingInfo);
 
+      if (serv_cxt->context_data.length () != sizeof (size_t))
+        {
+          ACE_ERROR ((LM_ERROR, "Invalid scheduling service context length\n"));
+          return;
+        }
+
       size_t gu_id {};
-      std::memcpy (&gu_id, serv_cxt->context_data.get_buffer (), serv_cxt->context_data.length ());
+      std::memcpy (&gu_id, serv_cxt->context_data.get_buffer (), sizeof (gu_id));
 
       ACE_DEBUG ((LM_DEBUG,
                   "The Guid is %B\n",

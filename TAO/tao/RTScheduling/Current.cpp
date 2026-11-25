@@ -661,11 +661,17 @@ void
 TAO_RTScheduler_Current_i::cancel_thread ()
 {
   size_t guid {};
-  std::memcpy (&guid, this->guid_.get_buffer (), this->guid_.length ());
-
-  TAOLIB_DEBUG ((LM_DEBUG,
-              "Distributable Thread - %B is cancelled\n",
-              guid));
+  if (this->guid_.length () == sizeof (guid))
+    {
+      std::memcpy (&guid, this->guid_.get_buffer (), sizeof (guid));
+      TAOLIB_DEBUG ((LM_DEBUG,
+                     "Distributable Thread - %B is cancelled\n",
+                     guid));
+    }
+  else
+    {
+      TAOLIB_DEBUG ((LM_DEBUG, "Distributable Thread is cancelled\n"));
+    }
 
   // Let the scheduler know that the thread has
   // been cancelled.

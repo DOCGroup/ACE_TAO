@@ -322,11 +322,11 @@ Server_Interceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr 
                               sched_param.out (),
                               implicit_sched_param.out ());
 
-  if (guid_var->length () == 0)
+  if (guid_var.ptr () == nullptr || guid_var->length () < sizeof (size_t))
     {
       TAOLIB_ERROR ((LM_ERROR,
-                  "The scheduler MUST retrieve and return the "
-                  "GUID from the service context\n"));
+                     "The scheduler must return a GUID of at least %B bytes\n",
+                     sizeof (size_t)));
       return;
     }
   RTScheduling::Current::IdType guid;
