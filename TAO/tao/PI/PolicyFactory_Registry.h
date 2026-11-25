@@ -72,7 +72,7 @@ public:
 
   /// Check if a @c PolicyFactory corresponding to the given type,
   /// exists.
-  bool factory_exists (CORBA::PolicyType type) const override;
+  bool factory_exists (CORBA::PolicyType &type) const override;
 
 private:
   TAO_PolicyFactory_Registry (TAO_PolicyFactory_Registry const &) = delete;

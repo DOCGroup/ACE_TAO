@@ -59,7 +59,7 @@ namespace
     {
       return nullptr;
     }
-    bool factory_exists (CORBA::PolicyType) const override
+    bool factory_exists (CORBA::PolicyType &) const override
     {
       return false;
     }

@@ -95,7 +95,7 @@ TAO_PolicyFactory_Registry::_create_policy (CORBA::PolicyType type)
 }
 
 bool
-TAO_PolicyFactory_Registry::factory_exists (CORBA::PolicyType type) const
+TAO_PolicyFactory_Registry::factory_exists (CORBA::PolicyType &type) const
 {
   return (this->factories_.find (type) == 0);
 }
