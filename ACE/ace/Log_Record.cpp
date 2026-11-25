@@ -106,8 +106,8 @@ ACE_Log_Record::dump () const
   // ACE_TRACE ("ACE_Log_Record::dump");
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
-  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("length_ = %q\n"),
-                 static_cast<ACE_INT64> (this->length_)));
+  ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("length_ = %d\n"),
+                 this->length_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntype_ = %u\n"),
                  this->type_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\ntime_stamp_ = (%:, %u)\n"),
