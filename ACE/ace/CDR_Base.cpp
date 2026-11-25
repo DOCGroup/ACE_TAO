@@ -765,11 +765,6 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
       std::memcpy (lhs_ptr, this->ld, sizeof (ret));
     }
 
-  // This bit of code is unnecessary.  However, this code is
-  // necessary to work around a bug in the gcc 4.1.1 optimizer.
-  ACE_CDR::LongDouble tmp;
-  tmp.assign (ret);
-
   return ret;
 }
 #endif /* NONNATIVE_LONGDOUBLE */
