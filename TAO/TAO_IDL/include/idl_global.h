@@ -831,8 +831,8 @@ public:
    */
   void dump_ast ();
 
-  /// flags for types of declarations seen while parsing.
-  ///{
+  /// @name Flags for types of declarations seen while parsing
+  /// @{
   bool abstract_iface_seen_ {};
   bool abstractbase_seen_ {};
   bool aggregate_seen_ {};
@@ -896,7 +896,7 @@ public:
   bool wstring_seen_ {};
   bool dds_connector_seen_ {};
   bool ami_connector_seen_ {};
-  ///}
+  /// @}
 
   /// flag to force generation of skeleton includes (see bug #2419).
   bool need_skeleton_includes_ {};
@@ -1004,140 +1004,125 @@ private:
   std::vector<std::string> pd_include_file_names_;
   std::vector<long> include_file_seen_count_;
 
+  /// IDL files included with \#include.
   std::vector<std::string> included_idl_files_;
-  // IDL files that are "#include'd.
 
   ParseState                pd_parse_state {PS_NoState}; // Parse state we're in.
 
   std::string                pd_idl_src_file;    // IDL source file.
 
+  /// Needed if orb.idl is included.
   std::string tao_root_;
-  // Needed if orb.idl is included.
 
+  /// Path to the perfect hash generator. By default this is
+  /// $ACE_ROOT/bin/ace_gperf unless ACE_GPERF specifies another name.
   std::string gperf_path_;
-  // Path for the perfect hash generator(gperf) program. Default
-  // is $ACE_ROOT/bin/gperf.
 
+  /// Temporary directory selected from TEMP or defaulting to /tmp/.
   std::string temp_dir_;
-  // Temp directory where which we can rewsolve in drv_preproc.cpp by
-  // checking for  TEMP env variable otherwise we assign to /tmp/.
 
+  /// A string beginning with \#ident, passed from IDL to generated files.
   std::string ident_string_;
-  // Holds a string that begins with #ident, to be passed from the IDL
-  // file to the generated files.
 
+  /// Whether case-only identifier differences produce an error, not a warning.
   bool case_diff_error_ {true};
-  // Do we report an error for indentifiers in the same scope that differ
-  // only by case? or just a warning?
 
+  /// Whether this front end is being used for the NEST ORB.
   bool nest_orb_ {};
-  // Is this front end being used for the NEST ORB?
 
+  /// Concatenation of all command-line options.
   std::string idl_flags_;
-  // Concatenation of all the command line options.
 
+  /// IDL keywords used to check local names.
   std::unordered_set<std::string> idl_keywords_;
-  // Container for all the IDL keywords so local names can be checked.
 
+  /// Container for all \#pragma prefix declarations.
   std::vector<std::string> pragma_prefixes_;
-  // Container for all the #pragma prefix declarations.
 
+  /// Whether C++ keywords are retained as IDL identifiers.
   bool preserve_cpp_keywords_ {true};
-  // Do we allow C++ keywords as identifiers in the idl to stay as they are ?
 
+  /// Include paths passed with -I.
   std::vector<Include_Path_Info> include_paths_;
-  // List of -I options passed to us.
 
+  /// Include paths used by backends with the -r option.
   std::vector<std::string> rel_include_paths_;
-  // Used by backends with the -r option.
 
+  /// Associates a prefix with a file.
   File_Prefix_Map file_prefixes_;
-  // Associates a prefix with a file.
 
+  /// Treat orb.idl like any other included IDL file.
   bool pass_orb_idl_ {};
-  // Treat orb.idl like any other included IDL file.
 
+  /// Set by the IFR backend itself.
   bool using_ifr_backend_ {};
-  // Set by the IFR backend itself.
 
+  /// Avoid generating another event consumer for eventtypes left by idl3_to_idl2.
   bool ignore_idl3_ {};
-  // Need this for eventtypes left over after running idl3_to_idl2,
-  // we don't want to try to generate another event consumer.
+
+  /// Map of \#pragma DCPS_DATA_TYPE and DCPS_DATA_KEY information.
   DCPS_Type_Info_Map dcps_type_info_map_;
-  // Map of #pragma DCPS_DATA_TYPE and DCPS_DATA_KEY infomation.
 
   std::vector<std::string> dcps_sequence_types_list_ {};
 
+  /// Whether DCPS zero-copy read support is enabled. This avoids generating
+  /// incorrect code for DDS versions before 0.12 with a newer TAO_IDL.
   bool dcps_support_zero_copy_read_ {};
-  // Are we enabled to support DCPS zero-copy read.
-  // Need this flag to avoid generating wrong code for pre v0.12 DDS
-  // with new TAO_IDL compiler.
 
+  /// Whether to generate support for DCPS zero-copy read sequences.
   bool dcps_gen_zero_copy_read_ {};
-  // Are we generating code insupport of DCPS zero-copy read data sequences?
 
+  /// Valuetypes used as primary keys.
   std::deque<AST_ValueType *> primary_keys_;
-  // List of valuetypes used as a primary key.
 
+  /// Directory subtree being traversed; not used by all backends.
   std::optional<std::string> recursion_start_;
-  // Path to directory subtree we are iterating/recursing over.
-  // Not used by all backends.
 
+  /// Whether multiple input files are processed into one output.
   bool multi_file_input_ {};
-  // Some backends process multiple files to a single output.
 
-  // Used if the above flag is set.
-
+  /// Parameters of the template module being parsed, or of the referenced
+  /// module when traversing an alias; null outside a template module scope.
   FE_Utils::T_PARAMLIST_INFO *current_params_ {};
-  // Stored if we are parsing the scope of a template module,
-  // 0 otherwise. Contains the params of the referenced
-  // template module if we are traversing an alias.
 
+  /// Alias names for parameter holders when parsing a template module reference.
   std::optional<UTL_StrList> alias_params_;
-  // Stored if we are parsing a template module reference. The
-  // scope traversed will be that of the referenced template
-  // module, but the param holder(s) created will use the
-  // aliased names.
 
+  /// Enclosing template parameters used to name holders while traversing an alias.
   std::optional<UTL_StrList> for_new_holder_;
-  // Stored if we are traversing an alias, this is a list of
-  // the enclosing template module's params. When we create
-  // a param holder, it will need this name rather than the
-  // name of the alias's referenced param.
 
+  /// Files parsed with the ciao lem pragma.
   std::vector<std::string> ciao_lem_file_names_;
-  // Files parsed with ciao lem pragma
 
+  /// Files parsed with the RTI type support pragma.
   std::vector<std::string> ciao_rti_ts_file_names_;
-  // Files parsed with RTI typesupport pragma
 
+  /// Files parsed with the OpenSplice type support pragma.
   std::vector<std::string> ciao_spl_ts_file_names_;
-  // Files parsed with OpenSplice typesupport pragma
 
+  /// Files parsed with the OpenDDS type support pragma.
   std::vector<std::string> ciao_oci_ts_file_names_;
-  // Files parsed with OpenDDS typesupport pragma
 
+  /// Files parsed with the CoreDX type support pragma.
   std::vector<std::string> ciao_coredx_ts_file_names_;
-  // Files parsed with CoreDX typesupport pragma
 
+  /// Interfaces that get a reply handler generated for AMI4CCM.
   std::vector<std::string> ciao_ami_iface_names_;
-  // Interfaces that get a reply handler generated for AMI4CCM.
 
+  /// Receptacles that get a sendc_ version added for AMI4CCM.
   std::vector<std::string> ciao_ami_recep_names_;
-  // Receptacles that get a sendc_ version added for AMI4CCM.
 
+  /// Included AMI receptacles that require different handling.
   std::vector<std::string> included_ami_recep_names_;
-  // We need to do something different with these...
 
+  /// Whether the included AMI receptacles have been handled.
   bool included_ami_receps_done_ {};
-  // ...but we need to do it only once.
 
+  /// Directives from \#pragma ciao ami4ccm idl or \#pragma ami4ccm idl.
   std::vector<std::string> ciao_ami_idl_fnames_;
-  // Stores directives from #pragma ciao ami4ccm idl "xxx"
-  // or  #pragma ami4ccm idl "xxx".
 
+  /// Directives from \#pragma dds4ccm impl.
   std::vector<std::string> dds4ccm_impl_fnames_;
-  // Stores directives from #pragma dds4ccm impl "xxx".
 
   /**
    * Used in the generation of overrides for CORBA::release and
