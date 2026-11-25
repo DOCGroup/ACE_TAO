@@ -1,5 +1,7 @@
 #include "test_config.h"
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XML_Helper.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/XML_Utils/XSCRT/XML.hpp"
 #include <xercesc/util/PlatformUtils.hpp>
 
@@ -52,6 +54,41 @@ run_main (int, ACE_TCHAR *[])
     Type_Probe first;
     Type_Probe second (std::move (first));
     first = std::move (second);
+
+    XML::XStr text (ACE_TEXT ("hello"));
+    XML::XStr const suffix (ACE_TEXT (" world"));
+    ACE_TEST_ASSERT (text.append (suffix.begin ()));
+    ACE_TEST_ASSERT (text == XML::XStr (ACE_TEXT ("hello world")));
+    ACE_TEST_ASSERT (text.erase (text.begin () + 5, text.end ()));
+    ACE_TEST_ASSERT (text == XML::XStr (ACE_TEXT ("hello")));
+    XML::XStr copy (text);
+    text = suffix;
+    ACE_TEST_ASSERT (copy == XML::XStr (ACE_TEXT ("hello")));
+    XML::XStr moved (std::move (copy));
+    ACE_TEST_ASSERT (copy.begin () == nullptr);
+    copy = std::move (moved);
+    ACE_TEST_ASSERT (moved.begin () == nullptr);
+    XMLCh *released = copy.release ();
+    ACE_TEST_ASSERT (copy.begin () == nullptr && released != nullptr);
+    ACE_TEST_ASSERT (xercesc::XMLString::equals (released, XML::XStr (ACE_TEXT ("hello"))));
+    xercesc::XMLString::release (&released);
+
+    {
+      XML::XML_Helper<> helper;
+      ACE_TCHAR const *const filename = ACE_TEXT ("XML_Utils_Test.xml");
+      xercesc::DOMDocument *document = helper.create_dom (ACE_TEXT ("root"), ACE_TEXT ("urn:test"));
+      ACE_TEST_ASSERT (document != nullptr);
+      ACE_TEST_ASSERT (helper.write_DOM (document, filename));
+      document->release ();
+      xercesc::XercesDOMParser parser;
+      parser.setValidationScheme (xercesc::AbstractDOMParser::Val_Never);
+      parser.parse (ACE_TEXT_ALWAYS_CHAR (filename));
+      xercesc::DOMDocument *parsed = parser.getDocument ();
+      ACE_TEST_ASSERT (parsed != nullptr);
+      ACE_TEST_ASSERT (xercesc::XMLString::equals (
+        parsed->getDocumentElement ()->getTagName (), XML::XStr (ACE_TEXT ("root"))));
+      ACE_TEST_ASSERT (ACE_OS::unlink (filename) == 0);
+    }
 
     XSCRT::XML::string xml_string (std::string ("example"));
     ACE_TEST_ASSERT (XSCRT::XML::transcode<char> (xml_string.c_str (), nullptr) == "example");
