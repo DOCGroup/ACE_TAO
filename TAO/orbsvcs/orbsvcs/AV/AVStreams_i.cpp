@@ -252,7 +252,7 @@ TAO_Basic_StreamCtrl::get_flow_connection (char const *flow_name)
     {
       if (TAO_debug_level > 0)
         {
-          ORBSVCS_DEBUG ((LM_DEBUG, "(%N,%l) Cannot find flow: %s\n", flow_name ));
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%N,%l) Cannot find flow: %C\n", flow_name ));
         }
       throw AVStreams::noSuchFlow ();
     }
@@ -282,7 +282,7 @@ TAO_Basic_StreamCtrl::set_flow_connection (char const *flow_name,
   {
     if (TAO_debug_level > 0)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG, "(%N,%l) Cannot find flow: %s\n", flow_name ));
+      ORBSVCS_DEBUG ((LM_DEBUG, "(%N,%l) Cannot find flow: %C\n", flow_name ));
     }
     throw AVStreams::noSuchFlow ();// is this right?
   }
@@ -755,7 +755,7 @@ TAO_StreamCtrl::bind_devs (AVStreams::MMDevice_ptr a_party,
                     {
                       if (TAO_debug_level > 0)
                       {
-                        ORBSVCS_DEBUG ((LM_DEBUG, " %s ", static_cast<char const*>(flows[i])));
+                        ORBSVCS_DEBUG ((LM_DEBUG, " %C ", static_cast<char const*>(flows[i])));
                       }
 
                       ex._tao_print_exception (
@@ -968,7 +968,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
           {
             if (TAO_debug_level > 0)
             {
-              ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %s\n", flowname));
+              ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %C\n", flowname));
             }
           }
         }
@@ -987,7 +987,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
           {
             if (TAO_debug_level > 0)
             {
-              ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %s\n", flowname));
+              ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamCtrl::bind failed for %C\n", flowname));
             }
           }
         }
@@ -1008,7 +1008,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
               result = a_fep_map.find (fep_key, fep);
               if (result == -1)
               {
-                ORBSVCS_ERROR_RETURN ((LM_ERROR, "Fep not found on A side for flowname: %s\n", flow_spec[i].in ()), 0);
+                ORBSVCS_ERROR_RETURN ((LM_ERROR, "Fep not found on A side for flowname: %C\n", flow_spec[i].in ()), 0);
               }
 
               result = spec_fep_map_a.bind (fep_key, fep);
@@ -1016,14 +1016,14 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
               {
                 if (TAO_debug_level > 0)
                 {
-                  ORBSVCS_DEBUG ((LM_DEBUG, "Bind failed for %s\n", flow_spec[i].in ()));
+                  ORBSVCS_DEBUG ((LM_DEBUG, "Bind failed for %C\n", flow_spec[i].in ()));
                 }
               }
 
               result = b_fep_map.find (fep_key, fep);
               if (result == -1)
               {
-                ORBSVCS_ERROR_RETURN ((LM_ERROR, "Fep not found on B side for flowname: %s\n", flow_spec[i].in ()), 0);
+                ORBSVCS_ERROR_RETURN ((LM_ERROR, "Fep not found on B side for flowname: %C\n", flow_spec[i].in ()), 0);
               }
 
               result = spec_fep_map_b.bind (fep_key, fep);
@@ -1031,7 +1031,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
               {
                 if (TAO_debug_level > 0)
                 {
-                  ORBSVCS_DEBUG ((LM_DEBUG, "Bind failed for %s\n", flow_spec[i].in ()));
+                  ORBSVCS_DEBUG ((LM_DEBUG, "Bind failed for %C\n", flow_spec[i].in ()));
                 }
               }
             }
@@ -1158,7 +1158,7 @@ TAO_StreamCtrl::bind (AVStreams::StreamEndPoint_A_ptr sep_a,
                                                      flow_qos);
                           if (result == -1 && TAO_debug_level > 0)
                             {
-                              ORBSVCS_DEBUG ((LM_DEBUG, "No QoS Specified for this flow <%s>\n", flowname));
+                              ORBSVCS_DEBUG ((LM_DEBUG, "No QoS Specified for this flow <%C>\n", flowname));
                             }
                         }
                       flow_connection->connect (producer.in (),
@@ -1571,7 +1571,7 @@ TAO_Base_StreamEndPoint::set_flow_handler (char const *flowname,
 {
   if(TAO_debug_level > 1)
   {
-     ORBSVCS_DEBUG ((LM_DEBUG, "(%N,%l) TAO_Base_StreamEndPoint::set_flow_handler(), flowname: %s\n", flowname));
+     ORBSVCS_DEBUG ((LM_DEBUG, "(%N,%l) TAO_Base_StreamEndPoint::set_flow_handler(), flowname: %C\n", flowname));
   }
   ACE_CString flow_name_key (flowname);
   if (this->flow_handler_map_.bind (flow_name_key, handler) != 0)
@@ -1603,7 +1603,7 @@ TAO_StreamEndPoint::TAO_StreamEndPoint ()
   this->mcast_addr_.set (ACE_DEFAULT_MULTICAST_ADDR);
   if (TAO_debug_level > 0)
   {
-    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::TAO_StreamEndPoint::mcast_addr = %s", this->mcast_addr_.c_str ()));
+    ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::TAO_StreamEndPoint::mcast_addr = %C", this->mcast_addr_.c_str ()));
   }
   //  this->handle_open ();
 }
@@ -1728,7 +1728,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
 
           if (TAO_debug_level > 0)
           {
-            ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::Connect: %s\n",  entry->entry_to_string ()));
+            ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::Connect: %C\n",  entry->entry_to_string ()));
           }
 
           int const insert_result = this->forward_flow_spec_set.insert (entry.get ());
@@ -1782,7 +1782,7 @@ TAO_StreamEndPoint::connect (AVStreams::StreamEndPoint_ptr responder,
 
           if (TAO_debug_level > 0)
           {
-            ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::Connect: Reverse Flow Spec %s\n", entry->entry_to_string ()));
+            ORBSVCS_DEBUG ((LM_DEBUG, "TAO_StreamEndPoint::Connect: Reverse Flow Spec %C\n", entry->entry_to_string ()));
           }
 
           int const insert_result = this->reverse_flow_spec_set.insert (entry.get ());
@@ -2240,7 +2240,7 @@ TAO_StreamEndPoint::change_qos (AVStreams::streamQoS &new_qos,
           AVStreams::QoS flow_qos;
           if (qos.get_flow_qos (entry.flowname (), flow_qos) != 0)
           {
-            ORBSVCS_DEBUG ((LM_DEBUG, "New QoS for the flow %s is not specified\n", entry.flowname ()));
+            ORBSVCS_DEBUG ((LM_DEBUG, "New QoS for the flow %C is not specified\n", entry.flowname ()));
           }
           int result;
           result = handler_entry->int_id_->change_qos (flow_qos);
@@ -2574,7 +2574,7 @@ TAO_StreamEndPoint_A::multiconnect (AVStreams::streamQoS &stream_qos,
                   {
                     if (TAO_debug_level > 0)
                     {
-                      ORBSVCS_DEBUG ((LM_DEBUG, "QoS not found for %s\n", forward_entry.flowname ()));
+                      ORBSVCS_DEBUG ((LM_DEBUG, "QoS not found for %C\n", forward_entry.flowname ()));
                     }
                   }
                   // Narrow it to FlowProducer.
@@ -2797,7 +2797,7 @@ TAO_StreamEndPoint_B::multiconnect (AVStreams::streamQoS &stream_qos,
               {
                 if (TAO_debug_level > 0)
                 {
-                  ORBSVCS_DEBUG ((LM_DEBUG, "QoS not found for %s", forward_entry->flowname ()));
+                  ORBSVCS_DEBUG ((LM_DEBUG, "QoS not found for %C", forward_entry->flowname ()));
                 }
               }
               AVStreams::FlowConnection_var flow_connection;
@@ -3230,7 +3230,7 @@ TAO_MMDevice::create_A_B (MMDevice_Type type,
               {
                 if (TAO_debug_level > 0)
                 {
-                  ORBSVCS_DEBUG ((LM_DEBUG, "(%N,%l) get_flow_qos failed for %s\n", forward_entry.flowname ()));
+                  ORBSVCS_DEBUG ((LM_DEBUG, "(%N,%l) get_flow_qos failed for %C\n", forward_entry.flowname ()));
                 }
               }
               switch (forward_entry.direction ())
@@ -3779,7 +3779,7 @@ TAO_FlowConnection::connect (AVStreams::FlowProducer_ptr producer,
         {
           if (TAO_debug_level > 0)
           {
-            ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowConnection::connect_to_peer addres: %s", consumer_address.in ()));
+            ORBSVCS_DEBUG ((LM_DEBUG, "TAO_FlowConnection::connect_to_peer addres: %C", consumer_address.in ()));
           }
           flow_producer->connect_to_peer (the_qos,
                                           consumer_address.in (),
@@ -4040,7 +4040,7 @@ TAO_FlowEndPoint::open (char const *flowname,
           protocol_spec [i] = CORBA::string_dup (entry.carrier_protocol_str ());
           if (TAO_debug_level > 0)
                 {
-                  ORBSVCS_DEBUG ((LM_DEBUG, "[%s]\n", static_cast<char const*> (protocol_spec[i])));
+                  ORBSVCS_DEBUG ((LM_DEBUG, "[%C]\n", static_cast<char const*> (protocol_spec[i])));
                 }
         }
       this->set_protocol_restriction (protocol_spec);
@@ -4204,7 +4204,7 @@ TAO_FlowEndPoint::set_protocol_restriction (AVStreams::protocolSpec const &proto
           char const *protocol = (protocols)[i];
           if (TAO_debug_level > 0)
           {
-            ORBSVCS_DEBUG ((LM_DEBUG, "%s\n", protocol));
+            ORBSVCS_DEBUG ((LM_DEBUG, "%C\n", protocol));
           }
         }
       CORBA::Any AvailableProtocols_property;
@@ -4223,7 +4223,7 @@ TAO_FlowEndPoint::set_protocol_restriction (AVStreams::protocolSpec const &proto
           char const *protocol = (*temp_spec)[i];
           if (TAO_debug_level > 0)
           {
-            ORBSVCS_DEBUG ((LM_DEBUG, "%s\n", protocol));
+            ORBSVCS_DEBUG ((LM_DEBUG, "%C\n", protocol));
           }
         }
       this->protocols_ = protocols;
