@@ -135,25 +135,25 @@ protected:
   /// Enqueue an ACE_Message_Block * in accordance with its deadline time.
   virtual int enqueue_deadline_i (ACE_Message_Block *new_item);
 
-  /// Enqueue an <ACE_Message_Block *> at the end of the queue.
+  /// Enqueue an @c ACE_Message_Block pointer at the end of the queue.
   virtual int enqueue_tail_i (ACE_Message_Block *new_item);
 
-  /// Enqueue an <ACE_Message_Block *> at the head of the queue.
+  /// Enqueue an @c ACE_Message_Block pointer at the head of the queue.
   virtual int enqueue_head_i (ACE_Message_Block *new_item);
 
-  /// Dequeue and return the <ACE_Message_Block *> at the head of the
+  /// Dequeue and return the @c ACE_Message_Block pointer at the head of the
   /// queue.
   virtual int dequeue_head_i (ACE_Message_Block *&first_item);
 
-  /// Dequeue and return the <ACE_Message_Block *> with the lowest
+  /// Dequeue and return the @c ACE_Message_Block pointer with the lowest
   /// priority.
   virtual int dequeue_prio_i (ACE_Message_Block *&dequeued);
 
-  /// Dequeue and return the <ACE_Message_Block *> at the tail of the
+  /// Dequeue and return the @c ACE_Message_Block pointer at the tail of the
   /// queue.
   virtual int dequeue_tail_i (ACE_Message_Block *&dequeued);
 
-  /// Dequeue and return the <ACE_Message_Block *> that has the lowest
+  /// Dequeue and return the @c ACE_Message_Block pointer that has the lowest
   /// deadline time.
   virtual int dequeue_deadline_i (ACE_Message_Block *&dequeued);
 

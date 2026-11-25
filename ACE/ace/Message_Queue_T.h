@@ -502,31 +502,31 @@ protected:
   /// These routines assume the public methods hold the locks. They are
   /// virtual so subclasses can change the queueing mechanism.
 
-  /// Enqueue an <ACE_Message_Block *> in accordance with its priority.
+  /// Enqueue an @c ACE_Message_Block pointer in accordance with its priority.
   virtual int enqueue_i (ACE_Message_Block *new_item);
 
-  /// Enqueue an <ACE_Message_Block *> in accordance with its deadline time.
+  /// Enqueue an @c ACE_Message_Block pointer in accordance with its deadline time.
   virtual int enqueue_deadline_i (ACE_Message_Block *new_item);
 
-  /// Enqueue an <ACE_Message_Block *> at the end of the queue.
+  /// Enqueue an @c ACE_Message_Block pointer at the end of the queue.
   virtual int enqueue_tail_i (ACE_Message_Block *new_item);
 
-  /// Enqueue an <ACE_Message_Block *> at the head of the queue.
+  /// Enqueue an @c ACE_Message_Block pointer at the head of the queue.
   virtual int enqueue_head_i (ACE_Message_Block *new_item);
 
-  /// Dequeue and return the <ACE_Message_Block *> at the head of the
+  /// Dequeue and return the @c ACE_Message_Block pointer at the head of the
   /// queue.
   virtual int dequeue_head_i (ACE_Message_Block *&first_item);
 
-  /// Dequeue and return the <ACE_Message_Block *> with the lowest
+  /// Dequeue and return the @c ACE_Message_Block pointer with the lowest
   /// priority.
   virtual int dequeue_prio_i (ACE_Message_Block *&dequeued);
 
-  /// Dequeue and return the <ACE_Message_Block *> at the tail of the
+  /// Dequeue and return the @c ACE_Message_Block pointer at the tail of the
   /// queue.
   virtual int dequeue_tail_i (ACE_Message_Block *&first_item);
 
-  /// Dequeue and return the <ACE_Message_Block *> with the lowest
+  /// Dequeue and return the @c ACE_Message_Block pointer with the lowest
   /// deadline time.
   virtual int dequeue_deadline_i (ACE_Message_Block *&first_item);
   /// @}
@@ -816,7 +816,7 @@ public:
                                u_int status_flags);
 
   /**
-   * Dequeue and return the <ACE_Message_Block *> at the head of the
+   * Dequeue and return the @c ACE_Message_Block pointer at the head of the
    * queue.  Returns -1 on failure, else the number of items still on
    * the queue.
    */
@@ -849,7 +849,7 @@ public:
 
 protected:
   /**
-   * Enqueue an <ACE_Message_Block *> in accordance with its priority.
+   * Enqueue an @c ACE_Message_Block pointer in accordance with its priority.
    * priority may be *dynamic* or *static* or a combination or *both*
    * It calls the priority evaluation function passed into the Dynamic
    * Message Queue constructor to update the priorities of all
@@ -865,7 +865,7 @@ protected:
                                  ACE_Dynamic_Message_Strategy::Priority_Status status);
 
   /**
-   * Dequeue and return the <ACE_Message_Block *> at the head of the
+   * Dequeue and return the @c ACE_Message_Block pointer at the head of the
    * logical queue.  Attempts first to dequeue from the pending
    * portion of the queue, or if that is empty from the late portion,
    * or if that is empty from the beyond late portion, or if that is
