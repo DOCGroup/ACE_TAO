@@ -239,7 +239,7 @@ public:
   /// Count of the semaphore.
   u_long count_;
 
-  /// Number of threads that have called <ACE_OS::sema_wait>.
+  /// Number of threads that have called @c ACE_OS::sema_wait.
   u_long waiters_;
 };
 #    endif /* !ACE_HAS_POSIX_SEM */

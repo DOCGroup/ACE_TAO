@@ -54,7 +54,7 @@ extern "C"
 #  if defined (ACE_LACKS_NAMED_POSIX_SEM)
      /// this->sema_ doesn't always get created dynamically if a platform
      /// doesn't support named posix semaphores.  We use this flag to
-     /// remember if we need to delete <sema_> or not.
+     /// Remember if we need to delete @c sema_ or not.
      bool new_sema_;
 #  endif /* ACE_LACKS_NAMED_POSIX_SEM */
 
