@@ -17,8 +17,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_POA_Helper::TAO_Notify_POA_Helper ()
-{
-}
+= default;
 
 TAO_Notify_POA_Helper::~TAO_Notify_POA_Helper () = default;
 

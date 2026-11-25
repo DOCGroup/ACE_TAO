@@ -16,8 +16,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CosNotify_Service::TAO_CosNotify_Service ()
-{
-}
+= default;
 
 TAO_CosNotify_Service::~TAO_CosNotify_Service () = default;
 

@@ -15,8 +15,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq ()
-{
-}
+= default;
 
 TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq)
 {

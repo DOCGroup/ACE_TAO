@@ -61,8 +61,7 @@ TAO_Notify_Refcountable::diagnostic_dump (char const *title)
 #endif /* TAO_NOTIFY_REFCOUNT_DIAGNOSTICS */
 
 TAO_Notify_Refcountable::TAO_Notify_Refcountable ()
-{
-}
+= default;
 
 TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
 {

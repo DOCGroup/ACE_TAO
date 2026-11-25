@@ -14,8 +14,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Constraint_Expr::TAO_Notify_Constraint_Expr ()
-{
-}
+= default;
 
 TAO_Notify_Constraint_Expr::~TAO_Notify_Constraint_Expr () = default;
 

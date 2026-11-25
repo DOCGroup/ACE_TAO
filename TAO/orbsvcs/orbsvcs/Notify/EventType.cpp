@@ -22,8 +22,7 @@ TAO_Notify_EventType::special ()
 }
 
 TAO_Notify_EventType::TAO_Notify_EventType ()
-{
-}
+= default;
 
 void
 TAO_Notify_EventType::init_i (const char* domain_name, const char* type_name)

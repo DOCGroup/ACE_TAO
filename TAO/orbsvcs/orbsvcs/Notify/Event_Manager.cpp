@@ -54,8 +54,7 @@ protected:
 /********************************************************************************/
 
 TAO_Notify_Event_Manager::TAO_Notify_Event_Manager ()
-{
-}
+= default;
 
 TAO_Notify_Event_Manager::~TAO_Notify_Event_Manager ()
 {
