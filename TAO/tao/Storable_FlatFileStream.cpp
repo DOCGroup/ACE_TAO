@@ -202,7 +202,7 @@ TAO::Storable_FlatFileStream::open()
     {
       TAOLIB_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("(%P|%t) Storable_FFS::open ")
-                            ACE_TEXT ("Cannot open file %s for mode %s: %p\n"),
+                            ACE_TEXT ("Cannot open file %C for mode %C: %p\n"),
                             file_.c_str (), mode_.c_str (), ACE_TEXT ("ACE_OS::flock_init")),
                            -1);
     }
@@ -212,7 +212,7 @@ TAO::Storable_FlatFileStream::open()
     {
       TAOLIB_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("(%P|%t) Storable_FFS::open ")
-                            ACE_TEXT ("Cannot open file %s for mode %s: %p\n"),
+                            ACE_TEXT ("Cannot open file %C for mode %C: %p\n"),
                             file_.c_str (), mode_.c_str (), ACE_TEXT ("ACE_OS::open")),
                            -1);
     }
@@ -246,7 +246,7 @@ TAO::Storable_FlatFileStream::open()
             {
               TAOLIB_ERROR ((LM_ERROR,
                              ACE_TEXT ("(%P|%t) Storable_FFS::open ")
-                             ACE_TEXT ("Cannot open file %s for mode %s: %p\n"),
+                             ACE_TEXT ("Cannot open file %C for mode %C: %p\n"),
                              file_.c_str(), mode_.c_str(), ACE_TEXT ("ACE_OS::fdopen")));
             }
           if (errno != EBADF)
@@ -673,7 +673,7 @@ TAO::Storable_FlatFileStream::create_backup ()
               TAOLIB_ERROR ((LM_ERROR,
                              ACE_TEXT ("TAO: (%P|%t) Storable_FlatFileStream::")
                              ACE_TEXT ("create_backup Unable to create backup ")
-                             ACE_TEXT ("of file %s\n"), file_.c_str ()));
+                             ACE_TEXT ("of file %C\n"), file_.c_str ()));
             }
           if (errno != EBADF)
             {
@@ -690,7 +690,7 @@ TAO::Storable_FlatFileStream::create_backup ()
               TAOLIB_ERROR ((LM_ERROR,
                              ACE_TEXT ("TAO: (%P|%t) Storable_FlatFileStream::")
                              ACE_TEXT ("create_backup Unable to create backup ")
-                             ACE_TEXT ("of file %s\n"), file_.c_str ()));
+                             ACE_TEXT ("of file %C\n"), file_.c_str ()));
             }
           if (errno != EBADF)
             {

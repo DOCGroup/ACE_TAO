@@ -211,9 +211,9 @@ TAO::Storable_File_Guard::load ()
       std::string const state_str = Storable_Base::state_as_string (ex.get_state ());
 
       TAOLIB_ERROR ((LM_ERROR,
-                     ACE_TEXT ("TAO: (%P|%t) ERROR: State %s ")
+                     ACE_TEXT ("TAO: (%P|%t) ERROR: State %C ")
                      ACE_TEXT ("encountered reading persistent ")
-                     ACE_TEXT ("state from file\n%s\n"),
+                     ACE_TEXT ("state from file\n%C\n"),
                      state_str.c_str (), ex.get_file_name ().c_str ()));
 
       // The following opens the backup file, and copies it
