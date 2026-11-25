@@ -100,7 +100,7 @@ public:
   explicit ACE_Configuration_Section_Key (ACE_Section_Key_Internal *key);
 
   /// Copy constructor, increments the reference count on the key.
-  ACE_Configuration_Section_Key (const ACE_Configuration_Section_Key &rhs);
+  ACE_Configuration_Section_Key (ACE_Configuration_Section_Key const &rhs);
 
   /// Move constructor, transferring the referenced key.
   ACE_Configuration_Section_Key (ACE_Configuration_Section_Key &&rhs) noexcept;
@@ -110,7 +110,7 @@ public:
 
   /// Assignment operator, increments reference count for this object
   /// and decrements it on @a rhs.
-  ACE_Configuration_Section_Key &operator= (const ACE_Configuration_Section_Key &rhs);
+  ACE_Configuration_Section_Key &operator= (ACE_Configuration_Section_Key const &rhs);
 
   /// Move assignment operator, transferring the referenced key.
   ACE_Configuration_Section_Key &operator= (ACE_Configuration_Section_Key &&rhs) noexcept;
@@ -150,7 +150,7 @@ public:
    * @return Reference to the configuration's root section. Note that
    *         it is a const reference.
    */
-  virtual const ACE_Configuration_Section_Key& root_section () const;
+  virtual ACE_Configuration_Section_Key const & root_section () const;
 
   /**
    * Opens a named section in an existing section.
@@ -165,8 +165,8 @@ public:
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int open_section (const ACE_Configuration_Section_Key &base,
-                            const ACE_TCHAR *sub_section,
+  virtual int open_section (ACE_Configuration_Section_Key const &base,
+                            ACE_TCHAR const *sub_section,
                             bool create,
                             ACE_Configuration_Section_Key& result) = 0;
 
@@ -180,8 +180,8 @@ public:
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int remove_section (const ACE_Configuration_Section_Key &key,
-                              const ACE_TCHAR *sub_section,
+  virtual int remove_section (ACE_Configuration_Section_Key const &key,
+                              ACE_TCHAR const *sub_section,
                               bool recursive) = 0;
 
   /**
@@ -202,7 +202,7 @@ public:
    * @retval   1 there are no more values in the section.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
+  virtual int enumerate_values (ACE_Configuration_Section_Key const & key,
                                 int index,
                                 ACE_TString& name,
                                 VALUETYPE& type) = 0;
@@ -224,7 +224,7 @@ public:
    * @retval   1 there are no more subsections in the section.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int enumerate_sections (const ACE_Configuration_Section_Key& key,
+  virtual int enumerate_sections (ACE_Configuration_Section_Key const & key,
                                   int index, ACE_TString& name) = 0;
 
   /// Sets a string-typed value.
@@ -237,8 +237,8 @@ public:
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int set_string_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  virtual int set_string_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 const ACE_TString& value) = 0;
 
   /// Sets a integer-typed value.
@@ -251,8 +251,8 @@ public:
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int set_integer_value (const ACE_Configuration_Section_Key& key,
-                                 const ACE_TCHAR* name,
+  virtual int set_integer_value (ACE_Configuration_Section_Key const & key,
+                                 ACE_TCHAR const * name,
                                  u_int value) = 0;
 
   /// Sets a binary-typed value.
@@ -266,8 +266,8 @@ public:
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  virtual int set_binary_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 const void* data,
                                 size_t length) = 0;
 
@@ -281,8 +281,8 @@ public:
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int get_string_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  virtual int get_string_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 ACE_TString& value) = 0;
 
   /// Gets an integer-typed value.
@@ -295,8 +295,8 @@ public:
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int get_integer_value (const ACE_Configuration_Section_Key& key,
-                                 const ACE_TCHAR* name,
+  virtual int get_integer_value (ACE_Configuration_Section_Key const & key,
+                                 ACE_TCHAR const * name,
                                  u_int& value) = 0;
 
   /// Gets a binary-typed value.
@@ -313,8 +313,8 @@ public:
    *             returned memory.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  virtual int get_binary_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 void*& data,
                                 size_t& length) = 0;
 
@@ -328,8 +328,8 @@ public:
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int find_value(const ACE_Configuration_Section_Key& key,
-                         const ACE_TCHAR* name,
+  virtual int find_value(ACE_Configuration_Section_Key const & key,
+                         ACE_TCHAR const * name,
                          VALUETYPE& type) = 0;
 
   /// Removes a named value.
@@ -340,8 +340,8 @@ public:
    * @retval   0 for success.
    * @retval  -1 for error; ACE_OS::last_error() retrieves error code.
    */
-  virtual int remove_value (const ACE_Configuration_Section_Key& key,
-                            const ACE_TCHAR* name) = 0;
+  virtual int remove_value (ACE_Configuration_Section_Key const & key,
+                            ACE_TCHAR const * name) = 0;
 
   /**
    * Expands @a path_in to @a key_out from @a key.  If create is true,
@@ -351,7 +351,7 @@ public:
    * Returns 0 on success, -1 if <create) is 0 and the path refers
    * a non-existent section
    */
-  int expand_path (const ACE_Configuration_Section_Key& key,
+  int expand_path (ACE_Configuration_Section_Key const & key,
                    const ACE_TString& path_in,
                    ACE_Configuration_Section_Key& key_out,
                    bool create = true);
@@ -380,7 +380,7 @@ protected:
 
   /// Resolves the internal key from a section key
   ACE_Section_Key_Internal* get_internal_key
-    (const ACE_Configuration_Section_Key& key);
+    (ACE_Configuration_Section_Key const & key);
 
   /**
    * Tests to see if @a name is valid.  @a name must be < 255 characters
@@ -389,7 +389,7 @@ protected:
    * valid.  The path separator is allowed, except for the first character,
    * if @a allow_path is true.
    */
-  int validate_name (const ACE_TCHAR* name, int allow_path = false);
+  int validate_name (ACE_TCHAR const * name, int allow_path = false);
 
   /**
    * Test to see if @a name is valid.  The default value for a key can be
@@ -397,7 +397,7 @@ protected:
    * valid.  Otherwise, it calls validate_name() to test @a name for the
    * same rules that apply to keys.
    */
-  int validate_value_name (const ACE_TCHAR* name);
+  int validate_value_name (ACE_TCHAR const * name);
 
   // Not used
   ACE_Configuration (const ACE_Configuration& rhs);
@@ -454,57 +454,57 @@ public:
 
   virtual ~ACE_Configuration_Win32Registry () = default;
 
-  virtual int open_section (const ACE_Configuration_Section_Key& base,
-                            const ACE_TCHAR* sub_section,
+  virtual int open_section (ACE_Configuration_Section_Key const & base,
+                            ACE_TCHAR const * sub_section,
                             bool create,
                             ACE_Configuration_Section_Key& result);
 
-  virtual int remove_section (const ACE_Configuration_Section_Key& key,
-                              const ACE_TCHAR* sub_section,
+  virtual int remove_section (ACE_Configuration_Section_Key const & key,
+                              ACE_TCHAR const * sub_section,
                               bool recursive);
 
-  virtual int enumerate_values (const ACE_Configuration_Section_Key& key,
+  virtual int enumerate_values (ACE_Configuration_Section_Key const & key,
                                 int index,
                                 ACE_TString& name,
                                 VALUETYPE& type);
 
-  virtual int enumerate_sections (const ACE_Configuration_Section_Key& key,
+  virtual int enumerate_sections (ACE_Configuration_Section_Key const & key,
                                   int index,
                                   ACE_TString& name);
 
-  virtual int set_string_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  virtual int set_string_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 const ACE_TString& value);
 
-  virtual int set_integer_value (const ACE_Configuration_Section_Key& key,
-                                 const ACE_TCHAR* name,
+  virtual int set_integer_value (ACE_Configuration_Section_Key const & key,
+                                 ACE_TCHAR const * name,
                                  u_int value);
 
-  virtual int set_binary_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  virtual int set_binary_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 const void* data,
                                 size_t length);
 
-  virtual int get_string_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  virtual int get_string_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 ACE_TString& value);
 
-  virtual int get_integer_value (const ACE_Configuration_Section_Key& key,
-                                 const ACE_TCHAR* name,
+  virtual int get_integer_value (ACE_Configuration_Section_Key const & key,
+                                 ACE_TCHAR const * name,
                                  u_int& value);
 
-  virtual int get_binary_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  virtual int get_binary_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 void*& data,
                                 size_t& length);
 
-  virtual int find_value(const ACE_Configuration_Section_Key& key,
-                         const ACE_TCHAR* name,
+  virtual int find_value(ACE_Configuration_Section_Key const & key,
+                         ACE_TCHAR const * name,
                          VALUETYPE& type);
 
   /// Removes the the value @a name from @a key.  returns non zero on error
-  virtual int remove_value (const ACE_Configuration_Section_Key& key,
-                            const ACE_TCHAR* name);
+  virtual int remove_value (ACE_Configuration_Section_Key const & key,
+                            ACE_TCHAR const * name);
 
   /**
    * This method traverses @c path through @c hKey.  It is useful when
@@ -515,7 +515,7 @@ public:
    * Returns 0 on error
    */
   static HKEY resolve_key (HKEY hKey,
-                           const ACE_TCHAR* path,
+                           ACE_TCHAR const * path,
                            bool create = true,
                            u_long security_access = KEY_ALL_ACCESS);
   virtual bool operator== (const ACE_Configuration_Win32Registry &rhs) const;
@@ -523,7 +523,7 @@ public:
 
 protected:
   /// Gets the HKEY for a configuration section
-  int load_key (const ACE_Configuration_Section_Key& key, HKEY& hKey);
+  int load_key (ACE_Configuration_Section_Key const & key, HKEY& hKey);
 
   // Not used
   ACE_Configuration_Win32Registry ();
@@ -553,7 +553,7 @@ public:
   ACE_Configuration_ExtId () = default;
 
   /// Named constructor
-  explicit ACE_Configuration_ExtId (const ACE_TCHAR* name);
+  explicit ACE_Configuration_ExtId (ACE_TCHAR const * name);
 
   /// Copy ctor
   ACE_Configuration_ExtId (const ACE_Configuration_ExtId& rhs);
@@ -578,12 +578,12 @@ public:
 
   /// @name Stored name
   /// @{
-  const ACE_TCHAR * name_ {};
+  ACE_TCHAR const * name_ {};
   /// @}
 
   /// @name Accessors
   /// @{
-  const ACE_TCHAR *name ();
+  ACE_TCHAR const *name ();
   /// @}
 };
 
@@ -703,7 +703,7 @@ class ACE_Export ACE_Configuration_Section_Key_Heap
 {
 public:
   /// Constructor based on the full path of the section
-  explicit ACE_Configuration_Section_Key_Heap (const ACE_TCHAR* path);
+  explicit ACE_Configuration_Section_Key_Heap (ACE_TCHAR const * path);
 
   /// The path itself
   std::unique_ptr<ACE_TCHAR, ACE_Configuration_Path_Deleter> path_;
@@ -764,7 +764,7 @@ public:
    * @retval -1 for error, with errno set to indicate the cause. If open()
    *            is called multiple times, errno will be @c EBUSY.
    */
-  int open (const ACE_TCHAR* file_name,
+  int open (ACE_TCHAR const * file_name,
             void* base_address = ACE_DEFAULT_BASE_ADDR,
             size_t default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
 
@@ -780,65 +780,65 @@ public:
    */
   int open (size_t default_map_size = ACE_DEFAULT_CONFIG_SECTION_SIZE);
 
-  int open_section (const ACE_Configuration_Section_Key& base,
-                            const ACE_TCHAR* sub_section,
+  int open_section (ACE_Configuration_Section_Key const & base,
+                            ACE_TCHAR const * sub_section,
                             bool create, ACE_Configuration_Section_Key& result) override;
 
-  int remove_section (const ACE_Configuration_Section_Key& key,
-                              const ACE_TCHAR* sub_section,
+  int remove_section (ACE_Configuration_Section_Key const & key,
+                              ACE_TCHAR const * sub_section,
                               bool recursive) override;
 
-  int enumerate_values (const ACE_Configuration_Section_Key& key,
+  int enumerate_values (ACE_Configuration_Section_Key const & key,
                                 int index,
                                 ACE_TString& name,
                                 VALUETYPE& type) override;
 
-  int enumerate_sections (const ACE_Configuration_Section_Key& key,
+  int enumerate_sections (ACE_Configuration_Section_Key const & key,
                                   int index,
                                   ACE_TString& name) override;
 
-  int set_string_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  int set_string_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 const ACE_TString& value) override;
 
-  int set_integer_value (const ACE_Configuration_Section_Key& key,
-                                 const ACE_TCHAR* name,
+  int set_integer_value (ACE_Configuration_Section_Key const & key,
+                                 ACE_TCHAR const * name,
                                  u_int value) override;
 
-  int set_binary_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  int set_binary_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 const void* data,
                                 size_t length) override;
 
-  int get_string_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  int get_string_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 ACE_TString& value) override;
 
-  int get_integer_value (const ACE_Configuration_Section_Key& key,
-                                 const ACE_TCHAR* name,
+  int get_integer_value (ACE_Configuration_Section_Key const & key,
+                                 ACE_TCHAR const * name,
                                  u_int& value) override;
 
-  int get_binary_value (const ACE_Configuration_Section_Key& key,
-                                const ACE_TCHAR* name,
+  int get_binary_value (ACE_Configuration_Section_Key const & key,
+                                ACE_TCHAR const * name,
                                 void* &data,
                                 size_t &length) override;
 
-  int find_value(const ACE_Configuration_Section_Key& key,
-                         const ACE_TCHAR* name,
+  int find_value(ACE_Configuration_Section_Key const & key,
+                         ACE_TCHAR const * name,
                          VALUETYPE& type) override;
 
   /// Removes the the value @a name from @a key.  returns non zero on error
-  int remove_value (const ACE_Configuration_Section_Key& key,
-                            const ACE_TCHAR* name) override;
+  int remove_value (ACE_Configuration_Section_Key const & key,
+                            ACE_TCHAR const * name) override;
 
 private:
   /// @a sub_section may not contain path separators
-  int open_simple_section (const ACE_Configuration_Section_Key &base,
-                           const ACE_TCHAR *sub_section,
+  int open_simple_section (ACE_Configuration_Section_Key const &base,
+                           ACE_TCHAR const *sub_section,
                            bool create, ACE_Configuration_Section_Key &result);
   /// Adds a new section
-  int add_section (const ACE_Configuration_Section_Key &base,
-                   const ACE_TCHAR *sub_section,
+  int add_section (ACE_Configuration_Section_Key const &base,
+                   ACE_TCHAR const *sub_section,
                    ACE_Configuration_Section_Key &result);
 
   /// Helper for the @c open method.
@@ -852,7 +852,7 @@ private:
 
   int section_open_helper (size_t hash_table_size, void *buffer);
 
-  int load_key (const ACE_Configuration_Section_Key& key, ACE_TString& name);
+  int load_key (ACE_Configuration_Section_Key const & key, ACE_TString& name);
 
   int new_section (const ACE_TString& section,
                    ACE_Configuration_Section_Key& result);
