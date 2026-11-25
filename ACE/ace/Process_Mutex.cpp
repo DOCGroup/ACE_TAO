@@ -2,7 +2,6 @@
 #include "ace/Log_Category.h"
 #include "ace/ACE.h"
 #include "ace/Guard_T.h"
-#include "ace/Process_Mutex.h"
 #include "ace/Malloc_T.h"
 
 #if !defined (__ACE_INLINE__)
