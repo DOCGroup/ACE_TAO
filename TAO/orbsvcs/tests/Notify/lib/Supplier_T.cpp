@@ -58,11 +58,11 @@ TAO_Notify_Tests_Supplier_T<Supplier_Traits>::offer_change (CosNotification::Eve
 
   for (; i < added.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "+(%s,%s), ", added[i].domain_name.in (), added[i].type_name.in ()));
+      ACE_DEBUG ((LM_DEBUG, "+(%C,%C), ", added[i].domain_name.in (), added[i].type_name.in ()));
     }
   for (i = 0; i < removed.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "-(%s,%s), ", removed[i].domain_name.in (), removed[i].type_name.in ()));
+      ACE_DEBUG ((LM_DEBUG, "-(%C,%C), ", removed[i].domain_name.in (), removed[i].type_name.in ()));
     }
 
   ACE_DEBUG ((LM_DEBUG, "\n"));

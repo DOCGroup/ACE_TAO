@@ -50,7 +50,7 @@ Notify_Push_Consumer::push_structured_event (
 {
   ++this->messages_received_;
   ACE_DEBUG ((LM_DEBUG,
-              "{%d} domain = %s\n",
+              "{%d} domain = %C\n",
               this->messages_received_,
               event.header.fixed_header.event_type.domain_name.in ()));
   this->client_.consumer_done (this);

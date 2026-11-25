@@ -128,7 +128,7 @@ Updates::print_event_types (CosNotification::EventTypeSeq const &types)
 {
   for (CORBA::ULong i = 0; i < types.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "(%s, %s)\n", types[i].domain_name.in (), types[i].type_name. in()));
+      ACE_DEBUG ((LM_DEBUG, "(%C, %C)\n", types[i].domain_name.in (), types[i].type_name. in()));
     }
 }
 

@@ -28,7 +28,7 @@ TAO_Notify_Tests_RT_Test_Filter::add_constraints (
     {
       if (TAO_debug_level > 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "(%t) received  = %s\n", constraint_list[i].constraint_expr.in ()));
+        ACE_DEBUG ((LM_DEBUG, "(%t) received  = %C\n", constraint_list[i].constraint_expr.in ()));
       }
 
       // Check pool id.
