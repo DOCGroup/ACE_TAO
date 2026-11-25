@@ -13,8 +13,8 @@ Sender::dump_results ()
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->mutex_);
   ACE_DEBUG ((LM_DEBUG,
-              "Total messages = %d\n"
-              "Total bytes = %d\n",
+              "Total messages = %u\n"
+              "Total bytes = %u\n",
               this->message_count_,
               this->byte_count_));
 }
