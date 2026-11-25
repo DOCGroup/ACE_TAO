@@ -27,6 +27,7 @@
 
 #include <cstdio>
 #include <cstring>
+#include <string>
 
 namespace
 {
@@ -39,8 +40,8 @@ namespace
     bool no_loops {};
     bool show_name_service_only {};
     bool failed {};
-    char const *tree {"|"};
-    char const *node {"+"};
+    std::string tree {"|"};
+    std::string node {"+"};
     size_t tree_size {};
     size_t node_size {};
     size_t max_depth {};
@@ -171,7 +172,7 @@ namespace
     ACE_DEBUG ((LM_DEBUG, "\n"));
     for (size_t count {}; count < level; ++count)
       {
-        ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+        ACE_DEBUG ((LM_DEBUG, "%C ", options.tree.c_str ()));
       }
     for (size_t count {}; count < options.node_size; ++count)
       {
@@ -183,7 +184,7 @@ namespace
     // Display Endpoint
     for (size_t count {}; count < level; ++count)
       {
-        ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+        ACE_DEBUG ((LM_DEBUG, "%C ", options.tree.c_str ()));
       }
     for (size_t count {}; count < options.node_size; ++count)
       {
@@ -210,9 +211,9 @@ namespace
       {
         for (size_t count {}; count < level-1; ++count)
           {
-            ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+            ACE_DEBUG ((LM_DEBUG, "%C ", options.tree.c_str ()));
           }
-        ACE_DEBUG ((LM_DEBUG, "%C %C", options.node,
+        ACE_DEBUG ((LM_DEBUG, "%C %C", options.node.c_str (),
                    bl[i].binding_name[0].id.in ()));
 
         if (bl[i].binding_name[0].kind[0])
@@ -267,7 +268,7 @@ namespace
                     size_t count_binding {};
                     for (; count_binding < (level - backwards); ++count_binding)
                       {
-                        ACE_DEBUG ((LM_DEBUG, "%C ", options.tree));
+                        ACE_DEBUG ((LM_DEBUG, "%C ", options.tree.c_str ()));
                       }
                     ACE_DEBUG ((LM_DEBUG, "^"));
                     while (++count_binding < level)
@@ -737,8 +738,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       // Initialize the lengths of the myTree and myNode draw strings.
-      options.tree_size = std::strlen (options.tree);
-      options.node_size = std::strlen (options.node);
+      options.tree_size = options.tree.size ();
+      options.node_size = options.node.size ();
 
       // Contact the name service
       CORBA::Object_var obj;
