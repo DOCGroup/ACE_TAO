@@ -172,6 +172,7 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
       ACE_OS::fprintf (stderr,
                       "Unable to allocate %ld bytes for options\n",
                       info.options);
+      ACE_OS::free (buf_req);
       return -1;
     }
 
@@ -200,11 +201,14 @@ ACE_ATM_Stream::get_vpi_vci (ACE_UINT16 &vpi,
   opt_ret.opt.buf = (char *) popt_ret;
 
   if (ACE_OS::t_optmgmt (stream_.get_handle (),
-                        &opt_req,
-                        &opt_ret) < 0) {
-    ACE_OS::t_error ("t_optmgmt");
-    return -1;
-  }
+                         &opt_req,
+                         &opt_ret) < 0)
+    {
+      ACE_OS::t_error ("t_optmgmt");
+      ACE_OS::free (buf_ret);
+      ACE_OS::free (buf_req);
+      return -1;
+    }
 
   ACE_OS::memcpy (connect_opts, (char *) popt_ret + sizeof (struct t_opthdr), opt_size);
 
