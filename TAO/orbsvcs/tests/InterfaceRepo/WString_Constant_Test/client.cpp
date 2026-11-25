@@ -16,6 +16,12 @@ check_wstring_constant (CORBA::Repository_ptr repository,
     }
 
   CORBA::ConstantDef_var const constant = CORBA::ConstantDef::_narrow (contained.in ());
+  if (CORBA::is_nil (constant.in ()))
+    {
+      std::fprintf (stderr, "%s is not a constant definition\n", id);
+      return false;
+    }
+
   CORBA::Any_var const value = constant->value ();
   CORBA::WChar const *wstring {};
   if (!(value.in () >>= wstring) || wstring == nullptr)
@@ -50,6 +56,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const object =
         orb->resolve_initial_references ("InterfaceRepository");
       CORBA::Repository_var const repository = CORBA::Repository::_narrow (object.in ());
+      if (CORBA::is_nil (repository.in ()))
+        {
+          std::fprintf (stderr, "InterfaceRepository is not a repository\n");
+          return 1;
+        }
+
       CORBA::WChar const unicode_value[] = {static_cast<CORBA::WChar> (0x00e9), 0};
       CORBA::WChar const concatenated_value[] = {
         static_cast<CORBA::WChar> (0x00e9),
