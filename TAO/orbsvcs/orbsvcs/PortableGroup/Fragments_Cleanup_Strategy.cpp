@@ -65,7 +65,7 @@ namespace TAO_PG
 
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - TBFCS::cleanup, ")
-                        ACE_TEXT ("cleaning %s%u bytes (hash %d)\n"),
+                        ACE_TEXT ("cleaning %s%u bytes (hash %Lu)\n"),
                         b, (*cur_iter).item ()->data_length (),
                         (*cur_iter).key ()));
           }
@@ -119,7 +119,7 @@ namespace TAO_PG
 
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT ("TAO (%P|%t) - NBFCS::cleanup, ")
-                        ACE_TEXT ("cleaning %s%u bytes (hash %d)\n"),
+                        ACE_TEXT ("cleaning %s%u bytes (hash %Lu)\n"),
                         b, sorted_set[i]->item ()->data_length (),
                         sorted_set[i]->key ()));
           }
@@ -151,7 +151,7 @@ namespace TAO_PG
               {
                 ORBSVCS_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("TAO (%P|%t) - MBFCS::cleanup, ")
-                                ACE_TEXT ("cleaning broken %u bytes (hash %d)\n"),
+                                ACE_TEXT ("cleaning broken %u bytes (hash %Lu)\n"),
                                 (*cur_iter).item ()->data_length (),
                                 (*cur_iter).key ()));
               }
@@ -199,7 +199,7 @@ namespace TAO_PG
           {
             ORBSVCS_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("TAO (%P|%t) - MBFCS::cleanup, ")
-                            ACE_TEXT ("cleaning %u bytes (hash %d)\n"),
+                            ACE_TEXT ("cleaning %u bytes (hash %Lu)\n"),
                             sorted_set[i]->item ()->data_length (),
                             sorted_set[i]->key ()));
           }
