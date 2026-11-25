@@ -27,7 +27,10 @@ namespace PortableServer
     CORBA::Octet *buffer = PortableServer::ObjectId::allocbuf (buffer_size);
 
     // Copy the contents
-    std::memcpy (buffer, string, buffer_size);
+    if (buffer_size != 0)
+      {
+        std::memcpy (buffer, string, buffer_size);
+      }
 
     // Create and return a new ID
     PortableServer::ObjectId *id {};
@@ -48,7 +51,10 @@ namespace PortableServer
     char * string = CORBA::string_alloc (id.length ());
 
     // Copy the data
-    std::memcpy (string, id.get_buffer (), id.length ());
+    if (id.length () != 0)
+      {
+        std::memcpy (string, id.get_buffer (), id.length ());
+      }
 
     // Null terminate the string
     string[id.length ()] = '\0';

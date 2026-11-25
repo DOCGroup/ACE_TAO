@@ -9,6 +9,7 @@
 #include "testS.h"
 #include "tao/ORB_Core.h"
 #include "tao/Server_Strategy_Factory.h"
+#include "tao/PortableServer/PortableServer_WFunctions.h"
 
 #include <memory>
 
@@ -484,6 +485,21 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   try
     {
+      PortableServer::ObjectId_var const empty_id =
+        PortableServer::string_to_ObjectId ("");
+      CORBA::String_var const empty_string =
+        PortableServer::ObjectId_to_string (empty_id.in ());
+      CORBA::WChar const empty_wide[] = {0};
+      PortableServer::ObjectId_var const empty_wide_id =
+        PortableServer::wstring_to_ObjectId (empty_wide);
+      CORBA::WString_var const empty_wide_string =
+        PortableServer::ObjectId_to_wstring (empty_wide_id.in ());
+      if (empty_id->length () != 0 || empty_string[0] != '\0'
+          || empty_wide_id->length () != 0 || empty_wide_string[0] != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Empty ObjectId conversion failed\n"), 1);
+        }
+
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
 
       // Obtain the RootPOA.
