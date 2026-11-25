@@ -694,6 +694,8 @@ ACE_SSL_Asynch_Stream::notify_close ()
 
   int retval {};
 #if defined (ACE_WIN32)
+  // Use dynamic_cast because a failed cast leaves close_result untouched.
+  // The unique_ptr remains responsible for deleting it on this path.
   ACE_WIN32_Proactor * const proactor =
     dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
   if (proactor == nullptr)
@@ -739,7 +741,8 @@ ACE_SSL_Asynch_Stream::notify_read (int bytes_transferred,
 
   int retval {};
 #if defined (ACE_WIN32)
-  // A failed post_completion() deletes the result, but a failed cast does not.
+  // Keep the explicit cast: a failed cast leaves the result here, while a
+  // failed Win32 post_completion deletes it.
   ACE_WIN32_Proactor * const proactor =
     dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
   if (proactor == nullptr)
@@ -784,7 +787,8 @@ ACE_SSL_Asynch_Stream::notify_write (int bytes_transferred,
 
   int retval {};
 #if defined (ACE_WIN32)
-  // A failed post_completion() deletes the result, but a failed cast does not.
+  // Keep the explicit cast: a failed cast leaves the result here, while a
+  // failed Win32 post_completion deletes it.
   ACE_WIN32_Proactor * const proactor =
     dynamic_cast<ACE_WIN32_Proactor *> (this->proactor_->implementation ());
   if (proactor == nullptr)

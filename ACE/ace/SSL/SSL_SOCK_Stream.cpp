@@ -8,6 +8,7 @@
 #include <openssl/err.h>
 
 #include "SSL_SOCK_Stream.h"
+#include "SSL_SOCK_Utils.h"
 
 #if !defined (__ACE_INLINE__)
 #include "SSL_SOCK_Stream.inl"
@@ -125,17 +126,12 @@ ACE_SSL_SOCK_Stream::recvv (iovec *io_vec,
   // From ACE_SOCK_IO::recvv().
 #if defined (FIONREAD)
   ACE_HANDLE const handle = this->get_handle ();
-#if !defined (ACE_WIN32)
-  if (handle < 0 || handle >= ACE_FD_SETSIZE)
+  ACE_Handle_Set handle_set;
+  if (!ACE_SSL_SOCK_Utils::valid_handle (handle)
+      || !ACE_SSL_SOCK_Utils::set_handle_bit (handle, handle_set))
     {
-      errno = EINVAL;
       return -1;
     }
-#endif /* ! ACE_WIN32 */
-
-  ACE_Handle_Set handle_set;
-  handle_set.reset ();
-  handle_set.set_bit (handle);
 
   io_vec->iov_base = nullptr;
 

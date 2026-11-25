@@ -191,7 +191,7 @@ public:
    *  allows for automatic service configuration (and backward
    *  compatibility with previous versions).
    *
-   *  @note the underlying SSL function will add valid file and
+   *  @note The underlying SSL function will add valid file and
    *  directory names to the load location lists maintained as part of
    *  the SSL_CTX table.  It therefore doesn't make sense to keep a
    *  copy of the file and path name of the most recently added
@@ -286,7 +286,7 @@ public:
    *
    *  @see OpenSSL documentation ... set_verify_depth(3) ...
    *
-   *  @note this method overrides the use of the
+   *  @note This method overrides the use of the
    *  default_verify_mode() method.
    */
   void set_verify_peer (int strict = 0, int once = 1, int depth = 0);

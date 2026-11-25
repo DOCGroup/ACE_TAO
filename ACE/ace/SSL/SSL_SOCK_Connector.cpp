@@ -6,6 +6,7 @@
 #include "ace/Log_Category.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
+#include "SSL_SOCK_Utils.h"
 
 #include <memory>
 #include <openssl/err.h>
@@ -46,18 +47,10 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   }
 
   ACE_HANDLE const handle = new_stream.get_handle ();
-  auto set_handle_bit = [handle] (ACE_Handle_Set &handle_set)
+  if (!ACE_SSL_SOCK_Utils::valid_handle (handle))
     {
-#if !defined (ACE_WIN32)
-      if (handle < 0 || handle >= ACE_FD_SETSIZE)
-        {
-          errno = EINVAL;
-          return false;
-        }
-#endif /* ! ACE_WIN32 */
-      handle_set.set_bit (handle);
-      return true;
-    };
+      return -1;
+    }
 
   // We're going to call SSL_connect, optionally doing ACE::select and
   // retrying the SSL_connect, until the SSL handshake is done or
@@ -110,11 +103,13 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           break;                    // Done
 
         case SSL_ERROR_WANT_WRITE:
-          status = set_handle_bit (wr_handle) ? 1 : -1;
+          status = ACE_SSL_SOCK_Utils::set_handle_bit (handle, wr_handle)
+                   ? 1 : -1;
           break;
 
         case SSL_ERROR_WANT_READ:
-          status = set_handle_bit (rd_handle) ? 1 : -1;
+          status = ACE_SSL_SOCK_Utils::set_handle_bit (handle, rd_handle)
+                   ? 1 : -1;
           break;
 
         case SSL_ERROR_ZERO_RETURN:
@@ -140,17 +135,14 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
               // set correctly, the read/write state should be valid.
               // Use that to decide what to do.
               status = 1;               // Wait for more activity
-              if (SSL_want_write (ssl_session))
+              if (!ACE_SSL_SOCK_Utils::set_wanted_handle_bit (ssl_session,
+                                                              handle,
+                                                              rd_handle,
+                                                              wr_handle))
                 {
-                  status = set_handle_bit (wr_handle) ? 1 : -1;
-                }
-              else if (SSL_want_read (ssl_session))
-                {
-                  status = set_handle_bit (rd_handle) ? 1 : -1;
-                }
-              else
-                {
-                  status = -1;            // Doesn't want anything - bail out
+                  // No SSL wait condition is available, or the handle cannot
+                  // be monitored.
+                  status = -1;
                 }
             }
           else

@@ -41,12 +41,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @par
  * Since SSL is record-oriented, some additional steps must be taken
  * to make the ACE_SSL_SOCK_Stream interact properly with the
- * Reactor (if one is used) when performing non-blocking IO.  In
- * In particular, if @c SSL_pending() returns a nonzero value for this
- * stream, the event handler that calls the IO methods in this class should
- * return a value greater than zero to
- * force the Reactor to invoke the event handler before polling for
- * additional events (e.g. blocking on select()).
+ * Reactor (if one is used) when performing non-blocking IO. In particular,
+ * if @c SSL_pending() returns a nonzero value for this stream, the event
+ * handler that calls the IO methods in this class should return a value
+ * greater than zero to force the Reactor to invoke the event handler
+ * before polling for additional events (e.g. blocking on select()).
  *
  * @note The user must currently ensure that only one thread services
  *       a given SSL session at any given time since underlying SSL
@@ -103,7 +102,7 @@ public:
 
   /// Send an iovec of size @a n to the ssl socket.
   /**
-   * @note it is not possible to perform a "scattered" write with
+   * @note It is not possible to perform a "scattered" write with
    * the underlying OpenSSL implementation.  As such, the expected
    * semantics are not fully reproduced with this implementation.
    */
