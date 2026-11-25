@@ -290,9 +290,9 @@ TAO_Notify_Tests_Periodic_Supplier::handle_svc ()
           if (TAO_debug_level > 0)
           {
             ACE_DEBUG ((LM_DEBUG,
-                        "(%t) sleep time = %q uSec, missed %q deadlines\n",
-                        static_cast<ACE_INT64> (sleep_time),
-                        static_cast<ACE_INT64> (missed)));
+                        "(%t) sleep time = %Ld uSec, missed %Ld deadlines\n",
+                        sleep_time,
+                        missed));
           }
 
           ACE_Time_Value t_sleep (0, sleep_time);

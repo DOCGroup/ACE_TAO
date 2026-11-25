@@ -104,9 +104,9 @@ TimeoutClient::send (bool async,
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "local: %Qms remote: %Qms  ... ",
-              static_cast<ACE_UINT64> (local_timeout),
-              static_cast<ACE_UINT64> (remote_sleep)));
+              "local: %Lums remote: %Lums  ... ",
+              local_timeout,
+              remote_sleep));
 
   CORBA::PolicyList policy_list (1);
 

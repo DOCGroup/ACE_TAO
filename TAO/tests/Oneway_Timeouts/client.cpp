@@ -532,8 +532,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               if (ms > TIME_THRESHOLD)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "note: Buffered request took %qms\n",
-                              static_cast<ACE_INT64> (ms)));
+                              "note: Buffered request took %Ldms\n",
+                              ms));
                 }
 
               ms = num_requests_sent * request_interval;
@@ -544,8 +544,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
             {
               ACE_DEBUG ((LM_DEBUG,
                           "note: Timeout expected in %d ms, "
-                          "but took %q ms\n", connect_timeout,
-                          static_cast<ACE_INT64> (ms)));
+                          "but took %Ld ms\n", connect_timeout,
+                          ms));
             }
 
           return 0;
@@ -573,8 +573,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               if (ms > TIME_THRESHOLD)
                 {
                   ACE_DEBUG ((LM_DEBUG,
-                              "note: Buffered request took %q ms\n",
-                              static_cast<ACE_INT64> (ms)));
+                              "note: Buffered request took %Ld ms\n",
+                              ms));
                 }
 
               ms = num_requests_sent * request_interval;
@@ -585,8 +585,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
             {
               ACE_DEBUG ((LM_DEBUG,
                           "note: Timeout expected in %d ms, "
-                          "but took %q ms\n", connect_timeout,
-                          static_cast<ACE_INT64> (ms)));
+                          "but took %Ld ms\n", connect_timeout,
+                          ms));
             }
 
           return 0;
