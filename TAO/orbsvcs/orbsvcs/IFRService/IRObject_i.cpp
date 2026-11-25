@@ -56,9 +56,7 @@ TAO_IRObject_i::update_key ()
       return;
     }
 
-  ACE_TString path (oid_string,
-                    0,
-                    false);
+  ACE_TString path (ACE_TEXT_CHAR_TO_TCHAR (oid_string));
 
   status =
     this->repo_->config ()->expand_path (this->repo_->root_key (),
