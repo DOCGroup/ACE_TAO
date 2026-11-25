@@ -600,7 +600,7 @@ public:
   using handler_type = SVC_HANDLER;
   using stream_type = typename SVC_HANDLER::stream_type;
 
-  explicit ACE_Scheduling_Strategy (SVC_HANDLER * = nullptr);
+  ACE_Scheduling_Strategy (SVC_HANDLER * = nullptr);
 
   virtual ~ACE_Scheduling_Strategy ();
 
@@ -636,7 +636,7 @@ public:
   /// Useful STL-style traits.
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
-  explicit ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = nullptr);
+  ACE_Schedule_All_Reactive_Strategy (SVC_HANDLER * = nullptr);
 
   /// @name Scheduling methods
   /// @{
@@ -674,7 +674,7 @@ public:
   /// Useful STL-style traits.
   using base_type = ACE_Scheduling_Strategy<SVC_HANDLER>;
 
-  explicit ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = nullptr);
+  ACE_Schedule_All_Threaded_Strategy (SVC_HANDLER * = nullptr);
 
   /// @name Scheduling methods
   /// @{

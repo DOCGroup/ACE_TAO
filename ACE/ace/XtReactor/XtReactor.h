@@ -57,7 +57,7 @@ public:
 class ACE_XtReactor_Export ACE_XtReactor : public ACE_Select_Reactor
 {
 public:
-  explicit ACE_XtReactor (XtAppContext context = nullptr,
+  ACE_XtReactor (XtAppContext context = nullptr,
                           size_t size = DEFAULT_SIZE,
                           bool restart = false,
                           ACE_Sig_Handler * = nullptr);

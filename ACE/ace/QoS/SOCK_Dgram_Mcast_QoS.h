@@ -27,7 +27,7 @@ class ACE_QoS_Export ACE_SOCK_Dgram_Mcast_QoS : public ACE_SOCK_Dgram_Mcast
 {
 public:
   /// Uses the same default options as ACE_SOCK_Dgram_Mcast.
-  explicit ACE_SOCK_Dgram_Mcast_QoS (options opts = DEFOPTS);
+  ACE_SOCK_Dgram_Mcast_QoS (options opts = DEFOPTS);
 
   // Note that there is no public <open> method.  Therefore, this
   // class cannot be used unless you <subscribe> to a multicast group.

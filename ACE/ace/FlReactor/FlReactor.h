@@ -39,7 +39,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_FlReactor_Export ACE_FlReactor : public ACE_Select_Reactor
 {
 public:
-  explicit ACE_FlReactor (size_t size = DEFAULT_SIZE,
+  ACE_FlReactor (size_t size = DEFAULT_SIZE,
                           bool restart = false,
                           ACE_Sig_Handler * = nullptr);
   ~ACE_FlReactor () override;

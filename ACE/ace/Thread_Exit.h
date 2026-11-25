@@ -84,7 +84,7 @@ class ACE_Export ACE_Thread_Exit_Maybe
 {
 public:
   /// Don't create an ACE_Thread_Exit instance by default.
-  explicit ACE_Thread_Exit_Maybe (int flag = 0);
+  ACE_Thread_Exit_Maybe (int flag = 0);
   ACE_Thread_Exit_Maybe (ACE_Thread_Exit_Maybe const &) = delete;
   ACE_Thread_Exit_Maybe (ACE_Thread_Exit_Maybe &&) = delete;
   ACE_Thread_Exit_Maybe &operator= (ACE_Thread_Exit_Maybe const &) = delete;

@@ -192,7 +192,7 @@ public:
    * You must invoke open() or join(), to create/bind a socket and define
    * operational parameters, before performing any I/O with this instance.
    */
-  explicit ACE_SOCK_Dgram_Mcast (options opts = DEFOPTS);
+  ACE_SOCK_Dgram_Mcast (options opts = DEFOPTS);
 
   /// Release all resources and implicitly or explicitly unsubscribe
   /// from all currently subscribed groups.
