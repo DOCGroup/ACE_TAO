@@ -65,8 +65,14 @@ ST_AMH_Servant::ST_AMH_Servant (CORBA::ORB_ptr orb)
 
 void
 ST_AMH_Servant::test_method (Test::AMH_RoundtripResponseHandler_ptr _tao_rh,
-                             Test::Timestamp)
+                             Test::Timestamp send_time)
 {
+  if (send_time == 0)
+    {
+      // Destruction of the response handler must send NO_RESPONSE.
+      return;
+    }
+
   // Throw an overload exception
   std::unique_ptr<Test::ServerOverload> exception (
     std::make_unique<Test::ServerOverload> ());

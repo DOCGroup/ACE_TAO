@@ -132,6 +132,7 @@ private:
   TAO_Service_Context reply_service_context_;
 
   /// Controls 8-byte alignment of the GIOP 1.2 reply body.
+  /// @todo Set this per reply; replies without a body must not be padded.
   CORBA::Boolean argument_flag_ {true};
 
   /**
