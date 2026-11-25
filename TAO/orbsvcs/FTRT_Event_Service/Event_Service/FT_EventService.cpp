@@ -259,6 +259,17 @@ FT_EventService::report_factory (CORBA::ORB_ptr orb,
           ACE_INET_Addr const factory_addr (addr);
           ACE_SOCK_Connector connector;
           ACE_SOCK_Stream stream;
+          struct Stream_Closer
+          {
+            ACE_SOCK_Stream &stream;
+            ~Stream_Closer ()
+            {
+              if (this->stream.get_handle () != ACE_INVALID_HANDLE)
+                {
+                  this->stream.close ();
+                }
+            }
+          } const stream_closer {stream};
 
           ORBSVCS_DEBUG ((LM_DEBUG, "connecting to %s\n", addr));
           if (connector.connect (stream, factory_addr) == -1)
@@ -275,8 +286,6 @@ FT_EventService::report_factory (CORBA::ORB_ptr orb,
           {
             ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) IOR Transmission Error\n"), -1);
           }
-
-          stream.close ();
         }
     }
   catch (...)
