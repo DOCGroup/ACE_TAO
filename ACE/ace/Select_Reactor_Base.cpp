@@ -544,8 +544,8 @@ ACE_Select_Reactor_Handler_Repository::dump () const
               this->max_handlep1 ()));
 # else
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("max_handlep1_ = %Q\n"),
-              static_cast<ACE_UINT64> (this->max_handlep1 ())));
+              ACE_TEXT ("max_handlep1_ = %H\n"),
+              this->max_handlep1 ()));
 # endif /* ACE_SELECT_REACTOR_BASE_USES_HASH_MAP */
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("[")));
 
