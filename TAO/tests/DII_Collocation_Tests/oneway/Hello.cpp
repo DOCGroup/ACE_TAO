@@ -97,7 +97,8 @@ Hello::test_bounded_var_size_arg (::Test::Bounded_Var_Size_Arg const &message)
       ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_bounded_var_size_arg ")
         ACE_TEXT("got bounded var size arg\n")));
     }
-  if (std::strncmp (message.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
+  if (message.length () != ::Test::BOUNDED_VAR_SIZE
+      || std::memcmp (message.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
     ERROR_COUNT ("Hello::test_bounded_var_size_arg")
 }
 
@@ -261,7 +262,8 @@ void Hello::test_args_3 (
   }
   if (std::strncmp (arg1, TEST_STR, std::strlen (arg1)) != 0)
     ERROR_COUNT ("Hello::test_args_3")
-  if (std::strncmp (arg2.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
+  if (arg2.length () != ::Test::BOUNDED_VAR_SIZE
+      || std::memcmp (arg2.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
     ERROR_COUNT ("Hello::test_args_3")
   if (arg3.length () != std::strlen (TEST_STR)
       || std::memcmp (arg3.get_buffer (), TEST_STR, arg3.length ()) != 0)
