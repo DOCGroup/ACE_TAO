@@ -189,7 +189,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev ()
 
       if (TAO_debug_level > 0)
       {
-        ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",vdev_name));
+        ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%C\n",vdev_name));
       }
 
       // Create the name
@@ -208,7 +208,7 @@ TAO_AV_Endpoint_Process_Strategy::get_vdev ()
       // Check if valid
       if (CORBA::is_nil (this->vdev_.in ()))
       {
-        ORBSVCS_ERROR_RETURN ((LM_ERROR, " could not resolve Stream_Endpoint_B in Naming service <%s>\n"), -1);
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, " could not resolve VDev in Naming service <%C>\n", vdev_name), -1);
       }
     }
   catch (CORBA::Exception const &ex)
@@ -261,7 +261,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
 
       if (TAO_debug_level > 0)
       {
-        ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+        ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%C\n",stream_endpoint_name));
       }
 
       // Create the name
@@ -281,7 +281,7 @@ TAO_AV_Endpoint_Process_Strategy_A::get_stream_endpoint ()
       // Check for validity
       if (CORBA::is_nil (this->stream_endpoint_a_.in ()))
       {
-        ORBSVCS_ERROR_RETURN ((LM_ERROR, " could not resolve Stream_Endpoint_A in Naming service <%s>\n"), -1);
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, " could not resolve Stream_Endpoint_A in Naming service <%C>\n", stream_endpoint_name), -1);
       }
     }
   catch (CORBA::Exception const &ex)
@@ -347,7 +347,7 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint ()
 
       if (TAO_debug_level > 0)
       {
-        ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%s\n",stream_endpoint_name));
+        ORBSVCS_DEBUG ((LM_DEBUG,"(%P|%t)%C\n",stream_endpoint_name));
       }
 
       // Create the name
@@ -367,7 +367,7 @@ TAO_AV_Endpoint_Process_Strategy_B::get_stream_endpoint ()
       // Check for validity
       if (CORBA::is_nil (this->stream_endpoint_b_.in ()))
       {
-        ORBSVCS_ERROR_RETURN ((LM_ERROR, " could not resolve Stream_Endpoint_B in Naming service <%s>\n"), -1);
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, " could not resolve Stream_Endpoint_B in Naming service <%C>\n", stream_endpoint_name), -1);
       }
     }
   catch (CORBA::Exception const &ex)
