@@ -532,7 +532,7 @@ public:
    *  - 'm': return the message corresponding to errno value, e.g., as
    *         done by strerror()
    *  - 'N': print file name where the error occurred.
-   *  - 'n': print the name of the program (or "<unknown>" if not set)
+   *  - 'n': print the name of the program (or "&lt;unknown&gt;" if not set)
    *  - 'o': print as an octal number
    *  - 'P': print out the current process id
    *  - 'p': print out the appropriate errno message from sys_errlist,

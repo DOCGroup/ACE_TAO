@@ -965,7 +965,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  *   'M': print the name of the priority of the message.
  *   'm': Return the message corresponding to errno value, e.g., as done by @c strerror
  *   'N': print file name where the error occurred.
- *   'n': print the name of the program (or "<unknown>" if not set)
+ *   'n': print the name of the program (or "&lt;unknown&gt;" if not set)
  *   'o': print as an octal number
  *   'P': format the current process id
  *   'p': format the appropriate errno message from sys_errlist, e.g., as done by @c perror

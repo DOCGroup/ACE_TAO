@@ -102,7 +102,7 @@ ACE_TkReactor::TimerCallbackProc (ClientData cd)
  *       ignore it, why?  In fact the following comment probably
  *       relates to that:
  *       This could be made shorter if we know which *kind* of event
- *       we were about to get.  Here we use <select> to find out which
+ *       we were about to get.  Here we use @c select() to find out which
  *       one might be available.
  */
 void

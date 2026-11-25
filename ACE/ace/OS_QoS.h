@@ -306,10 +306,10 @@ public:
    * the user data that is to be transferred to the peer during
    * connection establishment.  The @c callee_data is a pointer to the
    * user data that is to be transferred back from the peer during
-   * connection establishment.  The_<socket_qos> is a pointer to the
+   * connection establishment.  The @a socket_qos is a pointer to the
    * flow specifications for the socket, one for each direction.  The
    * @c group_socket_qos is a pointer to the flow speicfications for
-   * the socket group, if applicable.  The_@a flags indicate if we're a
+   * the socket group, if applicable.  The @a flags indicate if we're a
    * sender, receiver, or both.
    */
   ACE_QoS_Params (iovec *caller_data = nullptr,
