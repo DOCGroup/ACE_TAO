@@ -27,10 +27,8 @@ public:
 
   virtual ~ACE_Connection_Recycling_Strategy () = default;
 
-  ACE_Connection_Recycling_Strategy (ACE_Connection_Recycling_Strategy const &) = delete;
-  ACE_Connection_Recycling_Strategy &operator= (ACE_Connection_Recycling_Strategy const &) = delete;
-  ACE_Connection_Recycling_Strategy (ACE_Connection_Recycling_Strategy &&) = delete;
-  ACE_Connection_Recycling_Strategy &operator= (ACE_Connection_Recycling_Strategy &&) = delete;
+  ACE_Connection_Recycling_Strategy (ACE_Connection_Recycling_Strategy const &) = default;
+  ACE_Connection_Recycling_Strategy &operator= (ACE_Connection_Recycling_Strategy const &) = default;
 
   /// Remove from cache.
   virtual int purge (const void *recycling_act) = 0;
