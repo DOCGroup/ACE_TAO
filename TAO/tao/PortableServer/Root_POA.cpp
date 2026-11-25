@@ -34,7 +34,6 @@
 #include "tao/PortableServer/Acceptor_Filter_Factory.h"
 #include "tao/PortableServer/Network_Priority_Hook.h"
 
-#include <cstring>
 #include "tao/StringSeqC.h"
 #include "tao/PortableInterceptorC.h"
 #include "tao/PolicyC.h"
@@ -1818,19 +1817,14 @@ TAO_Root_POA::set_id (TAO_Root_POA *parent)
 }
 
 bool
-TAO_Root_POA::is_poa_generated_id (const PortableServer::ObjectId &id)
+TAO_Root_POA::is_poa_generated_id (PortableServer::ObjectId const &id)
 {
 #if defined (POA_NAME_IN_POA_GENERATED_ID)
-
-  // Grab the buffer
-  char const *id_buffer = reinterpret_cast<char const *> (id.get_buffer ());
 
   // Check to see if the POA name is the first part of the id
   return
     this->name_.length () < id.length () &&
-    std::strncmp (id_buffer,
-                  this->name_.c_str (),
-                  this->name_.length ()) == 0;
+    std::memcmp (id.get_buffer (), this->name_.c_str (), this->name_.length ()) == 0;
 #else /* POA_NAME_IN_POA_GENERATED_ID */
 
   ACE_UNUSED_ARG (id);

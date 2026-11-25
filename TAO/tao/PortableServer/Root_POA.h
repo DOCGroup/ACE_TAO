@@ -434,7 +434,7 @@ public:
 
   TAO_SYNCH_CONDITION &servant_deactivation_condition ();
 
-  bool is_poa_generated_id (const PortableServer::ObjectId &id);
+  bool is_poa_generated_id (PortableServer::ObjectId const &id);
 
   /// Check the state of this POA
   void check_state ();
