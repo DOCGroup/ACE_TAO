@@ -48,7 +48,6 @@ public:
 
   TAO_Queued_Data (TAO_Queued_Data const &qd);
   TAO_Queued_Data &operator= (TAO_Queued_Data const &) = delete;
-  TAO_Queued_Data (TAO_Queued_Data &&) = delete;
   TAO_Queued_Data &operator= (TAO_Queued_Data &&) = delete;
 
   /// Creation of a node in the queue.

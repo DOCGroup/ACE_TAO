@@ -75,12 +75,8 @@ namespace CORBA
 
     Environment (Environment const &rhs);
 
-    Environment (Environment &&) = delete;
-
     /// Assingment.
     Environment &operator= (Environment const &rhs);
-
-    Environment &operator= (Environment &&) = delete;
 
     /// Destructor, release the exception.
     ~Environment ();

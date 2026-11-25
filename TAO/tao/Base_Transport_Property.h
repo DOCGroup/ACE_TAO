@@ -54,7 +54,6 @@ public:
 
 private:
   TAO_Base_Transport_Property &operator= (TAO_Base_Transport_Property const &) = delete;
-  TAO_Base_Transport_Property (TAO_Base_Transport_Property &&) = delete;
   TAO_Base_Transport_Property &operator= (TAO_Base_Transport_Property &&) = delete;
 };
 
