@@ -71,14 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 class AST_UnionLabel;
 
-// List of AST_UnionBranch nodes.
-
-// NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
-//       It relies on a type-unsafe cast from UTL_List to subclasses, which
-//       will cease to operate correctly if you use either multiple or
-//       public virtual inheritance.
-
+/// List of AST_UnionLabel nodes.
 class TAO_IDL_FE_Export UTL_LabelList : public UTL_List
 {
 public:

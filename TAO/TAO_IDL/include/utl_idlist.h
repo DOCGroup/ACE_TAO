@@ -65,12 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _UTL_IDLIST_UTL_IDLIST_HH
 #define _UTL_IDLIST_UTL_IDLIST_HH
 
-// NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
-//       It relies on a type-unsafe cast from UTL_List to subclasses, which
-//       will cease to operate correctly if you use either multiple or
-//       public virtual inheritance.
-
 #include "utl_list.h"
 #include "ace/iosfwd.h"
 

@@ -70,16 +70,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <memory>
 
-// List of FE_Declarator nodes
-
-// NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
-//       It relies on a type-unsafe cast from UTL_List to subclasses, which
-//       will cease to operate correctly if you use either multiple or
-//       public virtual inheritance.
-
 class FE_Declarator;
 
+/// List of FE_Declarator nodes.
 class TAO_IDL_FE_Export UTL_DeclList : public UTL_List
 {
 public:
