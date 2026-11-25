@@ -2623,8 +2623,8 @@ ACE_WFMO_Reactor_Notify::handle_signal (int signum, siginfo_t *siginfo, ucontext
                   break;
                 default:
                   ACELIB_ERROR ((LM_ERROR,
-                              ACE_TEXT ("invalid mask = %Q\n"),
-                              static_cast<ACE_UINT64> (buffer->mask_)));
+                              ACE_TEXT ("invalid mask = %Lu\n"),
+                              buffer->mask_));
                   break;
                 }
 

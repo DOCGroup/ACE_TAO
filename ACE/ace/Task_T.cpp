@@ -27,8 +27,7 @@ ACE_Task<ACE_SYNCH_USE, TIME_POLICY>::dump () const
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nthr_mgr_ = %@"), this->thr_mgr_));
   this->msg_queue_->dump ();
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("delete_msg_queue_ = %d\n"), this->delete_msg_queue_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags = %Q"),
-                 static_cast<ACE_UINT64> (this->flags_)));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nflags = %Lu"), this->flags_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nmod_ = %@"), this->mod_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nnext_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\ngrp_id_ = %d"), this->grp_id_));

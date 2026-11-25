@@ -362,8 +362,8 @@ ACE_Dev_Poll_Reactor_Notify::dispatch_notify (ACE_Notification_Buffer &buffer)
         default:
           // Should we bail out if we get an invalid mask?
           ACELIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("dispatch_notify invalid mask = %Q\n"),
-                      static_cast<ACE_UINT64> (buffer.mask_)));
+                      ACE_TEXT ("dispatch_notify invalid mask = %Lu\n"),
+                      buffer.mask_));
         }
       if (result == -1)
       {
