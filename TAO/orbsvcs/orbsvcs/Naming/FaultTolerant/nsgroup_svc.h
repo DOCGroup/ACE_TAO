@@ -159,8 +159,8 @@ private:
   /**
    *  determine strategy based on policy string
    *
-   *  @param const ACE_TCHAR *policy ["round"]
-   *  @param FT_Naming::LoadBalancingStrategyValue& value
+   *  @param policy ["round"]
+   *  @param value The resulting load balancing strategy.
    *  @return true on success, false on failure.
    */
   static bool determine_policy_string (

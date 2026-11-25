@@ -114,7 +114,7 @@ public:
 private:
   /// @name Attributes
   /// @{
-  /// <heartbeat_> indicates whether heartbeating is enabled or not.
+  /// @c heartbeat_ indicates whether heartbeating is enabled or not.
   CORBA::Boolean heartbeat_;
 
   /// Intervals in which heartbeat messages need to be sent

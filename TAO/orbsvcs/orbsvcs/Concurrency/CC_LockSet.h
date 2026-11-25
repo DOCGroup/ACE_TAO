@@ -143,7 +143,7 @@ private:
   /**
    * This is the semaphore for the lock set. The semaphore is used to
    * queue requests for locks in modes stronger than currently
-   * possible to grant.  Note that the <ACE_Token> provides strict
+   * possible to grant.  Note that the @c ACE_Token provides strict
    * FIFO ordering of acquisition/release of the lock.
    */
   ACE_Token semaphore_;
@@ -153,7 +153,7 @@ private:
    * pointer to the related lock set. This is a really simple
    * solution, but since transactions are not supported in the first
    * version there should be no reason to drop lock sets together. The
-   * <LockSetCoordinator> is not implemented (it has the
+   * @c LockSetCoordinator is not implemented (it has the
    * responsibilities of dropping the locks).
    */
   /// Mapping between requested and held lock modes. Used by compatible

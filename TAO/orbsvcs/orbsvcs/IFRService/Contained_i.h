@@ -103,7 +103,7 @@ protected:
       CORBA::Boolean cleanup);
 
 private:
-  /// Check if <name> already exists in our container
+  /// Check if @a name already exists in our container
   CORBA::Boolean name_exists (
       char const *name);
 
