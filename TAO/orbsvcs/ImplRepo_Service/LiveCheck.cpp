@@ -614,9 +614,9 @@ LC_TimeoutGuard::LC_TimeoutGuard (LiveCheck *owner, LC_token_type token)
   if (ImR_Locator_i::debug () > 3)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::ctor, ")
+                      ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%q)::ctor, ")
                       ACE_TEXT ("blocked <%d>\n"),
-                      this->token_, this->blocked_));
+                      static_cast<ACE_INT64> (this->token_), this->blocked_));
     }
   owner_->enter_handle_timeout ();
 }
@@ -630,9 +630,9 @@ LC_TimeoutGuard::~LC_TimeoutGuard ()
     if (ImR_Locator_i::debug () > 3)
       {
         ORBSVCS_DEBUG ((LM_DEBUG,
-                        ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor, ")
+                        ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%q)::dtor, ")
                         ACE_TEXT ("doing nothing because our owner is blocked\n"),
-                        this->token_));
+                        static_cast<ACE_INT64> (this->token_)));
       }
     return;
   }
@@ -654,9 +654,10 @@ LC_TimeoutGuard::~LC_TimeoutGuard ()
       if (ImR_Locator_i::debug () > 2)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor, ")
-                          ACE_TEXT ("scheduling new timeout(%d), delay = %:,%q\n"),
-                          this->token_, owner_->token_, delay.sec (),
+                          ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%q)::dtor, ")
+                          ACE_TEXT ("scheduling new timeout(%q), delay = %:,%q\n"),
+                          static_cast<ACE_INT64> (this->token_),
+                          static_cast<ACE_INT64> (owner_->token_), delay.sec (),
                           static_cast<ACE_INT64> (delay.usec ())));
         }
       owner_->reactor()->schedule_timer (owner_,
@@ -669,9 +670,9 @@ LC_TimeoutGuard::~LC_TimeoutGuard ()
       if (ImR_Locator_i::debug () > 3)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%d)::dtor, ")
+                          ACE_TEXT ("(%P|%t) LC_TimeoutGuard(%q)::dtor, ")
                           ACE_TEXT ("no pending timeouts requested\n"),
-                          this->token_));
+                          static_cast<ACE_INT64> (this->token_)));
         }
     }
 }
@@ -759,9 +760,9 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
   if (ImR_Locator_i::debug () > 2)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d), ")
+                      ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%q), ")
                       ACE_TEXT ("running <%d>\n"),
-                      token, this->running_));
+                      static_cast<ACE_INT64> (token), this->running_));
     }
   if (!this->running_)
   {
@@ -786,9 +787,9 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
           if (ImR_Locator_i::debug () > 2)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d)")
+                              ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%q)")
                               ACE_TEXT (", ping sent to server <%C>\n"),
-                              token, entry->server_name ()));
+                              static_cast<ACE_INT64> (token), entry->server_name ()));
             }
         }
       else
@@ -796,9 +797,10 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
           if (ImR_Locator_i::debug () > 4)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%d)")
+                              ACE_TEXT ("(%P|%t) LiveCheck::handle_timeout(%q)")
                               ACE_TEXT (", ping skipped for server <%C> may_ping <%d>\n"),
-                              token, entry->server_name (), entry->may_ping ()));
+                              static_cast<ACE_INT64> (token),
+                              entry->server_name (), entry->may_ping ()));
             }
         }
     }
@@ -1202,9 +1204,9 @@ LiveCheck::schedule_ping (LiveEntry *entry)
       if (ImR_Locator_i::debug () > 2)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("(%P|%t) LiveCheck::schedule_ping (%d),")
+                          ACE_TEXT ("(%P|%t) LiveCheck::schedule_ping (%q),")
                           ACE_TEXT (" delay <%:,%q>\n"),
-                          this->token_, delay.sec (),
+                          static_cast<ACE_INT64> (this->token_), delay.sec (),
                           static_cast<ACE_INT64> (delay.usec ())));
         }
       this->reactor()->schedule_timer (this,
