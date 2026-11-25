@@ -412,7 +412,7 @@ TAO_MonitorEventChannel::map_supplier_proxy (
     {
       delete rcsc;
       ORBSVCS_ERROR ((LM_ERROR,
-                  "Unable to add control: %s\n",
+                  "Unable to add control: %C\n",
                   full.c_str ()));
     }
 }
@@ -461,7 +461,7 @@ TAO_MonitorEventChannel::map_consumer_proxy (
     {
       delete rcsc;
       ORBSVCS_ERROR ((LM_ERROR,
-                  "Unable to add control: %s\n",
+                  "Unable to add control: %C\n",
                   full.c_str ()));
     }
 }
@@ -556,7 +556,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, timestamp))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -576,7 +576,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, consumers))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -596,7 +596,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, consumers))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -616,7 +616,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, tconsumers))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -637,7 +637,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, suppliers))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -658,7 +658,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, suppliers))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -678,7 +678,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, conadmins))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -698,7 +698,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, conadmins))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -719,7 +719,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, supadmins))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -740,7 +740,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, supadmins))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -759,7 +759,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, events))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -789,7 +789,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, oldest))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -808,7 +808,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, slowest))
         {
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add statistic %s\n",
+                      "Unable to add statistic %C\n",
                       stat_name.c_str ()));
         }
 
@@ -824,7 +824,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
       if (!this->register_statistic (stat_name, overflows))
         {
           overflows->remove_ref ();
-          ORBSVCS_ERROR ((LM_ERROR, "Unable to add statistic: %s\n",
+          ORBSVCS_ERROR ((LM_ERROR, "Unable to add statistic: %C\n",
                       stat_name.c_str ()));
         }
 
@@ -846,7 +846,7 @@ TAO_MonitorEventChannel::add_stats (char const *name)
         {
           delete sd;
           ORBSVCS_ERROR ((LM_ERROR,
-                      "Unable to add control: %s\n",
+                      "Unable to add control: %C\n",
                       this->name_.c_str ()));
         }
     }

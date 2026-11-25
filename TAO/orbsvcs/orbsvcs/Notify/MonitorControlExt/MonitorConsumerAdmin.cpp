@@ -111,7 +111,7 @@ TAO_MonitorConsumerAdmin::register_stats_controls (
     {
       delete control;
       ORBSVCS_ERROR ((LM_ERROR,
-                  "Unable to add control: %s\n",
+                  "Unable to add control: %C\n",
                   this->control_name_.c_str ()));
     }
 }
