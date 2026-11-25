@@ -95,7 +95,7 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
   if (TAO_debug_level >= 10)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("***** TAO_CEC_DynamicImplementationServer::is_a called with value %s *****\n"),
+                  ACE_TEXT ("***** TAO_CEC_DynamicImplementationServer::is_a called with value %C *****\n"),
                   value));
     }
 
@@ -105,10 +105,10 @@ TAO_CEC_DynamicImplementationServer::is_a (CORBA::ServerRequest_ptr request)
   if (TAO_debug_level >= 10)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("***** is_a using Server's RepositoryId %s *****\n"),
+                  ACE_TEXT ("***** is_a using Server's RepositoryId %C *****\n"),
                   this->repository_id_));
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("***** is_a using base interface %s *****\n"),
+                  ACE_TEXT ("***** is_a using base interface %C *****\n"),
                   object_id));
     }
 
