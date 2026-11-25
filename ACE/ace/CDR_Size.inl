@@ -120,25 +120,25 @@ ACE_SizeCDR::write_fixed (const ACE_CDR::Fixed &x)
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_string (const ACE_CDR::Char *x)
 {
-  if (x != 0)
+  if (x != nullptr)
     {
-      const ACE_CDR::ULong len =
+      ACE_CDR::ULong const len =
         static_cast<ACE_CDR::ULong> (std::strlen (x));
       return this->write_string (len, x);
     }
-  return this->write_string (0, 0);
+  return this->write_string (0, nullptr);
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_SizeCDR::write_wstring (const ACE_CDR::WChar *x)
 {
-  if (x != 0)
+  if (x != nullptr)
     {
-      ACE_CDR::ULong len =
+      ACE_CDR::ULong const len =
         static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x));
       return this->write_wstring (len, x);
     }
-  return this->write_wstring (0, 0);
+  return this->write_wstring (0, nullptr);
 }
 
 ACE_INLINE ACE_CDR::Boolean
@@ -147,7 +147,7 @@ ACE_SizeCDR::write_string (const std::string &x)
   ACE_CDR::ULong len =
     static_cast<ACE_CDR::ULong> (x.size ());
   return this->write_string (len,
-                             x.empty () ? 0 : x.c_str ());
+                             x.empty () ? nullptr : x.c_str ());
 }
 
 #if !defined (ACE_LACKS_STD_STRING_VIEW)
@@ -157,7 +157,7 @@ ACE_SizeCDR::write_string_view (const std::string_view &x)
   ACE_CDR::ULong len =
     static_cast<ACE_CDR::ULong> (x.size ());
   return this->write_string (len,
-                             x.empty () ? 0 : x.data ());
+                             x.empty () ? nullptr : x.data ());
 }
 #endif
 
@@ -168,7 +168,7 @@ ACE_SizeCDR::write_wstring (const std::wstring &x)
   ACE_CDR::ULong len =
     static_cast<ACE_CDR::ULong> (x.size ());
   return this->write_wstring (len,
-                              x.empty () ? 0 : x.c_str ());
+                              x.empty () ? nullptr : x.c_str ());
 }
 #endif
 
@@ -459,7 +459,7 @@ operator<< (ACE_SizeCDR &ss, ACE_OutputCDR::from_string x)
 {
   ACE_CDR::ULong len = 0;
 
-  if (x.val_ != 0)
+  if (x.val_ != nullptr)
     {
       len = static_cast<ACE_CDR::ULong> (std::strlen (x.val_));
     }
@@ -473,7 +473,7 @@ operator<< (ACE_SizeCDR &ss, ACE_OutputCDR::from_wstring x)
 {
   ACE_CDR::ULong len = 0;
 
-  if (x.val_ != 0)
+  if (x.val_ != nullptr)
     {
         len = static_cast<ACE_CDR::ULong> (ACE_OS::strlen (x.val_));
     }
