@@ -78,6 +78,12 @@ UUID::UUID (ACE_TCHAR const *string_rep)
 bool
 UUID::from_string (char const *string_rep)
 {
+  if (string_rep == nullptr)
+  {
+    return false;
+  }
+
+  unsigned char parsed[BINARY_LENGTH] {};
   int offset {};
 
   for (int i {}; i < 5; ++i)
@@ -90,7 +96,7 @@ UUID::from_string (char const *string_rep)
         return false;
       }
 
-      rep_.uuid[offset++] = static_cast<unsigned char> (r);
+      parsed[offset++] = static_cast<unsigned char> (r);
       string_rep += 2;
     }
 
@@ -100,6 +106,7 @@ UUID::from_string (char const *string_rep)
     }
   }
 
+  std::memcpy (this->rep_.uuid, parsed, BINARY_LENGTH);
   return true;
 }
 

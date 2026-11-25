@@ -26,5 +26,16 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("UUID string conversion failed\n")), 1);
     }
+
+  TAO_FtRt::UUID updated (ACE_TEXT ("12345678-1234-1234-1234-123456789012"));
+  if (updated.from_string ("87654321-1234-1234-1234-12345678901z")
+      || updated != valid
+      || updated.from_string ("123")
+      || updated != valid
+      || updated.from_string (nullptr)
+      || updated != valid)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Invalid UUID changed its value\n")), 1);
+    }
   return 0;
 }
