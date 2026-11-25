@@ -47,7 +47,7 @@ Consumer_Handler::read_ior (ACE_TCHAR const *filename)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to open %s for reading: %p\n",
-                         filename),
+                         filename, ACE_TEXT ("open")),
                         -1);
     }
 

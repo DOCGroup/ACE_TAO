@@ -96,7 +96,7 @@ Server<Servant>::init (char const *servant_name,
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Unable to open %s for writing: %p\n"),
-                                 this->ior_output_file_.c_str ()),
+                                 this->ior_output_file_.c_str (), ACE_TEXT ("fopen")),
                                 -1);
             }
 
@@ -106,7 +106,7 @@ Server<Servant>::init (char const *servant_name,
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Unable to write %s: %p\n"),
-                                 this->ior_output_file_.c_str ()),
+                                 this->ior_output_file_.c_str (), ACE_TEXT ("write")),
                                 -1);
             }
         }
@@ -149,7 +149,7 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Unable to open %s for reading: %p\n"),
-                         filename),
+                         filename, ACE_TEXT ("fopen")),
                         -1);
     }
 

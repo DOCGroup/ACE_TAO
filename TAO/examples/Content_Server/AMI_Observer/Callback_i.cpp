@@ -28,7 +28,7 @@ Callback_i::Callback_i (std::atomic<int>& request_count)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("Could not open file \"%s\"%p\n"),
-                  this->file_.get_path_name ()));
+                  this->file_.get_path_name (), ACE_TEXT ("open")));
     }
   else
   {

@@ -172,7 +172,7 @@ Client<InterfaceObj, Var>::read_ior (ACE_TCHAR const *filename)
   if (f_handle == ACE_INVALID_HANDLE)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "Unable to open %s for reading: %p\n",
-                       filename),
+                       filename, ACE_TEXT ("open")),
                       -1);
 
   Persistent_Grid_Detail::Handle_Guard const f_handle_guard (f_handle);

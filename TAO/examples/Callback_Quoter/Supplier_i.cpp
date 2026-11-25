@@ -318,7 +318,7 @@ Supplier::read_file (ACE_TCHAR const *filename)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "Unable to open %s for writing: %p\n",
-                         filename),
+                         filename, ACE_TEXT ("fopen")),
                         -1);
     }
   return 0;
