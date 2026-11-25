@@ -12,9 +12,9 @@ namespace XSCRT
 
       ExtendedTypeInfo const &ti = extended_type_info (n);
 
-      size_t const max (compute_levels (ti, 0, levels));
+      size_t const max_level (compute_levels (ti, 0, levels));
 
-      for (size_t l{}; l <= max; ++l)
+      for (size_t l{}; l <= max_level; ++l)
       {
         TypeInfoSet dispatched;
 
@@ -55,9 +55,9 @@ namespace XSCRT
 
       ExtendedTypeInfo const &ti = extended_type_info (n);
 
-      size_t const max (compute_levels (ti, 0, levels));
+      size_t const max_level (compute_levels (ti, 0, levels));
 
-      for (size_t l{}; l <= max; ++l)
+      for (size_t l{}; l <= max_level; ++l)
       {
         TypeInfoSet dispatched;
 
