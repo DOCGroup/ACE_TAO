@@ -426,8 +426,6 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// The following methods do the actual work.
-
   /// Returns 1 if @c id1 == @c id2, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
   int equal (const EXT_ID &id1, const EXT_ID &id2);
@@ -436,7 +434,8 @@ protected:
   /// separate method to facilitate template specialization.
   u_long hash (const EXT_ID &ext_id);
 
-  /// These methods assume locks are held by private methods.
+  /// @name Methods called with locks held
+  /// @{
 
   /// Performs bind.  Must be called with locks held.
   int bind_i (const EXT_ID &ext_id,
@@ -527,6 +526,7 @@ protected:
   /// Removes all the entries in @c Map_Manager_Ex.  Must be called with
   /// locks held.
   int unbind_all_i ();
+  /// @}
 
   /// Pointer to a memory allocator used for table_, so it should
   /// supply size*sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>),
