@@ -6,6 +6,7 @@
 #include <cstring>
 
 constexpr CORBA::ULong request_ctx_id { 0xdead };
+constexpr char password[] = "root123";
 
 char *
 Vault_Server_Request_Interceptor::name ()
@@ -37,10 +38,8 @@ Vault_Server_Request_Interceptor::receive_request (
       IOP::ServiceContext_var const sc =
         ri->get_request_service_context (id);
 
-      char const *const buf =
-        reinterpret_cast<char const *> (sc->context_data.get_buffer ());
-
-      if (std::strcmp (buf, "root123") != 0)
+      if (sc->context_data.length () != sizeof (password)
+          || std::memcmp (sc->context_data.get_buffer (), password, sizeof (password)) != 0)
       {
         throw CORBA::NO_PERMISSION ();
       }
@@ -117,9 +116,8 @@ Vault_Server_Request_Context_Interceptor::receive_request (
   IOP::ServiceContext_var const sc =
     ri->get_request_service_context (id);
 
-  char const *const buf = reinterpret_cast<char const *> (sc->context_data.get_buffer ());
-
-  if (std::strcmp (buf, "root123") != 0)
+  if (sc->context_data.length () != sizeof (password)
+      || std::memcmp (sc->context_data.get_buffer (), password, sizeof (password)) != 0)
   {
     throw CORBA::NO_PERMISSION ();
   }

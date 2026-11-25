@@ -42,13 +42,8 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   IOP::ServiceContext_var const sc =
     ri->get_request_service_context (id);
 
-  char const *buf =
-    reinterpret_cast<char const *> (sc->context_data.get_buffer ());
-  ACE_DEBUG ((LM_DEBUG,
-              "  Received service context: %C\n",
-              buf));
-
-  if (std::strcmp (buf, request_msg) != 0)
+  if (sc->context_data.length () != sizeof (request_msg)
+      || std::memcmp (sc->context_data.get_buffer (), request_msg, sizeof (request_msg)) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Echo_Server_Request_Interceptor::receive_request_service_contexts: "
@@ -57,9 +52,12 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
     }
   else
     {
+      ACE_DEBUG ((LM_DEBUG,
+                  "  Received service context: %C\n",
+                  request_msg));
       // Put the request context into the slot for the servant to inspect.
       CORBA::Any data;
-      data <<= buf;
+      data <<= request_msg;
 
       try
         {
