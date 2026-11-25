@@ -278,7 +278,8 @@ void Hello::test_args_3 (
   {
     ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Hello::test_args_3\n")));
   }
-  if (std::strncmp (arg1, TEST_STR, std::strlen (arg1)) != 0)
+  if (std::strlen (arg1) != ::Test::BOUNDED_STRING_SIZE
+      || std::strncmp (arg1, TEST_STR, ::Test::BOUNDED_STRING_SIZE) != 0)
     ERROR_COUNT ("Hello::test_args_3")
   if (arg2.length () != ::Test::BOUNDED_VAR_SIZE
       || std::memcmp (arg2.get_buffer (), TEST_STR, ::Test::BOUNDED_VAR_SIZE) != 0)
