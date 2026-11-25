@@ -145,7 +145,7 @@ TAO_PropertySet_Tester::test_define_property ()
   char const* newstr {};
   anyval >>= newstr;
   ACE_DEBUG ((LM_DEBUG,
-              "Main: String :  %s, From any :  %s\n",
+              "Main: String :  %C, From any :  %C\n",
               strvar.in (),
               newstr));
   property_set_.define_property ("string_property",
@@ -206,7 +206,7 @@ TAO_PropertySet_Tester::test_get_property_value ()
       char const* str {};
       *anyptr >>= str;
       ACE_DEBUG ((LM_DEBUG,
-                  "Str %s\n", str));
+                  "Str %C\n", str));
     }
   else
     ACE_DEBUG ((LM_DEBUG,
@@ -359,7 +359,7 @@ TAO_PropertyNamesIterator_Tester::test_next_one ()
   CORBA::Boolean ret = iterator_.next_one (strvar.out ());
   while (ret)
     {
-      ACE_DEBUG ((LM_DEBUG, "Str : %s\n", strvar.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Str : %C\n", strvar.in ()));
       ret = iterator_.next_one (strvar.out ());
     }
   return 0;
@@ -393,7 +393,7 @@ TAO_PropertyNamesIterator_Tester::test_next_n (size_t n)
     }
   for (size_t i {}; i < pnames_var.in ().length (); ++i)
     ACE_DEBUG ((LM_DEBUG,
-                "str %s\n",
+                "str %C\n",
                 static_cast<char const*> (pnames_var[i])));
   return 0;
 }

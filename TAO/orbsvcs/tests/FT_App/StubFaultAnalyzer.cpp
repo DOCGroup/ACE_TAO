@@ -193,7 +193,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
           PortableGroup::GenericFactory::FactoryCreationId_var factory_creation_id;
 
           ACE_DEBUG((LM_DEBUG,
-            "Call create_object with type: %s\n", type_id.in()
+            "Call create_object with type: %C\n", type_id.in()
             ));
           this->factory_->create_object (
             type_id.in(),

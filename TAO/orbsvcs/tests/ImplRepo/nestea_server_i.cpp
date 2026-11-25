@@ -143,7 +143,7 @@ Nestea_Server_i::init (int argc, ACE_TCHAR **argv)
         this->orb_->object_to_string (obj.in ());
       if (TAO_debug_level > 0)
       {
-        ACE_DEBUG ((LM_DEBUG, "The IOR is: <%s>\n", ior.in ()));
+        ACE_DEBUG ((LM_DEBUG, "The IOR is: <%C>\n", ior.in ()));
       }
 
       TAO_Root_POA * const tmp_poa = dynamic_cast<TAO_Root_POA *> (nestea_poa_.in ());

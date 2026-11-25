@@ -49,7 +49,7 @@ Nestea_Client_i::run ()
 
   CORBA::String_var praise = this->server_->get_praise ();
   ACE_DEBUG ((LM_DEBUG, "Cans: %d\n"
-                        "Praise: %s\n",
+                        "Praise: %C\n",
                         this->server_->bookshelf_size (),
                         praise.in ()));
 
@@ -58,7 +58,7 @@ Nestea_Client_i::run ()
 
   praise = this->server_->get_praise ();
   ACE_DEBUG ((LM_DEBUG, "Cans: %d\n"
-                        "Praise: %s\n",
+                        "Praise: %C\n",
                         this->server_->bookshelf_size (),
                         praise.in ()));
 
