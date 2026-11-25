@@ -2,9 +2,49 @@
 #include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "tao/RTScheduling/Current.h"
+#include "tao/RTScheduling/Request_Interceptor.h"
+#include "tao/PI_Server/ServerRequestInfo.h"
 #include "tao/ORB_Core.h"
+#include "tao/TAO_Server_Request.h"
+#include "tao/CDR.h"
 
 #include <memory>
+
+class Test_Scheduler : public TAO_Scheduler
+{
+public:
+  explicit Test_Scheduler (CORBA::ORB_ptr orb) : TAO_Scheduler (orb) {}
+
+  void receive_request (PortableInterceptor::ServerRequestInfo_ptr,
+                        RTScheduling::Current::IdType_out guid,
+                        CORBA::String_out,
+                        CORBA::Policy_out,
+                        CORBA::Policy_out) override
+  {
+    if (this->guid_length_ >= 0)
+      {
+        RTScheduling::Current::IdType *value = new RTScheduling::Current::IdType;
+        value->length (static_cast<CORBA::ULong> (this->guid_length_));
+        guid = value;
+      }
+  }
+
+  int guid_length_ {-1};
+};
+
+class Test_Request_Info : public TAO::ServerRequestInfo
+{
+public:
+  explicit Test_Request_Info (TAO_ServerRequest &request)
+    : TAO::ServerRequestInfo (request, nullptr, 0, nullptr, nullptr, 0) {}
+
+  IOP::ServiceContext *get_request_service_context (IOP::ServiceId id) override
+  {
+    IOP::ServiceContext *context = new IOP::ServiceContext;
+    context->context_id = id;
+    return context;
+  }
+};
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -19,9 +59,33 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       TAO_RTScheduler_Manager_var manager = TAO_RTScheduler_Manager::_narrow (manager_obj.in ());
 
-      TAO_Scheduler scheduler (orb.in ());
+      Test_Scheduler scheduler (orb.in ());
 
       manager->rtscheduler (std::addressof (scheduler));
+
+      CORBA::Object_var current_object =
+        orb->resolve_initial_references ("RTScheduler_Current");
+      TAO_RTScheduler_Current *current =
+        dynamic_cast<TAO_RTScheduler_Current *> (current_object.in ());
+      if (current == nullptr)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "RTScheduler_Current has the wrong type\n"), 1);
+        }
+      TAO_InputCDR input (size_t {0});
+      TAO_OutputCDR output;
+      TAO_ServerRequest request (nullptr, input, output, nullptr, orb->orb_core ());
+      Test_Request_Info request_info (request);
+      Server_Interceptor interceptor (current);
+      int const invalid_lengths[] = {-1, 0, 1};
+      for (int const length : invalid_lengths)
+        {
+          scheduler.guid_length_ = length;
+          interceptor.receive_request (std::addressof (request_info));
+          if (current->implementation () != nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid GUID installed a current\n"), 1);
+            }
+        }
 
       // Cancellation must not read past short GUIDs or overwrite its local
       // numeric buffer for GUIDs larger than size_t.
