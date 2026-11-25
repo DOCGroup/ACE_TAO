@@ -223,7 +223,7 @@ TAO::Storable_FlatFileStream::open()
        attempts > 0 && this->fl_ == nullptr;
        --attempts)
     {
-#ifndef ACE_WIN32
+#if !defined (ACE_WIN32) && !defined (ACE_LACKS_DUP)
       ACE_HANDLE const stream_handle = ACE_OS::dup (filelock_.handle_);
       if (stream_handle == ACE_INVALID_HANDLE)
         {

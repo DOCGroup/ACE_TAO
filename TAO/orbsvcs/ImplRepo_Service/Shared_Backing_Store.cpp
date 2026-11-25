@@ -111,6 +111,9 @@ namespace {
                                                           flags_, 0666,
                                                           unlink_in_destructor);
 
+#if defined (ACE_LACKS_DUP)
+      this->file_ = ACE_OS::fdopen (this->file_lock_->get_handle (), flags_str);
+#else
       // The stream and the file lock each own their descriptor.
       ACE_HANDLE const stream_handle = ACE_OS::dup (this->file_lock_->get_handle ());
       if (stream_handle != ACE_INVALID_HANDLE)
@@ -123,7 +126,8 @@ namespace {
               errno = saved_errno;
             }
         }
-#endif
+#endif /* ACE_LACKS_DUP */
+#endif /* ACE_WIN32 */
     }
 
     void close_file ()
