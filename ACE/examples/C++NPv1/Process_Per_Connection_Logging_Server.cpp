@@ -44,7 +44,7 @@ Logging_Process::prepare (ACE_Process_Options &options)
 {
   if (options.pass_handle (logging_peer_.get_handle ()) == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "pass_handle"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", ACE_TEXT ("pass_handle")), -1);
   }
   options.command_line ("%s", this->prog_name_.c_str ());
   options.avoid_zombies (1);
@@ -97,7 +97,7 @@ Process_Per_Connection_Logging_Server::handle_connections ()
   logging_peer.close ();
   if (pid == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "spawn()"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", ACE_TEXT ("spawn()")), -1);
   }
 
   // ACE_Process_Manager calls unmanage() when it no longer tracks the process.
@@ -209,7 +209,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (server.run (argc, argv) == -1 && errno != EINTR)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "server.run()"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", ACE_TEXT ("server.run()")), 1);
   }
 
   // Barrier synchronization.

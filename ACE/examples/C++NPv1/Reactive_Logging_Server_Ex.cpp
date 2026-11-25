@@ -13,7 +13,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (server.run (argc, argv) == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "server.run()"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", ACE_TEXT ("server.run()")), 1);
   }
   return 0;
 }

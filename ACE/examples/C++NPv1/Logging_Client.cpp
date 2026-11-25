@@ -108,7 +108,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (connector.connect (logging_client.peer (), server_addr) < 0)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "connect()"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", ACE_TEXT ("connect()")), 1);
   }
 
 #if defined (ACE_WIN32) && defined (ACE_USES_OLD_IOSTREAMS)
@@ -125,7 +125,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (logging_client.send (log_record) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
-                           "%p\n", "logging_client.send()"), 1);
+                           "%p\n", ACE_TEXT ("logging_client.send()")), 1);
       }
   }
 #else
@@ -147,7 +147,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     if (logging_client.send (log_record) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n", "logging_client.send()"), 1);
+                         "%p\n", ACE_TEXT ("logging_client.send()")), 1);
     }
   }
 #endif

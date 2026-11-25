@@ -37,7 +37,7 @@ RT_Thread_Per_Connection_Logging_Server::open (u_short port)
     else
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p\n", "ACE_OS::sched_params()"), -1);
+                         "%p\n", ACE_TEXT ("ACE_OS::sched_params()")), -1);
     }
   }
   // Initialize the parent classes.
@@ -132,7 +132,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   if (server.run (argc, argv) == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "server.run()"), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", ACE_TEXT ("server.run()")), 1);
   }
 
   // Cooperative thread cancellation and barrier synchronization.
