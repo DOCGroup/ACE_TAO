@@ -150,7 +150,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   catch (CORBA::Exception const &ex)
     {
-      ACE_DEBUG ((LM_ERROR, "Corba Exception: %s\n", ex._info ().c_str ()));
+      ACE_DEBUG ((LM_ERROR, "Corba Exception: %C\n", ex._info ().c_str ()));
       return 1;
     }
 

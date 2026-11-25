@@ -114,7 +114,7 @@ Server::Server (int, ACE_TCHAR *argv[])
     management_poa_manager->activate ();
   }
   catch (CORBA::Exception const &ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Server> Caught CORBA::Exception %s"
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Server> Caught CORBA::Exception %C"
                 , ex._info().c_str()));
     return;
   }
@@ -158,7 +158,7 @@ Server::run (bool management)
     }
   }
   catch (CORBA::Exception const &ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %s in worker ORB\n"
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %C in worker ORB\n"
                 , ex._info().c_str()));
     status = false;
   }
@@ -169,7 +169,7 @@ Server::run (bool management)
     }
   }
   catch (CORBA::Exception const &ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %s in management ORB\n"
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %C in management ORB\n"
                 , ex._info().c_str()));
     status = false;
   }
@@ -202,7 +202,7 @@ Server::shutdown ()
     management_orb_ = CORBA::ORB::_nil();
   }
   catch (CORBA::Exception const &ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %s"
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Server::run> Caught CORBA::Exception %C"
                 , ex._info().c_str()));
   }
 

@@ -77,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     {
       if (options.expect_error)
         {
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - expected exception occurred!\n%s\n",
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - expected exception occurred!\n%C\n",
                       ex._info().c_str()));
 
           return 0;

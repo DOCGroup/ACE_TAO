@@ -128,7 +128,7 @@ Client::init (int argc, ACE_TCHAR *argv[])
     policy_list.length(0);
   }
   catch (CORBA::Exception const &ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Client::Init> Caught CORBA::Exception %s"
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Client::Init> Caught CORBA::Exception %C"
                 , ex._info().c_str()));
     return false;
   }
@@ -217,13 +217,13 @@ Client::run ()
     }
     catch (CORBA::Exception const &ex) {
       management_->unsleep (); // remote side could be asleep
-      ACE_ERROR ((LM_ERROR, "(%P|%t) Client::run> Caught during test logic CORBA::Exception %s"
+      ACE_ERROR ((LM_ERROR, "(%P|%t) Client::run> Caught during test logic CORBA::Exception %C"
                   , ex._info().c_str()));
       status = false;
     }
   }
   catch (CORBA::Exception const &ex) {
-    ACE_ERROR ((LM_ERROR, "(%P|%t) Client::run> Caught during test shutdown CORBA::Exception %s"
+    ACE_ERROR ((LM_ERROR, "(%P|%t) Client::run> Caught during test shutdown CORBA::Exception %C"
                 , ex._info().c_str()));
     status = false;
   }

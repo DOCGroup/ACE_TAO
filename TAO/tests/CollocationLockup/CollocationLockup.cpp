@@ -104,7 +104,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     } //destructor of ACE_Thread_Manager = implicit join
   catch (CORBA::Exception const &ex)
     {
-      ACE_DEBUG ((LM_ERROR, "Corba Exception: %s\n", ex._info ().c_str ()));
+      ACE_DEBUG ((LM_ERROR, "Corba Exception: %C\n", ex._info ().c_str ()));
       return 1;
     }
 
@@ -124,7 +124,7 @@ OrbRunThread (void *arg)
   catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_ERROR,
-                  "In OrbRunThread: Corba Exception: %s\n",
+                  "In OrbRunThread: Corba Exception: %C\n",
                   ex._info ().c_str ()));
     }
   return ACE_THR_FUNC_RETURN_NULL;
@@ -152,7 +152,7 @@ TestThread (void *arg)
   catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_ERROR,
-                  "In TestThread: Corba Exception: %s\n",
+                  "In TestThread: Corba Exception: %C\n",
                   ex._info ().c_str ()));
     }
   return ACE_THR_FUNC_RETURN_NULL;

@@ -34,7 +34,7 @@ int ACE_DLL_TAO_Service::init (int argc, ACE_TCHAR * argv [])
   catch (CORBA::Exception const &ex)
   {
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) %T - %M - %s\n"),
+                ACE_TEXT ("(%t) %T - %M - %C\n"),
                 ex._info ().c_str ()));
     return -1;
   }
@@ -56,7 +56,7 @@ int ACE_DLL_TAO_Service::fini ()
   catch (CORBA::Exception const &ex)
   {
     ACE_ERROR ((LM_ERROR,
-                ACE_TEXT ("(%t) %T - %M - %s\n"),
+                ACE_TEXT ("(%t) %T - %M - %C\n"),
                 ex._info ().c_str ()));
     return -1;
   }
