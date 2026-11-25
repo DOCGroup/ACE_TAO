@@ -961,7 +961,9 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  *   'i', 'd': print a decimal number
  *   'I', indent according to nesting depth
  *   'e', 'E', 'f', 'F', 'g', 'G': print a double
+ *   'H': print an ACE_HANDLE
  *   'l', print line number where an error occurred.
+ *   'L': length modifier for signed or unsigned long integer conversions
  *   'M': print the name of the priority of the message.
  *   'm': Return the message corresponding to errno value, e.g., as done by @c strerror
  *   'N': print file name where the error occurred.

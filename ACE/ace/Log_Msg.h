@@ -527,6 +527,7 @@ public:
    *  - 'I': indent according to nesting depth (obtained from
    *         ACE_Trace::get_nesting_indent()).
    *  - 'e', 'E', 'f', 'F', 'g', 'G': print a double
+   *  - 'H': print an ACE_HANDLE
    *  - 'l': print line number where an error occurred.
    *  - 'L': length modifier for a signed or unsigned long integer
    *         conversion, for example %Ld or %Lu.
