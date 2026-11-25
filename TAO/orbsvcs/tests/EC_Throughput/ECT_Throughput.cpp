@@ -179,7 +179,7 @@ ECT_Throughput::run (int argc, ACE_TCHAR* argv[])
 
       CORBA::String_var str =
         this->orb_->object_to_string (scheduler.in ());
-      ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%s>\n",
+      ACE_DEBUG ((LM_DEBUG, "The (local) scheduler IOR is <%C>\n",
                   str.in ()));
 
       // Register the servant with the Naming Context....

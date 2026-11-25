@@ -125,7 +125,7 @@ ECM_Driver::run (int argc, ACE_TCHAR* argv[])
       CORBA::String_var str =
         this->orb_->object_to_string (ec.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "The (local) EC IOR is <%s>\n", str.in ()));
+      ACE_DEBUG ((LM_DEBUG, "The (local) EC IOR is <%C>\n", str.in ()));
 
       poa_manager->activate ();
 

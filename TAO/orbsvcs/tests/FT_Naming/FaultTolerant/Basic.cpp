@@ -31,7 +31,7 @@ Basic::remove_member ()
                                   location);
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) - Removed Member at Location <%s>\n"),
+                  ACE_TEXT ("(%P|%t) - Removed Member at Location <%C>\n"),
                   this->location_.in ()));
     }
   catch (const PortableGroup::ObjectNotFound& ex)

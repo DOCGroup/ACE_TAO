@@ -199,7 +199,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         orb->object_to_string (obj1.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "ForwardRequestTest::test servant 1: <%s>\n",
+                  "ForwardRequestTest::test servant 1: <%C>\n",
                   ior.in ()));
 
       poa_manager->activate ();

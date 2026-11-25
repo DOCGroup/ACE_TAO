@@ -70,7 +70,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::String_var const the_string = goodday->get_string ();
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT("(%P|%t) - string returned <%s>\n"),
+                      ACE_TEXT("(%P|%t) - string returned <%C>\n"),
                       the_string.in ()));
         }
 
