@@ -17,7 +17,7 @@ ACE_Registry_Name_Space::ACE_Registry_Name_Space (ACE_Name_Options *name_options
 int
 ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
 {
-  const ACE_TCHAR *host = name_options->nameserver_host ();
+  ACE_TCHAR const *host = name_options->nameserver_host ();
   ACE_Registry::Naming_Context predefined;
 
   int result = ACE_Predefined_Naming_Contexts::connect (predefined,
@@ -50,9 +50,9 @@ ACE_Registry_Name_Space::open (ACE_Name_Options *name_options)
 }
 
 int
-ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
-                               const ACE_NS_WString &value,
-                               const char *type)
+ACE_Registry_Name_Space::bind (ACE_NS_WString const &name,
+                               ACE_NS_WString const &value,
+                               char const *type)
 {
   ACE_UNUSED_ARG(type);
 
@@ -77,9 +77,9 @@ ACE_Registry_Name_Space::bind (const ACE_NS_WString &name,
 }
 
 int
-ACE_Registry_Name_Space::rebind (const ACE_NS_WString &name,
-                                 const ACE_NS_WString &value,
-                                 const char *type)
+ACE_Registry_Name_Space::rebind (ACE_NS_WString const &name,
+                                 ACE_NS_WString const &value,
+                                 char const *type)
 {
   ACE_UNUSED_ARG(type);
 
@@ -104,7 +104,7 @@ ACE_Registry_Name_Space::rebind (const ACE_NS_WString &name,
 }
 
 int
-ACE_Registry_Name_Space::unbind (const ACE_NS_WString &name)
+ACE_Registry_Name_Space::unbind (ACE_NS_WString const &name)
 {
 #if defined (ACE_USES_WCHAR)
   return this->context_.unbind (name.fast_rep ());
@@ -114,7 +114,7 @@ ACE_Registry_Name_Space::unbind (const ACE_NS_WString &name)
 }
 
 int
-ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
+ACE_Registry_Name_Space::resolve (ACE_NS_WString const &name,
                                   ACE_NS_WString &value,
                                   char *&type)
 {
@@ -162,7 +162,7 @@ ACE_Registry_Name_Space::resolve (const ACE_NS_WString &name,
 
 int
 ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
-                                      const ACE_NS_WString &pattern)
+                                      ACE_NS_WString const &pattern)
 {
   ACE_BINDING_SET binding_set;
   int result = this->list_name_entries (binding_set,
@@ -185,7 +185,7 @@ ACE_Registry_Name_Space:: list_names (ACE_WSTRING_SET &set,
 
 int
 ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
-                                      const ACE_NS_WString &pattern)
+                                      ACE_NS_WString const &pattern)
 {
   ACE_BINDING_SET binding_set;
   int result = this->list_name_entries (binding_set,
@@ -208,7 +208,7 @@ ACE_Registry_Name_Space::list_values (ACE_WSTRING_SET &set,
 
 int
 ACE_Registry_Name_Space::list_types (ACE_WSTRING_SET &set,
-                                     const ACE_NS_WString &pattern)
+                                     ACE_NS_WString const &pattern)
 {
   ACE_UNUSED_ARG(set);
   ACE_UNUSED_ARG(pattern);
@@ -218,7 +218,7 @@ ACE_Registry_Name_Space::list_types (ACE_WSTRING_SET &set,
 
 int
 ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
-                                            const ACE_NS_WString &pattern)
+                                            ACE_NS_WString const &pattern)
 {
   ACE_UNUSED_ARG(pattern);
 
@@ -267,14 +267,14 @@ ACE_Registry_Name_Space::list_name_entries (ACE_BINDING_SET &set,
 
 int
 ACE_Registry_Name_Space::list_value_entries (ACE_BINDING_SET &set,
-                                             const ACE_NS_WString &pattern)
+                                             ACE_NS_WString const &pattern)
 {
   return this->list_name_entries (set, pattern);
 }
 
 int
 ACE_Registry_Name_Space::list_type_entries (ACE_BINDING_SET &set,
-                                            const ACE_NS_WString &pattern)
+                                            ACE_NS_WString const &pattern)
 {
   return this->list_name_entries (set, pattern);
 }

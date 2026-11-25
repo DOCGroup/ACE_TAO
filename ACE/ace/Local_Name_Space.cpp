@@ -55,7 +55,7 @@ ACE_NS_String::ACE_NS_String ()
   ACE_TRACE ("ACE_NS_String::ACE_NS_String");
 }
 
-ACE_NS_String::ACE_NS_String (const ACE_NS_WString &s)
+ACE_NS_String::ACE_NS_String (ACE_NS_WString const &s)
   : len_ ((s.length () + 1) * sizeof (ACE_WCHAR_T)),
     rep_ (s.rep ()),
     delete_rep_ (true)
@@ -148,7 +148,7 @@ ACE_NS_Internal::ACE_NS_Internal ()
 {
 }
 
-ACE_NS_Internal::ACE_NS_Internal (ACE_NS_String &value, const char *type)
+ACE_NS_Internal::ACE_NS_Internal (ACE_NS_String &value, char const *type)
   : value_ (value),
     type_ (type)
 {
@@ -169,7 +169,7 @@ ACE_NS_Internal::value ()
   return this->value_;
 }
 
-const char *
+char const *
 ACE_NS_Internal::type ()
 {
   ACE_TRACE ("ACE_NS_Internal::type");

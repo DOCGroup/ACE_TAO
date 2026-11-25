@@ -8,7 +8,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-ACE_Remote_Name_Space::open (const ACE_TCHAR *servername, u_short port)
+ACE_Remote_Name_Space::open (ACE_TCHAR const *servername, u_short port)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::open");
   ACE_INET_Addr servaddr;
@@ -33,7 +33,7 @@ ACE_Remote_Name_Space::ACE_Remote_Name_Space ()
   ACE_TRACE ("ACE_Remote_Name_Space::ACE_Remote_Name_Space");
 }
 
-ACE_Remote_Name_Space::ACE_Remote_Name_Space (const ACE_TCHAR *hostname,
+ACE_Remote_Name_Space::ACE_Remote_Name_Space (ACE_TCHAR const *hostname,
                                               u_short port)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::ACE_Remote_Name_Space");
@@ -44,9 +44,9 @@ ACE_Remote_Name_Space::ACE_Remote_Name_Space (const ACE_TCHAR *hostname,
 }
 
 int
-ACE_Remote_Name_Space::bind (const ACE_NS_WString &name,
-                             const ACE_NS_WString &value,
-                             const char *type)
+ACE_Remote_Name_Space::bind (ACE_NS_WString const &name,
+                             ACE_NS_WString const &value,
+                             char const *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::bind");
   std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const name_urep (name.rep ());
@@ -65,9 +65,9 @@ ACE_Remote_Name_Space::bind (const ACE_NS_WString &name,
 }
 
 int
-ACE_Remote_Name_Space::rebind (const ACE_NS_WString &name,
-                               const ACE_NS_WString &value,
-                               const char *type)
+ACE_Remote_Name_Space::rebind (ACE_NS_WString const &name,
+                               ACE_NS_WString const &value,
+                               char const *type)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::rebind");
   std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const name_urep (name.rep ());
@@ -86,7 +86,7 @@ ACE_Remote_Name_Space::rebind (const ACE_NS_WString &name,
 }
 
 int
-ACE_Remote_Name_Space::resolve (const ACE_NS_WString &name,
+ACE_Remote_Name_Space::resolve (ACE_NS_WString const &name,
                                 ACE_NS_WString &value,
                                 char *&type)
 {
@@ -126,7 +126,7 @@ ACE_Remote_Name_Space::resolve (const ACE_NS_WString &name,
 }
 
 int
-ACE_Remote_Name_Space::unbind (const ACE_NS_WString &name)
+ACE_Remote_Name_Space::unbind (ACE_NS_WString const &name)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::unbind");
   std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const name_urep (name.rep ());
@@ -140,7 +140,7 @@ ACE_Remote_Name_Space::unbind (const ACE_NS_WString &name)
 
 int
 ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
-                                   const ACE_NS_WString &pattern)
+                                   ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_names");
   std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
@@ -177,7 +177,7 @@ ACE_Remote_Name_Space::list_names (ACE_WSTRING_SET &set,
 
 int
 ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
-                                    const ACE_NS_WString &pattern)
+                                    ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_values");
   std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
@@ -215,7 +215,7 @@ ACE_Remote_Name_Space::list_values (ACE_WSTRING_SET &set,
 
 int
 ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
-                                   const ACE_NS_WString &pattern)
+                                   ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_types");
   std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
@@ -253,7 +253,7 @@ ACE_Remote_Name_Space::list_types (ACE_WSTRING_SET &set,
 
 int
 ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
-                                          const ACE_NS_WString &pattern)
+                                          ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_name_entries");
   std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
@@ -299,7 +299,7 @@ ACE_Remote_Name_Space::list_name_entries (ACE_BINDING_SET &set,
 
 int
 ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
-                                           const ACE_NS_WString &pattern)
+                                           ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_value_entries");
   std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());
@@ -345,7 +345,7 @@ ACE_Remote_Name_Space::list_value_entries (ACE_BINDING_SET &set,
 
 int
 ACE_Remote_Name_Space::list_type_entries (ACE_BINDING_SET &set,
-                                          const ACE_NS_WString &pattern)
+                                          ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Remote_Name_Space::list_type_entries");
   std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> const pattern_urep (pattern.rep ());

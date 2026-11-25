@@ -128,53 +128,53 @@ public:
   ~ACE_Local_Name_Space () override = default;
 
   /// Bind a new name to a naming context (Wide character strings).
-  int bind (const ACE_NS_WString &name,
-                    const ACE_NS_WString &value,
-                    const char *type = "") override;
+  int bind (ACE_NS_WString const &name,
+                    ACE_NS_WString const &value,
+                    char const *type = "") override;
 
   /**
    * Overwrite the value or type of an existing name in a
    * ACE_Local_Name_Space or bind a new name to the context, if it
    * didn't exist yet. (Wide character strings interface).
    */
-  int rebind (const ACE_NS_WString &name,
-                      const ACE_NS_WString &value,
-                      const char *type = "") override;
+  int rebind (ACE_NS_WString const &name,
+                      ACE_NS_WString const &value,
+                      char const *type = "") override;
 
   /// Delete a name from a ACE_Local_Name_Space (Wide character strings
   /// Interface).
-  int unbind (const ACE_NS_WString &name) override;
-  virtual int unbind_i (const ACE_NS_WString &name);
+  int unbind (ACE_NS_WString const &name) override;
+  virtual int unbind_i (ACE_NS_WString const &name);
 
   /// Get value and type of a given name binding (Wide chars).  The
   /// caller is responsible for deleting @a type!
-  int resolve (const ACE_NS_WString &name,
+  int resolve (ACE_NS_WString const &name,
                        ACE_NS_WString &value,
                        char *&type) override;
-  virtual int resolve_i (const ACE_NS_WString &name,
+  virtual int resolve_i (ACE_NS_WString const &name,
                          ACE_NS_WString &value,
                          char *&type);
 
   /// Get a set of names matching a specified pattern (wchars). Matching
   /// means the names must begin with the pattern string.
   int list_names (ACE_WSTRING_SET &set,
-                          const ACE_NS_WString &pattern) override;
+                          ACE_NS_WString const &pattern) override;
   virtual int list_names_i (ACE_WSTRING_SET &set,
-                          const ACE_NS_WString &pattern);
+                          ACE_NS_WString const &pattern);
 
   /// Get a set of values matching a specified pattern (wchars). Matching
   /// means the values must begin with the pattern string.
   int list_values (ACE_WSTRING_SET &set,
-                           const ACE_NS_WString &pattern) override;
+                           ACE_NS_WString const &pattern) override;
   virtual int list_values_i (ACE_WSTRING_SET &set,
-                             const ACE_NS_WString &pattern);
+                             ACE_NS_WString const &pattern);
 
   /// Get a set of types matching a specified pattern (wchars). Matching
   /// means the types must begin with the pattern string.
   int list_types (ACE_WSTRING_SET &set,
-                          const ACE_NS_WString &pattern) override;
+                          ACE_NS_WString const &pattern) override;
   virtual int list_types_i (ACE_WSTRING_SET &set,
-                            const ACE_NS_WString &pattern);
+                            ACE_NS_WString const &pattern);
 
   /**
    * Get a set of names matching a specified pattern (wchars). Matching
@@ -182,9 +182,9 @@ public:
    * complete binding associated each pattern match.
    */
   int list_name_entries (ACE_BINDING_SET &set,
-                                 const ACE_NS_WString &pattern) override;
+                                 ACE_NS_WString const &pattern) override;
   virtual int list_name_entries_i (ACE_BINDING_SET &set,
-                                   const ACE_NS_WString &pattern);
+                                   ACE_NS_WString const &pattern);
 
   /**
    * Get a set of values matching a specified pattern (wchars). Matching
@@ -192,9 +192,9 @@ public:
    * complete binding associated each pattern match.
    */
   int list_value_entries (ACE_BINDING_SET &set,
-                                  const ACE_NS_WString &pattern) override;
+                                  ACE_NS_WString const &pattern) override;
   virtual int list_value_entries_i (ACE_BINDING_SET &set,
-                                    const ACE_NS_WString &pattern);
+                                    ACE_NS_WString const &pattern);
 
   /**
    * Get a set of types matching a specified pattern (wchars). Matching
@@ -202,9 +202,9 @@ public:
    * complete binding associated each pattern match.
    */
   int list_type_entries (ACE_BINDING_SET &set,
-                                 const ACE_NS_WString &pattern) override;
+                                 ACE_NS_WString const &pattern) override;
   virtual int list_type_entries_i (ACE_BINDING_SET &set,
-                                   const ACE_NS_WString &pattern);
+                                   ACE_NS_WString const &pattern);
 
   /// Dump the state of the object
   void dump () const override;
@@ -221,12 +221,12 @@ private:
 #endif /* ACE_WIN32 */
 
   /// Factor out code from bind() and rebind().
-  int shared_bind (const ACE_NS_WString &name,
-                   const ACE_NS_WString &value,
-                   const char *type, bool rebind);
-  int shared_bind_i (const ACE_NS_WString &name,
-                     const ACE_NS_WString &value,
-                     const char *type, bool rebind);
+  int shared_bind (ACE_NS_WString const &name,
+                   ACE_NS_WString const &value,
+                   char const *type, bool rebind);
+  int shared_bind_i (ACE_NS_WString const &name,
+                     ACE_NS_WString const &value,
+                     char const *type, bool rebind);
 
   /// Allocate the appropriate type of map manager that stores the
   /// key/value binding.

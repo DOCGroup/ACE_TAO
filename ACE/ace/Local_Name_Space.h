@@ -44,7 +44,7 @@ public:
                  size_t len);
 
   /// Converts an ACE_NS_WString to an ACE_NS_String;
-  ACE_NS_String (const ACE_NS_WString &);
+  ACE_NS_String (ACE_NS_WString const &);
   /// @}
 
   ~ACE_NS_String ();
@@ -97,7 +97,7 @@ public:
   /// No-op constructor.
   ACE_NS_Internal ();
 
-  ACE_NS_Internal (ACE_NS_String &value, const char *type);
+  ACE_NS_Internal (ACE_NS_String &value, char const *type);
 
   /// Compare an ACE_NS_Internal
   bool operator == (const ACE_NS_Internal &) const;
@@ -106,14 +106,14 @@ public:
   ACE_NS_String value ();
 
   /// Return type.
-  const char *type ();
+  char const *type ();
 
 private:
   /// Contains the value of the string.
   ACE_NS_String value_;
 
   /// Contains the type of the string.
-  const char *type_ {};
+  char const *type_ {};
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

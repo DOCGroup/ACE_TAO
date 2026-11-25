@@ -118,9 +118,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::remap (EXCEPTION_POINTERS *ep)
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind (
-  const ACE_NS_WString &name,
-  const ACE_NS_WString &value,
-  const char *type,
+  ACE_NS_WString const &name,
+  ACE_NS_WString const &value,
+  char const *type,
   bool rebind)
 {
   // Note that we *must* use structured exception handling here
@@ -139,9 +139,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind (
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
-  const ACE_NS_WString &name,
-  const ACE_NS_WString &value,
-  const char *type,
+  ACE_NS_WString const &name,
+  ACE_NS_WString const &value,
+  char const *type,
   bool rebind)
 {
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
@@ -228,7 +228,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (
-  const ACE_NS_WString &name)
+  ACE_NS_WString const &name)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -246,7 +246,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind (
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (
-  const ACE_NS_WString &name)
+  ACE_NS_WString const &name)
 {
   ACE_TRACE ("ACE_Local_Name_Space::unbind_i");
 
@@ -270,9 +270,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::unbind_i (
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::bind (
-  const ACE_NS_WString &name,
-  const ACE_NS_WString &value,
-  const char *type)
+  ACE_NS_WString const &name,
+  ACE_NS_WString const &value,
+  char const *type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::bind");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -282,9 +282,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::bind (
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::rebind (
-  const ACE_NS_WString &name,
-  const ACE_NS_WString &value,
-  const char *type)
+  ACE_NS_WString const &name,
+  ACE_NS_WString const &value,
+  char const *type)
 {
   ACE_TRACE ("ACE_Local_Name_Space::rebind");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -294,7 +294,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::rebind (
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (
-  const ACE_NS_WString &name,
+  ACE_NS_WString const &name,
   ACE_NS_WString &value,
   char *&type)
 {
@@ -314,7 +314,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve (
 
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
-  const ACE_NS_WString &name,
+  ACE_NS_WString const &name,
   ACE_NS_WString &value,
   char *&type)
 {
@@ -340,7 +340,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
 
   // Gets type and then the actual reprsentation which is a
   // ACE_WCHAR_T
-  const char *temp = ns_internal.type ();
+  char const *temp = ns_internal.type ();
 
   const size_t len = ACE_OS::strlen (ns_internal.type ());
   // Makes a copy here. Caller needs to call delete to free up
@@ -414,8 +414,8 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
 {
   ACE_TRACE ("ACE_Local_Name_Space::create_manager_i");
   // Get directory name
-  const ACE_TCHAR *dir = this->name_options_->namespace_dir ();
-  const ACE_TCHAR *database = this->name_options_->database ();
+  ACE_TCHAR const *dir = this->name_options_->namespace_dir ();
+  ACE_TCHAR const *database = this->name_options_->database ();
 
   // Use process name as the file name.
   size_t len = ACE_OS::strlen (dir);
@@ -436,7 +436,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
 
   ACE_TCHAR lock_name_for_local_name_space [MAXNAMELEN + MAXPATHLEN];
   ACE_TCHAR lock_name_for_backing_store [MAXPATHLEN + MAXNAMELEN];
-  const ACE_TCHAR *postfix = database;
+  ACE_TCHAR const *postfix = database;
 
   size_t length = sizeof lock_name_for_local_name_space / sizeof (ACE_TCHAR);
   ACE_OS::strsncpy (lock_name_for_local_name_space,
@@ -561,7 +561,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::create_manager_i ()
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (
   ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_names_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -597,7 +597,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names_i (
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (
   ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_values_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -633,7 +633,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values_i (
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
   ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_types_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -682,7 +682,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
        map_iterator.advance ())
     {
       // Get the type
-      const char *type = map_entry->int_id_.type ();
+      char const *type = map_entry->int_id_.type ();
 
       // Everything matches the wildcard.
       if (wildcard
@@ -725,7 +725,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types_i (
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries_i (
   ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_name_entries_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -756,7 +756,7 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries_i (
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries_i (
   ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_value_entries_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -786,7 +786,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries_i (
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
   ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   ACE_TRACE ("ACE_Local_Name_Space::list_type_entries_i");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -833,7 +833,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries_i (
        map_iterator.advance ())
     {
       // Get the type.
-      const char *type = map_entry->int_id_.type ();
+      char const *type = map_entry->int_id_.type ();
 
       if (wildcard // Everything matches the wildcard.
 #if defined (ACE_HAS_REGEX)
@@ -885,7 +885,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i () const
       char *key = map_entry->ext_id_.char_rep ();
       char *value = map_entry->int_id_.value ().char_rep ();
 #if !defined (ACE_NLOGGING)
-      const char *type = map_entry->int_id_.type ();
+      char const *type = map_entry->int_id_.type ();
 #endif /* ! ACE_NLOGGING */
 
       ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("key=%C\nvalue=%C\ntype=%C\n"),
@@ -907,7 +907,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::dump_i () const
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names (
   ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -926,7 +926,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_names (
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values (
   ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -945,7 +945,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_values (
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types (
   ACE_WSTRING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -964,7 +964,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_types (
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries (
   ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -983,7 +983,7 @@ ACE_Local_Name_Space <ACE_MEM_POOL_2, ACE_LOCK>::list_name_entries (
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries (
   ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)
@@ -1002,7 +1002,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_value_entries (
 template <ACE_MEM_POOL_1, class ACE_LOCK> int
 ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::list_type_entries (
   ACE_BINDING_SET &set,
-  const ACE_NS_WString &pattern)
+  ACE_NS_WString const &pattern)
 {
   // Note that we *must* use structured exception handling here
   // because (1) we may need to commit virtual memory pages and (2)

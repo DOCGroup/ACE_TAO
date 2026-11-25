@@ -48,57 +48,57 @@ public:
    * associated file (if accessible) or contacts the dedicated name
    * server process for NET_LOCAL namespace.
    */
-  ACE_Remote_Name_Space (const ACE_TCHAR *hostname, u_short port);
+  ACE_Remote_Name_Space (ACE_TCHAR const *hostname, u_short port);
 
   /**
    * Specifies the scope of this namespace, opens and memory-maps the
    * associated file (if accessible) or contacts the dedicated name
    * server process for NET_LOCAL namespace.
    */
-  int open (const ACE_TCHAR *servername, u_short port);
+  int open (ACE_TCHAR const *servername, u_short port);
 
   /// destructor, do some cleanup :TBD: last dtor should "compress"
   /// file
   ~ACE_Remote_Name_Space () override;
 
   /// Bind a new name to a naming context (Wide character strings).
-  int bind (const ACE_NS_WString &name_in,
-                    const ACE_NS_WString &value_in,
-                    const char *type_in = "") override;
+  int bind (ACE_NS_WString const &name_in,
+                    ACE_NS_WString const &value_in,
+                    char const *type_in = "") override;
 
   /**
    * Overwrite the value or type of an existing name in a
    * ACE_Remote_Name_Space or bind a new name to the context, if it
    * didn't exist yet. (Wide character strings interface).
    */
-  int rebind (const ACE_NS_WString &name_in,
-                      const ACE_NS_WString &value_in,
-                      const char *type_in = "") override;
+  int rebind (ACE_NS_WString const &name_in,
+                      ACE_NS_WString const &value_in,
+                      char const *type_in = "") override;
 
   /// Delete a name from a ACE_Remote_Name_Space (Wide character strings
   /// Interface).
-  int unbind (const ACE_NS_WString &name_in) override;
+  int unbind (ACE_NS_WString const &name_in) override;
 
   /// Get value and type of a given name binding (Wide chars).  The
   /// caller is responsible for deleting both @a value_out and @a type_out!
-  int resolve (const ACE_NS_WString &name_in,
+  int resolve (ACE_NS_WString const &name_in,
                        ACE_NS_WString &value_out,
                        char *&type_out) override;
 
   /// Get a set of names matching a specified pattern (wchars). Matching
   /// means the names must begin with the pattern string.
   int list_names (ACE_WSTRING_SET &set_out,
-                          const ACE_NS_WString &pattern_in) override;
+                          ACE_NS_WString const &pattern_in) override;
 
   /// Get a set of values matching a specified pattern (wchars). Matching
   /// means the values must begin with the pattern string.
   int list_values (ACE_WSTRING_SET &set_out,
-                           const ACE_NS_WString &pattern_in) override;
+                           ACE_NS_WString const &pattern_in) override;
 
   /// Get a set of types matching a specified pattern (wchars). Matching
   /// means the types must begin with the pattern string.
   int list_types (ACE_WSTRING_SET &set_out,
-                          const ACE_NS_WString &pattern_in) override;
+                          ACE_NS_WString const &pattern_in) override;
 
   /**
    * Get a set of names matching a specified pattern (wchars). Matching
@@ -106,7 +106,7 @@ public:
    * complete binding associated each pattern match.
    */
   int list_name_entries (ACE_BINDING_SET &set,
-                                 const ACE_NS_WString &pattern) override;
+                                 ACE_NS_WString const &pattern) override;
 
   /**
    * Get a set of values matching a specified pattern (wchars). Matching
@@ -114,7 +114,7 @@ public:
    * complete binding associated each pattern match.
    */
   int list_value_entries (ACE_BINDING_SET &set,
-                                  const ACE_NS_WString &pattern) override;
+                                  ACE_NS_WString const &pattern) override;
 
   /**
    * Get a set of types matching a specified pattern (wchars). Matching
@@ -122,7 +122,7 @@ public:
    * complete binding associated each pattern match.
    */
   int list_type_entries (ACE_BINDING_SET &set,
-                                 const ACE_NS_WString &pattern) override;
+                                 ACE_NS_WString const &pattern) override;
 
   /// Dump the state of the object.
   void dump () const override;

@@ -26,9 +26,9 @@ ACE_Name_Binding::~ACE_Name_Binding ()
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
-ACE_Name_Binding::ACE_Name_Binding (const ACE_NS_WString &name,
-                                    const ACE_NS_WString &value,
-                                    const char *type)
+ACE_Name_Binding::ACE_Name_Binding (ACE_NS_WString const &name,
+                                    ACE_NS_WString const &value,
+                                    char const *type)
   : name_ (name),
     value_ (value),
     type_ (type == nullptr ? ACE_OS::strdup ("") : ACE_OS::strdup (type))
