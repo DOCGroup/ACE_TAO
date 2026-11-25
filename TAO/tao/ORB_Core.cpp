@@ -138,9 +138,9 @@ TAO_ORB_Core_Static_Resources::instance ()
             (global,"TAO_ORB_Core_Static_Resources");
 
           if (global_tocsr != nullptr)
-          {
-            *tocsr = *global_tocsr;
-          }
+            {
+              *tocsr = *global_tocsr;
+            }
         }
     }
 
@@ -960,17 +960,17 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // specifies endpoints for each lane.
 
           if (arg_shifter.is_option_next ())
-          {
-            return -1;
-          }
+            {
+              return -1;
+            }
 
           ACE_CString const lane (ACE_TEXT_ALWAYS_CHAR (current_arg));
           arg_shifter.consume_arg ();
 
           if (arg_shifter.is_option_next ())
-          {
-            return -1;
-          }
+            {
+              return -1;
+            }
 
           ACE_CString const endpoints (ACE_TEXT_ALWAYS_CHAR
                                   (arg_shifter.get_current ()));
@@ -1129,9 +1129,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           int const forward = ACE_OS::atoi (current_arg);
           if (forward)
-          {
-            this->orb_params_.forward_once_exception (TAO::FOE_OBJECT_NOT_EXIST);
-          }
+            {
+              this->orb_params_.forward_once_exception (TAO::FOE_OBJECT_NOT_EXIST);
+            }
 
           arg_shifter.consume_arg ();
         }
@@ -1140,9 +1140,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           int const forward = ACE_OS::atoi (current_arg);
           if (forward)
-          {
-            this->orb_params_.forward_once_exception (TAO::FOE_COMM_FAILURE);
-          }
+            {
+              this->orb_params_.forward_once_exception (TAO::FOE_COMM_FAILURE);
+            }
 
           arg_shifter.consume_arg ();
         }
@@ -1151,9 +1151,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           int const forward = ACE_OS::atoi (current_arg);
           if (forward)
-          {
-            this->orb_params_.forward_once_exception (TAO::FOE_TRANSIENT);
-          }
+            {
+              this->orb_params_.forward_once_exception (TAO::FOE_TRANSIENT);
+            }
 
           arg_shifter.consume_arg ();
         }
@@ -1162,9 +1162,9 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         {
           int const forward = ACE_OS::atoi (current_arg);
           if (forward)
-          {
-            this->orb_params_.forward_once_exception (TAO::FOE_INV_OBJREF);
-          }
+            {
+              this->orb_params_.forward_once_exception (TAO::FOE_INV_OBJREF);
+            }
 
           arg_shifter.consume_arg ();
         }
@@ -1390,17 +1390,17 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   this->orb_params ()->ip_hoplimit (ip_hoplimit);
   this->orb_params ()->ip_multicastloop (ip_multicastloop);
   if (rcv_sock_size >= 0)
-  {
-    this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
-  }
+    {
+      this->orb_params ()->sock_rcvbuf_size (rcv_sock_size);
+    }
   if (snd_sock_size >= 0)
-  {
-    this->orb_params ()->sock_sndbuf_size (snd_sock_size);
-  }
+    {
+      this->orb_params ()->sock_sndbuf_size (snd_sock_size);
+    }
   if (cdr_tradeoff >= 0)
-  {
-    this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
-  }
+    {
+      this->orb_params ()->cdr_memcpy_tradeoff (cdr_tradeoff);
+    }
 
   this->orb_params ()->std_profile_components (std_profile_components);
 
@@ -1548,9 +1548,9 @@ TAO_ORB_Core::fini ()
   // @todo Fix potential seg fault in
   //       TAO_ORB_Core::thread_lane_resources_manager().
   if (this->thread_lane_resources_manager_ != nullptr)
-  {
-    this->thread_lane_resources_manager_->finalize ();
-  }
+    {
+      this->thread_lane_resources_manager_->finalize ();
+    }
 
   // Destroy the object_key table
   this->object_key_table_.destroy ();
@@ -1675,9 +1675,9 @@ TAO_ORB_Core::thread_lane_resources_manager ()
 {
   // Check if there is a cached reference.
   if (this->thread_lane_resources_manager_ != nullptr)
-  {
-    return *this->thread_lane_resources_manager_;
-  }
+    {
+      return *this->thread_lane_resources_manager_;
+    }
 
   // If not, lookup the corresponding factory and ask it to make one.
   const char *thread_lane_resources_manager_factory_name =
@@ -1699,9 +1699,9 @@ TAO_ORB_Core::collocation_resolver ()
 {
   // Check if there is a cached reference.
   if (this->collocation_resolver_ != nullptr)
-  {
-    return *this->collocation_resolver_;
-  }
+    {
+      return *this->collocation_resolver_;
+    }
 
   // If not, lookup it up.
   this->collocation_resolver_ =
@@ -1748,9 +1748,9 @@ TAO_ORB_Core::ziop_adapter_i ()
 {
   // Check if there is a cached reference.
   if (this->ziop_adapter_ != nullptr)
-  {
-    return this->ziop_adapter_;
-  }
+    {
+      return this->ziop_adapter_;
+    }
 
   this->ziop_adapter_ =
     ACE_Dynamic_Service<TAO_ZIOP_Adapter>::instance
@@ -1798,9 +1798,9 @@ TAO_ORB_Core::stub_factory ()
 {
   // Check if there is a cached reference.
   if (this->stub_factory_ != nullptr)
-  {
-    return this->stub_factory_;
-  }
+    {
+      return this->stub_factory_;
+    }
 
   // If not, look in the service repository for an instance.
   const char *stub_factory_name =
@@ -1819,9 +1819,9 @@ TAO_ORB_Core::endpoint_selector_factory ()
 {
   // Check if there is a cached reference.
   if (this->endpoint_selector_factory_ != nullptr)
-  {
-    return this->endpoint_selector_factory_;
-  }
+    {
+      return this->endpoint_selector_factory_;
+    }
 
   // If not, look in the service repository for an instance.
   const char* endpoint_selector_factory_name =
@@ -2191,19 +2191,19 @@ TAO_ORB_Core::is_collocation_enabled (TAO_ORB_Core *orb_core,
   }
 
   if (!orb_core->optimize_collocation_objects ())
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   if (!orb_core->use_global_collocation () && orb_core != this)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   if (!orb_core->is_collocated (profile ? mp_temp : mp))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   return true;
 }
@@ -2368,9 +2368,9 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
     ACE_GUARD (TAO_SYNCH_MUTEX, monitor, this->lock_);
 
     if (this->has_shutdown ())
-    {
-      return;
-    }
+      {
+        return;
+      }
 
     // Check if we are on the right state, i.e. do not accept
     // shutdowns with the 'wait_for_completion' flag set in the middle
@@ -2402,9 +2402,9 @@ TAO_ORB_Core::shutdown (CORBA::Boolean wait_for_completion)
 
   // If <wait_for_completion> is set, wait for all threads to exit.
   if (wait_for_completion)
-  {
-    tm->wait ();
-  }
+    {
+      tm->wait ();
+    }
 
   // Explicitly destroy the valuetype adapter
   {
@@ -3094,9 +3094,9 @@ CORBA::Object_ptr
 TAO_ORB_Core::implrepo_service ()
 {
   if (!this->use_implrepo_)
-  {
-    return CORBA::Object::_nil ();
-  }
+    {
+      return CORBA::Object::_nil ();
+    }
 
   if (CORBA::is_nil (this->implrepo_service_))
     {
@@ -3211,9 +3211,9 @@ TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
     TAO_ORB_Core_Static_Resources::instance ()->alt_connection_timeout_hook_;
 
   if (alt_connection_timeout_hook == nullptr)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   if (!has_timeout || time_value == ACE_Time_Value::zero )
     {
@@ -3227,9 +3227,9 @@ TAO_ORB_Core::connection_timeout (TAO_Stub *stub,
   bool ht1;
   (*alt_connection_timeout_hook) (this, stub, ht1,tv1);
   if (ht1 && tv1 > ACE_Time_Value::zero && tv1 < time_value)
-  {
-    time_value = tv1;
-  }
+    {
+      time_value = tv1;
+    }
 }
 
 void

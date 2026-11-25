@@ -330,27 +330,27 @@ CORBA::Boolean
 TAO_IIOP_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
   if (other_profile == this)
-  {
-    return true;
-  }
+    {
+      return true;
+    }
 
   TAO_IIOP_Profile const *op =
     dynamic_cast<TAO_IIOP_Profile const *> (other_profile);
 
   // Make sure we have a TAO_IIOP_Profile.
   if (op == nullptr)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   if (this->count_ == 0 && op->count_ == 0)
-  {
-    return true;
-  }
+    {
+      return true;
+    }
   if (this->count_ != op->count_)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
   // Check endpoints equivalence.
   TAO_IIOP_Endpoint const *other_endp = std::addressof (op->endpoint_);
   for (TAO_IIOP_Endpoint *endp = std::addressof (this->endpoint_);
@@ -432,9 +432,9 @@ void
 TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
 {
   if (endp == nullptr)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   // special handling for the target matching the base endpoint
   if (endp == std::addressof (this->endpoint_))
@@ -461,9 +461,9 @@ TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
   while (cur != nullptr)
     {
       if (cur == endp)
-      {
-        break;
-      }
+        {
+          break;
+        }
       prev = cur;
       cur = cur->next_;
     }
@@ -474,9 +474,9 @@ TAO_IIOP_Profile::remove_endpoint (TAO_IIOP_Endpoint *endp)
       cur->next_ = nullptr;
       --this->count_;
       if (this->last_endpoint_ == cur)
-      {
-        this->last_endpoint_ = prev;
-      }
+        {
+          this->last_endpoint_ = prev;
+        }
       std::unique_ptr<TAO_IIOP_Endpoint> const removed {cur};
     }
 }
@@ -554,9 +554,9 @@ TAO_IIOP_Profile::to_string () const
   for (endp = std::addressof (this->endpoint_); endp != nullptr; endp = endp->next_)
     {
       if (std::addressof (this->endpoint_) != endp)
-      {
-        std::strcat (buf, ",");
-      }
+        {
+          std::strcat (buf, ",");
+        }
 
 #if defined (ACE_HAS_IPV6)
       if (endp->is_ipv6_decimal_)
@@ -648,9 +648,9 @@ TAO_IIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
     }
 
   if (this->version_.major > 1 || this->version_.minor > 0)
-  {
-    this->tagged_components ().encode (encap);
-  }
+    {
+      this->tagged_components ().encode (encap);
+    }
 }
 
 int
@@ -669,9 +669,9 @@ TAO_IIOP_Profile::encode_alternate_endpoints ()
       endpoint = endpoint->next_;
 
       if (!endpoint->is_encodable_)
-      {
-        continue;
-      }
+        {
+          continue;
+        }
 
       // Encode the data structure. - The CORBA specification does not
       // mandate a particular container for the endpoints, only that
@@ -745,9 +745,9 @@ TAO_IIOP_Profile::encode_endpoints ()
        ++c)
     {
       if (endpoint->is_encodable_)
-      {
-        ++actual_count;
-      }
+        {
+          ++actual_count;
+        }
 
       endpoint = endpoint->next_;
     }
@@ -828,18 +828,18 @@ TAO_IIOP_Profile::decode_endpoints ()
       // Extract the Byte Order.
       CORBA::Boolean byte_order {};
       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
       // Extract endpoints sequence.
       TAO::IIOPEndpointSequence endpoints;
 
       if (!(in_cdr >> endpoints))
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
 
       // Get the priority of the first endpoint (head of the list.
       // It's other data is extracted as part of the standard profile
@@ -878,9 +878,9 @@ TAO_IIOP_Profile::decode_endpoints ()
   for (CORBA::ULong index {}; index < tc.length (); ++index)
     {
       if (tc[index].tag != IOP::TAG_ALTERNATE_IIOP_ADDRESS)
-      {
-        continue;
-      }
+        {
+          continue;
+        }
       CORBA::Octet const *buf =
         tc[index].component_data.get_buffer ();
 
@@ -890,9 +890,9 @@ TAO_IIOP_Profile::decode_endpoints ()
       // Extract the Byte Order.
       CORBA::Boolean byte_order {};
       if (!(in_cdr >> ACE_InputCDR::to_boolean (byte_order)))
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
 
       in_cdr.reset_byte_order (static_cast<int> (byte_order));
 
@@ -900,9 +900,9 @@ TAO_IIOP_Profile::decode_endpoints ()
       CORBA::Short port {};
 
       if (!(in_cdr >> host.out ()) || !(in_cdr >> port))
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
 
       std::unique_ptr<TAO_IIOP_Endpoint> endpoint {
         new (std::nothrow) TAO_IIOP_Endpoint (host.in (),
