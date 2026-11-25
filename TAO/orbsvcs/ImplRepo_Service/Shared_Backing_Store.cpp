@@ -19,6 +19,7 @@
 #include "tao/IORManipulation/IORManip_Loader.h"
 #include "tao/ORB_Core.h"
 
+#include <cstdio>
 #include <cstdlib>
 #include <memory>
 #include <string>
@@ -471,7 +472,14 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
         }
       ACE_OS::fprintf (bfp.get (), "<?xml version=\"1.0\"?>\n");
       this->persist (bfp.get (), *info, "", this->repo_values_);
-      ACE_OS::fflush (bfp.get ());
+      int const write_error = std::ferror (bfp.get ());
+      int const close_error = ACE_OS::fclose (bfp.release ());
+      if (write_error != 0 || close_error != 0)
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("(%P|%t) Could not write backup file %s\n"),
+                                 bfname.c_str ()), -1);
+        }
     }
   server_file.release ();
 
@@ -542,8 +550,14 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
     }
   ACE_OS::fprintf (bfp.get (), "<?xml version=\"1.0\"?>\n");
   persist (bfp.get (), *info, "", this->repo_values_);
-  ACE_OS::fflush (bfp.get ());
-  bfp.reset ();
+  int const write_error = std::ferror (bfp.get ());
+  int const close_error = ACE_OS::fclose (bfp.release ());
+  if (write_error != 0 || close_error != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Could not write backup file %s\n"),
+                             bfname.c_str ()), -1);
+    }
   activator_file.release ();
 
   ImplementationRepository::UpdateInfo entity;
@@ -863,7 +877,14 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
     }
 
   this->write_listing (baklist.get ());
-  ACE_OS::fflush (baklist.get ());
+  int const write_error = std::ferror (baklist.get ());
+  int const close_error = ACE_OS::fclose (baklist.release ());
+  if (write_error != 0 || close_error != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Could not write backup file %s\n"),
+                             bfname.c_str ()), -1);
+    }
 
   return 0;
 }
