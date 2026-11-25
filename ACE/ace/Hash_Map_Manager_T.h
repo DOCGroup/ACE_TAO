@@ -138,19 +138,24 @@ public:
   using lock_type = ACE_LOCK;
   using ENTRY = ACE_Hash_Map_Entry<EXT_ID, INT_ID>;
 
-  /// ACE-style iterator typedefs.
+  /// @name ACE-style iterator typedefs
+  /// @{
   using ITERATOR = ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using CONST_ITERATOR = ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using REVERSE_ITERATOR = ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using CONST_REVERSE_ITERATOR = ACE_Hash_Map_Const_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
+  /// @}
 
-  /// STL-style iterator typedefs.
+  /// @name STL-style iterator typedefs
+  /// @{
   using iterator = ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using const_iterator = ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using reverse_iterator = ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
   using const_reverse_iterator = ACE_Hash_Map_Const_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
+  /// @}
 
-  /// STL-style typedefs/traits.
+  /// @name STL-style typedefs and traits
+  /// @{
   using key_type = EXT_ID;
   using data_type = INT_ID;
   using value_type = ACE_Hash_Map_Entry<EXT_ID, INT_ID>;
@@ -160,6 +165,7 @@ public:
   using const_pointer = const value_type *;
   using difference_type = ptrdiff_t;
   using size_type = size_t;
+  /// @}
 
   /**
    * Initialize an ACE_Hash_Map_Manager_Ex with a default number of elements.
@@ -579,11 +585,13 @@ public:
   /// STL-style typedefs/traits.
   using container_type = ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
-  /// std::iterator_traits typedefs/traits.
+  /// @name std::iterator_traits typedefs and traits
+  /// @{
   using value_type = typename container_type::value_type;
   using reference = typename container_type::reference;
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
+  /// @}
 
   /**
    *  If @a head != @c false, the iterator constructed is positioned
@@ -674,11 +682,13 @@ public:
   /// STL-style typedefs/traits.
   using container_type = ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>;
 
-  /// std::iterator_traits typedefs/traits.
+  /// @name std::iterator_traits typedefs and traits
+  /// @{
   using value_type = typename container_type::value_type;
   using reference = typename container_type::const_reference;
   using pointer = typename container_type::const_pointer;
   using difference_type = typename container_type::difference_type;
+  /// @}
 
   /// Constructor.  If head the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
@@ -960,12 +970,14 @@ public:
   /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::container_type;
 
-  /// std::iterator_traits typedefs
+  /// @name std::iterator_traits typedefs
+  /// @{
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = typename container_type::value_type;
   using reference = typename container_type::reference;
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
+  /// @}
 
   /// Initialization method.
   ACE_Hash_Map_Reverse_Iterator_Ex (ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
@@ -1015,12 +1027,14 @@ public:
   /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Const_Iterator_Base_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::container_type;
 
-  /// std::iterator_traits typedefs
+  /// @name std::iterator_traits typedefs
+  /// @{
   using iterator_category = std::bidirectional_iterator_tag;
   using value_type = typename container_type::value_type;
   using reference = typename container_type::reference;
   using pointer = typename container_type::pointer;
   using difference_type = typename container_type::difference_type;
+  /// @}
 
   /// Initialization method.
   ACE_Hash_Map_Const_Reverse_Iterator_Ex (const ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
@@ -1177,7 +1191,8 @@ public:
   /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::container_type;
 
-  /// std::iterator_traits typedefs
+  /// @name std::iterator_traits typedefs
+  /// @{
   using iterator_category = typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::iterator_category;
 
   using value_type = typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::value_type;
@@ -1187,6 +1202,7 @@ public:
   using pointer = typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::pointer;
 
   using difference_type = typename ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::difference_type;
+  /// @}
 
   /// Construct from map
   ACE_Hash_Map_Const_Iterator (const ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
@@ -1212,7 +1228,8 @@ public:
   /// STL-style traits/typedefs
   using container_type = typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::container_type;
 
-  /// std::iterator_traits typedefs
+  /// @name std::iterator_traits typedefs
+  /// @{
   using iterator_category = typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::iterator_category;
 
   using value_type = typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::value_type;
@@ -1222,6 +1239,7 @@ public:
   using pointer = typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::pointer;
 
   using difference_type = typename ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_LOCK>::difference_type;
+  /// @}
 
   ACE_Hash_Map_Reverse_Iterator (ACE_Hash_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> &mm,
                                  bool head = false);
