@@ -219,13 +219,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (!(line_stream >> id >> total_num >> rate >> url1 >> p1
             >> url2 >> p2 >> url3 >> p3 >> tcp >> sock))
         {
-          ACE_ERROR ((LM_ERROR, "Invalid stress test input line: %s\n", line.c_str ()));
+          ACE_ERROR ((LM_ERROR, "Invalid stress test input line: %C\n", line.c_str ()));
           std::cout.rdbuf (original_cout);
           return 4;
         }
       if (total_num < 0 || rate <= 0)
         {
-          ACE_ERROR ((LM_ERROR, "Invalid request count or request rate: %s\n", line.c_str ()));
+          ACE_ERROR ((LM_ERROR, "Invalid request count or request rate: %C\n", line.c_str ()));
           std::cout.rdbuf (original_cout);
           return 4;
         }

@@ -188,7 +188,7 @@ SO_Group::list_libs ()
   {
     if (libs_[i]->has_modules ())
       {
-        ACE_DEBUG ((LM_DEBUG, "  %s\n", libs_[i]->name ().c_str ()));
+        ACE_DEBUG ((LM_DEBUG, "  %C\n", libs_[i]->name ().c_str ()));
       }
   }
 }
