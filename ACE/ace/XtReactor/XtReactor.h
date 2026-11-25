@@ -33,10 +33,10 @@ class ACE_XtReactor_Export ACE_XtReactorID
 public:
   ACE_XtReactorID () = default;
 
-  ACE_XtReactorID (ACE_XtReactorID const &) = delete;
-  ACE_XtReactorID (ACE_XtReactorID &&) = delete;
-  ACE_XtReactorID &operator = (ACE_XtReactorID const &) = delete;
-  ACE_XtReactorID &operator = (ACE_XtReactorID &&) = delete;
+  ACE_XtReactorID (ACE_XtReactorID const &) = default;
+  ACE_XtReactorID (ACE_XtReactorID &&) = default;
+  ACE_XtReactorID &operator = (ACE_XtReactorID const &) = default;
+  ACE_XtReactorID &operator = (ACE_XtReactorID &&) = default;
 
   /// Magic cookie.
   XtInputId id_ {};
