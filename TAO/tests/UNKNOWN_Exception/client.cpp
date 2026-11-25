@@ -30,7 +30,7 @@ parse_args (int argc, ACE_TCHAR **argv)
                            "\t-x <shutdown server> [defaults to %d]\n"
                            "\n",
                            argv [0],
-                           ior,
+                           ior.c_str (),
                            shutdown_server),
                           -1);
       }

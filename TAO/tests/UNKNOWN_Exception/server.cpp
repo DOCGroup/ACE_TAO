@@ -185,7 +185,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
                            "\t-o <ior output file> [defaults to %s]\n"
                            "\n",
                            argv [0],
-                           ior_output_file),
+                           ior_output_file.c_str ()),
                           -1);
       }
 

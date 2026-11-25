@@ -68,7 +68,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
                              "Nil Test::Hello reference <%s>\n",
-                             ior),
+                             ior.c_str ()),
                             1);
         }
 
