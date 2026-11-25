@@ -177,8 +177,8 @@ client (void *arg)
             }
           else
             {
-              buf[rcv_siz/sizeof (ACE_TCHAR)] = '\0';
-              if (ACE_OS::strncmp (buf, TEST_DATA, ACE_OS::strlen (TEST_DATA)))
+              buf[(rcv_siz / sizeof (ACE_TCHAR)) - 1] = '\0';
+              if (ACE_OS::strcmp (buf, TEST_DATA) != 0)
                 {
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("(%P|%t) recv string should be %s; ")
@@ -242,8 +242,8 @@ server (void *arg)
         }
       else
         {
-          buf[rcv_siz / sizeof (ACE_TCHAR)] = '\0';
-          if (ACE_OS::strncmp (buf, TEST_DATA, ACE_OS::strlen (TEST_DATA)))
+          buf[(rcv_siz / sizeof (ACE_TCHAR)) - 1] = '\0';
+          if (ACE_OS::strcmp (buf, TEST_DATA) != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) recv string should be %s; ")
