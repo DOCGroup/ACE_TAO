@@ -3,7 +3,6 @@
 #ifndef XSCRT_WRITER_HPP
 #define XSCRT_WRITER_HPP
 
-#include <cstdlib>
 #include <stack>
 
 #include "ace/XML_Utils/XSCRT/XML.hpp"
@@ -20,11 +19,7 @@ namespace XSCRT
     }
 
   protected:
-    /// This constructor should never be called.
-    Writer ()
-    {
-      std::abort ();
-    }
+    Writer () = delete;
 
   public:
     void push_ (XML::Element<C> const &e)

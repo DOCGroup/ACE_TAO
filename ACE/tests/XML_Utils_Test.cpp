@@ -1,5 +1,6 @@
 #include "test_config.h"
 #include "ace/XML_Utils/XMLSchema/Types.hpp"
+#include "ace/XML_Utils/XMLSchema/Writer.hpp"
 #include "ace/XML_Utils/XML_Helper.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/XML_Utils/XSCRT/XML.hpp"
@@ -78,6 +79,10 @@ run_main (int, ACE_TCHAR *[])
       ACE_TCHAR const *const filename = ACE_TEXT ("XML_Utils_Test.xml");
       xercesc::DOMDocument *document = helper.create_dom (ACE_TEXT ("root"), ACE_TEXT ("urn:test"));
       ACE_TEST_ASSERT (document != nullptr);
+      XSCRT::XML::Element<char> root (document->getDocumentElement ());
+      XMLSchema::Writer::IDREF<char> writer (root);
+      XMLSchema::IDREF<char> const value (std::string ("reference"));
+      writer.traverse (value);
       ACE_TEST_ASSERT (helper.write_DOM (document, filename));
       document->release ();
       xercesc::XercesDOMParser parser;
@@ -87,6 +92,8 @@ run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (parsed != nullptr);
       ACE_TEST_ASSERT (xercesc::XMLString::equals (
         parsed->getDocumentElement ()->getTagName (), XML::XStr (ACE_TEXT ("root"))));
+      ACE_TEST_ASSERT (xercesc::XMLString::equals (
+        parsed->getDocumentElement ()->getTextContent (), XML::XStr (ACE_TEXT ("reference"))));
       ACE_TEST_ASSERT (ACE_OS::unlink (filename) == 0);
     }
 
