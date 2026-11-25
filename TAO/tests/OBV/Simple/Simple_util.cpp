@@ -62,7 +62,7 @@ Server<Servant>::init (char const *servant_name,
                                          "child_poa") == -1)
     ACE_ERROR_RETURN ((LM_ERROR,
                        "%p\n",
-                       "init_child_poa"),
+                       ACE_TEXT ("init_child_poa")),
                       -1);
 
   this->argc_ = argc;

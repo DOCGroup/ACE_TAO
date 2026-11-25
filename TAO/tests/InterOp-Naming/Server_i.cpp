@@ -84,7 +84,7 @@ Server_i::init (int argc, ACE_TCHAR *argv[])
 
   if (result == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "init_child_poa"), -1);
+    ACE_ERROR_RETURN ((LM_ERROR, "%p\n", ACE_TEXT ("init_child_poa")), -1);
   }
 
   Server_Options options {};

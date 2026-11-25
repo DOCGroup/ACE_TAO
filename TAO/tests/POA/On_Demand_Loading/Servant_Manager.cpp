@@ -89,7 +89,7 @@ ServantManager_i::obtain_servant (ACE_TCHAR const *str,
   std::unique_ptr<PortableServer::ServantBase> servant_owner (servant);
   if (this->servant_map_.bind (oid.in (), dll.get ()) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "%p\n", "Bind failed"));
+      ACE_ERROR ((LM_ERROR, "%p\n", ACE_TEXT ("Bind failed")));
       return nullptr;
     }
 
@@ -179,7 +179,7 @@ ServantManager_i::destroy_servant (PortableServer::Servant servant,
   ACE_DLL *raw_dll {};
   if (this->servant_map_.unbind (oid, raw_dll) == -1)
     {
-      ACE_ERROR ((LM_ERROR, "%p\n", "Unbind failed!\n"));
+      ACE_ERROR ((LM_ERROR, "%p\n", ACE_TEXT ("Unbind failed!\n")));
       return;
     }
 

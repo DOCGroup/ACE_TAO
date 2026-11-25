@@ -22,7 +22,7 @@ Thread_Pool::Thread_Pool (CORBA::ORB_ptr orb,
     {
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
-                  "activate failed\n"));
+                  ACE_TEXT ("activate failed\n")));
     }
 }
 
@@ -48,7 +48,7 @@ Thread_Pool::shutdown ()
         {
           ACE_ERROR ((LM_ERROR,
                       "(%t) %p\n",
-                      "put"));
+                      ACE_TEXT ("put")));
         }
 
       // this sleep helps to shutdown correctly -> was an error!

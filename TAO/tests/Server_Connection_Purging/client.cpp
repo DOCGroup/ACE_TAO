@@ -98,7 +98,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                              "Error while connecting: %p\n",
-                             "client"),
+                             ACE_TEXT ("client")),
                             -1);
         }
 
