@@ -19,14 +19,14 @@ ACE_Name_Options::verbose ()
   return this->verbosity_;
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Name_Options::process_name ()
 {
   ACE_TRACE ("ACE_Name_Options::process_name");
   return this->process_name_;
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Name_Options::namespace_dir ()
 {
   ACE_TRACE ("ACE_Name_Options::namespace_dir");
