@@ -1956,6 +1956,7 @@ project(Thread Pool Reactor Resume Test) : acetest {
 project(XML Utils Test) : acetest, ace_xml_utils {
   exename = XML_Utils_Test
   Source_Files {
+    XML_Utils_Max_Macro.cpp
     XML_Utils_Test.cpp
   }
 }
