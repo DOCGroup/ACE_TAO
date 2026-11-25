@@ -146,8 +146,8 @@ Peer::command ()
       p[count] = '\0';
       len += count;
       p += count;
-      char *nl;
-      if ((nl = strchr (line, '\n')) == nullptr)
+      char *nl = strchr (line, '\n');
+      if (nl == nullptr)
         {
           continue;
         }
@@ -236,8 +236,8 @@ Peer::command ()
           return -1;
         }
       char *secs_s = strtok (nullptr, "\t \n\r");
-      int secs = 0;
-      if (secs_s == nullptr || (secs = atoi (secs_s)) <= 0)
+      int const secs = secs_s != nullptr ? atoi (secs_s) : 0;
+      if (secs <= 0)
         {
           this->reply ("Malformed waitforfile command\n");
           return -1;
@@ -404,7 +404,8 @@ Test::start (const char *name)
     }
   char libspec[1024];
   sprintf (libspec, "%s.dll", name);
-  if ((this->dll_handle_ = LoadLibrary (libspec)) == nullptr)
+  this->dll_handle_ = LoadLibrary (libspec);
+  if (this->dll_handle_ == nullptr)
     {
       return format_errmsg (GetLastError (), libspec);
     }
