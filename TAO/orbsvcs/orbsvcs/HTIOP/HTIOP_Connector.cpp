@@ -213,7 +213,7 @@ TAO::HTIOP::Connector::make_connection (TAO::Profile_Transport_Resolver *,
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  "ACE::HTBP::Initial_Filter::recv_data_header %p",
-                                 "add_session"),
+                                 ACE_TEXT ("add_session")),
                                 0);
         }
     }

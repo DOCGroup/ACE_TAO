@@ -38,7 +38,7 @@ TAO_IOR_Multicast::~TAO_IOR_Multicast ()
 {
   if (ior_.length () > 0 && this->mcast_dgram_.leave (this->mcast_addr_) == -1)
     {
-    ORBSVCS_ERROR ((LM_ERROR, "%p\n", "~TAO_IOR_Multicast()"));
+    ORBSVCS_ERROR ((LM_ERROR, "%p\n", ACE_TEXT ("~TAO_IOR_Multicast()")));
     }
 }
 
@@ -50,7 +50,7 @@ TAO_IOR_Multicast::init (char const *ior,
 {
   if (this->mcast_addr_.set (port, mcast_addr) == -1)
   {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::init() %p\n", "set"), -1);
+    ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::init() %p\n", ACE_TEXT ("set")), -1);
   }
   return this->common_init (ior, service_id);
 }
@@ -91,7 +91,7 @@ TAO_IOR_Multicast::init (char const *ior,
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "%p\n",
-                             "set"),
+                             ACE_TEXT ("set")),
                             -1);
     }
 
@@ -109,14 +109,14 @@ TAO_IOR_Multicast::common_init (char const *ior,
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "TAO_IOR_Multicast::common_init() %p\n",
-                             "set"),
+                             ACE_TEXT ("set")),
                             -1);
     }
   else if (this->response_.open (this->response_addr_) == -1)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "set"),
+                         ACE_TEXT ("set")),
                         -1);
     }
 
@@ -127,7 +127,7 @@ TAO_IOR_Multicast::common_init (char const *ior,
                                    1,
                                    ACE_TEXT_CHAR_TO_TCHAR(this->mcast_nic_.c_str())) == -1)
       {
-        ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", "join"),-1);
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_IOR_Multicast::common_init() %p\n", ACE_TEXT ("join")),-1);
       }
     }
   else
@@ -136,7 +136,7 @@ TAO_IOR_Multicast::common_init (char const *ior,
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  "TAO_IOR_Multicast::common_init() %p\n",
-                                 "subscribe"),
+                                 ACE_TEXT ("subscribe")),
                                 -1);
         }
     }

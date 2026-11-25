@@ -81,7 +81,7 @@ TAO_Naming_Server::TAO_Naming_Server (CORBA::ORB_ptr orb,
     {
       ORBSVCS_ERROR ((LM_ERROR,
                       "(%P|%t) %p\n",
-                      "TAO_Naming_Server::init"));
+                      ACE_TEXT ("TAO_Naming_Server::init")));
     }
 }
 
@@ -505,7 +505,7 @@ TAO_Naming_Server::init_new_naming (CORBA::ORB_ptr orb,
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                 "Invalid persistence directory %C %p\n",
-                persistence_location, "access"), -1);
+                persistence_location, ACE_TEXT ("access")), -1);
             }
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT)

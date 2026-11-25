@@ -18,7 +18,7 @@ TAO_Notify_validate_client_Task::
   if (this->activate (THR_NEW_LWP | THR_JOINABLE, 1) == -1)
   {
     ORBSVCS_ERROR ((LM_ERROR,
-      ACE_TEXT("(%P|%t)TAO_Notify_validate_client_Task: %p\n"),"activate"));
+      ACE_TEXT("(%P|%t)TAO_Notify_validate_client_Task: %p\n"),ACE_TEXT ("activate")));
   }
 }
 

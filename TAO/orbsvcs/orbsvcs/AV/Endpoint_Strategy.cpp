@@ -74,7 +74,7 @@ TAO_AV_Endpoint_Process_Strategy::activate ()
   // Process creation failed
   if (this->pid_ == -1)
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) ACE_Process:: spawn failed: %p\n", "spawn"), -1);
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) ACE_Process:: spawn failed: %p\n", ACE_TEXT ("spawn")), -1);
     }
 
   // Create a unique semaphore name, using my hostname, and pid.
@@ -121,7 +121,7 @@ TAO_AV_Endpoint_Process_Strategy::activate ()
   // The job of the semaphore is done, remove it.
   if (semaphore.remove () == -1)
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) semaphore remove failed: %p\n", "remove"), -1);
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) semaphore remove failed: %p\n", ACE_TEXT ("remove")), -1);
     }
 
   try

@@ -27,7 +27,7 @@ TAO_Time_Service_Clerk::TAO_Time_Service_Clerk (int timer_value,
     {
       ORBSVCS_ERROR ((LM_ERROR,
                       "%p\n",
-                      "schedule_timer ()"));
+                      ACE_TEXT ("schedule_timer ()")));
     }
 }
 
