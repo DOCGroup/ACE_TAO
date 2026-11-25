@@ -10,7 +10,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once

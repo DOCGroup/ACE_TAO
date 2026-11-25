@@ -9,7 +9,7 @@
 
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 #include "ace/OS_Memory.h"
 

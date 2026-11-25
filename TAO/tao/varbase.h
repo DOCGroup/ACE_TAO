@@ -10,7 +10,7 @@
 #define TAO_VARBASE_H
 #include /**/ "ace/pre.h"
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

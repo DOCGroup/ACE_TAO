@@ -13,7 +13,7 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-#include /**/ "tao/Versioned_Namespace.h"
+#include "tao/orbconf.h"
 #include /**/ "tao/Intrusive_Ref_Count_Base_T.h"
 
 #include "ace/Atomic_Op.h"
