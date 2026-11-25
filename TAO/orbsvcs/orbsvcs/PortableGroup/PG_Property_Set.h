@@ -91,13 +91,8 @@ namespace TAO
     PG_Property_Set &operator= (PG_Property_Set &&) = delete;
 
     /**
-     * general purpose find. returns a pointer to an Any
-     *  if templated methods were available:
-     * @code
-     *    template <typename TYPE >
-     *    int find (ACE_CString const & key, TYPE & value) const;
-     * @endcode
-     *    instead, see global function below
+     * Find a property and return a pointer to its Any value.
+     * Use TAO::find to extract a value of a specific type.
      * @param key the (simple) name of the property
      * @param pValue an out parameter to receive a pointer to the Any containing the value
      * @returns boolean true if found
