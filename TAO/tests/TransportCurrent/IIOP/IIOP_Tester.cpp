@@ -62,9 +62,9 @@ test_transport_current (CORBA::ORB_ptr orb)
   ::TAO::CounterT const rr = tc->messages_received ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Tester (%P|%t) Transport [%q] [%C:%d -> %C:%d] ")
+              ACE_TEXT ("Tester (%P|%t) Transport [%d] [%C:%d -> %C:%d] ")
               ACE_TEXT ("Sent/Received [bytes=%Q/%Q, messages=%Q/%Q]\n"),
-              static_cast<ACE_INT64> (id),
+              id,
               rhost.in (), tc->remote_port (),
               lhost.in (), tc->local_port (),
               bs,

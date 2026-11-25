@@ -47,8 +47,8 @@ Current_Test_Impl::test_transport_current ()
       ::TAO::CounterT const rr = tc->messages_received ();
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Current_Test_Impl (%P|%t) Transport [%q] - Sent/Received [bytes=%Q/%Q, messages=%Q/%Q]\n"),
-                  static_cast<ACE_INT64> (id),
+                  ACE_TEXT ("Current_Test_Impl (%P|%t) Transport [%d] - Sent/Received [bytes=%Q/%Q, messages=%Q/%Q]\n"),
+                  id,
                   bs,
                   br,
                   rs,
