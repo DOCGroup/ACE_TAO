@@ -406,7 +406,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  /// STL styled iterator factory functions.
+  /// @name STL styled iterator factory functions.
+  /// @{
 
   /// Return forward iterator.
   iterator begin ();
@@ -419,6 +420,7 @@ public:
   reverse_iterator rend ();
   const_reverse_iterator rbegin () const;
   const_reverse_iterator rend () const;
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -793,7 +795,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  /// STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -806,6 +809,8 @@ public:
 
   /// Postfix reverse.
   ACE_Hash_Map_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -848,7 +853,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  /// STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -861,6 +867,8 @@ public:
 
   /// Postfix reverse.
   ACE_Hash_Map_Const_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -903,7 +911,8 @@ public:
                                 const EXT_ID &ext_id,
                                 int tail = 0);
 
-  /// STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix advance.
   ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -930,6 +939,8 @@ public:
   /// Check if two iterators point to the same position
   bool operator== (const ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
   bool operator!= (const ACE_Hash_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+
+  /// @}
 
 protected:
   /// Move forward by one element in the set.  Returns 0 when there's
@@ -990,7 +1001,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  /// STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix reverse.
   ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -1003,6 +1015,8 @@ public:
 
   /// Postfix advance.
   ACE_Hash_Map_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -1047,7 +1061,8 @@ public:
   /// Dump the state of an object.
   void dump () const;
 
-  /// STL styled iteration, compare, and reference functions.
+  /// @name STL styled iteration, compare, and reference functions.
+  /// @{
 
   /// Prefix reverse.
   ACE_Hash_Map_Const_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &operator++ ();
@@ -1060,6 +1075,8 @@ public:
 
   /// Postfix advance.
   ACE_Hash_Map_Const_Reverse_Iterator_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> operator-- (int);
+
+  /// @}
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
