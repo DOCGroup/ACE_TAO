@@ -49,6 +49,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * Such an application could be written as follows:
  *
+ * @code{.cpp}
  * int main (int argc, char* argv)
  * {
  *   CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
@@ -57,6 +58,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *     orb->resolve_initial_references("EventService");
  *   // Use <object> here...
  * }
+ * @endcode
  *
  * if the application is invoked using:
  *
