@@ -39,7 +39,8 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
           while (arg_shifter.is_anything_left ())
             {
               ACE_TCHAR const *current_arg {};
-              if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-PriorityModel"))) != nullptr)
+              current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-PriorityModel"));
+              if (current_arg != nullptr)
                 {
                   if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)
                     {
@@ -57,7 +58,8 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   continue;
                 }
               // -Lanes lane-count -Lane prio statc_thr dyn_thr
-              if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Lanes"))) != nullptr)
+              current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Lanes"));
+              if (current_arg != nullptr)
                 {
                   int const lanecount = ACE_OS::atoi (current_arg);
                   lanes_.length (lanecount);
@@ -102,7 +104,8 @@ TAO_Notify_Tests_RT_POA_Command::init (ACE_Arg_Shifter& arg_shifter)
                   continue;
                 } /* if -Lanes */
 
-              if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Bands"))) != nullptr)
+              current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-Bands"));
+              if (current_arg != nullptr)
                 {
                   int const bandcount = ACE_OS::atoi (current_arg);
                   bands_.length (bandcount);
