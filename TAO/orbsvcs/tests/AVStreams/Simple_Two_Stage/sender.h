@@ -118,8 +118,10 @@ private:
   /// The Naming Service client.
   TAO_Naming_Client naming_client_;
 
+  using File_Ptr = std::unique_ptr<FILE, int (*) (FILE *)>;
+
   /// File handle of the file read from.
-  std::unique_ptr<FILE, int (*) (FILE *)> input_file_;
+  File_Ptr input_file_;
 
   Options options_;
 
