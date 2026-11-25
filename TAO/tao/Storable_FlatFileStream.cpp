@@ -223,7 +223,22 @@ TAO::Storable_FlatFileStream::open()
        attempts > 0 && this->fl_ == nullptr;
        --attempts)
     {
-      this->fl_ = ACE_OS::fdopen(filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR (fdmode));
+#ifndef ACE_WIN32
+      ACE_HANDLE const stream_handle = ACE_OS::dup (filelock_.handle_);
+      if (stream_handle == ACE_INVALID_HANDLE)
+        {
+          break;
+        }
+      this->fl_ = ACE_OS::fdopen (stream_handle, ACE_TEXT_CHAR_TO_TCHAR (fdmode));
+      if (this->fl_ == nullptr)
+        {
+          int const saved_errno = errno;
+          ACE_OS::close (stream_handle);
+          errno = saved_errno;
+        }
+#else
+      this->fl_ = ACE_OS::fdopen (filelock_.handle_, ACE_TEXT_CHAR_TO_TCHAR (fdmode));
+#endif
 
       if (this->fl_ == nullptr)
         {
@@ -240,6 +255,14 @@ TAO::Storable_FlatFileStream::open()
             }
         }
     }
+#ifndef ACE_WIN32
+  if (this->fl_ == nullptr)
+    {
+      int const saved_errno = errno;
+      ACE_OS::flock_destroy (std::addressof (filelock_), 0);
+      errno = saved_errno;
+    }
+#endif
   return this->fl_ == nullptr ? -1 : 0;
 }
 
@@ -250,8 +273,7 @@ TAO::Storable_FlatFileStream::close()
 #ifndef ACE_WIN32
   ACE_OS::flock_destroy (std::addressof (filelock_), 0);
 #endif
-  ACE_OS::fclose (fl_);  // even though flock_destroy closes the handle
-                         // we still need to destroy the FILE*
+  ACE_OS::fclose (fl_);
 
   fl_ = nullptr;
   return 0;
