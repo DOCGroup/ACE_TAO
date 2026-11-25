@@ -94,11 +94,11 @@ public:
 
   bool annotatable () const override { return true; }
 
-  /// Parent Enum of this value
-  ///{
+  /// @name Parent enum of this value
+  /// @{
   AST_Enum *enum_parent () const;
   void enum_parent (AST_Enum * const node);
-  ///)
+  /// @}
 
 private:
   AST_Enum *enum_parent_ {};

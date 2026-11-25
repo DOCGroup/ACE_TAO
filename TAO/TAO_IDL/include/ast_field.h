@@ -117,11 +117,11 @@ public:
   // Data Accessors.
   AST_Type *field_type () const;
 
-  /// Get and Set Visibility
-  ///{
+  /// @name Get and set visibility
+  /// @{
   Visibility visibility () const;
   void visibility (Visibility const val);
-  ///}
+  /// @}
 
   // Are we or do we contain a wstring?
   int contains_wstring () override;

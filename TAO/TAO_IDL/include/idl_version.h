@@ -101,10 +101,8 @@ public:
    */
   std::string const& to_macro () const;
 
-  /**
-   * Compare a IdlVersion to a SpecificIdlVersion or another IdlVersion
-   */
-  ///{
+  /// @name Compare an IdlVersion to a SpecificIdlVersion or another IdlVersion
+  /// @{
   operator SpecificIdlVersion () const;
   bool operator== (SpecificIdlVersion other) const;
   bool operator!= (SpecificIdlVersion other) const;
@@ -112,7 +110,7 @@ public:
   bool operator>= (SpecificIdlVersion other) const;
   bool operator< (SpecificIdlVersion other) const;
   bool operator<= (SpecificIdlVersion other) const;
-  ///}
+  /// @}
 
 private:
   SpecificIdlVersion version_ {DEFAULT_DEFAULT_IDL_VERSION};

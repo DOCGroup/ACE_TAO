@@ -47,12 +47,12 @@ public:
   /// AST Dumping
   void dump (ACE_OSTREAM_TYPE &o) override;
 
-  /// Get and Set the Value
-  ///{
+  /// @name Get and set the value
+  /// @{
   AST_Expression *value () const;
   void value (AST_Expression *value);
   void value (std::unique_ptr<AST_Expression> value);
-  ///}
+  /// @}
 
   /// Get the ExprType
   AST_Expression::ExprType expr_type () const;

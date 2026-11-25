@@ -26,15 +26,13 @@ public:
 
   static AST_Decl::NodeType const NT;
 
-  /**
-   * Work around for AST node lookup, so that annotations do not conflict with
-   * other IDL types and variables that have the same name. This is done by
-   * prepending '@' to all annotation names.
-   */
-  ///{
+  /// @name Escape annotation names
+  /// Avoid AST lookup conflicts with IDL types and variables of the same name
+  /// by prepending '@' to annotation names.
+  /// @{
   static void escape_name (Identifier *name);
   static void escape_name (UTL_ScopedName *name);
-  ///}
+  /// @}
 
   bool annotatable () const override;
 

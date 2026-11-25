@@ -24,10 +24,8 @@ class TAO_IDL_FE_Export AST_Annotation_Appl : public virtual AST_Annotation_Decl
 {
 public:
   AST_Annotation_Appl () = delete;
-  /**
-   * Store Optional Annotation Parameters
-   */
-  ///{
+  /// @name Optional annotation parameters
+  /// @{
   struct Param {
     Param () = default;
     ~Param ();
@@ -40,7 +38,7 @@ public:
     bool used {};
   };
   using Params = std::vector<std::unique_ptr<Param>>;
-  ///}
+  /// @}
 
   /**
    * Create an Annotation using it's name and parameters
