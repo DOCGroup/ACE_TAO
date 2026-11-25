@@ -50,8 +50,7 @@ namespace TAO
         private TAO::Null_RefCount_Policy
     {
     public:
-      /// @typedef Type of individual case array element, not the
-      ///          array itself.
+      /// Type of individual case array element, not the array itself.
       using case_type = TAO::TypeCode::Case<char const *,
                                              CORBA::TypeCode_ptr const *>;
 

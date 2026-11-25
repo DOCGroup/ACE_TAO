@@ -45,8 +45,7 @@ namespace TAO
         private RefCountPolicy
     {
     public:
-      /// @typedef Type of individual case array element, not the
-      ///          array itself.
+      /// Type of individual case array element, not the array itself.
       using case_type = TAO::TypeCode::Case<StringType, TypeCodeType>;
 
       Union (char const * id,

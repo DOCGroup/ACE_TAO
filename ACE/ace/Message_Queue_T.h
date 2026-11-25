@@ -951,7 +951,7 @@ public:
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
     create_deadline_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                    size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                                   ACE_Notification_Strategy * = nullptr,
+                                   ACE_Notification_Strategy *ns = nullptr,
                                    u_long static_bit_field_mask = 0x3FFUL,
                                    u_long static_bit_field_shift = 10,
                                    u_long dynamic_priority_max = 0x3FFFFFUL,
@@ -968,7 +968,7 @@ public:
   static ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *
     create_laxity_message_queue (size_t hwm = ACE_Message_Queue_Base::DEFAULT_HWM,
                                  size_t lwm = ACE_Message_Queue_Base::DEFAULT_LWM,
-                                 ACE_Notification_Strategy * = nullptr,
+                                 ACE_Notification_Strategy *ns = nullptr,
                                  u_long static_bit_field_mask = 0x3FFUL,
                                  u_long static_bit_field_shift = 10,
                                  u_long dynamic_priority_max = 0x3FFFFFUL,
