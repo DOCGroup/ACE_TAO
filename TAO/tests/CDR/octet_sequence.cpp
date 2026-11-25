@@ -59,8 +59,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       TAO_OutputCDR cdr;
       cdr.write_octet_array_mb (m1.get ());
       dump ("expect 3,3,3", m1.get (), m2_alias, m3_alias);
-      ACE_DEBUG ((LM_INFO, "total cdr length is %u\n",
-                  static_cast<unsigned int> (cdr.total_length ())));
+      ACE_DEBUG ((LM_INFO, "total cdr length is %B\n",
+                  cdr.total_length ()));
     }
     dump ("expect 2,2,2", m1.get (), m2_alias, m3_alias);
   }
