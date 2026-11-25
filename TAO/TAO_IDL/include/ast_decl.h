@@ -237,48 +237,57 @@ public:
 
   UTL_ScopedName *name () const;
 
+  /// Compute a scoped name with a prefix and suffix on the local name.
   UTL_ScopedName *compute_name (std::string const& prefix,
                                 std::string const& suffix) const;
-  // Variation of the <name>. Computes scoped name string, applying
-  // prefix and suffix to the local name component.
 
   void set_name (UTL_ScopedName *n);
 
   Identifier *local_name () const;
   void local_name (Identifier *id);
 
+  /// Return the stringified full name.
   virtual std::string const& full_name () const;
-  // Return the stringified full name.
 
+  /// Return the flattened full scoped name.
   virtual std::string const& flat_name () const;
-  // Return the flattened full scoped name.
 
+  /// @name Repository ID accessors
+  /// @{
   std::string const& repoID () const;
   void repoID (std::string const& value);
   void clear_repoID ();
-  // Accessors for the repository ID.
+  /// @}
 
+  /// @name Repository ID prefix accessors
+  /// @{
   std::string const& prefix () const;
   void prefix (std::string const& value);
-  // Accessors for the repository ID prefix.
+  /// @}
 
+  /// @name Version accessors
+  /// @{
   std::string const& version () const;
   void version (std::string const& value);
-  // Accessors for the version_ member.
+  /// @}
 
+  /// @name Anonymous flag accessors
+  /// @{
   bool anonymous () const;
   void anonymous (bool val);
-  // Accessors for the anonymous_ member.
+  /// @}
 
+  /// @name Type ID flag accessors
+  /// @{
   bool typeid_set () const;
   void typeid_set (bool val);
-  // Accessors for the typeid_set_ member.
+  /// @}
 
+  /// Called by a typeId declaration.
   void set_id_with_typeid (std::string const& value);
-  // Called by a 'typeId' declaration.
 
+  /// Called by a type_prefix declaration.
   void set_prefix_with_typeprefix (std::string const& value);
-  // Called by a 'type_prefix' declaration.
 
   // If there is _cxx_ in the beginning, we will remove that and keep
   // a copy of the original name. TAO IDL's front end adds _cxx_
@@ -306,8 +315,8 @@ public:
   // Return TRUE if "this" is a child of "s".
   bool is_child (AST_Decl *s) const;
 
+  /// Whether this declaration is inside a nested scope.
   bool is_nested () const;
-  // Determines if we are inside of a nested scope or not.
 
   UTL_ScopedName *last_referenced_as () const;
   void last_referenced_as (UTL_ScopedName *n);
@@ -324,11 +333,11 @@ public:
   bool in_tmpl_mod_not_aliased () const;
   void in_tmpl_mod_not_aliased (bool val);
 
-  /// Set and get annotations for this IDL element
-  ///{
+  /// @name Annotations for this IDL element
+  /// @{
   void annotation_appls (AST_Annotation_Appls const &annotations);
   AST_Annotation_Appls &annotation_appls ();
-  ///}
+  /// @}
 
   /**
    * Dump Annotations AST
