@@ -78,16 +78,12 @@ Echo_Client_Request_Interceptor::send_request (
   IOP::ServiceContext_var sc2 =
     ri->get_request_service_context (::service_id);
 
-  char const *buf2 =
-    reinterpret_cast<char const *> (sc2->context_data.get_buffer ());
-
-  if (std::strcmp (buf2, request_msg) != 0)
+  if (sc2->context_data.length () != string_len
+      || std::memcmp (sc2->context_data.get_buffer (), request_msg, string_len) != 0)
     {
         ACE_ERROR ((LM_ERROR,
-                    "ERROR: Expected request service context to be: %C.\n"
-                    "  Got: %C\n",
-                    request_msg,
-                    buf2));
+                    "ERROR: Expected request service context to be: %C.\n",
+                    request_msg));
     }
 
 }

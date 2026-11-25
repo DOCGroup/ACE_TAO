@@ -39,15 +39,9 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   IOP::ServiceContext_var sc =
     ri->get_request_service_context (id);
 
-  char const *buf =
-    reinterpret_cast<char const *> (sc->context_data.get_buffer ());
-#if 0
-  ACE_DEBUG ((LM_DEBUG,
-              "  Received service context: %C\n",
-              buf));
-#endif /*if 0*/
-
-  if (std::strcmp (buf, request_msg) != 0)
+  size_t const message_length = sizeof (request_msg);
+  if (sc->context_data.length () != message_length
+      || std::memcmp (sc->context_data.get_buffer (), request_msg, message_length) != 0)
     {
         ACE_ERROR ((LM_ERROR,
                     "ERROR: Echo_Server_Request_Interceptor::receive_request_service_contexts: "

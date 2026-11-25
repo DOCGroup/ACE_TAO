@@ -63,9 +63,7 @@ UIPMC_Object_Impl::process (Test::Octets const &payload)
   seq.length (this->payload_);
   CORBA::Octet *buff = seq.get_buffer ();
   std::memset (buff, c, this->payload_);
-  char *one = reinterpret_cast<char *> (buff);
-  char const *two = reinterpret_cast<char const *> (payload.get_buffer ());
-  if (std::strncmp (one, two, this->payload_) != 0)
+  if (std::memcmp (buff, payload.get_buffer (), this->payload_) != 0)
     {
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("ERROR: received malformed message from client '%c'\n"),
