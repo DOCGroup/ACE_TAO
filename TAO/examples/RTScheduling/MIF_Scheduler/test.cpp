@@ -1,6 +1,7 @@
 #include "test.h"
 #include "../Task_Stats.h"
 #include "../Synch_i.h"
+#include "../Guid_Utils.h"
 
 #include "tao/RTScheduling/RTScheduler_Manager.h"
 #include "tao/ORB_Core.h"
@@ -11,6 +12,37 @@
 #include "ace/Sig_Handler.h"
 
 #include <memory>
+
+static int
+test_guid_value ()
+{
+  RTScheduling::Current::IdType guid;
+  CORBA::ULong const lengths[] = {
+    0, static_cast<CORBA::ULong> (sizeof (size_t) - 1),
+    static_cast<CORBA::ULong> (sizeof (size_t) + 1)
+  };
+  for (CORBA::ULong const length : lengths)
+    {
+      guid.length (length);
+      try
+        {
+          rtscheduling_guid_value (guid);
+          ACE_ERROR_RETURN ((LM_ERROR, "Invalid GUID length accepted\n"), 1);
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+        }
+    }
+
+  size_t const expected = 0x12345678;
+  guid.length (sizeof (expected));
+  std::memcpy (guid.get_buffer (), &expected, sizeof (expected));
+  if (rtscheduling_guid_value (guid) != expected)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "GUID value changed\n"), 1);
+    }
+  return 0;
+}
 
 class TestShutdown : public ACE_Event_Handler
 {
@@ -164,6 +196,11 @@ DT_Test::svc ()
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  if (argc == 2 && ACE_OS::strcmp (argv[1], ACE_TEXT ("-test-guid")) == 0)
+    {
+      return test_guid_value ();
+    }
+
   int status = 0;
 
   ACE_Service_Config::static_svcs ()->insert (

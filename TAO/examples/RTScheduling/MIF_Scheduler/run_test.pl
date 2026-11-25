@@ -24,6 +24,12 @@ $server->AddLibPath ('..');
 $client->AddLibPath ('..');
 $starter->AddLibPath ('..');
 
+my $guid_test = $server->CreateProcess ("test", "-test-guid");
+if ($guid_test->SpawnWaitKill ($server->ProcessStartWaitInterval ()) != 0) {
+    print STDERR "ERROR: GUID validation test failed\n";
+    exit 1;
+}
+
 my $iorbase = "ns.ior";
 my $s_svcbase = "svc$PerlACE::svcconf_ext.server";
 my $c_svcbase = "svc$PerlACE::svcconf_ext.client";
