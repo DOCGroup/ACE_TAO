@@ -124,8 +124,8 @@ class CTestEventHandler : public ICustomEventHandler
             long const iParameter = ACE_Utils::truncate_cast<long> ((intptr_t)p_vParameter);
 
             ACE_DEBUG((LM_DEBUG,
-                       ACE_TEXT("%I(%t) Incrementing test event handler call count by %q.\n"),
-                       static_cast<ACE_INT64> (iParameter)));
+                       ACE_TEXT("%I(%t) Incrementing test event handler call count by %Ld.\n"),
+                       iParameter));
 
             m_Mutex.acquire();
             *m_p_iCallCount += iParameter;

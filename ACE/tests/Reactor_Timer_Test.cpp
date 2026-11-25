@@ -77,11 +77,11 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%@] Timer id %Ld with count #%d|%q timed out at %:!\n"),
+              ACE_TEXT ("[%@] Timer id %Ld with count #%d|%Ld timed out at %:!\n"),
               static_cast<void *> (this),
               this->timer_id (),
               the_count,
-              static_cast<ACE_INT64> (current_count),
+              current_count,
               tv.sec ()));
 
   if (current_count == long (ACE_MAX_TIMERS - 1))
