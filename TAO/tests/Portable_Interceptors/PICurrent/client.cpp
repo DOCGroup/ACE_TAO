@@ -117,6 +117,28 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           throw CORBA::INTERNAL ();
         }
 
+      // An object with a policy set uses a different allocation path.
+      CORBA::PolicyList empty_policies;
+      CORBA::Object_var policy_object =
+        server->_set_policy_overrides (empty_policies, CORBA::SET_OVERRIDE);
+      policies = policy_object->_get_policy_overrides (types);
+      if (policies.ptr () == nullptr || policies->length () != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Empty policy set returned an invalid list\n"),
+                            1);
+        }
+
+      types.length (1);
+      types[0] = 0;
+      policies = policy_object->_get_policy_overrides (types);
+      if (policies.ptr () == nullptr || policies->length () != 0)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "(%P|%t) Filtered policy set returned an invalid list\n"),
+                            1);
+        }
+
       server->invoke_me ();
 
       CORBA::Any_var new_data =
