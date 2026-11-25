@@ -131,7 +131,7 @@ public:
   /**
    * @return  Relative time value.
    *
-   * @note    This method uses it's time_policy_ member to get the current
+   * @note    This method uses its time_policy_ member to get the current
    *          time of day.
    *          The developer is responsible for making sure this is an absolute
    *          time value compatible with the active time policy.
@@ -144,7 +144,7 @@ public:
   /**
    * @return  Absolute time value.
    *
-   * @note    This method uses it's time_policy_ member to get the current
+   * @note    This method uses its time_policy_ member to get the current
    *          time of day.
    *          The developer is responsible for making sure this is a relative
    *          time value.

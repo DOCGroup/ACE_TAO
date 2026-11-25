@@ -619,7 +619,7 @@ public:
   class Timer_Queue {};
   ACE_Proactor (size_t /* number_of_threads */ = 0,
                 Timer_Queue * /* tq */ = 0) {}
-  ~ACE_Proactor () {}
+  ~ACE_Proactor () = default;
   ACE_Proactor (ACE_Proactor const &) = delete;
   ACE_Proactor (ACE_Proactor &&) = delete;
   ACE_Proactor &operator= (ACE_Proactor const &) = delete;
