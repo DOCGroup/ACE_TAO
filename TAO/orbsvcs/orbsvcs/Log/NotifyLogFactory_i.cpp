@@ -9,7 +9,8 @@ TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i () = default;
 
 TAO_NotifyLogFactory_i::TAO_NotifyLogFactory_i (
   CosNotifyChannelAdmin::EventChannelFactory_ptr event_channel_factory)
-  : notify_factory_ (event_channel_factory)
+  : notify_factory_ (CosNotifyChannelAdmin::EventChannelFactory::_duplicate (
+      event_channel_factory))
 {
   CosNotifyChannelAdmin::ChannelID id;
   CosNotifyChannelAdmin::AdminID adminID {};

@@ -134,18 +134,29 @@ Notify_Logging_Service::init (int argc, ACE_TCHAR * argv[])
 
   if (this->ior_file_name_)
     {
-      std::unique_ptr<FILE, int (*) (FILE *)> const iorf (
+      std::unique_ptr<FILE, int (*) (FILE *)> iorf (
         ACE_OS::fopen (this->ior_file_name_->c_str (), ACE_TEXT ("w")),
         ACE_OS::fclose);
       if (!iorf)
         {
+          this->poa_->destroy (true, true);
+          this->orb_->destroy ();
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              ACE_TEXT ("Cannot open output file for writing IOR: %s"),
                              this->ior_file_name_->c_str ()),
                             -1);
         }
 
-      ACE_OS::fprintf (iorf.get (), "%s\n", ior.in ());
+      int const write_result = ACE_OS::fprintf (iorf.get (), "%s\n", ior.in ());
+      int const close_result = ACE_OS::fclose (iorf.release ());
+      if (write_result < 0 || close_result != 0)
+        {
+          this->poa_->destroy (true, true);
+          this->orb_->destroy ();
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot write IOR file: %s\n"),
+                                 this->ior_file_name_->c_str ()), -1);
+        }
     }
 
   if (this->pid_file_name_)
