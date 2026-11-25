@@ -505,78 +505,77 @@ public:
 
   /// @}
 
-  ParseState parse_state ();       // What state we're in
-  void set_parse_state (ParseState s); // Set it
+  /// Return the current parse state.
+  ParseState parse_state ();
+  /// Set the current parse state.
+  void set_parse_state (ParseState s);
 
+  /// Return the IDL source file being compiled.
   std::string const& idl_src_file () const;
-  // Returns the IDL source file being compiled.
 
+  /// Set the source IDL file that is being parsed.
   void idl_src_file (std::string const& filename);
-  // Set the source IDL file that is being parsed.
 
+  /// Set the directory for temporary files. By default, the IDL compiler
+  /// uses the TEMP environment variable or "/tmp/" if it is not set.
   void temp_dir (std::string const& s);
-  // Set the directory where the IDL compiler can keep all its temp
-  // files. By default, IDL compiler looks for TEMP env variable and
-  // if it is not set,  "/tmp/" is assigned.
 
+  /// Return the directory for temporary files. By default, the IDL compiler
+  /// uses the TEMP environment variable or "/tmp/" if it is not set.
   std::string const& temp_dir () const;
-  // Get the directory where the IDL compiler can keep all its temp
-  // files. By default, IDL compiler looks for TEMP env variable and
-  // if it is not set,  "/tmp/" is assigned.
 
+  /// Set the path of TAO_ROOT.
   void tao_root (std::string const& s);
-  // Set the path of TAO_ROOT.
 
+  /// Return the path of TAO_ROOT.
   std::string const& tao_root () const;
-  // Get the path for TAO_ROOT.
 
+  /// Set the path for the perfect hashing program (GPERF).
   void gperf_path (std::string const& s);
-  // Set the path for the perfect hashing program (GPERF).
 
+  /// Return the path for the perfect hashing program (GPERF).
   std::string const& gperf_path () const;
-  // Get the path for the perfect hashing program (GPERF).
 
+  /// Set the value of the \#ident string.
   void ident_string (std::string const& s);
-  // Set the value of the #ident string.
 
+  /// Return the value of the \#ident string.
   std::string const& ident_string () const;
-  // Get the value of the #ident string.
 
+  /// Report an error when true, or a warning when false, for identifiers
+  /// in the same scope that differ only by case.
   void case_diff_error (bool);
-  // report an error (1) for indentifiers in the same scope
-  // that differ only by case, or report a warning (0).
 
+  /// Return whether case-only differences are errors.
   bool case_diff_error ();
-  // are we strict about case-only differences or not?
 
+  /// Set whether we are using the NEST ORB.
   void nest_orb (bool);
-  // Set on or off whether we are using the NEST ORB.
 
+  /// Return whether we are being used with the NEST ORB.
   bool nest_orb ();
-  // are we beIng used with the NEST ORB?
 
+  /// Clean up.
   void destroy ();
-  // Cleanup function.
 
+  /// Save each flag passed to the IDL compiler.
   void append_idl_flag (std::string const& s);
-  // Save each flag passed to the IDL compiler.
 
+  /// Return a string representation of the flags passed to the IDL compiler.
   std::string const& idl_flags () const;
-  // Get a string representation of the flags
-  // passed to the idl compiler.
 
+  /// Access the IDL keyword container.
   std::unordered_set<std::string> &
   idl_keywords ();
-  // Accessor for the IDL keyword container.
 
+  /// Access the pragma prefix container.
   std::vector<std::string> &pragma_prefixes ();
-  // Accessor for the pragma prefix container.
 
+  /// Update repository ID prefix bookkeeping when the file changes.
   void update_prefix (std::string const& filename);
-  // Do repo id prefix bookkeeping when the file changes.
 
+  /// Return whether this include has been seen before.
   long seen_include_file_before (std::string const& filename);
-  // Seen this include before?
 
   long last_seen_index () const;
   void last_seen_index (long val);
