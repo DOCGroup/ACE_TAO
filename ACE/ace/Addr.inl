@@ -1,14 +1,14 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
-ACE_Addr::operator == (const ACE_Addr &sap) const
+ACE_Addr::operator == (ACE_Addr const &sap) const
 {
   return (sap.addr_type_ == this->addr_type_ &&
           sap.addr_size_ == this->addr_size_   );
 }
 
 ACE_INLINE bool
-ACE_Addr::operator != (const ACE_Addr &sap) const
+ACE_Addr::operator != (ACE_Addr const &sap) const
 {
   return (sap.addr_type_ != this->addr_type_ ||
           sap.addr_size_ != this->addr_size_   );

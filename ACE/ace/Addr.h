@@ -55,22 +55,22 @@ public:
   virtual void *get_addr () const;
 
   /// Set a pointer to the address.
-  virtual void set_addr (const void *, int len);
+  virtual void set_addr (void const *, int len);
 
   /// @name Address comparison
   /// @{
   /// Check for address equality.
-  bool operator == (const ACE_Addr &sap) const;
+  bool operator == (ACE_Addr const &sap) const;
 
   /// Check for address inequality.
-  bool operator != (const ACE_Addr &sap) const;
+  bool operator != (ACE_Addr const &sap) const;
   /// @}
 
   /// Initializes instance variables.
   void base_set (int type, int size);
 
   /// Wild-card address.
-  static const ACE_Addr sap_any;
+  static ACE_Addr const sap_any;
 
   /// Returns a hash value.  This should be overwritten by a subclass
   /// that can produce a better hash value.

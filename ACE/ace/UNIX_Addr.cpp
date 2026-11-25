@@ -21,7 +21,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_UNIX_Addr)
 
 // Set a pointer to the address.
 void
-ACE_UNIX_Addr::set_addr (const void *addr, int len)
+ACE_UNIX_Addr::set_addr (void const *addr, int len)
 {
   ACE_TRACE ("ACE_UNIX_Addr::set_addr");
 
@@ -41,7 +41,7 @@ ACE_UNIX_Addr::get_addr () const
 // Transform the string into the current addressing format.
 
 int
-ACE_UNIX_Addr::string_to_addr (const char addr[])
+ACE_UNIX_Addr::string_to_addr (char const addr[])
 {
   ACE_OS::strsncpy (this->unix_addr_.sun_path, addr,
                     sizeof this->unix_addr_.sun_path);
@@ -116,7 +116,7 @@ ACE_UNIX_Addr::ACE_UNIX_Addr ()
 }
 
 int
-ACE_UNIX_Addr::set (const ACE_UNIX_Addr &sa)
+ACE_UNIX_Addr::set (ACE_UNIX_Addr const &sa)
 {
   if (sa.get_type () == AF_ANY)
     {
@@ -136,7 +136,7 @@ ACE_UNIX_Addr::set (const ACE_UNIX_Addr &sa)
   return 0;
 }
 
-ACE_UNIX_Addr::ACE_UNIX_Addr (const ACE_UNIX_Addr &sa)
+ACE_UNIX_Addr::ACE_UNIX_Addr (ACE_UNIX_Addr const &sa)
   : ACE_Addr (AF_UNIX, sa.get_size ())
 {
   this->set (sa);
@@ -177,7 +177,7 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (const sockaddr_un *un, int len)
 }
 
 int
-ACE_UNIX_Addr::set (const char rendezvous_point[])
+ACE_UNIX_Addr::set (char const rendezvous_point[])
 {
   (void) std::memset (&this->unix_addr_,
                       0,
@@ -204,7 +204,7 @@ ACE_UNIX_Addr::set (const char rendezvous_point[])
 
 // Create a ACE_Addr from a UNIX pathname.
 
-ACE_UNIX_Addr::ACE_UNIX_Addr (const char rendezvous_point[])
+ACE_UNIX_Addr::ACE_UNIX_Addr (char const rendezvous_point[])
 {
   this->set (rendezvous_point);
 }

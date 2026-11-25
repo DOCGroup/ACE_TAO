@@ -34,21 +34,21 @@ class ACE_Export ACE_UNIX_Addr : public ACE_Addr
 public:
   ACE_UNIX_Addr ();
 
-  ACE_UNIX_Addr (const ACE_UNIX_Addr &sa);
+  ACE_UNIX_Addr (ACE_UNIX_Addr const &sa);
 
-  ACE_UNIX_Addr& operator= (const ACE_UNIX_Addr&) = default;
+  ACE_UNIX_Addr& operator= (ACE_UNIX_Addr const&) = default;
 
   /// Creates an ACE_UNIX_Addr from a string.
-  ACE_UNIX_Addr (const char rendezvous_point[]);
+  ACE_UNIX_Addr (char const rendezvous_point[]);
 
   /// Creates an ACE_INET_Addr from a sockaddr_un structure.
   ACE_UNIX_Addr (const sockaddr_un *, int len);
 
   /// Creates an ACE_UNIX_Addr from another ACE_UNIX_Addr.
-  int set (const ACE_UNIX_Addr &sa);
+  int set (ACE_UNIX_Addr const &sa);
 
   /// Creates an ACE_UNIX_Addr from a string.
-  int set (const char rendezvous_point[]);
+  int set (char const rendezvous_point[]);
 
   /// Creates an ACE_UNIX_Addr from a sockaddr_un structure.
   int set (const sockaddr_un *, int len);
@@ -57,30 +57,30 @@ public:
   void *get_addr () const override;
 
   /// Set a pointer to the underlying network address.
-  void set_addr (const void *addr, int len) override;
+  void set_addr (void const *addr, int len) override;
 
   /// Transform the current address into string format.
   virtual int addr_to_string (ACE_TCHAR addr[], size_t) const;
 
   /// Transform the string into the current addressing format.
-  virtual int string_to_addr (const char addr[]);
+  virtual int string_to_addr (char const addr[]);
 
 #if defined (ACE_HAS_WCHAR)
   /// Creates an ACE_UNIX_Addr from a string.
-  ACE_UNIX_Addr (const wchar_t rendezvous_point[]);
+  ACE_UNIX_Addr (wchar_t const rendezvous_point[]);
 
   /// Creates an ACE_UNIX_Addr from a string.
-  int set (const wchar_t rendezvous_point[]);
+  int set (wchar_t const rendezvous_point[]);
 #endif /* ACE_HAS_WCHAR */
 
   /// Compare two addresses for equality.
-  bool operator == (const ACE_UNIX_Addr &SAP) const;
+  bool operator == (ACE_UNIX_Addr const &SAP) const;
 
   /// Compare two addresses for inequality.
-  bool operator != (const ACE_UNIX_Addr &SAP) const;
+  bool operator != (ACE_UNIX_Addr const &SAP) const;
 
   /// Return the path name of the underlying rendezvous point.
-  const char *get_path_name () const;
+  char const *get_path_name () const;
 
   /// Computes and returns hash value.
   u_long hash () const override;

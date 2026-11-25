@@ -21,7 +21,7 @@ ACE_FILE_Addr::ACE_FILE_Addr ()
 }
 
 int
-ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
+ACE_FILE_Addr::set (ACE_FILE_Addr const &sa)
 {
   if (sa.get_type () == AF_ANY)
     {
@@ -70,14 +70,14 @@ ACE_FILE_Addr::set (const ACE_FILE_Addr &sa)
   return 0;
 }
 
-ACE_FILE_Addr::ACE_FILE_Addr (const ACE_FILE_Addr &sa)
+ACE_FILE_Addr::ACE_FILE_Addr (ACE_FILE_Addr const &sa)
   : ACE_Addr (AF_FILE, sizeof this->filename_)
 {
   this->set (sa);
 }
 
 int
-ACE_FILE_Addr::set (const ACE_TCHAR *filename)
+ACE_FILE_Addr::set (ACE_TCHAR const *filename)
 {
   (void) ACE_OS::strsncpy (this->filename_,
                            filename,
@@ -88,7 +88,7 @@ ACE_FILE_Addr::set (const ACE_TCHAR *filename)
 }
 
 ACE_FILE_Addr &
-ACE_FILE_Addr::operator= (const ACE_FILE_Addr &sa)
+ACE_FILE_Addr::operator= (ACE_FILE_Addr const &sa)
 {
   if (this != std::addressof (sa))
   {
@@ -99,7 +99,7 @@ ACE_FILE_Addr::operator= (const ACE_FILE_Addr &sa)
 
 // Create a ACE_Addr from a ACE_FILE pathname.
 
-ACE_FILE_Addr::ACE_FILE_Addr (const ACE_TCHAR *filename)
+ACE_FILE_Addr::ACE_FILE_Addr (ACE_TCHAR const *filename)
 {
   this->set (filename);
 }
