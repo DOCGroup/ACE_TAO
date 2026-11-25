@@ -187,7 +187,7 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
              {
                 ORBSVCS_ERROR ((LM_ERROR,
                             "TAO (%P|%t) - UIPMC_Connector::make_connection, "
-                            "connection to <%C:%u> from interface <%s> failed (%p)\n",
+                            "connection to <%C:%u> from interface <%C> failed (%p)\n",
                              uipmc_endpoint->host (),
                              uipmc_endpoint->port (),
                              uipmc_endpoint->is_preferred_network () ? uipmc_endpoint->preferred_network () : "ANY",
