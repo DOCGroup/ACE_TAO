@@ -104,7 +104,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
   x = this->thr_run_time_[0];// scale_factor;
   val_1 = ACE_CU64_TO_CU32 (x);
 
-  ACE_OS::fprintf (output_file, "%u \t " ACE_SIZE_T_FORMAT_SPECIFIER "\n",
+  ACE_OS::fprintf (output_file, ACE_UINT32_FORMAT_SPECIFIER_ASCII " \t " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n",
                    val_1, thr_count_[0]);
 
   // dump the samples recorded.
@@ -113,7 +113,7 @@ Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
       x = this->thr_run_time_[i];
       val_1 = ACE_CU64_TO_CU32 (x);
       val_2  = this->thr_count_[i];
-      ACE_OS::fprintf (output_file, "%u \t " ACE_SIZE_T_FORMAT_SPECIFIER "\n",
+      ACE_OS::fprintf (output_file, ACE_UINT32_FORMAT_SPECIFIER_ASCII " \t " ACE_SIZE_T_FORMAT_SPECIFIER_ASCII "\n",
                        val_1, val_2);
     }
 
