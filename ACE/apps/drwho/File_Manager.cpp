@@ -81,17 +81,18 @@ File_Manager::open_passwd_file ()
   char filename[] = "passwd-XXXXXX";
   ACE_HANDLE const f = ACE_OS::mkstemp (filename);
   if (f == ACE_INVALID_HANDLE)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   {
     using File_Ptr = std::unique_ptr<std::FILE, int (*) (std::FILE *)>;
-    File_Ptr const fp (ACE_OS::fdopen (f, "w"), std::fclose);
+    File_Ptr fp (ACE_OS::fdopen (f, "w"), std::fclose);
 
     if (!fp)
       {
         ACE_OS::close (f);
+        ACE_OS::unlink (filename);
         return -1;
       }
 
@@ -118,12 +119,21 @@ File_Manager::open_passwd_file ()
       }
 
     ACE_OS::endpwent ();
+    bool const write_error = std::ferror (fp.get ()) != 0;
+    int const close_result = std::fclose (fp.release ());
+    if (write_error || close_result != 0)
+      {
+        ACE_OS::unlink (filename);
+        return -1;
+      }
   }
 
-  if (this->mmap_.map (filename) == -1)
-  {
-    return -1;
-  }
+  int const map_result = this->mmap_.map (filename);
+  ACE_OS::unlink (filename);
+  if (map_result == -1)
+    {
+      return -1;
+    }
 
   this->buffer_ptr = static_cast<char *> (this->mmap_.addr ());
 
