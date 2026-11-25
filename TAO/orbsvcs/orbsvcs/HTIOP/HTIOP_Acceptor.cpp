@@ -408,7 +408,7 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
       if (TAO_debug_level > 2)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Overriding address in IOR with %s\n"),
+                      ACE_TEXT ("Overriding address in IOR with %C\n"),
                       this->hostname_in_ior_.c_str ()));
         }
 
@@ -785,7 +785,7 @@ TAO::HTIOP::Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
           if (TAO_debug_level > 2)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("Overriding address in IOR with %s\n"),
+                          ACE_TEXT ("Overriding address in IOR with %C\n"),
                           this->hostname_in_ior_.c_str ()));
             }
           if (this->hostname (orb_core,
@@ -949,7 +949,7 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
               || slot == ACE_CString::npos)
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                     ACE_TEXT ("TAO (%P|%t) HTIOP option <%s> is ")
+                                     ACE_TEXT ("TAO (%P|%t) HTIOP option <%C> is ")
                                      ACE_TEXT ("missing a value.\n"),
                                      opt.c_str ()),
                                     -1);
@@ -972,7 +972,7 @@ TAO::HTIOP::Acceptor::parse_options (const char *str)
           else
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                     ACE_TEXT ("(%P|%t) Invalid HTIOP option: <%s>\n"),
+                                     ACE_TEXT ("(%P|%t) Invalid HTIOP option: <%C>\n"),
                                      name.c_str ()),
                                     -1);
             }
