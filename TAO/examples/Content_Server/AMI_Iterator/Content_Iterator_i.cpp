@@ -4,6 +4,8 @@
 #include "ace/OS_NS_unistd.h"
 #include "Content_Iterator_i.h"
 
+#include <memory>
+
 Content_Iterator_i::Content_Iterator_i (char const *pathname,
                                         CORBA::ULongLong file_size)
   : file_ (ACE_TEXT_CHAR_TO_TCHAR (pathname)),
@@ -62,8 +64,9 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
     }
 
   // Allocate a buffer for the file being read.
-  CORBA::Octet *const buf =
-    Web_Server::Chunk_Type::allocbuf (BUFSIZ);
+  std::unique_ptr<CORBA::Octet, decltype (&Web_Server::Chunk_Type::freebuf)> buf (
+    Web_Server::Chunk_Type::allocbuf (BUFSIZ),
+    &Web_Server::Chunk_Type::freebuf);
 
   if (buf == nullptr)
     {
@@ -72,12 +75,10 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
                         false);
     }
 
-  ssize_t const bytes_read = this->file_io_.recv (buf,
+  ssize_t const bytes_read = this->file_io_.recv (buf.get (),
                                                   BUFSIZ);
   if (bytes_read == -1)
     {
-      Web_Server::Chunk_Type::freebuf (buf);
-
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),
                          ACE_TEXT ("Error during read")),
@@ -94,7 +95,7 @@ Content_Iterator_i::next_chunk (CORBA::ULongLong offset,
   // sequence.  Only replace the amount of data actually read.
   chunk->replace (bytes_read,
                   bytes_read,
-                  buf,
+                  buf.release (),
                   true);  // The sequence releases memory for us.
 
   ++this->chunk_index_;
