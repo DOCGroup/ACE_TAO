@@ -1076,6 +1076,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ORB_var orb = CORBA::ORB_init (argc,
                                             argv);
 
+      CORBA::Object_var object =
+        orb->string_to_object ("corbaloc:iiop:127.0.0.1:12345/vector-test");
+      hello_var reference = hello::_unchecked_narrow (object.in ());
+      TAO_OutputCDR partial_reference_output;
+      partial_reference_output << CORBA::ULong (2);
+      partial_reference_output << reference.in ();
+      TAO_InputCDR partial_reference_input (partial_reference_output);
+      object_vector reference_target {hello::_nil ()};
+      if (CORBA::is_nil (reference.in ())
+          || TAO::demarshal_objref_vector<hello> (partial_reference_input,
+                                                  reference_target)
+          || reference_target.size () != 1
+          || !CORBA::is_nil (reference_target[0]))
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Partial object vector decoding failed\n"));
+        }
+
       Accessor_Optimized_Value_init * const opt_accessor_factory =
         new Accessor_Optimized_Value_init;
       orb->register_value_factory (
