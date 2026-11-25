@@ -125,7 +125,7 @@ ACE_INET_Addr::get_addr_size () const
 }
 
 ACE_INLINE bool
-ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs) const
+ACE_INET_Addr::operator < (ACE_INET_Addr const &rhs) const
 {
 #if defined (ACE_HAS_IPV6)
   if (this->get_type() != rhs.get_type())
@@ -156,7 +156,7 @@ ACE_INET_Addr::operator < (const ACE_INET_Addr &rhs) const
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
 ACE_INET_Addr::set (u_short port_number,
-                    const wchar_t host_name[],
+                    wchar_t const host_name[],
                     int encode,
                     int address_family)
 {
@@ -167,9 +167,9 @@ ACE_INET_Addr::set (u_short port_number,
 }
 
 ACE_INLINE int
-ACE_INET_Addr::set (const wchar_t port_name[],
-                    const wchar_t host_name[],
-                    const wchar_t protocol[])
+ACE_INET_Addr::set (wchar_t const port_name[],
+                    wchar_t const host_name[],
+                    wchar_t const protocol[])
 {
   return this->set (ACE_Wide_To_Ascii (port_name).char_rep (),
                     ACE_Wide_To_Ascii (host_name).char_rep (),
@@ -177,9 +177,9 @@ ACE_INET_Addr::set (const wchar_t port_name[],
 }
 
 ACE_INLINE int
-ACE_INET_Addr::set (const wchar_t port_name[],
+ACE_INET_Addr::set (wchar_t const port_name[],
                     ACE_UINT32 ip_addr,
-                    const wchar_t protocol[])
+                    wchar_t const protocol[])
 {
   return this->set (ACE_Wide_To_Ascii (port_name).char_rep (),
                     ip_addr,
@@ -187,7 +187,7 @@ ACE_INET_Addr::set (const wchar_t port_name[],
 }
 
 ACE_INLINE int
-ACE_INET_Addr::set (const wchar_t addr[], int address_family)
+ACE_INET_Addr::set (wchar_t const addr[], int address_family)
 {
   return this->set (ACE_Wide_To_Ascii (addr).char_rep (), address_family);
 }
@@ -235,7 +235,7 @@ ACE_INET_Addr::is_multicast () const
 #endif /* ACE_HAS_IPV6 */
   return
     (*static_cast<const unsigned char*> (
-        static_cast<const void*> (&this->inet_addr_.in4_.sin_addr.s_addr)) & 0xf0) == 0xe0;
+        static_cast<void const *> (&this->inet_addr_.in4_.sin_addr.s_addr)) & 0xf0) == 0xe0;
 }
 
 #if defined (ACE_HAS_IPV6)
