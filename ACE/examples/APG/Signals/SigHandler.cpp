@@ -12,6 +12,8 @@ public:
   explicit MySignalHandler (int signum) : signum_ (signum)
   { }
 
+  ~MySignalHandler () override = default;
+
   MySignalHandler (MySignalHandler const &) = delete;
   MySignalHandler (MySignalHandler &&) = delete;
   MySignalHandler &operator= (MySignalHandler const &) = delete;

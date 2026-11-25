@@ -31,6 +31,7 @@ class ChildHandler : public POA_ChildModule::AMI_ChildInterfaceHandler
 {
 public:
   ChildHandler () = default;
+  ~ChildHandler () override = default;
   ChildHandler (ChildHandler const &) = delete;
   ChildHandler &operator= (ChildHandler const &) = delete;
   ChildHandler (ChildHandler &&) = delete;
@@ -41,6 +42,7 @@ class NonRelatedChildHandler : public POA_AMI_ChildInterfaceHandler
 {
 public:
   NonRelatedChildHandler () = default;
+  ~NonRelatedChildHandler () override = default;
   NonRelatedChildHandler (NonRelatedChildHandler const &) = delete;
   NonRelatedChildHandler &operator= (NonRelatedChildHandler const &) = delete;
   NonRelatedChildHandler (NonRelatedChildHandler &&) = delete;

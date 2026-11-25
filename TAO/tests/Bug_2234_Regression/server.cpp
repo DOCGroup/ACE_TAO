@@ -64,6 +64,8 @@ public:
   {
   }
 
+  ~FooImpl () override = default;
+
   FooImpl (FooImpl const &) = delete;
   FooImpl (FooImpl &&) = delete;
   FooImpl & operator= (FooImpl const &) = delete;

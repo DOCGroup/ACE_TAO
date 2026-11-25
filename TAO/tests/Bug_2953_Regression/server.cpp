@@ -24,6 +24,8 @@ public:
     , task_ (task)
   {
   }
+  ~Test_i () override = default;
+
   Test_i (Test_i const &) = delete;
   Test_i &operator= (Test_i const &) = delete;
   Test_i (Test_i &&) = delete;
