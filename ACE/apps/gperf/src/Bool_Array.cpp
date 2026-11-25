@@ -59,8 +59,8 @@ Bool_Array::open (u_long s)
 
   if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
-                "\nbool array size = %B, total bytes = %B\n",
-                static_cast<size_t> (size_),
+                "\nbool array size = %Lu, total bytes = %B\n",
+                size_,
                 static_cast<size_t> (size_) * sizeof (unsigned long)));
   return 0;
 }
