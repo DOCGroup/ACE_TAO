@@ -179,16 +179,15 @@ TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout")))) // -Timeout timeout_period_S
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout"));
+      if (current_arg != nullptr) // -Timeout timeout_period_S
         {
-          if (current_arg != nullptr)
-            {
-              this->run_period_ = ACE_Time_Value (ACE_OS::atoi (current_arg), 0);
-            }
-
+          this->run_period_ = ACE_Time_Value (ACE_OS::atoi (current_arg), 0);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput")))) // -IORoutput
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput"));
+      if (current_arg != nullptr) // -IORoutput
         {
           if (this->activation_manager_->ior_output_file (current_arg) == -1)
             {
@@ -198,8 +197,10 @@ TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
             }
 
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput")))) // -IORinput file_name
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORinput"));
+      if (current_arg != nullptr) // -IORinput file_name
         {
           if (this->activation_manager_->ior_input_file (current_arg) == -1)
             {
@@ -209,8 +210,9 @@ TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
             }
 
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Skip_Priority_Levels_Check")) == 0) // Skip the check for multiple priority levels.
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Skip_Priority_Levels_Check")) == 0) // Skip the check for multiple priority levels.
         {
           this->skip_priority_levels_check_ = 1;
 

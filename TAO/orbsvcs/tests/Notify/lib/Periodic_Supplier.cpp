@@ -46,13 +46,15 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
 
   while (arg_shifter.is_anything_left ())
     {
-      if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-EventType"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-EventType"));
+      if (current_arg != nullptr)
         {
           this->event_.type ("*", ACE_TEXT_ALWAYS_CHAR(current_arg)) ;
           zeroth_event.type ("*", ACE_TEXT_ALWAYS_CHAR(current_arg)) ;
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-FilterLongData")) == 0) // -FilterLongData name value
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-FilterLongData")) == 0) // -FilterLongData name value
         {
           arg_shifter.consume_arg ();
 
@@ -68,8 +70,10 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
           buffer <<= (CORBA::Long) value;
 
           this->event_.filter (name.c_str (), buffer);
+          continue;
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Priority"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Priority"));
+      if (current_arg != nullptr)
         {
           priority_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -77,23 +81,31 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
           CORBA::Any buffer;
           buffer <<= (CORBA::Short) this->priority_;
           this->event_.qos (CosNotification::Priority, buffer);
+          continue;
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Period"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Period"));
+      if (current_arg != nullptr)
         {
           period_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExecTime"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExecTime"));
+      if (current_arg != nullptr)
         {
           exec_time_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Phase"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Phase"));
+      if (current_arg != nullptr)
         {
           phase_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Iter"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Iter"));
+      if (current_arg != nullptr)
         {
           iter_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -102,13 +114,17 @@ TAO_Notify_Tests_Periodic_Supplier::init_state (ACE_Arg_Shifter& arg_shifter)
           {
             return -1;
           }
+          continue;
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"));
+      if (current_arg != nullptr)
         {
           load_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RunTime")))) // in seconds
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RunTime"));
+      if (current_arg != nullptr) // in seconds
         {
           run_time_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();

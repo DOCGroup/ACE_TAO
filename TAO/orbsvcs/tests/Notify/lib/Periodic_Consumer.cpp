@@ -46,7 +46,8 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
 
   while (arg_shifter.is_anything_left ())
     {
-      if (nullptr != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MaxCount"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-MaxCount"));
+      if (current_arg != nullptr)
         {
           this->max_count_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
