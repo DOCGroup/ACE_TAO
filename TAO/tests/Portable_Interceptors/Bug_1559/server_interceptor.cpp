@@ -1,5 +1,5 @@
 #include "server_interceptor.h"
-#include "tao/OctetSeqC.h"
+#include "../context_match.h"
 #include "ace/Log_Msg.h"
 #include "tao/ORB_Constants.h"
 #include <cstring>
@@ -63,18 +63,12 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
   IOP::ServiceId const id = ::service_id;
   IOP::ServiceContext_var const sc =
     ri->get_request_service_context (id);
-
-  char const *const buf =
-    reinterpret_cast<char const *> (sc->context_data.get_buffer ());
-  ACE_DEBUG ((LM_DEBUG,
-              "  Received service context: %C\n",
-              buf));
-  if (std::strcmp (buf, request_msg) == 0)
+  if (context_matches (sc->context_data, request_msg))
     {
       ACE_DEBUG ((LM_DEBUG, "Sending LOCATION_FORWARD\n"));
       throw PortableInterceptor::ForwardRequest (this->forward_location_.in ());
     }
-  else if (std::strcmp (buf, forward_msg) == 0)
+  else if (context_matches (sc->context_data, forward_msg))
     {
       // Make the context to send the context to the client
       IOP::ServiceContext scc {};
@@ -124,12 +118,7 @@ Echo_Server_Request_Interceptor::send_reply (
   IOP::ServiceContext_var const sc =
     ri->get_reply_service_context (::service_id);
 
-  char const *const buf = reinterpret_cast<char const *> (sc->context_data.get_buffer ());
-  ACE_DEBUG ((LM_DEBUG,
-              "  Reply service context: %C\n",
-              buf));
-
-  if (std::strcmp (buf, reply_msg) != 0)
+  if (!context_matches (sc->context_data, reply_msg))
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Echo_Server_Request_Interceptor::send_reply: "
@@ -141,16 +130,12 @@ Echo_Server_Request_Interceptor::send_reply (
   IOP::ServiceContext_var const sc2 =
     ri->get_request_service_context (::service_id);
 
-  char const *const buf2 = reinterpret_cast<char const *> (sc2->context_data.get_buffer ());
-
-  if (std::strcmp (buf2, forward_msg) != 0)
+  if (!context_matches (sc2->context_data, forward_msg))
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Echo_Server_Request_Interceptor::send_reply: "
-                  "Expected request service context to be: %C.\n"
-                  "  Got: %C\n",
-                  forward_msg,
-                  buf2));
+                  "Expected request service context to be: %C.\n",
+                  forward_msg));
     }
 }
 
@@ -169,12 +154,7 @@ Echo_Server_Request_Interceptor::send_exception (
   IOP::ServiceContext_var const sc =
     ri->get_reply_service_context (::service_id);
 
-  char const *const buf = reinterpret_cast<char const *> (sc->context_data.get_buffer ());
-  ACE_DEBUG ((LM_DEBUG,
-              "  Reply service context: %C\n",
-              buf));
-
-  if (std::strcmp (buf, reply_msg) != 0)
+  if (!context_matches (sc->context_data, reply_msg))
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Echo_Server_Request_Interceptor::send_exception: "
@@ -186,16 +166,12 @@ Echo_Server_Request_Interceptor::send_exception (
   IOP::ServiceContext_var const sc2 =
     ri->get_request_service_context (::service_id);
 
-  char const *const buf2 = reinterpret_cast<char const *> (sc2->context_data.get_buffer ());
-
-  if (std::strcmp (buf2, forward_msg) != 0)
+  if (!context_matches (sc2->context_data, forward_msg))
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Echo_Server_Request_Interceptor::send_exception: "
-                  "Expected request service context to be: %C.\n"
-                  "  Got: %C\n",
-                  forward_msg,
-                  buf2));
+                  "Expected request service context to be: %C.\n",
+                  forward_msg));
     }
 }
 
@@ -214,16 +190,12 @@ Echo_Server_Request_Interceptor::send_other (
   IOP::ServiceContext_var const sc =
     ri->get_request_service_context (::service_id);
 
-  char const *const buf = reinterpret_cast<char const *> (sc->context_data.get_buffer ());
-
-  if (std::strcmp (buf, request_msg) != 0)
+  if (!context_matches (sc->context_data, request_msg))
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Echo_Server_Request_Interceptor::send_reply: "
-                  "Expected request service context to be: %C.\n"
-                  "  Got: %C\n",
-                  request_msg,
-                  buf));
+                  "Expected request service context to be: %C.\n",
+                  request_msg));
     }
 
   // If we get this far then we should have received a
