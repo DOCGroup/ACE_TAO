@@ -50,6 +50,8 @@ namespace TAO
   {
   public:
     PolicyFactory_Registry_Adapter () = default;
+    PolicyFactory_Registry_Adapter (PolicyFactory_Registry_Adapter const &) = default;
+    PolicyFactory_Registry_Adapter &operator= (PolicyFactory_Registry_Adapter const &) = default;
 
     virtual ~PolicyFactory_Registry_Adapter ();
 
@@ -72,12 +74,6 @@ namespace TAO
     /// Check if a @c PolicyFactory corresponding to the given type,
     /// exists.
     virtual bool factory_exists (CORBA::PolicyType type) const = 0;
-
-  private:
-    PolicyFactory_Registry_Adapter (PolicyFactory_Registry_Adapter const &) = delete;
-    PolicyFactory_Registry_Adapter &operator= (PolicyFactory_Registry_Adapter const &) = delete;
-    PolicyFactory_Registry_Adapter (PolicyFactory_Registry_Adapter &&) = delete;
-    PolicyFactory_Registry_Adapter &operator= (PolicyFactory_Registry_Adapter &&) = delete;
   };
 }
 

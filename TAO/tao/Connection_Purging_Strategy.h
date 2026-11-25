@@ -35,6 +35,7 @@ class TAO_Export TAO_Connection_Purging_Strategy
 {
 public:
   explicit TAO_Connection_Purging_Strategy (int cache_maximum);
+  TAO_Connection_Purging_Strategy (TAO_Connection_Purging_Strategy const &) = default;
 
   virtual ~TAO_Connection_Purging_Strategy () = default;
 
@@ -46,9 +47,7 @@ public:
 
 private:
   TAO_Connection_Purging_Strategy () = delete;
-  TAO_Connection_Purging_Strategy (TAO_Connection_Purging_Strategy const &) = delete;
   TAO_Connection_Purging_Strategy &operator= (TAO_Connection_Purging_Strategy const &) = delete;
-  TAO_Connection_Purging_Strategy (TAO_Connection_Purging_Strategy &&) = delete;
   TAO_Connection_Purging_Strategy &operator= (TAO_Connection_Purging_Strategy &&) = delete;
 
   /// The maximum number of cache entries

@@ -33,6 +33,8 @@ class TAO_Export TAO_Service_Context_Handler
 {
   public:
     TAO_Service_Context_Handler ();
+    TAO_Service_Context_Handler (TAO_Service_Context_Handler const &) = default;
+    TAO_Service_Context_Handler &operator= (TAO_Service_Context_Handler const &) = default;
     virtual int process_service_context (
       TAO_Transport &transport,
       IOP::ServiceContext const &context,
@@ -46,12 +48,6 @@ class TAO_Export TAO_Service_Context_Handler
       TAO_OutputCDR &msg) = 0;
 
     virtual ~TAO_Service_Context_Handler ();
-
-  private:
-    TAO_Service_Context_Handler (TAO_Service_Context_Handler const &) = delete;
-    TAO_Service_Context_Handler &operator= (TAO_Service_Context_Handler const &) = delete;
-    TAO_Service_Context_Handler (TAO_Service_Context_Handler &&) = delete;
-    TAO_Service_Context_Handler &operator= (TAO_Service_Context_Handler &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
