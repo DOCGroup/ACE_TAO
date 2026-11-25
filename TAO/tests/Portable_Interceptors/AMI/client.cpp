@@ -118,9 +118,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR ((LM_ERROR,
                       "ERROR: Mismatched count of requests and responses "
-                      " (request = %Q, response = %Q)\n",
-                      static_cast<ACE_UINT64> (request_count),
-                      static_cast<ACE_UINT64> (response_count)));
+                      " (request = %Lu, response = %Lu)\n",
+                      request_count,
+                      response_count));
         }
 
       if (request_count == 0)
@@ -167,9 +167,9 @@ test_synchronous (Test::Echo_ptr echo)
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: Invalid or mismatched request/reply "
-                  "count (request = %Q, reply = %Q)\n",
-                  static_cast<ACE_UINT64> (total_request_count),
-                  static_cast<ACE_UINT64> (total_reply_count)));
+                  "count (request = %Lu, reply = %Lu)\n",
+                  total_request_count,
+                  total_reply_count));
       exit_status = 1;
     }
 
@@ -225,9 +225,9 @@ test_ami (CORBA::ORB_ptr orb,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: In test_ami () unexpected request/other "
-                  "count (request = %Q, other = %Q)\n",
-                  static_cast<ACE_UINT64> (total_request_count),
-                  static_cast<ACE_UINT64> (total_other_count)));
+                  "count (request = %Lu, other = %Lu)\n",
+                  total_request_count,
+                  total_other_count));
       exit_status = 1;
     }
 
@@ -254,9 +254,9 @@ test_ami (CORBA::ORB_ptr orb,
     {
       ACE_ERROR ((LM_ERROR,
                   "ERROR: In test_ami () unexpected request/reply "
-                  "count (request = %Q, reply = %Q)\n",
-                  static_cast<ACE_UINT64> (total_request_count),
-                  static_cast<ACE_UINT64> (total_reply_count)));
+                  "count (request = %Lu, reply = %Lu)\n",
+                  total_request_count,
+                  total_reply_count));
       exit_status = 1;
     }
 }
