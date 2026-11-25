@@ -13,6 +13,7 @@
 class TAO_IDL_FE_Export AST_Native : public virtual AST_Exception
 {
 public:
+  AST_Native () = delete;
   explicit AST_Native (UTL_ScopedName *n);
 
   ~AST_Native () override;

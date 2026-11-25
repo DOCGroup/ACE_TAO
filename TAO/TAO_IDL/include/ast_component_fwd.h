@@ -7,6 +7,7 @@
 class TAO_IDL_FE_Export AST_ComponentFwd : public virtual AST_InterfaceFwd
 {
 public:
+  AST_ComponentFwd () = delete;
   AST_ComponentFwd (AST_ComponentFwd const &) = delete;
   AST_ComponentFwd (AST_ComponentFwd &&) = delete;
   AST_ComponentFwd &operator= (AST_ComponentFwd const &) = delete;

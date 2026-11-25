@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Root : public virtual AST_Module
 {
 public:
+  AST_Root () = delete;
   explicit AST_Root (UTL_ScopedName *n);
 
   ~AST_Root () override;

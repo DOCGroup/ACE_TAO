@@ -10,6 +10,7 @@ class AST_Structure;
 class TAO_IDL_FE_Export AST_StructureFwd : public virtual AST_Type
 {
 public:
+  AST_StructureFwd () = delete;
   AST_StructureFwd (AST_StructureFwd const &) = delete;
   AST_StructureFwd (AST_StructureFwd &&) = delete;
   AST_StructureFwd &operator= (AST_StructureFwd const &) = delete;
