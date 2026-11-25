@@ -33,8 +33,8 @@ ACE_Based_Pointer_Basic<CONCRETE>::operator= (CONCRETE *rhs)
     }
   else
     {
-      this->target_ = ((char *) rhs
-                       - ((char *) this - this->base_offset_));
+      this->target_ = (reinterpret_cast<char const *> (rhs)
+                       - (reinterpret_cast<char const *> (this) - this->base_offset_));
     }
 }
 
@@ -49,8 +49,8 @@ ACE_Based_Pointer<CONCRETE>::operator= (CONCRETE *rhs)
     }
   else
     {
-      this->target_ = ((char *) rhs
-                       - ((char *) this - this->base_offset_));
+      this->target_ = (reinterpret_cast<char const *> (rhs)
+                       - (reinterpret_cast<char const *> (this) - this->base_offset_));
     }
 }
 
