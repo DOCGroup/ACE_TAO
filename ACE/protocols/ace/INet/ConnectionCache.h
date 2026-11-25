@@ -63,8 +63,6 @@ namespace ACE
               virtual ~ConnectionCacheKey ();
 
               ConnectionCacheKey& operator = (ConnectionCacheKey const& cachekey);
-              ConnectionCacheKey (ConnectionCacheKey&&) = delete;
-              ConnectionCacheKey& operator = (ConnectionCacheKey&&) = delete;
 
               bool operator == (ConnectionCacheKey const& cachekey) const;
 
@@ -143,8 +141,6 @@ namespace ACE
               ConnectionCacheValue (ConnectionCacheValue const& cacheval);
 
               ConnectionCacheValue& operator = (ConnectionCacheValue const& cacheval);
-              ConnectionCacheValue (ConnectionCacheValue&&) = delete;
-              ConnectionCacheValue& operator = (ConnectionCacheValue&&) = delete;
 
               bool operator == (ConnectionCacheValue const& cacheval) const;
 

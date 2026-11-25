@@ -57,8 +57,6 @@ public:
   /// The copy constructor.  Makes a deep copy of the passed in PSB.
   Persistent_Storage_Block(const Persistent_Storage_Block& psb);
   Persistent_Storage_Block& operator= (Persistent_Storage_Block const &psb);
-  Persistent_Storage_Block (Persistent_Storage_Block &&) = delete;
-  Persistent_Storage_Block& operator= (Persistent_Storage_Block &&) = delete;
   ~Persistent_Storage_Block();
 
   /// Set our block to not have any data at all - a no-op.  This can be

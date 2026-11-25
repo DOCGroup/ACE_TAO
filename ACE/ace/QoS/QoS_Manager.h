@@ -42,8 +42,6 @@ public:
   /// Copies hold an independent snapshot of the session pointer set.
   ACE_QoS_Manager (ACE_QoS_Manager const &) = default;
   ACE_QoS_Manager &operator= (ACE_QoS_Manager const &) = default;
-  ACE_QoS_Manager (ACE_QoS_Manager &&) = delete;
-  ACE_QoS_Manager &operator= (ACE_QoS_Manager &&) = delete;
   /**
    * Join the given QoS session. A socket can join multiple QoS
    * sessions.  This call adds the given QoS session to the list of
