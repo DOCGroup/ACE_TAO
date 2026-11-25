@@ -149,9 +149,9 @@ CORBA::ValueBase::_tao_marshal (TAO_OutputCDR &strm,
                                 ptrdiff_t formal_type_id)
 {
   if ( ! _tao_write_special_value (strm, this_))
-  {
-    return _tao_write_value (strm, this_, formal_type_id);
-  }
+    {
+      return _tao_write_value (strm, this_, formal_type_id);
+    }
   else
   {
     return true;
@@ -190,9 +190,9 @@ CORBA::ValueBase::_tao_unmarshal (TAO_InputCDR &strm,
     }
 
   if (is_null_object || is_indirected)
-  {
-    return true;
-  }
+    {
+      return true;
+    }
 
   // If we have now obtained the ValueType
   // continue by unmarshalling the values into it.
@@ -588,9 +588,9 @@ CORBA::ValueBase::_tao_unmarshal_value_indirection (TAO_InputCDR &strm,
 
   CORBA::Long offset {};
   if (!strm.read_long (offset) ||  offset >= 0)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   char* pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
 
@@ -638,9 +638,9 @@ CORBA::ValueBase::_tao_unmarshal_repo_id_indirection (TAO_InputCDR &strm,
 {
   CORBA::Long offset {};
   if (!strm.read_long (offset) ||  offset >= 0)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   void* pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
   if (strm.get_repo_id_map()->get()->find (pos, id) != 0)
@@ -669,9 +669,9 @@ CORBA::ValueBase::_tao_unmarshal_codebase_url_indirection (TAO_InputCDR &strm,
 {
   CORBA::Long offset {};
   if (!strm.read_long (offset) ||  offset >= 0)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   void* pos = strm.rd_ptr () + offset - sizeof (CORBA::Long);
 
@@ -716,9 +716,9 @@ CORBA::ValueBase::_tao_write_special_value (TAO_OutputCDR &strm,
 {
   // If the 'value' is null then write the null value to the stream.
   if (value == nullptr)
-  {
-    return strm.write_long (TAO_OBV_GIOP_Flags::Null_tag);
-  }
+    {
+      return strm.write_long (TAO_OBV_GIOP_Flags::Null_tag);
+    }
   else
   {
 #ifdef TAO_HAS_VALUETYPE_OUT_INDIRECTION
@@ -850,14 +850,14 @@ CORBA::ValueBase::_tao_write_value_header (TAO_OutputCDR &strm,
   // Truncatable value type, must use chunking and list all repository
   // ids in its "truncatable" derivation hierarchy.
   if (this->is_truncatable_ || this->chunking_)
-  {
-    valuetag |= TAO_OBV_GIOP_Flags::Chunking_tag_sigbits;
-  }
+    {
+      valuetag |= TAO_OBV_GIOP_Flags::Chunking_tag_sigbits;
+    }
 
   if (!is_formal_type || this->is_truncatable_)
-  {
-    valuetag |= TAO_OBV_GIOP_Flags::Type_info_single;
-  }
+    {
+      valuetag |= TAO_OBV_GIOP_Flags::Type_info_single;
+    }
 
   if (num_ids > 1)
     {
@@ -1264,9 +1264,9 @@ CORBA::ValueBase::_tao_read_repository_id (TAO_InputCDR& strm,
     }
 
   if (! id_stream.read_string (id))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // It's possible the id is read again from an indirection stream,
   // so make sure the id is the same.
@@ -1356,9 +1356,9 @@ CORBA::ValueBase::_tao_read_codebase_url (TAO_InputCDR& strm,
     }
 
   if (! url_stream.read_string (codebase_url))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // It's possible the codebase url is read again from an indirection stream,
   // so make sure the codebase url is the same.
@@ -1466,9 +1466,9 @@ CORBA::DefaultValueRefCountBase::_remove_ref ()
   CORBA::ULong const new_count = --this->refcount_;
 
   if (new_count == 0)
-  {
-    delete this;
-  }
+    {
+      delete this;
+    }
 }
 
 CORBA::ULong

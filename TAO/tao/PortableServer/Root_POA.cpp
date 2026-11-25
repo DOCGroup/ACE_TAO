@@ -344,18 +344,18 @@ TAO_Root_POA::complete_destruction_i ()
 
   // Remove POA from the POAManager.
   if (this->poa_manager_.remove_poa (this) != 0)
-  {
-    throw ::CORBA::OBJ_ADAPTER ();
-  }
+    {
+      throw ::CORBA::OBJ_ADAPTER ();
+    }
 
   // Remove POA from the Object Adapter.
   int const result = this->object_adapter ().unbind_poa (this,
                                                    this->folded_name_,
                                                    this->system_name_.in ());
   if (result != 0)
-  {
-    throw ::CORBA::OBJ_ADAPTER ();
-  }
+    {
+      throw ::CORBA::OBJ_ADAPTER ();
+    }
 
   // Cleanup all strategies
   this->active_policy_strategies_.cleanup ();
@@ -792,9 +792,9 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
                          CORBA::Boolean wait_for_completion)
 {
   if (this->cleanup_in_progress_)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   // Is the <wait_for_completion> semantics for this thread correct?
   TAO_Root_POA::check_for_valid_wait_for_completions (this->orb_core (), wait_for_completion);
@@ -847,9 +847,9 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
       this->adapter_state_changed (array_obj_ref_template, PortableInterceptor::INACTIVE);
 
       if (adapter != nullptr)
-      {
-        adapter->release (array_obj_ref_template[0]);
-      }
+        {
+          adapter->release (array_obj_ref_template[0]);
+        }
     }
 
   // Destroy all child POA's now.
@@ -950,9 +950,9 @@ TAO_Root_POA::delete_child (const TAO_Root_POA::String &child)
   // If we are not closing down, we must remove this child from our
   // collection.
   if (!this->cleanup_in_progress_)
-  {
-    result = this->children_.unbind (child);
-  }
+    {
+      result = this->children_.unbind (child);
+    }
 
   // Otherwise, if we are closing down, we are currently iterating
   // over our children and there is not need to remove this child from
@@ -1082,9 +1082,9 @@ TAO_Root_POA::add_ior_component_to_profile (
   // supposed to throw a CORBA::BAD_PARAM exception if no profile
   // matched the given ProfileId.
   if (!found_profile)
-  {
-    throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 29, CORBA::COMPLETED_NO);
-  }
+    {
+      throw ::CORBA::BAD_PARAM (CORBA::OMGVMCID | 29, CORBA::COMPLETED_NO);
+    }
 }
 
 void
@@ -2091,9 +2091,9 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
   // less profiles than endpoints.
   int result = mprofile.set (static_cast <CORBA::ULong> (profile_count));
   if (result == -1)
-  {
-    error = true;
-  }
+    {
+      error = true;
+    }
 
   if (!error)
     {
@@ -2102,20 +2102,20 @@ TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
                               mprofile,
                               acceptor_registry.acceptors ());
       if (result == -1)
-      {
-        error = true;
-      }
+        {
+          error = true;
+        }
     }
 
   if (!error)
-  {
-    result = filter->encode_endpoints (mprofile);
-  }
+    {
+      result = filter->encode_endpoints (mprofile);
+    }
 
   if (result == -1)
-  {
-    error = true;
-  }
+    {
+      error = true;
+    }
 
   if (error)
     {
@@ -2474,9 +2474,9 @@ TAO::ORT_Adapter *
 TAO_Root_POA::ORT_adapter ()
 {
   if (this->ort_adapter_ != nullptr)
-  {
-    return this->ort_adapter_;
-  }
+    {
+      return this->ort_adapter_;
+    }
 
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (nullptr);

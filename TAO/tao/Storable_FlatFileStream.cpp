@@ -138,9 +138,9 @@ TAO::Storable_FlatFileStream::Storable_FlatFileStream (std::string const &file,
 TAO::Storable_FlatFileStream::~Storable_FlatFileStream ()
 {
   if ( fl_ != nullptr )
-  {
-    this->close();
-  }
+    {
+      this->close();
+    }
 }
 
 void
@@ -274,9 +274,9 @@ TAO::Storable_FlatFileStream::flock (int whence, int start, int len)
        --attempts)
     {
       if (retry)
-      {
-        this->reopen();
-      }
+        {
+          this->reopen();
+        }
       retry = true;
       result = shared ?
         ACE_OS::flock_rdlock(std::addressof (filelock_), whence, start, len) :
@@ -319,9 +319,9 @@ TAO::Storable_FlatFileStream::funlock (int whence, int start, int len)
        --attempts)
     {
       if (retry)
-      {
-        this->reopen();
-      }
+        {
+          this->reopen();
+        }
       retry = true;
       result = ACE_OS::flock_unlock(std::addressof (filelock_), whence, start, len);
       if (result != 0)
@@ -360,9 +360,9 @@ TAO::Storable_FlatFileStream::last_changed ()
            --attempts)
         {
           if (retry)
-          {
-            this->reopen ();
-          }
+            {
+              this->reopen ();
+            }
           retry = true;
 
           ACE_stat st;
@@ -384,9 +384,9 @@ TAO::Storable_FlatFileStream::last_changed ()
                                  ACE_TEXT ("fstat")));
                 }
               if (errno != EBADF)
-              {
-                break;
-              }
+                {
+                  break;
+                }
             }
         }
     }
@@ -395,9 +395,9 @@ TAO::Storable_FlatFileStream::last_changed ()
       ACE_stat st;
       result = ACE_OS::stat (file_.c_str (), std::addressof (st));
       if (result == 0)
-      {
-        mtime = st.st_mtime;
-      }
+        {
+          mtime = st.st_mtime;
+        }
     }
   if (result != 0)
     {
@@ -439,9 +439,9 @@ TAO::Storable_FlatFileStream::operator << (std::string const &str)
     std::fprintf (this->fl_, ACE_SSIZE_T_FORMAT_SPECIFIER_ASCII "\n%s\n",
                   str.length (), str.c_str ());
   if (n < 0)
-  {
-    this->throw_on_write_error (badbit);
-  }
+    {
+      this->throw_on_write_error (badbit);
+    }
 
   return *this;
 }
@@ -491,9 +491,9 @@ TAO::Storable_FlatFileStream::operator << (ACE_UINT32 i)
   int const n =
     std::fprintf (this->fl_, ACE_UINT32_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
-  {
-    this->throw_on_write_error (badbit);
-  }
+    {
+      this->throw_on_write_error (badbit);
+    }
   return *this;
 }
 
@@ -513,9 +513,9 @@ TAO::Storable_FlatFileStream::operator << (ACE_UINT64 i)
   int const n =
     std::fprintf (this->fl_, ACE_UINT64_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
-  {
-    this->throw_on_write_error (badbit);
-  }
+    {
+      this->throw_on_write_error (badbit);
+    }
   return *this;
 }
 
@@ -535,9 +535,9 @@ TAO::Storable_FlatFileStream::operator << (ACE_INT32 i)
   int const n =
     std::fprintf (this->fl_, ACE_INT32_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
-  {
-    this->throw_on_write_error (badbit);
-  }
+    {
+      this->throw_on_write_error (badbit);
+    }
   return *this;
 }
 
@@ -557,9 +557,9 @@ TAO::Storable_FlatFileStream::operator << (ACE_INT64 i)
   int const n =
     std::fprintf (this->fl_, ACE_INT64_FORMAT_SPECIFIER_ASCII "\n", i);
   if (n < 0)
-  {
-    this->throw_on_write_error (badbit);
-  }
+    {
+      this->throw_on_write_error (badbit);
+    }
   return *this;
 }
 
@@ -621,9 +621,9 @@ TAO::Storable_FlatFileStream::create_backup ()
        --attempts)
     {
       if (retry)
-      {
-        this->reopen();
-      }
+        {
+          this->reopen();
+        }
       retry = true;
       errno = 0;
       this->rewind();
@@ -691,9 +691,9 @@ TAO::Storable_FlatFileStream::restore_backup ()
   std::string const backup_name = this->backup_file_name ();
 
   if (ACE_OS::access (backup_name.c_str (), F_OK))
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   std::unique_ptr<FILE, int (*) (FILE *)> backup (
     ACE_OS::fopen (backup_name.c_str (), "r"),
