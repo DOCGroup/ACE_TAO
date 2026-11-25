@@ -1000,6 +1000,43 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR, "Truncated array vector changed the target\n"));
     }
 
+  using object_vector = std::vector<hello_ptr>;
+  object_vector const objects {hello::_nil (), hello::_nil ()};
+  TAO_OutputCDR objects_output;
+  if (!TAO::marshal_objref_vector<hello> (objects_output, objects))
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Failed to marshal object vector\n"));
+    }
+  else
+    {
+      TAO_InputCDR objects_input (objects_output);
+      object_vector decoded_objects;
+      if (!TAO::demarshal_objref_vector<hello> (objects_input, decoded_objects)
+          || decoded_objects.size () != objects.size ())
+        {
+          ++error_count;
+          ACE_ERROR ((LM_ERROR, "Object vector round trip failed\n"));
+        }
+      for (hello_ptr const object : decoded_objects)
+        {
+          CORBA::release (object);
+        }
+    }
+
+  TAO_OutputCDR partial_objects_output;
+  partial_objects_output << CORBA::ULong (2);
+  partial_objects_output << hello::_nil ();
+  TAO_InputCDR partial_objects_input (partial_objects_output);
+  object_vector unchanged_objects {hello::_nil ()};
+  if (TAO::demarshal_objref_vector<hello> (partial_objects_input,
+                                            unchanged_objects)
+      || unchanged_objects.size () != 1)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Partial object vector changed the target\n"));
+    }
+
   const ACE_CDR::ULongLong test_ull =
     ACE_UINT64_LITERAL (122192928000000000);
 

@@ -126,19 +126,23 @@ namespace TAO
 
     std::vector<typename T::_ptr_type> tmp;
     tmp.resize (new_length, T::_nil ());
-    typename T::_ptr_type tmp_elem = T::_nil ();
+    std::vector<typename T::_var_type> owners (new_length);
 
     for ( ::CORBA::ULong i {}; i < new_length; ++i)
       {
-        if (! (strm >> tmp_elem))
+        if (! (strm >> owners[i].out ()))
           {
             return false;
           }
 
-        tmp[i] = tmp_elem;
+        tmp[i] = owners[i].in ();
       }
 
     tmp.swap (target);
+    for (typename T::_var_type &owner : owners)
+      {
+        owner._retn ();
+      }
     return true;
   }
 
