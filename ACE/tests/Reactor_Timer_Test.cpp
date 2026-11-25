@@ -58,11 +58,11 @@ Time_Handler::handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask close_mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%@] handle = %H, close_mask = %Q, timer id = %q\n"),
+              ACE_TEXT ("[%@] handle = %H, close_mask = %Lu, timer id = %Ld\n"),
               static_cast<void *> (this),
               handle,
-              static_cast<ACE_UINT64> (close_mask),
-              static_cast<ACE_INT64> (this->timer_id ())));
+              close_mask,
+              this->timer_id ()));
   return 0;
 }
 
@@ -77,9 +77,9 @@ Time_Handler::handle_timeout (const ACE_Time_Value &tv,
   }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("[%@] Timer id %q with count #%d|%q timed out at %:!\n"),
+              ACE_TEXT ("[%@] Timer id %Ld with count #%d|%q timed out at %:!\n"),
               static_cast<void *> (this),
-              static_cast<ACE_INT64> (this->timer_id ()),
+              this->timer_id (),
               the_count,
               static_cast<ACE_INT64> (current_count),
               tv.sec ()));

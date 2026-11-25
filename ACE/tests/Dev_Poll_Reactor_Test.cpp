@@ -184,9 +184,9 @@ Client::handle_close (ACE_HANDLE handle,
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%t) Client Svc_Handler closed ")
-              ACE_TEXT ("handle <%H> with reactor mask <%Q>.\n"),
+              ACE_TEXT ("handle <%H> with reactor mask <%Lu>.\n"),
               handle,
-              static_cast<ACE_UINT64> (mask)));
+              mask));
 
   // There is no point in running reactor after this client is closed.
   if (this->reactor ()->end_reactor_event_loop () == 0)
@@ -316,10 +316,10 @@ Server::handle_close (ACE_HANDLE handle,
     {
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("(%t) Server Svc_Handler closing ")
-                  ACE_TEXT ("handle <%H,%H> with reactor mask <%Q>.\n"),
+                  ACE_TEXT ("handle <%H,%H> with reactor mask <%Lu>.\n"),
                   handle,
                   this->get_handle (),
-                  static_cast<ACE_UINT64> (mask)));
+                  mask));
     }
 
   return SVC_HANDLER::handle_close (handle, mask);

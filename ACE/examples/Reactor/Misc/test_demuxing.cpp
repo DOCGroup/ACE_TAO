@@ -374,8 +374,8 @@ Message_Handler::handle_input (ACE_HANDLE)
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) priority = %Q\n",
-                  static_cast<ACE_UINT64> (mb->msg_priority ())));
+                  "(%t) priority = %Lu\n",
+                  mb->msg_priority ()));
       mb->release ();
     }
 

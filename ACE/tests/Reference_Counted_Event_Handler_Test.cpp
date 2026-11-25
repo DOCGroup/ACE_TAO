@@ -75,15 +75,15 @@ Reference_Counted_Event_Handler::Reference_Counted_Event_Handler (int &events)
     (ACE_Event_Handler::Reference_Counting_Policy::ENABLED);
 
   ACE_DEBUG ((LM_DEBUG,
-              "Reference count in Reference_Counted_Event_Handler() is %q\n",
-              static_cast<ACE_INT64> (this->reference_count_.load ())));
+              "Reference count in Reference_Counted_Event_Handler() is %Ld\n",
+              this->reference_count_.load ()));
 }
 
 Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Reference count in ~Reference_Counted_Event_Handler() is %q\n",
-              static_cast<ACE_INT64> (this->reference_count_.load ())));
+              "Reference count in ~Reference_Counted_Event_Handler() is %Ld\n",
+              this->reference_count_.load ()));
 
   this->pipe_.close ();
 }
@@ -92,8 +92,8 @@ int
 Reference_Counted_Event_Handler::handle_input (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Reference count in Reference_Counted_Event_Handler::handle_input() is %q\n",
-              static_cast<ACE_INT64> (this->reference_count_.load ())));
+              "Reference count in Reference_Counted_Event_Handler::handle_input() is %Ld\n",
+              this->reference_count_.load ()));
 
   --this->events_;
 
@@ -125,8 +125,8 @@ int
 Reference_Counted_Event_Handler::handle_output (ACE_HANDLE)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Reference count in Reference_Counted_Event_Handler::handle_output() is %q\n",
-              static_cast<ACE_INT64> (this->reference_count_.load ())));
+              "Reference count in Reference_Counted_Event_Handler::handle_output() is %Ld\n",
+              this->reference_count_.load ()));
 
   --this->events_;
 
@@ -152,9 +152,9 @@ Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
                                                  const void *arg)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %q\n",
+              "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %Ld\n",
               static_cast<const char *> (arg),
-              static_cast<ACE_INT64> (this->reference_count_.load ())));
+              this->reference_count_.load ()));
 
   --this->events_;
 
@@ -174,11 +174,11 @@ Reference_Counted_Event_Handler::handle_close (ACE_HANDLE handle,
                                                ACE_Reactor_Mask masks)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "Reference_Counted_Event_Handler::handle_close() called with handle = %H and masks = %Q. "
-              "Reference count is %q\n",
+              "Reference_Counted_Event_Handler::handle_close() called with handle = %H and masks = %Lu. "
+              "Reference count is %Ld\n",
               handle,
-              static_cast<ACE_UINT64> (masks),
-              static_cast<ACE_INT64> (this->reference_count_.load ())));
+              masks,
+              this->reference_count_.load ()));
 
   return 0;
 }
@@ -190,8 +190,8 @@ Reference_Counted_Event_Handler::add_reference ()
     this->ACE_Event_Handler::add_reference ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Reference count after add_reference() is %q\n",
-              static_cast<ACE_INT64> (this->reference_count_.load ())));
+              "Reference count after add_reference() is %Ld\n",
+              this->reference_count_.load ()));
 
   return reference_count;
 }
@@ -203,8 +203,8 @@ Reference_Counted_Event_Handler::remove_reference ()
     this->ACE_Event_Handler::remove_reference ();
 
   ACE_DEBUG ((LM_DEBUG,
-              "Reference count after remove_reference() is %q\n",
-              static_cast<ACE_INT64> (reference_count)));
+              "Reference count after remove_reference() is %Ld\n",
+              reference_count));
 
   return reference_count;
 }
@@ -647,9 +647,9 @@ Simple_Event_Handler::handle_close (ACE_HANDLE handle,
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Simple_Event_Handler::handle_close() called with ")
-              ACE_TEXT ("handle = %H and masks = %Q with close count = %d.\n"),
+              ACE_TEXT ("handle = %H and masks = %Lu with close count = %d.\n"),
               handle,
-              static_cast<ACE_UINT64> (masks),
+              masks,
               --this->close_count_));
 
   if (this->close_count_ == 0)
@@ -951,11 +951,11 @@ Closed_In_Upcall_Event_Handler::handle_close (ACE_HANDLE handle,
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Closed_In_Upcall_Event_Handler::handle_close() ")
-              ACE_TEXT ("called with handle = %H and masks = %Q. ")
-              ACE_TEXT ("Reference count is %q\n"),
+              ACE_TEXT ("called with handle = %H and masks = %Lu. ")
+              ACE_TEXT ("Reference count is %Ld\n"),
               handle,
-              static_cast<ACE_UINT64> (masks),
-              static_cast<ACE_INT64> (this->reference_count_.load ())));
+              masks,
+              this->reference_count_.load ()));
 
   return 0;
 }
@@ -967,8 +967,8 @@ Closed_In_Upcall_Event_Handler::add_reference ()
     this->ACE_Event_Handler::add_reference ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Reference count after add_reference() is %q\n"),
-              static_cast<ACE_INT64> (this->reference_count_.load ())));
+              ACE_TEXT ("Reference count after add_reference() is %Ld\n"),
+              this->reference_count_.load ()));
 
   return reference_count;
 }
@@ -980,8 +980,8 @@ Closed_In_Upcall_Event_Handler::remove_reference ()
     this->ACE_Event_Handler::remove_reference ();
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Reference count after remove_reference() is %q\n"),
-              static_cast<ACE_INT64> (reference_count)));
+              ACE_TEXT ("Reference count after remove_reference() is %Ld\n"),
+              reference_count));
 
   return reference_count;
 }

@@ -233,9 +233,9 @@ Client::handle_close (ACE_HANDLE handle,
                       ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Client::handle_close handle = %H mask = %Q\n"),
+              ACE_TEXT ("(%t) Client::handle_close handle = %H mask = %Lu\n"),
               handle,
-              static_cast<ACE_UINT64> (mask)));
+              mask));
   return 0;
   //return SVC_HANDLER::handle_close (handle, mask);
 }
@@ -370,9 +370,9 @@ Server::handle_close (ACE_HANDLE handle,
                       ACE_Reactor_Mask mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%t) Server::handle_close handle = %H mask = %Q\n"),
+              ACE_TEXT ("(%t) Server::handle_close handle = %H mask = %Lu\n"),
               handle,
-              static_cast<ACE_UINT64> (mask)));
+              mask));
   return 0;
   //return SVC_HANDLER::handle_close (handle, mask);
 }
