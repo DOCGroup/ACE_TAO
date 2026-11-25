@@ -366,6 +366,7 @@ ACE_SSL_SOCK_Stream::close ()
           return this->stream_.close ();
         }
       ACE_SSL_Context::report_error ();
+      ACE_OS::last_error (EIO);
       break;
 
     case SSL_ERROR_SSL:
