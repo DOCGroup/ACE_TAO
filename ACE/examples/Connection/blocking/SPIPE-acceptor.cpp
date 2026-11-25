@@ -25,9 +25,9 @@ Svc_Handler::open (void *)
               this->peer ().get_handle ()));
   if (this->ar_.open (*this,
                       this->peer ().get_handle ()) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   return this->ar_.read (this->mb_,
                          this->mb_.size ());
 }
@@ -53,9 +53,9 @@ Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
       this->ar_.read (this->mb_, this->mb_.size ());
     }
   else
-  {
-    ACE_Proactor::end_event_loop ();
-  }
+    {
+      ACE_Proactor::end_event_loop ();
+    }
 }
 
 int
@@ -76,9 +76,9 @@ int
 IPC_Server::init (int argc, ACE_TCHAR *argv[])
 {
   if (this->parse_args (argc, argv) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Opening %s\n"),
@@ -86,22 +86,21 @@ IPC_Server::init (int argc, ACE_TCHAR *argv[])
 
   // Initialize named pipe listener.
   if (this->open (ACE_SPIPE_Addr (this->rendezvous_.c_str ())) == -1)
-  {
-    ACE_ERROR_RETURN ((LM_ERROR,
-                       ACE_TEXT ("%p\n"),
-                       ACE_TEXT ("open")), 1);
-
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("%p\n"),
+                         ACE_TEXT ("open")), 1);
+    }
   // Register to receive shutdowns using this handler.
   else if (ACE_Reactor::instance ()->register_handler
       (SIGINT, this) == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   else
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 }
 
 int
@@ -166,22 +165,19 @@ IPC_Server::svc ()
       // its open() method (note no automatic restart if errno ==
       // EINTR).
       if (this->accept (&sh, nullptr) == -1)
-      {
-        ACE_ERROR_RETURN ((LM_ERROR,
-                           ACE_TEXT ("%p\n"),
-                           ACE_TEXT ("accept")),
-                          1);
-
-      // SH's destructor closes the stream implicitly but the
-      // listening endpoint stays open.
-      }
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("%p\n"),
+                             ACE_TEXT ("accept")),
+                            1);
+        }
       else
         {
           // Run single-threaded.
           if (this->n_threads_ <= 1)
-          {
-            run_reactor_event_loop (nullptr);
-          }
+            {
+              run_reactor_event_loop (nullptr);
+            }
           else
             {
               if (ACE_Thread_Manager::instance ()->spawn_n
@@ -189,12 +185,12 @@ IPC_Server::svc ()
                     run_reactor_event_loop,
                     nullptr,
                     THR_NEW_LWP) == -1)
-              {
-                ACE_ERROR_RETURN ((LM_ERROR,
-                                   ACE_TEXT ("%p\n"),
-                                   ACE_TEXT ("spawn_n")),
-                                  1);
-              }
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR,
+                                     ACE_TEXT ("%p\n"),
+                                     ACE_TEXT ("spawn_n")),
+                                    1);
+                }
 
               ACE_Thread_Manager::instance ()->wait ();
             }
@@ -210,6 +206,7 @@ IPC_Server::svc ()
           // ACE_Event_Handler, doesn't it seem possible to implement
           // a handle_signal() hook, and catch the signal there?
         }
+      // The handler's destructor closes its stream; the listener stays open.
     }
 
   /* NOTREACHED */
