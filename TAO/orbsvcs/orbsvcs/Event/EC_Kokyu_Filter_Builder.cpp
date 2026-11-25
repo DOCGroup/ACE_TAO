@@ -1,5 +1,6 @@
 #include "orbsvcs/Event/EC_Kokyu_Filter.h"
 #include "orbsvcs/Event_Service_Constants.h"
+#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Event/EC_Kokyu_Filter_Builder.h"
 #include "orbsvcs/Event/EC_Type_Filter.h"
 #include "orbsvcs/Event/EC_Conjunction_Filter.h"
@@ -53,7 +54,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
   for (CORBA::ULong i {}; i < qos.dependencies.length (); ++i)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "consumerqos[%d] event.header.type = %s,"
+                  "consumerqos[%d] event.header.type = %C,"
                   "rt_info = %d\n",
                   i,
                   designator (qos.dependencies[i].event.header.type),
@@ -116,7 +117,7 @@ TAO_EC_Kokyu_Filter_Builder::build (
       final_consumer_rep_name += "#rep";
 
 #ifdef EC_KOKYU_LOGGING
-      ORBSVCS_DEBUG ((LM_DEBUG, "about to create consumer rep %s\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "about to create consumer rep %C\n",
                   final_consumer_rep_name.c_str ()));
 #endif
 
