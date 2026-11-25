@@ -1626,6 +1626,39 @@ gai_strerror_test ()
   return 0;
 }
 
+// Check cleanup after a file-lock handle has been transferred to a stream.
+int
+flock_detached_handle_test ()
+{
+#if !defined (ACE_LACKS_MKSTEMP) && !defined (ACE_LACKS_FILELOCKS)
+  ACE_TCHAR filename[] = ACE_TEXT ("flock_detached_XXXXXX");
+  ACE_HANDLE const initial = ACE_OS::mkstemp (filename);
+  if (initial == ACE_INVALID_HANDLE)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("mkstemp failed\n")), -1);
+    }
+  ACE_OS::close (initial);
+
+  ACE_OS::ace_flock_t lock {};
+  if (ACE_OS::flock_init (&lock, O_RDWR, filename, 0600) != 0)
+    {
+      ACE_OS::unlink (filename);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("flock_init failed\n")), -1);
+    }
+  ACE_HANDLE const handle = lock.handle_;
+  lock.handle_ = ACE_INVALID_HANDLE;
+  ACE_OS::flock_destroy (&lock, 0);
+  bool const name_released = lock.lockname_ == nullptr;
+  int const close_result = ACE_OS::close (handle);
+  ACE_OS::unlink (filename);
+  if (!name_released || close_result != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Detached file lock cleanup failed\n")), -1);
+    }
+#endif
+  return 0;
+}
+
 int
 run_main (int, ACE_TCHAR *[])
 {
@@ -1642,6 +1675,12 @@ run_main (int, ACE_TCHAR *[])
 
   int status = 0;
   int result;
+
+  result = flock_detached_handle_test ();
+  if (result != 0)
+    {
+      status = result;
+    }
 
   result = strncpy_test ();
   if (result != 0)

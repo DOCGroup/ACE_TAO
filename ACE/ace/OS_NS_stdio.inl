@@ -159,20 +159,20 @@ ACE_OS::flock_destroy (ACE_OS::ace_flock_t *lock,
       // Close the handle.
       ACE_OS::close (lock->handle_);
       lock->handle_ = ACE_INVALID_HANDLE;
-      if (lock->lockname_ != nullptr)
+      if (unlink_file && lock->lockname_ != nullptr)
         {
-          if (unlink_file)
-            {
-              ACE_OS::unlink (lock->lockname_);
-            }
-#if defined (ACE_HAS_ALLOC_HOOKS)
-          ACE_Allocator::instance()->free (
-            static_cast<void *> (const_cast<ACE_TCHAR *> (lock->lockname_)));
-#else
-          ACE_OS::free (
-            static_cast<void *> (const_cast<ACE_TCHAR *> (lock->lockname_)));
-#endif /* ACE_HAS_ALLOC_HOOKS */
+          ACE_OS::unlink (lock->lockname_);
         }
+    }
+  if (lock->lockname_ != nullptr)
+    {
+#if defined (ACE_HAS_ALLOC_HOOKS)
+      ACE_Allocator::instance()->free (
+        static_cast<void *> (const_cast<ACE_TCHAR *> (lock->lockname_)));
+#else
+      ACE_OS::free (
+        static_cast<void *> (const_cast<ACE_TCHAR *> (lock->lockname_)));
+#endif /* ACE_HAS_ALLOC_HOOKS */
       lock->lockname_ = nullptr;
     }
   return 0;

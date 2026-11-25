@@ -60,6 +60,17 @@ namespace {
     {
       if (this->file_ != nullptr)
         {
+#if defined (ACE_LACKS_DUP) && !defined (ACE_WIN32)
+          if (this->file_lock_ != nullptr)
+            {
+              if (this->locked_)
+                {
+                  this->file_lock_->release ();
+                }
+              // The stream owns the lock's handle when it cannot be duplicated.
+              this->file_lock_->set_handle (ACE_INVALID_HANDLE);
+            }
+#endif
           close_file ();
         }
       this->file_lock_.reset ();

@@ -271,6 +271,11 @@ TAO::Storable_FlatFileStream::close()
 {
   ACE_OS::fflush(fl_);
 #ifndef ACE_WIN32
+# if defined (ACE_LACKS_DUP)
+  // The stream owns the lock's handle when it cannot be duplicated.
+  ACE_OS::flock_unlock (std::addressof (filelock_));
+  filelock_.handle_ = ACE_INVALID_HANDLE;
+# endif
   ACE_OS::flock_destroy (std::addressof (filelock_), 0);
 #endif
   ACE_OS::fclose (fl_);
