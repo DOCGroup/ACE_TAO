@@ -65,7 +65,7 @@ public:
   ACE_Task_Base &operator= (ACE_Task_Base const &) = delete;
   ACE_Task_Base &operator= (ACE_Task_Base &&) = delete;
 
-  explicit ACE_Task_Base (ACE_Thread_Manager * = nullptr);
+  ACE_Task_Base (ACE_Thread_Manager * = nullptr);
 
   ~ACE_Task_Base () override;
 

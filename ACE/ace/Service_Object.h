@@ -42,7 +42,7 @@ class ACE_Export ACE_Service_Object
     public ACE_Shared_Object
 {
 public:
-  explicit ACE_Service_Object (ACE_Reactor * = nullptr);
+  ACE_Service_Object (ACE_Reactor * = nullptr);
 
   ~ACE_Service_Object () override;
 

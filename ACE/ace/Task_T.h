@@ -47,7 +47,7 @@ public:
    * then we'll allocate one dynamically.  Otherwise, we'll use the
    * one passed as a parameter.
    */
-  explicit ACE_Task (ACE_Thread_Manager *thr_mgr = nullptr,
+  ACE_Task (ACE_Thread_Manager *thr_mgr = nullptr,
             ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> *mq = nullptr);
 
   ACE_Task (ACE_Task const &) = delete;

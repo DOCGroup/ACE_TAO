@@ -51,7 +51,7 @@ public:
 
   /// If @a fill == false then initialize the sigset_ to be empty, else
   /// full.
-  explicit ACE_Sig_Set (bool fill = false);
+  ACE_Sig_Set (bool fill = false);
 
   ~ACE_Sig_Set ();
 
@@ -222,7 +222,7 @@ public:
   /// This is kind of conditional Guard, needed when guard should be
   /// activated only when a specific condition met. When condition ==
   /// true (default), Guard is activated
-  explicit ACE_Sig_Guard (ACE_Sig_Set *mask = nullptr, bool condition = true);
+  ACE_Sig_Guard (ACE_Sig_Set *mask = nullptr, bool condition = true);
 
   /// Restore blocked signals.
   ~ACE_Sig_Guard ();

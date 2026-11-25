@@ -128,7 +128,7 @@ public:
   };
 
   /// Create an empty message.
-  explicit ACE_Message_Block (ACE_Allocator *message_block_allocator = nullptr);
+  ACE_Message_Block (ACE_Allocator *message_block_allocator = nullptr);
 
   /**
    * Create an ACE_Message_Block that owns the specified ACE_Data_Block

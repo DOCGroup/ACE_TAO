@@ -187,7 +187,7 @@ public:
    * of the add methods. This is referred to as the iterative method
    * of adding arguments to this object.
    */
-  explicit ACE_ARGV_T (bool substitute_env_args = true);
+  ACE_ARGV_T (bool substitute_env_args = true);
 
   ~ACE_ARGV_T ();
 

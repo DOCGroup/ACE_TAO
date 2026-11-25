@@ -38,7 +38,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Method_Request
 {
 public:
-  explicit ACE_Method_Request (unsigned long priority = 0);
+  ACE_Method_Request (unsigned long priority = 0);
 
   virtual ~ACE_Method_Request () = default;
 
