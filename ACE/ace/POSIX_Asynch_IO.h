@@ -515,7 +515,7 @@ protected:
  * @class ACE_POSIX_Asynch_Write_File
  *
  *     This class provides concrete implementation for
- *     <ACE_Asynch_Write_File> for POSIX platforms where the
+ *     @c ACE_Asynch_Write_File for POSIX platforms where the
  *     completion strategy for Proactor is based on AIOCB (AIO
  *     Control Blocks).
  */

@@ -241,7 +241,7 @@ public:
  * @brief This data structure is meant to be used within a method or
  * function...  It performs automatic aquisition and release of
  * a synchronization object.  Moreover, it ensures that the lock
- * is released even if a thread exits via <thr_exit>!
+ * is released even if a thread exits via @c thr_exit!
  */
 template <class ACE_LOCK>
 class ACE_TSS_Guard
@@ -355,9 +355,9 @@ private:
 /**
  * @class ACE_TSS_Read_Guard
  *
- * @brief This class is similar to class <ACE_TSS_Guard>, though it
+ * @brief This class is similar to class @c ACE_TSS_Guard, though it
  * acquires/releases a read lock automatically (naturally, the
- * <ACE_LOCK> it is instantiated with must support the
+ * @c ACE_LOCK it is instantiated with must support the
  * appropriate API).
  */
 template <class ACE_LOCK>

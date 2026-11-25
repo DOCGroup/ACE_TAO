@@ -36,7 +36,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * (char *). If string are used, care must be taken cause only
  * pointer copies are done and the string data is *not* copied.
  * The recorded time probes can then be printed by calling
- * <print_times>.  If you have used unsigned longs as event
+ * @c print_times.  If you have used unsigned longs as event
  * descriptions in any of your time probes, you must have
  * provided an event description table that maps the unsigned
  * longs to readable strings.  This map is a simple array of
@@ -45,7 +45,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * only used strings for the event description, this map is not
  * necessary.
  * Multiple maps can also be used to chunk up the time probes.
- * Each one can be added by calling <event_descriptions>.
+ * Each one can be added by calling @c event_descriptions.
  * Different tables are used internally by consulting the
  * minimum_id for each table.  It is up to the user to make sure
  * that multiple tables do not share the same event id range.
@@ -173,8 +173,8 @@ private:
 /**
  * @class ACE_Function_Timeprobe
  *
- * @brief Auto pointer like time probes. It will record <event> on
- * construction and <event + 1> on destruction.
+ * @brief Auto pointer like time probes. It will record @c event on
+ * construction and @c event plus one on destruction.
  */
 template <class Timeprobe>
 class ACE_Function_Timeprobe

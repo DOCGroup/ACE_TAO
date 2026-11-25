@@ -46,7 +46,7 @@ namespace ACE
 
       /**
        * This method builds an expression tree representing the
-       * constraint specified in <constraints>, and returns -1 with
+       * constraint specified in @a constraints, and returns -1 with
        * an error message if the constraint given has syntax errors or
        * semantic errors, such as mismatched types.
        */

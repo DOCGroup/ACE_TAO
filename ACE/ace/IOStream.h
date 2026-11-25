@@ -232,11 +232,11 @@ protected:
 
   /**
    * syncin is called when the input needs to be synced with the
-   * source file.  In a filebuf, this results in the <seek> system
+   * source file.  In a filebuf, this results in the @c seek system
    * call being used.  We can't do that on socket-like connections, so
    * this does basically nothing.  That's safe because we have a
    * separate read buffer to maintain the already-read data.  In a
-   * filebuf, the single common buffer is used forcing the <seek>
+   * filebuf, the single common buffer is used forcing the @c seek
    * call.
    */
   int syncin ();

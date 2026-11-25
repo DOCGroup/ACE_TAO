@@ -225,7 +225,7 @@
  *
  * @brief This is used to implement semaphores for platforms that support
  * POSIX pthreads, but do *not* support POSIX semaphores, i.e.,
- * it's a different type than the POSIX <sem_t>.
+ * it's a different type than the POSIX @c sem_t.
  */
 class ACE_Export ACE_sema_t
 {

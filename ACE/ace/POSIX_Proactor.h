@@ -491,7 +491,7 @@ class ACE_Export ACE_POSIX_SIG_Proactor : public ACE_POSIX_AIOCB_Proactor
 
 public:
   /**
-   * This constructor masks only the <ACE_SIGRTMIN>
+   * This constructor masks only the @c ACE_SIGRTMIN
    * real-time signal. Only this signal should be used to issue
    * asynchronous operations using this Proctor.
    */
@@ -520,10 +520,8 @@ public:
 
   /**
    * Block indefinitely until at least one event is dispatched.
-   * Dispatch a single set of events.  If <wait_time> elapses before
-   * any events occur, return 0.  Return 1 on success i.e., when a
-   * completion is dispatched, non-zero (-1) on errors and errno is
-   * set accordingly.
+   * Dispatch a single set of events. Return 1 when a completion is
+   * dispatched, or -1 on error with errno set accordingly.
    */
   int handle_events () override;
 

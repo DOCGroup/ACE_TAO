@@ -102,13 +102,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * ~(alignment - 1) = 1...110...0 = T2
  *
  * Notice that there is a multiple of @a alignment in the range
- * [<value>,<value> + T1], also notice that if
+ * [@c value,@c value + T1], also notice that if
  *
- * X = ( <value> + T1 ) & T2
+ * X = ( @c value + T1 ) & T2
  *
  * then
  *
- * <value> <= X <= <value> + T1
+ * @c value <= X <= @c value + T1
  *
  * because the & operator only changes the last bits, and since X is a
  * multiple of @a alignment (its last bits are zero) we have found the

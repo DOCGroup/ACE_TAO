@@ -34,9 +34,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS {
   // these are non-standard names...
 
-  /** @name Functions from <cctype>
+  /** @name Functions from &lt;cctype&gt;
    *
-   *  Included are the functions defined in <cctype> and their <cwctype>
+   *  Included are the functions defined in &lt;cctype&gt; and their &lt;cwctype&gt;
    *  equivalents.
    *
    *  Since they are often implemented as macros, we don't use the same name
