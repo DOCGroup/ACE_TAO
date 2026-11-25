@@ -308,6 +308,8 @@ namespace XMLSchema
     {
     }
 
+    ~IdentityProvider () override = default;
+
     bool before (XSCRT::IdentityProvider const &y) const override
     {
       return id_ < dynamic_cast<IdentityProvider const &> (y).id_;

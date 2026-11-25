@@ -48,6 +48,8 @@ public:
     {
     }
 
+    ~Unresolved_IDREF () = default;
+
     String const &get_message () const
     {
       return this->message_;
@@ -58,6 +60,7 @@ public:
   };
 
   ID_Map () = default;
+  ~ID_Map () = default;
   ID_Map (ID_Map const &) = delete;
   ID_Map &operator= (ID_Map const &) = delete;
   ID_Map (ID_Map &&) = delete;
