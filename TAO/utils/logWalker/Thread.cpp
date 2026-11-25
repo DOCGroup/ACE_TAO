@@ -243,8 +243,8 @@ Thread::swap_target ()
       else
         {
           ACE_ERROR ((LM_ERROR,
-                      "Thread::swap_target, target_dup_.id = %q, giop_target == nullptr\n",
-                      static_cast<ACE_INT64> (target_dup_->id())));
+                      "Thread::swap_target, target_dup_.id = %Ld, giop_target == nullptr\n",
+                      target_dup_->id()));
         }
     }
 }

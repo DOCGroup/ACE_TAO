@@ -181,16 +181,16 @@ run_main (int, ACE_TCHAR *[])
   errors +=
     check64 (ACE_TEXT ("ACE_SWAP_LONG_LONG(0x0123456789abcdef) is %Q%s"), ACE_SWAP_LONG_LONG (test_val_3), 0xefcdab8967452301);
 
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OS page size: %q\n"),
-              static_cast<ACE_INT64> (ACE_OS::getpagesize ())));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("OS page size: %Ld\n"),
+              ACE_OS::getpagesize ()));
 
 #if defined (_SC_PAGESIZE)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sysconf page size: %q\n"),
-              static_cast<ACE_INT64> (ACE_OS::sysconf (_SC_PAGESIZE))));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("sysconf page size: %Ld\n"),
+              ACE_OS::sysconf (_SC_PAGESIZE)));
 #endif /* _SC_PAGESIZE */
 #if defined (_SC_CLK_TCK)
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("clock ticks/sec = %q\n"),
-              static_cast<ACE_INT64> (ACE_OS::sysconf (_SC_CLK_TCK))));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("clock ticks/sec = %Ld\n"),
+              ACE_OS::sysconf (_SC_CLK_TCK)));
 #endif /* _SC_CLK_TCK */
 
   ACE_END_TEST;
