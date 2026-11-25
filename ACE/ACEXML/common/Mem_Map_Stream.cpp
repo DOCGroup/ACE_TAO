@@ -173,8 +173,8 @@ ACEXML_Mem_Map_Stream::open (Connector *connector,
   if (status == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%p %s %d\n",
-                         "Connect failed",
+                         "%p %C %d\n",
+                         ACE_TEXT ("Connect failed"),
                          addr.get_host_name (),
                          addr.get_port_number ()),
                         -1);

@@ -749,7 +749,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       Client client_instance (addr, remote_addr);
 
       ACE_DEBUG ((LM_DEBUG,
-                  "\nSending %d byte packets to %s:%d "
+                  "\nSending %d byte packets to %C:%d "
                   "with so_bufsz = %d\n\n",
                   bufsz,
                   addr.get_host_name (),

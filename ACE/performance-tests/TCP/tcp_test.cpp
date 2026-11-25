@@ -335,7 +335,7 @@ Server::Server (ACE_INET_Addr const &addr)
     ACE_DEBUG ((LM_DEBUG, "%p\n", "open"));
   }
 
-  ACE_DEBUG ((LM_DEBUG, "Listening on %s:%d\n",
+  ACE_DEBUG ((LM_DEBUG, "Listening on %C:%d\n",
               addr.get_host_name (),
               addr.get_port_number ()));
   if (acceptor.accept (this->endpoint_) == -1)
@@ -732,14 +732,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
   ++get_opt.opt_ind ();
 
-  ACE_DEBUG ((LM_DEBUG, "Connecting to %s:%d\n",
+  ACE_DEBUG ((LM_DEBUG, "Connecting to %C:%d\n",
               remote_addr.get_host_name (),
               remote_addr.get_port_number ()));
 
   Client client_instance (remote_addr);
 
   ACE_DEBUG ((LM_DEBUG,
-              "\nSending %d byte packets to %s:%d "
+              "\nSending %d byte packets to %C:%d "
               "with so_bufsz = %d\n\n",
               bufsz,
               addr.get_host_name (),

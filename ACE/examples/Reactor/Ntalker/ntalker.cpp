@@ -100,7 +100,7 @@ Handler::handle_input (ACE_HANDLE const h)
       if (result != -1)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "received datagram from host %s on port %d bytes = %b\n",
+                      "received datagram from host %C on port %d bytes = %b\n",
                       remote_addr.get_host_name (),
                       remote_addr.get_port_number (),
                       result));

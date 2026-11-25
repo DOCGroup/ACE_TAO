@@ -336,7 +336,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
         }
 
       ORBSVCS_ERROR ((LM_ERROR,
-                  "Message was received from [%s:%s:%d]\n",
+                  "Message was received from [%C:%C:%d]\n",
                   from.get_host_name (),
                   from.get_host_addr (),
                   from.get_port_number()));
