@@ -21,3 +21,10 @@ project(Thread Pool Reactor SSL Test) : acetest, ssl {
   }
 }
 
+project(SSL SOCK Stream Close Test) : acetest, ssl {
+  exename = SSL_SOCK_Stream_Close_Test
+  Source_Files {
+    SSL_SOCK_Stream_Close_Test.cpp
+  }
+}
+
