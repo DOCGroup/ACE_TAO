@@ -58,7 +58,7 @@ Consumer_Handler::read_ior (ACE_TCHAR const *filename)
   if (data == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to read ior: %p\n"),
+                         "Unable to read ior: %m\n"),
                         -1);
     }
 

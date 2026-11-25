@@ -259,14 +259,14 @@ Options::read_ior (ACE_TCHAR *filename)
   if (!ior)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to allocate memory to read ior: %p\n"),
+                         "Unable to allocate memory to read ior: %m\n"),
                         -1);
     }
   char * const copy = CORBA::string_dup (ior.get ());
   if (copy == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to duplicate IOR string: %p\n"),
+                         "Unable to duplicate IOR string: %m\n"),
                         -1);
     }
   this->ior_ = copy;

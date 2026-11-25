@@ -84,7 +84,7 @@ PP_Test_Client::read_ior (ACE_TCHAR const *filename)
   if (!data)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to allocate memory to read ior: %p\n"),
+                         "Unable to allocate memory to read ior: %m\n"),
                         -1);
     }
 

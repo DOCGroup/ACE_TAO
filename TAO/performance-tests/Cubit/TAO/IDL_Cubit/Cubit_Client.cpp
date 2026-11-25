@@ -192,7 +192,7 @@ Cubit_Client::read_ior (const ACE_TCHAR *filename)
   if (!data)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to allocate memory to read ior: %p\n"),
+                         "Unable to allocate memory to read ior: %m\n"),
                         -1);
     }
 

@@ -53,7 +53,7 @@ CC_Client::read_ior (ACE_TCHAR *filename)
   if (this->cc_factory_key_ == nullptr)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "Unable to allocate memory to read ior: %p\n"),
+                         "Unable to allocate memory to read ior: %m\n"),
                         -1);
     }
    return 0;
