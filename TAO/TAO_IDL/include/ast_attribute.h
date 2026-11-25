@@ -112,8 +112,8 @@ public:
 private:
   // Data.
 
+  /// Whether the attribute is read-only.
   bool const pd_readonly;
-  // Is attribute read-only?
 
   UTL_ExceptList_Owner pd_get_exceptions;
   UTL_ExceptList_Owner pd_set_exceptions;

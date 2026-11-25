@@ -106,8 +106,8 @@ public:
   bool ifr_added () const;
   void ifr_added (bool val);
 
+  /// Generate the scoped name if the constant's type is an enum.
   UTL_ScopedName *enum_full_name ();
-  // If our type is enum, we have to generate the scoped name.
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -123,14 +123,14 @@ public:
   bool annotatable () const override { return true; }
 
 protected:
+  /// The value.
   std::unique_ptr<AST_Expression> pd_constant_value;
-  // The value.
 
+  /// The expression type.
   AST_Expression::ExprType pd_et;
-  // Its expression type.
 
+  /// Whether this node has been added to the IFR.
   bool ifr_added_ {};
-  // Has this node been added to the IFR?
 };
 
 #endif           // _AST_CONSTANT_AST_CONSTANT_HH

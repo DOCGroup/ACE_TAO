@@ -111,11 +111,11 @@ public:
 private:
   // Data.
 
+  /// Label kind.
   UnionLabel pd_label_kind;
-  // Label kind.
 
+  /// Label expression.
   std::unique_ptr<AST_Expression> pd_label_val;
-  // Label expression.
 };
 
 #endif           // _AST_UNION_LABEL_AST_UNION_LABEL_HH

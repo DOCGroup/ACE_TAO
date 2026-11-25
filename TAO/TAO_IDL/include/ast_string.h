@@ -106,11 +106,11 @@ public:
 private:
   // Data.
 
+  /// String maximum size.
   std::unique_ptr<AST_Expression> pd_max_size;
-  // String maximum size.
 
+  /// Width of the string.
   size_t pd_width;
-  // Width of string.
 };
 
 #endif           // _AST_STRING_AST_STRING_HH
