@@ -87,9 +87,9 @@ protected:
 class TAO_RTEvent_Serv_Export TAO_EC_Queue : public ACE_Message_Queue<ACE_SYNCH>
 {
 public:
-  explicit TAO_EC_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
-                         size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
-                         ACE_Notification_Strategy * = nullptr);
+  TAO_EC_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
+                size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
+                ACE_Notification_Strategy * = nullptr);
   TAO_EC_Queue (const TAO_EC_Queue&) = delete;
   TAO_EC_Queue (TAO_EC_Queue&&) = delete;
   TAO_EC_Queue& operator= (const TAO_EC_Queue&) = delete;
@@ -174,7 +174,7 @@ public:
 class TAO_RTEvent_Serv_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispatch_Command
 {
 public:
-  explicit TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
+  TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
   TAO_EC_Shutdown_Task_Command (const TAO_EC_Shutdown_Task_Command&) = delete;
   TAO_EC_Shutdown_Task_Command (TAO_EC_Shutdown_Task_Command&&) = delete;
   TAO_EC_Shutdown_Task_Command& operator= (const TAO_EC_Shutdown_Task_Command&) = delete;
