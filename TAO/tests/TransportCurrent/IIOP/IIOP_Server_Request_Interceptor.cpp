@@ -19,6 +19,35 @@ namespace
       reinterpret_cast<char const *> (data.get_buffer ()), data.length ());
     return ACE_OS::atoi (text.c_str ());
   }
+
+  bool test_request_id ()
+  {
+    CORBA::OctetSeq data;
+    if (request_id (data) != 0)
+      {
+        return false;
+      }
+
+    data.length (3);
+    data[0] = '1';
+    data[1] = '2';
+    data[2] = '3';
+    if (request_id (data) != 123)
+      {
+        return false;
+      }
+
+    data[0] = '-';
+    data[1] = '4';
+    data[2] = '2';
+    if (request_id (data) != -42)
+      {
+        return false;
+      }
+
+    data[1] = 0;
+    return request_id (data) == 0;
+  }
 }
 
 namespace Test {
@@ -148,6 +177,13 @@ namespace Test {
   IIOP_Server_Request_Interceptor::self_test ()
   {
     CORBA::String_var name (this->name ());
+    if (!test_request_id ())
+      {
+        ACE_ERROR ((LM_ERROR, ACE_TEXT ("%C: request context parsing failed\n"),
+                    name.in ()));
+        return false;
+      }
+
     bool has_remaining_endpoints = false;
     for (size_t count = 0;
          count < this->endPoints_.size ();
