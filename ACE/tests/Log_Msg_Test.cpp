@@ -16,6 +16,7 @@
 #include "ace/streams.h"
 
 #include "ace/FILE_Connector.h"
+#include <climits>
 #include <memory>
 #include "ace/Log_Msg_Callback.h"
 #include "ace/Log_Record.h"
@@ -651,6 +652,7 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
     {
       const ACE_TCHAR *b = log_record.msg_data ();
       const ACE_TCHAR *expect {};
+      ACE_TCHAR integer_expected[64];
 
       ++this->tests_;
 
@@ -720,6 +722,24 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
           expect = this->expected_invalid_handle_;
           b += 3;
         }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l9:"), 3) == 0)
+        {
+          ACE_OS::snprintf (integer_expected, 64, ACE_TEXT ("%ld"), LONG_MAX);
+          expect = integer_expected;
+          b += 3;
+        }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l10:"), 4) == 0)
+        {
+          ACE_OS::snprintf (integer_expected, 64, ACE_TEXT ("%lu"), ULONG_MAX);
+          expect = integer_expected;
+          b += 4;
+        }
+      else if (ACE_OS::strncmp (b, ACE_TEXT ("l11:"), 4) == 0)
+        {
+          ACE_OS::snprintf (integer_expected, 64, ACE_TEXT ("%ld"), LONG_MIN);
+          expect = integer_expected;
+          b += 4;
+        }
       else
         {
           ACE_ERROR ((LM_ERROR,
@@ -756,9 +776,9 @@ Log_Spec_Verify::result ()
                   this->fail_));
     }
 
-  if (this->tests_ != 21)
+  if (this->tests_ != 24)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 21!\n"),
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Expected number of tests run is %d, not 24!\n"),
                   this->tests_));
       ++this->fail_;
     }
@@ -859,6 +879,9 @@ test_format_specs ()
   verifier.expected_handles (expected_handle, expected_invalid_handle);
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l7:%H"), handle));
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l8:%H"), ACE_INVALID_HANDLE));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l9:%Ld"), LONG_MAX));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l10:%Lu"), ULONG_MAX));
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("l11:%Ld"), LONG_MIN));
 
   ACE_LOG_MSG->msg_ostream (ace_file_stream::instance ()->output_file ());
   ACE_LOG_MSG->msg_callback (nullptr);

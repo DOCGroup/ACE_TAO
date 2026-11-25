@@ -1203,6 +1203,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           int       wp = 0;      // Width/precision extracted from args
           bool      done = false;
           bool      skip_nul_locate = false;
+          unsigned int long_modifiers = 0;
           int       this_len = 0;    // How many chars s[n]printf wrote
 
 #ifdef ACE_LOG_MSG_USE_STRERROR_R
@@ -1256,6 +1257,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                   break;
                 case 'L':
                   *fp++ = 'l';
+                  ++long_modifiers;
                   done = false;
                   break;
 
@@ -2149,7 +2151,24 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case 'u': case 'x': case 'X':
                   fp[0] = *format_str;
                   fp[1] = '\0';
-                  if (can_check)
+                  if (long_modifiers == 1)
+                    {
+                      if (*format_str == 'd' || *format_str == 'i')
+                        {
+                          long const value = va_arg (argp, long);
+                          this_len = can_check
+                            ? ACE_OS::snprintf (bp, bspace, format, value)
+                            : ACE_OS::sprintf (bp, format, value);
+                        }
+                      else
+                        {
+                          unsigned long const value = va_arg (argp, unsigned long);
+                          this_len = can_check
+                            ? ACE_OS::snprintf (bp, bspace, format, value)
+                            : ACE_OS::sprintf (bp, format, value);
+                        }
+                    }
+                  else if (can_check)
                     {
                       this_len = ACE_OS::snprintf
                         (bp, bspace, format, va_arg (argp, int));
