@@ -71,6 +71,12 @@ namespace {
       if (this->file_ != nullptr)
         {
           lock ();
+#if !defined (ACE_WIN32)
+          if (!this->locked_)
+            {
+              return nullptr;
+            }
+#endif
         }
 
       return this->file_;
@@ -105,8 +111,6 @@ namespace {
                                                           flags_, 0666,
                                                           unlink_in_destructor);
 
-      // Truncating output so this will not allow reading then writing
-      ACE_OS::ftruncate (this->file_lock_->get_handle (), 0);
       // The stream and the file lock each own their descriptor.
       ACE_HANDLE const stream_handle = ACE_OS::dup (this->file_lock_->get_handle ());
       if (stream_handle != ACE_INVALID_HANDLE)
@@ -174,6 +178,11 @@ namespace {
         }
 
       this->locked_ = res == 0;
+      if (this->locked_ && (this->flags_ & (O_RDWR | O_WRONLY)) != 0
+          && ACE_OS::ftruncate (this->file_lock_->get_handle (), 0) != 0)
+        {
+          this->locked_ = false;
+        }
 
       if (!this->locked_)
         {
@@ -403,8 +412,24 @@ Shared_Backing_Store::persistent_remove (const ACE_CString& name,
 
   const ACE_TString fname = this->filename_ + uid.unique_filename;
   {
-    // take the lock, then remove the file
-    Lockable_File file(fname, O_WRONLY, true);
+    // Hold the file lock while removing the file on platforms that support it.
+    Lockable_File file (fname, O_WRONLY);
+    if (file.get_file () == nullptr)
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) Could not lock file %s\n"),
+                               fname.c_str ()), -1);
+      }
+#if defined (ACE_WIN32)
+    // Windows does not allow unlinking an open file.
+    file.release ();
+#endif
+    if (ACE_OS::unlink (fname.c_str ()) != 0)
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("(%P|%t) Could not remove file %s\n"),
+                               fname.c_str ()), -1);
+      }
   }
   listing_lf.release();
 
