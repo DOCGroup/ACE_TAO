@@ -48,11 +48,13 @@ public:
 
   /**
    * Populate @a mprofile with profiles. Profiles are created for
-   * selected acceptors (endpoints) in @a acceptors.
+   * selected acceptors (endpoints) in the range from @a acceptors_begin
+   * to @a acceptors_end.
    */
   virtual int fill_profile (TAO::ObjectKey const &object_key,
                             TAO_MProfile &mprofile,
-                            TAO_AcceptorSet const &acceptors,
+                            TAO_Acceptor **acceptors_begin,
+                            TAO_Acceptor **acceptors_end,
                             CORBA::Short priority = TAO_INVALID_PRIORITY) = 0;
 
   /// Encodes the endpoints in the profiles into the TAO_TAG_ENDPOINTS

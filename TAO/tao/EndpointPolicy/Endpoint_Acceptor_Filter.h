@@ -43,7 +43,8 @@ public:
   /// policy.
   int fill_profile (TAO::ObjectKey const &object_key,
                     TAO_MProfile &mprofile,
-                    TAO_AcceptorSet const &acceptors,
+                    TAO_Acceptor **acceptors_begin,
+                    TAO_Acceptor **acceptors_end,
                     CORBA::Short priority = TAO_INVALID_PRIORITY) override;
 
   TAO_Endpoint_Acceptor_Filter () = delete;

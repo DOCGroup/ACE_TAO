@@ -5,7 +5,6 @@
 #include "tao/Transport_Acceptor.h"
 #include "tao/MProfile.h"
 #include "tao/Profile.h"
-#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -19,7 +18,8 @@ int
 TAO_Server_Protocol_Acceptor_Filter::fill_profile (
   TAO::ObjectKey const &object_key,
   TAO_MProfile &mprofile,
-  TAO_AcceptorSet const &acceptors,
+  TAO_Acceptor **acceptors_begin,
+  TAO_Acceptor **acceptors_end,
   CORBA::Short priority)
 {
   // RTCORBA 1.0, Section 4.15.1: ServerProtocolPolicy determines
@@ -28,13 +28,16 @@ TAO_Server_Protocol_Acceptor_Filter::fill_profile (
     {
       CORBA::ULong const protocol_type = this->protocols_[j].protocol_type;
 
-      for (std::unique_ptr<TAO_Acceptor> const &acceptor : acceptors)
-        if (acceptor->tag () == protocol_type &&
-            (acceptor->create_profile (object_key,
-                                          mprofile,
-                                          priority) == -1))
-          {
-          return -1;
+      for (TAO_Acceptor **acceptor = acceptors_begin;
+           acceptor != acceptors_end; ++acceptor)
+        {
+          if ((*acceptor)->tag () == protocol_type &&
+              (*acceptor)->create_profile (object_key,
+                                           mprofile,
+                                           priority) == -1)
+            {
+              return -1;
+            }
         }
     }
 

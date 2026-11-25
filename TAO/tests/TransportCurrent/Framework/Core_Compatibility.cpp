@@ -1,7 +1,7 @@
 /**
  * @file Core_Compatibility.cpp
  *
- * Verify copy behavior of TAO transport-related extension interfaces.
+ * Verify source compatibility of TAO transport-related interfaces.
  */
 
 #include "tao/Acceptor_Filter.h"
@@ -12,9 +12,18 @@
 #include "tao/Service_Context_Handler.h"
 
 #include <type_traits>
+#include <utility>
 
 namespace
 {
+  struct Legacy_Acceptor_Filter : TAO_Acceptor_Filter
+  {
+    int fill_profile (TAO::ObjectKey const &, TAO_MProfile &,
+                      TAO_Acceptor **, TAO_Acceptor **,
+                      CORBA::Short) override;
+    int encode_endpoints (TAO_MProfile &) override;
+  };
+
   struct Object_Adapter : TAO_Adapter
   {
     void open () override;
@@ -86,4 +95,7 @@ namespace
   static_assert (std::is_move_assignable<TAO_Default_Acceptor_Filter>::value);
   static_assert (std::is_copy_constructible<Object_Adapter>::value);
   static_assert (std::is_move_assignable<Object_Adapter>::value);
+  static_assert (!std::is_abstract<Legacy_Acceptor_Filter>::value);
+  static_assert (std::is_same<decltype (std::declval<TAO_Acceptor_Registry &> ().begin ()),
+                              TAO_AcceptorSetIterator>::value);
 }
