@@ -57,23 +57,30 @@ TAO_UIPMC_Protocol_Factory::init (int argc,
 
   while (arg_shifter.is_anything_left ())
     {
-  ACE_TCHAR const *current_arg {};
-
       // This option lets you override the default
-      if ((current_arg = arg_shifter.get_the_parameter
-                          (ACE_TEXT ("-ORBListenOnAll"))) != nullptr)
+      ACE_TCHAR const *current_arg =
+        arg_shifter.get_the_parameter (ACE_TEXT ("-ORBListenOnAll"));
+      if (current_arg != nullptr)
         {
           this->listen_on_all_ = ACE_OS::atoi (current_arg) != 0;
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                               (ACE_TEXT ("-ORBListenerInterfaces"))) != nullptr ||
-               (current_arg = arg_shifter.get_the_parameter
-                               (ACE_TEXT ("-ORBListenerInterface"))) != nullptr ||
-               (current_arg = arg_shifter.get_the_parameter
-                               (ACE_TEXT ("-ORBListenInterfaces"))) != nullptr ||
-               (current_arg = arg_shifter.get_the_parameter
-                               (ACE_TEXT ("-ORBListenInterface"))) != nullptr)
+
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBListenerInterfaces"));
+      if (current_arg == nullptr)
+        {
+          current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBListenerInterface"));
+        }
+      if (current_arg == nullptr)
+        {
+          current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBListenInterfaces"));
+        }
+      if (current_arg == nullptr)
+        {
+          current_arg = arg_shifter.get_the_parameter (ACE_TEXT ("-ORBListenInterface"));
+        }
+      if (current_arg != nullptr)
         {
           if (0 == ACE_OS::strcasecmp (current_arg, ACE_TEXT ("CopyPreferredInterfaces")) ||
               0 == ACE_OS::strcasecmp (current_arg, ACE_TEXT ("CopyPreferredInterface")))
