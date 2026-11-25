@@ -57,7 +57,7 @@ public:
   Reference_Count remove_reference ();
 #endif
 
-  explicit TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = nullptr);
+  TAO_IIOP_Connection_Handler (ACE_Thread_Manager * = nullptr);
 
   explicit TAO_IIOP_Connection_Handler (TAO_ORB_Core *orb_core);
 

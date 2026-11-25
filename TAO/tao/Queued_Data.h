@@ -41,7 +41,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Export TAO_Queued_Data
 {
 public:
-  explicit TAO_Queued_Data (ACE_Allocator *alloc = nullptr);
+  TAO_Queued_Data (ACE_Allocator *alloc = nullptr);
 
   /// Borrow the message block \a mb; the caller retains ownership and controls its lifetime.
   explicit TAO_Queued_Data (ACE_Message_Block *mb, ACE_Allocator *alloc = nullptr);

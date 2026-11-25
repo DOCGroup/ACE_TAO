@@ -49,7 +49,7 @@ using TAO_PHandle = CORBA::ULong;
 class TAO_Export TAO_MProfile
 {
 public:
-  explicit TAO_MProfile (CORBA::ULong sz = 0);
+  TAO_MProfile (CORBA::ULong sz = 0);
 
   /**
    * Copies the used profiles from @a mprofiles and rewinds the current
