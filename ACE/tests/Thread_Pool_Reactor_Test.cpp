@@ -194,7 +194,7 @@ svr_worker (void *)
   if (result == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "(%t) Error handling events: %p\n"),
+                         "(%t) Error handling events: %m\n"),
                         0);
     }
 
@@ -219,7 +219,7 @@ cli_worker (void *arg)
       if (connect.connect (stream, addr) < 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      "(%t) connect: %p\n"));
+                      "(%t) connect: %m\n"));
           continue;
         }
 
@@ -233,7 +233,7 @@ cli_worker (void *arg)
                              (len + 1) * sizeof (ACE_TCHAR)) == -1)
             {
               ACE_ERROR ((LM_ERROR,
-                          "(%t) send_n: %p\n"));
+                          "(%t) send_n: %m\n"));
               continue;
             }
           ACE_OS::sleep (delay);
@@ -274,7 +274,7 @@ worker (void *)
   if (connect.connect (stream, addr) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%t) Error while connecting: %p\n"));
+                  "(%t) Error while connecting: %m\n"));
     }
 
   const ACE_TCHAR *sbuf = ACE_TEXT ("\011shutdown");
@@ -286,7 +286,7 @@ worker (void *)
   if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%t) send_n: %p\n"));
+                  "(%t) send_n: %m\n"));
     }
 
   stream.close ();
