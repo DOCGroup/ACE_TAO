@@ -24,9 +24,9 @@
 
 /// Implements the Web_Server::Iterator_Factory interface.
 ///
-/// This class registers a client-side <Callback> object with the Content
-/// Server, which is implemented by a <Callback_Handler> for each requested
-/// file. register_callback() creates a <Callback_Handler> that pushes data
+/// This class registers a client-side @c Callback object with the Content
+/// Server, which is implemented by a @c Callback_Handler for each requested
+/// file. register_callback() creates a @c Callback_Handler that pushes data
 /// chunks asynchronously to the client. This allows the Content Server to
 /// service multiple file requests concurrently without application-level
 /// threads.
@@ -41,9 +41,9 @@ public:
   Push_Iterator_Factory_i& operator= (Push_Iterator_Factory_i&&) = delete;
 
   /**
-   * This registration method passes a <Callback> that the Web server
-   * uses to ``push'' data associated with <pathname> one ``chunk'' at
-   * a time.  The <metadata> reports information about the <pathname>.
+   * This registration method passes a @c Callback that the Web server
+   * uses to ``push'' data associated with @a pathname one ``chunk'' at
+   * a time.  The returned metadata reports information about the @a pathname.
    */
   Web_Server::Metadata_Type *register_callback
     (char const *pathname,

@@ -42,10 +42,10 @@ public:
   Iterator_Factory_i& operator= (Iterator_Factory_i&&) = delete;
 
   /**
-   * This factory method returns a <Content_Iterator> that can be used
-   * to read the <contents> associated with <pathname> one ``chunk''
-   * at a time.  The <metadata> reports information about the
-   * <contents>.
+   * This factory method returns a @c Content_Iterator that can be used
+   * to read the @a contents associated with @a pathname one ``chunk''
+   * at a time.  The @a metadata reports information about the
+   * @a contents.
    */
   void get_iterator (char const *pathname,
                      Web_Server::Content_Iterator_out contents,
