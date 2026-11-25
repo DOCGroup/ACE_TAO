@@ -84,7 +84,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
       {
         ACE_ERROR ((LM_ERROR,
                     ACE_TEXT ("%s failed get_host_addr() check\n")
-                    ACE_TEXT ("%s != %s\n"),
+                    ACE_TEXT ("%C != %s\n"),
                     primary_ipv6,
                     addr.get_host_addr (),
                     primary_ipv6));

@@ -194,7 +194,7 @@ int run_main (int, ACE_TCHAR *[])
                                LINK_LOCAL_ADDR))
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("IPv6 get_host_addr failed: %s != %s\n"),
+                      ACE_TEXT ("IPv6 get_host_addr failed: %C != %s\n"),
                       link_local_addr.get_host_addr (),
                       LINK_LOCAL_ADDR));
           status = 1;

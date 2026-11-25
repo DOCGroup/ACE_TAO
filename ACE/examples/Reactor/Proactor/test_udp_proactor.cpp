@@ -177,7 +177,7 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
   ACE_DEBUG ((LM_DEBUG, "%s = %B\n", "bytes_transfered", result.bytes_transferred ()));
   ACE_INET_Addr peerAddr;
   result.remote_address (peerAddr);
-  ACE_DEBUG ((LM_DEBUG, "%s = %s:%d\n", "peer_address", peerAddr.get_host_addr (), peerAddr.get_port_number ()));
+  ACE_DEBUG ((LM_DEBUG, "%C = %C:%d\n", "peer_address", peerAddr.get_host_addr (), peerAddr.get_port_number ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "flags", result.flags ()));
   ACE_DEBUG ((LM_DEBUG, "%s = %@\n", "act", const_cast<void *> (result.act ())));
   ACE_DEBUG ((LM_DEBUG, "%s = %d\n", "success", result.success ()));

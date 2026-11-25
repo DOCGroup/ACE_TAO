@@ -465,7 +465,7 @@ MCT_Config::dump () const
   // Note that this call to get_host_addr is the non-reentrant
   // version, but it's okay for us.
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("\tgroups_start_ = %s:%d\n"),
+              ACE_TEXT ("\tgroups_start_ = %C:%d\n"),
               this->group_start_.get_host_addr (),
               this->group_start_.get_port_number ()));
 

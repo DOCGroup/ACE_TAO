@@ -951,7 +951,7 @@ is_ip_address_local (char const * const ip_to_bind)
   for (size_t i = 0; i < how_many; ++i)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("\t%s\n"),
+                  ACE_TEXT ("\t%C\n"),
                   the_addr_array[i].get_host_addr ()));
     }
 

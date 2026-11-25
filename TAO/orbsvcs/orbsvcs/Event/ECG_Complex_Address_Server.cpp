@@ -202,7 +202,7 @@ TAO_ECG_Complex_Address_Server::get_address (
 void
 TAO_ECG_Complex_Address_Server::dump_content ()
 {
-  ORBSVCS_DEBUG ((LM_DEBUG, "Default address: %s:%d\n",
+  ORBSVCS_DEBUG ((LM_DEBUG, "Default address: %C:%d\n",
               this->default_addr_.get_host_addr (),
               this->default_addr_.get_port_number ()));
 
@@ -211,7 +211,7 @@ TAO_ECG_Complex_Address_Server::dump_content ()
        ++iter)
     {
       MAP::ENTRY & entry = *iter;
-      ORBSVCS_DEBUG ((LM_DEBUG, "%d --> %s:%d\n",
+      ORBSVCS_DEBUG ((LM_DEBUG, "%d --> %C:%d\n",
                   entry.ext_id_,
                   this->default_addr_.get_host_addr (),
                   this->default_addr_.get_port_number ()));
