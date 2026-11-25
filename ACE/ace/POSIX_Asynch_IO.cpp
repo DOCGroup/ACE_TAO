@@ -96,9 +96,9 @@ ACE_POSIX_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor_impl)
   ACE_POSIX_Proactor *posix_proactor = dynamic_cast<ACE_POSIX_Proactor *> (proactor_impl);
 
   if (posix_proactor == nullptr)
-  {
-    ACELIB_ERROR_RETURN ((LM_ERROR, "Dynamic cast to POSIX Proactor failed\n"), -1);
-  }
+    {
+      ACELIB_ERROR_RETURN ((LM_ERROR, "Dynamic cast to POSIX Proactor failed\n"), -1);
+    }
 
   // Post myself.
   return posix_proactor->post_completion (this);
@@ -147,14 +147,14 @@ ACE_POSIX_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
     {
       ACE_Handler *handler = handler_proxy.get ()->handler ();
       if (handler != nullptr)
-      {
-        this->handle_ = handler->handle ();
-      }
+        {
+          this->handle_ = handler->handle ();
+        }
     }
   if (this->handle_ == ACE_INVALID_HANDLE)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
 #if 0
   // @@ If <proactor> is 0, let us not bother about getting this
@@ -179,9 +179,9 @@ int
 ACE_POSIX_Asynch_Operation::cancel ()
 {
   if (!posix_proactor_)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   return posix_proactor_->cancel_aio (this->handle_);
 }
 
@@ -266,9 +266,9 @@ ACE_POSIX_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_read_stream (result);
-  }
+    {
+      handler->handle_read_stream (result);
+    }
 }
 
 ACE_POSIX_Asynch_Read_Stream_Result::~ACE_POSIX_Asynch_Read_Stream_Result () = default;
@@ -289,9 +289,9 @@ ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
 {
   size_t const space = message_block.space ();
   if (bytes_to_read > space)
-  {
-    bytes_to_read=space;
-  }
+    {
+      bytes_to_read=space;
+    }
 
   if (bytes_to_read == 0)
     {
@@ -387,9 +387,9 @@ ACE_POSIX_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_write_stream (result);
-  }
+    {
+      handler->handle_write_stream (result);
+    }
 }
 
 ACE_POSIX_Asynch_Write_Stream_Result::~ACE_POSIX_Asynch_Write_Stream_Result () = default;
@@ -501,9 +501,9 @@ ACE_POSIX_Asynch_Read_File_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_read_file (result);
-  }
+    {
+      handler->handle_read_file (result);
+    }
 }
 
 ACE_POSIX_Asynch_Read_File_Result::~ACE_POSIX_Asynch_Read_File_Result () = default;
@@ -633,9 +633,9 @@ ACE_POSIX_Asynch_Write_File_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_write_file (result);
-  }
+    {
+      handler->handle_write_file (result);
+    }
 }
 
 ACE_POSIX_Asynch_Write_File_Result::~ACE_POSIX_Asynch_Write_File_Result  () = default;
@@ -779,9 +779,9 @@ ACE_POSIX_Asynch_Accept_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_accept (result);
-  }
+    {
+      handler->handle_accept (result);
+    }
 }
 
 ACE_POSIX_Asynch_Accept_Result::~ACE_POSIX_Asynch_Accept_Result () = default;
@@ -924,9 +924,9 @@ ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
     result_owner.release ();
 
     if (this->result_queue_.size () > 1)
-    {
-      return 0;
-    }
+      {
+        return 0;
+      }
   }
 
   // If this is the only item, then it means there the set was empty
@@ -964,9 +964,9 @@ ACE_POSIX_Asynch_Accept::cancel_uncompleted (int flg_notify)
       this->result_queue_.dequeue_head (result);
 
       if (result == nullptr)
-      {
-        break;
-      }
+        {
+          break;
+        }
 
       void (*result_deleter) (ACE_POSIX_Asynch_Accept_Result *) =
         [] (ACE_POSIX_Asynch_Accept_Result *result)
@@ -1073,9 +1073,9 @@ ACE_POSIX_Asynch_Accept::close ()
     }
 
   if (this->handle_ == ACE_INVALID_HANDLE)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   ACE_Asynch_Pseudo_Task & task =
     this->posix_proactor ()->get_asynch_pseudo_task ();
@@ -1243,9 +1243,9 @@ ACE_POSIX_Asynch_Connect_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_connect (result);
-  }
+    {
+      handler->handle_connect (result);
+    }
 }
 
 ACE_POSIX_Asynch_Connect_Result::~ACE_POSIX_Asynch_Connect_Result () = default;
@@ -1285,9 +1285,9 @@ ACE_POSIX_Asynch_Connect::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
   ACE_TRACE ("ACE_POSIX_Asynch_Connect::open");
 
   if (this->flg_open_)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   //int result =
   ACE_POSIX_Asynch_Operation::open (handler_proxy,
@@ -1356,9 +1356,9 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
   connect_handle = result->connect_handle ();
 
   if (rc != 0)
-  {
-    return post_result (result_owner.release (), true);
-  }
+    {
+      return post_result (result_owner.release (), true);
+    }
 
   //  Enqueue result we will wait for completion
   {
@@ -1434,9 +1434,9 @@ int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * res
   const ACE_HANDLE handle = result->connect_handle ();
 
   if (handle != ACE_INVALID_HANDLE)
-  {
-    ACE_OS::closesocket (handle);
-  }
+    {
+      ACE_OS::closesocket (handle);
+    }
 
   return -1;
 }
@@ -1531,14 +1531,14 @@ ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
       if (rc < 0)  // failure
         {
           if (errno == EWOULDBLOCK || errno == EINPROGRESS)
-          {
-            return 0; // connect started
-          }
+            {
+              return 0; // connect started
+            }
 
           if (errno == EINTR)
-          {
-            continue;
-          }
+            {
+              continue;
+            }
 
           result->set_error (errno);
         }
@@ -1817,9 +1817,9 @@ ACE_POSIX_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_transmit_file (result);
-  }
+    {
+      handler->handle_transmit_file (result);
+    }
 }
 
 ACE_POSIX_Asynch_Transmit_File_Result::~ACE_POSIX_Asynch_Transmit_File_Result () = default;
@@ -2209,9 +2209,9 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
     }
 
   if (bytes_per_send == 0)
-  {
-    bytes_per_send = bytes_to_write;
-  }
+    {
+      bytes_per_send = bytes_to_write;
+    }
 
   // Configure the result parameter.
   ACE_POSIX_Asynch_Transmit_File_Result *result {};
@@ -2363,9 +2363,9 @@ ACE_POSIX_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_read_dgram (result);
-  }
+    {
+      handler->handle_read_dgram (result);
+    }
 }
 
 ACE_POSIX_Asynch_Read_Dgram_Result::~ACE_POSIX_Asynch_Read_Dgram_Result () = default;
@@ -2442,9 +2442,9 @@ ACE_POSIX_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
   // Call the application handler.
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_write_dgram (result);
-  }
+    {
+      handler->handle_write_dgram (result);
+    }
 }
 
 ACE_POSIX_Asynch_Write_Dgram_Result::~ACE_POSIX_Asynch_Write_Dgram_Result () = default;

@@ -507,9 +507,9 @@ ACE_POSIX_Proactor::post_wakeup_completions (int how_many)
          ACE_POSIX_Wakeup_Completion (this->wakeup_handler_.proxy ()),
          -1);
       if (this->post_completion (wakeup_completion) == -1)
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
     }
 
   return 0;
@@ -649,15 +649,15 @@ ACE_AIOCB_Notify_Pipe_Manager::~ACE_AIOCB_Notify_Pipe_Manager ()
 
   ACE_HANDLE h = this->pipe_.write_handle ();
   if (h != ACE_INVALID_HANDLE)
-  {
-    ACE_OS::closesocket (h);
-  }
+    {
+      ACE_OS::closesocket (h);
+    }
 
   h = this->pipe_.read_handle ();
   if ( h != ACE_INVALID_HANDLE)
-  {
-    ACE_OS::closesocket (h);
-  }
+    {
+      ACE_OS::closesocket (h);
+    }
 }
 
 int
@@ -780,9 +780,9 @@ void ACE_POSIX_AIOCB_Proactor::set_notify_handle (ACE_HANDLE h)
 int ACE_POSIX_AIOCB_Proactor::create_result_aiocb_list ()
 {
   if (aiocb_list_ != nullptr)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   ACE_NEW_RETURN (aiocb_list_, aiocb *[aiocb_list_max_size_], -1);
 
@@ -1132,9 +1132,9 @@ ACE_POSIX_AIOCB_Proactor::handle_events_i (u_long milli_seconds)
                                 count);
 
           if (asynch_result == nullptr)
-          {
-            break;
-          }
+            {
+              break;
+            }
 
           // Call the application code.
           this->application_specific_code (asynch_result,
@@ -1163,15 +1163,15 @@ ACE_POSIX_AIOCB_Proactor::get_result_status (ACE_POSIX_Asynch_Result *asynch_res
   aiocb *aio_ptr (asynch_result);
   error_status  = aio_error (aio_ptr);
   if (error_status == EINPROGRESS)
-  {
-    return 0;  // not completed
-  }
+    {
+      return 0;  // not completed
+    }
 
   ssize_t const op_return = aio_return (aio_ptr);
   if (op_return > 0)
-  {
-    transfer_count = static_cast<size_t> (op_return);
-  }
+    {
+      transfer_count = static_cast<size_t> (op_return);
+    }
   // else transfer_count is already 0, error_status reports the error.
   return 1; // completed
 }
@@ -1280,9 +1280,9 @@ ACE_POSIX_AIOCB_Proactor::start_aio (ACE_POSIX_Asynch_Result *result,
   ssize_t const slot = allocate_aio_slot (result);
 
   if (slot < 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   size_t const index = static_cast<size_t> (slot);
 
@@ -1550,14 +1550,14 @@ ACE_POSIX_AIOCB_Proactor::cancel_aio (ACE_HANDLE handle)
   } // release mutex_
 
   if (num_total == 0)
-  {
-    return 1;  // ALLDONE
-  }
+    {
+      return 1;  // ALLDONE
+    }
 
   if (num_cancelled == num_total)
-  {
-    return 0;  // CANCELLED
-  }
+    {
+      return 0;  // CANCELLED
+    }
 
   return 2; // NOT CANCELLED
 }
@@ -1716,9 +1716,9 @@ ACE_POSIX_SIG_Proactor::notify_completion (int sig_num)
 
   // Queue the signal.
   if (sigqueue (pid, sig_num, value) == 0)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   if (errno != EAGAIN)
     {
@@ -2006,9 +2006,9 @@ ACE_POSIX_Asynch_Timer::complete (size_t       /* bytes_transferred */,
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_time_out (this->time_, this->act ());
-  }
+    {
+      handler->handle_time_out (this->time_, this->act ());
+    }
 }
 
 // *********************************************************************
@@ -2040,9 +2040,9 @@ ACE_POSIX_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
   if (handler != nullptr)
-  {
-    handler->handle_wakeup ();
-  }
+    {
+      handler->handle_wakeup ();
+    }
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
