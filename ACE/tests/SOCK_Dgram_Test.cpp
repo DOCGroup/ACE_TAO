@@ -18,6 +18,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/Time_Value.h"
 #include "ace/OS_NS_unistd.h"
+#include "ace/OS_NS_sys_socket.h"
 
 #include <memory>
 
@@ -368,6 +369,39 @@ spawn (int proto)
   return 0;
 }
 
+#if defined (ACE_LINUX) && defined (ACE_HAS_IPV6) && defined (IP_MULTICAST_IF)
+int
+test_dual_stack_multicast_interface ()
+{
+  if (ACE_OS::if_nametoindex ("lo") == 0)
+    {
+      return 0;
+    }
+
+  ACE_SOCK_Dgram socket;
+  if (socket.open (ACE_Addr::sap_any, PF_INET6) == -1)
+    {
+      return 0;
+    }
+
+  in_addr multicast_interface {};
+  int option_length = sizeof (multicast_interface);
+  int const set_result = socket.set_nic (ACE_TEXT ("lo"));
+  int const get_result = socket.get_option (IPPROTO_IP, IP_MULTICAST_IF,
+                                            &multicast_interface, &option_length);
+  socket.close ();
+
+  if (set_result == -1 || get_result == -1
+      || multicast_interface.s_addr != ACE_HTONL (INADDR_LOOPBACK))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to set IPv4 multicast interface on a dual-stack socket\n")),
+                        1);
+    }
+  return 0;
+}
+#endif /* ACE_LINUX && ACE_HAS_IPV6 && IP_MULTICAST_IF */
+
 int run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("SOCK_Dgram_Test"));
@@ -380,6 +414,13 @@ int run_main (int, ACE_TCHAR *[])
     {
       retval = spawn (AF_INET6);
     }
+
+#if defined (ACE_LINUX) && defined (IP_MULTICAST_IF)
+  if (retval == 0)
+    {
+      retval = test_dual_stack_multicast_interface ();
+    }
+#endif /* ACE_LINUX && IP_MULTICAST_IF */
 
 #endif /* ACE_HAS_IPV6 */
 

@@ -4,6 +4,7 @@
 #include "ace/INET_Addr.h"
 #include "ace/ACE.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_sys_socket.h"
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/os_include/net/os_if.h"
@@ -745,9 +746,23 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
 #else
       ifreq if_address;
       ACE_OS::strsncpy (if_address.ifr_name, ACE_TEXT_ALWAYS_CHAR (net_if), (sizeof if_address.ifr_name));
-      if (ACE_OS::ioctl (this->get_handle (),
-                         SIOCGIFADDR,
-                         &if_address) == -1)
+      int lookup_result = ACE_OS::ioctl (this->get_handle (),
+                                         SIOCGIFADDR,
+                                         &if_address);
+#if defined (ACE_HAS_IPV6)
+      if (lookup_result == -1)
+        {
+          // Some platforms cannot obtain an IPv4 interface address from an
+          // IPv6 socket, even when it accepts IPv4 multicast traffic.
+          ACE_HANDLE const lookup_socket = ACE_OS::socket (AF_INET, SOCK_DGRAM, 0);
+          if (lookup_socket != ACE_INVALID_HANDLE)
+            {
+              lookup_result = ACE_OS::ioctl (lookup_socket, SIOCGIFADDR, &if_address);
+              ACE_OS::closesocket (lookup_socket);
+            }
+        }
+#endif /* ACE_HAS_IPV6 */
+      if (lookup_result == -1)
         {
           // The net_if name failed to be found. It seems that older linux
           // kernals only support the actual interface name (eg. "eth0"),
