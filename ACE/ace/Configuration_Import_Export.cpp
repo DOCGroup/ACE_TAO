@@ -711,6 +711,7 @@ ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
   cp[1] = '\0';          // Chop trailing whitespace
 
   // Now start at the beginning and move over all whitespace.
+  cp = src;
   while (ACE_OS::ace_isspace (*cp))
     {
       ++cp;
