@@ -22,6 +22,7 @@
 #include "ace/SOCK_Stream.h"
 #include "ace/Message_Block.h"
 #include "ace/Get_Opt.h"
+#include "ace/OS_NS_ctype.h"
 
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
@@ -218,8 +219,8 @@ Receiver::Receiver ()
 {
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   ++sessions_;
-  ACE_DEBUG ((LM_DEBUG, "Receiver Ctor sessions_=%q\n",
-              static_cast<ACE_INT64> (sessions_)));
+  ACE_DEBUG ((LM_DEBUG, "Receiver Ctor sessions_=%Ld\n",
+              sessions_));
 }
 
 Receiver::~Receiver ()
@@ -227,8 +228,8 @@ Receiver::~Receiver ()
   ACE_GUARD (ACE_Recursive_Thread_Mutex, locker, mutex_);
   --sessions_;
   ACE_OS::closesocket (this->handle_);
-  ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor sessions_=%q\n",
-              static_cast<ACE_INT64> (sessions_)));
+  ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor sessions_=%Ld\n",
+              sessions_));
 }
 
 //  return true if we alive, false  we commited suicide
@@ -738,6 +739,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
           {
             break;
           }
+        [[fallthrough]];
       case 'u':
       default:
         ACE_ERROR ((LM_ERROR, "%p.",
