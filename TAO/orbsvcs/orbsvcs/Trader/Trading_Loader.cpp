@@ -216,10 +216,16 @@ TAO_Trading_Loader::create_object (CORBA::ORB_ptr orb_ptr,
   // Dump the ior to a file.
   if (this->ior_output_file_ != nullptr)
     {
-      ACE_OS::fprintf (this->ior_output_file_.get (),
-                       "%s",
-                       this->ior_.in ());
-      this->ior_output_file_.reset ();
+      int const write_result = ACE_OS::fprintf (this->ior_output_file_.get (),
+                                                "%s",
+                                                this->ior_.in ());
+      FILE * const output = this->ior_output_file_.release ();
+      int const close_result = this->ior_output_file_.get_deleter () (output);
+      if (write_result < 0 || close_result != 0)
+        {
+          ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Could not write Trading Service IOR\n")));
+          return CORBA::Object::_nil ();
+        }
     }
 
   CORBA::Object_var table_object =
@@ -457,22 +463,24 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
             {
               const ACE_TCHAR *file_name =
                 arg_shifter.get_current ();
+              this->ior_output_file_.reset ();
+              this->ior_output_file_.get_deleter () = ACE_OS::fclose;
               this->ior_output_file_.reset (
                 ACE_OS::fopen (file_name, ACE_TEXT("w")));
 
               if (this->ior_output_file_ == nullptr)
                 {
                   ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                                        "Unable to open %s for writing: %p\n",
-                                        file_name), -1);
+                                        ACE_TEXT ("Unable to open %s for writing: %p\n"),
+                                        file_name, ACE_TEXT ("fopen")), -1);
                 }
               arg_shifter.consume_arg ();
             }
           else
             {
-              this->ior_output_file_.reset (
-                ACE_OS::fdopen (ACE_STDOUT,
-                                ACE_TEXT("w")));
+              this->ior_output_file_.reset ();
+              this->ior_output_file_.get_deleter () = ACE_OS::fflush;
+              this->ior_output_file_.reset (stdout);
             }
         }
 
