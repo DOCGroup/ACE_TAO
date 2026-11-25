@@ -107,7 +107,7 @@ class ACE_Dynamic_Time_Policy_Base; // forward decl
 class ACE_Export ACE_Delegating_Time_Policy
 {
 public:
-  explicit ACE_Delegating_Time_Policy (ACE_Dynamic_Time_Policy_Base const * delegate = nullptr);
+  ACE_Delegating_Time_Policy (ACE_Dynamic_Time_Policy_Base const * delegate = nullptr);
 
   /// Return the current time according to this policy
   ACE_Time_Value_T<ACE_Delegating_Time_Policy> operator()() const;

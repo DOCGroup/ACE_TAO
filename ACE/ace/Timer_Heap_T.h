@@ -120,7 +120,7 @@ public:
    * timer nodes.  If nullptr, then a default freelist will be created.  The default
    * size will be ACE_DEFAULT_TIMERS and there will be no preallocation.
    */
-  explicit ACE_Timer_Heap_T (FUNCTOR *upcall_functor = nullptr,
+  ACE_Timer_Heap_T (FUNCTOR *upcall_functor = nullptr,
                              ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
                              TIME_POLICY const &time_policy = TIME_POLICY());
 

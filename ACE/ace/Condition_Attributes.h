@@ -26,7 +26,7 @@ public:
   ACE_Condition_Attributes &operator= (ACE_Condition_Attributes const &) = delete;
   ACE_Condition_Attributes &operator= (ACE_Condition_Attributes &&) = delete;
 
-  explicit ACE_Condition_Attributes (int type = ACE_DEFAULT_SYNCH_TYPE);
+  ACE_Condition_Attributes (int type = ACE_DEFAULT_SYNCH_TYPE);
 
   ~ACE_Condition_Attributes ();
 
@@ -47,7 +47,7 @@ public:
   ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T const &) = delete;
   ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T &&) = delete;
 
-  explicit ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE)
+  ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE)
     : ACE_Condition_Attributes (type)
   {}
 
@@ -66,7 +66,7 @@ public:
   ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T const &) = delete;
   ACE_Condition_Attributes_T &operator= (ACE_Condition_Attributes_T &&) = delete;
 
-  explicit ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE);
+  ACE_Condition_Attributes_T (int type = ACE_DEFAULT_SYNCH_TYPE);
 
   ~ACE_Condition_Attributes_T () = default;
 };

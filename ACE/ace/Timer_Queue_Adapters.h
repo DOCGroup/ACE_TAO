@@ -56,7 +56,7 @@ public:
    * signals when @c SIGALRM is run.  Otherwise, just block the signals
    * indicated in @a mask.
    */
-  explicit ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *mask = nullptr);
+  ACE_Async_Timer_Queue_Adapter (ACE_Sig_Set *mask = nullptr);
 
   ACE_Async_Timer_Queue_Adapter (ACE_Async_Timer_Queue_Adapter const &) = delete;
   ACE_Async_Timer_Queue_Adapter (ACE_Async_Timer_Queue_Adapter &&) = delete;
@@ -136,7 +136,7 @@ public:
   /// Creates the timer queue.  Activation of the task is the user's
   /// responsibility. Optionally a pointer to a timer queue can be passed,
   /// when no pointer is passed, a TQ is dynamically created
-  explicit ACE_Thread_Timer_Queue_Adapter (
+  ACE_Thread_Timer_Queue_Adapter (
     ACE_Thread_Manager * = ACE_Thread_Manager::instance (),
     TQ *timer_queue = nullptr);
 

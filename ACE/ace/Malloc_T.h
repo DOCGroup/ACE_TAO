@@ -219,7 +219,7 @@ public:
    * @note @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. */
-  explicit ACE_Allocator_Adapter (const char *pool_name = nullptr);
+  ACE_Allocator_Adapter (const char *pool_name = nullptr);
 
   /**
    * @note @a pool_name should be located in
@@ -455,7 +455,7 @@ public:
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
-  explicit ACE_Malloc_T (const ACE_TCHAR *pool_name = nullptr);
+  ACE_Malloc_T (const ACE_TCHAR *pool_name = nullptr);
 
   /**
    * Initialize ACE_Malloc.  This constructor passes @a pool_name to
@@ -844,7 +844,7 @@ public:
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
-  explicit ACE_Malloc (const ACE_TCHAR *pool_name = nullptr);
+  ACE_Malloc (const ACE_TCHAR *pool_name = nullptr);
 
   /**
    * Initialize ACE_Malloc.  This constructor passes @a pool_name to

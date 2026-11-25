@@ -514,7 +514,7 @@ public:
   using implementation = IMPLEMENTATION;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
-  explicit ACE_Map_Impl (ACE_Allocator *alloc = nullptr);
+  ACE_Map_Impl (ACE_Allocator *alloc = nullptr);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
@@ -780,7 +780,7 @@ public:
   using implementation = ACE_Active_Map_Manager<expanded_value>;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
-  explicit ACE_Active_Map_Manager_Adapter (ACE_Allocator *alloc = nullptr);
+  ACE_Active_Map_Manager_Adapter (ACE_Allocator *alloc = nullptr);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
@@ -1058,7 +1058,7 @@ public:
   using implementation = ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
-  explicit ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc = nullptr);
+  ACE_Hash_Map_Manager_Ex_Adapter (ACE_Allocator *alloc = nullptr);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.
@@ -1329,7 +1329,7 @@ public:
   using implementation = ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
-  explicit ACE_Map_Manager_Adapter (ACE_Allocator *alloc = nullptr);
+  ACE_Map_Manager_Adapter (ACE_Allocator *alloc = nullptr);
 
   /// Initialize with @a size entries.  The @a size parameter is ignored
   /// by maps for which an initialize size does not make sense.

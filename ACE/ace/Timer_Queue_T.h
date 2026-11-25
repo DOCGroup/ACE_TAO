@@ -79,7 +79,7 @@ public:
    * Queue will create a default FUNCTOR.  @a freelist the freelist of
    * timer nodes.  If nullptr, then a default freelist will be created.
    */
-  explicit ACE_Timer_Queue_T (FUNCTOR *upcall_functor = nullptr,
+  ACE_Timer_Queue_T (FUNCTOR *upcall_functor = nullptr,
                     ACE_Free_List<ACE_Timer_Node_T <TYPE> > *freelist = nullptr,
                     TIME_POLICY const &time_policy = TIME_POLICY());
 

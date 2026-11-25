@@ -81,7 +81,7 @@ public:
     LIFO = 0
   };
 
-  explicit ACE_Token (const ACE_TCHAR *name = nullptr, void * = nullptr);
+  ACE_Token (const ACE_TCHAR *name = nullptr, void * = nullptr);
 
   virtual ~ACE_Token ();
 

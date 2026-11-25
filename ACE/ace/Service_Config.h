@@ -294,7 +294,7 @@ public:
    * signum to a negative number will prevent a signal handler being
    * registered when the repository is opened.
    */
-  explicit ACE_Service_Config (bool ignore_static_svcs = true,
+  ACE_Service_Config (bool ignore_static_svcs = true,
                                size_t size = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE,
                                int signum = SIGHUP);
 

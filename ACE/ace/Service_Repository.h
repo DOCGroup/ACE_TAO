@@ -50,7 +50,7 @@ public:
   static constexpr int DEFAULT_SIZE = ACE_DEFAULT_SERVICE_REPOSITORY_SIZE;
 
   /// Initialize the repository.
-  explicit ACE_Service_Repository (size_t size = DEFAULT_SIZE);
+  ACE_Service_Repository (size_t size = DEFAULT_SIZE);
 
   ACE_Service_Repository (ACE_Service_Repository const &) = delete;
   ACE_Service_Repository &operator= (ACE_Service_Repository const &) = delete;

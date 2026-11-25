@@ -101,7 +101,7 @@ public:
   using Base_Timer_Queue = ACE_Timer_Queue_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
   using FreeList = ACE_Free_List<Node>;
 
-  explicit ACE_Timer_Wheel_T (FUNCTOR *upcall_functor = nullptr, FreeList *freelist = nullptr,
+  ACE_Timer_Wheel_T (FUNCTOR *upcall_functor = nullptr, FreeList *freelist = nullptr,
                               TIME_POLICY const &time_policy = TIME_POLICY());
 
   /// Constructor with opportunities to set the wheelsize and resolution
