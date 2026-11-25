@@ -65,20 +65,19 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_FIELD_AST_FIELD_HH
 #define _AST_FIELD_AST_FIELD_HH
 
-// Representation of a generic field.
-
-// Used as member in structures, exceptions and unions, and as a base
-// type for attributes and arguments to operations
-//
-// NOTE: There are two constructors here, the first is used when field
-// is used directly inside a structure, the second when it is used as
-// the base type for attributes and operations.
-
 #include "ast_decl.h"
 #include "utl_scoped_name.h"
 
 class AST_Type;
 
+/**
+ * @brief Represents a field in a structure, exception or union.
+ *
+ * Also serves as a base for attributes and operation arguments.
+ *
+ * @note The constructor accepting a node type supports derived field types;
+ * the other type constructor is used for fields declared directly.
+ */
 class TAO_IDL_FE_Export AST_Field : public virtual AST_Decl
 {
 public:
