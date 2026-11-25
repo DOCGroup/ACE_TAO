@@ -894,10 +894,9 @@ int producer (MCT_Config &config)
   return retval;
 }
 
-/*
+/**
  * Advance the address by 1, e.g., 239.255.0.1 => 239.255.0.2
- * Note that the algorithm is somewhat simplistic, but sufficient for our
- * purpose.
+ * @note The algorithm is somewhat simplistic, but sufficient for this test.
  */
 int advance_addr (ACE_INET_Addr &addr)
 {
