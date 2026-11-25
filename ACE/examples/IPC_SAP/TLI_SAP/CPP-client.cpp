@@ -62,7 +62,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("connected to %s\n"),
+                      ACE_TEXT ("connected to %C\n"),
                       remote_addr.get_host_name ()));
         }
     }

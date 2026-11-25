@@ -33,7 +33,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_TLI_Stream new_stream;
 
   ACE_DEBUG ((LM_DEBUG,
-              "starting server at host %s\n",
+              "starting server at host %C\n",
               addr.get_host_name ()));
 
   // Performs the iterative server activities
@@ -55,7 +55,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "client %s connected\n",
+                  "client %C connected\n",
                   addr.get_host_name ()));
 
       // Read data from client (terminate on error).

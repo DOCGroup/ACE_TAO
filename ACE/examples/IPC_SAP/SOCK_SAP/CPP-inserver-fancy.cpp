@@ -206,7 +206,7 @@ Handler::open (void *)
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              "(%P|%t) client %s connected from %d on handle %H\n",
+              "(%P|%t) client %C connected from %d on handle %H\n",
               cli_addr.get_host_name (),
               cli_addr.get_port_number (),
               this->peer ().get_handle ()));

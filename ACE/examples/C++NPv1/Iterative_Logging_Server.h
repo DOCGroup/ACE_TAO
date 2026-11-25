@@ -52,7 +52,7 @@ protected:
         ACE_ERROR_RETURN ((LM_ERROR, "%p\n", "acceptor.accept()"), -1);
       }
 
-    ACE_DEBUG ((LM_DEBUG, "Accepted connection from %s\n",
+    ACE_DEBUG ((LM_DEBUG, "Accepted connection from %C\n",
                 logging_peer_addr.get_host_name ()));
     return 0;
   }

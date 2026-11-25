@@ -151,7 +151,7 @@ Handle_R_Stream::handle_input (ACE_HANDLE)
     }
 
   ACE_DEBUG ((LM_INFO,
-              "accepted from host %s at port %d\n",
+              "accepted from host %C at port %d\n",
               sa.get_host_name (),
               sa.get_port_number ()));
 

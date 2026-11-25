@@ -214,7 +214,7 @@ Options::shared_client_test (u_short port,
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t) connected to %s at port %d\n",
+                  "(%P|%t) connected to %C at port %d\n",
                   remote_addr.get_host_name (),
                   remote_addr.get_port_number ()));
     }
