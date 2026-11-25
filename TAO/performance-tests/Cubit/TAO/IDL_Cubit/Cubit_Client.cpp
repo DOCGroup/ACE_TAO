@@ -13,6 +13,8 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_string.h"
 
+#include <cstring>
+
 #if defined (ACE_ENABLE_TIMEPROBES)
 
   static const char *Cubit_Client_Timeprobe_Description[] =
@@ -1002,9 +1004,9 @@ Cubit_Client::cube_rti_data (int,
 #endif /* ACE_HAS_PURIFY == 1 */
               Cubit::HandleValuePair &hvp = oumh.messagePayload[k];
               hvp.handle = k * k;
-              const char *d1 = "somedata";
-              hvp.data.length (ACE_OS::strlen (d1)+1);
-              ACE_OS::strcpy ((char *) hvp.data.get_buffer (), d1);
+              char const data[] = "somedata";
+              hvp.data.length (sizeof data);
+              std::memcpy (hvp.data.get_buffer (), data, sizeof data);
             }
         }
 
