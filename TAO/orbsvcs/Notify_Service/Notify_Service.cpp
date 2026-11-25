@@ -481,12 +481,14 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
   ACE_TCHAR const * current_arg {};
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Factory"));
+      if (current_arg != nullptr)
         {
           this->notify_factory_name_.set (ACE_TEXT_ALWAYS_CHAR(current_arg));
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ShutdownORB")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ShutdownORB")) == 0)
         {
           current_arg = arg_shifter.get_the_parameter
                               (ACE_TEXT("-ShutdownORB"));
@@ -501,8 +503,9 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
           {
             arg_shifter.consume_arg ();
           }
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ShutdownDispatchingORB")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-ShutdownDispatchingORB")) == 0)
         {
           current_arg = arg_shifter.get_the_parameter
                               (ACE_TEXT("-ShutdownDispatchingORB"));
@@ -517,8 +520,9 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
           {
             arg_shifter.consume_arg ();
           }
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-UseSeparateDispatchingORB")) == 0)
         {
           current_arg = arg_shifter.get_the_parameter
                               (ACE_TEXT("-UseSeparateDispatchingORB"));
@@ -549,34 +553,41 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
           {
             arg_shifter.consume_arg ();
           }
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Boot")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Boot")) == 0)
         {
           this->bootstrap_ = true;
           // Make it bootstrappable
 
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NameSvc")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NameSvc")) == 0)
         {
           this->use_name_svc_ = true;
           // Register ref with the name service
 
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NoNameSvc")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-NoNameSvc")) == 0)
         {
           this->use_name_svc_ = false;
           // Don't Register ref with the name service
 
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-IORoutput"));
+      if (current_arg != nullptr)
         {
           this->ior_output_file_name_ = current_arg;
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ChannelName"));
+      if (current_arg != nullptr)
         {
           std::string const channel_name (ACE_TEXT_ALWAYS_CHAR (current_arg));
           if (std::find (this->notify_channel_name_.begin (),
@@ -586,15 +597,18 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
               this->notify_channel_name_.push_back (channel_name);
             }
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Channel")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-Channel")) == 0)
         {
           this->register_event_channel_ = true;
           // Register one EC with naming.
 
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Notify_TPReactor"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Notify_TPReactor"));
+      if (current_arg != nullptr)
         {
           if (TAO_debug_level > 0)
             {
@@ -605,13 +619,17 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
 
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RunThreads"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RunThreads"));
+      if (current_arg != nullptr)
         {
           this->nthreads_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Timeout"));
+      if (current_arg != nullptr)
         {
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
           this->timeout_ = ACE_OS::atoi (current_arg);
@@ -624,13 +642,16 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
                          ACE_TExT ("The timeout will not be applied.\n")));
             }
 #endif /* TAO_HAS_CORBA_MESSAGING != 0 */
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LoggingInterval"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-LoggingInterval"));
+      if (current_arg != nullptr)
         {
           this->logging_interval_ = ACE_Time_Value (ACE_OS::atoi (current_arg));
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-?")) == 0)
+      if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("-?")) == 0)
         {
           ORBSVCS_DEBUG((LM_DEBUG,
                      ACE_TEXT ("usage: %s -Factory factory_name ")
@@ -649,10 +670,7 @@ TAO_Notify_Service_Driver::parse_args (int argc, ACE_TCHAR * argv[])
 
           return -1;
         }
-      else
-        {
-          arg_shifter.ignore_arg ();
-        }
+      arg_shifter.ignore_arg ();
     }
   return 0;
 }
