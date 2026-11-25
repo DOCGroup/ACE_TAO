@@ -136,7 +136,7 @@ Foo_B_ClientEngine::execute()
 
   this->obj_->test_fixed_size_arg (t);
 
-  this->obj_->test_special_basic_arg (this->client_id_ % 2,
+  this->obj_->test_special_basic_arg (this->client_id_ % 2 != 0,
                                       this->client_id_);
 
   this->obj_->test_objref_arg (this->callback_.in ());
