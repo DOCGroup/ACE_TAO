@@ -122,17 +122,22 @@ ACE_Blob_Reader::receive_reply ()
 
   // Search for the header termination string "\r\n\r\n", or "\n\n". If
   // found, move past it to get to the data portion.
-  if ((buf_ptr = std::strstr (buf, "\r\n\r\n")) != nullptr)
+  buf_ptr = std::strstr (buf, "\r\n\r\n");
+  if (buf_ptr != nullptr)
     {
       buf_ptr += 4;
     }
-  else if ((buf_ptr = std::strstr (buf, "\n\n")) != nullptr)
-    {
-      buf_ptr += 2;
-    }
   else
     {
-      buf_ptr = buf;
+      buf_ptr = std::strstr (buf, "\n\n");
+      if (buf_ptr != nullptr)
+        {
+          buf_ptr += 2;
+        }
+      else
+        {
+          buf_ptr = buf;
+        }
     }
 
   size_t const bytes_read = (buf + header_length) - buf_ptr;

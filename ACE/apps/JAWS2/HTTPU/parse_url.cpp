@@ -66,9 +66,12 @@ HTTP_Parse_URL::parse_url ()
 {
   char *p = this->url_;
 
-  char *q;
-  if ((q = std::strchr (this->url_, '\r'))
-      || (q = std::strchr (this->url_, '\n')))
+  char *q = std::strchr (this->url_, '\r');
+  if (q == nullptr)
+    {
+      q = std::strchr (this->url_, '\n');
+    }
+  if (q != nullptr)
     {
       *q = '\0';
     }
