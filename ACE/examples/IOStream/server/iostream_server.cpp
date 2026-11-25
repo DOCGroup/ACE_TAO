@@ -102,7 +102,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
   if (ACE_Reactor::instance ()->register_handler (sig_set,
                                                   std::addressof (sa)) == -1)
     {
-      ACE_ERROR_RETURN ((LM_ERROR, "%p\n"), -1);
+      ACE_ERROR_RETURN ((LM_ERROR, "register_handler: %m\n"), -1);
     }
 
   IOStream_Acceptor peer_acceptor;
