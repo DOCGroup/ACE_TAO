@@ -158,9 +158,6 @@ OctetStr::~OctetStr ()
 
 OctetStr &OctetStr::operator= (char const *string)
 {
-   // get the string size
-   size_t nz {};
-
    // free up previous memory if needed
    if (smival.value.string.ptr)
    {
@@ -168,7 +165,9 @@ OctetStr &OctetStr::operator= (char const *string)
    }
 
    // if empty then we are done
-   if (!string || !(nz = std::strlen (string))) {
+   size_t const nz = string != nullptr ? std::strlen (string) : 0;
+   if (nz == 0)
+   {
      validity = 1;
      return *this;
    }
@@ -364,11 +363,11 @@ bool operator>= (OctetStr const &lhs, char const *rhs)
 
 OctetStr &OctetStr::operator+= (char const *a)
 {
-  size_t slen {};
+  size_t const slen = a != nullptr ? std::strlen (a) : 0;
   size_t nlen {};
 
   // get len of string
-  if (!a || ((slen = std::strlen (a)) == 0))
+  if (slen == 0)
   {
     return *this;
   }

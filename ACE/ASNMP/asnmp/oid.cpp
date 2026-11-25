@@ -53,8 +53,9 @@ Oid::Oid( const char * dotted_oid_string, size_t size)
   // can't init enum SmiValue so just memset it clean
   set_null();
 
-  size_t z;
-  if ((z = std::strlen (dotted_oid_string)) == 0) {
+  size_t const z = std::strlen (dotted_oid_string);
+  if (z == 0)
+  {
     set_invalid();
     return;
   }
