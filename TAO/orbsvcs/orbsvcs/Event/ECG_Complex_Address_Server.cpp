@@ -83,8 +83,8 @@ TAO_ECG_Complex_Address_Server::add_entry (char const *key,
     {
       if (this->default_addr_.set (mcast_addr) == -1)
         {
-          ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
-                                       "mcast address specified: %s.\n",
+          ORBSVCS_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to initialize: invalid ")
+                                       ACE_TEXT ("mcast address specified: %C.\n"),
                                  mcast_addr),
                                 -1);
         }
@@ -96,8 +96,8 @@ TAO_ECG_Complex_Address_Server::add_entry (char const *key,
   const CORBA::Long header_value = ACE_OS::strtol (key, &endptr, 0);
   if (*endptr != '\0')
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
-                                   "source/type specified: %s.\n",
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to initialize: invalid ")
+                                   ACE_TEXT ("source/type specified: %C.\n"),
                          key),
                         -1);
     }
@@ -105,8 +105,8 @@ TAO_ECG_Complex_Address_Server::add_entry (char const *key,
   ACE_INET_Addr addr;
   if (addr.set (mcast_addr) == -1)
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "Unable to initialize: invalid "
-                                   "mcast address specified: %s.\n",
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to initialize: invalid ")
+                                   ACE_TEXT ("mcast address specified: %C.\n"),
                          mcast_addr),
                          -1);
     }

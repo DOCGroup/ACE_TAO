@@ -30,9 +30,9 @@ TAO_ECG_Simple_Mcast_EH::open (char const *mcast_addr,
   if (mcast_group.set (mcast_addr) != 0)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open mcast handler: "
-                             "error using specified address %s "
-                             "in ACE_INET.set ().\n",
+                             ACE_TEXT ("Unable to open mcast handler: ")
+                             ACE_TEXT ("error using specified address %C ")
+                             ACE_TEXT ("in ACE_INET.set ().\n"),
                              mcast_addr),
                             -1);
     }
@@ -40,8 +40,8 @@ TAO_ECG_Simple_Mcast_EH::open (char const *mcast_addr,
   if (this->dgram_.join (mcast_group, 1, net_if) != 0)
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             "Unable to open mcast handler: error "
-                             "joining to %s\n",
+                             ACE_TEXT ("Unable to open mcast handler: error ")
+                             ACE_TEXT ("joining to %C\n"),
                              mcast_addr),
                             -1);
     }

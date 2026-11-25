@@ -86,8 +86,8 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
   if (explanation != nullptr)
     {
       ORBSVCS_DEBUG ((LM_WARNING,
-                  "EC (%P|%t): TPC_Dispatching::add_consumer failed to bind consumer (%@)"
-                  " and dispatch task in map (%s): %p\n",
+                  ACE_TEXT ("EC (%P|%t): TPC_Dispatching::add_consumer failed to bind consumer (%@)")
+                  ACE_TEXT (" and dispatch task in map (%C)\n"),
                   consumer, explanation));
       dtask->putq (new TAO_EC_Shutdown_Task_Command);
       dtask->wait ();
