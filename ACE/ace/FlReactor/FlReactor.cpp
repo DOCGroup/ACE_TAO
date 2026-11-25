@@ -255,9 +255,9 @@ ACE_FlReactor::remove_handler_i (ACE_Handle_Set const &handles,
 void
 ACE_FlReactor::reset_timeout ()
 {
-  if (ACE_Time_Value const *const max_wait_time =
-        this->timer_queue_->calculate_timeout (nullptr);
-      max_wait_time != nullptr)
+  ACE_Time_Value const *const max_wait_time =
+    this->timer_queue_->calculate_timeout (nullptr);
+  if (max_wait_time != nullptr)
     {
       float const timeout = max_wait_time->sec ()
         + max_wait_time->usec () / 1000000.0F;

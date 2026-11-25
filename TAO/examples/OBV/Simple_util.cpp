@@ -62,7 +62,8 @@ Server<Servant>::init (char const *servant_name,
   this->argc_ = argc;
   this->argv_ = argv;
 
-  if (int const retval = this->parse_args (); retval != 0)
+  int const retval = this->parse_args ();
+  if (retval != 0)
     {
       return retval;
     }

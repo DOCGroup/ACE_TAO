@@ -530,9 +530,9 @@ ACE_QtReactor::reset_timeout ()
       this->qtime_ = nullptr;
     }
 
-  if (ACE_Time_Value const *const max_wait_time =
-        this->timer_queue_->calculate_timeout (nullptr);
-      max_wait_time != nullptr)
+  ACE_Time_Value const *const max_wait_time =
+    this->timer_queue_->calculate_timeout (nullptr);
+  if (max_wait_time != nullptr)
     {
       ACE_NEW (this->qtime_, QTimer);
       QObject::connect (this->qtime_,

@@ -416,13 +416,15 @@ ACE_XtReactor::reset_timeout ()
     }
   this->timeout_ = {};
 
-  if (ACE_Time_Value const *max_wait_time =
-        this->timer_queue_->calculate_timeout (nullptr);
-      max_wait_time != nullptr)
-    this->timeout_ = ::XtAppAddTimeOut (this->context_,
-                                        max_wait_time->msec (),
-                                        TimerCallbackProc,
-                                        this);
+  ACE_Time_Value const *const max_wait_time =
+    this->timer_queue_->calculate_timeout (nullptr);
+  if (max_wait_time != nullptr)
+    {
+      this->timeout_ = ::XtAppAddTimeOut (this->context_,
+                                          max_wait_time->msec (),
+                                          TimerCallbackProc,
+                                          this);
+    }
 }
 
 int

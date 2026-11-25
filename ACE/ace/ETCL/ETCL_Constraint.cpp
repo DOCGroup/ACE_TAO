@@ -457,23 +457,28 @@ ETCL_Literal_Constraint::widest_type (ETCL_Literal_Constraint const &rhs)
 ETCL_Literal_Constraint::Value
 ETCL_Literal_Constraint::copy_value (ETCL_Literal_Constraint::Value const &value)
 {
-  if (String_Owner const *str = std::get_if<String_Owner> (&value))
+  String_Owner const *const str = std::get_if<String_Owner> (&value);
+  if (str != nullptr)
   {
     return String_Owner (ACE::strnew (str->get ()));
   }
-  if (ACE_CDR::ULong const *uinteger = std::get_if<ACE_CDR::ULong> (&value))
+  ACE_CDR::ULong const *const uinteger = std::get_if<ACE_CDR::ULong> (&value);
+  if (uinteger != nullptr)
   {
     return *uinteger;
   }
-  if (ACE_CDR::Long const *integer = std::get_if<ACE_CDR::Long> (&value))
+  ACE_CDR::Long const *const integer = std::get_if<ACE_CDR::Long> (&value);
+  if (integer != nullptr)
   {
     return *integer;
   }
-  if (ACE_CDR::Boolean const *boolean = std::get_if<ACE_CDR::Boolean> (&value))
+  ACE_CDR::Boolean const *const boolean = std::get_if<ACE_CDR::Boolean> (&value);
+  if (boolean != nullptr)
   {
     return *boolean;
   }
-  if (ACE_CDR::Double const *doub = std::get_if<ACE_CDR::Double> (&value))
+  ACE_CDR::Double const *const doub = std::get_if<ACE_CDR::Double> (&value);
+  if (doub != nullptr)
   {
     return *doub;
   }
