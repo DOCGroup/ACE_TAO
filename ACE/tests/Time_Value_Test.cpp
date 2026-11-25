@@ -61,30 +61,30 @@ int test_year_month (ACE_Time_Value const &time, long year, long month)
   if (dt.year () != year)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time year should be %q not %q\n"),
-                  static_cast<ACE_INT64> (year),
-                  static_cast<ACE_INT64> (dt.year ())));
+                  ACE_TEXT ("time year should be %Ld not %Ld\n"),
+                  year,
+                  dt.year ()));
       ++ret;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("time year is correct, it is %q\n"),
-                  static_cast<ACE_INT64> (dt.year ())));
+                  ACE_TEXT ("time year is correct, it is %Ld\n"),
+                  dt.year ()));
     }
   if (dt.month () != month)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("time month should be %q not %q\n"),
-                  static_cast<ACE_INT64> (month),
-                  static_cast<ACE_INT64> (dt.month ())));
+                  ACE_TEXT ("time month should be %Ld not %Ld\n"),
+                  month,
+                  dt.month ()));
       ++ret;
     }
   else
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("time month is correct, it is %q\n"),
-                  static_cast<ACE_INT64> (dt.month ())));
+                  ACE_TEXT ("time month is correct, it is %Ld\n"),
+                  dt.month ()));
     }
 
   return ret;
