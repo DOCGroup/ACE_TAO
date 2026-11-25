@@ -59,7 +59,8 @@ disable_signal (int sigmin, int sigmax)
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Error: (%P|%t): sigemptyset failed: %p\n")));
+                  ACE_TEXT ("Error: (%P|%t): %p\n"),
+                  ACE_TEXT ("sigemptyset failed")));
     }
 
   for (int i = sigmin; i <= sigmax; ++i)
@@ -75,7 +76,8 @@ disable_signal (int sigmin, int sigmax)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Error: (%P|%t): SIG_BLOCK failed: %p\n")),
+                         ACE_TEXT ("Error: (%P|%t): %p\n"),
+                         ACE_TEXT ("SIG_BLOCK failed")),
                         -1);
     }
 #else
@@ -167,9 +169,9 @@ get_dh1024 ()
   static unsigned char dh1024_g[]={
     0x02,
   };
-  DH *dh;
+  DH *dh = DH_new ();
 
-  if ((dh = DH_new ()) == nullptr)
+  if (dh == nullptr)
     {
       return nullptr;
     }
