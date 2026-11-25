@@ -823,7 +823,7 @@ TAO_IFR_Service_Utils::create_common (
   // Create new section, or open if it already exists.
   ACE_Configuration_Section_Key sub_key;
   config->open_section (container_key,
-                        sub_section_name,
+                        ACE_TEXT_CHAR_TO_TCHAR (sub_section_name),
                         true,
                         sub_key);
 
@@ -831,10 +831,10 @@ TAO_IFR_Service_Utils::create_common (
 
   // If we have a count, it gets set, if not, it stays 0.
   config->get_integer_value (sub_key,
-                             "count",
+                             ACE_TEXT ("count"),
                              defn_count);
 
-  char *section_name =
+  ACE_TCHAR const *section_name =
     TAO_IFR_Service_Utils::int_to_string (defn_count);
   config->open_section (sub_key,
                         section_name,
@@ -843,60 +843,60 @@ TAO_IFR_Service_Utils::create_common (
 
   // Increment the count.
   config->set_integer_value (sub_key,
-                             "count",
+                             ACE_TEXT ("count"),
                              defn_count + 1);
 
   config->get_integer_value (sub_key,
-                             "count",
+                             ACE_TEXT ("count"),
                              defn_count);
 
   // Set the name attribute.
   config->set_string_value (new_key,
-                            "name",
-                            name);
+                            ACE_TEXT ("name"),
+                            ACE_TEXT_CHAR_TO_TCHAR (name));
 
   // Set the id attribute.
   config->set_string_value (new_key,
-                            "id",
-                            id);
+                            ACE_TEXT ("id"),
+                            ACE_TEXT_CHAR_TO_TCHAR (id));
 
   // Set the version attribute.
   config->set_string_value (new_key,
-                            "version",
-                            version);
+                            ACE_TEXT ("version"),
+                            ACE_TEXT_CHAR_TO_TCHAR (version));
 
   // Set the definition kind.
   config->set_integer_value (new_key,
-                             "def_kind",
+                             ACE_TEXT ("def_kind"),
                              contained_kind);
 
   // Get the container's absolute name, append the new name,
   // and set it in the new section.
   ACE_TString absolute_name;
   config->get_string_value (container_key,
-                            "absolute_name",
+                            ACE_TEXT ("absolute_name"),
                             absolute_name);
 
-  absolute_name += "::";
-  absolute_name += name;
+  absolute_name += ACE_TEXT ("::");
+  absolute_name += ACE_TEXT_CHAR_TO_TCHAR (name);
 
   config->set_string_value (new_key,
-                            "absolute_name",
+                            ACE_TEXT ("absolute_name"),
                             absolute_name);
 
   // Get the container's path.
   ACE_TString container_id;
   config->get_string_value (container_key,
-                            "id",
+                            ACE_TEXT ("id"),
                             container_id);
 
   config->set_string_value (new_key,
-                            "container_id",
+                            ACE_TEXT ("container_id"),
                             container_id);
 
-  if (container_id == "") // This Container is the Repository.
+  if (container_id == ACE_TEXT ("")) // This Container is the Repository.
     {
-      path = "";
+      path = ACE_TEXT ("");
     }
   else
     {
@@ -904,16 +904,16 @@ TAO_IFR_Service_Utils::create_common (
                                 container_id.c_str (),
                                 path);
 
-      path += '\\';
+      path += ACE_TEXT ('\\');
     }
 
-  path += sub_section_name;
-  path += '\\';
+  path += ACE_TEXT_CHAR_TO_TCHAR (sub_section_name);
+  path += ACE_TEXT ('\\');
   path += section_name;
 
   // Store our path under our global repo id for fast lookup.
   config->set_string_value (repo->repo_ids_key (),
-                            id,
+                            ACE_TEXT_CHAR_TO_TCHAR (id),
                             path);
 
   return path;
