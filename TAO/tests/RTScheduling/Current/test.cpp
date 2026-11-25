@@ -42,8 +42,15 @@ public:
   {
     IOP::ServiceContext *context = new IOP::ServiceContext;
     context->context_id = id;
+    context->context_data.length (this->context_length_);
+    for (CORBA::ULong i {}; i < this->context_length_; ++i)
+      {
+        context->context_data[i] = 1;
+      }
     return context;
   }
+
+  CORBA::ULong context_length_ {};
 };
 
 int
@@ -84,6 +91,43 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (current->implementation () != nullptr)
             {
               ACE_ERROR_RETURN ((LM_ERROR, "Invalid GUID installed a current\n"), 1);
+            }
+        }
+
+      CORBA::ULong const invalid_context_lengths[] = {0, 1, sizeof (size_t) + 1};
+      for (CORBA::ULong const length : invalid_context_lengths)
+        {
+          request_info.context_length_ = length;
+          RTScheduling::Current::IdType_var decoded_guid;
+          CORBA::String_var name;
+          CORBA::Policy_var sched_param;
+          CORBA::Policy_var implicit_sched_param;
+          scheduler.TAO_Scheduler::receive_request (
+            std::addressof (request_info), decoded_guid.out (), name.out (),
+            sched_param.out (), implicit_sched_param.out ());
+          if (decoded_guid.ptr () != nullptr)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Invalid context produced a GUID\n"), 1);
+            }
+        }
+
+      request_info.context_length_ = sizeof (size_t);
+      RTScheduling::Current::IdType_var decoded_guid;
+      CORBA::String_var decoded_name;
+      CORBA::Policy_var decoded_sched_param;
+      CORBA::Policy_var decoded_implicit_sched_param;
+      scheduler.TAO_Scheduler::receive_request (
+        std::addressof (request_info), decoded_guid.out (), decoded_name.out (),
+        decoded_sched_param.out (), decoded_implicit_sched_param.out ());
+      if (decoded_guid.ptr () == nullptr || decoded_guid->length () != sizeof (size_t))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Valid context did not produce a GUID\n"), 1);
+        }
+      for (CORBA::ULong i {}; i < decoded_guid->length (); ++i)
+        {
+          if (decoded_guid[i] != 1)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Decoded GUID has incorrect data\n"), 1);
             }
         }
 
