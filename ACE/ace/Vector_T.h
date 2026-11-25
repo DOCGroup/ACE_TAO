@@ -181,15 +181,12 @@ public:
 
   void swap (ACE_Vector &rhs);
 
-  /*
-   * Implement our own end functions because Array_Base's end functions use the
-   * current capacity, not the Vector's actual element count!
-   */
-  /// C++ Standard End Iterator
-  ///{
+  /// @name C++ standard end iterators
+  /// These use the vector's element count; Array_Base uses its capacity.
+  /// @{
   typename ACE_Array_Base<T>::iterator end ();
   typename ACE_Array_Base<T>::const_iterator end () const;
-  ///}
+  /// @}
 
 protected:
   /**

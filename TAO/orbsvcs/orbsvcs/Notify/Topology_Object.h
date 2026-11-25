@@ -60,6 +60,7 @@ namespace TAO_Notify
     /// saver to use.  In turn, we must call this function on all of our
     /// children.
     /// The implementation should look like:
+    /// @code
     ///   bool change = this->self_changed_;
     ///   this->self_changed_ = false;
     ///   this->children_changed_ = false;
@@ -79,7 +80,8 @@ namespace TAO_Notify
     ///       saver.delete_child(child_type, child_id);
     ///     }
     ///     saver.end_object(this->id(), type);
-    ///   )
+    ///   }
+    /// @endcode
     virtual void save_persistent (Topology_Saver& saver) = 0;
 
     /// Re-establish connections that we had before a shutdown.

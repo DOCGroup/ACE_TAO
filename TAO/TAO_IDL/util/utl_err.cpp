@@ -279,10 +279,8 @@ get_lineno (AST_Decl *node = nullptr)
   return node ? node->line () : idl_global->lineno ();
 }
 
-/**
- * Common Error Message Header
- */
-///{
+/// @name Common error message header
+/// @{
 static void
 idl_error_header (UTL_Error::ErrorCode c, long lineno, std::string const& filename)
 {
@@ -303,12 +301,10 @@ idl_error_header (UTL_Error::ErrorCode c, AST_Decl *node = nullptr)
 {
   idl_error_header (c, get_lineno (node), get_filename (node));
 }
-///}
+/// @}
 
-/**
- * Common Warning Message Header
- */
-///{
+/// @name Common warning message header
+/// @{
 static void
 idl_warning_header (UTL_Error::ErrorCode c, long lineno, std::string const& filename)
 {
@@ -328,7 +324,7 @@ idl_warning_header (UTL_Error::ErrorCode c, AST_Decl *node = nullptr)
 {
   idl_warning_header (c, get_lineno (node), get_filename (node));
 }
-///}
+/// @}
 
 // Convert a parse state into a possible error message
 static std::string
