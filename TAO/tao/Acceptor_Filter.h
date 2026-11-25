@@ -43,10 +43,8 @@ class TAO_Export TAO_Acceptor_Filter
 public:
   TAO_Acceptor_Filter () = default;
   virtual ~TAO_Acceptor_Filter ();
-  TAO_Acceptor_Filter (TAO_Acceptor_Filter const &) = delete;
-  TAO_Acceptor_Filter &operator= (TAO_Acceptor_Filter const &) = delete;
-  TAO_Acceptor_Filter (TAO_Acceptor_Filter &&) = delete;
-  TAO_Acceptor_Filter &operator= (TAO_Acceptor_Filter &&) = delete;
+  TAO_Acceptor_Filter (TAO_Acceptor_Filter const &) = default;
+  TAO_Acceptor_Filter &operator= (TAO_Acceptor_Filter const &) = default;
 
   /**
    * Populate @a mprofile with profiles. Profiles are created for
