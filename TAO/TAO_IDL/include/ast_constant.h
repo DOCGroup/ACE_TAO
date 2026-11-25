@@ -71,16 +71,15 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_decl.h"
 #include "global_extern.h"
 
-// Representation of constant declaration:
-//
-// NOTE: Part of the job of the constructor is to convert
-// the AST_Constant_val it received to the type denoted by
-// the ConstantType it received.
-//
-// NOTE: There are two constructors here, one that gets a NodeType
-// parameter. This constructor is used from AST_EnumVal, which is
-// just a glorified AST_Constant
-
+/**
+ * @brief Represents a constant declaration.
+ *
+ * @note The constructor converts the supplied constant value to the
+ * requested constant type.
+ *
+ * @note The constructor accepting a node type is used by AST_EnumVal,
+ * which is a specialized AST_Constant.
+ */
 class TAO_IDL_FE_Export AST_Constant : public virtual AST_Decl
 {
 public:
