@@ -1643,7 +1643,8 @@ run_main (int, ACE_TCHAR *[])
   int status = 0;
   int result;
 
-  if ((result = strncpy_test ()) != 0)
+  result = strncpy_test ();
+  if (result != 0)
   {
     status = result;
   }

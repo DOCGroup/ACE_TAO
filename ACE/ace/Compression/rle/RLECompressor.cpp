@@ -37,7 +37,8 @@ ACE_RLECompressor::compress (void const *in_ptr,
           switch (out_index ? run_count : 128U)
             {
             case 128:
-              if ((out_base = out_index++) >= max_out_len)
+              out_base = out_index++;
+              if (out_base >= max_out_len)
                 {
                   return (std::numeric_limits<ACE_UINT64>::max) ();
                 }
@@ -55,7 +56,8 @@ ACE_RLECompressor::compress (void const *in_ptr,
                     }
                   else if (run_count)
                     {
-                      if ((out_base = out_index++) >= max_out_len)
+                      out_base = out_index++;
+                      if (out_base >= max_out_len)
                         {
                           return (std::numeric_limits<ACE_UINT64>::max) ();
                         }
@@ -68,7 +70,8 @@ ACE_RLECompressor::compress (void const *in_ptr,
                   out_p[out_base] = static_cast<ACE_Byte> (run_count | 0x80);
                   if (in_len)
                     {
-                      if ((out_base = out_index++) >= max_out_len)
+                      out_base = out_index++;
+                      if (out_base >= max_out_len)
                         {
                           return (std::numeric_limits<ACE_UINT64>::max) ();
                         }

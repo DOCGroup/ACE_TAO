@@ -29,17 +29,20 @@ ACE_UTF16_Encoding_Converter::is_legal_utf8 (const ACE_Byte* source,
 
     // Everything else falls through when "true"...
     case 4:
-      if ((a = (*--srcptr)) < 0x80 || a > 0xBF)
+      a = *--srcptr;
+      if (a < 0x80 || a > 0xBF)
         {
           return false;
         }
     case 3:
-      if ((a = (*--srcptr)) < 0x80 || a > 0xBF)
+      a = *--srcptr;
+      if (a < 0x80 || a > 0xBF)
         {
           return false;
         }
     case 2:
-      if ((a = (*--srcptr)) > 0xBF)
+      a = *--srcptr;
+      if (a > 0xBF)
         {
           return false;
         }

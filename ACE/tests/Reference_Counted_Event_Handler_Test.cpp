@@ -270,7 +270,8 @@ reference_counted_event_handler_test_1 (ACE_Reactor *reactor)
         }
       else
         {
-          if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
+          result = reactor->cancel_timer (timer_id, nullptr, 0);
+          if (result != 1)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
@@ -466,7 +467,8 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
         }
       else
         {
-          if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
+          result = reactor->cancel_timer (timer_id, nullptr, 0);
+          if (result != 1)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
@@ -819,7 +821,8 @@ simple_event_handler (ACE_Reactor *reactor)
         }
       else
         {
-          if ((result = reactor->cancel_timer (timer_id, nullptr, 0)) != 1)
+          result = reactor->cancel_timer (timer_id, nullptr, 0);
+          if (result != 1)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("cancel_timer returned %d; should be 1\n"),
