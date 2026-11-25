@@ -268,7 +268,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
          }
     }
   ORBSVCS_DEBUG ((LM_DEBUG, "\n"));
-  ORBSVCS_DEBUG ((LM_DEBUG, "  Working Directory: %s\n", info.startup.working_directory.in ()));
+  ORBSVCS_DEBUG ((LM_DEBUG, "  Working Directory: %C\n", info.startup.working_directory.in ()));
   ORBSVCS_DEBUG ((LM_DEBUG, "  Activation Mode: %C\n", act));
   ORBSVCS_DEBUG ((LM_DEBUG, "  Number of retries: %d\n%C", limit - 1, locked_out));
 
