@@ -85,11 +85,11 @@ public:
 
   ~AST_Union () override;
 
-  // This also calls the base class version.
+  /// Redefine this union and call the base class version.
   void redefine (AST_Structure *from) override;
 
+  /// Check whether this type or a type in the list is involved in recursion.
   bool in_recursion (std::vector<AST_Type *> &list) override;
-  // Are we or the parameter node involved in some kind of recursion?
 
   // Data Accessors.
 
@@ -113,18 +113,16 @@ public:
       ACE_CDR::LongLong longlong_val;
       ACE_CDR::ULongLong ulonglong_val;
     } u {};
+    /// Computation state: -2 initially, -1 on error, 0 if all cases are
+    /// covered, and 1 if the default value has been computed.
     long computed_ {-2};
-    // computed == -1 => error condition
-    //          == 0 => does not exist because all cases have been covered
-    //          == 1 => already computed
-    //          == -2 => initial value
   };
 
+  /// Get the default value.
   int default_value (DefaultValue &);
-  // Get the default value.
 
+  /// Return the default index used.
   virtual int default_index ();
-  // Return the default index used.
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &) override;
@@ -134,31 +132,28 @@ public:
 
   static AST_Decl::NodeType const NT;
 
-  /**
-   * Get and Set Annotations on the discriminator
-   */
-  ///{
+  /// @name Discriminator annotations
+  /// @{
   AST_Annotation_Appls &disc_annotations ();
   AST_Annotation_Appls const &disc_annotations () const;
   void disc_annotations (AST_Annotation_Appls const &annotations);
-  ///}
+  /// @}
 
 protected:
+  /// Compute the size type if it is unknown.
   int compute_size_type () override;
-  // Compute the size type if it is unknown.
 
+  // Protected so subclasses can call it.
   AST_UnionBranch *fe_add_union_branch (AST_UnionBranch *b) override;
-  // Moved out of private section so it can be called from subclass.
 
 private:
   // Data.
 
+  /// Discriminator type.
   AST_ConcreteType *pd_disc_type;
-  // Discriminator type.
 
+  /// Discriminator expression type; EV_enum denotes an enum value.
   AST_Expression::ExprType pd_udisc_type;
-  // Its expression type.
-  // Convention: udisc_type == EV_enum denotes an enum value.
 
   // Operations.
 
@@ -175,21 +170,19 @@ private:
 
   AST_EnumVal *fe_add_enum_val (AST_EnumVal *v) override;
 
+  /// Compute the default value, if any.
   virtual int compute_default_value ();
-  // Compute the default value (if any).
 
+  /// Compute the default index.
   int compute_default_index ();
-  // Count the default index.
 
+  /// Default value, if any.
   DefaultValue default_value_;
-  // Default value (if any).
 
+  /// Default label index, using zero-based indexing.
   int default_index_ {-2};
-  // Default label index (zero based indexing).
 
-  /**
-   * Annotations on the discriminator
-   */
+  /// Annotations on the discriminator.
   AST_Annotation_Appls disc_annotations_;
 };
 
