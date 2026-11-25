@@ -551,7 +551,7 @@ test_control (void * /* param */)
               peer = INVALID_SOCKET;
               continue;
             }
-          auto const thread_handle = _beginthreadex (0,            // security
+          uintptr_t const thread_handle = _beginthreadex (0,       // security
                                                      64 * 1024,    // stack size
                                                      peer_svc,     // entrypoint
                                                      p.get (),     // param
