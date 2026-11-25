@@ -197,7 +197,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (count2 != in_count)
         {
           ACE_DEBUG ((LM_ERROR,
-                      "**ERROR (add_profiles): incorrect count (%d) "
+                      "**ERROR (add_profiles): incorrect count (%u) "
                       "returned for is_in_ior after removal\n",
                       in_count));
         }
