@@ -207,27 +207,23 @@ TAO_SFP_Base::read_frame (TAO_AV_Transport *transport,
     ORBSVCS_DEBUG ((LM_DEBUG,"Reading simple frame\n"));
   }
   // Check to see what the length of the message is.
-  int byte_order = frame_header.flags & 0x1;
-  int message_len = frame_header.message_size;
+  int const byte_order = frame_header.flags & 0x1;
+  size_t const message_len = frame_header.message_size;
+  if (message_len < frame_header_len || message_len > state.static_frame_.size ())
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "SFP::read_frame: invalid message size\n"), -1);
+    }
 
 //       ACE_NEW_RETURN (message_block,
 //                       ACE_Message_Block (message_len),
 //                       0);
   state.static_frame_.rd_ptr (state.static_frame_.base ());
   state.static_frame_.wr_ptr (state.static_frame_.base ());
-  int n = transport->recv (state.static_frame_.rd_ptr (),message_len);
-  if (n == -1)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
-  }
-  else if (n == 0)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,"SFP::handle_input -peek"),0);
-  }
-  else if (n != message_len)
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR, "SFP::read_simple_frame:message truncated\n"), 0);
-  }
+  ssize_t const n = transport->recv (state.static_frame_.rd_ptr (), message_len);
+  if (n < 0 || static_cast<size_t> (n) != message_len)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "SFP::read_frame: message truncated\n"), -1);
+    }
   message_block = std::addressof (state.static_frame_);
   // print the buffer.
   //      this->dump_buf (message,n);
@@ -423,17 +419,23 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
                       fragment.sequence_num));
     }
 
+  if (fragment.frag_sz < fragment_len)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "SFP::read_fragment: invalid fragment size\n"), -1);
+    }
+
   ACE_Message_Block *data;
   ACE_NEW_RETURN (data,
                   ACE_Message_Block(fragment.frag_sz),
                   -1);
+  ACE_Message_Block_Unique_Ptr data_owner (data);
 
   // Read the fragment.
-  int n = transport->recv (data->wr_ptr (),fragment.frag_sz);
-  if ((n == -1) || (n==0))
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,"TAO_SFP::read_fragment:%p",""),-1);
-  }
+  ssize_t const n = transport->recv (data->wr_ptr (), fragment.frag_sz);
+  if (n < 0 || static_cast<size_t> (n) != fragment.frag_sz)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "SFP::read_fragment: fragment truncated\n"), -1);
+    }
   // move past the fragment header.
   data->rd_ptr (fragment_len);
   data->wr_ptr (n);
@@ -448,7 +450,7 @@ TAO_SFP_Base::read_fragment (TAO_AV_Transport *transport,
                   TAO_SFP_Fragment_Node,
                   -1);
   new_node->fragment_info_ = fragment;
-  new_node->data_ = data;
+  new_node->data_ = data_owner.release ();
   TAO_SFP_Fragment_Table *fragment_table {};
   result = state.fragment_table_map_.find (fragment.source_id,fragment_table);
   if (result != 0)
@@ -1461,15 +1463,7 @@ TAO_AV_SFP_Factory::make_protocol_object (TAO_FlowSpec_Entry *entry,
 // TAO_SFP_Frame_State
 
 TAO_SFP_Frame_State::TAO_SFP_Frame_State ()
-  :cdr (new ACE_Data_Block (ACE_CDR::DEFAULT_BUFSIZE,
-                            ACE_Message_Block::MB_DATA,
-                            0,
-                            0,
-                            0,
-                            0,
-                            0),
-        0,
-        TAO_ENCAP_BYTE_ORDER)
+  : cdr (ACE_CDR::DEFAULT_BUFSIZE, TAO_ENCAP_BYTE_ORDER)
 {
 }
 

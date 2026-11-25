@@ -28,6 +28,7 @@ namespace
 
     ssize_t recv (char *buffer, size_t length, int flags, ACE_Time_Value *) override
     {
+      this->received_ = true;
       if (flags != flags_ || size_ > static_cast<ssize_t> (length))
         {
           return -1;
@@ -39,10 +40,13 @@ namespace
       return size_;
     }
 
+    bool received () const { return this->received_; }
+
   private:
     char const *data_;
     ssize_t size_;
     int flags_;
+    bool received_ {};
   };
 
   template <typename T>
@@ -164,6 +168,53 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       || decoded_fragment.frag_number != fragment.frag_number)
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("SFP message reader failed\n")), 1);
+    }
+
+  char data[64] {};
+  TAO_SFP_Frame_State state;
+  if (state.static_frame_.size (sizeof (data)) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot allocate frame buffer\n")), 1);
+    }
+  TAO_AV_frame_info *frame_info {};
+  header.flags = 0;
+  header.message_type = flowProtocol::SimpleFrame_Msg;
+  header.message_size = TAO_SFP_Base::frame_header_len + 1;
+  data[TAO_SFP_Base::frame_header_len] = 'x';
+  Test_Transport frame_transport (data, header.message_size, 0);
+  if (TAO_SFP_Base::read_frame (std::addressof (frame_transport), header, state, frame_info) != 0
+      || state.frame_block_ != std::addressof (state.static_frame_)
+      || state.frame_block_->length () != 1 || *state.frame_block_->rd_ptr () != 'x')
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Complete frame was not decoded\n")), 1);
+    }
+
+  ACE_LOG_MSG->set_flags (ACE_Log_Msg::SILENT);
+  header.message_size = TAO_SFP_Base::frame_header_len - 1;
+  Test_Transport too_small (data, sizeof (data), 0);
+  int const small_result = TAO_SFP_Base::read_frame (std::addressof (too_small), header, state, frame_info);
+  header.message_size = sizeof (data) + 1;
+  Test_Transport too_large (data, sizeof (data), 0);
+  int const large_result = TAO_SFP_Base::read_frame (std::addressof (too_large), header, state, frame_info);
+  header.message_size = TAO_SFP_Base::frame_header_len + 1;
+  Test_Transport short_frame (data, header.message_size - 1, 0);
+  int const short_frame_result = TAO_SFP_Base::read_frame (
+    std::addressof (short_frame), header, state, frame_info);
+  fragment.frag_sz = TAO_SFP_Base::fragment_len - 1;
+  Test_Transport invalid_fragment (data, sizeof (data), 0);
+  int const invalid_fragment_result = TAO_SFP_Base::read_fragment (
+    std::addressof (invalid_fragment), fragment, state, frame_info);
+  fragment.frag_sz = TAO_SFP_Base::fragment_len + 1;
+  Test_Transport short_fragment (data, fragment.frag_sz - 1, 0);
+  int const short_fragment_result = TAO_SFP_Base::read_fragment (
+    std::addressof (short_fragment), fragment, state, frame_info);
+  ACE_LOG_MSG->clr_flags (ACE_Log_Msg::SILENT);
+  if (small_result != -1 || too_small.received ()
+      || large_result != -1 || too_large.received ()
+      || short_frame_result != -1 || invalid_fragment_result != -1 || invalid_fragment.received ()
+      || short_fragment_result != -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Invalid or truncated SFP data was accepted\n")), 1);
     }
   return 0;
 }
