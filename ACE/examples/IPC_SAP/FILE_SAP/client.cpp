@@ -20,7 +20,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
   ssize_t const len =
     ACE_Utils::truncate_cast<ssize_t> (ACE_OS::strlen (argv[2]) + 1);
-  auto const readback =
+  std::unique_ptr<ACE_TCHAR[]> const readback =
     std::make_unique<ACE_TCHAR[]> (ACE_OS::strlen (argv[2]) + 1);
 
   ACE_FILE_Info fileinfo;

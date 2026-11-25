@@ -34,7 +34,7 @@ TAO_DiffServPolicy_ORBInitializer::pre_init (
     }
 
   // Bind the service context handler for Diffserv
-  auto handler = std::make_unique<TAO_DiffServ_Service_Context_Handler> ();
+  std::unique_ptr<TAO_DiffServ_Service_Context_Handler> handler = std::make_unique<TAO_DiffServ_Service_Context_Handler> ();
   tao_info->orb_core ()->service_context_registry ().bind (
     IOP::REP_NWPRIORITY,
     handler.release ());

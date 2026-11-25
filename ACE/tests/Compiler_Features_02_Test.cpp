@@ -55,7 +55,7 @@ run_main (int, ACE_TCHAR *[])
 
   // ... add all the numbers to validate that they are there ...
   int sum = 0;
-  for (auto const& entry : c)
+  for (collection::value_type const &entry : c)
     {
       sum += entry.second;
     }

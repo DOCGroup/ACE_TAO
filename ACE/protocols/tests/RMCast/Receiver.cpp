@@ -96,9 +96,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       }
     }
 
-    auto const lost_count = std::count (received.begin (), received.end (), 0);
-    auto const damaged_count = std::count (damaged.begin (), damaged.end (), 1);
-    auto const duplicate_count = std::count (duplicate.begin (), duplicate.end (), 1);
+    Status_List::difference_type const lost_count = std::count (received.begin (), received.end (), 0);
+    Status_List::difference_type const damaged_count = std::count (damaged.begin (), damaged.end (), 1);
+    Status_List::difference_type const duplicate_count = std::count (duplicate.begin (), duplicate.end (), 1);
 
     ACE_DEBUG ((LM_DEBUG,
                 "lost      : %Q\n"

@@ -51,7 +51,7 @@ namespace ACE
 
       Monitor_Base::CONSTRAINTS const& list = this->monitor_->constraints ();
 
-      for (auto const &constraint : list)
+      for (Monitor_Base::CONSTRAINTS::value_type const &constraint : list)
         {
           Constraint_Interpreter interpreter;
           interpreter.build_tree (constraint.second.expr.fast_rep ());

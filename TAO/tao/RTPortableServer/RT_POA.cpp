@@ -275,7 +275,7 @@ TAO_RT_POA::key_to_stub_i (TAO::ObjectKey const &object_key,
       TAO::Portable_Server::Cached_Policies::SERVER_DECLARED)
     {
       TAO_Thread_Lanes const &lanes = this->thread_pool_->lanes ();
-      auto const lane = std::find_if (lanes.begin (),
+      TAO_Thread_Lanes::const_iterator const lane = std::find_if (lanes.begin (),
                                       lanes.end (),
                                       [priority] (std::unique_ptr<TAO_Thread_Lane> const &candidate)
                                       {

@@ -158,7 +158,7 @@ AST_Annotation_Appl::find_param (std::string const& name) const
               return top->used ? nullptr : top;
             }
         }
-      auto const param = std::find_if (
+      Params::iterator const param = std::find_if (
         params_->begin (), params_->end (),
         [&name] (std::unique_ptr<Param> const& candidate)
         {

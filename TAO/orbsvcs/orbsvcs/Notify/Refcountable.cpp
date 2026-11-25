@@ -181,7 +181,7 @@ TAO_Notify_Tracker::add (TAO_Notify_Refcountable *p)
   int id = ++id_counter_;
 
   Entry e { p, typeid (*p).name () };
-  auto result = map_.try_emplace (id, std::move (e));
+  std::pair<EntityMap::iterator, bool> result = map_.try_emplace (id, std::move (e));
   EntityMap::iterator& it = result.first;
   if (!result.second)
   {
