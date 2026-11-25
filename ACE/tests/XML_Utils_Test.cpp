@@ -106,6 +106,8 @@ run_main (int, ACE_TCHAR *[])
       document->release ();
       xercesc::XercesDOMParser parser;
       parser.setValidationScheme (xercesc::AbstractDOMParser::Val_Never);
+      parser.setLoadExternalDTD (false);
+      parser.setDisableDefaultEntityResolution (true);
       parser.parse (ACE_TEXT_ALWAYS_CHAR (filename));
       xercesc::DOMDocument *parsed = parser.getDocument ();
       ACE_TEST_ASSERT (parsed != nullptr);
@@ -121,6 +123,24 @@ run_main (int, ACE_TCHAR *[])
     XSCRT::XML::string xml_string (std::string ("example"));
     ACE_TEST_ASSERT (XSCRT::XML::transcode<char> (xml_string.c_str (), nullptr) == "example");
     ACE_TEST_ASSERT (XSCRT::XML::transcode<char> (nullptr, nullptr).empty ());
+
+    XSCRT::XML::string wide_string (std::wstring (L"wide"));
+    XSCRT::XML::string string_copy (xml_string);
+    wide_string = string_copy;
+    ACE_TEST_ASSERT (XSCRT::XML::transcode<char> (wide_string.c_str (), nullptr) == "example");
+    {
+      XSCRT::XML::string temporary (std::wstring (L"temporary"));
+      string_copy = temporary;
+    }
+    ACE_TEST_ASSERT (XSCRT::XML::transcode<char> (string_copy.c_str (), nullptr) == "temporary");
+    XSCRT::XML::string string_move (std::move (xml_string));
+    ACE_TEST_ASSERT (xml_string.c_str () == nullptr);
+    string_move = XSCRT::XML::string (std::wstring (L"moved wide"));
+    wide_string = std::move (string_move);
+    ACE_TEST_ASSERT (string_move.c_str () == nullptr);
+    ACE_TEST_ASSERT (XSCRT::XML::transcode<char> (wide_string.c_str (), nullptr) == "moved wide");
+    wide_string = XSCRT::XML::string (std::string ("moved narrow"));
+    ACE_TEST_ASSERT (XSCRT::XML::transcode<char> (wide_string.c_str (), nullptr) == "moved narrow");
   }
   xercesc::XMLPlatformUtils::Terminate ();
   ACE_END_TEST;
