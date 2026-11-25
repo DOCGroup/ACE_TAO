@@ -1,7 +1,14 @@
 #include "tao/TransportCurrent/Transport_Current.h"
+#include "tao/Transport_Selection_Guard.h"
 #include "tao/SystemException.h"
 
+#include <type_traits>
+
 using namespace TAO;
+
+static_assert (std::is_assignable<Transport_Selection_Guard &,
+                                  Transport_Selection_Guard &&>::value,
+               "Transport selection guards must remain assignable from rvalues");
 
 /// Test referencing the TC data outside of the context of an upcall,
 /// or a client-side interceptor
