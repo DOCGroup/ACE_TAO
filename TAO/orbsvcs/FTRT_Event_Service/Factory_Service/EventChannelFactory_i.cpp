@@ -52,7 +52,12 @@ CORBA::Object_ptr EventChannelFactory_i::create_object (
         break;
       }
 
-      id_str.get ()[std::strlen (id_str.get ()) - 1] = '\0';
+      size_t const id_length = std::strlen (id_str.get ());
+      if (id_length == 0)
+      {
+        continue;
+      }
+      id_str.get ()[id_length - 1] = '\0';
       if (std::strcmp (id_str.get (), type_id) == 0)
       {
         return create_process (prog.get (), the_criteria, factory_creation_id);
