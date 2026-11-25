@@ -360,29 +360,28 @@ ACE_SSL_SOCK_Stream::close ()
       // using this ACE_SSL_SOCK_Stream instance.  This prevents the
       // previous SSL session state from being associated with the new
       // SSL session/connection.
-      if (::SSL_clear (this->ssl_.get ()) != 1)
+      if (::SSL_clear (this->ssl_.get ()) == 1)
         {
-          ACE_SSL_Context::report_error ();
-          ACE_Errno_Guard error (errno);
           this->set_handle (ACE_INVALID_HANDLE);
-          this->stream_.close ();
-          return -1;
+          return this->stream_.close ();
         }
-      this->set_handle (ACE_INVALID_HANDLE);
-      return this->stream_.close ();
+      ACE_SSL_Context::report_error ();
+      break;
 
     case SSL_ERROR_SSL:
     case SSL_ERROR_SYSCALL:
     default:
       ACE_SSL_Context::report_error ();
-
-      ACE_Errno_Guard error (errno);   // Save/restore errno
-      ::SSL_clear (this->ssl_.get ());
-      this->set_handle (ACE_INVALID_HANDLE);
-      this->stream_.close ();
+      {
+        ACE_Errno_Guard error (errno);
+        ::SSL_clear (this->ssl_.get ());
+      }
       break;
     }
 
+  ACE_Errno_Guard error (errno);
+  this->set_handle (ACE_INVALID_HANDLE);
+  this->stream_.close ();
   return -1;
 }
 

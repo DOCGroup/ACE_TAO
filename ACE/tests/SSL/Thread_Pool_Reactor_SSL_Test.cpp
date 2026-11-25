@@ -149,15 +149,15 @@ Request_Handler::handle_input (ACE_HANDLE fd)
         }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t) svr input; fd: 0x%x; input: %C\n"),
+                  ACE_TEXT ("(%t) svr input; fd: %H; input: %C\n"),
                   fd,
                   buffer));
       return 0;
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                "(%t) Request_Handler: 0x%x peer closed (0x%x)\n",
-                this, fd));
+                ACE_TEXT ("(%t) Request_Handler: %@ peer closed (%H)\n"),
+                static_cast<void *> (this), fd));
   return -1;
 }
 
@@ -165,13 +165,13 @@ int
 Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) svr close; fd: 0x%x, rcvd %d msgs\n",
+              ACE_TEXT ("(%t) svr close; fd: %H, rcvd %B msgs\n"),
               fd,
               this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR((LM_ERROR,
-               "(%t) Handler 0x%x: Expected %d messages; got %d\n",
-               this,
+               ACE_TEXT ("(%t) Handler %@: Expected %B messages; got %B\n"),
+               static_cast<void *> (this),
                cli_req_no,
                this->nr_msgs_rcvd_));
   this->destroy ();
@@ -229,7 +229,7 @@ cli_worker (void *arg)
       for (size_t j = 0; j < cli_req_no; j++)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) conn_worker handle 0x%x, req %d\n",
+                      ACE_TEXT ("(%t) conn_worker handle %H, req %B\n"),
                       stream.get_handle (),
                       j+1));
           if (stream.send_n (arg, len + 1) == -1)
@@ -242,13 +242,16 @@ cli_worker (void *arg)
           ACE_OS::sleep (delay);
         }
 
-      // Wait until the server has processed all requests before disconnecting.
-      ACE_Time_Value const timeout (5);
-      char acknowledged {};
-      if (stream.recv_n (std::addressof (acknowledged), 1, std::addressof (timeout)) != 1
-          || acknowledged != 1)
+      if (cli_req_no != 0)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to receive acknowledgement: %m\n")));
+          // Wait until the server has processed all requests before disconnecting.
+          ACE_Time_Value const timeout (5);
+          char acknowledged {};
+          if (stream.recv_n (std::addressof (acknowledged), 1, std::addressof (timeout)) != 1
+              || acknowledged != 1)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to receive acknowledgement: %m\n")));
+            }
         }
       stream.close ();
     }
@@ -290,7 +293,7 @@ worker (void *)
   char const sbuf[] = "\011shutdown";
 
   ACE_DEBUG ((LM_DEBUG,
-              "shutdown stream handle = %x\n",
+              ACE_TEXT ("shutdown stream handle = %H\n"),
               stream.get_handle ()));
 
   if (stream.send_n (sbuf, sizeof (sbuf)) == -1)
