@@ -135,7 +135,7 @@ disable_signal (int sigmin, int sigmax)
   if (ACE_OS::sigemptyset (&signal_set) == - 1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("Error: (%P|%t): sigemptyset failed: %p\n")));
+                  ACE_TEXT ("Error: (%P|%t): sigemptyset failed: %p\n"), ACE_TEXT ("error")));
     }
 
   for (int i = sigmin; i <= sigmax; ++i)
@@ -290,7 +290,7 @@ Client_Handler::handle_write_stream
       if (this->stream_.write (this->block_, this->block_.length ()) == -1)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t) Client_Handler::write failed: %p\n")));
+                      ACE_TEXT ("(%t) Client_Handler::write failed: %p\n"), ACE_TEXT ("error")));
           delete this;
         }
     }
@@ -407,7 +407,7 @@ Server_Handler::handle_read_stream
   if (this->stream_.read (b, b.space () - 1) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) Server_Handler::read failed: %p\n")));
+                  ACE_TEXT ("(%t) Server_Handler::read failed: %p\n"), ACE_TEXT ("error")));
       delete this;
     }
   return;
@@ -496,7 +496,7 @@ start_clients (void *)
       if (connect.connect (stream, addr) < 0)
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%t) connect: %p\n")));
+                      ACE_TEXT ("(%t) connect: %p\n"), ACE_TEXT ("error")));
           continue;
         }
 
@@ -548,7 +548,7 @@ run_main (int argc, ACE_TCHAR *argv[])
                                                         ACE_Event_Handler::ACCEPT_MASK))
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%t) register_handler: %p; aborting\n")));
+                  ACE_TEXT ("(%t) register_handler: %p; aborting\n"), ACE_TEXT ("error")));
       return 1;
     }
 

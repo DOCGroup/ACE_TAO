@@ -166,7 +166,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Test 1, sendv failed: %p\n")));
+                  ACE_TEXT ("(%P|%t) Test 1, sendv failed: %p\n"), ACE_TEXT ("error")));
       Test_Result = 1;
     }
   else
