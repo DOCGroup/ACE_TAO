@@ -452,32 +452,39 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
     }
   // successful added file (if adding), so release the listing file lock
   listing_lf.release();
-    ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
+  ACE_OS::fprintf (fp,"<?xml version=\"1.0\"?>\n");
 
-    this->repo_values_[REPO_TYPE].second = ACE_TEXT_ALWAYS_CHAR (uid.repo_type_str.c_str ());
-    this->repo_values_[REPO_ID].second = ACE_TEXT_ALWAYS_CHAR (uid.repo_id_str.c_str ());
+  this->repo_values_[REPO_TYPE].second = ACE_TEXT_ALWAYS_CHAR (uid.repo_type_str.c_str ());
+  this->repo_values_[REPO_ID].second = ACE_TEXT_ALWAYS_CHAR (uid.repo_id_str.c_str ());
 
-    this->persist (fp, *info, "", this->repo_values_);
+  this->persist (fp, *info, "", this->repo_values_);
+  int const flush_error = ACE_OS::fflush (fp);
+  if (flush_error != 0 || std::ferror (fp) != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Could not write file %s\n"),
+                             fname.c_str ()), -1);
+    }
 
-    // Copy the current file to a backup.
-    std::unique_ptr<FILE, int (*) (FILE *)> bfp (
-      ACE_OS::fopen (bfname.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
-    if (!bfp)
-      {
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
-                               bfname.c_str ()), -1);
-      }
-    ACE_OS::fprintf (bfp.get (), "<?xml version=\"1.0\"?>\n");
-    this->persist (bfp.get (), *info, "", this->repo_values_);
-    int const write_error = std::ferror (bfp.get ());
-    int const close_error = ACE_OS::fclose (bfp.release ());
-    if (write_error != 0 || close_error != 0)
-      {
-        ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("(%P|%t) Could not write backup file %s\n"),
-                               bfname.c_str ()), -1);
-      }
+  // Copy the current file to a backup.
+  std::unique_ptr<FILE, int (*) (FILE *)> bfp (
+    ACE_OS::fopen (bfname.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
+  if (!bfp)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Couldn't write to file %s\n"),
+                             bfname.c_str ()), -1);
+    }
+  ACE_OS::fprintf (bfp.get (), "<?xml version=\"1.0\"?>\n");
+  this->persist (bfp.get (), *info, "", this->repo_values_);
+  int const write_error = std::ferror (bfp.get ());
+  int const close_error = ACE_OS::fclose (bfp.release ());
+  if (write_error != 0 || close_error != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Could not write backup file %s\n"),
+                             bfname.c_str ()), -1);
+    }
   server_file.release ();
 
   ImplementationRepository::UpdateInfo entity;
@@ -535,6 +542,13 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
   this->repo_values_[REPO_ID].second = ACE_TEXT_ALWAYS_CHAR (uid.repo_id_str.c_str ());
 
   persist (fp, *info, "", this->repo_values_);
+  int const flush_error = ACE_OS::fflush (fp);
+  if (flush_error != 0 || std::ferror (fp) != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("(%P|%t) Could not write file %s\n"),
+                             fname.c_str ()), -1);
+    }
 
   // Copy the current file to a backup.
   std::unique_ptr<FILE, int (*) (FILE *)> bfp (
