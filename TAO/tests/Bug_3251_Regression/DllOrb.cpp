@@ -20,7 +20,8 @@ DllOrb::init (int argc, ACE_TCHAR *argv[])
     ACE_TCHAR const *current_arg {};
     while (as.is_anything_left ())
     {
-      if ((current_arg = as.get_the_parameter (ACE_TEXT ("-NumThreads"))) != nullptr)
+      current_arg = as.get_the_parameter (ACE_TEXT ("-NumThreads"));
+      if (current_arg != nullptr)
       {
         int const num_threads = ACE_OS::atoi (current_arg);
         if (num_threads >= 1)

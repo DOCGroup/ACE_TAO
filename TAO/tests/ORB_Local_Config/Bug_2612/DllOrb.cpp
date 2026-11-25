@@ -27,7 +27,8 @@ int DllOrb::init (int argc, ACE_TCHAR *argv[])
     ACE_TCHAR const *current_arg {};
     while (as.is_anything_left ())
       {
-        if ((current_arg = as.get_the_parameter (ACE_TEXT ("-t"))) != nullptr)
+        current_arg = as.get_the_parameter (ACE_TEXT ("-t"));
+        if (current_arg != nullptr)
           {
             int const num = ACE_OS::atoi (current_arg);
             if (num >= 1)
