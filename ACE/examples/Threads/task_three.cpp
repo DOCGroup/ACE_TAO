@@ -199,7 +199,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *[])
       owned_out_stream.reset (stream);
       out_stream = owned_out_stream.get ();
 #else
-      if ((out_stream = ACE_OS::fopen ("test_task_three.out", "w")) == nullptr)
+      out_stream = ACE_OS::fopen ("test_task_three.out", "w");
+      if (out_stream == nullptr)
         {
           return -1;
         }

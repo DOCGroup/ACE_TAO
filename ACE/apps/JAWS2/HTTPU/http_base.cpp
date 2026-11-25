@@ -260,7 +260,8 @@ HTTP_Base::deliver_header_name (JAWS_Header_Data *&data)
 
   for (;;)
     {
-      if ((data = this->iter_.next ()) == nullptr)
+      data = this->iter_.next ();
+      if (data == nullptr)
         {
           // No more headers, deliver final "\r\n"
           this->mb_->copy ("\r\n", 2);

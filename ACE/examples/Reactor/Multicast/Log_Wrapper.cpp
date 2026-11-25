@@ -24,7 +24,8 @@ Log_Wrapper::open (int port, char const *mcast_addr)
     return -1;
   }
 
-  if ((host_info = ACE_OS::gethostbyname (host_data.nodename)) == nullptr)
+  host_info = ACE_OS::gethostbyname (host_data.nodename);
+  if (host_info == nullptr)
   {
     return -1;
   }

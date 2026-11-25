@@ -95,7 +95,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getPrefix\n")));
   ACEXML_Char const *prefix {};
 
-  if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.purl.org/dc#"))) == nullptr)
+  prefix = xmlns.getPrefix (ACE_TEXT ("http://www.purl.org/dc#"));
+  if (prefix == nullptr)
     {
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("Fail to get prefix of http://www.purl.org/dc#\n")));
@@ -108,7 +109,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
                   prefix));
     }
 
-  if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/1999/xhtml"))) == nullptr ||
+  prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/1999/xhtml"));
+  if (prefix == nullptr ||
       *prefix != ACE_TEXT ('\0'))
     {
       ACE_DEBUG ((LM_ERROR,
@@ -120,7 +122,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Default namespace prefix is empty\n")));
   }
 
-  if ((prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/XML/1998/namespace"))) == nullptr)
+  prefix = xmlns.getPrefix (ACE_TEXT ("http://www.w3.org/XML/1998/namespace"));
+  if (prefix == nullptr)
     {
       ACE_DEBUG ((LM_ERROR,
                   ACE_TEXT ("Fail to get prefix of http://www.w3.org/XML/1998/namespace\n")));
@@ -174,7 +177,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("\n*** Checking getURI\n")));
   ACEXML_Char const *URI {};
 
-  if ((URI = xmlns.getURI (ACE_TEXT ("dc"))) == nullptr)
+  URI = xmlns.getURI (ACE_TEXT ("dc"));
+  if (URI == nullptr)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"dc\"\n")));
       status = 1;
@@ -183,7 +187,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"dc\" is %s\n"), URI));
   }
-  if ((URI = xmlns.getURI (ACE_TEXT ("xc"))) == nullptr)
+  URI = xmlns.getURI (ACE_TEXT ("xc"));
+  if (URI == nullptr)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"xc\"\n")));
       status = 1;
@@ -192,7 +197,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"xc\" is %s\n"), URI));
   }
-  if ((URI = xmlns.getURI (ACE_TEXT ("xml"))) == nullptr)
+  URI = xmlns.getURI (ACE_TEXT ("xml"));
+  if (URI == nullptr)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get URI for \"xml\"\n")));
       status = 1;
@@ -201,7 +207,8 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("URI for \"xml\" is %s\n"), URI));
   }
-  if ((URI = xmlns.getURI (ACE_TEXT (""))) == nullptr)
+  URI = xmlns.getURI (ACE_TEXT (""));
+  if (URI == nullptr)
     {
       ACE_DEBUG ((LM_ERROR, ACE_TEXT ("Fail to get default namespace URI\n")));
       status = 1;
