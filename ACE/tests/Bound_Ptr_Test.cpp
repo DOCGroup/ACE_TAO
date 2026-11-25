@@ -353,16 +353,21 @@ run_main (int, ACE_TCHAR *[])
   ACE_NEW_RETURN (parent1,
                   Parent,
                   -1);
+  size_t const children_before = Child::instance_count_;
   {
-    ACE_Strong_Bound_Ptr<Child, ACE_Null_Mutex> const derived (
-      new Child (parent1->weak_self_));
-    ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> const converted (derived);
     ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> base;
-    ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> &result = (base = derived);
-    ACE_TEST_ASSERT (std::addressof (result) == std::addressof (base));
-    ACE_TEST_ASSERT (base.get () == derived.get ());
-    ACE_TEST_ASSERT (converted.get () == derived.get ());
+    {
+      ACE_Strong_Bound_Ptr<Child, ACE_Null_Mutex> const derived (
+        new Child (parent1->weak_self_));
+      ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> const converted (derived);
+      ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> &result = (base = derived);
+      ACE_TEST_ASSERT (std::addressof (result) == std::addressof (base));
+      ACE_TEST_ASSERT (base.get () == derived.get ());
+      ACE_TEST_ASSERT (converted.get () == derived.get ());
+    }
+    ACE_TEST_ASSERT (Child::instance_count_ == children_before + 1);
   }
+  ACE_TEST_ASSERT (Child::instance_count_ == children_before);
   ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> p8;
   {
     // Must get the pointer from the parent object's weak_self_ member.
