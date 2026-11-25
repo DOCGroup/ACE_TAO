@@ -84,8 +84,8 @@ private:
                                                 ACE_Null_Mutex>;
 
   /**
-   * Calls to <open> will create a new instance of <Account_i> and
-   * bind into the hash map manager if <name> is unique, else it will
+   * Calls to @c open will create a new instance of @c Account_i and
+   * bind into the hash map manager if @c name is unique, else it will
    * return a previously bound entry.
    */
   MAP_MANAGER_TYPE hash_map_;

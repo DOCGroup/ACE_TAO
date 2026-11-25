@@ -54,13 +54,13 @@ public:
   void verbosity (Logger::Verbosity_Level level) override;
 
 private:
-  /// Converts the IDL defined <Log_Priority> enum type to the
-  /// <ACE_Log_Priority> enum type.
+  /// Converts the IDL defined @c Log_Priority enum type to the
+  /// @c ACE_Log_Priority enum type.
   static ACE_Log_Priority priority_conversion (Logger::Log_Priority priority);
 
   /**
-   * Converts the IDL defined <Verbosity_Level> enum type to a u_long,
-   * which is used by the <ACE_Log_Record> to distinguish the
+   * Converts the IDL defined @c Verbosity_Level enum type to a u_long,
+   * which is used by the @c ACE_Log_Record to distinguish the
    * level of verbosity.
    */
   static u_long verbosity_conversion (Logger::Verbosity_Level verbosity_level);
@@ -99,8 +99,8 @@ public:
 
 private:
   /**
-   * Calls to <make_logger> will create a new instance of @c Logger and
-   * bind into the hash map manager if @a name is unique, else it will
+   * Calls to @c make_logger will create a new instance of @c Logger and
+   * bind into the hash map manager if @c name is unique, else it will
    * return a previously bound entry.
    */
   ACE_Hash_Map_Manager<ACE_CString, Logger_i *, ACE_Null_Mutex> hash_map_;
