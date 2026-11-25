@@ -81,6 +81,7 @@ class AST_Type;
 class TAO_IDL_FE_Export AST_Field : public virtual AST_Decl
 {
 public:
+  AST_Field () = delete;
   AST_Field (AST_Field const &) = delete;
   AST_Field (AST_Field &&) = delete;
   AST_Field &operator= (AST_Field const &) = delete;

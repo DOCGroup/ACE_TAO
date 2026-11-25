@@ -71,6 +71,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Argument : public virtual AST_Field
 {
 public:
+  AST_Argument () = delete;
   AST_Argument (AST_Argument const &) = delete;
   AST_Argument (AST_Argument &&) = delete;
   AST_Argument &operator= (AST_Argument const &) = delete;

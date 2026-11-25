@@ -84,6 +84,7 @@ public:
      , OP_idempotent            // Operation is idempotent.
   };
 
+  AST_Operation () = delete;
   AST_Operation (AST_Type *return_type,
                  Flags flags,
                  UTL_ScopedName *n,

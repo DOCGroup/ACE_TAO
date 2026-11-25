@@ -82,6 +82,7 @@ class ast_visitor;
 class TAO_IDL_FE_Export AST_Array : public virtual AST_ConcreteType
 {
 public:
+  AST_Array () = delete;
   AST_Array (UTL_ScopedName *n,
              size_t ndims,
              UTL_ExprList *dims,
