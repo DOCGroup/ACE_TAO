@@ -22,7 +22,6 @@ private:
   Headers_Map_Item ();
   Headers_Map_Item (Headers_Map_Item const &) = delete;
   Headers_Map_Item (Headers_Map_Item &&) = delete;
-  Headers_Map_Item &operator= (Headers_Map_Item &&) = delete;
   ~Headers_Map_Item ();
 
   // operator const char * () const;
