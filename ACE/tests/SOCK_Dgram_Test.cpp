@@ -373,7 +373,8 @@ spawn (int proto)
 int
 test_dual_stack_multicast_interface ()
 {
-  if (ACE_OS::if_nametoindex ("lo") == 0)
+  unsigned int const loopback_index = ACE_OS::if_nametoindex ("lo");
+  if (loopback_index == 0)
     {
       return 0;
     }
@@ -401,6 +402,19 @@ test_dual_stack_multicast_interface ()
                              interface_name),
                             1);
         }
+    }
+
+  unsigned int ipv6_interface {};
+  option_length = sizeof (ipv6_interface);
+  if (socket.set_nic (ACE_TEXT ("lo"), AF_INET6) == -1
+      || socket.get_option (IPPROTO_IPV6, IPV6_MULTICAST_IF,
+                            &ipv6_interface, &option_length) == -1
+      || ipv6_interface != loopback_index)
+    {
+      socket.close ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Failed to set IPv6 multicast interface\n")),
+                        1);
     }
 
   if (socket.set_nic (ACE_TEXT ("127.0.0.1"), AF_INET6) != -1)
