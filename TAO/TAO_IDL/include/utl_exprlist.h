@@ -107,6 +107,7 @@ private:
 class   UTL_ExprlistActiveIterator : public UTL_ListActiveIterator
 {
 public:
+  UTL_ExprlistActiveIterator () = delete;
   explicit UTL_ExprlistActiveIterator (UTL_ExprList *s);
 
   // Get current item.

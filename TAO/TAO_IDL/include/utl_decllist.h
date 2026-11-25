@@ -106,6 +106,7 @@ class TAO_IDL_FE_Export UTL_DecllistActiveIterator
 public:
   // Operations
 
+  UTL_DecllistActiveIterator () = delete;
   explicit UTL_DecllistActiveIterator (UTL_DeclList *s);
 
   // Get current item

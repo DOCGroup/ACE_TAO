@@ -124,6 +124,7 @@ class TAO_IDL_FE_Export UTL_IdListActiveIterator
   : public UTL_ListActiveIterator
 {
 public:
+  UTL_IdListActiveIterator () = delete;
   explicit UTL_IdListActiveIterator (UTL_IdList *s);
 
   /// Retrieves the next item.
