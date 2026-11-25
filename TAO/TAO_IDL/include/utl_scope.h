@@ -346,8 +346,8 @@ public:
   AST_Structure *fe_add_full_struct_type (AST_Structure *t);
   AST_StructureFwd *fe_add_fwd_struct_type (AST_StructureFwd *t);
 
-  /// No-op base class version of the specialized adding actions.
-
+  /// @name No-op base class versions of specialized adding actions
+  /// @{
   virtual
   AST_PredefinedType *fe_add_predefined_type (
     AST_PredefinedType *t);
@@ -492,6 +492,7 @@ public:
   virtual
   AST_Annotation_Member *fe_add_annotation_member (
     AST_Annotation_Member *annotation_member);
+  /// @}
 
 protected:
   /// Quick check on the head of a name to see if it's global.
