@@ -7,6 +7,7 @@ project(*Sender) : aceexe, rmcast {
 project(*Receiver) : aceexe, rmcast {
   exename = receiver
   Source_Files {
+    Copy_Compatibility.cpp
     Receiver.cpp
   }
 }
