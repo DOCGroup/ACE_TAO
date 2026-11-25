@@ -599,20 +599,20 @@ TAO_IFR_Service_Utils::name_exists (
   int status = 0;
   ACE_TString section_name;
   u_int count = 0;
-  char *stringified {};
+  ACE_TCHAR *stringified {};
 
   // Check the members defined elsewhere, if any.
   ACE_Configuration_Section_Key refs_key;
   status =
     repo->config ()->open_section (key,
-                                   "refs",
+                                   ACE_TEXT ("refs"),
                                    false,
                                    refs_key);
 
   if (status == 0)
     {
       repo->config ()->get_integer_value (refs_key,
-                                          "count",
+                                          ACE_TEXT ("count"),
                                           count);
 
       for (CORBA::ULong i {}; i < count; ++i)
@@ -627,10 +627,10 @@ TAO_IFR_Service_Utils::name_exists (
 
           ACE_TString member_name;
           repo->config ()->get_string_value (member_key,
-                                             "name",
+                                             ACE_TEXT ("name"),
                                              member_name);
 
-          if ((*checker) (member_name.fast_rep ()) != 0)
+          if ((*checker) (ACE_TEXT_ALWAYS_CHAR (member_name.fast_rep ())) != 0)
             {
               throw
                 CORBA::BAD_PARAM (CORBA::OMGVMCID | 3,
@@ -643,13 +643,13 @@ TAO_IFR_Service_Utils::name_exists (
   ACE_Configuration_Section_Key defns_key;
   status =
     repo->config ()->open_section (key,
-                                   "defns",
+                                   ACE_TEXT ("defns"),
                                    false,
                                    defns_key);
   if (status == 0)
     {
       repo->config ()->get_integer_value (defns_key,
-                                          "count",
+                                          ACE_TEXT ("count"),
                                           count);
 
       for (CORBA::ULong i {}; i < count; ++i)
@@ -664,10 +664,10 @@ TAO_IFR_Service_Utils::name_exists (
 
           ACE_TString defn_name;
           repo->config ()->get_string_value (defn_key,
-                                             "name",
+                                             ACE_TEXT ("name"),
                                              defn_name);
 
-          if ((*checker) (defn_name.fast_rep ()) != 0)
+          if ((*checker) (ACE_TEXT_ALWAYS_CHAR (defn_name.fast_rep ())) != 0)
             {
               throw CORBA::BAD_PARAM (
                 CORBA::OMGVMCID | 3,
@@ -732,7 +732,7 @@ TAO_IFR_Service_Utils::check_subsection (
   ACE_Configuration_Section_Key sub_key;
   int status =
     config->open_section (key,
-                          sub_section,
+                          ACE_TEXT_CHAR_TO_TCHAR (sub_section),
                           false,
                           sub_key);
 
@@ -743,12 +743,12 @@ TAO_IFR_Service_Utils::check_subsection (
 
   CORBA::ULong count = 0;
   config->get_integer_value (sub_key,
-                             "count",
+                             ACE_TEXT ("count"),
                              count);
 
   ACE_Configuration_Section_Key entry_key;
   ACE_TString entry_name;
-  char *stringified {};
+  ACE_TCHAR *stringified {};
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
@@ -758,10 +758,10 @@ TAO_IFR_Service_Utils::check_subsection (
                             false,
                             entry_key);
       config->get_string_value (entry_key,
-                                "name",
+                                ACE_TEXT ("name"),
                                 entry_name);
 
-      if ((*checker) (entry_name.fast_rep ()) != 0)
+      if ((*checker) (ACE_TEXT_ALWAYS_CHAR (entry_name.fast_rep ())) != 0)
         {
           throw CORBA::BAD_PARAM (3, CORBA::COMPLETED_NO);
           return;
