@@ -58,7 +58,7 @@ namespace ACE
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("receive: can't store numeric value - ")
-                      ACE_TEXT ("%s is a string type monitor\n"),
+                      ACE_TEXT ("%C is a string type monitor\n"),
                       this->name_.c_str ()));
           return;
         }
@@ -113,7 +113,7 @@ namespace ACE
         {
           ACELIB_ERROR ((LM_ERROR,
                       ACE_TEXT ("receive: can't store string values - ")
-                      ACE_TEXT ("%s is a numeric type monitor\n"),
+                      ACE_TEXT ("%C is a numeric type monitor\n"),
                       this->name_.c_str ()));
           return;
         }
@@ -245,7 +245,7 @@ namespace ACE
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("average: %s is wrong monitor type\n"),
+                             ACE_TEXT ("average: %C is wrong monitor type\n"),
                              this->name_.c_str ()),
                             0);
         }
@@ -265,7 +265,7 @@ namespace ACE
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("sum_of_squares: %s ")
+                             ACE_TEXT ("sum_of_squares: %C ")
                              ACE_TEXT ("is wrong monitor type\n"),
                              this->name_.c_str ()),
                             0);
@@ -282,7 +282,7 @@ namespace ACE
       if (this->data_.type_ == Monitor_Control_Types::MC_GROUP)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("count: %s is a monitor group\n"),
+                             ACE_TEXT ("count: %C is a monitor group\n"),
                              this->name_.c_str ()),
                             0UL);
         }
@@ -301,7 +301,7 @@ namespace ACE
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("minimum_sample: %s ")
+                             ACE_TEXT ("minimum_sample: %C ")
                              ACE_TEXT ("is wrong monitor type\n"),
                              this->name_.c_str ()),
                             0);
@@ -319,7 +319,7 @@ namespace ACE
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("maximum_sample: %s ")
+                             ACE_TEXT ("maximum_sample: %C ")
                              ACE_TEXT ("is wrong monitor type\n"),
                              this->name_.c_str ()),
                             0);
@@ -337,7 +337,7 @@ namespace ACE
           || this->data_.type_ == Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             ACE_TEXT ("last_sample: %s ")
+                             ACE_TEXT ("last_sample: %C ")
                              ACE_TEXT ("is wrong monitor type\n"),
                              this->name_.c_str ()),
                             0);
@@ -356,7 +356,7 @@ namespace ACE
       if (this->data_.type_ != Monitor_Control_Types::MC_LIST)
         {
           ACELIB_ERROR ((LM_ERROR,
-                      ACE_TEXT ("get_list: %s is not a ")
+                      ACE_TEXT ("get_list: %C is not a ")
                       ACE_TEXT ("list monitor type\n"),
                       this->name_.c_str ()));
 
