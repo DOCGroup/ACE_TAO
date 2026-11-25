@@ -181,7 +181,7 @@ Client_i::read_ior (ACE_TCHAR const *filename)
   if (!data)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n")),
+                         ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior: %p\n"), ACE_TEXT ("error")),
                         -1);
     }
 

@@ -153,7 +153,7 @@ disable_signal (int sigmin, int sigmax)
 # endif /* ACE_LACKS_PTHREAD_THR_SIGSETMASK */
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Error: (%P|%t): SIG_BLOCK failed: %p\n")),
+                         ACE_TEXT ("Error: (%P|%t): SIG_BLOCK failed: %p\n"), ACE_TEXT ("error")),
                         -1);
     }
 #else
@@ -239,14 +239,14 @@ Client_Handler::open (ACE_HANDLE handle)
   if (this->stream_.open (*this, handle) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) Client_Handler::open failed: %p\n")),
+                         ACE_TEXT ("(%t) Client_Handler::open failed: %p\n"), ACE_TEXT ("error")),
                         -1);
     }
   this->block_.copy (test_string);
   if (this->stream_.write (this->block_, this->block_.length ()) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) Client_Handler::write failed: %p\n")),
+                         ACE_TEXT ("(%t) Client_Handler::write failed: %p\n"), ACE_TEXT ("error")),
                         -1);
     }
   return 0;
@@ -339,13 +339,13 @@ Server_Handler::open (ACE_HANDLE handle)
   if (this->stream_.open (*this, handle) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) Server_Handler::open failed: %p\n")),
+                         ACE_TEXT ("(%t) Server_Handler::open failed: %p\n"), ACE_TEXT ("error")),
                         -1);
     }
   if (this->stream_.read (this->block_, this->block_.space () - 1) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) Server_Handler::read failed: %p\n")),
+                         ACE_TEXT ("(%t) Server_Handler::read failed: %p\n"), ACE_TEXT ("error")),
                         -1);
     }
   return 0;
@@ -419,7 +419,7 @@ Server_Acceptor::open (const ACE_INET_Addr &listen_addr)
   if (this->acceptor_.open (listen_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("listen: %p\n")),
+                         ACE_TEXT ("listen: %p\n"), ACE_TEXT ("error")),
                         -1);
     }
   return 0;
@@ -438,7 +438,7 @@ Server_Acceptor::handle_input (ACE_HANDLE)
   if (this->acceptor_.accept (new_stream) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) accept: %p\n")),
+                         ACE_TEXT ("(%t) accept: %p\n"), ACE_TEXT ("error")),
                         -1);
     }
   Server_Handler *new_handler {};
@@ -471,7 +471,7 @@ proactor_loop (void *)
   if (result == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%t) Error handling events: %p\n")),
+                         ACE_TEXT ("(%t) Error handling events: %p\n"), ACE_TEXT ("error")),
                         0);
     }
 

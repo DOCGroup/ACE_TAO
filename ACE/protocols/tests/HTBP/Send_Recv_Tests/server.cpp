@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       || peer_acceptor.get_local_addr (server_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) open: %p\n")), 1);
+                         ACE_TEXT ("(%P|%t) open: %p\n"), ACE_TEXT ("error")), 1);
     }
 
   ACE_DEBUG ((LM_DEBUG,
