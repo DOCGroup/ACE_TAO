@@ -146,15 +146,14 @@ public:
 protected:
   // Data.
 
+  /// Base type for the field.
   AST_Type *ref_type_;
-  // Base type for field.
 
+  /// Used with valuetype and eventtype fields.
   Visibility visibility_;
-  // Used with valuetype and eventtype fields.
 
+  /// Whether this field owns its anonymous array or sequence type.
   bool owns_base_type_ {};
-  // If our field type is anonymous array or sequence, we're
-  // responsible for destroying it.
 };
 
 #endif           // _AST_FIELD_AST_FIELD_HH
