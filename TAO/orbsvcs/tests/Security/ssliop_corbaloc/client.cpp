@@ -154,7 +154,7 @@ CosNaming_Client::parse_args ()
                 {
                   ACE_ERROR_RETURN ((LM_ERROR,
                                      ACE_TEXT ("Unable to open %s for writing: %p\n"),
-                                     get_opts.opt_arg ()), -1);
+                                     get_opts.opt_arg (), ACE_TEXT ("fopen")), -1);
                 }
 
               this->test_.reset (new (std::nothrow) Persistent_Test_Begin (

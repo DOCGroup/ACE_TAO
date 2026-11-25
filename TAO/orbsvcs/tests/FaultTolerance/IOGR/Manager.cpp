@@ -237,7 +237,7 @@ Client_i::init (ACE_TCHAR const* ior_file)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("Unable to open %s for reading: %p\n"),
-                         ior_file),
+                         ior_file, ACE_TEXT ("fopen")),
                         -1);
     }
 

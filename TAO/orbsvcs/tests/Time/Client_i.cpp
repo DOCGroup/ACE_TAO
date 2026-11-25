@@ -170,7 +170,7 @@ Client_i::read_ior (ACE_TCHAR const *filename)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to open %s for reading: %p\n"),
-                         filename),
+                         filename, ACE_TEXT ("open")),
                         -1);
     }
 
@@ -216,7 +216,7 @@ Client_i::parse_args (int argc, ACE_TCHAR *argv[])
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("[CLIENT] Process/Thread Id : (%P/%t) Unable to read ior from %s : %p\n"),
-                                 get_opts.opt_arg ()),
+                                 get_opts.opt_arg (), ACE_TEXT ("read")),
                                 -1);
             }
           break;
