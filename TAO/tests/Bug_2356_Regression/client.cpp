@@ -45,7 +45,7 @@ class Handler : public POA_A::AMI_AMI_TestHandler
 {
 public:
   Handler () = default;
-  ~Handler () = default;
+  ~Handler () override = default;
 
   Handler (Handler const &) = delete;
   Handler &operator= (Handler const &) = delete;
