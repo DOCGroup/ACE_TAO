@@ -226,34 +226,25 @@ public:
   void inherit_log_msg_attributes ();
   /// @}
 
-  /// @name Service execution control
+  /** @name Service execution control
+   *
+   * These methods share the following behavior for @c wait_time and
+   * their return values. If @c wait_time is null, the function waits
+   * indefinitely for the service to reach a steady state. Otherwise,
+   * it specifies how long to wait and is updated with the service's
+   * last reported wait hint. A zero time can be used to check the
+   * status again later while processing other events.
+   *
+   * @note The wait time is not currently used: the calls check status
+   * once and do not wait for it to change.
+   *
+   * The start, stop, pause and continue methods return 0 if the request
+   * was made successfully, even if the service refuses to change state.
+   * Supply @c svc_state to receive the service's last reported state.
+   * They return -1 if the request itself is refused, for example due
+   * to privilege restrictions or unsupported controls.
+   */
   /// @{
-
-  // These methods to start/pause/resume/stop/check the service all
-  // have the following common behavior with respect to @a wait_time
-  // and return value.  @a wait_time is a pointer to an ACE_Time_Value
-  // object.  If not supplied (a zero pointer) the function will wait
-  // indefinitely for the action to be finalized (service reach
-  // running state, completely shut down, etc.) or get "stuck" before
-  // returning.  If the time is supplied, it specifies how long to
-  // wait for the service to reach a steady state, and on return, it
-  // is updated to the service's last reported wait hint.  So, if you
-  // want to control the waiting yourself (for example, you want to
-  // react to UI events during the wait) specify a @a wait_time of (0,
-  // 0) and use the updated time to know when to check the service's
-  // state again.  NOTE!!!! The wait_time things don't work yet.  The
-  // calls always check status once, and do not wait for it to change.
-  //
-  // The return value from start_svc, stop_svc, pause_svc,
-  // continue_svc is 0 if the request to NT to effect the change was
-  // made successfully.  The service may refuse to change, or not do
-  // what you wanted; so if you need to know, supply a <svc_state>
-  // pointer to receive the service's reported last state on return
-  // and check it to see if it's what you want.  The functions only
-  // return -1 when the actual request to the service is refused -
-  // this would include privilege restrictions and if the service is
-  // not configured to receive the request (this is most likely to
-  // happen in the case of pause and continue).
 
   /**
    * Start the service (must have been inserted before).  wait_time is
