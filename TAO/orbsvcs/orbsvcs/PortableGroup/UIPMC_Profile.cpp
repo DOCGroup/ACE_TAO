@@ -345,7 +345,7 @@ TAO_UIPMC_Profile::parse_string_i (char const *string)
         {
             ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) - UIPMC_Profile: ")
-                        ACE_TEXT ("Invalid ref: can't find multicast address in %s\n"),
+                        ACE_TEXT ("Invalid ref: can't find multicast address in %C\n"),
                         string
                        ));
         }

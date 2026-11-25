@@ -96,9 +96,9 @@ TAO_PortableGroup_Acceptor_Registry::open_i (TAO_Profile const *profile,
               ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) ")
                         ACE_TEXT ("unable to open acceptor ")
-                        ACE_TEXT ("for <%s>%p\n"),
+                        ACE_TEXT ("for <%C>%p\n"),
                         buffer,
-                        ""));
+                        ACE_TEXT ("")));
             }
 
           throw CORBA::BAD_PARAM (
@@ -122,9 +122,9 @@ TAO_PortableGroup_Acceptor_Registry::open_i (TAO_Profile const *profile,
               ORBSVCS_ERROR ((LM_ERROR,
                         ACE_TEXT ("TAO (%P|%t) ")
                         ACE_TEXT ("unable to add acceptor to registry")
-                        ACE_TEXT ("for <%s>%p\n"),
+                        ACE_TEXT ("for <%C>%p\n"),
                         buffer,
-                        ""));
+                        ACE_TEXT ("")));
             }
 
           throw CORBA::NO_MEMORY (
