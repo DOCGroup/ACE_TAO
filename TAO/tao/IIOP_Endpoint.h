@@ -95,14 +95,14 @@ public:
   /// Return a hash value for this object.
   CORBA::ULong hash () override;
 
-  /// Return a reference to the <object_addr>.
+  /// Return a reference to the @c object_addr.
   ACE_INET_Addr const &object_addr () const;
 
   /// Return a pointer to the host string.  This object maintains
   /// ownership of this string.
   char const *host () const;
 
-  /// Copy the string @a h into <host_> and return the resulting pointer.
+  /// Copy the string @a h into @c host_ and return the resulting pointer.
   /// This object maintains ownership of this string.
   char const *host (char const *h);
 
@@ -128,7 +128,7 @@ public:
   TAO_IIOP_Endpoint &operator= (TAO_IIOP_Endpoint const &other);
 
   /// Given a comma separated list of preferred interface directives, which
-  /// are of the form <wild_remote>=<wild_local>, this function will retrieve
+  /// are of the form @c wild_remote = @c wild_local, this function will retrieve
   /// the list of preferred local ip addresses by matching wild_local against
   /// the list of all local ip interfaces, for any directive where wild_remote
   /// matches the host from our endpoint.

@@ -84,7 +84,7 @@ protected:
   /// Atomically assign rhs to @c value_.
   ACE_Atomic_Op_GCC<T> &operator= (T rhs);
 
-  /// Atomically assign <rhs> to @c value_.
+  /// Atomically assign @a rhs to @c value_.
   ACE_Atomic_Op_GCC<T> &operator= (const ACE_Atomic_Op_GCC<T> &rhs);
 
   /// Initialize @c value_ to 0.
