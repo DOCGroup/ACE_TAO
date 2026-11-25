@@ -119,23 +119,38 @@ Concurrency_Service::init (int argc,
       if (iorf == nullptr)
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                             "Cannot open output file for writing IOR: %s",
-                             this->options_.ior_file_name),
-                            -1);
+                                 ACE_TEXT ("Cannot open output file for writing IOR: %s\n"),
+                                 this->options_.ior_file_name), -1);
         }
 
-      ACE_OS::fprintf (iorf.get (), "%s\n", str.in ());
+      int const write_result = ACE_OS::fprintf (iorf.get (), "%s\n", str.in ());
+      int const close_result = ACE_OS::fclose (iorf.release ());
+      if (write_result < 0 || close_result != 0)
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot write IOR file: %s\n"),
+                                 this->options_.ior_file_name), -1);
+        }
     }
 
   if (this->options_.pid_file_name != nullptr)
     {
       std::unique_ptr<FILE, int (*) (FILE *)> pidf (
         ACE_OS::fopen (this->options_.pid_file_name, ACE_TEXT("w")), ACE_OS::fclose);
-      if (pidf != nullptr)
+      if (pidf == nullptr)
         {
-          ACE_OS::fprintf (pidf.get (),
-                           "%ld\n",
-                           static_cast<long> (ACE_OS::getpid ()));
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot open PID file: %s\n"),
+                                 this->options_.pid_file_name), -1);
+        }
+      int const write_result = ACE_OS::fprintf (pidf.get (), "%ld\n",
+                                                static_cast<long> (ACE_OS::getpid ()));
+      int const close_result = ACE_OS::fclose (pidf.release ());
+      if (write_result < 0 || close_result != 0)
+        {
+          ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                                 ACE_TEXT ("Cannot write PID file: %s\n"),
+                                 this->options_.pid_file_name), -1);
         }
     }
 
