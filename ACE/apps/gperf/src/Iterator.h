@@ -76,6 +76,11 @@ private:
 
   /// Smallest possible value, inclusive.
   int lo_bound;
+
+  /// Range progress for this iterator.
+  bool range_active_ {};
+  int current_value_ {};
+  int upper_bound_ {};
 };
 
 #endif /* ITERATOR_H */

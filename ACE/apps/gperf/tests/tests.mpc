@@ -1,3 +1,21 @@
+project(key_iterator): aceexe, crosscompile {
+  exename = key_iterator_test
+
+  Source_Files {
+    test_key_iterator.cpp
+    ../src/Iterator.cpp
+  }
+
+  verbatim(gnuace, bottom) {
+    all: runtests
+
+    runtests: key_iterator_test$(EXEEXT)
+    "\t./key_iterator_test"
+
+    endif # CROSS-COMPILE
+  }
+}
+
 project(cinset): gperf_test {
   exename = cout
 

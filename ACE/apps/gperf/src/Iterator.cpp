@@ -43,20 +43,13 @@ Iterator::Iterator (char *s,
 int
 Iterator::operator() ()
 {
-  // Variables to record the Iterator's status when handling ranges,
-  // e.g., 3-12.
-
-  static int size;
-  static int curr_value;
-  static int upper_bound;
-
-  if (size)
+  if (this->range_active_)
     {
-      if (++curr_value >= upper_bound)
+      if (++this->current_value_ >= this->upper_bound_)
         {
-          size = 0;
+          this->range_active_ = false;
         }
-      return curr_value;
+      return this->current_value_;
     }
   else
     {
@@ -68,28 +61,29 @@ Iterator::operator() ()
           case '$': ++str; return end_word;
           case '0': case '1': case '2': case '3': case '4':
           case '5': case '6': case '7': case '8': case '9':
-            for (curr_value = 0; ACE_OS::ace_isdigit (*str); ++str)
+            for (this->current_value_ = 0; ACE_OS::ace_isdigit (*str); ++str)
               {
-                curr_value = curr_value * 10 + *str - '0';
+                this->current_value_ = this->current_value_ * 10 + *str - '0';
               }
 
             if (*str == '-')
               {
-                for (size = 1, upper_bound = 0;
-                     ACE_OS::ace_isdigit (*++str);
-                     upper_bound = upper_bound * 10 + *str - '0')
+                this->range_active_ = true;
+                this->upper_bound_ = 0;
+                for (; ACE_OS::ace_isdigit (*++str);
+                     this->upper_bound_ = this->upper_bound_ * 10 + *str - '0')
                   {
                     // Do nothing.
                   }
 
-                if (upper_bound <= curr_value || upper_bound > hi_bound)
+                if (this->upper_bound_ <= this->current_value_ || this->upper_bound_ > hi_bound)
                   {
                     return error_value;
                   }
               }
 
-            return curr_value >= lo_bound && curr_value <= hi_bound
-                   ? curr_value
+            return this->current_value_ >= lo_bound && this->current_value_ <= hi_bound
+                   ? this->current_value_
                    : error_value;
           }
 
