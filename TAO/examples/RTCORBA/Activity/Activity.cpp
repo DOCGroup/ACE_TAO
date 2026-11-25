@@ -351,6 +351,7 @@ Activity::create_started_flag_file (int argc, ACE_TCHAR *argv[])
               ACE_ERROR ((LM_ERROR,
                           "Unable to open %s for writing: %p\n",
                           current_arg, ACE_TEXT ("fopen")));
+              return;
             }
 
           std::fprintf (file, "ignore");
