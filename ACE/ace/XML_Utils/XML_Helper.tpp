@@ -359,14 +359,13 @@ namespace XML
           return false;
         }
       XERCES_CPP_NAMESPACE::DOMConfiguration *const ser_config (serializer->getDomConfig ());
-      std::unique_ptr<XERCES_CPP_NAMESPACE::XMLFormatTarget> const format_target =
-        std::make_unique<XERCES_CPP_NAMESPACE::LocalFileFormatTarget> (ACE_TEXT_ALWAYS_CHAR (file));
-
+      std::unique_ptr<XERCES_CPP_NAMESPACE::XMLFormatTarget> format_target;
       std::unique_ptr<XERCES_CPP_NAMESPACE::DOMLSOutput, OutputReleaser> const output (impl_->createLSOutput ());
       if (!output)
         {
           return false;
         }
+      format_target = std::make_unique<XERCES_CPP_NAMESPACE::LocalFileFormatTarget> (ACE_TEXT_ALWAYS_CHAR (file));
 
       if (ser_config->canSetParameter (xercesc::XMLUni::fgDOMWRTFormatPrettyPrint, true))
         {
