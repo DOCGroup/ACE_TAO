@@ -226,7 +226,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-int TAO_PG::test_encode_decode ()
+int TAO::test_encode_decode ()
 {
   int result = 1;
   static const long testLong = 123456L;
@@ -241,7 +241,7 @@ int TAO_PG::test_encode_decode ()
   PortableGroup::Properties_var property_set = new PortableGroup::Properties;
   //scope encoder to be sure its gone before decoding
   {
-    TAO_PG::Encoder encoder;
+    TAO_PG::Properties_Encoder encoder;
     PortableGroup::Value value;
     value <<= (CORBA::Long) testLong;
     encoder.add (testLongKey, value);
@@ -263,7 +263,7 @@ int TAO_PG::test_encode_decode ()
     if (longResult != testLong)
     {
       ORBSVCS_ERROR ( (LM_ERROR,
-        "%n\n%T: %s = %d expecting %d\n",
+        "%n\n%T: %C = %d expecting %d\n",
           testLongKey,
           (int)longResult,
           (int)testLong
@@ -274,7 +274,7 @@ int TAO_PG::test_encode_decode ()
   else
   {
     ORBSVCS_ERROR ( (LM_ERROR,
-      "%n\n%T: Can't find value for %s\n", testLongKey
+      "%n\n%T: Can't find value for %C\n", testLongKey
       ));
     result = 0;
   }
@@ -285,10 +285,10 @@ int TAO_PG::test_encode_decode ()
     if (0 != std::strcmp (testString, stringResult))
     {
       ORBSVCS_ERROR ( (LM_ERROR,
-        "%n\n%T: %s = \"%s\" expecting \"%s\"\n",
+        "%n\n%T: %C = \"%C\" expecting \"%C\"\n",
           testStringKey,
-          (int)stringResult,
-          (int)testString
+          stringResult,
+          testString
         ));
       result = 0;
     }
@@ -296,7 +296,7 @@ int TAO_PG::test_encode_decode ()
   else
   {
     ORBSVCS_ERROR ( (LM_ERROR,
-      "%n\n%T: Can't find value for %s\n", testStringKey
+      "%n\n%T: Can't find value for %C\n", testStringKey
       ));
     result = 0;
   }
@@ -307,7 +307,7 @@ int TAO_PG::test_encode_decode ()
     if (doubleResult != testDouble)
     {
       ORBSVCS_ERROR ( (LM_ERROR,
-        "%n\n%T: %s = \"%f\" expecting \"%f\"\n",
+        "%n\n%T: %C = \"%f\" expecting \"%f\"\n",
           testDoubleKey,
           doubleResult,
           testDouble
@@ -318,7 +318,7 @@ int TAO_PG::test_encode_decode ()
   else
   {
     ORBSVCS_ERROR ( (LM_ERROR,
-      "%n\n%T: Can't find value for %s\n", testDoubleKey
+      "%n\n%T: Can't find value for %C\n", testDoubleKey
       ));
     result = 0;
   }
