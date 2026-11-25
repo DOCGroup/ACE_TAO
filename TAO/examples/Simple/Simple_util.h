@@ -45,7 +45,7 @@ public:
             int argc,
             ACE_TCHAR *argv[]);
 
-  /// After calling <init>, this method will register the server with
+  /// After calling @c init, this method will register the server with
   /// the TAO Naming Service using the name passed to this method.
   int register_name (char const *name);
 

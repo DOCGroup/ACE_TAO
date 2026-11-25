@@ -48,8 +48,8 @@ public:
             int argc,
             ACE_TCHAR *argv[]);
 
-  /// After calling <init>, this method will register the server with
-  /// the TAO Naming Service using the servant_name passed to <init>.
+  /// After calling @c init, this method will register the server with
+  /// the TAO Naming Service using the servant_name passed to @c init.
   int register_name ();
 
   /// Run the orb.
