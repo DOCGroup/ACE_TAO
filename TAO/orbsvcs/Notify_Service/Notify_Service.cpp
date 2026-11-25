@@ -437,7 +437,7 @@ TAO_Notify_Service_Driver::fini ()
       poa = PortableServer::POA::_nil ();
     }
 
-  if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb.in ()))
+  if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb_.in ()))
     {
       dispatching_orb->shutdown ();
     }
@@ -453,7 +453,7 @@ TAO_Notify_Service_Driver::fini ()
   this->logging_worker_.wait ();
 
   // Destroy the ORB
-  if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb.in ()))
+  if (this->shutdown_dispatching_orb_ && !CORBA::is_nil (dispatching_orb_.in ()))
     {
       dispatching_orb->destroy ();
     }
@@ -464,7 +464,7 @@ TAO_Notify_Service_Driver::fini ()
       orb->destroy ();
     }
 
-  dispatching_orb = CORBA::ORB::_nil ();
+  dispatching_orb_ = CORBA::ORB::_nil ();
 
   worker_.orb (CORBA::ORB::_nil ());
 
