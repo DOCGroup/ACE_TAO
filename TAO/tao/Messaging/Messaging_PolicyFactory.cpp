@@ -71,9 +71,9 @@ TAO_Messaging_PolicyFactory::create_policy (
       type == Messaging::MAX_HOPS_POLICY_TYPE ||
 #endif  /* TAO_HAS_MAX_HOPS_POLICY == 1 */
       type == Messaging::QUEUE_ORDER_POLICY_TYPE)
-  {
-    throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY);
-  }
+    {
+      throw ::CORBA::PolicyError (CORBA::UNSUPPORTED_POLICY);
+    }
 
   ACE_UNUSED_ARG (value);
 
