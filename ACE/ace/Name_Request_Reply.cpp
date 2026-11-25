@@ -304,8 +304,8 @@ ACE_Name_Request::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Request::dump");
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("*******\nlength = %Q\n"),
-              static_cast<ACE_UINT64> (this->length ())));
+              ACE_TEXT ("*******\nlength = %u\n"),
+              this->length ()));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("message-type = ")));
 
@@ -374,11 +374,11 @@ ACE_Name_Request::dump () const
                   static_cast<ACE_INT64> (tv.usec ())));
     }
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("*******\nname_len = %Q\n"),
-              static_cast<ACE_UINT64> (this->name_len ())));
+              ACE_TEXT ("*******\nname_len = %u\n"),
+              this->name_len ()));
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("*******\nvalue_len = %Q\n"),
-              static_cast<ACE_UINT64> (this->value_len ())));
+              ACE_TEXT ("*******\nvalue_len = %u\n"),
+              this->value_len ()));
 
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("+++++++\n")));
@@ -518,9 +518,9 @@ ACE_Name_Reply::dump () const
 #if defined (ACE_HAS_DUMP)
   ACE_TRACE ("ACE_Name_Reply::dump");
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("*******\nlength = %Q\nerrnum = %Q"),
-              static_cast<ACE_UINT64> (this->length ()),
-              static_cast<ACE_UINT64> (this->errnum ())));
+              ACE_TEXT ("*******\nlength = %u\nerrnum = %u"),
+              this->length (),
+              this->errnum ()));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("type = ")));
   switch (this->msg_type ())
