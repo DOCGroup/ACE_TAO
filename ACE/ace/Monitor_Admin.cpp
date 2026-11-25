@@ -63,7 +63,7 @@ namespace ACE
       if (!good_reg_add)
         {
           ACELIB_ERROR_RETURN ((LM_ERROR,
-                             "registration of %s failed\n",
+                             "registration of %C failed\n",
                              monitor_point->name ()),
                              good_reg_add);
         }

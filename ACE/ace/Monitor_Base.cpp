@@ -215,7 +215,7 @@ namespace ACE
       if (!mgr->admin ().monitor_point (this, time))
         {
           ACELIB_ERROR ((LM_ERROR,
-                      "monitor point %s registration failed\n",
+                      "monitor point %C registration failed\n",
                       this->name ()));
         }
     }
