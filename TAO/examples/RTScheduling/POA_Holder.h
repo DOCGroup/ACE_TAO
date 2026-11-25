@@ -27,7 +27,11 @@ public:
   POA_Holder ();
 
   /// The arg_shifter options are read in the following manner:
-  ///-POA <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count> (-Lane <priority> ,<static_threads> <dynamic_threads>)* -Bands <count> (-Band <low> <high>)*
+  /// @code
+  /// -POA <name> -PriorityModel <CLIENT|SERVER> <priority> -Lanes <count>
+  ///   (-Lane <priority> ,<static_threads> <dynamic_threads>)*
+  ///   -Bands <count> (-Band <low> <high>)*
+  /// @endcode
   int init (ACE_Arg_Shifter& arg_shifter);
 
   /// Activate the new POA using the parameters initialized before.
