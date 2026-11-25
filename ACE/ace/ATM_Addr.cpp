@@ -251,30 +251,31 @@ ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
 #endif /* ACE_HAS_FORE_ATM_XTI || ACE_HAS_FORE_ATM_WS2 || ACE_HAS_LINUX_ATM */
                             sizeof this->atm_addr_);
 #if defined (ACE_HAS_FORE_ATM_XTI)
-  struct hostent *entry;
-  struct atmnsap_addr *nsap;
-
   // Yow, someone gave us a NULL ATM address!
   if (sap == nullptr)
     {
       errno = EINVAL;
       return -1;
     }
-  else if ((entry = gethostbyname_atmnsap (const_cast<ACE_TCHAR *> (sap))) != nullptr)
+
+  struct hostent *entry = gethostbyname_atmnsap (const_cast<ACE_TCHAR *> (sap));
+  if (entry != nullptr)
     {
       ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address,
                       entry->h_addr_list[0],
                       ATMNSAP_ADDR_LEN - 1);
     }
-  else if ((nsap = atmnsap_addr (sap)) != nullptr)
+  else
     {
+      struct atmnsap_addr *nsap = atmnsap_addr (sap);
+      if (nsap == nullptr)
+        {
+          errno = EINVAL;
+          return -1;
+        }
       ACE_OS::memcpy (atm_addr_.sap.t_atm_sap_addr.address,
                       nsap->atmnsap,
                       ATMNSAP_ADDR_LEN);
-    }
-  else {
-      errno = EINVAL;
-      return -1;
     }
 #elif defined (ACE_HAS_FORE_ATM_WS2)
    DWORD dwValue;
