@@ -75,7 +75,7 @@ ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx ()
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::~ACE_Message_Queue_Vx");
 
-  if (this->tail_ != 0  &&  this->close () == -1)
+  if (this->tail_ != nullptr && this->close () == -1)
     {
       ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("close")));
     }
@@ -96,7 +96,7 @@ ACE_Message_Queue_Vx::open (size_t max_messages,
   this->cur_bytes_ = 0;
   this->cur_length_ = 0;
   this->cur_count_ = 0;
-  this->head_ = 0;
+  this->head_ = nullptr;
   this->notification_strategy_ = ns;
   this->max_messages_ = static_cast<int> (max_messages);
   this->max_message_length_ = static_cast<int> (max_message_length);
@@ -112,7 +112,7 @@ ACE_Message_Queue_Vx::open (size_t max_messages,
           reinterpret_cast<ACE_Message_Block *> (
               ::msgQCreate (max_messages_,
                             max_message_length_,
-                            MSG_Q_FIFO))) == 0 ? -1 : 0;
+                            MSG_Q_FIFO))) == nullptr ? -1 : 0;
 }
 
 // Clean up the queue if we have not already done so!
@@ -232,7 +232,7 @@ ACE_Message_Queue_Vx::enqueue_tail_i (ACE_Message_Block *new_item)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::enqueue_tail_i");
 
-  if (new_item == 0)
+  if (new_item == nullptr)
     {
       return -1;
     }
@@ -271,12 +271,12 @@ ACE_Message_Queue_Vx::enqueue_i (ACE_Message_Block *new_item)
 {
   ACE_TRACE ("ACE_Message_Queue_Vx::enqueue_i");
 
-  if (new_item == 0)
+  if (new_item == nullptr)
     {
       return -1;
     }
 
-  if (this->head_ == 0)
+  if (this->head_ == nullptr)
     {
       // Should always take this branch.
       return this->enqueue_head_i (new_item);
@@ -308,7 +308,7 @@ ACE_Message_Queue_Vx::dequeue_head_i (ACE_Message_Block *&first_item)
   // We don't allocate a new Message_Block:  the caller must provide
   // it, and must ensure that it is big enough (without chaining).
 
-  if (first_item == 0  ||  first_item->wr_ptr () == 0)
+  if (first_item == nullptr || first_item->wr_ptr () == nullptr)
     {
       return -1;
     }
