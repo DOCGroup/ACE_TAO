@@ -81,7 +81,6 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG, "Received expected exception\n"));
           received_expected_exception = true;
-
         }
 
       roundtrip->shutdown ();
