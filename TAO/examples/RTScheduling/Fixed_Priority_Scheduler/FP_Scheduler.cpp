@@ -160,13 +160,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 
   if (serv_cxt != 0)
     {
-      if (serv_cxt->context_data.length () != sizeof (size_t))
-        {
-          throw CORBA::BAD_PARAM ();
-        }
-
-      size_t gu_id {};
-      std::memcpy (&gu_id, serv_cxt->context_data.get_buffer (), sizeof (gu_id));
+      size_t const gu_id = rtscheduling_guid_value (serv_cxt->context_data);
 
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,

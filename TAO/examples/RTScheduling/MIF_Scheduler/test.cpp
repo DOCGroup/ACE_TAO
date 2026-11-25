@@ -17,6 +17,7 @@ static int
 test_guid_value ()
 {
   RTScheduling::Current::IdType guid;
+  CORBA::OctetSeq context;
   CORBA::ULong const lengths[] = {
     0, static_cast<CORBA::ULong> (sizeof (size_t) - 1),
     static_cast<CORBA::ULong> (sizeof (size_t) + 1)
@@ -32,6 +33,16 @@ test_guid_value ()
       catch (CORBA::BAD_PARAM const &)
         {
         }
+
+      context.length (length);
+      try
+        {
+          rtscheduling_guid_value (context);
+          ACE_ERROR_RETURN ((LM_ERROR, "Invalid context length accepted\n"), 1);
+        }
+      catch (CORBA::BAD_PARAM const &)
+        {
+        }
     }
 
   size_t const expected = 0x12345678;
@@ -40,6 +51,12 @@ test_guid_value ()
   if (rtscheduling_guid_value (guid) != expected)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "GUID value changed\n"), 1);
+    }
+  context.length (sizeof (expected));
+  std::memcpy (context.get_buffer (), &expected, sizeof (expected));
+  if (rtscheduling_guid_value (context) != expected)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Context GUID value changed\n"), 1);
     }
   return 0;
 }

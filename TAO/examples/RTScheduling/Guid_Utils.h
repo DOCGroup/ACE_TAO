@@ -6,8 +6,9 @@
 
 #include <cstring>
 
+template <typename Sequence>
 inline size_t
-rtscheduling_guid_value (RTScheduling::Current::IdType const &guid)
+rtscheduling_guid_value (Sequence const &guid)
 {
   if (guid.length () != sizeof (size_t))
     {
