@@ -112,7 +112,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var const merged = iorm->merge_iors (iors);
       Callee_var const double_callee = Callee::_unchecked_narrow (merged.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Profile count is %d\n",
+      ACE_DEBUG ((LM_DEBUG, "Profile count is %u\n",
                   iorm->get_profile_count (merged.in ())));
 
       simple->registerCallee (double_callee.in ());

@@ -70,7 +70,7 @@ Session::svc ()
     {
       ACE_ERROR ((LM_ERROR,
                           "(%P|%t) ERROR: Session::svc, "
-                          "send %d messages out of %d\n",
+                          "send %u messages out of %u\n",
                           i, message_count_));
       ex._tao_print_exception ("Session::svc - ");
       return -1;
