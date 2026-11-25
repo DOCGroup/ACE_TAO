@@ -138,7 +138,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                     ACE_CString str;
                     b = catior_impl.decode(aString, str);
-                    ACE_DEBUG ((LM_DEBUG, "%s", str.c_str()));
+                    ACE_DEBUG ((LM_DEBUG, "%C", str.c_str()));
                   }
                 catch (const CORBA::Exception&)
                   {
@@ -273,7 +273,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
                     Catior_i fcatior_impl;
 
                     b = fcatior_impl.decode(aString, str);
-                    ACE_DEBUG ((LM_DEBUG, "%s", str.c_str()));
+                    ACE_DEBUG ((LM_DEBUG, "%C", str.c_str()));
                   }
                 if (b)
                 {
@@ -393,7 +393,7 @@ ACE_TMAIN (int argcw, ACE_TCHAR *argvw[])
 
                     ACE_CString str;
                     b = catior_impl.decode(aString, str);
-                    ACE_DEBUG ((LM_DEBUG, "%s", str.c_str()));
+                    ACE_DEBUG ((LM_DEBUG, "%C", str.c_str()));
                   }
                 if (b)
                 {
