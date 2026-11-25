@@ -31,15 +31,15 @@ class ACE_Export ACE_MEM_Addr : public ACE_Addr
 public:
   ACE_MEM_Addr ();
 
-  ACE_MEM_Addr (const ACE_MEM_Addr &);
+  ACE_MEM_Addr (ACE_MEM_Addr const &);
 
-  ACE_MEM_Addr& operator= (const ACE_MEM_Addr&) = default;
+  ACE_MEM_Addr& operator= (ACE_MEM_Addr const&) = default;
 
   /// Creates an ACE_MEM_Addr from a @a port_number
   explicit ACE_MEM_Addr (u_short port_number);
 
   /// Creates an ACE_MEM_Addr from a @a port_name.
-  explicit ACE_MEM_Addr (const ACE_TCHAR port_name[]);
+  explicit ACE_MEM_Addr (ACE_TCHAR const port_name[]);
 
   ~ACE_MEM_Addr () override = default;
 
@@ -47,7 +47,7 @@ public:
   int initialize_local (u_short port);
 
   /// Check if @a sap designates an endpoint on the same host.
-  int same_host (const ACE_INET_Addr& sap);
+  int same_host (ACE_INET_Addr const& sap);
 
   /// @name Methods for reinitializing an existing address
   /// @{
@@ -62,7 +62,7 @@ public:
 
   /// Uses @c getservbyname to initialize an ACE_MEM_Addr from a
   /// @a port_name, the remote @c host_name, and the @c protocol.
-  int set (const ACE_TCHAR port_name[]);
+  int set (ACE_TCHAR const port_name[]);
 
   /// @}
 
@@ -70,7 +70,7 @@ public:
   void *get_addr () const override;
 
   /// Set a pointer to the address.
-  void set_addr (const void *, int len) override;
+  void set_addr (void const *, int len) override;
 
   /// Transform the external ACE_MEM_Addr address into string
   /// format.
@@ -79,7 +79,7 @@ public:
                               int ipaddr_format = 1) const;
 
   /// Initializes the external ACE_MEM_Addr from the @a address.
-  virtual int string_to_addr (const ACE_TCHAR address[]);
+  virtual int string_to_addr (ACE_TCHAR const address[]);
 
   /// Sets the port number.
   void set_port_number (u_short,
@@ -97,14 +97,14 @@ public:
    * is non-reentrant since it returns a pointer to a static data
    * area).
    */
-  const char *get_host_name () const;
+  char const *get_host_name () const;
 
   /**
    * Return the "dotted decimal" external Internet address representation of
    * the hostname storing it in the @a addr (which is assumed to be
    * @a addr_size bytes long).  This version is reentrant.
    */
-  const char *get_host_addr (char *addr, int addr_size) const;
+  char const *get_host_addr (char *addr, int addr_size) const;
 
   /**
    * Return the "dotted decimal" external Internet address representation of
@@ -114,23 +114,23 @@ public:
    * using strdup() or (2) use the "reentrant" version of
    * get_host_addr() described above.
    */
-  const char *get_host_addr () const;
+  char const *get_host_addr () const;
 
   /// Return the 4-byte external IP address, converting it into host byte
   /// order.
   ACE_UINT32 get_ip_address () const;
 
-  const ACE_INET_Addr &get_remote_addr () const;
-  const ACE_INET_Addr &get_local_addr () const;
+  ACE_INET_Addr const &get_remote_addr () const;
+  ACE_INET_Addr const &get_local_addr () const;
 
   /// Compare two addresses for equality.  The addresses are considered
   /// equal if they contain the same IP address and port number.
-  bool operator == (const ACE_MEM_Addr &SAP) const;
-  bool operator == (const ACE_INET_Addr &SAP) const;
+  bool operator == (ACE_MEM_Addr const &SAP) const;
+  bool operator == (ACE_INET_Addr const &SAP) const;
 
   /// Compare two addresses for inequality.
-  bool operator != (const ACE_MEM_Addr &SAP) const;
-  bool operator != (const ACE_INET_Addr &SAP) const;
+  bool operator != (ACE_MEM_Addr const &SAP) const;
+  bool operator != (ACE_INET_Addr const &SAP) const;
 
   /// Computes and returns hash value.
   u_long hash () const override;

@@ -16,16 +16,16 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr ()
   ACE_TRACE ("ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr");
 }
 
-ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr (const char address[])
+ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr (char const address[])
  : ACE_INET_Addr (address)
 {
 }
 
 ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
-                                                   const char host_name[],
+                                                   char const host_name[],
                                                    int encode,
                                                    int address_family,
-                                                   const char *(secondary_host_names[]),
+                                                   char const *(secondary_host_names[]),
                                                    size_t size){
   // Initialize the primary INET addr
   ACE_INET_Addr::set(port_number, host_name, encode, address_family);
@@ -62,10 +62,10 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
 
 #if defined (ACE_HAS_WCHAR)
 ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
-                                                   const wchar_t host_name[],
+                                                   wchar_t const host_name[],
                                                    int encode,
                                                    int address_family,
-                                                   const wchar_t *(secondary_host_names[]),
+                                                   wchar_t const *(secondary_host_names[]),
                                                    size_t size){
   // Initialize the primary INET addr
   ACE_INET_Addr::set(port_number, host_name, encode, address_family);
@@ -104,7 +104,7 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
 ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
                                                    ACE_UINT32 primary_ip_addr,
                                                    int encode,
-                                                   const ACE_UINT32 *secondary_ip_addrs,
+                                                   ACE_UINT32 const *secondary_ip_addrs,
                                                    size_t size){
   // Initialize the primary INET addr
   ACE_INET_Addr::set(port_number, primary_ip_addr, encode);
@@ -142,10 +142,10 @@ ACE_Multihomed_INET_Addr::ACE_Multihomed_INET_Addr(u_short port_number,
 // Set implementations  (NEED BETTER COMMENT HERE)
 int
 ACE_Multihomed_INET_Addr::set (u_short port_number,
-                               const char host_name[],
+                               char const host_name[],
                                int encode,
                                int address_family,
-                               const char *(secondary_host_names[]),
+                               char const *(secondary_host_names[]),
                                size_t size)
 {
   this->secondaries_.size(size);
@@ -171,10 +171,10 @@ ACE_Multihomed_INET_Addr::set (u_short port_number,
 //
 int
 ACE_Multihomed_INET_Addr::set (u_short port_number,
-                               const wchar_t host_name[],
+                               wchar_t const host_name[],
                                int encode,
                                int address_family,
-                               const wchar_t *(secondary_host_names[]),
+                               wchar_t const *(secondary_host_names[]),
                                size_t size)
 {
   this->secondaries_.size(size);
@@ -199,7 +199,7 @@ int
 ACE_Multihomed_INET_Addr::set (u_short port_number,
                                ACE_UINT32 primary_ip_addr,
                                int encode,
-                               const ACE_UINT32 *secondary_ip_addrs,
+                               ACE_UINT32 const *secondary_ip_addrs,
                                size_t size)
 {
   this->secondaries_.size(size);

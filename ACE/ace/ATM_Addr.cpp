@@ -58,7 +58,7 @@ ACE_ATM_Addr::ACE_ATM_Addr (u_char selector)
   this->init (selector);
 }
 
-ACE_ATM_Addr::ACE_ATM_Addr (const ACE_ATM_Addr &sap,
+ACE_ATM_Addr::ACE_ATM_Addr (ACE_ATM_Addr const &sap,
                             u_char selector)
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
@@ -94,7 +94,7 @@ ACE_ATM_Addr::ACE_ATM_Addr (const ATM_Addr *sap,
   this->set (sap, selector);
 }
 
-ACE_ATM_Addr::ACE_ATM_Addr (const ACE_TCHAR sap[],
+ACE_ATM_Addr::ACE_ATM_Addr (ACE_TCHAR const sap[],
                             u_char selector)
 #if defined (ACE_HAS_FORE_ATM_XTI) || defined (ACE_HAS_FORE_ATM_WS2)
   : ACE_Addr (AF_ATM,
@@ -171,7 +171,7 @@ ACE_ATM_Addr::init (u_char selector)
 }
 
 int
-ACE_ATM_Addr::set (const ACE_ATM_Addr &sap,
+ACE_ATM_Addr::set (ACE_ATM_Addr const &sap,
                    u_char selector)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
@@ -217,7 +217,7 @@ ACE_ATM_Addr::set (const ATM_Addr *sap,
 }
 
 int
-ACE_ATM_Addr::set (const ACE_TCHAR address[],
+ACE_ATM_Addr::set (ACE_TCHAR const address[],
                    u_char selector)
 {
   ACE_TRACE ("ACE_ATM_Addr::set");
@@ -238,7 +238,7 @@ ACE_ATM_Addr::set (const ACE_TCHAR address[],
 // Transform the string into the current addressing format.
 
 int
-ACE_ATM_Addr::string_to_addr (const ACE_TCHAR sap[])
+ACE_ATM_Addr::string_to_addr (ACE_TCHAR const sap[])
 {
   ACE_TRACE ("ACE_ATM_Addr::string_to_addr");
 
@@ -437,7 +437,7 @@ ACE_ATM_Addr::addr_to_string (ACE_TCHAR addr[],
 #endif /* ACE_HAS_FORE_ATM_XTI && ACE_HAS_FORE_ATM_WS2 */
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_ATM_Addr::addr_to_string () const
 {
   ACE_TRACE ("ACE_ATM_Addr::addr_to_string");
@@ -454,7 +454,7 @@ ACE_ATM_Addr::addr_to_string () const
 
 // Set a pointer to the address.
 void
-ACE_ATM_Addr::set_addr (const void *addr, int len)
+ACE_ATM_Addr::set_addr (void const *addr, int len)
 {
   ACE_TRACE ("ACE_ATM_Addr::set_addr");
 
@@ -472,7 +472,7 @@ ACE_ATM_Addr::set_addr (const void *addr, int len)
 // Compare two addresses for inequality.
 
 bool
-ACE_ATM_Addr::operator != (const ACE_ATM_Addr &sap) const
+ACE_ATM_Addr::operator != (ACE_ATM_Addr const &sap) const
 {
   ACE_TRACE ("ACE_ATM_Addr::operator !=");
   return ! ((*this) == sap);
@@ -481,7 +481,7 @@ ACE_ATM_Addr::operator != (const ACE_ATM_Addr &sap) const
 // Compare two addresses for equality.
 
 bool
-ACE_ATM_Addr::operator == (const ACE_ATM_Addr &sap) const
+ACE_ATM_Addr::operator == (ACE_ATM_Addr const &sap) const
 {
   ACE_TRACE ("ACE_ATM_Addr::operator ==");
 

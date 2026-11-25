@@ -61,7 +61,7 @@ public:
 
   ACE_ATM_Addr (u_char selector = DEFAULT_SELECTOR);
 
-  ACE_ATM_Addr (const ACE_ATM_Addr &,
+  ACE_ATM_Addr (ACE_ATM_Addr const &,
                 u_char selector = DEFAULT_SELECTOR);
 
   /**
@@ -78,7 +78,7 @@ public:
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
    */
-  ACE_ATM_Addr (const ACE_TCHAR sap[],
+  ACE_ATM_Addr (ACE_TCHAR const sap[],
                 u_char selector = DEFAULT_SELECTOR);
 
   ~ACE_ATM_Addr () = default;
@@ -88,7 +88,7 @@ public:
   void init (u_char selector = DEFAULT_SELECTOR);
 
   /// Initializes from another ACE_ATM_Addr.
-  int set (const ACE_ATM_Addr &,
+  int set (ACE_ATM_Addr const &,
            u_char selector = DEFAULT_SELECTOR);
 
   /**
@@ -105,7 +105,7 @@ public:
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
    */
-  int set (const ACE_TCHAR sap[],
+  int set (ACE_TCHAR const sap[],
            u_char selector = DEFAULT_SELECTOR);
 
   /**
@@ -114,7 +114,7 @@ public:
    * "47.0005.80.ffe100.0000.f20f.2200.0020480694f9.00") or "hostname"
    * (e.g., "frisbee.cs.wustl.edu").
    */
-  virtual int string_to_addr (const ACE_TCHAR sap[]);
+  virtual int string_to_addr (ACE_TCHAR const sap[]);
 
   /**
    * Return the character representation of the ATM address (e.g.,
@@ -133,13 +133,13 @@ public:
    * is non-reentrant since it returns a pointer to a static data
    * area.)
    */
-  const ACE_TCHAR *addr_to_string () const;
+  ACE_TCHAR const *addr_to_string () const;
 
   /// Return a pointer to the underlying network address.
   virtual void *get_addr () const;
 
   /// Set a pointer to the address.
-  virtual void set_addr (const void *, int);
+  virtual void set_addr (void const *, int);
 
   /// Return the selector for network address.
   u_char get_selector () const;
@@ -152,10 +152,10 @@ public:
    * equal if they contain the same ATM address.  Q: Is there any
    * other check for equality needed for ATM?
    */
-  bool operator == (const ACE_ATM_Addr &SAP) const;
+  bool operator == (ACE_ATM_Addr const &SAP) const;
 
   /// Compare two addresses for inequality.
-  bool operator != (const ACE_ATM_Addr &SAP) const;
+  bool operator != (ACE_ATM_Addr const &SAP) const;
 
   /// Dump the state of an object.
   void dump () const;

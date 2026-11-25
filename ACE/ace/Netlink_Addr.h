@@ -35,7 +35,7 @@ class ACE_Export ACE_Netlink_Addr : public ACE_Addr {
 public:
   ACE_Netlink_Addr ();
 
-  ACE_Netlink_Addr (const ACE_Netlink_Addr &);
+  ACE_Netlink_Addr (ACE_Netlink_Addr const &);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
   ACE_Netlink_Addr (const sockaddr_nl *, int len);
@@ -45,7 +45,7 @@ public:
   /**
    * @param naddr sets the nl_ member @see nl_
    */
-  int set (const ACE_Netlink_Addr &naddr);
+  int set (ACE_Netlink_Addr const &naddr);
   /**
    * sets the pid and groups fields of member nl_  @see nl_
    */
@@ -73,7 +73,7 @@ public:
   /**
    * Set a pointer to the address
    */
-  void set_addr (const void *, int len= sizeof(sockaddr_nl) ) override;
+  void set_addr (void const *, int len= sizeof(sockaddr_nl) ) override;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

@@ -21,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Netlink_Addr)
 
-int ACE_Netlink_Addr::set (const ACE_Netlink_Addr &sa)
+int ACE_Netlink_Addr::set (ACE_Netlink_Addr const &sa)
 {
   std::memset (&this->nl_, 0, sizeof this->nl_);
   this->nl_.nl_family = AF_NETLINK;
@@ -29,7 +29,7 @@ int ACE_Netlink_Addr::set (const ACE_Netlink_Addr &sa)
   return 0;
 }
 
-ACE_Netlink_Addr::ACE_Netlink_Addr (const ACE_Netlink_Addr &sa)
+ACE_Netlink_Addr::ACE_Netlink_Addr (ACE_Netlink_Addr const &sa)
 : ACE_Addr (AF_NETLINK, sa.get_size ())
 {
   this->set (sa);

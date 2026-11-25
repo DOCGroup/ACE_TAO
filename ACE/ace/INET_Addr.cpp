@@ -960,7 +960,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
       return (ACE_OS::hostname (hostname, len) == -1) ? -1 : 0;
     }
 
-  const ACE_SOCKET_LEN addr_size =
+  ACE_SOCKET_LEN const addr_size =
 #ifdef ACE_HAS_IPV6
     (this->get_type () == PF_INET6) ? sizeof (sockaddr_in6) :
 #endif

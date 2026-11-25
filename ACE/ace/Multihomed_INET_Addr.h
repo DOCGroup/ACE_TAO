@@ -38,7 +38,7 @@ public:
    * is assumed to be a port number, with the IP address being
    * INADDR_ANY.
    */
-  explicit ACE_Multihomed_INET_Addr (const char address[]);
+  explicit ACE_Multihomed_INET_Addr (char const address[]);
 
   /**
    * Constructs an ACE_Multihomed_INET_Addr from a @a port_number, a
@@ -52,10 +52,10 @@ public:
    * AF_INET6. To specify IPv4, use AF_INET.
    */
     ACE_Multihomed_INET_Addr(u_short port_number,
-                             const char primary_host_name[],
+                             char const primary_host_name[],
                              int encode = 1,
                              int address_family = AF_UNSPEC,
-                             const char *(secondary_host_names[]) = nullptr,
+                             char const *(secondary_host_names[]) = nullptr,
                              size_t size = 0);
 
   /**
@@ -69,7 +69,7 @@ public:
   ACE_Multihomed_INET_Addr(u_short port_number,
                            ACE_UINT32 primary_ip_addr = INADDR_ANY,
                            int encode = 1,
-                           const ACE_UINT32 *secondary_ip_addrs = nullptr,
+                           ACE_UINT32 const *secondary_ip_addrs = nullptr,
                            size_t size = 0);
 
 #if defined (ACE_HAS_WCHAR)
@@ -77,17 +77,17 @@ public:
      * WCHAR versions of the methods that take char's as arguments.
      */
   ACE_Multihomed_INET_Addr(u_short port_number,
-                           const wchar_t primary_host_name[],
+                           wchar_t const primary_host_name[],
                            int encode = 1,
                            int address_family = AF_UNSPEC,
-                           const wchar_t *(secondary_host_names[]) = nullptr,
+                           wchar_t const *(secondary_host_names[]) = nullptr,
                            size_t size = 0);
 
   int set (u_short port_number,
-           const wchar_t primary_host_name[],
+           wchar_t const primary_host_name[],
            int encode = 1,
            int address_family = AF_UNSPEC,
-           const wchar_t *(secondary_host_names[]) = nullptr,
+           wchar_t const *(secondary_host_names[]) = nullptr,
            size_t size = 0);
 
 #endif /* ACE_HAS_WCHAR */
@@ -115,10 +115,10 @@ public:
    * AF_INET6. To specify IPv4, use AF_INET.
    */
   int set (u_short port_number,
-           const char primary_host_name[],
+           char const primary_host_name[],
            int encode = 1,
            int address_family = AF_UNSPEC,
-           const char *(secondary_host_names[]) = nullptr,
+           char const *(secondary_host_names[]) = nullptr,
            size_t size = 0);
 
   /**
@@ -132,7 +132,7 @@ public:
   int set (u_short port_number,
            ACE_UINT32 primary_ip_addr = INADDR_ANY,
            int encode = 1,
-           const ACE_UINT32 *secondary_ip_addrs = nullptr,
+           ACE_UINT32 const *secondary_ip_addrs = nullptr,
            size_t size = 0);
 
   /**

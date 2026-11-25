@@ -20,7 +20,7 @@ ACE_SPIPE_Addr::dump () const
 
 // Set a pointer to the address.
 void
-ACE_SPIPE_Addr::set_addr (const void *addr, int len)
+ACE_SPIPE_Addr::set_addr (void const *addr, int len)
 {
   ACE_TRACE ("ACE_SPIPE_Addr::set_addr");
 
@@ -56,13 +56,13 @@ ACE_SPIPE_Addr::addr_to_string (ACE_TCHAR *s, size_t len) const
 
 // Transform the string into the current addressing format.
 int
-ACE_SPIPE_Addr::string_to_addr (const ACE_TCHAR *addr)
+ACE_SPIPE_Addr::string_to_addr (ACE_TCHAR const *addr)
 {
   return this->set (addr);
 }
 
 int
-ACE_SPIPE_Addr::set (const ACE_SPIPE_Addr &sa)
+ACE_SPIPE_Addr::set (ACE_SPIPE_Addr const &sa)
 {
   this->base_set (sa.get_type (), sa.get_size ());
 
@@ -81,14 +81,14 @@ ACE_SPIPE_Addr::set (const ACE_SPIPE_Addr &sa)
   return 0;
 }
 
-ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_SPIPE_Addr &sa)
+ACE_SPIPE_Addr::ACE_SPIPE_Addr (ACE_SPIPE_Addr const &sa)
   : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)
 {
   this->set (sa);
 }
 
 int
-ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
+ACE_SPIPE_Addr::set (ACE_TCHAR const *addr,
                      gid_t gid,
                      uid_t uid)
 {
@@ -96,7 +96,7 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
   len += sizeof (this->SPIPE_addr_.gid_);
 
 #if defined (ACE_WIN32)
-  const ACE_TCHAR *colonp = ACE_OS::strchr (addr, ':');
+  ACE_TCHAR const *colonp = ACE_OS::strchr (addr, ':');
   ACE_TCHAR temp[BUFSIZ];
 
   if (colonp == 0) // Assume it's a local name.
@@ -147,7 +147,7 @@ ACE_SPIPE_Addr::set (const ACE_TCHAR *addr,
 }
 
 // Create a ACE_Addr from a ACE_SPIPE pathname.
-ACE_SPIPE_Addr::ACE_SPIPE_Addr (const ACE_TCHAR *addr,
+ACE_SPIPE_Addr::ACE_SPIPE_Addr (ACE_TCHAR const *addr,
                                 gid_t gid,
                                 uid_t uid)
   : ACE_Addr (AF_SPIPE, sizeof this->SPIPE_addr_)

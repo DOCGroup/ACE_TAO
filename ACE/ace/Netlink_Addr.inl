@@ -37,7 +37,7 @@ ACE_INLINE int ACE_Netlink_Addr::get_addr_size () const
   return sizeof (this->nl_);
 }
 
-ACE_INLINE void ACE_Netlink_Addr::set_addr (const void *addr, int len) {
+ACE_INLINE void ACE_Netlink_Addr::set_addr (void const *addr, int len) {
   std::memcpy (&this->nl_, addr, static_cast<size_t> (len));
 }
 
