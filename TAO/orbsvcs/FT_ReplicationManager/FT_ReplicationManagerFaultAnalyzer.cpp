@@ -36,10 +36,7 @@ int TAO::FT_ReplicationManagerFaultAnalyzer::validate_event_type (
   CosNotification::StructuredEvent const & event)
 {
   // Delegate to base class.
-  //@@ Visual C++ 6.0 won't compile this if I include the namespace name
-  // on the base class.
-  // return TAO::FT_DefaultFaultAnalyzer::validate_event_type (event);
-  return FT_DefaultFaultAnalyzer::validate_event_type (event);
+  return TAO::FT_DefaultFaultAnalyzer::validate_event_type (event);
 }
 
 /// Analyze a fault event.
