@@ -110,7 +110,7 @@ Session::add_process (HostProcess *proc)
   if (procs_by_name_.bind(proc->proc_name(), proc) != 0)
     {
       ACE_ERROR ((LM_ERROR,
-                  "Session::add_process could not bind procname %s\n",
+                  "Session::add_process could not bind procname %C\n",
                   proc->proc_name().c_str()));
     }
 }

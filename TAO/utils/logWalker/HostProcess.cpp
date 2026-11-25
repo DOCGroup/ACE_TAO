@@ -212,7 +212,7 @@ HostProcess::add_peer(long handle, PeerProcess *peer)
   int result = this->by_addr_.bind (addr,peer);
   if (result < 0)
     {
-      ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %s result = %d,  %p\n",
+      ACE_ERROR ((LM_ERROR,"add_peer, cannot bind to addr %C result = %d,  %p\n",
                   addr.addr_.c_str(), result, "by_addr_.bind"));
     }
 
