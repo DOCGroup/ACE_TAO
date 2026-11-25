@@ -53,7 +53,9 @@ ServerInterceptor::receive_request (PortableInterceptor::ServerRequestInfo_ptr r
 
       for (char const * const allowed_user : allowed_users)
         {
-          if (std::strcmp (user_name, allowed_user) == 0)
+          size_t const user_length = std::strlen (allowed_user) + 1;
+          if (service_context->context_data.length () == user_length
+              && std::memcmp (user_name, allowed_user, user_length) == 0)
             {
               permission_granted = true;
               break;

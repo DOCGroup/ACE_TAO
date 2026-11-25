@@ -56,7 +56,9 @@ ServerInterceptor::receive_request (
 
     for (unsigned int i = 0; i < num_allowed_users; ++i)
     {
-      if (std::strcmp (buf, allowed_users[i]) == 0)
+      size_t const user_length = std::strlen (allowed_users[i]) + 1;
+      if (oc_seq.length () == user_length
+          && std::memcmp (buf, allowed_users[i], user_length) == 0)
         {
           permission_granted = true;
         }
