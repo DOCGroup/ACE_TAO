@@ -1384,7 +1384,7 @@ namespace ACE_OS {
   /// @{
 
   /// These two methods are primarily in support of
-  /// ACE_Condition<ACE_Recursive_Thread_Mutex> and should probably not
+  /// @c ACE_Condition with @c ACE_Recursive_Thread_Mutex and should probably not
   /// be called outside that context.
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_cond_unlock (ACE_recursive_thread_mutex_t *m,

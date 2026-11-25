@@ -365,8 +365,10 @@ namespace ACE
   /// it to a ACE_Event_Handler_var
   /// As user this now makes it for example possible to implement
   /// the following when Simple_Handler is derived from ACE_Event_Handler
+  /// @code
   /// ACE_Event_Handler_var v =
   ///   ACE::make_event_handler<Simple_Handler> (reactor.get());
+  /// @endcode
   template<class T,
            typename = std::enable_if_t<std::is_base_of_v<ACE_Event_Handler, T>>,
            typename ...Args> inline

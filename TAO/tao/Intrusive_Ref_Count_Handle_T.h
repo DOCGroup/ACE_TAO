@@ -83,7 +83,7 @@ public:
   /// Takes ownership of passed-in "copy" of reference to T.
   TAO_Intrusive_Ref_Count_Handle& operator= (T* p);
 
-  /// Assignment Operator with const TAO_Smart_Ptr<T>& argument.
+  /// Assignment operator with a const @c TAO_Intrusive_Ref_Count_Handle reference.
   /// Claims a "copy" of rhs object's reference to T.
   TAO_Intrusive_Ref_Count_Handle& operator=
                                    (const TAO_Intrusive_Ref_Count_Handle& b);

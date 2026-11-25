@@ -39,7 +39,7 @@ public:
   ACE_Bound_Ptr_Counter (long init_obj_ref_count = 0);
   ~ACE_Bound_Ptr_Counter () = default;
 
-  /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
+  /// Create an @c ACE_Bound_Ptr_Counter with @c ACE_LOCK and initialize the
   /// reference count to indicate ownership by a strong pointer.
   static ACE_Bound_Ptr_Counter<ACE_LOCK> *create_strong ();
 
@@ -53,7 +53,7 @@ public:
   /// reference count.
   static long detach_strong (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
 
-  /// Create a ACE_Bound_Ptr_Counter<ACE_LOCK> and initialize the
+  /// Create an @c ACE_Bound_Ptr_Counter with @c ACE_LOCK and initialize the
   /// reference count to indicate no ownership.
   static ACE_Bound_Ptr_Counter<ACE_LOCK> *create_weak ();
 
@@ -68,7 +68,7 @@ public:
   static bool object_was_deleted (ACE_Bound_Ptr_Counter<ACE_LOCK> *counter);
 
 private:
-  /// Allocate a new ACE_Bound_Ptr_Counter<ACE_LOCK> instance,
+  /// Allocate a new @c ACE_Bound_Ptr_Counter instance with @c ACE_LOCK,
   /// returning NULL if it cannot be created.
   static ACE_Bound_Ptr_Counter<ACE_LOCK> *internal_create (long init_obj_ref_count);
 

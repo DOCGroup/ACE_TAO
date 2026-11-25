@@ -32,7 +32,7 @@
 ///
 /// SMI value portion of a VarBind.
 typedef struct {
-          /// Insert SNMP_SYNTAX_<type>.
+          /// Insert the SNMP_SYNTAX value for the type.
           SmiUINT32 syntax;
         union   {
           /// SNMP_SYNTAX_INT and SNMP_SYNTAX_INT32.
