@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "SSL_SOCK_Connector.h"
 
 #include "ace/OS_NS_errno.h"
@@ -7,7 +6,9 @@
 #include "ace/Log_Category.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
+#include "SSL_SOCK_Utils.h"
 
+#include <memory>
 #include <openssl/err.h>
 
 #if !defined (__ACE_INLINE__)
@@ -27,19 +28,29 @@ int
 ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
                                      const ACE_Time_Value *timeout)
 {
-  SSL *ssl = new_stream.ssl ();
-  if (ssl == nullptr)
+  SSL *ssl_session = new_stream.ssl ();
+  if (ssl_session == nullptr)
+  {
     return -1;
+  }
 
-  if (SSL_is_init_finished (ssl))
+  if (SSL_is_init_finished (ssl_session))
+  {
     return 0;
+  }
 
   // Check if a connection is already pending for the given SSL
   // structure.
-  if (!SSL_in_connect_init (ssl))
-    ::SSL_set_connect_state (ssl);
+  if (!SSL_in_connect_init (ssl_session))
+  {
+    ::SSL_set_connect_state (ssl_session);
+  }
 
-  ACE_HANDLE handle = new_stream.get_handle ();
+  ACE_HANDLE const handle = new_stream.get_handle ();
+  if (!ACE_SSL_SOCK_Utils::valid_handle (handle))
+    {
+      return -1;
+    }
 
   // We're going to call SSL_connect, optionally doing ACE::select and
   // retrying the SSL_connect, until the SSL handshake is done or
@@ -49,22 +60,26 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
   // is 0 (wait as long as it takes) then don't worry about the blocking
   // status; we'll block in SSL_connect if the socket is blocking, and
   // block in ACE::select if not.
-  int reset_blocking_mode = 0;
+  bool reset_blocking_mode {};
   if (timeout != nullptr)
     {
       reset_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
-                                              ACE_NONBLOCK);
+                                              ACE_NONBLOCK) != 0;
           // Set the handle into non-blocking mode if it's not already
           // in it.
           if (reset_blocking_mode
               && ACE::set_flags (handle,
                                  ACE_NONBLOCK) == -1)
+          {
             return -1;
+          }
     }
 
   ACE_Time_Value t;
   if (timeout != nullptr)
+  {
     t = *timeout;   // Need a non-const copy.
+  }
 
   // Take into account the time between each select() call below.
   ACE_Countdown_Time countdown ((timeout == nullptr ? nullptr : &t));
@@ -78,8 +93,8 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
       ACE_Handle_Set rd_handle;
       ACE_Handle_Set wr_handle;
 
-      status = ::SSL_connect (ssl);
-      switch (::SSL_get_error (ssl, status))
+      status = ::SSL_connect (ssl_session);
+      switch (::SSL_get_error (ssl_session, status))
         {
         case SSL_ERROR_NONE:
           // Start out with non-blocking disabled on the SSL stream.
@@ -88,13 +103,13 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           break;                    // Done
 
         case SSL_ERROR_WANT_WRITE:
-          wr_handle.set_bit (handle);
-          status = 1;               // Wait for more activity
+          status = ACE_SSL_SOCK_Utils::set_handle_bit (handle, wr_handle)
+                   ? 1 : -1;
           break;
 
         case SSL_ERROR_WANT_READ:
-          rd_handle.set_bit (handle);
-          status = 1;               // Wait for more activity
+          status = ACE_SSL_SOCK_Utils::set_handle_bit (handle, rd_handle)
+                   ? 1 : -1;
           break;
 
         case SSL_ERROR_ZERO_RETURN:
@@ -120,17 +135,14 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
               // set correctly, the read/write state should be valid.
               // Use that to decide what to do.
               status = 1;               // Wait for more activity
-              if (SSL_want_write (ssl))
+              if (!ACE_SSL_SOCK_Utils::set_wanted_handle_bit (ssl_session,
+                                                              handle,
+                                                              rd_handle,
+                                                              wr_handle))
                 {
-                  wr_handle.set_bit (handle);
-                }
-              else if (SSL_want_read (ssl))
-                {
-                  rd_handle.set_bit (handle);
-                }
-              else
-                {
-                  status = -1;            // Doesn't want anything - bail out
+                  // No SSL wait condition is available, or the handle cannot
+                  // be monitored.
+                  status = -1;
                 }
             }
           else
@@ -151,8 +163,8 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
           // Must have at least one handle to wait for at this point.
           ACE_ASSERT (rd_handle.num_set () == 1 || wr_handle.num_set () == 1);
 
-          // Block indefinitely if timeout pointer is zero.
-          int select_width = 0;
+          // Block indefinitely if the timeout pointer is null.
+          int select_width {};
 #if !defined (ACE_WIN32)
           select_width = handle + 1;
 #endif /* ACE_WIN32 */
@@ -177,11 +189,11 @@ ACE_SSL_SOCK_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
             }
         }
 
-    } while (status == 1 && !SSL_is_init_finished (ssl));
+    } while (status == 1 && !SSL_is_init_finished (ssl_session));
 
   if (reset_blocking_mode)
     {
-      ACE_Errno_Guard eguard (errno);
+      ACE_Errno_Guard const eguard (errno);
       ACE::clr_flags (handle, ACE_NONBLOCK);
     }
 
@@ -202,7 +214,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
   ACE_Time_Value time_copy;
-  ACE_Countdown_Time countdown (&time_copy);
+  ACE_Countdown_Time countdown (std::addressof (time_copy));
   if (timeout != nullptr)
     {
       time_copy += *timeout;
@@ -218,9 +230,11 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                               flags,
                               perms);
 
-  int error = 0;
+  int error {};
   if (result == -1)
+  {
     error = errno;  // Save us some TSS accesses.
+  }
 
   // Obtain the handle from the underlying SOCK_Stream and set it in
   // the SSL_SOCK_Stream.  Note that the case where a connection is in
@@ -231,10 +245,14 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
       && (result == 0
           || (result == -1 && (error == EWOULDBLOCK
                                || error == EINPROGRESS))))
+  {
     new_stream.set_handle (new_stream.peer ().get_handle ());
+  }
 
   if (result == -1)
+  {
     return result;
+  }
 
   // If using a timeout, update the countdown timer to reflect the time
   // spent on the connect itself, then pass the remaining time to
@@ -248,7 +266,9 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   result = this->ssl_connect (new_stream, timeout);
 
   if (result == -1)
+  {
     new_stream.close ();
+  }
 
   return result;
 }
@@ -270,7 +290,7 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
   ACE_Time_Value time_copy;
-  ACE_Countdown_Time countdown (&time_copy);
+  ACE_Countdown_Time countdown (std::addressof (time_copy));
   if (timeout != nullptr)
     {
       time_copy += *timeout;
@@ -288,9 +308,11 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                          reuse_addr,
                                          perms);
 
-  int error = 0;
+  int error {};
   if (result == -1)
+  {
     error = errno;  // Save us some TSS accesses.
+  }
 
   // Obtain the handle from the underlying SOCK_Stream and set it in
   // the SSL_SOCK_Stream.  Note that the case where a connection is in
@@ -301,10 +323,14 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
       && (result == 0
           || (result == -1 && (error == EWOULDBLOCK
                                || error == EINPROGRESS))))
+  {
     new_stream.set_handle (new_stream.peer ().get_handle ());
+  }
 
   if (result == -1)
+  {
     return result;
+  }
 
   // If using a timeout, update the countdown timer to reflect the time
   // spent on the connect itself, then pass the remaining time to
@@ -318,7 +344,9 @@ ACE_SSL_SOCK_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
   result = this->ssl_connect (new_stream, timeout);
 
   if (result == -1)
+  {
     new_stream.close ();
+  }
 
   return result;
 }
@@ -335,7 +363,7 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
   // Take into account the time to complete the basic TCP handshake
   // and the SSL handshake.
   ACE_Time_Value time_copy;
-  ACE_Countdown_Time countdown (&time_copy);
+  ACE_Countdown_Time countdown (std::addressof (time_copy));
   if (tv != nullptr)
     {
       time_copy += *tv;
@@ -349,7 +377,9 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
       && this->connector_.complete (new_stream.peer (),
                                     remote_sap,
                                     tv) == -1)
+  {
     return -1;
+  }
 
   // The handle in the SSL_SOCK_Stream should have already been set in
   // the connect() method.
@@ -371,7 +401,6 @@ ACE_SSL_SOCK_Connector::complete (ACE_SSL_SOCK_Stream &new_stream,
 
   return 0;
 }
-
 
 ACE_SSL_SOCK_Connector::ACE_SSL_SOCK_Connector (
   ACE_SSL_SOCK_Stream &new_stream,

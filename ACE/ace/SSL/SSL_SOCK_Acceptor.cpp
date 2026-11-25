@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 #include "SSL_SOCK_Acceptor.h"
 
 #include "ace/Handle_Set.h"
@@ -9,6 +7,7 @@
 #include "ace/Time_Value.h"
 #include "ace/Countdown_Time.h"
 #include "ace/Truncate.h"
+#include "SSL_SOCK_Utils.h"
 
 #if !defined (__ACE_INLINE__)
 #include "SSL_SOCK_Acceptor.inl"
@@ -27,15 +26,23 @@ int
 ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
                                    ACE_Time_Value *timeout) const
 {
-  SSL *ssl = new_stream.ssl ();
+  SSL *ssl_session = new_stream.ssl ();
 
-  if (SSL_is_init_finished (ssl))
+  if (SSL_is_init_finished (ssl_session))
+  {
     return 0;
+  }
 
-  if (!SSL_in_accept_init (ssl))
-    ::SSL_set_accept_state (ssl);
+  if (!SSL_in_accept_init (ssl_session))
+  {
+    ::SSL_set_accept_state (ssl_session);
+  }
 
-  ACE_HANDLE handle = new_stream.get_handle ();
+  ACE_HANDLE const handle = new_stream.get_handle ();
+  if (!ACE_SSL_SOCK_Utils::valid_handle (handle))
+    {
+      return -1;
+    }
 
   // We're going to call SSL_accept, optionally doing ACE::select and
   // retrying the SSL_accept, until the SSL handshake is done or
@@ -45,17 +52,19 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
   // is 0 (wait as long as it takes) then don't worry about the blocking
   // status; we'll block in SSL_accept if the socket is blocking, and
   // block in ACE::select if not.
-  int reset_blocking_mode = 0;
+  bool reset_blocking_mode {};
   if (timeout != nullptr)
     {
       reset_blocking_mode = ACE_BIT_DISABLED (ACE::get_flags (handle),
-                                              ACE_NONBLOCK);
+                                              ACE_NONBLOCK) != 0;
           // Set the handle into non-blocking mode if it's not already
           // in it.
           if (reset_blocking_mode
               && ACE::set_flags (handle,
                                  ACE_NONBLOCK) == -1)
+          {
             return -1;
+          }
     }
 
   // Take into account the time between each select() call below.
@@ -69,21 +78,21 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
       ACE_Handle_Set rd_handle;
       ACE_Handle_Set wr_handle;
 
-      status = ::SSL_accept (ssl);
-      switch (::SSL_get_error (ssl, status))
+      status = ::SSL_accept (ssl_session);
+      switch (::SSL_get_error (ssl_session, status))
         {
         case SSL_ERROR_NONE:
           status = 0;               // To tell caller about success
           break;                    // Done
 
         case SSL_ERROR_WANT_WRITE:
-          wr_handle.set_bit (handle);
-          status = 1;               // Wait for more activity
+          status = ACE_SSL_SOCK_Utils::set_handle_bit (handle, wr_handle)
+                   ? 1 : -1;
           break;
 
         case SSL_ERROR_WANT_READ:
-          rd_handle.set_bit (handle);
-          status = 1;               // Wait for more activity
+          status = ACE_SSL_SOCK_Utils::set_handle_bit (handle, rd_handle)
+                   ? 1 : -1;
           break;
 
         case SSL_ERROR_ZERO_RETURN:
@@ -109,15 +118,20 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
               // set correctly, the read/write state should be valid.
               // Use that to decide what to do.
               status = 1;               // Wait for more activity
-              if (SSL_want_write (ssl))
-                wr_handle.set_bit (handle);
-              else if (SSL_want_read (ssl))
-                rd_handle.set_bit (handle);
-              else
-                status = -1;            // Doesn't want anything - bail out
+              if (!ACE_SSL_SOCK_Utils::set_wanted_handle_bit (ssl_session,
+                                                              handle,
+                                                              rd_handle,
+                                                              wr_handle))
+                {
+                  // No SSL wait condition is available, or the handle cannot
+                  // be monitored.
+                  status = -1;
+                }
             }
           else
+          {
             status = -1;
+          }
           break;
 
         default:
@@ -130,7 +144,7 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
         {
           // Must have at least one handle to wait for at this point.
           ACE_ASSERT (rd_handle.num_set() == 1 || wr_handle.num_set () == 1);
-          int select_width = 0;
+          int select_width {};
 #if !defined (ACE_WIN32)
           select_width = handle + 1;
 #endif /* ACE_WIN32 */
@@ -147,16 +161,20 @@ ACE_SSL_SOCK_Acceptor::ssl_accept (ACE_SSL_SOCK_Stream &new_stream,
           // Could be both handles set (same handle in both masks) so
           // set to 1.
           if (status >= 1)
-            status = 1;
+            {
+              status = 1;
+            }
           else                   // Timeout or failure
-            status = -1;
+            {
+              status = -1;
+            }
         }
 
-    } while (status == 1 && !SSL_is_init_finished (ssl));
+    } while (status == 1 && !SSL_is_init_finished (ssl_session));
 
   if (reset_blocking_mode)
     {
-      ACE_Errno_Guard eguard (errno);
+      ACE_Errno_Guard const eguard (errno);
       ACE::clr_flags (handle, ACE_NONBLOCK);
     }
 
@@ -186,7 +204,9 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
                                     timeout,
                                     restart,
                                     reset_new_handle))
+  {
     return -1;
+  }
 
   (void) countdown.update ();
 
@@ -224,7 +244,9 @@ ACE_SSL_SOCK_Acceptor::accept (ACE_SSL_SOCK_Stream &new_stream,
                                     timeout,
                                     restart,
                                     reset_new_handle))
+  {
     return -1;
+  }
 
   (void) countdown.update ();
 

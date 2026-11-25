@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SSL_SOCK_Connector.h
  *
@@ -9,8 +6,6 @@
  *  @author John Heitmann
  *  @author Chris Zimman
  */
-//=============================================================================
-
 
 #ifndef ACE_SSL_SOCK_CONNECTOR_H
 #define ACE_SSL_SOCK_CONNECTOR_H
@@ -33,7 +28,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_SSL_SOCK_Connector
  *
- * @brief Defines a factory that creates new <ACE_SSL_SOCK_Stream>s
+ * @brief Defines a factory that creates new @c ACE_SSL_SOCK_Stream objects
  *        actively.
  *
  * The ACE_SSL_SOCK_Connector doesn't have a socket of its own,
@@ -54,7 +49,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_SSL_Export ACE_SSL_SOCK_Connector
 {
 public:
-  /// Default constructor.
+  ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Connector const &) = delete;
+  ACE_SSL_SOCK_Connector &operator= (ACE_SSL_SOCK_Connector const &) = delete;
+  ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Connector &&) = delete;
+  ACE_SSL_SOCK_Connector &operator= (ACE_SSL_SOCK_Connector &&) = delete;
+
   ACE_SSL_SOCK_Connector ();
 
   /**
@@ -70,7 +69,7 @@ public:
    *                    contains an IPv6 address, a socket with family
    *                    PF_INET6 will be used, else it will be PF_INET.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
-   *                    of time to wait to connect. If the pointer is 0
+   *                    of time to wait to connect. If the pointer is null
    *                    then the call blocks until the connection attempt
    *                    is complete, whether it succeeds or fails.  If
    *                    *timeout == {0, 0} then the connection is done
@@ -92,10 +91,6 @@ public:
    *                    cleaned up yet.
    * @param flags       Ignored.
    * @param perms       Ignored.
-   *
-   * @return            Returns 0 if the connection succeeds. If it fails,
-   *                    -1 is returned and errno contains a specific error
-   *                    code.
    */
   ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Stream &new_stream,
                           const ACE_Addr &remote_sap,
@@ -121,7 +116,7 @@ public:
    *                    IntServ (RSVP) and DiffServ protocols.
    *                    @see ACE_QoS_Params.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
-   *                    of time to wait to connect. If the pointer is 0
+   *                    of time to wait to connect. If the pointer is null
    *                    then the call blocks until the connection attempt
    *                    is complete, whether it succeeds or fails.  If
    *                    *timeout == {0, 0} then the connection is done
@@ -143,10 +138,6 @@ public:
    *                    cleaned up yet.
    * @param flags       Ignored.
    * @param perms       Ignored.
-   *
-   * @return            Returns 0 if the connection succeeds. If it fails,
-   *                    -1 is returned and errno contains a specific error
-   *                    code.
    */
   ACE_SSL_SOCK_Connector (ACE_SSL_SOCK_Stream &new_stream,
                           const ACE_Addr &remote_sap,
@@ -159,7 +150,6 @@ public:
                           int reuse_addr = 0,
                           int perms = 0);
 
-  /// Default dtor.
   virtual ~ACE_SSL_SOCK_Connector ();
 
   /**
@@ -175,7 +165,7 @@ public:
    *                    contains an IPv6 address, a socket with family
    *                    PF_INET6 will be used, else it will be PF_INET.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
-   *                    of time to wait to connect. If the pointer is 0
+   *                    of time to wait to connect. If the pointer is null
    *                    then the call blocks until the connection attempt
    *                    is complete, whether it succeeds or fails.  If
    *                    *timeout == {0, 0} then the connection is done
@@ -226,7 +216,7 @@ public:
    *                    IntServ (RSVP) and DiffServ protocols.
    *                    @see ACE_QoS_Params.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
-   *                    of time to wait to connect. If the pointer is 0
+   *                    of time to wait to connect. If the pointer is null
    *                    then the call blocks until the connection attempt
    *                    is complete, whether it succeeds or fails.  If
    *                    *timeout == {0, 0} then the connection is done
@@ -266,8 +256,8 @@ public:
 
   /**
    * Try to complete a non-blocking connection.
-   * If connection completion is successful then <new_stream> contains
-   * the connected ACE_SSL_SOCK_Stream.  If <remote_sap> is non-NULL
+   * If connection completion is successful then @a new_stream contains
+   * the connected ACE_SSL_SOCK_Stream. If @a remote_sap is not @c nullptr
    * then it will contain the address of the connected peer.
    */
   int complete (ACE_SSL_SOCK_Stream &new_stream,
@@ -278,10 +268,10 @@ public:
   bool reset_new_handle (ACE_HANDLE handle);
 
   /// Meta-type info
-  //@{
+  /// @{
   using PEER_ADDR = ACE_INET_Addr;
   using PEER_STREAM = ACE_SSL_SOCK_Stream;
-  //@}
+  /// @}
 
   /// Dump the state of an object.
   void dump () const;

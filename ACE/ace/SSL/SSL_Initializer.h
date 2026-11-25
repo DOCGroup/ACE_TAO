@@ -1,12 +1,8 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    SSL_Initializer.h
  *
  *  @author Vladimir Zykov <vz@prismtech.com>
  */
-//=============================================================================
 
 #ifndef ACE_SSL_INITIALIZER_H
 #define ACE_SSL_INITIALIZER_H
@@ -28,14 +24,20 @@ class ACE_SSL_Export ACE_SSL_Initializer
   : public ACE_Service_Object
 {
 public:
+  ACE_SSL_Initializer () = default;
+  ACE_SSL_Initializer (ACE_SSL_Initializer const &) = delete;
+  ACE_SSL_Initializer &operator= (ACE_SSL_Initializer const &) = delete;
+  ACE_SSL_Initializer (ACE_SSL_Initializer &&) = delete;
+  ACE_SSL_Initializer &operator= (ACE_SSL_Initializer &&) = delete;
+
   /// Used to force the initialization of ACE_SSL.
   static int static_init ();
 
   /// Create ACE_SSL_Context singleton.
-  virtual int init (int argc, ACE_TCHAR *argv[]);
+  int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Do cleanup of SSL library.
-  virtual int fini ();
+  int fini () override;
 };
 
 static int ACE_Force_ACE_SSL_Initializer = ACE_SSL_Initializer::static_init ();
