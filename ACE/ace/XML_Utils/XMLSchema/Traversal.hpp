@@ -17,7 +17,8 @@ namespace XMLSchema
     {
       void traverse (XMLSchema::IDREF_Base &r) override
       {
-        if (XSCRT::Type *const referenced (r.get ()); referenced != nullptr)
+        XSCRT::Type *const referenced (r.get ());
+        if (referenced != nullptr)
           {
             dispatch (*referenced);
           }
@@ -25,7 +26,8 @@ namespace XMLSchema
 
       void traverse (XMLSchema::IDREF_Base const &r) override
       {
-        if (XSCRT::Type const *const referenced (r.get ()); referenced != nullptr)
+        XSCRT::Type const *const referenced (r.get ());
+        if (referenced != nullptr)
           {
             dispatch (*referenced);
           }
