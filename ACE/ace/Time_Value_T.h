@@ -49,7 +49,7 @@ public:
     : ACE_Time_Value (t) {}
   /// @}
 
-  /// Construct from ACE_Time_Value_T<TIME_POLICY>
+  /// Construct from an @c ACE_Time_Value_T with the same time policy.
   ACE_Time_Value_T(const ACE_Time_Value_T<TIME_POLICY>& tv)
     : ACE_Time_Value (tv),
       time_policy_ (tv.time_policy_)

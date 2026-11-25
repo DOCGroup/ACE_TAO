@@ -155,11 +155,11 @@ private:
   /// @name Reference-counted representation management
   /// @{
 
-  /// Allocate a new ACE_Future_Rep<T> instance, returning NULL if it
+  /// Allocate a new @c ACE_Future_Rep instance, returning NULL if it
   /// cannot be created.
   static ACE_Future_Rep<T> *internal_create ();
 
-  /// Create a ACE_Future_Rep<T> and initialize the reference count.
+  /// Create an @c ACE_Future_Rep and initialize the reference count.
   static ACE_Future_Rep<T> *create ();
 
   /**

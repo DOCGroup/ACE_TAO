@@ -94,8 +94,7 @@ namespace PortableServer
      */
     static T * _duplicate (T *);
 
-    /// Swap the contents of a Servant_var<T> with another
-    /// Servant_var<T>
+    /// Swap the contents of two @c Servant_var instances.
     /**
      * Non-throwing swap operation.
      * Often used to implement strong exception safety.
