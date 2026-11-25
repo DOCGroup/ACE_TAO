@@ -46,8 +46,8 @@ public:
   /**
    * Creates an @c Object_Group that resolves requests for arbitrary
    * members in round robin order.  If an @c Object_Group, of any
-   * type, with Group_ID <id> has already been created by this
-   * factory, and hasn't been destroyed, a <duplicate_group>
+   * type, with Group_ID @c id has already been created by this
+   * factory, and hasn't been destroyed, a @c duplicate_group
    * exception is thrown.
    */
   Load_Balancer::Object_Group_ptr make_round_robin (char const * id) override;
@@ -55,23 +55,23 @@ public:
   /**
    * Creates an @c Object_Group that resolves requests for arbitrary
    * members in random order.  If an @c Object_Group, of any
-   * type, with Group_ID <id> has already been created by this
-   * factory, and hasn't been destroyed, a <duplicate_group>
+   * type, with Group_ID @c id has already been created by this
+   * factory, and hasn't been destroyed, a @c duplicate_group
    * exception is thrown.
    */
   Load_Balancer::Object_Group_ptr make_random (char const * id) override;
 
   /**
-   * Locates and returns an @c Object_Group by its <Group_ID>.   If
-   * no @c Object_Group has <Group_ID> of <id>, throw a
-   * <no_such_group> exception.
+   * Locates and returns an @c Object_Group by its @c Group_ID.   If
+   * no @c Object_Group has @c Group_ID of @c id, throw a
+   * @c no_such_group exception.
    */
   Load_Balancer::Object_Group_ptr resolve (char const * id) override;
 
   /**
    * Lists all round robin @c Object_Group instances created
    * by this factory, and haven't been destroyed yet, i.e., return
-   * a sequence of <Group_ID>s of all existing round robin
+   * a sequence of @c Group_ID values of all existing round robin
    * @c Object_Group instances created by this factory.
    */
   Load_Balancer::Group_List * round_robin_groups () override;
@@ -79,7 +79,7 @@ public:
   /**
    * Lists all random @c Object_Group instances created
    * by this factory, and haven't been destroyed yet, i.e., return
-   * a sequence of <Group_ID>s of all existing random
+   * a sequence of @c Group_ID values of all existing random
    * @c Object_Group instances created by this factory.
    */
   Load_Balancer::Group_List * random_groups () override;
@@ -87,13 +87,13 @@ public:
   /// @name Implementation details
   /// @{
   /**
-   * This method is invoked by an @c Object_Group with group id <id> when it
+   * This method is invoked by an @c Object_Group with group id @c id when it
    * is being destroyed.  The method removes entry corresponding to
-   * group <id> from <random_groups_> if <random> is true or from
-   * <rr_groups_> if <random> is false.  This recycles <id>, allowing it
+   * group @c id from @c random_groups_ if @c random is true or from
+   * @c rr_groups_ if @c random is false.  This recycles @c id, allowing it
    * to be used for new @c Object_Group, and prevents the destroyed
-   * group from being included in lists returned from <random_groups>
-   * and <round_robin_groups> methods.
+   * group from being included in lists returned from @c random_groups
+   * and @c round_robin_groups methods.
    */
   void remove_group (std::string const &id, bool random);
   /// @}
@@ -102,17 +102,17 @@ private:
   /// @name Helper methods
   /// @{
   /**
-   * This function factors out common code in <make_round_robin> and
-   * <make_random>.  Creates a random @c Object_Group if <random> parameter is
+   * This function factors out common code in @c make_round_robin and
+   * @c make_random.  Creates a random @c Object_Group if @c random parameter is
    * set to true and round robin @c Object_Group if it is false.
    */
   Load_Balancer::Object_Group_ptr make_group (bool random,
                                               char const * id);
 
   /**
-   * This function factors out common code in <random_groups> and
-   * <round_robin_groups>.  Returns a sequence of its random
-   * groups if <random> parameter is set to true and a sequence of its
+   * This function factors out common code in @c random_groups and
+   * @c round_robin_groups.  Returns a sequence of its random
+   * groups if @c random parameter is set to true and a sequence of its
    * round robin groups if it is false.
    */
   Load_Balancer::Group_List * list_groups (bool random);
@@ -156,24 +156,24 @@ public:
   char * id () override;
 
   /**
-   * Adds a new <member> to the @c Object_Group.  Note that each
+   * Adds a new @c member to the @c Object_Group.  Note that each
    * @c Member_ID in an @c Object_Group must be unique.  If the
    * group already contains a member with the same @c Member_ID, a
-   * <duplicate_member> exceptions is thrown.
+   * @c duplicate_member exceptions is thrown.
    */
   void bind (Load_Balancer::Member const & member) override;
 
   /**
    * Removes a member with the specified @c Member_ID from the
    * @c Object_Group.  If none of the group's members have a
-   * Member_ID of <id>, <no_such_member> exception is thrown.
+   * Member_ID of @c id, @c no_such_member exception is thrown.
    */
   void unbind (char const * id) override;
 
   /**
    * Returns a member object from this @c Object_Group in accordance with
    * load balancing policy it implements, i.e., ``random'' or
-   * ``round robin.''  If the group contains no members, <no_such_member>
+   * ``round robin.''  If the group contains no members, @c no_such_member
    * exception is thrown.
    */
   CORBA::Object_ptr resolve () override = 0;
@@ -181,7 +181,7 @@ public:
   /**
    * Returns an object with the specified @c Member_ID.  If this
    * @c Object_Group contains no members with the specified
-   * @c Member_ID, <no_such_member> exception is thrown.
+   * @c Member_ID, @c no_such_member exception is thrown.
    */
   CORBA::Object_ptr resolve_with_id (char const * id) override;
 
@@ -191,7 +191,7 @@ public:
   /**
    * Cleanup the resources associated with this @c Object_Group.
    * Subsequent calls to this @c Object_Group should fail, and its
-   * <id> should become available.  <Object_Group_Factory>
+   * @c id should become available.  @c Object_Group_Factory
    * should no longer list this @c Object_Group.
    */
   void destroy () override;
@@ -221,7 +221,7 @@ protected:
   std::string id_;
 
   /**
-   * Pointer to the <Object_Group_Factory> servant, which created this
+   * Pointer to the @c Object_Group_Factory servant, which created this
    * @c Object_Group servant.  We need this pointer to be able to
    * notify the factory when this @c Object_Group is destroyed.  Upon
    * notification, the factory can update its records and release
@@ -256,7 +256,7 @@ public:
   /**
    * Cleanup the resources associated with this @c Object_Group.
    * Subsequent calls to this @c Object_Group should fail, and its
-   * <id> should become available.  <Object_Group_Factory>
+   * @c id should become available.  @c Object_Group_Factory
    * should no longer list this @c Object_Group.
    */
   void destroy () override;
@@ -282,7 +282,7 @@ public:
   RR_Object_Group &operator= (RR_Object_Group &&) = delete;
 
   /**
-   * We need to override the implementation of <unbind> from
+   * We need to override the implementation of @c unbind from
    * Object_Group_i to make sure @c resolve
    * works correctly.
    */
@@ -295,7 +295,7 @@ public:
   /**
    * Cleanup the resources associated with this @c Object_Group.
    * Subsequent calls to this @c Object_Group should fail, and its
-   * <id> should become available.  <Object_Group_Factory>
+   * @c id should become available.  @c Object_Group_Factory
    * should no longer list this @c Object_Group.
    */
   void destroy () override;
