@@ -128,8 +128,9 @@ Foo_B_ClientEngine::execute()
   this->obj_->test_bounded_var_size_arg (bd_var_size_string.in ());
 
   Unbounded_Var_Size_var ub_var_size_string = new Unbounded_Var_Size(100);
-  ub_var_size_string->replace (ub_var_size_string->maximum (),
-                               std::strlen (test_str) + 1,
+  CORBA::ULong const test_str_length = static_cast<CORBA::ULong> (std::strlen (test_str) + 1);
+  ub_var_size_string->replace (test_str_length,
+                               test_str_length,
                                test_str);
   this->obj_->test_unbounded_var_size_arg (ub_var_size_string.in ());
 

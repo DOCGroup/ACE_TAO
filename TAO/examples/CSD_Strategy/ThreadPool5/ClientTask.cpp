@@ -138,7 +138,7 @@ ClientTask::svc()
       CORBA::String_var buffer2 = CORBA::string_dup ("UNBOUNDED VAR SIZE CHAR");
       Unbounded_Var_Size_var ub_var_size_string (new Unbounded_Var_Size (100));
       size_t const buffer2_length = std::strlen (buffer2.in ()) + 1;
-      ub_var_size_string->replace (ub_var_size_string->maximum (),
+      ub_var_size_string->replace (buffer2_length,
                                    buffer2_length,
                                    buffer2._retn (),
                                    true);
