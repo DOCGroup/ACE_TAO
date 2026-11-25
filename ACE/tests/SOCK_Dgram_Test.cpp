@@ -177,13 +177,12 @@ client (void *arg)
             }
           else
             {
-              buf[(rcv_siz / sizeof (ACE_TCHAR)) - 1] = '\0';
-              if (ACE_OS::strcmp (buf, TEST_DATA) != 0)
+              if (ACE_OS::memcmp (buf, TEST_DATA, sizeof (TEST_DATA)) != 0)
                 {
                   ACE_ERROR ((LM_ERROR,
                               ACE_TEXT ("(%P|%t) recv string should be %s; ")
-                              ACE_TEXT (" but is %s\n"),
-                              TEST_DATA, buf));
+                              ACE_TEXT (" but the received bytes differ\n"),
+                              TEST_DATA));
                 }
             }
           if (peer_addr.get_type () != server_addr.get_type ())
@@ -242,13 +241,12 @@ server (void *arg)
         }
       else
         {
-          buf[(rcv_siz / sizeof (ACE_TCHAR)) - 1] = '\0';
-          if (ACE_OS::strcmp (buf, TEST_DATA) != 0)
+          if (ACE_OS::memcmp (buf, TEST_DATA, sizeof (TEST_DATA)) != 0)
             {
               ACE_ERROR ((LM_ERROR,
                           ACE_TEXT ("(%P|%t) recv string should be %s; ")
-                          ACE_TEXT (" but is %s\n"),
-                          TEST_DATA, buf));
+                          ACE_TEXT (" but the received bytes differ\n"),
+                          TEST_DATA));
             }
         }
 
