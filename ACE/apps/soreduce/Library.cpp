@@ -148,7 +148,7 @@ MPC_TAO_Dep_Lib::write_projectinfo()
 }
 
 
-Library::Library (ACE_TCHAR const *name)
+Library::Library (char const *name)
   : name_ (name),
     exported_ (0)
 {
@@ -171,7 +171,7 @@ Library::Library (ACE_TCHAR const *name)
 }
 
 void
-Library::set_path (ACE_TCHAR const *p)
+Library::set_path (char const *p)
 {
   char abspath[1000] {};
   ssize_t const abspathlen = ACE_OS::readlink (p, abspath, sizeof abspath - 1);
@@ -233,7 +233,7 @@ Library::load_modules ()
 
   modules_.clear ();
   for (size_t i = 0; i < static_cast<size_t> (num_modules); ++i) {
-    ACE_CString const ent_name (ACE_TEXT_ALWAYS_CHAR (dent[i]->d_name));
+    ACE_CString const ent_name (dent[i]->d_name);
     std::unique_ptr<Obj_Module> module = std::make_unique<Obj_Module> (ent_name);
     module->add_source (ACE_CString (subdir + "/" + ent_name).c_str ());
     modules_.push_back (std::move (module));

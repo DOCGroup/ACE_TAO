@@ -100,8 +100,7 @@ SO_Group::add_executable (char const *path)
 
     if (!found)
     {
-      std::unique_ptr<Library> nlib = std::make_unique<Library> (
-        ACE_TEXT_CHAR_TO_TCHAR (libname));
+      std::unique_ptr<Library> nlib = std::make_unique<Library> (libname);
       // Skip over '=> '.
       if (ACE_OS::read (pipe[0], line, 3) != 3)
         {

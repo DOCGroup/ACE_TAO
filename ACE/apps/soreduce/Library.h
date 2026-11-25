@@ -99,7 +99,7 @@ protected:
 class Library
 {
 public:
-  explicit Library (ACE_TCHAR const *name = nullptr);
+  explicit Library (char const *name = nullptr);
   ~Library () = default;
   Library (Library const &) = delete;
   Library (Library &&) = delete;
@@ -120,7 +120,7 @@ public:
   void write_export_list (bool);
 
   /// Sets the path used to find the shared library object files.
-  void set_path (ACE_TCHAR const *p);
+  void set_path (char const *p);
 
   /// Loads the object modules from the library path.
   void load_modules();
