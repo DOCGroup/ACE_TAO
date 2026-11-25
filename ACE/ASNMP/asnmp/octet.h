@@ -39,7 +39,7 @@ class ASNMP_Export OctetStr : public  SnmpSyntax
 {
 public:
   /// construct octet from byte buffer, assume c style string if size == -1
-  explicit OctetStr (char const *string = "", long size = -1);
+  OctetStr (char const *string = "", long size = -1);
 
   OctetStr (OctetStr const &octet);
   OctetStr (OctetStr &&) = delete;

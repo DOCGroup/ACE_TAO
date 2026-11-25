@@ -186,7 +186,7 @@ class ASNMP_Export IpAddress : public Address
 {
 public:
   /// default construct an IP address with a string
-  explicit IpAddress( const char *inaddr = "");
+  IpAddress( const char *inaddr = "");
 
   /// construct an IP address with another IP address
   IpAddress( const IpAddress  &ipaddr);
@@ -321,7 +321,7 @@ class  ASNMP_Export UdpAddress : public IpAddress
 {
 public:
   /// default constructor with a dotted string in the form of addr:port
-  explicit UdpAddress (char const *inaddr = "");
+  UdpAddress (char const *inaddr = "");
 
   UdpAddress( const UdpAddress &udpaddr);
 
@@ -383,7 +383,7 @@ protected:
 class  ASNMP_Export MacAddress : public Address
 {
 public:
-  explicit MacAddress( const char  *inaddr = "");
+  MacAddress( const char  *inaddr = "");
 
   MacAddress( const MacAddress  &macaddr);
 
@@ -438,7 +438,7 @@ protected:
 class  ASNMP_Export NetbiosAddress : public Address
 {
 public:
-   explicit NetbiosAddress( const char *inaddr = "");
+   NetbiosAddress( const char *inaddr = "");
 
    /// set name and service type
    NetbiosAddress( const char *inaddr, nb_service svc);
@@ -493,7 +493,7 @@ protected:
 class  ASNMP_Export DecNetAddress : public Address
 {
 public:
-  explicit DecNetAddress( const char *inaddr = "");
+  DecNetAddress( const char *inaddr = "");
 
   DecNetAddress( const DecNetAddress& decaddr);
 
@@ -536,7 +536,7 @@ protected:
 class  ASNMP_Export AppleTalkAddress :  public Address
 {
 public:
-  explicit AppleTalkAddress( const char *inaddr = "");
+  AppleTalkAddress( const char *inaddr = "");
 
   AppleTalkAddress( const AppleTalkAddress& atkaddr);
 
@@ -591,7 +591,7 @@ private:
 class ASNMP_Export IpxAddress : public Address
 {
 public:
-  explicit IpxAddress( const char  *inaddr = "");
+  IpxAddress( const char  *inaddr = "");
 
   IpxAddress( const IpxAddress  &ipxaddr);
 
@@ -650,7 +650,7 @@ protected:
 class ASNMP_Export IpxSockAddress : public IpxAddress
 {
 public:
-  explicit IpxSockAddress( const char *inaddr = "");
+  IpxSockAddress( const char *inaddr = "");
 
   IpxSockAddress( const IpxSockAddress &ipxaddr);
 
@@ -708,7 +708,7 @@ protected:
 class ASNMP_Export GenAddress : public Address
 {
 public:
-  explicit GenAddress (char const *addr = "");
+  GenAddress (char const *addr = "");
 
   explicit GenAddress (Address const &addr);
 

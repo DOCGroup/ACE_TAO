@@ -38,7 +38,7 @@
 class ASNMP_Export Counter64 : public  SnmpSyntax
 {
 public:
-  explicit Counter64 (ACE_UINT64 llw = 0);
+  Counter64 (ACE_UINT64 llw = 0);
 
   Counter64 (unsigned long hiparm, unsigned long loparm);
 

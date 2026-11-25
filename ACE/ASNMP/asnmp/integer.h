@@ -85,7 +85,7 @@ protected:
 class ASNMP_Export SnmpInt32 : public SnmpSyntax
 {
 public:
-  explicit SnmpInt32 (long const i = 0);
+  SnmpInt32 (long const i = 0);
 
   SnmpInt32 (SnmpInt32 const &c);
   SnmpInt32 (SnmpInt32 &&) = delete;

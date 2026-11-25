@@ -46,7 +46,7 @@
 class ASNMP_Export Oid : public  SnmpSyntax
 {
 public:
-  explicit Oid (char const * dotted_oid_string = "", size_t size = unsigned(-1));
+  Oid (char const * dotted_oid_string = "", size_t size = unsigned(-1));
 
   Oid ( const Oid &oid);
   Oid (Oid &&) = delete;
