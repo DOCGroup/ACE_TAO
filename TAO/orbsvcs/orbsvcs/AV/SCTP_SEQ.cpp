@@ -195,7 +195,7 @@ TAO_AV_SCTP_SEQ_Base_Acceptor::acceptor_open (TAO_AV_SCTP_SEQ_Acceptor *acceptor
   if (TAO_debug_level > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "TAO_AV_SCTP_SEQ_Base_Acceptor::open: %s",
+                  "TAO_AV_SCTP_SEQ_Base_Acceptor::open: %C",
                   buf));
     }
 
@@ -288,7 +288,7 @@ TAO_AV_SCTP_SEQ_Acceptor::open (TAO_Base_StreamEndPoint *endpoint,
   if (TAO_debug_level > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "TAO_AV_SCTP_SEQ_Acceptor::open: %s",
+                  "TAO_AV_SCTP_SEQ_Acceptor::open: %C",
                   buf));
     }
 
@@ -358,7 +358,7 @@ TAO_AV_SCTP_SEQ_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   if (TAO_debug_level > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "TAO_AV_SCTP_SEQ_Acceptor::open_default: %s\n",
+                  "TAO_AV_SCTP_SEQ_Acceptor::open_default: %C\n",
                   buf));
     }
 
@@ -563,7 +563,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
         {
           peer_addrs[i].addr_to_string (buf, BUFSIZ);
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          "%s %B\n",
+                          "%C %B\n",
                           buf,
                           size));
         }
@@ -577,7 +577,7 @@ TAO_AV_SCTP_SEQ_Connector::connect (TAO_FlowSpec_Entry *entry,
         {
           peer_addrs[i].addr_to_string (buf, BUFSIZ);
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          "%s %B\n",
+                          "%C %B\n",
                           buf,
                           size));
         }
@@ -834,7 +834,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::open (void * /*arg*/)
       if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                      "(%P|%t) connection to server <%s> on %H\n",
+                      "(%P|%t) connection to server <%C> on %H\n",
                       server,
                       this->peer ().get_handle ()));
         }

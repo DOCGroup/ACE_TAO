@@ -845,7 +845,7 @@ TAO_AV_UDP_QoS_Acceptor::open_default (TAO_Base_StreamEndPoint *endpoint,
   address->addr_to_string (buf,
                            BUFSIZ);*/
   ORBSVCS_DEBUG ((LM_DEBUG,
-              "(%N,%l) ADDRESS IS %s:%d\n",
+              "(%N,%l) ADDRESS IS %C:%d\n",
               buf, qos_acceptor_addr_.get_port_number() ));
 
   int result = this->open_i (std::addressof (qos_acceptor_addr_));
@@ -1236,7 +1236,7 @@ TAO_AV_UDP_QoS_Connector::connect (TAO_FlowSpec_Entry *entry,
   catch (CORBA::Exception const &)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "Negotiator not found for flow %s\n",
+                  "Negotiator not found for flow %C\n",
                   this->entry_->flowname ()));
     }
 
