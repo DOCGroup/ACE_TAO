@@ -944,7 +944,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::trybind (const char *name,
     }
 
   // Found it, so return a copy of the current entry.
-  pointer = (char *) node->pointer_;
+  pointer = node->pointer_;
   return 1;
 }
 
@@ -983,7 +983,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (const char *name,
       return -1;
     }
 
-  pointer = (char *) node->pointer_;
+  pointer = node->pointer_;
   return 0;
 }
 
@@ -1055,7 +1055,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *
     {
       if (std::strcmp (curr->name (), name) == 0)
         {
-          pointer = (char *) curr->pointer_;
+          pointer = curr->pointer_;
 
           if (prev == nullptr)
             {
@@ -1147,7 +1147,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_It
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_LIFO_Iterator_T ()
 {
-  ACE_OS::free ((void *) this->name_);
+  ACE_OS::free (const_cast<char *> (this->name_));
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
@@ -1158,7 +1158,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::next (void *&next_
 
   if (this->curr_ != nullptr)
     {
-      next_entry = (char *) this->curr_->pointer_;
+      next_entry = this->curr_->pointer_;
       name = this->curr_->name ();
       return 1;
     }
@@ -1250,7 +1250,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_FIFO_It
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_FIFO_Iterator_T ()
 {
-  ACE_OS::free ((void *) this->name_);
+  ACE_OS::free (const_cast<char *> (this->name_));
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
@@ -1261,7 +1261,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::next (void *&next_
 
   if (this->curr_ != nullptr)
     {
-      next_entry = (char *) this->curr_->pointer_;
+      next_entry = this->curr_->pointer_;
       name = this->curr_->name ();
       return 1;
     }
