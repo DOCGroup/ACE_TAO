@@ -121,7 +121,7 @@ TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
     {// A null object reference is not an acceptable member of the group.
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) ERROR: Unable to add null member ")
-                  ACE_TEXT ("to object group with id: %s\n"),
+                  ACE_TEXT ("to object group with id: %Q\n"),
                   this->tagged_component_.object_group_id));
       return CORBA::Object::_nil ();
     }
@@ -142,8 +142,8 @@ TAO::FT_PG_Object_Group_Storable::add_member_to_iogr (CORBA::Object_ptr member)
         {
           ORBSVCS_ERROR ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) ERROR: Unable to add member ")
-                      ACE_TEXT ("to object group with id: %s for object ")
-                      ACE_TEXT ("of type: %s\n"),
+                      ACE_TEXT ("to object group with id: %Q for object ")
+                      ACE_TEXT ("of type: %C\n"),
                       this->tagged_component_.object_group_id,
                       member_type_id));
           return CORBA::Object::_nil ();

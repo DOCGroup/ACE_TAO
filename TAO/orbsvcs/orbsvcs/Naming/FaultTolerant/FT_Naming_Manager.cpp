@@ -31,7 +31,7 @@
   if (TAO_debug_level > 6)    \
   {                           \
     ORBSVCS_DEBUG (( LM_DEBUG,    \
-    "Enter %s\n", #name       \
+    "Enter %C\n", #name       \
       ));                     \
   }
 
@@ -50,7 +50,7 @@
   if (TAO_debug_level > 6)    \
   {                           \
     ORBSVCS_DEBUG (( LM_DEBUG,    \
-      "Leave %s\n", #name     \
+      "Leave %C\n", #name     \
       ));                     \
   }                           \
   return /* value goes here */
