@@ -2269,6 +2269,7 @@ ACE_Dev_Poll_Reactor::handler (ACE_HANDLE handle,
     {
       if (event_handler != nullptr)
       {
+        info->event_handler->add_reference ();
         *event_handler = info->event_handler;
       }
 
