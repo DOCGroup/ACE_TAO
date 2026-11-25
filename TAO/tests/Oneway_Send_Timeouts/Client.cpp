@@ -1,6 +1,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "tao/AnyTypeCode/Any.h"
 
+#include <cstring>
 #include <memory>
 #include "ace/Get_Opt.h"
 #include "ace/Time_Value.h"
@@ -241,6 +242,8 @@ Client::test_oneway_timeout (bool flood)
   ACE_OS::memset (msg,'A',5999999);
   msg[5999999] = 0;
 
+  // Keep the full payload when adding a scope name to its beginning.
+
   test_obj_->dummy_two_way (); // connection establishment
 
   ACE_Time_Value tv (0);
@@ -251,12 +254,13 @@ Client::test_oneway_timeout (bool flood)
   // Timeout with SYNC_SCOPE SYNC_NONE
   try {
     std::string scope_name ("SYNC_NONE");
-    ACE_OS::strcpy (msg, scope_name.c_str ());
+    std::memcpy (msg, scope_name.data (), scope_name.length ());
     test_obj_none_timeout_->dummy_one_way (msg);
 
     if (flood && flush_strategy_ == Flushing_Strategy::BLOCKING) {
       // block flushing gives a oneway SYNCH_WITH_TRANSPORT semantics
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A Timeout was expected for SYNC_NONE.\n"));
+      status = false;
     }
     else {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_NONE\n"));
@@ -276,7 +280,7 @@ Client::test_oneway_timeout (bool flood)
   // Timeout with TAO specific SYNC_SCOPE SYNC_EAGER_BUFFERING
   try {
     std::string scope_name ("SYNC_EAGER_BUFFERING");
-    ACE_OS::strcpy (msg, scope_name.c_str ());
+    std::memcpy (msg, scope_name.data (), scope_name.length ());
 
     /* BLOCKed flushing has SYNCH_WITH_TRANSPORT semantics. With flooding turned on
         you would have received a TIMEOUT in the previous test (SYNC_NONE). Even without
@@ -302,6 +306,7 @@ Client::test_oneway_timeout (bool flood)
 
     if (flood && flush_strategy_ == Flushing_Strategy::BLOCKING) {
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A Timeout was expected for SYNC_EAGER_BUFFERING\n"));
+      status = false;
     }
     else {
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) As expected no Timeout received for SYNC_EAGER_BUFFERING\n"));
@@ -321,7 +326,7 @@ Client::test_oneway_timeout (bool flood)
   // Timeout with TAO specific SYNC_SCOPE SYNC_DELAYED_BUFFERING
   try {
     std::string scope_name ("SYNC_DELAYED_BUFFERING");
-    ACE_OS::strcpy (msg, scope_name.c_str ());
+    std::memcpy (msg, scope_name.data (), scope_name.length ());
 
     if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
@@ -337,6 +342,7 @@ Client::test_oneway_timeout (bool flood)
 
     if (flood && flush_strategy_ == Flushing_Strategy::BLOCKING) {
       ACE_ERROR ((LM_ERROR, "(%P|%t) ERROR: A Timeout was expected for SYNC_DELAYED_BUFFERING\n"));
+      status = false;
     }
     else {
       test_obj_delayed_timeout_->dummy_one_way ("SYNC_DELAYED_BUFFERING");
@@ -363,7 +369,7 @@ Client::test_oneway_timeout (bool flood)
   // Timeout with SYNC_SCOPE SYNC_WITH_TRANSPORT
   try {
     std::string scope_name ("SYNC_WITH_TRANSPORT");
-    ACE_OS::strcpy (msg, scope_name.c_str ());
+    std::memcpy (msg, scope_name.data (), scope_name.length ());
 
     if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
@@ -401,7 +407,7 @@ Client::test_oneway_timeout (bool flood)
 // Timeout with default SYNC_SCOPE SYNC_WITH_SERVER
   try {
     std::string scope_name ("SYNC_WITH_SERVER");
-    ACE_OS::strcpy (msg, scope_name.c_str ());
+    std::memcpy (msg, scope_name.data (), scope_name.length ());
 
     if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
@@ -438,7 +444,7 @@ Client::test_oneway_timeout (bool flood)
   // Timeout with default SYNC_SCOPE (SYNC_WITH_TARGET)
   try {
     std::string scope_name ("SYNC_WITH_TARGET");
-    ACE_OS::strcpy (msg, scope_name.c_str ());
+    std::memcpy (msg, scope_name.data (), scope_name.length ());
 
     if (flush_strategy_ == Flushing_Strategy::BLOCKING) {
       if (flood) {
