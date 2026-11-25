@@ -19,7 +19,7 @@
  * @class Load_Balancing_Service
  *
  * Server, which creates and initializes a
- * <Load_Balancer::Object_Group_Factory>
+ * @c Load_Balancer::Object_Group_Factory
  * object, and runs the orb loop.
  */
 class Load_Balancing_Service
@@ -34,7 +34,7 @@ public:
   Load_Balancing_Service &operator= (Load_Balancing_Service const &) = delete;
   Load_Balancing_Service &operator= (Load_Balancing_Service &&) = delete;
 
-  /// Initialize the <Load_Balancing_Service>: initializes the ORB, parses
+  /// Initialize the @c Load_Balancing_Service: initializes the ORB, parses
   /// arguments, creates a servant ...
   int init (int argc, ACE_TCHAR *argv[]);
 
@@ -48,7 +48,7 @@ private:
   /// The ORB manager.
   TAO_ORB_Manager orb_manager_;
 
-  /// File to output the <Object_Group_Factory> IOR.
+  /// File to output the @c Object_Group_Factory IOR.
   FILE *ior_output_file_ {};
 };
 

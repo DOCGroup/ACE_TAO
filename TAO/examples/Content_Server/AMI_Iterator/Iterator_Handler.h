@@ -56,7 +56,7 @@ public:
 
   /**
    * Activate and run this Reply Handler.  The contents (not the
-   * pointer itself) of the <request_count> parameter will be
+   * pointer itself) of the @c request_count parameter will be
    * incremented when file retrieval begins, and decremented when file
    * retrieval completes.
    */
