@@ -25,6 +25,10 @@ TAO::Less_Than_ObjectKey::operator () (TAO::ObjectKey const &lhs,
     {
       return false;
     }
+  else if (rlen == 0)
+    {
+      return false;
+    }
 
   CORBA::Octet const * const rhs_buff = rhs.get_buffer ();
   CORBA::Octet const * const lhs_buff = lhs.get_buffer ();

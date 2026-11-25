@@ -376,6 +376,10 @@ operator== (const TAO_VERSIONED_NAMESPACE_NAME::TAO::unbounded_value_sequence<CO
     {
       return false;
     }
+  if (rlen == 0)
+    {
+      return true;
+    }
 
   const CORBA::Octet * rhs_buff = rhs.get_buffer ();
   const CORBA::Octet * lhs_buff = lhs.get_buffer ();

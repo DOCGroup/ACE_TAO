@@ -8,6 +8,7 @@
  */
 #include "tao/Basic_Types.h"
 #include "tao/OctetSeqC.h"
+#include "tao/ObjectKey_Table.h"
 #include "tao/Unbounded_Octet_Sequence_T.h"
 #include "ace/Log_Msg.h"
 
@@ -19,6 +20,24 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
 {
   try
     {
+      TAO::Less_Than_ObjectKey less;
+      TAO::ObjectKey empty_key;
+      TAO::ObjectKey first_key;
+      TAO::ObjectKey second_key;
+      first_key.length (1);
+      second_key.length (1);
+      first_key[0] = 1;
+      second_key[0] = 2;
+      if (less (empty_key, empty_key)
+          || !less (empty_key, first_key)
+          || less (first_key, empty_key)
+          || !less (first_key, second_key)
+          || less (second_key, first_key)
+          || less (first_key, first_key))
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, "Object key ordering failed\n"), 1);
+        }
+
       s_sequence a;
       s_sequence b(23);
 
