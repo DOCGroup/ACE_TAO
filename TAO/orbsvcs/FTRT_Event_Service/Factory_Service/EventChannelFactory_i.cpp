@@ -201,8 +201,6 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   // Try to create a new process running date.
   ACE_Process new_process {};
 
-  ACE_Time_Value timeout { WAIT_FOR_REGISTRATION_TIME };
-  timeout += ACE_OS::gettimeofday();
   if (new_process.spawn (options) == -1)
   {
     ORBSVCS_ERROR ((LM_ERROR,
@@ -215,6 +213,8 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
   ACE_INET_Addr client_addr {};
   ACE_SOCK_Stream stream {};
   Socket_Closer<ACE_SOCK_Stream> const stream_closer {stream};
+  ACE_Time_Value timeout { WAIT_FOR_REGISTRATION_TIME };
+  ACE_Time_Value const deadline = ACE_OS::gettimeofday () + timeout;
 
   ORBSVCS_DEBUG((LM_DEBUG, "accepting connection from event channel\n"));
   if (acceptor.accept (stream, std::addressof (client_addr),
@@ -230,15 +230,30 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
 
   constexpr int IOR_BUFFER_SIZE = 5000;
   char ior[IOR_BUFFER_SIZE + 1] {};
-  int n {};
-  int byte_read {};
-  while (byte_read < IOR_BUFFER_SIZE &&
-         (n = stream.recv (ior + byte_read, IOR_BUFFER_SIZE - byte_read)) > 0)
+  size_t byte_read {};
+  while (byte_read < IOR_BUFFER_SIZE)
     {
-      byte_read += n;
+      ACE_Time_Value const now = ACE_OS::gettimeofday ();
+      if (now >= deadline)
+        {
+          return result;
+        }
+      ACE_Time_Value const remaining = deadline - now;
+      ssize_t const received = stream.recv (ior + byte_read,
+                                            IOR_BUFFER_SIZE - byte_read,
+                                            std::addressof (remaining));
+      if (received < 0)
+        {
+          return result;
+        }
+      if (received == 0)
+        {
+          break;
+        }
+      byte_read += static_cast<size_t> (received);
     }
 
-  if (n < 0 || byte_read == 0)
+  if (byte_read == 0)
   {
     return result;
   }
