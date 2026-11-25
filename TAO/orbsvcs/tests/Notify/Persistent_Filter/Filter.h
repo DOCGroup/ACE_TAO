@@ -173,7 +173,7 @@ protected:
   /// @name Data members
   /// @{
 
-  /// The callback for <done>
+  /// The callback for @c done
   FilterClient* filter_;
 
   /// The name of this consumer.

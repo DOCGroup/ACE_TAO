@@ -246,9 +246,7 @@ protected:
    * Consumer0: [start          , start           + count)
    * Consumer1: [start + 1*shift, start + 1*shift + count)
    * Consumer2: [start + 2*shift, start + 2*shift + count)
-   * .....
-   * ....
-   * .
+   * ...
    * Some sub-tests may choose other configurations, but this is good
    * for many cases.
    */
@@ -262,9 +260,7 @@ protected:
    * Supplier0: [start          , start           + count)
    * Supplier1: [start + 1*shift, start + 1*shift + count)
    * Supplier2: [start + 2*shift, start + 2*shift + count)
-   * .....
-   * ....
-   * .
+   * ...
    * Some sub-tests may choose other configurations, but this is good
    * for many cases.
    */
