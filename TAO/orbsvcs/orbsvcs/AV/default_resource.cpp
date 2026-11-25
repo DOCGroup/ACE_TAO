@@ -72,7 +72,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 {
                   ORBSVCS_ERROR ((LM_ERROR,
                                   ACE_TEXT ("(%P|%t) Unable to add transport factories for %s: %p\n"),
-                                  argv[curarg]));
+                                  argv[curarg], ACE_TEXT ("insert")));
                 }
               else
               {
@@ -97,7 +97,7 @@ TAO_AV_Default_Resource_Factory::init (int argc, ACE_TCHAR *argv[])
                 {
                   ORBSVCS_ERROR ((LM_ERROR,
                                   ACE_TEXT ("(%P|%t) Unable to add flow protocol factories for %s: %p\n"),
-                                  argv[curarg]));
+                                  argv[curarg], ACE_TEXT ("insert")));
                 }
               else
               {

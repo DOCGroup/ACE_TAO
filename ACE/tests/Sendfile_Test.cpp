@@ -88,7 +88,7 @@ client (void *arg)
       || (in_fd = ACE_OS::open (test_file, O_CREAT | O_RDWR | O_TRUNC,
                                 ACE_DEFAULT_FILE_PERMS)) == ACE_INVALID_HANDLE)
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) open %s: %p\n"), test_file));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) open %s: %p\n"), test_file, ACE_TEXT ("open")));
       Test_Result = 1;
       goto cleanup;
     }
@@ -99,7 +99,7 @@ client (void *arg)
 
   if (byte_count != static_cast<ssize_t> (sizeof (buffer)))
     {
-      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) write %s: %p\n"), test_file));
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("(%P|%t) write %s: %p\n"), test_file, ACE_TEXT ("write")));
       Test_Result = 1;
     }
 
@@ -302,7 +302,7 @@ spawn ()
            reinterpret_cast<void *> (&peer_acceptor),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %s: %p\n%a"),
+                    ACE_TEXT ("(%P|%t) %p\n%a"),
                     ACE_TEXT ("server thread create failed")));
 
       if (ACE_Thread_Manager::instance ()->spawn
@@ -310,7 +310,7 @@ spawn ()
            reinterpret_cast<void *> (&server_addr),
            THR_NEW_LWP | THR_DETACHED) == -1)
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) %s: %p\n%a"),
+                    ACE_TEXT ("(%P|%t) %p\n%a"),
                     ACE_TEXT ("client thread create failed")));
 
       // Wait for the threads to exit.
