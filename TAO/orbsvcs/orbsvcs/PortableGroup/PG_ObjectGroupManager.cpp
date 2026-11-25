@@ -827,7 +827,7 @@ TAO_PG_ObjectGroupManager::remove_group_from_location_map (
             ORBSVCS_DEBUG ((LM_DEBUG,
                             ACE_TEXT ("(%P|%t) TAO_PG_ObjectGroupManager::")
                             ACE_TEXT ("remove_group_from_location_map -")
-                            ACE_TEXT ("Found group at location: %s, position %i, size = %i\n"),
+                            ACE_TEXT ("Found group at location: %C, position %i, size = %B\n"),
                             loc[0].id.in (), to_be_removed, groups->size ()));
           }
         // Dont need to destroy the entry. Just need to remove it from the
