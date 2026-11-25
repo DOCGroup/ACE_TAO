@@ -105,14 +105,14 @@ private:
   Union_Label_Owner pd_car_data;
 };
 
-// Active iterator for UTL_LabelList.
+/// Active iterator for UTL_LabelList.
 class UTL_LabellistActiveIterator : public UTL_ListActiveIterator
 {
 public:
   UTL_LabellistActiveIterator () = delete;
   explicit UTL_LabellistActiveIterator (UTL_LabelList *source);
 
-  // Get current item.
+  /// Get the current item.
   AST_UnionLabel *item () const;
 };
 

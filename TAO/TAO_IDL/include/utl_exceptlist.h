@@ -110,7 +110,7 @@ struct UTL_ExceptList_Deleter
 using UTL_ExceptList_Owner =
   std::unique_ptr<UTL_ExceptList, UTL_ExceptList_Deleter>;
 
-// Active iterator for UTL_ExceptList.
+/// Active iterator for UTL_ExceptList.
 class TAO_IDL_FE_Export UTL_ExceptlistActiveIterator
   : public UTL_ListActiveIterator
 {
@@ -118,7 +118,7 @@ public:
   UTL_ExceptlistActiveIterator () = delete;
   explicit UTL_ExceptlistActiveIterator (UTL_ExceptList *s);
 
-  // Get current item
+  /// Get the current item.
   AST_Type *item () const;
 };
 

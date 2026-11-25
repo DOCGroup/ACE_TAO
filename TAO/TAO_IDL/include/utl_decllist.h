@@ -99,7 +99,7 @@ private:
   std::unique_ptr<FE_Declarator> pd_car_data; // The element this list stores
 };
 
-// Active iterator fooor UTL_DeclList
+/// Active iterator for UTL_DeclList.
 class TAO_IDL_FE_Export UTL_DecllistActiveIterator
   : public UTL_ListActiveIterator
 {
@@ -109,7 +109,7 @@ public:
   UTL_DecllistActiveIterator () = delete;
   explicit UTL_DecllistActiveIterator (UTL_DeclList *s);
 
-  // Get current item
+  /// Get the current item.
   FE_Declarator *item () const;
 };
 

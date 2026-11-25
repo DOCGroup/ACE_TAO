@@ -103,14 +103,14 @@ private:
   Expression_Owner pd_car_data;
 };
 
-// Active iterator for UTL_ExprList.
+/// Active iterator for UTL_ExprList.
 class   UTL_ExprlistActiveIterator : public UTL_ListActiveIterator
 {
 public:
   UTL_ExprlistActiveIterator () = delete;
   explicit UTL_ExprlistActiveIterator (UTL_ExprList *s);
 
-  // Get current item.
+  /// Get the current item.
   AST_Expression *item () const;
 };
 

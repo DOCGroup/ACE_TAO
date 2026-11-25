@@ -94,14 +94,14 @@ private:
   bool pd_truncatable;
 };
 
-// Active iterator for UTL_NameList.
+/// Active iterator for UTL_NameList.
 class   UTL_NamelistActiveIterator : public UTL_ListActiveIterator
 {
 public:
   UTL_NamelistActiveIterator () = delete;
   explicit UTL_NamelistActiveIterator (UTL_NameList *source);
 
-  // Get current item.
+  /// Get the current item.
   UTL_ScopedName *item () const;
 };
 

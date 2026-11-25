@@ -127,7 +127,7 @@ public:
   UTL_IdListActiveIterator () = delete;
   explicit UTL_IdListActiveIterator (UTL_IdList *s);
 
-  /// Retrieves the next item.
+  /// Retrieves the current item.
   Identifier *item () const;
 };
 

@@ -123,7 +123,7 @@ private:
   friend class UTL_ListActiveIterator;
 };
 
-// Active iterator for lists.
+/// Active iterator for lists.
 class TAO_IDL_FE_Export UTL_ListActiveIterator
 {
 public:
@@ -132,14 +132,14 @@ public:
 
   virtual ~UTL_ListActiveIterator () = default;
 
-  // Get next list.
+  /// Advance to the next list item.
   virtual void next ();
 
-  // Are we at the end of this list?
+  /// Whether the iterator is at the end of the list.
   virtual bool is_done () const;
 
 protected:
-  // On what to iterate?
+  /// List position being iterated.
   UTL_List *source;
 };
 
