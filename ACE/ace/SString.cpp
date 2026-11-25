@@ -24,9 +24,9 @@ ACE_OSTREAM_TYPE &
 operator<< (ACE_OSTREAM_TYPE &os, const ACE_CString &cs)
 {
   if (cs.fast_rep ())
-  {
-    os << cs.fast_rep ();
-  }
+    {
+      os << cs.fast_rep ();
+    }
   return os;
 }
 
@@ -48,9 +48,9 @@ ACE_OSTREAM_TYPE &
 operator<< (ACE_OSTREAM_TYPE &os, const ACE_SString &ss)
 {
   if (ss.fast_rep ())
-  {
-    os << ss.fast_rep ();
-  }
+    {
+      os << ss.fast_rep ();
+    }
   return os;
 }
 #endif /* !ACE_LACKS_IOSTREAM_TOTALLY */
@@ -130,9 +130,9 @@ ACE_NS_WString::ACE_NS_WString (const char *s,
   : ACE_WString (alloc)
 {
   if (s == nullptr)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   this->len_ = this->buf_len_ = std::strlen (s);
 
@@ -204,9 +204,9 @@ ACE_SString::ACE_SString (const ACE_SString &s)
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == nullptr)
-  {
-    this->allocator_ = ACE_Allocator::instance ();
-  }
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   this->rep_ = static_cast<char *> (this->allocator_->malloc (s.len_ + 1));
   std::memcpy (this->rep_, s.rep_, this->len_);
@@ -219,9 +219,9 @@ ACE_SString::ACE_SString (ACE_Allocator *alloc)
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == nullptr)
-  {
-    this->allocator_ = ACE_Allocator::instance ();
-  }
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   this->rep_ = static_cast<char *> (this->allocator_->malloc (this->len_ + 1));
   this->rep_[this->len_] = '\0';
@@ -254,9 +254,9 @@ ACE_SString::ACE_SString (const char *s,
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == nullptr)
-  {
-    this->allocator_ = ACE_Allocator::instance ();
-  }
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   if (s == nullptr)
     {
@@ -279,9 +279,9 @@ ACE_SString::ACE_SString (char c,
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == nullptr)
-  {
-    this->allocator_ = ACE_Allocator::instance ();
-  }
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   this->len_ = 1;
   this->rep_ = static_cast<char *> (this->allocator_->malloc (this->len_ + 1));
@@ -299,9 +299,9 @@ ACE_SString::ACE_SString (const char *s,
   ACE_TRACE ("ACE_SString::ACE_SString");
 
   if (this->allocator_ == nullptr)
-  {
-    this->allocator_ = ACE_Allocator::instance ();
-  }
+    {
+      this->allocator_ = ACE_Allocator::instance ();
+    }
 
   if (s == nullptr)
     {
@@ -350,21 +350,21 @@ ACE_SString::substring (size_type offset,
 
   // case 1. empty string
   if (len_ == 0)
-  {
-    return ACE_SString ();
-  }
+    {
+      return ACE_SString ();
+    }
 
   // case 2. start pos l
   if (offset >= len_)
-  {
-    return ACE_SString ();
-  }
+    {
+      return ACE_SString ();
+    }
 
   // get all remaining bytes
   if (length == npos || count > (this->len_ - offset))
-  {
-    count = len_ - offset;
-  }
+    {
+      count = len_ - offset;
+    }
 
   return ACE_SString (this->rep_ + offset, count, this->allocator_);
 }
