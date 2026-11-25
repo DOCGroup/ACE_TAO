@@ -14,6 +14,7 @@
 #include "ace/os_include/os_netdb.h"
 #include "ace/OS_NS_sys_socket.h"
 #include <cstring>
+#include <string>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -162,19 +163,22 @@ TAO_UIPMC_Connector::make_connection (TAO::Profile_Transport_Resolver *,
       if (retval == 0)
         {
 #if defined (ACE_HAS_IPV6)
-          ACE_TCHAR const *prefer_if =
-            ACE_TEXT_CHAR_TO_TCHAR (uipmc_endpoint->preferred_if());
-          if (prefer_if != nullptr && prefer_if[0] != '\0')
+          char const *const preferred_if = uipmc_endpoint->preferred_if ();
+          if (preferred_if != nullptr && preferred_if[0] != '\0')
             {
-              if (svc_handler->peer ().set_nic(prefer_if, AF_INET6))
+              std::basic_string<ACE_TCHAR> const prefer_if (
+                ACE_TEXT_CHAR_TO_TCHAR (preferred_if));
+              if (svc_handler->peer ().set_nic (prefer_if.c_str (), AF_INET6))
                 {
                   if (TAO_debug_level > 0)
-                        ORBSVCS_ERROR ((LM_ERROR,
-                            "TAO (%P|%t) - UIPMC_Connector::make_connection, "
-                            "connection to <%C:%u> - failed to set requested local network interface <%s>\n",
-                             uipmc_endpoint->host (),
-                             uipmc_endpoint->port (),
-                             prefer_if));
+                    {
+                      ORBSVCS_ERROR ((LM_ERROR,
+                                      ACE_TEXT ("TAO (%P|%t) - UIPMC_Connector::make_connection, ")
+                                      ACE_TEXT ("connection to <%C:%u> - failed to set requested local network interface <%s>\n"),
+                                      uipmc_endpoint->host (),
+                                      uipmc_endpoint->port (),
+                                      prefer_if.c_str ()));
+                    }
                   retval = -1;
                 }
             }
