@@ -37,24 +37,21 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * it is suitable for use in interrupt service routines.
  * @note *Many* ACE_Message_Queue features are not supported with
  * this specialization, including:
- * * The two size arguments to the constructor and <open> are
- * interpreted differently.  The first is interpreted as the
- * maximum number of bytes in a message.  The second is
- * interpreted as the maximum number of messages that can be
- * queued.
- * * <dequeue_head> *requires* that the ACE_Message_Block
- * pointer argument point to an ACE_Message_Block that was
- * allocated by the caller.  It must be big enough to support
- * the received message, without using continuation. The
- * pointer argument is not modified.
+ * * The two size arguments to the constructor and @c open are
+ *   interpreted differently. The first is the maximum number of bytes
+ *   in a message; the second is the maximum number of queued messages.
+ * * @c dequeue_head *requires* that the ACE_Message_Block pointer
+ *   argument point to an ACE_Message_Block allocated by the caller.
+ *   It must be big enough to support the received message without
+ *   using continuation. The pointer argument is not modified.
  * * Message priority.  MSG_Q_FIFO is hard-coded.
  * * enqueue method timeouts.
- * * <peek_dequeue_head>.
- * * <ACE_Message_Queue_Iterators>.
+ * * @c peek_dequeue_head.
+ * * @c ACE_Message_Queue_Iterators.
  * * The ability to change low and high water marks after creation.
  * * Message_Block chains.  The continuation field of ACE_Message_Block
- * *   is ignored; only the first block of a fragment chain is
- * *   recognized.
+ *   is ignored; only the first block of a fragment chain is
+ *   recognized.
  */
 class ACE_Export ACE_Message_Queue_Vx: public ACE_Message_Queue<ACE_NULL_SYNCH>
 {
