@@ -225,7 +225,7 @@ client (void *arg)
             {
               ACE_INET_Addr failed_addr = addresses.get()[i];
               ACE_ERROR ((LM_ERROR,
-                          ACE_TEXT ("(%t) connection failed to %s, %d\n"),
+                          ACE_TEXT ("(%t) connection failed to %C, %d\n"),
                           failed_addr.get_host_name (),
                           failed_addr.get_port_number ()));
             }

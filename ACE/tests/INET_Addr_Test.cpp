@@ -525,7 +525,7 @@ int run_main (int, ACE_TCHAR *[])
                   if (addr != alias_check)
                         {
                           ACE_ERROR ((LM_WARNING,
-                                      ACE_TEXT ("IPv6 name mismatch: %s (%s) != %s\n"),
+                                      ACE_TEXT ("IPv6 name mismatch: %C (%C) != %C\n"),
                                       addr.get_host_name (),
                                       addr.get_host_addr (),
                                       ipv6_names[i]));
@@ -534,7 +534,7 @@ int run_main (int, ACE_TCHAR *[])
               else
                 {
                   ACE_ERROR ((LM_WARNING,
-                              ACE_TEXT ("IPv6 reverse lookup mismatch: %s (%s) != %s\n"),
+                              ACE_TEXT ("IPv6 reverse lookup mismatch: %C (%C) != %C\n"),
                               addr.get_host_name (),
                               addr.get_host_addr (),
                               ipv6_names[i]));

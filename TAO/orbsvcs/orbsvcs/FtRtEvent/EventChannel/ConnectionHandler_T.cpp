@@ -25,7 +25,7 @@ int ConnectionAcceptHandler<ACE_PEER_STREAM_2>::open (void * acceptor)
     }
 
   ORBSVCS_DEBUG ((LM_DEBUG,
-    "(%P|%t) connected with %s\n",
+    "(%P|%t) connected with %C\n",
     addr.get_host_name ()));
 
   return 0;

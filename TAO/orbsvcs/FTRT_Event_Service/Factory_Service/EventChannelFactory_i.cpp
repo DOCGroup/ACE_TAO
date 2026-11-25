@@ -223,7 +223,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
     ORBSVCS_ERROR_RETURN ((LM_ERROR, "accept fail\n"), 0);
   }
 
-  ORBSVCS_DEBUG((LM_DEBUG, "Factory Connect established with %s:%d\n",
+  ORBSVCS_DEBUG((LM_DEBUG, "Factory Connect established with %C:%d\n",
     client_addr.get_host_name(), client_addr.get_port_number() ));
 
   // receive the ior string from the created object

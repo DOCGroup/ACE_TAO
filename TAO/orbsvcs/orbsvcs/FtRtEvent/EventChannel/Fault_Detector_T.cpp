@@ -21,7 +21,7 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::init_acceptor()
       ORBSVCS_ERROR_RETURN((LM_ERROR, "Connot get local addr\n"), -1);
     }
 
-  ORBSVCS_DEBUG((LM_DEBUG, "listening at %s:%d\n", listen_addr.get_host_name(),
+  ORBSVCS_DEBUG((LM_DEBUG, "listening at %C:%d\n", listen_addr.get_host_name(),
                                                listen_addr.get_port_number()));
   ACE_TCHAR tcharbuf [MAXHOSTNAMELEN];
   listen_addr.addr_to_string(tcharbuf, MAXHOSTNAMELEN, 0);

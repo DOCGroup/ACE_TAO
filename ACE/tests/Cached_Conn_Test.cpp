@@ -201,7 +201,7 @@ server (ACCEPTOR *acceptor)
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("client %s connected from %d\n"),
+                  ACE_TEXT ("client %C connected from %d\n"),
                   cli_addr.get_host_name (),
                   cli_addr.get_port_number ()));
     }
