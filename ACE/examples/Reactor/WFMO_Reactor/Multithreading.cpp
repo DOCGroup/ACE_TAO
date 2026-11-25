@@ -134,9 +134,9 @@ Task_Handler::Task_Handler (size_t number_of_handles,
                                                         this->events_[i].handle ()) == -1)
           {
             ACE_ERROR ((LM_ERROR,
-                        "%p\t cannot register handle %B with Reactor\n",
+                        "%p\t cannot register handle %H with Reactor\n",
                         "Task_Handler::Task_Handler",
-                        i));
+                        this->events_[i].handle ()));
           }
       }
 
