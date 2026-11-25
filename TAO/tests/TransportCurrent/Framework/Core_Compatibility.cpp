@@ -7,6 +7,7 @@
 #include "tao/Acceptor_Filter.h"
 #include "tao/Adapter.h"
 #include "tao/Connection_Purging_Strategy.h"
+#include "tao/IIOP_Connector.h"
 #include "tao/PolicyFactory_Registry_Adapter.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
 #include "tao/Protocol_Factory.h"
@@ -18,6 +19,11 @@
 
 namespace
 {
+  struct Connector_Probe : TAO_IIOP_Connector
+  {
+    using TAO_Connector::active_connect_strategy_;
+  };
+
   struct Legacy_Acceptor_Filter : TAO_Acceptor_Filter
   {
     int fill_profile (TAO::ObjectKey const &, TAO_MProfile &,
@@ -105,4 +111,6 @@ namespace
   using Match_Prefix = int (TAO_Protocol_Factory::*) (ACE_CString const &);
   static_assert (std::is_same<decltype (&TAO_Protocol_Factory::match_prefix),
                               Match_Prefix>::value);
+  static_assert (std::is_same<decltype (Connector_Probe::active_connect_strategy_),
+                              TAO_Connect_Strategy *>::value);
 }

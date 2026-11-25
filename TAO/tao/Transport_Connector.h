@@ -12,7 +12,6 @@
 
 #include /**/ "ace/pre.h"
 #include "tao/Basic_Types.h"
-#include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)
 # pragma once
@@ -209,7 +208,7 @@ protected:
 
 protected:
   /// The (a)synch connect strategy
-  std::unique_ptr<TAO_Connect_Strategy> active_connect_strategy_;
+  TAO_Connect_Strategy *active_connect_strategy_ {};
 
 private:
   /// IOP protocol tag.
