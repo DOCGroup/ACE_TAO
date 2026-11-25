@@ -1209,9 +1209,9 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
                     ACE_TEXT ("completion_key"),
                     const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %Q\n"),
+                    ACE_TEXT ("%s = %Lu\n"),
                     ACE_TEXT ("error"),
-                    static_cast<ACE_UINT64> (result.error ())));
+                    result.error ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %s\n"),
                     ACE_TEXT ("message_block"),
@@ -1332,9 +1332,9 @@ Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
                     ACE_TEXT ("completion_key"),
                     const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %Q\n"),
+                    ACE_TEXT ("%s = %Lu\n"),
                     ACE_TEXT ("error"),
-                    static_cast<ACE_UINT64> (result.error ())));
+                    result.error ()));
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%s = %s\n"),
                     ACE_TEXT ("message_block"),
@@ -1877,9 +1877,9 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
                     ACE_TEXT ("completion_key"),
                     const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %Q\n"),
+                    ACE_TEXT ("%s = %Lu\n"),
                     ACE_TEXT ("error"),
-                    static_cast<ACE_UINT64> (result.error ())));
+                    result.error ()));
 
 #if defined (ACE_WIN32)
         size_t bytes_transferred = result.bytes_transferred ();
@@ -2033,9 +2033,9 @@ Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
                     ACE_TEXT ("completion_key"),
                     const_cast<void *> (result.completion_key ())));
         ACE_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("%s = %Q\n"),
+                    ACE_TEXT ("%s = %Lu\n"),
                     ACE_TEXT ("error"),
-                    static_cast<ACE_UINT64> (result.error ())));
+                    result.error ()));
 
 #if defined (ACE_WIN32)
         char index = 0;
