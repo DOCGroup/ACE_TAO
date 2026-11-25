@@ -154,7 +154,7 @@ Request_Handler::handle_input (ACE_HANDLE fd)
   else
   {
     ACE_DEBUG ((LM_DEBUG,
-                "(%t) Request_Handler: %@ peer closed (%H)\n",
+                ACE_TEXT ("(%t) Request_Handler: %@ peer closed (%H)\n"),
                 static_cast<void *> (this), fd));
   }
   return -1;
@@ -164,13 +164,13 @@ int
 Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) svr close; fd: %H, rcvd %B msgs\n",
+              ACE_TEXT ("(%t) svr close; fd: %H, rcvd %B msgs\n"),
               fd,
               this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
   {
     ACE_ERROR((LM_ERROR,
-               "(%t) Handler %@: Expected %B messages; got %B\n",
+               ACE_TEXT ("(%t) Handler %@: Expected %B messages; got %B\n"),
                static_cast<void *> (this),
                cli_req_no,
                this->nr_msgs_rcvd_));
@@ -230,7 +230,7 @@ cli_worker (void *arg)
       for (size_t j = 0; j < cli_req_no; ++j)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) conn_worker handle %H, req %B\n",
+                      ACE_TEXT ("(%t) conn_worker handle %H, req %B\n"),
                       stream.get_handle (),
                       j + 1));
           if (stream.send_n (arg, len + 1) == -1)
@@ -294,7 +294,7 @@ worker (void *)
   char const sbuf[] = "\011shutdown";
 
   ACE_DEBUG ((LM_DEBUG,
-              "shutdown stream handle = %H\n",
+              ACE_TEXT ("shutdown stream handle = %H\n"),
               stream.get_handle ()));
 
   if (stream.send_n (sbuf, sizeof (sbuf)) == -1)
