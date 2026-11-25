@@ -26,7 +26,7 @@ TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
   this->event_channel_->destroy_proxy_collection (this->collection_);
 }
 
-template<class EVENT_CHANNEL, class PROXY, class INTERFACE> INTERFACE*
+template<class EVENT_CHANNEL, class PROXY, class INTERFACE> typename INTERFACE::_ptr_type
 TAO_ESF_Proxy_Admin<EVENT_CHANNEL,PROXY,INTERFACE>::
     obtain ()
 {

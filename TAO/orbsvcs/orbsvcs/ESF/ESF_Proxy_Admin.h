@@ -69,13 +69,8 @@ public:
   /// Iterate over its internal collection.
   void for_each (TAO_ESF_Worker<PROXY> *worker);
 
-  // @todo We should use INTERFACE::_ptr_type or PROXY::_ptr_type, but
-  // the MSVC compiler (v6.0) gets confused when we do so.  So we have
-  // to choose for the lesser evil.  The code works because TAO uses
-  // pointers to implement the _ptr types, and that is OK because this
-  // code is supposed to run under TAO only.
   /// Create a new PROXY and activate it.
-  virtual INTERFACE*
+  virtual typename INTERFACE::_ptr_type
       obtain ();
 
   /**
