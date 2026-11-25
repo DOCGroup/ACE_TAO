@@ -595,72 +595,100 @@ public:
   /// false for paths provided by the user.
   void add_include_path (std::string const& path, bool is_system);
 
+  /// @name Relative include paths
+  /// @{
   void add_rel_include_path (std::string const& path);
   std::vector<std::string> const & rel_include_paths () const;
-  // Accessor/mutator for the rel_include_paths_ member.
+  /// @}
 
+  /// @name CIAO LEM file names
+  /// @{
   void add_ciao_lem_file_names (std::string const& s);
   std::vector<std::string> const & ciao_lem_file_names () const;
-  // Accessor/mutator for the ciao_lem_file_names_ member.
+  /// @}
 
+  /// @name CIAO RTI type support file names
+  /// @{
   void add_ciao_rti_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_rti_ts_file_names () const;
-  // Accessor/mutator for the ciao_rti_ts_file_names_ member.
+  /// @}
 
+  /// @name CIAO OpenSplice type support file names
+  /// @{
   void add_ciao_spl_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_spl_ts_file_names () const;
-  // Accessor/mutator for the ciao_spl_ts_file_names_ member.
+  /// @}
 
+  /// @name CIAO OpenDDS type support file names
+  /// @{
   void add_ciao_oci_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_oci_ts_file_names () const;
-  // Accessor/mutator for the ciao_oci_ts_file_names_ member.
+  /// @}
 
+  /// @name CIAO CoreDX type support file names
+  /// @{
   void add_ciao_coredx_ts_file_names (std::string const& s);
   std::vector<std::string> const & ciao_coredx_ts_file_names () const;
-  // Accessor/mutator for the ciao_coredx_ts_file_names_ member.
+  /// @}
 
+  /// @name CIAO AMI interface names
+  /// @{
   void add_ciao_ami_iface_names (std::string const& s);
   std::vector<std::string> const & ciao_ami_iface_names () const;
-  // Accessor/mutator for the ciao_ami_iface_names_ member.
+  /// @}
 
+  /// @name CIAO AMI receptacle names
+  /// @{
   void add_ciao_ami_recep_names (std::string const& s);
   std::vector<std::string> const & ciao_ami_recep_names () const;
-  // Accessor/mutator for the ciao_ami_recep_names_ member.
+  /// @}
 
+  /// @name Included AMI receptacle names
+  /// @{
   void add_included_ami_recep_names (std::string const& s);
   std::vector<std::string> const & included_ami_recep_names () const;
-  // Accessor/mutator for the included_ami_recep_names_ member.
+  /// @}
 
   bool included_ami_receps_done () const;
   void included_ami_receps_done (bool val);
 
+  /// @name CIAO AMI IDL file names
+  /// @{
   void add_ciao_ami_idl_fnames (std::string const& s);
   std::vector<std::string> const & ciao_ami_idl_fnames () const;
-  // Accessor/mutator for the included_ami_idl_fnames_ member.
+  /// @}
 
+  /// @name DDS4CCM implementation file names
+  /// @{
   void add_dds4ccm_impl_fnames (std::string const& s);
   std::vector<std::string> const & dds4ccm_impl_fnames () const;
-  // Accessor mutator for the dds4ccm_impl_fnames_ member.
+  /// @}
 
+  /// Access the interfaces with mixed parentage.
   std::deque<AST_Interface *> & mixed_parentage_interfaces ();
-  // Accessor for the member
 
   using File_Prefix_Map = std::unordered_map<std::string, std::string>;
 
+  /// Access the IDL file prefix container.
   File_Prefix_Map &file_prefixes ();
-  // Accessor for the IDL file prefix container.
 
+  /// @name ORB IDL processing
+  /// @{
   bool pass_orb_idl () const;
   void pass_orb_idl (bool val);
-  // Accessor for the pass_orb_idl_ member.
+  /// @}
 
+  /// @name IFR backend selection
+  /// @{
   bool using_ifr_backend () const;
   void using_ifr_backend (bool val);
-  // Accessor for the using_ifr_backend_ member.
+  /// @}
 
+  /// @name IDL3 processing
+  /// @{
   bool ignore_idl3 () const;
   void ignore_idl3 (bool val);
-  // Accessor for the ignore_idl3_ member.
+  /// @}
 
   /// Currently called only from the IDL backend, but could be useful elsewhere.
   int check_gperf ();
@@ -675,16 +703,20 @@ public:
   /// structs or unions used in a valuetype have been fully defined.
   void check_primary_keys ();
 
+  /// @name Recursion start
+  /// @{
   std::optional<std::string> const& recursion_start () const;
   void recursion_start (std::string const& val);
-  // Accessors for the member.
+  /// @}
 
+  /// @name Multiple-file input
+  /// @{
   bool multi_file_input () const;
   void multi_file_input (bool val);
-  // Accessors for the member.
+  /// @}
 
+  /// Return the combined input file name.
   std::string const& big_file_name () const;
-  // Just get the const string.
 
   /// @name Current template module parameters
   /// If UTL_Scope::lookup_by_name() finds no match, it checks this list
@@ -710,9 +742,11 @@ public:
   void for_new_holder (std::optional<UTL_StrList> params);
   /// @}
 
+  /// @name CORBA module
+  /// @{
   AST_Module *corba_module () const;
   void corba_module (AST_Module *m);
-  // Accessors for the member.
+  /// @}
 
   struct Include_Path_Info
   {
@@ -720,8 +754,8 @@ public:
     bool is_system_ {};
   };
 
+  /// Access the include paths.
   std::vector<Include_Path_Info> const& include_paths () const;
-  // Accessor for the member.
 
   /// Determines which diagnostic, if any, to emit for an anonymous IDL construct.
   enum class Anon_Type_Diagnostic
@@ -731,28 +765,36 @@ public:
     Silent
   };
 
+  /// Set the anonymous type diagnostic.
   void anon_type_diagnostic (Anon_Type_Diagnostic val);
-  // Mutator for the member.
 
   /// Has anon_type_diagnostic () been called?
   bool explicit_anon_type_diagnostic () const;
 
+  /// @name Anonymous type diagnostic checks
+  /// @{
   bool anon_error () const;
   bool anon_warning () const;
   bool anon_silent () const;
-  // Simple checks for the value of anon_type_diagnostic_.
+  /// @}
 
+  /// @name Typedef context
+  /// @{
   bool in_typedef () const;
   void in_typedef (bool val);
-  // Accessors for the member.
+  /// @}
 
+  /// @name Template module context without an alias
+  /// @{
   bool in_tmpl_mod_no_alias () const;
   void in_tmpl_mod_no_alias (bool val);
-  // Accessors for the member.
+  /// @}
 
+  /// @name Template module alias context
+  /// @{
   bool in_tmpl_mod_alias () const;
   void in_tmpl_mod_alias (bool val);
-  // Accessors for the member.
+  /// @}
 
   /**
    * Convenience function that causes the program to exit with the given return
