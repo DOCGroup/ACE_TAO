@@ -225,10 +225,10 @@ Worker_Task::svc ()
             }
 
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("(%t) in iteration %d, length = %B, prio = %Q, text = \"%*s\"\n"),
+                      ACE_TEXT ("(%t) in iteration %d, length = %B, prio = %Lu, text = \"%*s\"\n"),
                       count,
                       length,
-                      static_cast<ACE_UINT64> (mb->msg_priority ()),
+                      mb->msg_priority (),
                       (int)(length - 2), // remove the trailing "\n\0"
                       mb->rd_ptr ()));
         }
