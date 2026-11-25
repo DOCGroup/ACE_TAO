@@ -165,7 +165,8 @@ ACE_Refcounted_Auto_Ptr<X, ACE_LOCK>::reset (X *p)
     }
 
   AUTO_REFCOUNTED_PTR_REP *old_rep = this->rep_;
-  if ((this->rep_ = AUTO_REFCOUNTED_PTR_REP::create (p)) != nullptr)
+  this->rep_ = AUTO_REFCOUNTED_PTR_REP::create (p);
+  if (this->rep_ != nullptr)
     {
       AUTO_REFCOUNTED_PTR_REP::detach (old_rep);
     }

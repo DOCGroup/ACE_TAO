@@ -1052,8 +1052,8 @@ ACE_Configuration_Win32Registry::resolve_key (HKEY hKey,
 {
   HKEY result = nullptr;
   // Make a copy of hKey
-  int errnum;
-  if ((errnum = RegOpenKey (hKey, nullptr, &result)) != ERROR_SUCCESS)
+  int errnum = RegOpenKey (hKey, nullptr, &result);
+  if (errnum != ERROR_SUCCESS)
     {
       errno = errnum;
       return nullptr;

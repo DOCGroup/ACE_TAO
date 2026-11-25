@@ -207,7 +207,8 @@ TAO::Storable_FlatFileStream::open()
                            -1);
     }
 #else
-  if ((filelock_.handle_ = ACE_OS::open (file_.c_str (), flags, 0)) == ACE_INVALID_HANDLE)
+  filelock_.handle_ = ACE_OS::open (file_.c_str (), flags, 0);
+  if (filelock_.handle_ == ACE_INVALID_HANDLE)
     {
       TAOLIB_ERROR_RETURN ((LM_ERROR,
                             ACE_TEXT ("(%P|%t) Storable_FFS::open ")
