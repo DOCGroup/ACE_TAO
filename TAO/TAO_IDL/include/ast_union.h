@@ -67,14 +67,10 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_structure.h"
 
-// NOTE: add (AST_ConcreteType *) is defined here because a union
-// can contain locally defined types in addition to fields.
-//
-// NOTE: add (AST_EnumValue *) is defined here because enums can
-// be defined manifest locally; the constants defined in these
-// enums are inserted in the enclosing scope. It is unlikely that
-// a BE writer will need to overload this function in AST_Union.
-
+/**
+ * @note A union can contain local types as well as fields. Constants
+ * of locally defined enums are inserted into this scope.
+ */
 class TAO_IDL_FE_Export AST_Union : public virtual AST_Structure
 {
 public:
