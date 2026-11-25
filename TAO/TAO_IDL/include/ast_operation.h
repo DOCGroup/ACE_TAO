@@ -129,10 +129,9 @@ public:
    */
   int count_arguments_with_direction (int direction_mask);
 
+  /// Check whether an argument or the return value has a native type,
+  /// for which stub code should not be generated.
   virtual bool has_native ();
-  // Any of the arguments or the return value is a <native> type.
-  // This is important because in that case no code should be
-  // generated for the stubs.
 
   // AST Dumping.
   void dump (ACE_OSTREAM_TYPE &o) override;
@@ -153,31 +152,31 @@ public:
 protected:
   // Data.
 
+  /// Return type.
   AST_Type *pd_return_type;
-  // Return type
 
+  /// Operation flags.
   Flags pd_flags;
-  // Operation flags
 
+  /// Context.
   UTL_StrList pd_context;
-  // Context
 
+  /// Exceptions raised.
   UTL_ExceptList_Owner pd_exceptions;
-  // Exceptions raised
 
+  /// Number of arguments.
   int argument_count_ {-1};
-  // Number of arguments.
 
+  /// Whether any arguments are IN or INOUT.
   bool has_in_arguments_ {};
-  // True if any arguments are IN or INOUT
 
+  /// Whether an argument or the return value has a native type.
   bool has_native_ {};
-  // Is any argument of type native.
 
   // Operations.
 
+  /// Count the number of arguments.
   int compute_argument_attr ();
-  // Count the number of arguments.
 
   // Scope Management Protocol.
 
