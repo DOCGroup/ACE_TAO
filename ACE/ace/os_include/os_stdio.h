@@ -3,6 +3,8 @@
  *
  *  standard buffered input/output
  *
+ *  @note LynxOS requires stdarg.h to be included before stdio.h.
+ *
  *  @author Don Hinton <dhinton@dresystems.com>
  *  @author This code was originally in various places including ace/OS.h.
  */
@@ -18,7 +20,6 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-// NOTE: stdarg.h must be #included before stdio.h on LynxOS.
 #include "ace/os_include/os_stdarg.h"
 #include "ace/os_include/os_stddef.h"
 
