@@ -17,6 +17,10 @@ void replace_key(char* ior, char* end_ior,
 {
   size_t const keylen = oldkey.length();
   ACE_ASSERT(keylen == newkey.length());
+  if (keylen == 0)
+    {
+      return;
+    }
 
   char* pos = ior;
   const char *oldkey_begin =

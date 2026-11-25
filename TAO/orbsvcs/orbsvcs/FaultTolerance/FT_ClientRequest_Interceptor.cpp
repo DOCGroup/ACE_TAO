@@ -224,8 +224,11 @@ namespace TAO
         {
           // We send the whole tagged component as a service context.
           sc.context_data.length (tp->component_data.length ());
-          CORBA::Octet *sc_buf = sc.context_data.get_buffer ();
-          std::memcpy (sc_buf, tp->component_data.get_buffer (), tp->component_data.length ());
+          if (tp->component_data.length () != 0)
+            {
+              CORBA::Octet *sc_buf = sc.context_data.get_buffer ();
+              std::memcpy (sc_buf, tp->component_data.get_buffer (), tp->component_data.length ());
+            }
         }
       else
         {
