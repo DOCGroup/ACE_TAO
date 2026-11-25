@@ -272,7 +272,7 @@ public:
   /// notification. Unread incoming data can cause a connection reset, so the
   /// peer may not receive this stream's close notification.
   /// A nonblocking socket is closed even if its TLS close notification
-  /// cannot be sent without blocking.
+  /// cannot be sent without blocking; the peer may then see an unexpected EOF.
   int close ();
 
   /// Meta-type info
