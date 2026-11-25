@@ -9,6 +9,8 @@
 
 #include <cstring>
 #include <memory>
+#include <utility>
+#include <vector>
 
 constexpr int WAIT_FOR_REGISTRATION_TIME = 10; //sec
 
@@ -127,21 +129,9 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
       return CORBA::Object::_nil ();
     }
 
-  ACE_Process_Options options {};
   ACE_TString str {};
-
-  std::string::size_type const slash = process_str.find_last_of ('/');
-  if (slash != std::string::npos)
-  {
-    options.working_directory (process_str.substr (0, slash).c_str ());
-  }
   str = ACE_TEXT_CHAR_TO_TCHAR (process_str.c_str ());
-
-  constexpr int ENV_BUF_LEN = 512;
-  ACE_TCHAR buf[ENV_BUF_LEN] {};
-  server_addr.addr_to_string (buf, ENV_BUF_LEN, 0);
-  options.setenv (ACE_TEXT("EventChannelFactoryAddr"),
-                 ACE_TEXT("%") ACE_TEXT_PRIs, buf);
+  std::vector<std::pair<char const *, char const *>> environment;
 
   // extract the object ID from the criteria
   for (CORBA::ULong i {}; i < the_criteria.length (); ++i)
@@ -160,9 +150,7 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
           if (id_str[0] != '-')
             {
               // environment variable
-              options.setenv (ACE_TEXT_CHAR_TO_TCHAR (id_str),
-                              ACE_TEXT("%") ACE_TEXT_PRIs,
-                              ACE_TEXT_CHAR_TO_TCHAR (val));
+              environment.emplace_back (id_str, val);
             }
           else // command line option
             {
@@ -176,7 +164,39 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
 
   ORBSVCS_DEBUG((LM_DEBUG, "Command Line : %s\n", str.c_str()));
 
-  options.command_line (ACE_TEXT("%") ACE_TEXT_PRIs, str.c_str ());
+  ACE_Process_Options options (true, str.length () + 1);
+  std::string::size_type const slash = process_str.find_last_of ('/');
+  if (slash != std::string::npos)
+    {
+      options.working_directory (process_str.substr (0, slash).c_str ());
+    }
+
+  constexpr int ENV_BUF_LEN = 512;
+  ACE_TCHAR buf[ENV_BUF_LEN] {};
+  if (server_addr.addr_to_string (buf, ENV_BUF_LEN, 0) == -1
+      || options.setenv (ACE_TEXT ("EventChannelFactoryAddr"),
+                         ACE_TEXT ("%") ACE_TEXT_PRIs, buf) == -1)
+    {
+      ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Cannot configure event factory address\n")));
+      return CORBA::Object::_nil ();
+    }
+
+  for (std::pair<char const *, char const *> const &entry : environment)
+    {
+      if (options.setenv (ACE_TEXT_CHAR_TO_TCHAR (entry.first),
+                          ACE_TEXT ("%") ACE_TEXT_PRIs,
+                          ACE_TEXT_CHAR_TO_TCHAR (entry.second)) == -1)
+        {
+          ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Cannot set event factory environment\n")));
+          return CORBA::Object::_nil ();
+        }
+    }
+
+  if (options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, str.c_str ()) == -1)
+    {
+      ORBSVCS_ERROR ((LM_ERROR, ACE_TEXT ("Cannot set event factory command line\n")));
+      return CORBA::Object::_nil ();
+    }
 
   // Try to create a new process running date.
   ACE_Process new_process {};
