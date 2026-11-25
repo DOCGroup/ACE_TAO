@@ -379,7 +379,7 @@ public:
                     int reuse_addr = 1);
 
   /// Close down the Strategy_Acceptor's resources.
-  virtual ~ACE_Strategy_Acceptor ();
+  ~ACE_Strategy_Acceptor () override;
 
   /// Return the underlying PEER_ACCEPTOR object.
   operator PEER_ACCEPTOR &() const override;

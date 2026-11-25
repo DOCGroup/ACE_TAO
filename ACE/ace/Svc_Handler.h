@@ -78,7 +78,7 @@ public:
                    ACE_Message_Queue<SYNCH_TRAITS> *mq = nullptr,
                    ACE_Reactor *reactor = ACE_Reactor::instance ());
 
-  virtual ~ACE_Svc_Handler ();
+  ~ACE_Svc_Handler () override;
 
   /// Activate the client handler.  This is typically called by the
   /// ACE_Acceptor or ACE_Connector, which passes "this" in as the
