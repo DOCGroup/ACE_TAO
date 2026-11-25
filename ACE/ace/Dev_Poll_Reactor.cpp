@@ -1157,7 +1157,7 @@ ACE_Dev_Poll_Reactor::dispatch_notification_handlers (
   // enabled.  We'll handle all these threads and notifications, and
   // then break out to continue the event loop.
 
-  const int n =
+  int const n =
     this->notify_handler_->dispatch_notifications (number_of_active_handles,
                                                    dispatch_set.rd_mask_);
 
@@ -1196,7 +1196,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
   // epoll_wait() pulls one event which is stored in event_. If the handle
   // is invalid, there's no event there. Else process it. In any event, we
   // have the event, so clear event_ for the next thread.
-  const ACE_HANDLE handle = this->event_.data.fd;
+  ACE_HANDLE const handle = this->event_.data.fd;
   ACE_UINT32 revents      = this->event_.events;
   this->event_.data.fd = ACE_INVALID_HANDLE;
   this->event_.events = 0;
@@ -1219,7 +1219,7 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
   // Notice that pfds only contains file descriptors that have
   // received events.
   struct pollfd *& pfds = this->start_pfds_;
-  const ACE_HANDLE handle = pfds->fd;
+  ACE_HANDLE const handle = pfds->fd;
   short &revents          = pfds->revents;
   if (pfds < this->end_pfds_)
 #endif /* ACE_HAS_EVENT_POLL */
@@ -1809,7 +1809,7 @@ ACE_Dev_Poll_Reactor::suspend_handler (ACE_Event_Handler *event_handler)
       return -1;
     }
 
-  const ACE_HANDLE handle = event_handler->get_handle ();
+  ACE_HANDLE const handle = event_handler->get_handle ();
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
@@ -1934,7 +1934,7 @@ ACE_Dev_Poll_Reactor::resume_handler (ACE_Event_Handler *event_handler)
       return -1;
     }
 
-  const ACE_HANDLE handle = event_handler->get_handle ();
+  ACE_HANDLE const handle = event_handler->get_handle ();
 
   ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, grd, this->repo_lock_, -1));
 
@@ -2009,7 +2009,7 @@ ACE_Dev_Poll_Reactor::resume_handler_i (ACE_HANDLE handle)
     return 0;
   }
 
-  const ACE_Reactor_Mask mask = info->mask;
+  ACE_Reactor_Mask const mask = info->mask;
   if (mask == ACE_Event_Handler::NULL_MASK)
     {
       info->suspended = false;
@@ -2375,7 +2375,7 @@ ACE_Dev_Poll_Reactor::restart (bool r)
 
   ACE_MT (ACE_GUARD_RETURN (ACE_Dev_Poll_Reactor_Token, mon, this->token_, false));
 
-  const bool current_value = this->restart_;
+  bool const current_value = this->restart_;
   this->restart_ = r;
   return current_value;
 }
