@@ -332,44 +332,82 @@ public:
   IDL_GlobalData& operator= (IDL_GlobalData&&) = delete;
 
   // Operations
-  UTL_ScopeStack   &scopes ();              // Scopes stack
+  /// Scope stack.
+  UTL_ScopeStack &scopes ();
 
-  AST_Root         *root () const;          // Root of AST
-  void             set_root (std::unique_ptr<AST_Root>);
+  /// @name AST root accessors
+  /// @{
+  AST_Root *root () const;
+  void set_root (std::unique_ptr<AST_Root>);
+  /// @}
 
-  AST_Generator    *gen () const;           // Generator
-  void             set_gen (std::unique_ptr<AST_Generator>);
+  /// @name Generator accessors
+  /// @{
+  AST_Generator *gen () const;
+  void set_gen (std::unique_ptr<AST_Generator>);
+  /// @}
 
-  AST_ValueType    *primary_key_base () const; // PrimaryKeyBase
-  void             primary_key_base (AST_ValueType *);   // Set it
+  /// @name PrimaryKeyBase accessors
+  /// @{
+  AST_ValueType *primary_key_base () const;
+  void primary_key_base (AST_ValueType *);
+  /// @}
 
-  UTL_Error        *err () const;           // Error reporter
-  void             set_err (std::unique_ptr<UTL_Error>);
+  /// @name Error reporter accessors
+  /// @{
+  UTL_Error *err () const;
+  void set_err (std::unique_ptr<UTL_Error>);
+  /// @}
 
-  int              err_count () const;      // How many errors?
-  void             set_err_count (int);         // Set it
+  /// @name Error count accessors
+  /// @{
+  int err_count () const;
+  void set_err_count (int);
+  /// @}
 
-  long             lineno () const;         // Where in file?
-  void             set_lineno (long);           // Set it
+  /// @name Current line number accessors
+  /// @{
+  long lineno () const;
+  void set_lineno (long);
+  /// @}
 
-  std::string const& filename () const;      // What file?
+  /// @name Current filename accessors
+  /// @{
+  std::string const& filename () const;
   void set_filename (std::string const& filename);
+  /// @}
 
-  std::string const& main_filename () const; // What's the main file name?
+  /// @name Main filename accessors
+  /// @{
+  std::string const& main_filename () const;
   void set_main_filename (std::string const& filename);
+  /// @}
 
-  std::string const& real_filename () const; // What's the real file name?
+  /// @name Real filename accessors
+  /// @{
+  std::string const& real_filename () const;
   void set_real_filename (std::string const& filename);
+  /// @}
 
-  std::string const& stripped_filename () const; // Stripped filename
+  /// @name Stripped filename accessors
+  /// @{
+  std::string const& stripped_filename () const;
   void set_stripped_filename (std::string const& filename);
+  /// @}
 
-  bool             imported () const;       // Are we imported?
-  bool             import () const;         // Is import on?
-  void             set_import (bool);           // Set it
+  /// Whether the current file is imported.
+  bool imported () const;
+  /// @name Import flag accessors
+  /// @{
+  bool import () const;
+  void set_import (bool);
+  /// @}
 
-  bool             in_main_file () const;   // Are we?
-  void             set_in_main_file (bool);     // Set it
+  /// @name Main-file flag accessors
+  /// @{
+  bool in_main_file () const;
+  void set_in_main_file (bool);
+  /// @}
 
   std::string const& prog_name () const;
   void set_prog_name (std::string const& name);
@@ -378,15 +416,21 @@ public:
   std::string const& cpp_location () const;
   void set_cpp_location (std::string const& location);
 
-  long             compile_flags () const;  // What flags are on?
-  void             set_compile_flags (long);    // Turn some on or off
+  /// @name Compiler flag accessors
+  /// @{
+  long compile_flags () const;
+  void set_compile_flags (long);
+  /// @}
 
   std::string const& local_escapes () const;
   void             append_local_escape (std::string const& escape);
   void             set_local_escapes (std::string const& escapes);
 
-  UTL_Indenter     *indent () const;        // Get indenter
-  void             set_indent (std::unique_ptr<UTL_Indenter>);
+  /// @name Indenter accessors
+  /// @{
+  UTL_Indenter *indent () const;
+  void set_indent (std::unique_ptr<UTL_Indenter>);
+  /// @}
 
   void store_include_file_name (std::string const& filename);
 
