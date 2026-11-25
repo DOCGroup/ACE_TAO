@@ -108,7 +108,7 @@ public:
 
 private:
   int export_section (ACE_Configuration_Section_Key const & section,
-                      const ACE_TString& path,
+                      ACE_TString const & path,
                       FILE* out);
 
   int process_previous_line_format (ACE_TCHAR* buffer,
@@ -178,7 +178,7 @@ private:
    * the entire configuration object.
    */
   int export_section (ACE_Configuration_Section_Key const & section,
-                      const ACE_TString& path,
+                      ACE_TString const & path,
                       FILE* out);
 
   /**

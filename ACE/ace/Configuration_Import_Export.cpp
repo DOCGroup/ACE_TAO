@@ -263,7 +263,7 @@ namespace
 
 int
 ACE_Registry_ImpExp::export_section (ACE_Configuration_Section_Key const & section,
-                                     const ACE_TString& path,
+                                     ACE_TString const & path,
                                      FILE* out)
 {
   // don't export the root
@@ -561,7 +561,7 @@ ACE_Ini_ImpExp::export_config (ACE_TCHAR const * filename)
 
 int
 ACE_Ini_ImpExp::export_section (ACE_Configuration_Section_Key const & section,
-                                const ACE_TString& path,
+                                ACE_TString const & path,
                                 FILE* out)
 {
   // don't export the root
