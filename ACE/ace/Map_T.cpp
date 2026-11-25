@@ -303,10 +303,8 @@ ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::compare (const ACE_Iterator_I
 template <class T, class VALUE> T
 ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).int_id_.first,
-            (*implementation_).int_id_.second);
+  return T ((*this->implementation_).int_id_.first,
+            (*this->implementation_).int_id_.second);
 }
 
 template <class T, class VALUE> void
@@ -347,10 +345,8 @@ ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::compare (const ACE_Re
 template <class T, class VALUE> T
 ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).int_id_.first,
-            (*implementation_).int_id_.second);
+  return T ((*this->implementation_).int_id_.first,
+            (*this->implementation_).int_id_.second);
 }
 
 template <class T, class VALUE> void
@@ -739,10 +735,8 @@ ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>:
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> T
 ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).ext_id_,
-            (*implementation_).int_id_);
+  return T ((*this->implementation_).ext_id_,
+            (*this->implementation_).int_id_);
 }
 
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> void
@@ -783,10 +777,8 @@ ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPAR
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> T
 ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).ext_id_,
-            (*implementation_).int_id_);
+  return T ((*this->implementation_).ext_id_,
+            (*this->implementation_).int_id_);
 }
 
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> void
@@ -1026,10 +1018,8 @@ ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Iterator_Imp
 template <class T, class KEY, class VALUE> T
 ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).ext_id_,
-            (*implementation_).int_id_);
+  return T ((*this->implementation_).ext_id_,
+            (*this->implementation_).int_id_);
 }
 
 template <class T, class KEY, class VALUE> void
@@ -1069,10 +1059,8 @@ ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Reve
 template <class T, class KEY, class VALUE> T
 ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::dereference () const
 {
-  // The following syntax is necessary to work around certain broken compilers.
-  // In particular, please do not prefix implementation_ with this->
-  return T ((*implementation_).ext_id_,
-            (*implementation_).int_id_);
+  return T ((*this->implementation_).ext_id_,
+            (*this->implementation_).int_id_);
 }
 
 template <class T, class KEY, class VALUE> void
