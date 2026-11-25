@@ -70,8 +70,8 @@ TAO_Notify_Refcountable::~TAO_Notify_Refcountable ()
   TAO_Notify_Tracker::Entry e = TAO_Notify_Tracker::get_instance().find( this );
   if ( e.obj != nullptr )
   {
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %s(%d) with refcount:%d destroyed incorrectly.\n",
-        e.obj, e.class_name, e.obj->ref_id_, e.obj->refcount_.load () ));
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %C(%d) with refcount:%d destroyed incorrectly.\n",
+        e.obj, e.class_name.c_str (), e.obj->ref_id_, e.obj->refcount_.load () ));
 
     if ( e.obj != this || e.obj->ref_id_ != this->ref_id_ )
     {
@@ -146,19 +146,19 @@ TAO_Notify_Tracker::dump (char const *title)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
-  ORBSVCS_DEBUG ((LM_DEBUG,"\nTAO_Notify_Tracker: %s\n", (title ? title : "dump")));
+  ORBSVCS_DEBUG ((LM_DEBUG,"\nTAO_Notify_Tracker: %C\n", (title ? title : "dump")));
 
   EntityMap::const_iterator iter( map_.begin() );
   while ( iter != map_.end() )
   {
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %s(%d) with refcount:%d.\n",
-      iter->second.obj, iter->second.class_name, iter->first, iter->second.obj->refcount_.load () ));
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %C(%d) with refcount:%d.\n",
+      iter->second.obj, iter->second.class_name.c_str (), iter->first, iter->second.obj->refcount_.load () ));
     ++iter;
   }
 
   EntityMap::size_type current_count = map_.size();
   int diff = ( current_count - last_dump_count_ );
-  ORBSVCS_DEBUG ((LM_DEBUG,"Count: %u\nDifference: %+d\n", current_count, diff ));
+  ORBSVCS_DEBUG ((LM_DEBUG,"Count: %B\nDifference: %+d\n", current_count, diff ));
   last_dump_count_ = current_count;
 }
 
@@ -185,7 +185,7 @@ TAO_Notify_Tracker::add (TAO_Notify_Refcountable *p)
   EntityMap::iterator& it = result.first;
   if (!result.second)
   {
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %s(%d) added twice.\n",
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %C(%d) added twice.\n",
       it->second.obj, it->second.class_name.c_str(), it->first ));
   }
   else
@@ -208,7 +208,7 @@ TAO_Notify_Tracker::remove (TAO_Notify_Refcountable const *p)
   if ( iter == map_.end() )
   {
     char const *class_name = typeid (*p).name ();
-    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %s(%d) not found.\n",
+    ORBSVCS_DEBUG ((LM_DEBUG,"object:%@ %C(%d) not found.\n",
       p, class_name, ref_id ));
   }
   else
