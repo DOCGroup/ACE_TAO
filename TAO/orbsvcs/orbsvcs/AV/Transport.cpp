@@ -119,7 +119,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                 {
                   ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                          "(%P|%t) Unable to create an "
-                                         "connector for <%s>\n",
+                                         "connector for <%C>\n",
                                          entry->flowname ()),
                                         -1);
                 }
@@ -167,7 +167,7 @@ TAO_AV_Connector_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                     {
                       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                              "(%P|%t) Unable to create an "
-                                             "connector for <%s>\n",
+                                             "connector for <%C>\n",
                                              entry->flowname ()),
                                             -1);
                     }
@@ -253,7 +253,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
       if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG (
-            (LM_DEBUG, "TAO_AV_Acceptor_Registry::protocol for flow %s is %s\n", entry->flowname (), transport_protocol));
+            (LM_DEBUG, "TAO_AV_Acceptor_Registry::protocol for flow %C is %C\n", entry->flowname (), transport_protocol));
         }
 
       if (address == nullptr)
@@ -332,7 +332,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                              {
                               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                                      "(%P|%t) Unable to create an "
-                                                     "acceptor for <%s>\n",
+                                                     "acceptor for <%C>\n",
                                                      entry->flowname ()),
                                                     -1);
                              }
@@ -342,7 +342,7 @@ TAO_AV_Acceptor_Registry::open (TAO_Base_StreamEndPoint *endpoint,
                     {
                       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                              "(%P|%t) Unable to create an "
-                                             "acceptor for <%s>\n",
+                                             "acceptor for <%C>\n",
                                              entry->flowname ()),
                                             -1);
                     }
@@ -382,14 +382,14 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
     {
       ORBSVCS_ERROR_RETURN ((LM_ERROR,
                              "TAO (%P|%t) (%N,%l) Unable to match protocol prefix "
-                             "for <%s>\n",
+                             "for <%C>\n",
                              flow_protocol),
                             -1);
     }
 
   if (TAO_debug_level > 0)
   {
-    ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) Matched flow_protocol: %s, Looking for transport protocol: %s\n", flow_protocol, transport_protocol));
+    ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) Matched flow_protocol: %C, Looking for transport protocol: %C\n", flow_protocol, transport_protocol));
   }
 
   TAO_AV_Transport_Factory *transport_factory =
@@ -399,7 +399,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO (%P|%t) (%N,%l) Unable to match protocol prefix "
-                           "for <%s>\n",
+                           "for <%C>\n",
                            transport_protocol),
                           -1);
   }
@@ -413,7 +413,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO (%P|%t) unable to create "
-                           "an acceptor for <%d>\n",
+                           "an acceptor for <%C>\n",
                            transport_protocol),
                           -1);
   }
@@ -428,7 +428,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
   {
     ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            "TAO (%P|%t) unable to open "
-                           "default acceptor for <%s>%p\n",
+                           "default acceptor for <%C>\n",
                            flow_protocol),
                           -1);
   }
@@ -444,7 +444,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  "TAO (%P|%t) Unable to match control flow "
-                                 "for <%s>\n",
+                                 "for <%C>\n",
                                  control_flow_factory_name),
                                 -1);
         }
@@ -457,7 +457,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
         {
           ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  "TAO (%P|%t) unable to create "
-                                 "an acceptor for <%d>\n",
+                                 "an acceptor for <%C>\n",
                                  transport_protocol),
                                 -1);
         }
@@ -473,7 +473,7 @@ TAO_AV_Acceptor_Registry::open_default (TAO_Base_StreamEndPoint *endpoint,
       {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                "TAO (%P|%t) unable to open "
-                               "default acceptor for <%s>%p\n",
+                               "default acceptor for <%C>\n",
                                transport_protocol),
                               -1);
       }
