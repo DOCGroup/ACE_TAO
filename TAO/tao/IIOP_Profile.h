@@ -158,7 +158,7 @@ protected:
    * local address.
    * Addressing info of the default endpoint, i.e., head of the list,
    * is transmitted using standard IIOP ProfileBody components.  See
-   * <encode_endpoints> method documentation above for how the rest of
+   * @c encode_endpoints method documentation above for how the rest of
    * the endpoint list is transmitted.
    */
   TAO_IIOP_Endpoint endpoint_;

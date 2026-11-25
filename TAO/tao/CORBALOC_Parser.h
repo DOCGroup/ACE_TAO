@@ -29,12 +29,12 @@ class TAO_MProfile;
 /**
  * @class TAO_CORBALOC_Parser
  *
- * @brief Implements the <corbaloc:> IOR format
+ * @brief Implements the @c corbaloc: IOR format
  *
- * This class implements the <corbaloc:> IOR format.
+ * This class implements the @c corbaloc: IOR format.
  * It is dynamically loaded by the ORB and used to parse the
- * string to separate the individual <obj_addr> from the list of object
- * addresses <obj_addr_list>.
+ * string to separate the individual @c obj_addr from the list of object
+ * addresses @c obj_addr_list.
  */
 class TAO_CORBALOC_Parser : public TAO_IOR_Parser
 {

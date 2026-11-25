@@ -28,8 +28,8 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * This class implements the @c mcast: IOR format.
  * It is dynamically loaded by the ORB and used to parse the
- * string to separate the individual <obj_addr> from the list of object
- * addresses <obj_addr_list>.
+ * string to separate the individual @c obj_addr from the list of object
+ * addresses @c obj_addr_list.
  */
 class TAO_Export TAO_MCAST_Parser : public TAO_IOR_Parser
 {
