@@ -45,12 +45,12 @@ TAO_AV_QoS::get_flow_qos (char const *flowname,
 
           while( iter != qos_map_.end() )
             {
-              ORBSVCS_DEBUG((LM_DEBUG, "  %s\n", (*iter).ext_id_.c_str() ));
+              ORBSVCS_DEBUG((LM_DEBUG, "  %C\n", (*iter).ext_id_.c_str() ));
               ++iter;
             }
 
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          "(%N,%l) TAO_AV_QOS::get_flow_qos qos_map::find failed for %s\n", flowname));
+                          "(%N,%l) TAO_AV_QOS::get_flow_qos qos_map::find failed for %C\n", flowname));
         }
       return -1;
     }

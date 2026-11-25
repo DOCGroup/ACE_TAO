@@ -46,7 +46,7 @@ add_default_av_factory (Set &factories,
       if (TAO_debug_level)
         {
           ORBSVCS_ERROR ((LM_WARNING,
-                          "(%P|%t) WARNING - No %s found in Service Repository."
+                          "(%P|%t) WARNING - No %C found in Service Repository."
                           "  Using default instance.\n",
                           warning_name));
         }
@@ -270,7 +270,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
           if (TAO_debug_level > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              "address given for flow %s\n",
+                              "address given for flow %C\n",
                               entry->flowname ()));
             }
 
@@ -493,7 +493,7 @@ TAO_AV_Core::init_forward_flows (TAO_Base_StreamEndPoint *endpoint,
                 new_flowspec [i++] = entry.entry_to_string ();
                 if (TAO_debug_level > 0)
                 {
-                  ORBSVCS_DEBUG ((LM_DEBUG, "reverse Flow Spec Is %s\n", entry.entry_to_string ()));
+                  ORBSVCS_DEBUG ((LM_DEBUG, "reverse Flow Spec Is %C\n", entry.entry_to_string ()));
                 }
               }
           }
@@ -849,7 +849,7 @@ TAO_AV_Core::init_transport_factories ()
           if (TAO_debug_level > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              "%s\n",
+                              "%C\n",
                               name.c_str ()));
             }
 
@@ -859,7 +859,7 @@ TAO_AV_Core::init_transport_factories ()
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Unable to load ")
-                                 ACE_TEXT ("protocol <%s>, %p\n"),
+                                 ACE_TEXT ("protocol <%C>, %p\n"),
                                  name.c_str (), ""),
                                 -1);
             }
@@ -868,7 +868,7 @@ TAO_AV_Core::init_transport_factories ()
           if (TAO_debug_level > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
+                          ACE_TEXT ("TAO (%P|%t) Loaded protocol <%C>\n"),
                           name.c_str ()));
             }
         }
@@ -971,7 +971,7 @@ TAO_AV_Core::init_flow_protocol_factories ()
           if (TAO_debug_level > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                              "%s\n",
+                              "%C\n",
                               name.c_str ()));
             }
 
@@ -981,7 +981,7 @@ TAO_AV_Core::init_flow_protocol_factories ()
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Unable to load ")
-                                 ACE_TEXT ("protocol <%s>, %p\n"),
+                                 ACE_TEXT ("protocol <%C>, %p\n"),
                                  name.c_str (), ""),
                                 -1);
             }
@@ -991,7 +991,7 @@ TAO_AV_Core::init_flow_protocol_factories ()
           if (TAO_debug_level > 0)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("TAO (%P|%t) Loaded protocol <%s>\n"),
+                          ACE_TEXT ("TAO (%P|%t) Loaded protocol <%C>\n"),
                           name.c_str ()));
             }
         }
