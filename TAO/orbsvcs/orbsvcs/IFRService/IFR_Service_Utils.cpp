@@ -239,7 +239,7 @@ TAO_IFR_Server::open_config ()
         {
           char const *const filename = OPTIONS::instance ()->persistent_file ();
 
-          if (heap_guard->open (filename))
+          if (heap_guard->open (ACE_TEXT_CHAR_TO_TCHAR (filename)))
             {
               ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
@@ -479,7 +479,7 @@ TAO_IFR_Service_Utils::int_to_string (CORBA::ULong number)
 {
   static ACE_TCHAR hex_string[9];
   ACE_OS::sprintf (hex_string,
-                   "%8.8X",
+                   ACE_TEXT ("%8.8X"),
                    number);
   hex_string[8] = '\0';
   return hex_string;
@@ -579,7 +579,7 @@ TAO_IFR_Service_Utils::id_exists (char const *id,
   ACE_TString holder;
 
   if (repo->config ()->get_string_value (repo->repo_ids_key (),
-                                         id,
+                                         ACE_TEXT_CHAR_TO_TCHAR (id),
                                          holder)
        == 0)
     {
