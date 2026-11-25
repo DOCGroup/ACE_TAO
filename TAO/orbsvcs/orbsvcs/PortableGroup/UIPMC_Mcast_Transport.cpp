@@ -80,7 +80,7 @@ TAO_UIPMC_Mcast_Transport::cleanup_packets (bool expired_only)
             {
               ORBSVCS_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%B]::")
-                          ACE_TEXT ("cleanup_packets, cleaning %d bytes\n"),
+                          ACE_TEXT ("cleanup_packets, cleaning %u bytes\n"),
                           this->id (),
                           (*cur_iter).item ()->data_length ()));
             }
@@ -515,7 +515,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("TAO (%P|%t) - UIPMC_Mcast_Transport[%B]::")
-                      ACE_TEXT ("handle_input, processing MIOP message %@ (%d bytes)\n"),
+                      ACE_TEXT ("handle_input, processing MIOP message %@ (%u bytes)\n"),
                       this->id (), static_cast<void *> (complete), complete->data_length ()));
         }
 
