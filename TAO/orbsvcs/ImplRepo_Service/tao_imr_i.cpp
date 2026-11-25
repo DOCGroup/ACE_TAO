@@ -14,6 +14,7 @@
 
 #include <cstring>
 #include <memory>
+#include <string>
 
 TAO_IMR_i::TAO_IMR_i ()
   : argc_ (0),
@@ -534,7 +535,8 @@ TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
       {
       case 'p': //list of peers
         {
-          char *arg = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+          std::string peer_list (ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ()));
+          char *arg = peer_list.data ();
           CORBA::ULong last = this->peers_.length ();
           CORBA::ULong num = 0;
           char *c2 = arg;

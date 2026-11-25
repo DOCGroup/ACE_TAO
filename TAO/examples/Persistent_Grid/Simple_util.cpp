@@ -5,6 +5,7 @@
 # include "ace/OS_NS_fcntl.h"
 # include "ace/OS_NS_unistd.h"
 # include "ace/OS_NS_stdio.h"
+# include "ace/ace_wchar.h"
 
 # include <memory>
 
@@ -207,7 +208,12 @@ Client<InterfaceObj, Var>::parse_args ()
         break;
       case 'k':  // ior provide on command line
         {
-          char const * const ior = ACE_TEXT_ALWAYS_CHAR (get_opts.opt_arg ());
+#if defined (ACE_USES_WCHAR)
+          ACE_Wide_To_Ascii converted_ior (get_opts.opt_arg ());
+          char const *const ior = converted_ior.char_rep ();
+#else
+          char const *const ior = get_opts.opt_arg ();
+#endif
           if (!ior)
             ACE_ERROR_RETURN ((LM_ERROR,
                                "Unable to convert IOR argument to a narrow string\n"),

@@ -8,6 +8,8 @@
 #include "ace/UUID.h"
 #include "ace/Arg_Shifter.h"
 
+#include <string>
+
 static constexpr char the_prefix[] = "uipmc";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -95,8 +97,8 @@ TAO_UIPMC_Protocol_Factory::init (int argc,
             }
           else
             {
-              char const * const always_char = ACE_TEXT_ALWAYS_CHAR (current_arg);
-              if (TAO_ORB_Parameters::check_preferred_interfaces_string (always_char))
+              std::string const always_char (ACE_TEXT_ALWAYS_CHAR (current_arg));
+              if (TAO_ORB_Parameters::check_preferred_interfaces_string (always_char.c_str ()))
                 {
                   // Append any valid string to those already specified
                   // (by other -ORBListenerInterfaces options that have been
@@ -105,14 +107,14 @@ TAO_UIPMC_Protocol_Factory::init (int argc,
                   {
                     this->listener_interfaces_+= ',';
                   }
-                  this->listener_interfaces_+= always_char;
+                  this->listener_interfaces_+= always_char.c_str ();
                 }
               else
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
                                 ACE_TEXT ("TAO_UIPMC_Protocol_Factory::init - ")
                                 ACE_TEXT ("ignoring invalid -ORBListenerInterfaces %C\n"),
-                                always_char));
+                                always_char.c_str ()));
                 }
             }
 

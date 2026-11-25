@@ -25,6 +25,8 @@
 #include "ace/Argv_Type_Converter.h"
 #include "ace/Get_Opt.h"
 
+#include <string>
+
 // FUZZ: disable check_for_streams_include
 #include "ace/streams.h"
 
@@ -97,8 +99,8 @@ nextapp::nextapp (int argc, char *argv[])
        {
        case 'o':
          {
-           char const * const oid_arg = ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ());
-           req = oid_arg;
+           std::string const oid_arg (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+           req = oid_arg.c_str ();
            if (!req.valid ())
              {
                cout << "ERROR: oid value: " << oid_arg
