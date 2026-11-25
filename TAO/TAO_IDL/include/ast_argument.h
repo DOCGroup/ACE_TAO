@@ -104,8 +104,8 @@ public:
   static AST_Decl::NodeType const NT;
 
 private:
+  /// Argument direction.
   Direction const pd_direction;
-  // Argument direction.
 };
 
 #endif           // _AST_ARGUMENT_AST_ARGUMENT_HH

@@ -103,9 +103,9 @@ public:
   AST_Type *base_type () const;
   void set_base_type (AST_Type *nbt);
 
-  // Recursively called on valuetype to check for legal use as
-  // a primary key. Overridden for valuetype, struct, sequence,
-  // union, array, typedef, and interface.
+  /// Recursively checks whether the type is legal as a primary key.
+  /// Overridden for valuetypes, structs, sequences, unions, arrays,
+  /// typedefs and interfaces.
   bool legal_for_primary_key () const override;
 
   // Cleanup.
@@ -119,36 +119,32 @@ public:
 
   static AST_Decl::NodeType const NT;
 
-  /**
-   * Get and Set Annotations on the base type
-   */
-  ///{
+  /// @name Base type annotations
+  /// @{
   AST_Annotation_Appls &base_type_annotations ();
   void base_type_annotations (AST_Annotation_Appls const &annotations);
-  ///}
+  /// @}
 
 protected:
+  /// Compute the size type if it is unknown.
   int compute_size_type () override;
-  // Compute the size type if it is unknown.
 
 private:
   // Data.
 
   std::vector<std::unique_ptr<AST_Expression>> pd_dims;
 
+  /// Base type of the array.
   AST_Type *pd_base_type;
-  // Base type of array.
 
   std::unique_ptr<AST_Type> owned_base_type_;
 
-  // Compute how many dimensions.
+  /// Compute the dimensions.
   std::vector<std::unique_ptr<AST_Expression>> compute_dims (
     UTL_ExprList *dims,
     size_t ndims);
 
-  /**
-   * Annotations on the base type
-   */
+  /// Annotations on the base type.
   AST_Annotation_Appls base_type_annotations_;
 };
 
