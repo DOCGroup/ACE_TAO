@@ -54,7 +54,7 @@ class RTSCHEDTESTLIB_Export Task_Stats
   void end_time (ACE_hrtime_t time);
 
   /// Record a sample
-  int sample (time_t thr_run_time, int thr_count);
+  int sample (time_t thr_run_time, size_t thr_count);
 
   void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg);
  protected:
@@ -65,14 +65,14 @@ class RTSCHEDTESTLIB_Export Task_Stats
   ACE_hrtime_t end_time_;
 
   /// The maximum number of samples
-  ACE_UINT32 max_samples_;
+  size_t max_samples_;
 
   /// The number of samples
-  ACE_UINT32 samples_count_;
+  size_t samples_count_;
 
   /// The samples : the time of execution. and the recorded exec. time .
   std::unique_ptr<time_t[]> thr_run_time_;
-  std::unique_ptr<int[]> thr_count_;
+  std::unique_ptr<size_t[]> thr_count_;
 
   /// The minimum value
   ACE_UINT64 exec_time_min_;

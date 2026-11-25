@@ -12,6 +12,14 @@
 #include "ace/Sig_Handler.h"
 
 #include <memory>
+#include <limits>
+
+class Test_Task_Stats : public Task_Stats
+{
+public:
+  size_t count () const { return this->samples_count_; }
+  size_t first_guid () const { return this->thr_count_[0]; }
+};
 
 static int
 test_guid_value ()
@@ -57,6 +65,15 @@ test_guid_value ()
   if (rtscheduling_guid_value (context) != expected)
     {
       ACE_ERROR_RETURN ((LM_ERROR, "Context GUID value changed\n"), 1);
+    }
+
+  Test_Task_Stats stats;
+  size_t const large_guid = (std::numeric_limits<size_t>::max) ();
+  if (stats.init (1) != 0 || stats.sample (1, large_guid) != 0
+      || stats.first_guid () != large_guid || stats.init (1) != 0
+      || stats.count () != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Scheduling statistics lost a GUID\n"), 1);
     }
   return 0;
 }

@@ -1,7 +1,7 @@
 #include "ace/Log_Msg.h"
 
 ACE_INLINE int
-Task_Stats::sample (time_t thr_run_time, int thr_count)
+Task_Stats::sample (time_t thr_run_time, size_t thr_count)
 {
   if (this->samples_count_ >= this->max_samples_)
   {
