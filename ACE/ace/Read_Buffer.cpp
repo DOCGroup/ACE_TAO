@@ -138,6 +138,10 @@ ACE_Read_Buffer::read (int term, int search, int replace)
   ACE_TRACE ("ACE_Read_Buffer::read");
   this->occurrences_ = 0;
   this->size_ = 0;
+  if (this->stream_ == nullptr)
+    {
+      return nullptr;
+    }
   return this->rec_read (term, search, replace);
 }
 

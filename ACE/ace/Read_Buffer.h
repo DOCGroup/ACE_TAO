@@ -78,7 +78,7 @@ public:
    * @a replace value.  The last of the byte of data is a 0, so that
    * @c strlen can be used on it.  The caller is responsible for
    * freeing the pointer returned from this method using the
-   * ACE_Allocator::free().
+   * ACE_Allocator::free(). Returns null if no stream is available.
    */
   char *read (int terminator = EOF,
               int search = '\n',

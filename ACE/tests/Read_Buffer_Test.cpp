@@ -95,6 +95,14 @@ run_main (int, ACE_TCHAR *[])
 
 #endif
 
+  {
+    ACE_Read_Buffer invalid_reader (ACE_INVALID_HANDLE, false);
+    if (invalid_reader.read () != nullptr)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Invalid handle was accepted\n")), -1);
+      }
+  }
+
   ACE_END_TEST;
   return 0;
 }
