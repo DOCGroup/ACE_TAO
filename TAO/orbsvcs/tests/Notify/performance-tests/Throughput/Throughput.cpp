@@ -295,50 +295,66 @@ Notify_Throughput::parse_args (int argc, ACE_TCHAR *argv [])
         {
           this->options_.collocated_ec = true;
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-consumers"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-consumers"));
+      if (current_arg != nullptr)
         {
           this->options_.consumer_count = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-suppliers"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-suppliers"));
+      if (current_arg != nullptr)
         {
           this->options_.supplier_count = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_size"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_size"));
+      if (current_arg != nullptr)
         {
           this->options_.burst_size = ACE_OS::atoi (current_arg);
           // The number of events to send/receive.
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_count"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_count"));
+      if (current_arg != nullptr)
         {
           this->options_.burst_count = ACE_OS::atoi (current_arg);
           //
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_pause"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-burst_pause"));
+      if (current_arg != nullptr)
         {
           this->options_.burst_pause = ACE_OS::atoi (current_arg);
           //
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-payload"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-payload"));
+      if (current_arg != nullptr)
         {
           this->options_.payload_size = ACE_OS::atoi (current_arg);
           //
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-EC"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-EC"));
+      if (current_arg != nullptr)
         {
           this->options_.ec_name = ACE_TEXT_ALWAYS_CHAR (current_arg);
           //
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExpectedCount"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExpectedCount"));
+      if (current_arg != nullptr)
         {
           this->perconsumer_count_ = ACE_OS::atoi (current_arg);
           this->options_.expected_count_set = true;
