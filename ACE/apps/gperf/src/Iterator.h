@@ -45,7 +45,7 @@
 class Iterator
 {
 public:
-  Iterator (char *s,
+  Iterator (char const *s,
             int lo,
             int hi,
             int word_end,
@@ -60,7 +60,7 @@ public:
 
 private:
   /// A pointer to the string provided by the user.
-  char *str;
+  char const *str;
 
   /// Value returned after last key is processed.
   int end;

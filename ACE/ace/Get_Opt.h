@@ -12,6 +12,10 @@
 #include "ace/SStringfwd.h"
 #include "ace/Containers.h"
 
+#if defined (ACE_USES_WCHAR) && defined (__ACE_INLINE__)
+# include "ace/SString.h"
+#endif
+
 #include <memory>
 
 #if !defined (ACE_LACKS_PRAGMA_ONCE)

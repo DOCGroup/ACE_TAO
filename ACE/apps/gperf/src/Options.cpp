@@ -526,7 +526,8 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         case 'k':
           {
             int const BAD_VALUE = -1;
-            Iterator expand (ACE_TEXT_ALWAYS_CHAR(get_opt.opt_arg ()),
+            std::string const key_positions (ACE_TEXT_ALWAYS_CHAR (get_opt.opt_arg ()));
+            Iterator expand (key_positions.c_str (),
                              1,
                              MAX_KEY_POS - 1,
                              WORD_END,

@@ -4,8 +4,8 @@
 ///
 /// @author Don Hinton <dhinton@dresystems.com>
 
-#include "test_config.h"
 #include "ace/Get_Opt.h"
+#include "test_config.h"
 #include "ace/ARGV.h"
 #include "ace/SString.h"
 

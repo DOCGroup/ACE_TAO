@@ -38,7 +38,7 @@ namespace
 }
 
 /// Constructor for Iterator.
-Iterator::Iterator (char *s,
+Iterator::Iterator (char const *s,
                     int lo,
                     int hi,
                     int word_end,
