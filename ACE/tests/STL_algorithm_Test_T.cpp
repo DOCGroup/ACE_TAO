@@ -44,7 +44,7 @@ int test_STL_algorithm (T & container)
   // We are only validating that the container's iterators
   // compile with the <algorithm> header.
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("running STL algorithm test for `%s'\n"),
+              ACE_TEXT ("running STL algorithm test for `%C'\n"),
               typeid (T).name ()));
 
   // Test the forward iterator using std::for_each.
