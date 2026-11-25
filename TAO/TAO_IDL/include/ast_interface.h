@@ -65,10 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_INTERFACE_AST_INTERFACE_HH
 #define _AST_INTERFACE_AST_INTERFACE_HH
 
-// NOTE: add (AST_EnumValue *) is defined here because enums can
-// be defined manifest locally; the constants defined in these
-// enums are inserted in the enclosing scope.
-
 #include "ast_type.h"
 #include "utl_scope.h"
 
@@ -80,6 +76,7 @@ class AST_Interface;
 using AST_Type_List = std::vector<AST_Type *>;
 using AST_Interface_List = std::vector<AST_Interface *>;
 
+/// @note Constants of locally defined enums are inserted into this scope.
 class TAO_IDL_FE_Export AST_Interface : public virtual AST_Type,
                                         public virtual UTL_Scope
 {

@@ -65,22 +65,17 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_STRUCTURE_AST_STRUCTURE_HH
 #define _AST_STRUCTURE_AST_STRUCTURE_HH
 
-// Representation of structure:
-//
-// NOTE: add (AST_ConcreteType *) is defined here because a structure
-// can contain locally defined types in addition to fields.
-//
-// NOTE: add (AST_EnumValue *) is defined here because enums can
-// be defined manifest locally; the constants defined in these
-// enums are inserted in the enclosing scope. It is unlikely that
-// a BE writer will need to overload this function in AST_Structure.
-
 #include "ast_concrete_type.h"
 #include "utl_scope.h"
 
 #include <cstddef>
 #include <vector>
 
+/**
+ * @brief Represents a structure that can contain fields and local types.
+ *
+ * @note Constants of locally defined enums are inserted into this scope.
+ */
 class TAO_IDL_FE_Export AST_Structure
   : public virtual AST_ConcreteType,
     public virtual UTL_Scope
