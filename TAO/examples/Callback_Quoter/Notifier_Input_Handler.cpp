@@ -171,7 +171,7 @@ Notifier_Input_Handler::init (int argc,
                                                  std::addressof (this->notifier_i_));
 
   ACE_DEBUG ((LM_DEBUG,
-              "The IOR is: <%s>\n",
+              "The IOR is: <%C>\n",
               str.in ()));
 
   if (this->ior_output_file_)

@@ -236,7 +236,7 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T): send_request "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               operation.in ()));
 #endif
   // Make the context to send the context to the target
@@ -329,7 +329,7 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T): receive_request from "
-              "\"%s\"\n",
+              "\"%C\"\n",
               operation.in ()));
 #endif
 
@@ -406,7 +406,7 @@ Fixed_Priority_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              "(%t|%T): send_reply from \"%s\"\n",
+              "(%t|%T): send_reply from \"%C\"\n",
               ri->operation ()));
 #endif
 
@@ -489,7 +489,7 @@ Fixed_Priority_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T):receive_reply from "
-              "\"%s\"\n",
+              "\"%C\"\n",
               opname.c_str ()));
 #endif
 

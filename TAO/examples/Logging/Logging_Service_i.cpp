@@ -72,7 +72,7 @@ Logger_Server::init (int argc,
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "The IOR is: <%s>\n",
+                  "The IOR is: <%C>\n",
                   str.in ()));
     }
 

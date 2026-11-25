@@ -61,7 +61,7 @@ void
 Foo_i::test_unbounded_string_arg (char const *message)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Foo_i::test_unbounded_string_arg ")
-                         ACE_TEXT ("got unbounded string %s\n"),
+                         ACE_TEXT ("got unbounded string %C\n"),
                          message));
 }
 
@@ -69,7 +69,7 @@ void
 Foo_i::test_bounded_string_arg (char const *message)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Foo_i::test_bounded_string_arg ")
-                         ACE_TEXT ("got bounded string %s\n"),
+                         ACE_TEXT ("got bounded string %C\n"),
                          message));
 }
 
@@ -123,11 +123,11 @@ Foo_i::test_fixed_size_arg_two_way (::TimeOfDay const &t)
 void
 Foo_i::test_var_array_arg (::Var_Array const messages)
 {
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Foo_i::test_var_array_arg %s\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Foo_i::test_var_array_arg %C\n"),
               messages[0].in ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Foo_i::test_var_array_arg %s\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Foo_i::test_var_array_arg %C\n"),
               messages[1].in ()));
-  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Foo_i::test_var_array_arg %s\n"),
+  ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Foo_i::test_var_array_arg %C\n"),
               messages[2].in ()));
 }
 

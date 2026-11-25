@@ -113,7 +113,7 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
       else if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "Object Group Factory ior: %s\n",
+                      "Object Group Factory ior: %C\n",
                       ior.in ()));
         }
     }

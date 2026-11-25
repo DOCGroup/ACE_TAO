@@ -16,7 +16,7 @@ Consumer_i::push (Callback_Quoter::Info const &data)
   // step, which could be obtaining the shares.
 
   ACE_DEBUG ((LM_DEBUG,
-              "Selling 10,000 %s shares at %d!!\n",
+              "Selling 10,000 %C shares at %d!!\n",
               data.stock_name.in (),
               data.value));
 }

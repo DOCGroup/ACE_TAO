@@ -131,7 +131,7 @@ Logger_Client::init_naming_service ()
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "The factory IOR is <%s>\n",
+                  "The factory IOR is <%C>\n",
                   str.in ()));
     }
   return 0;
@@ -352,8 +352,8 @@ Logger_Client::show_record (Logger::Log_Record const &newrec) const
               " Log Priority: %d\n"
               "         Time: %d\n"
               "          PID: %d\n"
-              " Host Address: %s\n"
-              "      Message: %s\n",
+              " Host Address: %C\n"
+              "      Message: %C\n",
               newrec.type,
               newrec.time,
               newrec.app_id,
