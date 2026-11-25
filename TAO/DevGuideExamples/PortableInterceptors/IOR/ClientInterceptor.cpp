@@ -4,6 +4,7 @@
 #include "tao/PI/ClientRequestInfo.h"
 
 #include <iostream>
+#include <string>
 #include <utility>
 
 constexpr CORBA::ULong service_ctx_id = 0xdeed;
@@ -56,10 +57,14 @@ ClientInterceptor::send_request (
   try
     {
       IOP::TaggedComponent_var myTag = ri->get_effective_component(tagID);
-      char *tag =
-        reinterpret_cast<char*> (myTag->component_data.get_buffer());
+      std::string tag;
+      if (myTag->component_data.length () != 0)
+        {
+          tag.assign (reinterpret_cast<char const *> (myTag->component_data.get_buffer ()),
+                      myTag->component_data.length ());
+        }
 
-      std::cout << "IOR Tag is : " << tag << std::endl;
+      std::cout << "IOR Tag is : " << tag.c_str () << std::endl;
     }
   catch(...)
     {

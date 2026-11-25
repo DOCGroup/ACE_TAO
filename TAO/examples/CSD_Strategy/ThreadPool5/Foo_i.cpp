@@ -101,18 +101,22 @@ void
 Foo_i::test_bounded_var_size_arg (
   ::Bounded_Var_Size const & message)
 {
+  std::string const text = message.length () == 0
+    ? std::string () : std::string (message.get_buffer (), message.length ());
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_bounded_var_size_arg ")
                        ACE_TEXT("got var array chars %C\n"),
-                       message.get_buffer ()));
+                       text.c_str ()));
 }
 
 void
 Foo_i::test_unbounded_var_size_arg (
   ::Unbounded_Var_Size const & message)
 {
+  std::string const text = message.length () == 0
+    ? std::string () : std::string (message.get_buffer (), message.length ());
   ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_i::test_unbounded_var_size_arg ")
                        ACE_TEXT("got var array chars %C\n"),
-                       message.get_buffer ()));
+                       text.c_str ()));
 }
 
 void
