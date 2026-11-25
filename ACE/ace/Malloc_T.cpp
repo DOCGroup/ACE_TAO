@@ -111,7 +111,7 @@ ACE_Cached_Allocator<T, ACE_LOCK>::free (void * ptr)
 {
   if (ptr != nullptr)
     {
-      this->free_list_.add ((ACE_Cached_Mem_Pool_Node<T> *) ptr) ;
+      this->free_list_.add (static_cast<ACE_Cached_Mem_Pool_Node<T> *> (ptr)) ;
     }
 }
 
@@ -188,7 +188,7 @@ ACE_Dynamic_Cached_Allocator<ACE_LOCK>::free (void * ptr)
 {
   if (ptr != nullptr)
     {
-      this->free_list_.add ((ACE_Cached_Mem_Pool_Node<char> *) ptr);
+      this->free_list_.add (static_cast<ACE_Cached_Mem_Pool_Node<char> *> (ptr));
     }
 }
 
@@ -714,7 +714,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_malloc (size_t nbytes)
               void *remap_addr = this->memory_pool_.base_addr ();
               if (remap_addr != nullptr)
                 {
-                  this->cb_ptr_ = (ACE_CB *) remap_addr;
+                  this->cb_ptr_ = static_cast<ACE_CB *> (remap_addr);
                 }
 
               if (currp != nullptr)
@@ -813,7 +813,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
     }
 
   // Adjust AP to point to the block MALLOC_HEADER
-  MALLOC_HEADER *blockp = ((MALLOC_HEADER *) ap) - 1;
+  MALLOC_HEADER *blockp = (static_cast<MALLOC_HEADER *> (ap)) - 1;
   MALLOC_HEADER *currp = this->cb_ptr_->freep_;
 
   // Search until we find the location where the blocks belongs.  Note
@@ -822,12 +822,12 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
     {
       for (;
            blockp <= currp
-             || blockp >= (MALLOC_HEADER *) currp->next_block_;
+             || blockp >= static_cast<MALLOC_HEADER *> (currp->next_block_);
            currp = currp->next_block_)
         {
-          if (currp >= (MALLOC_HEADER *) currp->next_block_
+          if (currp >= static_cast<MALLOC_HEADER *> (currp->next_block_)
               && (blockp > currp
-                  || blockp < (MALLOC_HEADER *) currp->next_block_))
+                  || blockp < static_cast<MALLOC_HEADER *> (currp->next_block_)))
             {
               // Freed block at the start or the end of the memory pool.
               break;
@@ -935,7 +935,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::trybind (const char *name,
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::trybind");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  NAME_NODE *node = (NAME_NODE *) this->shared_find (name);
+  NAME_NODE *node = static_cast<NAME_NODE *> (this->shared_find (name));
 
   if (node == nullptr)
     {
@@ -976,7 +976,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (const char *name,
 
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
 
-  NAME_NODE *node = (NAME_NODE *) this->shared_find (name);
+  NAME_NODE *node = static_cast<NAME_NODE *> (this->shared_find (name));
 
   if (node == nullptr)
     {
