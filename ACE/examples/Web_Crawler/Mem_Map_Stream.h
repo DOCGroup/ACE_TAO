@@ -159,10 +159,10 @@ private:
   /// Memory-mapped file that we're iterating over.
   ACE_Mem_Map mem_map_;
 
-  /// Pointer to the address where the next <recv> method will start.
+  /// Pointer to the address where the next @c recv method will start.
   char *recv_pos_ {};
 
-  /// Pointer to the address where the next <get_char> method will
+  /// Pointer to the address where the next @c get_char method will
   /// start.
   char *get_pos_ {};
 

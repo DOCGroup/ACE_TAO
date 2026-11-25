@@ -99,7 +99,7 @@ private:
   /// Whether the URLs are traversed in FIFO or LIFO order.
   const ACE_TCHAR *order_ {};
 
-  /// Timeout on <recv> and <connect> to broken Web servers.
+  /// Timeout on @c recv and @c connect to broken Web servers.
   ACE_Time_Value timeout_;
 
   /// String used to filter out which URLs to validate.
@@ -108,7 +108,7 @@ private:
   /// Pointer to the Command_Processor.
   Command_Processor *command_processor_ {};
 
-  /// Pointer to the <URL_Visitor>.
+  /// Pointer to the @c URL_Visitor.
   URL_Visitor *visitor_ {};
 
   /// Port no.

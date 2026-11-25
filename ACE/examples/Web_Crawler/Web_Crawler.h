@@ -50,7 +50,7 @@ public:
 private:
   /**
    * Pointer to a factory that creates visitors that explore URLs and
-   * perform various tasks.  Subclasses of <URL_Visitor_Factory>
+   * perform various tasks.  Subclasses of @c URL_Visitor_Factory
    * determine what happens during a visitation.
    */
   std::unique_ptr<URL_Visitor_Factory> url_visitor_factory_;

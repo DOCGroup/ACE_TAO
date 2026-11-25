@@ -88,7 +88,7 @@ private:
   /// Private constructor enforces the Singleton.
   explicit Async_Timer_Queue (ACE_Sig_Set *);
 
-  /// The adapter is instantiated by an <ACE_Timer_Heap>.
+  /// The adapter is instantiated by an @c ACE_Timer_Heap.
   ACE_Async_Timer_Queue_Adapter<ACE_Timer_Heap> tq_;
 
   Async_Timer_Queue (Async_Timer_Queue const &) = delete;

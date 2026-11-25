@@ -77,8 +77,8 @@ class ACE_Svc_Export ACE_URL_Local_Locator
   /**
    * Query the locator for HTTP with designate properties (none, some,
    * or all).  The locator being queried will return a sequence of
-   * offers with <how_many> offers in it.  This interface allocates
-   * <offer> so users must deallocate it after use.
+   * offers with @a how_many offers in it.  This interface allocates
+   * @a offer so users must deallocate it after use.
    */
   virtual int url_query (const ACE_URL_Locator::ACE_Selection_Criteria how,
                          const ACE_URL_Property_Seq *pseq,

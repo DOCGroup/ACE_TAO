@@ -116,7 +116,7 @@ private:
   /// Number of threads to spawn.
   size_t thr_count_ {4};
 
-  /// Flags to <thr_create>.
+  /// Flags to @c thr_create.
   long t_flags_ {};
 
   /// ACE_Task high water mark.
