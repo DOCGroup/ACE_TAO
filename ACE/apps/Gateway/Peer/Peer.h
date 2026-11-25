@@ -113,7 +113,7 @@ protected:
   /// Send an Peer event to gatewayd, using @c nonblk_put.
   virtual int send (ACE_Message_Block *mb);
 
-  /// Perform a non-blocking <put>, which tries to send an event to the
+  /// Perform a non-blocking @c put, which tries to send an event to the
   /// gatewayd, but only if it isn't flow controlled.
   virtual int nonblk_put (ACE_Message_Block *mb);
 
@@ -210,7 +210,7 @@ public:
   Peer_Connector () = default;
 
   /**
-   * Initialize the <Peer_Connector>.
+   * Initialize the @c Peer_Connector.
    * @note The arguments are
    * ignored.  They are only provided to avoid a compiler warning
    * about hiding the virtual function ACE_Connector<Peer_Handler,
@@ -223,7 +223,7 @@ public:
   Peer_Connector &operator= (Peer_Connector &&) = delete;
 
 private:
-  /// Factor out common code for initializing the <Peer_Connector>.
+  /// Factor out common code for initializing the @c Peer_Connector.
   int open_connector (Peer_Handler *&ph, u_short port);
 
   /// Manually allocated handler; ACE_Connector and the reactor use it while connected.
@@ -271,8 +271,8 @@ private:
   Peer_Acceptor supplier_acceptor_;
 
   /**
-   * An instance of our <Peer_Connector>.  Note that one
-   * <Peer_Connector> is used to establish @c Peer_Handler objects for both
+   * An instance of our @c Peer_Connector.  Note that one
+   * @c Peer_Connector is used to establish @c Peer_Handler objects for both
    * Consumers and Suppliers.
    */
   Peer_Connector connector_;

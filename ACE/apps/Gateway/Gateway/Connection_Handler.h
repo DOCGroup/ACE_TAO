@@ -91,7 +91,7 @@ public:
   Event_Channel *event_channel () const;
 
   /// Get or set the total number of bytes sent or received on this proxy.
-  /// Increment count by <bytes>.
+  /// Increment count by @c bytes.
   /// Return the current byte count.
   void total_bytes (size_t bytes);
   size_t total_bytes () const;
@@ -129,7 +129,7 @@ protected:
   /// Consumer).
   char connection_role_ {};
 
-  /// Reference to the <Event_Channel> that we use to forward all
+  /// Reference to the @c Event_Channel that we use to forward all
   /// the events from Consumers and Suppliers.
   Event_Channel *event_channel_ {};
 };
@@ -139,15 +139,15 @@ protected:
  *
  * @brief Creates the appropriate type of @c Connection_Handler.
  *
- * @c Connection_Handler objects can include <Consumer_Handler>,
- * <Supplier_Handler>, <Thr_Consumer_Handler>, or
- * <Thr_Supplier_Handler>).
+ * @c Connection_Handler objects can include @c Consumer_Handler,
+ * @c Supplier_Handler, @c Thr_Consumer_Handler, or
+ * @c Thr_Supplier_Handler).
  */
 class Connection_Handler_Factory
 {
 public:
   /// Make the appropriate type of @c Connection_Handler, based on the
-  /// <Connection_Config_Info> parameter.
+  /// @c Connection_Config_Info parameter.
   Connection_Handler *make_connection_handler (Connection_Config_Info const &);
 };
 

@@ -11,7 +11,7 @@
         JAWS_Cached_Allocator< T, ACE_SYNCH_NULL_MUTEX >
 
 /// Caches dynamically allocated objects of fixed size in a pool of
-/// <n_chunks> chunks, each sized for <T>.
+/// @c n_chunks chunks, each sized for @c T.
 template <class T, class ACE_LOCK>
 class JAWS_Cached_Allocator : public ACE_New_Allocator
 {
@@ -51,7 +51,7 @@ private:
 };
 
 /// Caches dynamically allocated objects of fixed size in a thread-specific
-/// pool of <n_chunks> chunks, each sized for <T>.
+/// pool of @c n_chunks chunks, each sized for @c T.
 template <class T>
 class JAWS_TSS_Cached_Allocator : public ACE_New_Allocator
 {

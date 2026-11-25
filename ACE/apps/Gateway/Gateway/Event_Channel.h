@@ -24,8 +24,8 @@ using MAP_MUTEX = ACE_Null_Mutex;
  *
  * The inspiration for this class is derived from the CORBA COS
  * Event Channel, though the design is simplified.
- * We inherit from <ACE_Event_Handler> so that we can be
- * registered with an <ACE_Reactor> to handle timeouts.
+ * We inherit from @c ACE_Event_Handler so that we can be
+ * registered with an @c ACE_Reactor to handle timeouts.
  */
 class ACE_Svc_Export Event_Channel : public ACE_Event_Handler
 {
@@ -67,8 +67,8 @@ public:
   int find_proxy (ACE_INT32 connection_id,
                   Connection_Handler *&);
 
-  /// Subscribe the <Consumer_Dispatch_Set> to receive events that
-  /// match <Event_Key>.
+  /// Subscribe the @c Consumer_Dispatch_Set to receive events that
+  /// match @c Event_Key.
   int subscribe (Event_Key const &event_addr,
                  std::unique_ptr<Consumer_Dispatch_Set> cds);
 
@@ -79,7 +79,7 @@ public:
   /// Actively initiate connections to the Peers.
   void initiate_connector ();
 
-  /// Passively initiate the <Peer_Acceptor>s for Consumer and
+  /// Passively initiate the @c Peer_Acceptor objects for Consumer and
   /// Suppliers.
   int initiate_acceptors ();
 
@@ -87,8 +87,8 @@ private:
   /// Parse the command-line arguments.
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
-  /// Forwards the <data> to Consumer that have registered to receive
-  /// it, based on addressing information in the <event_key>.
+  /// Forwards the @c data to Consumer that have registered to receive
+  /// it, based on addressing information in the @c event_key.
   void routing_event (Event_Key *event_key,
                     ACE_Message_Block *data);
 
@@ -116,10 +116,10 @@ private:
   using CONNECTION_MAP_ITERATOR = ACE_Map_Iterator<CONNECTION_ID, Connection_Handler *, MAP_MUTEX>;
   using CONNECTION_MAP_ENTRY = ACE_Map_Entry<CONNECTION_ID, Connection_Handler *>;
 
-  /// Table that maps <CONNECTION_ID>s to @c Connection_Handler *'s.
+  /// Table that maps @c CONNECTION_ID values to @c Connection_Handler *'s.
   CONNECTION_MAP connection_map_;
 
-  /// Map that associates an event to a set of <Consumer_Handler> *'s.
+  /// Map that associates an event to a set of @c Consumer_Handler *'s.
   Event_Forwarding_Discriminator efd_;
 };
 

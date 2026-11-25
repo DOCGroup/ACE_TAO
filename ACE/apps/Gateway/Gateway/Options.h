@@ -66,14 +66,14 @@ public:
 
   /**
    * Gets the locking strategy used for serializing access to the
-   * reference count in <ACE_Message_Block>.  If it's 0, then there's
+   * reference count in @c ACE_Message_Block.  If it's 0, then there's
    * no locking strategy and we're using a REACTIVE concurrency
    * strategy.
    */
   ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *locking_strategy () const;
 
   /// Set the locking strategy used for serializing access to the
-  /// reference count in <ACE_Message_Block>.
+  /// reference count in @c ACE_Message_Block.
   /// Takes ownership of the supplied strategy.
   void locking_strategy (ACE_Lock_Adapter<ACE_SYNCH_MUTEX> *);
 
@@ -145,7 +145,7 @@ private:
 
   /**
    * Owns the locking strategy used for serializing access to the
-   * reference count in <ACE_Message_Block>. If it's empty, then there's
+   * reference count in @c ACE_Message_Block. If it's empty, then there's
    * no locking strategy and we're using a REACTIVE concurrency
    * strategy.
    */
