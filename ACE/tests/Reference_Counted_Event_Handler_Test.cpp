@@ -58,6 +58,11 @@ public:
 
   ACE_Event_Handler::Reference_Count remove_reference () override;
 
+  ACE_Event_Handler::Reference_Count reference_count () const
+  {
+    return this->reference_count_.load ();
+  }
+
   ACE_Pipe pipe_;
 
   int &events_;
@@ -340,12 +345,19 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
       else
       {
         ACE_Event_Handler *result_handler {};
+        ACE_Event_Handler::Reference_Count const count_before =
+          handler->reference_count ();
 
         result =
           reactor->handler (handler->pipe_.read_handle (),
                             ACE_Event_Handler::READ_MASK,
                             &result_handler);
         ACE_Event_Handler_var const safe_result_handler (result_handler);
+
+        if (result == 0 && result_handler == handler)
+          {
+            ACE_TEST_ASSERT (handler->reference_count () == count_before + 1);
+          }
 
         if (result != 0)
           {
@@ -360,6 +372,15 @@ reference_counted_event_handler_test_2 (ACE_Reactor *reactor)
                           ACE_TEXT ("Mismatch: result_handler %@ should be %@\n"),
                           static_cast<void *> (result_handler), static_cast<void *> (handler)));
             }
+      }
+
+      {
+        ACE_Event_Handler::Reference_Count const count_before =
+          handler->reference_count ();
+        result = reactor->handler (handler->pipe_.read_handle (),
+                                   ACE_Event_Handler::READ_MASK);
+        ACE_TEST_ASSERT (result == 0);
+        ACE_TEST_ASSERT (handler->reference_count () == count_before);
       }
 
       {
