@@ -87,9 +87,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i (int signum,
   ACE_Event_Handler *handler = this->signal_handler_->handler (signum);
 
   if (handler == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   else if (eh != nullptr)
   {
     *eh = handler;
@@ -193,9 +193,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::renew ()
   ACE_TRACE ("ACE_Select_Reactor_T::renew");
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   if (!this->supress_notify_renew ())
-  {
-    this->token_.renew (this->requeue_position_);
-  }
+    {
+      this->token_.renew (this->requeue_position_);
+    }
 #endif /* defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0) */
 }
 
@@ -381,9 +381,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
 
   // Can't initialize ourselves more than once.
   if (this->initialized_)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   this->owner_ = ACE_Thread::self ();
   this->restart_ = restart;
@@ -424,9 +424,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::open
     }
 
   if (result != -1 && this->handler_rep_.open (size) == -1)
-  {
-    result = -1;
-  }
+    {
+      result = -1;
+    }
   else if (this->notify_handler_->open (this,
                                         nullptr,
                                         disable_notify_pipe) == -1)
@@ -603,9 +603,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::close ()
     }
 
   if (this->notify_handler_ != nullptr)
-  {
-    this->notify_handler_->close ();
-  }
+    {
+      this->notify_handler_->close ();
+    }
 
   if (this->delete_notify_handler_)
     {
@@ -646,9 +646,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
   {
     if (this->remove_handler_i (h, mask) == -1)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
   }
 
   return 0;
@@ -667,9 +667,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i
   while ((h = handle_iter ()) != ACE_INVALID_HANDLE)
   {
     if (this->register_handler_i (h, handler, mask) == -1)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
   }
 
   return 0;
@@ -735,9 +735,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler 
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
 
   if ((this->timer_queue_ != nullptr) && (handler != nullptr))
-  {
-    return this->timer_queue_->cancel (handler, dont_call_handle_close);
-  }
+    {
+      return this->timer_queue_->cancel (handler, dont_call_handle_close);
+    }
   else
   {
     return 0;
@@ -864,9 +864,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
   ACE_TRACE ("ACE_Select_Reactor_T::notify_handle");
   // Check for removed handlers.
   if (event_handler == nullptr)
-  {
-    return;
-  }
+    {
+      return;
+    }
 
   bool const reference_counting_required =
     event_handler->reference_counting_policy ().value () ==
@@ -881,9 +881,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
   int const status = (event_handler->*ptmf) (handle);
 
   if (status < 0)
-  {
-    this->remove_handler_i (handle, mask);
-  }
+    {
+      this->remove_handler_i (handle, mask);
+    }
   else if (status > 0)
   {
     ready_mask.set_bit (handle);
@@ -891,9 +891,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::notify_handle
 
   // Call remove_reference() if needed.
   if (reference_counting_required)
-  {
-    event_handler->remove_reference ();
-  }
+    {
+      event_handler->remove_reference ();
+    }
 }
 
 // Perform GET, CLR, SET, and ADD operations on the select()
@@ -921,9 +921,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::mask_ops
   // <wait_set_>, otherwise set the <suspend_set_>.
 
   if (this->is_suspended_i (handle))
-  {
-    return this->bit_ops (handle, mask, this->suspend_set_, ops);
-  }
+    {
+      return this->bit_ops (handle, mask, this->suspend_set_, ops);
+    }
   else
   {
     return this->bit_ops (handle, mask, this->wait_set_, ops);
@@ -958,9 +958,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler_i
   ACE_Event_Handler *event_handler = this->handler_rep_.find (handle);
 
   if (event_handler == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   else
     {
       if ((ACE_BIT_ENABLED (mask, ACE_Event_Handler::READ_MASK)
@@ -997,9 +997,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::resume_i");
   if (this->handler_rep_.find (handle) == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (this->suspend_set_.rd_mask_.is_set (handle))
     {
@@ -1026,9 +1026,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_i (ACE_HANDLE handle)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::suspend_i");
   if (this->handler_rep_.find (handle) == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (this->wait_set_.rd_mask_.is_set (handle))
     {
@@ -1060,9 +1060,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::is_suspended_i (ACE_HANDLE handl
 {
   ACE_TRACE ("ACE_Select_Reactor_T::is_suspended_i");
   if (this->handler_rep_.find (handle) == nullptr)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   return this->suspend_set_.rd_mask_.is_set (handle) ||
          this->suspend_set_.wr_mask_.is_set (handle) ||
@@ -1110,9 +1110,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
                             -1));
 
   if (this->deactivated_)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   // Update the countdown to reflect time waiting for the mutex.
   ACE_MT (countdown.update ());
@@ -1170,9 +1170,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::wait_for_multiple_events
       do
         {
           if (this->timer_queue_ == nullptr)
-          {
-            return 0;
-          }
+            {
+              return 0;
+            }
 
           this_timeout =
             this->timer_queue_->calculate_timeout (max_wait_time,
@@ -1254,9 +1254,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::dispatch_notification_handlers
                                                    dispatch_set.rd_mask_);
 
   if (n == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   else
     {
       number_of_handlers_dispatched += n;
@@ -1588,14 +1588,14 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::check_handles ()
   ACE_Handle_Set check_set (this->wait_set_.rd_mask_);
   ACE_Handle_Set_Iterator wr_iter (this->wait_set_.wr_mask_);
   while ((h = wr_iter ()) != ACE_INVALID_HANDLE)
-  {
-    check_set.set_bit (h);
-  }
+    {
+      check_set.set_bit (h);
+    }
   ACE_Handle_Set_Iterator ex_iter (this->wait_set_.ex_mask_);
   while ((h = ex_iter ()) != ACE_INVALID_HANDLE)
-  {
-    check_set.set_bit (h);
-  }
+    {
+      check_set.set_bit (h);
+    }
 
   ACE_Handle_Set_Iterator check_iter (check_set);
   while ((h = check_iter ()) != ACE_INVALID_HANDLE)
