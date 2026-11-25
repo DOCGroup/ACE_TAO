@@ -41,8 +41,7 @@ public:
 
   explicit ACE_Timer_Wheel_Iterator_T (Wheel &);
 
-  ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_Iterator_T const &) = delete;
-  ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_Iterator_T &&) = delete;
+  ACE_Timer_Wheel_Iterator_T (ACE_Timer_Wheel_Iterator_T const &) = default;
   ACE_Timer_Wheel_Iterator_T &operator= (ACE_Timer_Wheel_Iterator_T const &) = delete;
   ACE_Timer_Wheel_Iterator_T &operator= (ACE_Timer_Wheel_Iterator_T &&) = delete;
 

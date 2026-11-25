@@ -119,8 +119,7 @@ public:
   using Hash = ACE_Timer_Hash_T<TYPE, FUNCTOR, ACE_LOCK, BUCKET, TIME_POLICY>;
   explicit ACE_Timer_Hash_Iterator_T (Hash &);
 
-  ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_Iterator_T const &) = delete;
-  ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_Iterator_T &&) = delete;
+  ACE_Timer_Hash_Iterator_T (ACE_Timer_Hash_Iterator_T const &) = default;
   ACE_Timer_Hash_Iterator_T &operator= (ACE_Timer_Hash_Iterator_T const &) = delete;
   ACE_Timer_Hash_Iterator_T &operator= (ACE_Timer_Hash_Iterator_T &&) = delete;
 

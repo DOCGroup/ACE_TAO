@@ -21,6 +21,17 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Wheel.h"
 #include "ace/Timer_Hash.h"
+#include <type_traits>
+
+static_assert (std::is_copy_constructible_v<ACE_Timer_List_Iterator>
+               && std::is_move_constructible_v<ACE_Timer_List_Iterator>
+               && std::is_copy_constructible_v<ACE_Timer_Heap_Iterator>
+               && std::is_move_constructible_v<ACE_Timer_Heap_Iterator>
+               && std::is_copy_constructible_v<ACE_Timer_Wheel_Iterator>
+               && std::is_move_constructible_v<ACE_Timer_Wheel_Iterator>
+               && std::is_copy_constructible_v<ACE_Timer_Hash_Iterator>
+               && std::is_move_constructible_v<ACE_Timer_Hash_Iterator>,
+               "Timer iterators preserve their copy construction behavior");
 #include "ace/Time_Policy.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"

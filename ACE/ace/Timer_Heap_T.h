@@ -39,8 +39,7 @@ public:
   using Heap = ACE_Timer_Heap_T<TYPE, FUNCTOR, ACE_LOCK, TIME_POLICY>;
   explicit ACE_Timer_Heap_Iterator_T (Heap &);
 
-  ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_Iterator_T const &) = delete;
-  ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_Iterator_T &&) = delete;
+  ACE_Timer_Heap_Iterator_T (ACE_Timer_Heap_Iterator_T const &) = default;
   ACE_Timer_Heap_Iterator_T &operator= (ACE_Timer_Heap_Iterator_T const &) = delete;
   ACE_Timer_Heap_Iterator_T &operator= (ACE_Timer_Heap_Iterator_T &&) = delete;
 
