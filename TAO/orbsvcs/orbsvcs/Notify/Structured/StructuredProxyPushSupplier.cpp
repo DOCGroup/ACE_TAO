@@ -12,8 +12,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_StructuredProxyPushSupplier::TAO_Notify_StructuredProxyPushSupplier ()
-{
-}
+= default;
 
 void
 TAO_Notify_StructuredProxyPushSupplier::release ()

@@ -4,8 +4,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Hash_Persistence_Strategy::TAO_Hash_Persistence_Strategy ()
-{
-}
+= default;
 
 TAO_Hash_Persistence_Strategy::~TAO_Hash_Persistence_Strategy () = default;
 

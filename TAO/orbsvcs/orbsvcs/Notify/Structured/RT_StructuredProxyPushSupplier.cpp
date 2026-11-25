@@ -6,8 +6,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_RT_StructuredProxyPushSupplier::TAO_Notify_RT_StructuredProxyPushSupplier ()
-{
-}
+= default;
 
 CORBA::Object_ptr
 TAO_Notify_RT_StructuredProxyPushSupplier::activate (PortableServer::Servant servant)

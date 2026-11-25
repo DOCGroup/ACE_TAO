@@ -467,8 +467,7 @@ TAO_IFR_Server::init_multicast_server ()
 }
 
 TAO_IFR_Service_Utils::TAO_IFR_Service_Utils ()
-{
-}
+= default;
 
 TAO_IFR_Service_Utils::~TAO_IFR_Service_Utils () = default;
 

@@ -9,8 +9,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_SequenceProxyPushSupplier::TAO_Notify_SequenceProxyPushSupplier ()
-{
-}
+= default;
 
 void
 TAO_Notify_SequenceProxyPushSupplier::release ()
