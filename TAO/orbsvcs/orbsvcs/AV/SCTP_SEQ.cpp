@@ -793,7 +793,7 @@ TAO_AV_SCTP_SEQ_Flow_Handler::change_qos (AVStreams::QoS qos)
     {
       if(ret < 0 )
         {
-          ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) errno: %p\n"));
+          ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) errno: %m\n"));
         }
     }
   return ret;

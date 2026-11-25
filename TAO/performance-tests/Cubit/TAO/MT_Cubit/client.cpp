@@ -766,7 +766,7 @@ Client_i::do_thread_per_rate_test ()
        priority) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) errno = %p: activate failed\n"));
+                  "(%P|%t) errno = %m: activate failed\n"));
     }
   // The high priority thread is parsing the arguments, so wait on the
   // condition variable until it wakes us up.
@@ -800,7 +800,7 @@ Client_i::do_thread_per_rate_test ()
        priority) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) errno = %p: activate failed\n"));
+                  "(%P|%t) errno = %m: activate failed\n"));
     }
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
@@ -817,7 +817,7 @@ Client_i::do_thread_per_rate_test ()
        priority) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) errno = %p: activate failed\n"));
+                  "(%P|%t) errno = %m: activate failed\n"));
     }
 
   priority = ACE_Sched_Params::previous_priority (ACE_SCHED_FIFO,
@@ -834,7 +834,7 @@ Client_i::do_thread_per_rate_test ()
        priority) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  "(%P|%t) errno = %p: activate failed\n"));
+                  "(%P|%t) errno = %m: activate failed\n"));
     }
 
   // Wait for all the threads to exit.

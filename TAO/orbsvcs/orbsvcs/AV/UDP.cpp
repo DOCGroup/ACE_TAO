@@ -149,7 +149,7 @@ TAO_AV_UDP_Flow_Handler::change_qos(AVStreams::QoS qos)
         {
            if(ret < 0 )
              {
-                ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) errno: %p\n"));
+                ORBSVCS_DEBUG((LM_DEBUG, "(%N,%l) errno: %m\n"));
              }
         }
       return ret;

@@ -425,7 +425,7 @@ int
 ACE_TMAIN(int, ACE_TCHAR *[])
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%p|%t) Cannot run in SIngle threaded mode\n"));
+              "(%P|%t) Cannot run in Single threaded mode\n"));
 
   return 0;
 }
