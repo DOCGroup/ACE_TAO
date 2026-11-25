@@ -67,9 +67,8 @@ TAO_UIOP_Transport::recv (char *buf,
       errno != ETIME)
     {
       TAOLIB_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO (%P|%t) - UIOP_Transport::recv, %p %p\n"),
-                  ACE_TEXT ("TAO - read message failure ")
-                  ACE_TEXT ("recv ()\n")));
+                  ACE_TEXT ("TAO (%P|%t) - UIOP_Transport::recv, %p\n"),
+                  ACE_TEXT ("TAO - read message failure recv ()")));
     }
 
   // Error handling
