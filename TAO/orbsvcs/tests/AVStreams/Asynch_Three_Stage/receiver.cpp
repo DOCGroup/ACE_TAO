@@ -50,6 +50,13 @@ Receiver_Callback::receive_frame (ACE_Message_Block *frame,
       frame = frame->cont ();
     }
 
+  if (ACE_OS::fflush (output_file) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         "Receiver_Callback::fflush failed\n"),
+                        -1);
+    }
+
   return 0;
 }
 

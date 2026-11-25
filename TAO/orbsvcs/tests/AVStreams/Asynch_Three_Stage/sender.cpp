@@ -149,6 +149,13 @@ Sender::init (int argc, ACE_TCHAR *argv[])
 int
 Sender::pace_data ()
 {
+  // Receivers can start after the sender. Dispatch requests until a flow
+  // has been established before consuming the input file.
+  while (this->connection_manager_.protocol_objects ().current_size () == 0)
+    {
+      TAO_AV_CORE::instance ()->orb ()->perform_work ();
+    }
+
   // The time that should lapse between two consecutive frames sent.
   ACE_Time_Value inter_frame_time;
 
