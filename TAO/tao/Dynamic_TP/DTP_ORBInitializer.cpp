@@ -93,7 +93,7 @@ TAO_DTP_ORBInitializer::post_init (PortableInterceptor::ORBInitInfo_ptr info)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("(%P|%t) TAO_DTP_ORBInitializer::post_init ")
-                      ACE_TEXT ("using thread pool name %s\n"), dtp_name));
+                      ACE_TEXT ("using thread pool name %C\n"), dtp_name));
         }
 
       TAO_DTP_Config_Registry * const config_registry =

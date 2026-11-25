@@ -944,7 +944,7 @@ dump_node_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> &node) const
   const char * color_str = (node.color () == ACE_RB_Tree_Node_Base::RED)
                            ? "RED" : "BLACK";
 
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT (" color=[%s]\n"), color_str));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT (" color=[%C]\n"), color_str));
 #else /* !ACE_HAS_DUMP */
   ACE_UNUSED_ARG (node);
 #endif /* ACE_HAS_DUMP */
