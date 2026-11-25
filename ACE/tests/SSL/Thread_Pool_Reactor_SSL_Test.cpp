@@ -242,13 +242,16 @@ cli_worker (void *arg)
           ACE_OS::sleep (delay);
         }
 
-      // Wait until the server has processed all requests before disconnecting.
-      ACE_Time_Value const timeout (5);
-      char acknowledged {};
-      if (stream.recv_n (std::addressof (acknowledged), 1, std::addressof (timeout)) != 1
-          || acknowledged != 1)
+      if (cli_req_no != 0)
         {
-          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to receive acknowledgement: %m\n")));
+          // Wait until the server has processed all requests before disconnecting.
+          ACE_Time_Value const timeout (5);
+          char acknowledged {};
+          if (stream.recv_n (std::addressof (acknowledged), 1, std::addressof (timeout)) != 1
+              || acknowledged != 1)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to receive acknowledgement: %m\n")));
+            }
         }
       stream.close ();
     }

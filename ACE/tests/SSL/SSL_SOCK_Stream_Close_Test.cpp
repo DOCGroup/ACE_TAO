@@ -116,6 +116,8 @@ int run_main (int, ACE_TCHAR *[])
                 }
               else
                 {
+                  // Fill the raw socket to force TLS shutdown to block; the
+                  // peer does not process these bytes as TLS records.
                   char data[8192] {};
                   bool blocked {};
                   for (size_t i {}; i < 16384; ++i)
