@@ -174,7 +174,7 @@ ACE_TMAIN (int argc , ACE_TCHAR *argv[])
       }
 
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%P|%t) Server: Send returned %d\n"), n));
+                  ACE_TEXT ("(%P|%t) Server: Send returned %b\n"), n));
 
       int got[2] = {-1,-1};
       while (got[0] == -1 || got[1] == -1)
