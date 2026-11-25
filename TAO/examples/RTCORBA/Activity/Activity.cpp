@@ -341,7 +341,8 @@ Activity::create_started_flag_file (int argc, ACE_TCHAR *argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Started_Flag"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Started_Flag"));
+      if (current_arg != nullptr)
         {
           FILE *file = ACE_OS::fopen (current_arg, ACE_TEXT("w"));
 

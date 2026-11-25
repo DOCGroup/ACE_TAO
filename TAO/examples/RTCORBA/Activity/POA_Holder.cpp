@@ -11,7 +11,8 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
   while (arg_shifter.is_anything_left ())
     {
       ACE_TCHAR const *current_arg {};
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-PriorityModel"));
+      if (current_arg != nullptr)
         {
           if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT("CLIENT")) == 0)
             {
@@ -25,8 +26,10 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
 
           server_priority_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Lanes"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Lanes"));
+      if (current_arg != nullptr)
         {
           int lanecount = ACE_OS::atoi (current_arg);
           lanes_.length (lanecount);
@@ -64,8 +67,10 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
                 break;
               }
             } /* while -- lane values */
+          continue;
         } /* if -Lanes */
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Bands"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Bands"));
+      if (current_arg != nullptr)
         {
           int bandcount = ACE_OS::atoi (current_arg);
           bands_.length (bandcount);
@@ -98,11 +103,10 @@ POA_Holder::init (ACE_Arg_Shifter& arg_shifter)
               }
             } /* while -- Band values */
 
+          continue;
         } /* if -Bands */
-      else // something else is showing up ...
-        {
-          return 0;
-        }
+      // Something else is showing up.
+      return 0;
     }
   return 0;
 }

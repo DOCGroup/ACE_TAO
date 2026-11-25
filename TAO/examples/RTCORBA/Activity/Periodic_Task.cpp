@@ -14,32 +14,43 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
 
   while (arg_shifter.is_anything_left ())
     {
-      if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobName"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-JobName"));
+      if (current_arg != nullptr)
         {
           name_ = ACE_TEXT_ALWAYS_CHAR(current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Priority"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Priority"));
+      if (current_arg != nullptr)
         {
           task_priority_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Period"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Period"));
+      if (current_arg != nullptr)
         {
           period_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExecTime"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ExecTime"));
+      if (current_arg != nullptr)
         {
           exec_time_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Phase"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Phase"));
+      if (current_arg != nullptr)
         {
           phase_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if (0 != (current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Iter"))))
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Iter"));
+      if (current_arg != nullptr)
         {
           iter_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
@@ -58,28 +69,27 @@ Periodic_Task::init_task (ACE_Arg_Shifter& arg_shifter)
           }
 
           task_stats_ = std::move (task_stats);
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-Load"));
+      if (current_arg != nullptr)
         {
           load_ = ACE_OS::atoi (current_arg);
           arg_shifter.consume_arg ();
 
           return 0;
         }
-      else
+      ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parse Task unknown option %s\n"),
+                  arg_shifter.get_current ()));
+      if (TAO_debug_level > 0)
         {
-          ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("parse Task unknown option %s\n"),
-                      arg_shifter.get_current ()));
-          if (TAO_debug_level > 0)
-            {
-              ACE_DEBUG ((LM_DEBUG,
-                          ACE_TEXT ("name %C, priority %d, period %LuuS, ")
-                          ACE_TEXT ("exec_time %LuuS, phase %LduS, iter %d, load %d\n"),
-                          name_.c_str (), task_priority_,
-                          period_, exec_time_, phase_, iter_, load_));
-            }
-          break;
+          ACE_DEBUG ((LM_DEBUG,
+                      ACE_TEXT ("name %C, priority %d, period %LuuS, ")
+                      ACE_TEXT ("exec_time %LuuS, phase %LduS, iter %d, load %d\n"),
+                      name_.c_str (), task_priority_,
+                      period_, exec_time_, phase_, iter_, load_));
         }
+      break;
     }
   return 0;
 }
