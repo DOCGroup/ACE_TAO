@@ -11,6 +11,8 @@
 #include "ace/Intrusive_Auto_Ptr.h"
 #include "ace/Thread_Manager.h"
 
+#include <utility>
+
 class One {
   static bool released;
 
@@ -83,6 +85,17 @@ int run_main (int, ACE_TCHAR *[])
   }
 
   ACE_TEST_ASSERT (One::was_released());
+
+  theone = new One (0);
+  {
+    ACE_Intrusive_Auto_Ptr<One> source (theone);
+    ACE_Intrusive_Auto_Ptr<One> copied (std::move (source));
+    ACE_Intrusive_Auto_Ptr<One> assigned (new One (0));
+    assigned = std::move (source);
+    ACE_TEST_ASSERT (theone->has_refs (3));
+    ACE_TEST_ASSERT (source.get () == theone);
+  }
+  ACE_TEST_ASSERT (One::was_released ());
 
   // Test assigning zero.
   theone = new One(0);

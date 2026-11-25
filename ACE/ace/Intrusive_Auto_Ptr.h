@@ -55,7 +55,6 @@ public:
   /// representation object referenced by @a r.
   /// An ACE_Intrusive_Auto_Ptr_Rep is created if necessary.
   ACE_Intrusive_Auto_Ptr (ACE_Intrusive_Auto_Ptr<X> const &r);
-  ACE_Intrusive_Auto_Ptr (ACE_Intrusive_Auto_Ptr<X> &&) = delete;
 
   /// Derived class copy ctor
   template<class U>
@@ -70,7 +69,6 @@ public:
   /// ACE_Intrusive_Auto_Ptr_Rep. An ACE_Intrusive_Auto_Ptr_Rep
   /// is created if necessary.
   void operator = (ACE_Intrusive_Auto_Ptr<X> const &r);
-  void operator = (ACE_Intrusive_Auto_Ptr<X> &&) = delete;
 
   /// Redirection operator
   X *operator-> () const;
