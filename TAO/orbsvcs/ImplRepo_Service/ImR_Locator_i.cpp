@@ -241,27 +241,21 @@ ImR_Locator_i::run ()
 {
   if (debug_ > 0)
     {
-      // This debug message was split into two calls to
-      // work around yet another bug in Visual Studio 2005.
-      // When this was a single debug message, the value for
-      // debug () came out garbled and the read-only string
-      // caused an ACCESS VIOLATION -- Chad Elliott 10/4/2006
       ORBSVCS_DEBUG ((LM_DEBUG,
                       ACE_TEXT ("Implementation Repository: Running\n")
                       ACE_TEXT ("\tPing Interval : %Lums\n")
                       ACE_TEXT ("\tPing Timeout : %Lums\n")
                       ACE_TEXT ("\tStartup Timeout : %qs\n")
                       ACE_TEXT ("\tPersistence : %s\n")
-                      ACE_TEXT ("\tMulticast : %C\n"),
+                      ACE_TEXT ("\tMulticast : %C\n")
+                      ACE_TEXT ("\tDebug : %d\n")
+                      ACE_TEXT ("\tReadOnly : %C\n\n"),
                       this->opts_->ping_interval ().msec (),
                       this->opts_->ping_timeout ().msec (),
                       static_cast<ACE_INT64> (this->opts_->startup_timeout ().sec ()),
                       this->repository_->repo_mode (),
                       (this->repository_->multicast () != 0 ?
-                       "Enabled" : "Disabled")));
-      ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("\tDebug : %d\n")
-                      ACE_TEXT ("\tReadOnly : %C\n\n"),
+                       "Enabled" : "Disabled"),
                       debug (),
                       (this->opts_->readonly () ? "True" : "False")));
     }
