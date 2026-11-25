@@ -23,7 +23,7 @@ ACE_Registry_ImpExp::ACE_Registry_ImpExp (ACE_Configuration& config)
 // Imports the configuration database from filename.
 // No existing data is removed.
 int
-ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
+ACE_Registry_ImpExp::import_config (ACE_TCHAR const * filename)
 {
   if (nullptr == filename)
     {
@@ -217,7 +217,7 @@ ACE_Registry_ImpExp::import_config (const ACE_TCHAR* filename)
 // Once the file is opened this method calls 'export_section' passing
 // the root section.
 int
-ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
+ACE_Registry_ImpExp::export_config (ACE_TCHAR const * filename)
 {
   if (nullptr == filename)
     {
@@ -247,9 +247,9 @@ ACE_Registry_ImpExp::export_config (const ACE_TCHAR* filename)
 # define ACE_WRITE_STRING write_string
 namespace
 {
-  int write_string (const char *string, FILE *stream)
+  int write_string (char const *string, FILE *stream)
   {
-    const size_t count = std::strlen (string);
+    size_t const count = std::strlen (string);
     return (ACE_OS::fwrite (string, 1, count, stream) < count) ? -1 : 0;
   }
 }
@@ -262,7 +262,7 @@ namespace
 // the entire configuration object.
 
 int
-ACE_Registry_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
+ACE_Registry_ImpExp::export_section (ACE_Configuration_Section_Key const & section,
                                      const ACE_TString& path,
                                      FILE* out)
 {
@@ -431,7 +431,7 @@ ACE_Ini_ImpExp::ACE_Ini_ImpExp (ACE_Configuration& config)
 
 // Method to read file and populate object.
 int
-ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
+ACE_Ini_ImpExp::import_config (ACE_TCHAR const * filename)
 {
   if (nullptr == filename)
     {
@@ -529,7 +529,7 @@ ACE_Ini_ImpExp::import_config (const ACE_TCHAR* filename)
 // Once the file is opened this method calls 'export_section' passing
 // the root section.
 int
-ACE_Ini_ImpExp::export_config (const ACE_TCHAR* filename)
+ACE_Ini_ImpExp::export_config (ACE_TCHAR const * filename)
 {
   if (nullptr == filename)
     {
@@ -560,7 +560,7 @@ ACE_Ini_ImpExp::export_config (const ACE_TCHAR* filename)
 // configuration objet
 
 int
-ACE_Ini_ImpExp::export_section (const ACE_Configuration_Section_Key& section,
+ACE_Ini_ImpExp::export_section (ACE_Configuration_Section_Key const & section,
                                 const ACE_TString& path,
                                 FILE* out)
 {
