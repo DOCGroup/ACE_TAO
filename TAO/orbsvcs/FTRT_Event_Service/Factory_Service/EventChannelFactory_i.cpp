@@ -128,17 +128,25 @@ CORBA::Object_ptr EventChannelFactory_i::create_process (
         {
           char const *val {};
           char const *id_str = name[0].id.in ();
-          the_criteria[i].val >>= val;
+          if (!(the_criteria[i].val >>= val) || val == nullptr)
+            {
+              ORBSVCS_ERROR ((LM_ERROR,
+                              ACE_TEXT ("Invalid event channel factory criterion\n")));
+              return CORBA::Object::_nil ();
+            }
           if (id_str[0] != '-')
             {
               // environment variable
               options.setenv (ACE_TEXT_CHAR_TO_TCHAR (id_str),
-                              ACE_TEXT("%") ACE_TEXT_PRIs, val);
+                              ACE_TEXT("%") ACE_TEXT_PRIs,
+                              ACE_TEXT_CHAR_TO_TCHAR (val));
             }
           else // command line option
             {
-              ACE_OS::sprintf (buf, ACE_TEXT(" %s %s"), id_str, val);
-              str += buf;
+              str += ACE_TEXT (" ");
+              str += ACE_TEXT_CHAR_TO_TCHAR (id_str);
+              str += ACE_TEXT (" ");
+              str += ACE_TEXT_CHAR_TO_TCHAR (val);
             }
         }
     }
