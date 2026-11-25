@@ -102,20 +102,19 @@ public:
   AST_Interface_List const& inherits_flat () const;
   size_t n_inherits_flat () const;
 
+  /// Return whether this is a local interface.
   bool is_local () const;
-  // See if we are a local interface.
 
+  /// Return whether this is an abstract interface.
   bool is_abstract () const;
-  // See if we are an abstract interface.
 
+  /// Destroy anything allocated for this class.
   virtual void destroy ();
-  // Destroy anything allocated for this class.
 
   // Operations.
 
-  // Compile the flattened unique list of interfaces which this
-  // interface inherits from.
 protected:
+  /// Compile the flattened unique list of interfaces inherited by this interface.
   void compile_inheritance (UTL_NameList *ifaces,
                             bool for_valuetype);
 
