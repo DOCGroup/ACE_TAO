@@ -82,25 +82,25 @@ public:
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   u_short const logger_port = argc > 1 ? ACE_OS::atoi (argv[1]) : 0;
-  char const *const logger_host =
-    argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST;
+  std::string const logger_host =
+    ACE_TEXT_ALWAYS_CHAR (argc > 2 ? argv[2] : ACE_DEFAULT_SERVER_HOST);
   int result {};
 
   ACE_INET_Addr server_addr;
 
   if (logger_port != 0)
   {
-    result = server_addr.set (logger_port, logger_host);
+    result = server_addr.set (logger_port, logger_host.c_str ());
   }
   else
   {
-    result = server_addr.set ("ace_logger", logger_host);
+    result = server_addr.set ("ace_logger", logger_host.c_str ());
   }
   if (result == -1)
   {
-    ACE_ERROR_RETURN ((LM_ERROR, "lookup %s, %p\n",
-                       logger_port == 0 ? "ace_logger" : argv[1],
-                       logger_host), 1);
+    ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("lookup %s, %p\n"),
+                       logger_port == 0 ? ACE_TEXT ("ace_logger") : argv[1],
+                       ACE_TEXT_CHAR_TO_TCHAR (logger_host.c_str ())), 1);
   }
 
   ACE_SOCK_Connector connector;
@@ -121,7 +121,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ACE_Time_Value const now (ACE_OS::gettimeofday ());
     ACE_Log_Record log_record (LM_INFO, now, ACE_OS::getpid ());
-    log_record.msg_data (user_input.data ());
+    log_record.msg_data (ACE_TEXT_CHAR_TO_TCHAR (user_input.data ()));
     if (logging_client.send (log_record) == -1)
       {
         ACE_ERROR_RETURN ((LM_ERROR,
@@ -143,7 +143,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ACE_Time_Value const now (ACE_OS::gettimeofday ());
     ACE_Log_Record log_record (LM_INFO, now, ACE_OS::getpid ());
-    log_record.msg_data (user_input.c_str ());
+    log_record.msg_data (ACE_TEXT_CHAR_TO_TCHAR (user_input.c_str ()));
     if (logging_client.send (log_record) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

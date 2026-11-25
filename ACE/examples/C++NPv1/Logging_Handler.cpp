@@ -104,7 +104,7 @@ Logging_Handler::write_log_record (ACE_Message_Block const &mblk)
     cdr >> length;
     ACE_Log_Record log_entry;
     cdr >> log_entry;  // Finally extract the <ACE_log_record>.
-    log_entry.print (mblk.rd_ptr (), 1, cerr);
+    log_entry.print (ACE_TEXT_CHAR_TO_TCHAR (mblk.rd_ptr ()), 1, cerr);
   }
   return ACE_Utils::truncate_cast<int> (mblk.total_length ());
 }
