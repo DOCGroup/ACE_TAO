@@ -100,7 +100,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     if (worker.activate (THR_NEW_LWP | THR_JOINABLE, nr_threads) != 0)
       {
           ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
-          "Cannot activate client threads"), -1);
+          ACE_TEXT ("Cannot activate client threads")), -1);
       }
 
     ACE_DEBUG((LM_INFO,"(%P|%t) Await server initialization\n"));
@@ -118,7 +118,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (worker2.activate (THR_NEW_LWP | THR_JOINABLE, 2) != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR, "(%P|%t) %p\n",
-          "Cannot activate chatty client threads"), -1);
+          ACE_TEXT ("Cannot activate chatty client threads")), -1);
         }
 
       do {

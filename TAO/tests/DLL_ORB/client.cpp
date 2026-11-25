@@ -29,8 +29,8 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "ERROR: Client unable to process the "
-                         "Service Configurator directive"),
+                         ACE_TEXT ("ERROR: Client unable to process the "
+                         "Service Configurator directive")),
                         -1);
     }
 

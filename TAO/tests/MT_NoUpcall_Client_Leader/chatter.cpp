@@ -62,7 +62,7 @@ Chatter::svc ()
    catch (CORBA::Exception const& ex)
    {
       ex._tao_print_exception ("Exception caught:");
-      ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d] %p for %s\n", nrq, "failed", ior_));
+      ACE_DEBUG((LM_INFO,"(%P|%t) Chatter[%d] %p for %s\n", nrq, ACE_TEXT ("failed"), ior_));
    }
    return -1;
 }
@@ -94,7 +94,7 @@ Chatter::farewell ()
    catch (CORBA::Exception const& ex)
    {
       ex._tao_print_exception ("Exception caught:");
-      ACE_DEBUG((LM_INFO,"(%P|%t) %p for %s\n", "farewell FAILED", ior_));
+      ACE_DEBUG((LM_INFO,"(%P|%t) %p for %s\n", ACE_TEXT ("farewell FAILED"), ior_));
    }
    return 0;
 }

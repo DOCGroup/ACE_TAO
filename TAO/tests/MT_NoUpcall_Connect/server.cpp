@@ -83,7 +83,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (worker.activate () != 0)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
-                             "(%P|%t) %p\n", "Cannot activate server thread(s)"),
+                             "(%P|%t) %p\n", ACE_TEXT ("Cannot activate server thread(s)")),
                             -1);
         }
 
