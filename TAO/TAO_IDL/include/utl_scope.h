@@ -515,35 +515,36 @@ private:
                              bool full_def_only = false);
 };
 
-// Active iterator for a UTL_Scope node
+/// Active iterator for a UTL_Scope node.
 class TAO_IDL_FE_Export UTL_ScopeActiveIterator
 {
 public:
   // Operations.
 
+  UTL_ScopeActiveIterator () = delete;
   UTL_ScopeActiveIterator (UTL_Scope *s,
                            UTL_Scope::ScopeIterationKind ik);
 
-  // Advance to next item.
+  /// Advance to the next item.
   void next ();
 
-  // Get current item.
+  /// Get the current item.
   AST_Decl *item ();
 
-  // Have we iterated over entire scope?
+  /// Whether the entire scope has been visited.
   bool is_done ();
 
 private:
-  // Scope to iterate over.
+  /// Scope to iterate over.
   UTL_Scope *iter_source;
 
-  // What kind of iteration?
+  /// Kind of iteration.
   UTL_Scope::ScopeIterationKind ik;
 
-  // What stage?
+  /// Current iteration stage.
   UTL_Scope::ScopeIterationKind stage;
 
-  // What location in stage?
+  /// Current location in the stage.
   size_t il;
 };
 
