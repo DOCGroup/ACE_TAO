@@ -441,8 +441,8 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
               (after - before).msec () > max_request_time)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "note: test() took %Q ms, max is %u ms\n",
-                          static_cast<ACE_UINT64> ((after - before).msec ()), max_request_time));
+                          "note: test() took %Lu ms, max is %u ms\n",
+                          (after - before).msec (), max_request_time));
             }
 
           ACE_DEBUG ((LM_DEBUG, "c%d\n", i));
@@ -599,9 +599,9 @@ int ACE_TMAIN (int ac, ACE_TCHAR *av[])
     }
   catch (Exception const &ex)
     {
-      ACE_ERROR ((LM_ERROR, "client: %s\n\nLast operation took %Q ms.\n",
+      ACE_ERROR ((LM_ERROR, "client: %s\n\nLast operation took %Lu ms.\n",
                   ex._name(),
-                  static_cast<ACE_UINT64> ((ACE_High_Res_Timer::gettimeofday_hr () - before).msec ())));
+                  (ACE_High_Res_Timer::gettimeofday_hr () - before).msec ()));
     }
 
   return 1;

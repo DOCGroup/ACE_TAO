@@ -94,9 +94,9 @@ print_priority_info (char const* const name)
     {
       // This thread's LWP is in the RT class.
       ACE_DEBUG ((LM_DEBUG,
-                  "RT class; priority: %d, quantum: %Q msec\n",
+                  "RT class; priority: %d, quantum: %Lu msec\n",
                   sched_params.priority (),
-                  static_cast<ACE_UINT64> (sched_params.quantum ().msec ())));
+                  sched_params.quantum ().msec ()));
     }
   else
     {
