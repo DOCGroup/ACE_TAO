@@ -148,14 +148,10 @@ private:
    */
   ACE_Token semaphore_;
 
-  /**
-   * If this lock set is related to another lock set, this is the
-   * pointer to the related lock set. This is a really simple
-   * solution, but since transactions are not supported in the first
-   * version there should be no reason to drop lock sets together. The
-   * @c LockSetCoordinator is not implemented (it has the
-   * responsibilities of dropping the locks).
-   */
+  // A related lock set could be tracked by a pointer. Transactions are
+  // not supported, so there should be no reason to drop lock sets
+  // together. LockSetCoordinator, which would drop the locks, is not
+  // implemented.
   /// Mapping between requested and held lock modes. Used by compatible
   /// (...).  Uses the internal enumeration as indices.
   inline static constexpr bool compatible_[number_of_lock_modes][number_of_lock_modes] = {
