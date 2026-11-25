@@ -27,7 +27,6 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
     {
       // If we had registered timeout handlers just cancel them and
       // loose ownership of the handlers
-      this->timeout_handler_->cancel ();
       this->timeout_handler_.reset ();
       // AMI Timeout Handling End
     }
@@ -91,8 +90,8 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       if (TAO_debug_level >= 4)
         {
           TAOLIB_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher")
-                      ACE_TEXT ("::dispatch_reply status = %d\n"),
+                        ACE_TEXT ("TAO_Messaging (%P|%t) - Asynch_Reply_Dispatcher")
+                        ACE_TEXT ("::dispatch_reply status = %d\n"),
                                 this->reply_status_));
         }
 
@@ -134,9 +133,9 @@ TAO_Asynch_Reply_Dispatcher::dispatch_reply (TAO_Pluggable_Reply_Params &params)
       catch (::CORBA::Exception const &ex)
         {
           if (TAO_debug_level >= 4)
-          {
-            ex._tao_print_exception ("Asynch_Reply_Dispatcher::dispatch_reply, exception during reply handler");
-          }
+            {
+              ex._tao_print_exception ("Asynch_Reply_Dispatcher::dispatch_reply, exception during reply handler");
+            }
         }
     }
 
@@ -154,7 +153,6 @@ TAO_Asynch_Reply_Dispatcher::connection_closed ()
         {
           // If we had registered timeout handlers just cancel them and
           // loose ownership of the handlers
-          this->timeout_handler_->cancel ();
           this->timeout_handler_.reset ();
         }
 
@@ -215,9 +213,9 @@ TAO_Asynch_Reply_Dispatcher::reply_timed_out ()
       // held by the timeout handler, whose refcount in turn is held
       // by the reactor.
       if (!this->try_dispatch_reply ())
-      {
-        return;
-      }
+        {
+          return;
+        }
 
       if (!CORBA::is_nil (this->reply_handler_.in ()))
         {

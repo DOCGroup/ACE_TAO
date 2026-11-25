@@ -68,6 +68,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       if (!received_no_response)
         {
+          roundtrip->shutdown ();
           ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("ERROR, expecting NO_RESPONSE\n")), 1);
         }
 
@@ -80,10 +81,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Received expected exception\n")));
           received_expected_exception = true;
-
-          roundtrip->shutdown ();
         }
 
+      roundtrip->shutdown ();
       orb->destroy ();
     }
   catch (CORBA::Exception const &ex)
