@@ -59,8 +59,7 @@ const CORBA::ULong TAO_ENOTSUP_MINOR_CODE            = 0x14U;
 // ****************************************************************
 
 CORBA::SystemException::SystemException ()
-{
-}
+= default;
 
 CORBA::SystemException::SystemException (const char *repository_id,
                                          const char *local_name,

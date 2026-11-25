@@ -277,8 +277,7 @@ ACE_Event_Handler::remove_stdin_handler (ACE_Reactor *reactor,
 
 
 ACE_Event_Handler_var::ACE_Event_Handler_var ()
-{
-}
+= default;
 
 ACE_Event_Handler_var::ACE_Event_Handler_var (ACE_Event_Handler *p)
   : ptr_ (p)

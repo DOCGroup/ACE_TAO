@@ -33,8 +33,7 @@ ACE_CLEANUP_DESTROYER_NAME (ACE_Cleanup *object, void *param)
 /*****************************************************************************/
 
 ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node ()
-{
-}
+= default;
 
 ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void *object,
                                               ACE_CLEANUP_FUNC cleanup_hook,

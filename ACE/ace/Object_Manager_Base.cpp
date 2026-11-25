@@ -50,8 +50,7 @@ int ACE_SEH_Default_Exception_Handler (void *)
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
 ACE_Object_Manager_Base::ACE_Object_Manager_Base ()
-{
-}
+= default;
 
 ACE_Object_Manager_Base::~ACE_Object_Manager_Base ()
 {
