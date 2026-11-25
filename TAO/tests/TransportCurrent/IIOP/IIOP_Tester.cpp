@@ -67,9 +67,9 @@ test_transport_current (CORBA::ORB_ptr orb)
               static_cast<ACE_INT64> (id),
               rhost.in (), tc->remote_port (),
               lhost.in (), tc->local_port (),
-              static_cast<ACE_UINT64> (bs),
-              static_cast<ACE_UINT64> (br),
-              static_cast<ACE_UINT64> (rs),
-              static_cast<ACE_UINT64> (rr)));
+              bs,
+              br,
+              rs,
+              rr));
   return 0;
 }

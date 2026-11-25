@@ -49,10 +49,10 @@ Current_Test_Impl::test_transport_current ()
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Current_Test_Impl (%P|%t) Transport [%q] - Sent/Received [bytes=%Q/%Q, messages=%Q/%Q]\n"),
                   static_cast<ACE_INT64> (id),
-                  static_cast<ACE_UINT64> (bs),
-                  static_cast<ACE_UINT64> (br),
-                  static_cast<ACE_UINT64> (rs),
-                  static_cast<ACE_UINT64> (rr)));
+                  bs,
+                  br,
+                  rs,
+                  rr));
     }
 
   if (TAO_debug_level > 2)
