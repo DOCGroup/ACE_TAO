@@ -70,8 +70,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 class AST_Interface;
 
-// Representation of a forward interface declaration.
-
+/// Represents a forward interface declaration.
 class TAO_IDL_FE_Export AST_InterfaceFwd : public virtual AST_Type
 {
 public:

@@ -3,12 +3,13 @@
 
 #include "ast_exception.h"
 
-// Representation of "native" IDL type. It may be used as a
-// return type, parameter type, or in an operation's
-// exception list. This last usage creates special problems
-// with both syntax checking and code generation. Letting
-// this class inherit from AST_Exception is the most seamless
-// way to handle it, and does not affect the other use cases.
+/**
+ * @brief Represents an IDL native type.
+ *
+ * A native type may appear as a return type, parameter type or in an
+ * operation's exception list. Inheriting from AST_Exception supports
+ * the latter use in syntax checking and code generation.
+ */
 class TAO_IDL_FE_Export AST_Native : public virtual AST_Exception
 {
 public:

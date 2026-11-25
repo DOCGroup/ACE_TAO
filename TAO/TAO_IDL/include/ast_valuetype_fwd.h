@@ -3,8 +3,7 @@
 
 #include "ast_interface_fwd.h"
 
-// Representation of a forward valuetype declaration.
-
+/// Represents a forward valuetype declaration.
 class TAO_IDL_FE_Export AST_ValueTypeFwd : public virtual AST_InterfaceFwd
 {
 public:

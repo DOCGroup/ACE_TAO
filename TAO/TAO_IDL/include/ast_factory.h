@@ -65,9 +65,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_FACTORY_AST_FACTORY_HH
 #define _AST_FACTORY_AST_FACTORY_HH
 
-// Representation of OBV and component home factory
-// construct declaration.
-
 #include "ast_decl.h"
 #include "utl_scope.h"
 #include "utl_scoped_name.h"
@@ -75,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <cstddef>
 
+/// Represents an OBV or component home factory declaration.
 class TAO_IDL_FE_Export AST_Factory : public virtual AST_Decl,
                                       public virtual UTL_Scope
 {

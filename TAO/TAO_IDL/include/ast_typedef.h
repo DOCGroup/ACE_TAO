@@ -68,9 +68,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "ast_type.h"
 #include "ast_field.h"
 
-// Representation of typedef declaration.
-// A typedef declaration is a renaming of a base type.
-
+/// Represents a typedef that renames a base type.
 class TAO_IDL_FE_Export AST_Typedef : public virtual AST_Type,
                                       public virtual AST_Field
 {

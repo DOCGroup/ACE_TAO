@@ -73,9 +73,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 class AST_Expression;
 
-// Representation of string declaration.
-// A string type is represented by a maximum size.
-
+/// Represents a string type by its maximum size.
 class TAO_IDL_FE_Export AST_String : public virtual AST_ConcreteType
 {
 public:

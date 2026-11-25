@@ -65,11 +65,9 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ARGUMENT_AST_ARGUMENT_HH
 #define _AST_ARGUMENT_AST_ARGUMENT_HH
 
-// Representation of argument to operation:
-// An argument is a field with a direction attached
-
 #include "ast_field.h"
 
+/// An operation argument is a field with a direction.
 class TAO_IDL_FE_Export AST_Argument : public virtual AST_Field
 {
 public:

@@ -77,9 +77,7 @@ class AST_Decl;
 class AST_Param_Holder;
 class AST_Enum;
 
-// Representation of expression values.
-
-// An expression (and maybe its value, if computed).
+/// Represents an expression and its value, if computed.
 class TAO_IDL_FE_Export AST_Expression
 {
 public:

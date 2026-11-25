@@ -3,8 +3,7 @@
 
 #include "ast_valuetype_fwd.h"
 
-// Representation of a forward eventtype declaration.
-
+/// Represents a forward eventtype declaration.
 class TAO_IDL_FE_Export AST_EventTypeFwd : public virtual AST_ValueTypeFwd
 {
 public:

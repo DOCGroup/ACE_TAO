@@ -6,8 +6,7 @@
 
 class AST_Structure;
 
-// Representation of a forward structure declaration.
-
+/// Represents a forward structure declaration.
 class TAO_IDL_FE_Export AST_StructureFwd : public virtual AST_Type
 {
 public:
