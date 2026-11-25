@@ -41,20 +41,20 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::String_var result (tst->receive_boxedvalue (b.in ()));
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t)Passing two boxed values in one valuetype: %s\n",
+                  "(%P|%t)Passing two boxed values in one valuetype: %C\n",
                   result.in ()));
       result = tst->receive_boxedvalue (bb.in ());
       ACE_DEBUG ((LM_DEBUG,
-                  "(%P|%t)Passing one boxed value twice in one valuetype: %s\n",
+                  "(%P|%t)Passing one boxed value twice in one valuetype: %C\n",
                   result.in ()));
       result = tst->receive_long (p1.in (), p2.in ());
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing two integers: %s\n", result.in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing two integers: %C\n", result.in ()));
       result = tst->receive_long (p1.in (), p1.in ());
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing one integer twice: %s\n", result.in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing one integer twice: %C\n", result.in ()));
       result = tst->receive_string (s1.in (), s2.in ());
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing two strings: %s\n", result.in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing two strings: %C\n", result.in ()));
       result = tst->receive_string (s1.in (), nullptr);
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing null: %s\n", result.in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing null: %C\n", result.in ()));
 
       Node_var const n4 (new OBV_demo::value::idl::Node (4, nullptr));
       Node_var const n3 (new OBV_demo::value::idl::Node (3, n4.in ()));
@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       n4->next (n1.in ());
       result = tst->receive_list (n1.in ());
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing a list structure: %s\n", result.in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing a list structure: %C\n", result.in ()));
       // Break the cycle so the valuetype reference counts can reach zero.
       n4->next (nullptr);
 
@@ -72,7 +72,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       t->basic_data (10);
 
       result = tst->receive_truncatable (t.inout ());
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing inout truncatable: %s\n", result.in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing inout truncatable: %C\n", result.in ()));
       if (t->data () != 21 || t->basic_data () != 11)
         {
           std::cerr << "Received incorrect truncatable data" << std::endl;
@@ -90,7 +90,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
 
       result = tst->receive_sequence (configs);
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing sequence: %s\n", result.in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t)Passing sequence: %C\n", result.in ()));
 
       while (orb->work_pending ())
         {

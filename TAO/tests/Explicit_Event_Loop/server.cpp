@@ -119,7 +119,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::String_var const str = orb->object_to_string (tm.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "%s\n",
+                  "%C\n",
                   str.in ()));
 
       if (!options.ior_output_file.empty ())
@@ -166,7 +166,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   catch (...)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         "%s\n",
+                         "%C\n",
                          "client: an unknown exception was caught\n"),
                          1);
     }
