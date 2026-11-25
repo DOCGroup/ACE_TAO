@@ -83,8 +83,8 @@ Grid_i::width (CORBA::Short x)
       for (CORBA::Short ctr {}; ctr < this->height_; ++ctr)
         {
           std::memcpy (array.get () + x * ctr,
-                        this->array_.get () + this->width_ * ctr,
-                        Grid_i::ushort_min (this->width_, x) * sizeof (CORBA::Long));
+                       this->array_.get () + this->width_ * ctr,
+                       Grid_i::ushort_min (this->width_, x) * sizeof (CORBA::Long));
         }
       this->array_ = std::move (array);
       this->width_ = x;
@@ -100,8 +100,8 @@ Grid_i::height (CORBA::Short y)
       for (CORBA::Short ctr {}; ctr < Grid_i::ushort_min (this->height_, y); ++ctr)
         {
           std::memcpy (array.get () + this->width_ * ctr,
-                        this->array_.get () + this->width_ * ctr,
-                        this->width_ * sizeof (CORBA::Long));
+                       this->array_.get () + this->width_ * ctr,
+                       this->width_ * sizeof (CORBA::Long));
         }
       this->array_ = std::move (array);
       this->height_ = y;
