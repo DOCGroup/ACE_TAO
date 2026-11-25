@@ -31,13 +31,6 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_XtReactor_Export ACE_XtReactorID
 {
 public:
-  ACE_XtReactorID () = default;
-
-  ACE_XtReactorID (ACE_XtReactorID const &) = default;
-  ACE_XtReactorID (ACE_XtReactorID &&) = default;
-  ACE_XtReactorID &operator = (ACE_XtReactorID const &) = default;
-  ACE_XtReactorID &operator = (ACE_XtReactorID &&) = default;
-
   /// Magic cookie.
   XtInputId id_ {};
 
