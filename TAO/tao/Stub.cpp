@@ -80,9 +80,9 @@ TAO_Stub::~TAO_Stub ()
   ACE_ASSERT (this->refcount_ == 0);
 
   if (this->forward_profiles_)
-  {
-    reset_profiles ();
-  }
+    {
+      reset_profiles ();
+    }
 
   // reset_profiles doesn't delete forward_profiles_perm_.
   delete this->forward_profiles_perm_;
@@ -232,9 +232,9 @@ TAO_Stub::object_key () const
 {
   // Return the profile in use's object key if you see one.
   if (this->profile_in_use_)
-  {
-    return this->profile_in_use_->object_key ();
-  }
+    {
+      return this->profile_in_use_->object_key ();
+    }
 
   if (this->forward_profiles_)
     {
@@ -245,9 +245,9 @@ TAO_Stub::object_key () const
       // FUZZ: enable check_for_ACE_Guard
 
       if (obj.locked () != 0 &&  this->forward_profiles_ != nullptr)
-      {
-        return this->forward_profiles_->get_profile (0)->object_key ();
-      }
+        {
+          return this->forward_profiles_->get_profile (0)->object_key ();
+        }
     }
 
   // If no forwarded profiles, just use the base profile
@@ -280,9 +280,9 @@ TAO_Stub::get_profile_ior_info (
       IOP::TaggedProfile * const tp = prof->create_tagged_profile ();
 
       if (tp == nullptr)
-      {
-        throw ::CORBA::NO_MEMORY ();
-      }
+        {
+          throw ::CORBA::NO_MEMORY ();
+        }
       ior_info->profiles[index] = *tp;
     }
 }
@@ -330,17 +330,17 @@ CORBA::Boolean
 TAO_Stub::is_equivalent (CORBA::Object_ptr other_obj)
 {
   if (CORBA::is_nil (other_obj))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   TAO_Profile * const other_profile = other_obj->_stubobj ()->profile_in_use_;
   TAO_Profile * const this_profile = this->profile_in_use_;
 
   if (other_profile == nullptr || this_profile == nullptr)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // Compare the profiles
   return this_profile->is_equivalent (other_profile);
@@ -365,9 +365,9 @@ TAO_Stub::set_profile_in_use_i (TAO_Profile *pfile)
   this->profile_in_use_ = pfile;
 
   if (old)
-  {
-    old->_decr_refcnt ();
-  }
+    {
+      old->_decr_refcnt ();
+    }
 
   return this->profile_in_use_;
 }
@@ -379,9 +379,9 @@ TAO_Stub::forward_back_one ()
 
   // Only delete the forward location if it is not permanent
   if (this->forward_profiles_ != this->forward_profiles_perm_)
-  {
-    delete this->forward_profiles_;
-  }
+    {
+      delete this->forward_profiles_;
+    }
 
   // the current profile in this profile list is no
   // longer being forwarded, so set the reference to zero.
@@ -523,9 +523,9 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
 
   // STRING, a type ID hint
   if (!(cdr << this->type_id.in()))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   if ( ! this->forward_profiles_perm_)
     {
@@ -533,9 +533,9 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
 
       CORBA::ULong const profile_count = mprofile.profile_count ();
       if (!(cdr << profile_count))
-      {
-        return false;
-      }
+        {
+          return false;
+        }
 
     // @@ The MProfile should be locked during this iteration, is there
     // anyway to achieve that?
@@ -543,9 +543,9 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
       {
         TAO_Profile const * const p = mprofile.get_profile (i);
         if (!p->encode (cdr))
-        {
-          return false;
-        }
+          {
+            return false;
+          }
       }
     }
   else
@@ -573,9 +573,9 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
 
       CORBA::ULong const profile_count = mprofile.profile_count ();
       if (!(cdr << profile_count))
-      {
-        return false;
-      }
+        {
+          return false;
+        }
 
       // @@ The MProfile should be locked during this iteration, is there
       // anyway to achieve that?
@@ -583,9 +583,9 @@ TAO_Stub::marshal (TAO_OutputCDR &cdr)
         {
           TAO_Profile const * const p = mprofile.get_profile (i);
           if (!p->encode (cdr))
-          {
-            return false;
-          }
+            {
+              return false;
+            }
         }
 
       // release ACE_Lock
