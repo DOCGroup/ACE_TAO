@@ -16,8 +16,7 @@ constexpr ACEXML_Char ACEXML_XMLNS_URI_name[] = ACE_TEXT ("http://www.w3.org/XML
 const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS = ACEXML_XMLNS_URI_name;
 
 ACEXML_Namespace_Context_Stack::ACEXML_Namespace_Context_Stack ()
-{
-}
+= default;
 
 ACEXML_Namespace_Context_Stack::~ACEXML_Namespace_Context_Stack () = default;
 

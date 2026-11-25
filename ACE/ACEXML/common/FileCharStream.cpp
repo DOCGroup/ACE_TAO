@@ -10,8 +10,7 @@
 #endif /* ACE_USES_WCHAR */
 
 ACEXML_FileCharStream::ACEXML_FileCharStream ()
-{
-}
+= default;
 
 ACEXML_FileCharStream::~ACEXML_FileCharStream ()
 {

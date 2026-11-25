@@ -5,8 +5,7 @@
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_LocatorImpl::ACEXML_LocatorImpl ()
-{
-}
+= default;
 
 ACEXML_LocatorImpl::ACEXML_LocatorImpl (ACEXML_Char const *systemId,
                                         ACEXML_Char const *publicId)

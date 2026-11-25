@@ -75,8 +75,7 @@ ACEXML_SAXException::print () const
 }
 
 ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException ()
-{
-}
+= default;
 
 ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_SAXNotSupportedException &ex)
   : ACEXML_SAXException (ex)
@@ -129,8 +128,7 @@ ACEXML_SAXNotSupportedException::print () const
 }
 
 ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException ()
-{
-}
+= default;
 
 ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (const ACEXML_Char *msg)
   : ACEXML_SAXException (msg)
@@ -182,8 +180,7 @@ ACEXML_SAXNotRecognizedException::print () const
 }
 
 ACEXML_SAXParseException::ACEXML_SAXParseException ()
-{
-}
+= default;
 
 ACEXML_SAXParseException::ACEXML_SAXParseException (const ACEXML_Char *msg)
   : ACEXML_SAXException (msg)

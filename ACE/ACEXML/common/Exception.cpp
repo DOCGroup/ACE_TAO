@@ -12,8 +12,7 @@ const ACEXML_Char *ACEXML_Exception::null_ = ACE_TEXT ("");
 #endif /* __ACEXML_INLINE__ */
 
 ACEXML_Exception::ACEXML_Exception()
-{
-}
+= default;
 
 ACEXML_Exception::~ACEXML_Exception() = default;
 

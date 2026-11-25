@@ -40,8 +40,7 @@
 
 /// Construct an uninitialized variable binding.
 Vb::Vb ()
-{
-}
+= default;
 
 /// Construct a variable binding with its OID initialized.
 Vb::Vb (Oid const &oid)
