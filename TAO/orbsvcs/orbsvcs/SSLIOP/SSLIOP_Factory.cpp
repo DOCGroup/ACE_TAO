@@ -252,7 +252,7 @@ TAO::SSLIOP::Protocol_Factory::Protocol_Factory ()
 }
 
 int
-TAO::SSLIOP::Protocol_Factory::match_prefix (std::string const &prefix)
+TAO::SSLIOP::Protocol_Factory::match_prefix (ACE_CString const &prefix)
 {
   // Check for the proper prefix for this protocol.
   return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix[0]) == 0)

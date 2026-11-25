@@ -9,6 +9,7 @@
 #include "tao/Connection_Purging_Strategy.h"
 #include "tao/PolicyFactory_Registry_Adapter.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
+#include "tao/Protocol_Factory.h"
 #include "tao/Service_Context_Handler.h"
 #include "tao/Transport_Acceptor.h"
 
@@ -101,4 +102,7 @@ namespace
                               TAO_AcceptorSetIterator>::value);
   static_assert (std::is_same<decltype (std::declval<TAO_Acceptor &> ().is_collocated (nullptr)),
                               int>::value);
+  using Match_Prefix = int (TAO_Protocol_Factory::*) (ACE_CString const &);
+  static_assert (std::is_same<decltype (&TAO_Protocol_Factory::match_prefix),
+                              Match_Prefix>::value);
 }

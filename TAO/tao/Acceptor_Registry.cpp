@@ -195,7 +195,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
         orb_core->protocol_factories ()->end ();
 
       // extract the protocol prefix
-      std::string const prefix (iop.c_str (), slot);
+      ACE_CString const prefix (iop.c_str (), slot);
 
       for (TAO_ProtocolFactorySetItor factory =
              orb_core->protocol_factories ()->begin ();
@@ -263,7 +263,7 @@ TAO_Acceptor_Registry::open (TAO_ORB_Core *orb_core,
             CORBA::COMPLETED_NO);
         }
 
-      std::string const prefix (iop.c_str (), slot);
+      ACE_CString const prefix (iop.c_str (), slot);
 
       // @@ We could move the protocol factory loop to the outermost
       //    level but for now we leave it inside the endpoint loop
