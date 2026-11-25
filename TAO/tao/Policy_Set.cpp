@@ -240,21 +240,22 @@ CORBA::PolicyList *
 TAO_Policy_Set::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
 {
   CORBA::ULong const slots = types.length ();
-  CORBA::PolicyList_var policy_list;
+  CORBA::PolicyList *raw_policy_list {};
 
   if (slots == 0)
     {
       // Copy our own policy list.
-      ACE_NEW_THROW_EX (policy_list.out (),
+      ACE_NEW_THROW_EX (raw_policy_list,
                         CORBA::PolicyList (this->policy_list_),
                         CORBA::NO_MEMORY ());
 
-      return policy_list._retn ();
+      return raw_policy_list;
     }
 
-  ACE_NEW_THROW_EX (policy_list.out (),
+  ACE_NEW_THROW_EX (raw_policy_list,
                     CORBA::PolicyList (slots),
                     CORBA::NO_MEMORY ());
+  CORBA::PolicyList_var policy_list (raw_policy_list);
 
   policy_list->length (slots);
   CORBA::ULong n {};

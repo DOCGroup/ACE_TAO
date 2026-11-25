@@ -275,9 +275,9 @@ ReplicaController::send_reply (
     }
   }
 
-  CORBA::OctetSeq_var reply {};
-
-  ACE_NEW (reply.out (), CORBA::OctetSeq (reply_cdr.total_length ()));
+  CORBA::OctetSeq *raw_reply {};
+  ACE_NEW (raw_reply, CORBA::OctetSeq (reply_cdr.total_length ()));
+  CORBA::OctetSeq_var reply (raw_reply);
 
   reply->length (reply_cdr.total_length ());
 
@@ -342,9 +342,9 @@ ReplicaController::send_reply (
 
     size_t const size = log_cdr.total_length ();
 
-    CORBA::OctetSeq_var msg {};
-
-    ACE_NEW (msg.out (), CORBA::OctetSeq (size));
+    CORBA::OctetSeq *raw_msg {};
+    ACE_NEW (raw_msg, CORBA::OctetSeq (size));
+    CORBA::OctetSeq_var msg (raw_msg);
 
     msg->length (size);
 

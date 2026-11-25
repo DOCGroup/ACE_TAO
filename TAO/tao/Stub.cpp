@@ -507,12 +507,12 @@ TAO_Stub::get_policy_overrides (CORBA::PolicyTypeSeq const &types)
       return this->policies_->get_policy_overrides (types);
     }
 
-  CORBA::PolicyList_var policy_list;
-  ACE_NEW_THROW_EX (policy_list.out (),
+  CORBA::PolicyList *policy_list {};
+  ACE_NEW_THROW_EX (policy_list,
                     CORBA::PolicyList (),
                     CORBA::NO_MEMORY ());
 
-  return policy_list._retn ();
+  return policy_list;
 }
 #endif
 

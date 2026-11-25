@@ -65,11 +65,12 @@ TAO_DynAnyFactory::create_multiple_dyn_anys (
 
   CORBA::ULong const length = values.length ();
 
-  DynamicAny::DynAnySeq_var retseq;
+  DynamicAny::DynAnySeq *raw_seq {};
   ACE_NEW_THROW_EX (
-    retseq.out (),
+    raw_seq,
     DynamicAny::DynAnySeq (length),
     CORBA::NO_MEMORY ());
+  DynamicAny::DynAnySeq_var retseq (raw_seq);
   retseq->length (length);
 
   for (CORBA::ULong i {}; i < length; ++i)
@@ -97,11 +98,12 @@ TAO_DynAnyFactory::create_multiple_anys (
 
   CORBA::ULong const length = values.length ();
 
-  DynamicAny::AnySeq_var retseq;
+  DynamicAny::AnySeq *raw_seq {};
   ACE_NEW_THROW_EX (
-    retseq.out (),
+    raw_seq,
     DynamicAny::AnySeq (length),
     CORBA::NO_MEMORY ());
+  DynamicAny::AnySeq_var retseq (raw_seq);
   retseq->length (length);
 
   for (CORBA::ULong i {}; i < length; ++i)

@@ -57,10 +57,11 @@ Iterator_Factory_i::get_iterator (char const *pathname,
   Web_Server::Content_Iterator_var iterator =
     iterator_servant->_this ();
 
-  Web_Server::Metadata_Type_var metadata_value;
-  ACE_NEW_THROW_EX (metadata_value.out (),
+  Web_Server::Metadata_Type *raw_metadata {};
+  ACE_NEW_THROW_EX (raw_metadata,
                     Web_Server::Metadata_Type,
                     CORBA::NO_MEMORY ());
+  Web_Server::Metadata_Type_var metadata_value (raw_metadata);
 
   if (this->modification_date (file_status,
                                *metadata_value) != 0)
