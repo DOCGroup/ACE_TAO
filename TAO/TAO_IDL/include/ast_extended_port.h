@@ -8,6 +8,7 @@ class TAO_IDL_FE_Export AST_Extended_Port
   : public virtual AST_Field
 {
 public:
+  AST_Extended_Port () = delete;
   AST_Extended_Port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);
