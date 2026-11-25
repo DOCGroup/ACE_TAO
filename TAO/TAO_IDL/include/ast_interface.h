@@ -207,11 +207,8 @@ protected:
   /// The forward declaration this interface may have been created from.
   AST_InterfaceFwd *fwd_decl_ {};
 
-  // Must keep these base interface placeholders in a separate
-  // container, so they can be destroyed. Iterating over
-  // pd_inherits won't work because the real interfaces will
-  // probably already be destroyed and the pointers will be
-  // garbage.
+  /// Base interface placeholders are kept separately for destruction;
+  /// real interfaces in pd_inherits may already have been destroyed.
   std::vector<AST_Type *> param_holders_;
 
   /// Do we have both abstract and concrete parents?
@@ -253,15 +250,13 @@ protected:
   // This version checks for redefinitions of attributes or operations.
   AST_Decl *lookup_for_add (AST_Decl *d);
 
+  /// Populate the insert queue with parents and, for valuetypes, supported
+  /// interfaces from this type and its parents.
   void redef_clash_populate_r (AST_Type *t);
-  // Populate the insert queue with our parents, and, if we are a
-  // valuetype, with our supported interface and our parents'
-  // supported interfaces.
 
+  /// Insert without duplicates by searching both traversal queues.
   int insert_non_dup (AST_Type *t,
                       bool abstract_paths_only = false);
-  // Do non-duplicating insert of bi, by searching both the
-  // insert queue and the delete queue.
 };
 
 #endif           // _AST_INTERFACE_AST_INTERFACE_HH
