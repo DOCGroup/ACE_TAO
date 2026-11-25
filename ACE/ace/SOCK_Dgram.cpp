@@ -601,26 +601,34 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
       ACE_INET_Addr addr;
       addr.set (static_cast<u_short> (0), ACE_IPV6_ANY);
       ipv6_mreq send_mreq;
-      if (this->make_multicast_ifaddr6 (&send_mreq,
-                                        addr,
-                                        net_if) == -1)
+      int const ipv6_lookup = this->make_multicast_ifaddr6 (&send_mreq,
+                                                              addr,
+                                                              net_if);
+      if (ipv6_lookup == -1 && addr_family == AF_INET6)
         {
           return -1;
         }
 
       // Only let this attempt to set unknown interface when INET6 is
       // specifically requested. Otherwise we will just try INET.
-      if (send_mreq.ipv6mr_interface != 0 || addr_family == AF_INET6)
+      if (ipv6_lookup == 0 &&
+          (send_mreq.ipv6mr_interface != 0 || addr_family == AF_INET6))
         {
           if (this->ACE_SOCK::set_option
                               (IPPROTO_IPV6, IPV6_MULTICAST_IF,
                                &(send_mreq.ipv6mr_interface),
                                sizeof send_mreq.ipv6mr_interface) == -1)
             {
-              return -1;
+              if (addr_family == AF_INET6)
+                {
+                  return -1;
+                }
+            }
+          else
+            {
+              ipv6_mif_set = send_mreq.ipv6mr_interface != 0;
             }
         }
-      ipv6_mif_set = send_mreq.ipv6mr_interface != 0;
     }
 
 #   if defined (ACE_WIN32)

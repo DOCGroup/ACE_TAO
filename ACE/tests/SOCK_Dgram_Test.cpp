@@ -386,16 +386,47 @@ test_dual_stack_multicast_interface ()
 
   in_addr multicast_interface {};
   int option_length = sizeof (multicast_interface);
-  int const set_result = socket.set_nic (ACE_TEXT ("lo"));
-  int const get_result = socket.get_option (IPPROTO_IP, IP_MULTICAST_IF,
-                                            &multicast_interface, &option_length);
+  ACE_TCHAR const * const interfaces[] = {ACE_TEXT ("lo"), ACE_TEXT ("127.0.0.1")};
+  for (ACE_TCHAR const * const interface_name : interfaces)
+    {
+      int const set_result = socket.set_nic (interface_name);
+      int const get_result = socket.get_option (IPPROTO_IP, IP_MULTICAST_IF,
+                                                &multicast_interface, &option_length);
+      if (set_result == -1 || get_result == -1
+          || multicast_interface.s_addr != ACE_HTONL (INADDR_LOOPBACK))
+        {
+          socket.close ();
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Failed to set IPv4 multicast interface %s on a dual-stack socket\n"),
+                             interface_name),
+                            1);
+        }
+    }
+
+  if (socket.set_nic (ACE_TEXT ("127.0.0.1"), AF_INET6) != -1)
+    {
+      socket.close ();
+      ACE_ERROR_RETURN ((LM_ERROR,
+                         ACE_TEXT ("Accepted an IPv4 address as an IPv6 interface\n")),
+                        1);
+    }
   socket.close ();
 
-  if (set_result == -1 || get_result == -1
+  ACE_SOCK_Dgram ipv4_socket;
+  if (ipv4_socket.open (ACE_Addr::sap_any, PF_INET) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to open IPv4 datagram socket\n")), 1);
+    }
+  int const ipv4_result = ipv4_socket.set_nic (ACE_TEXT ("lo"));
+  option_length = sizeof (multicast_interface);
+  int const get_ipv4_result = ipv4_socket.get_option (IPPROTO_IP, IP_MULTICAST_IF,
+                                                       &multicast_interface, &option_length);
+  ipv4_socket.close ();
+  if (ipv4_result == -1 || get_ipv4_result == -1
       || multicast_interface.s_addr != ACE_HTONL (INADDR_LOOPBACK))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("Failed to set IPv4 multicast interface on a dual-stack socket\n")),
+                         ACE_TEXT ("Failed to set multicast interface on an IPv4 socket\n")),
                         1);
     }
   return 0;
