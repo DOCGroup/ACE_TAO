@@ -261,12 +261,13 @@ ACE_RAPI_Session::open (ACE_INET_Addr const &dest_addr,
   // the callback function. The callback function uses this argument to
   // update the QoS of this session based on the RSVP event it receives.
 
-  if ((this->session_id_ = rapi_session (static_cast<sockaddr *> (dest_addr.get_addr ()),
-                                        protocol_id,
-                                        0,
-                                        rsvp_callback,
-                                        this,
-                                        &rsvp_error)) == NULL_SID)
+  this->session_id_ = rapi_session (static_cast<sockaddr *> (dest_addr.get_addr ()),
+                                    protocol_id,
+                                    0,
+                                    rsvp_callback,
+                                    this,
+                                    &rsvp_error);
+  if (this->session_id_ == NULL_SID)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,
                             "rapi_session () call fails. Error\n"),

@@ -507,7 +507,8 @@ int TCPConnectionHandler::sendBuffers ()
 
   if (buffers_)
     {
-      if (0 < (result = peer_.send_n (buffers_))) // remove sent blocks
+      result = peer_.send_n (buffers_);
+      if (0 < result) // remove sent blocks
         {
           totalSent_ += result;
           while (buffers_ &&
