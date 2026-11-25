@@ -893,8 +893,14 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
 
   CORBA::String_var replica_ior = this->replicator_.ior ();
   ior_table->bind(replica_name, replica_ior.in());
-  ACE_OS::fprintf (fp.get (), "%s", replica_ior.in ());
-  fp.reset ();
+  int const write_result = ACE_OS::fprintf (fp.get (), "%s", replica_ior.in ());
+  int const close_result = ACE_OS::fclose (fp.release ());
+  if (write_result < 0 || close_result != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+        ACE_TEXT ("(%P|%t) ImR: Could not write file: %C\n"),
+        replica_filename.c_str ()), -1);
+    }
 
   int err = 0;
   // only report the imr ior if the fault tolerant ImR is complete
