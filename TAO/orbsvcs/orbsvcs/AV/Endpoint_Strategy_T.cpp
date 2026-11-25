@@ -420,7 +420,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
       if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
-                          "(%P|%t)TAO_AV_Child_Process::activate_objects,stream_endpoint_ior :%s\n",
+                          "(%P|%t)TAO_AV_Child_Process::activate_objects,stream_endpoint_ior :%C\n",
                           stream_endpoint_ior.in ()));
         }
 
@@ -428,7 +428,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
       CORBA::String_var vdev_ior = this->activate_with_poa (this->vdev_);
       if (TAO_debug_level > 0)
         {
-          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)TAO_AV_Child_Process::activate_objects, vdev ior is :%s\n", vdev_ior.in ()));
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)TAO_AV_Child_Process::activate_objects, vdev ior is :%C\n", vdev_ior.in ()));
         }
 
       // activate the media controller
@@ -437,7 +437,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::activate_objects 
       if (TAO_debug_level > 0)
         {
           ORBSVCS_DEBUG (
-            (LM_DEBUG, "(%P|%t)TAO_AV_Child_Process::activate_objects,media_ctrl_ior is: %s\n", media_ctrl_ior.in ()));
+            (LM_DEBUG, "(%P|%t)TAO_AV_Child_Process::activate_objects,media_ctrl_ior is: %C\n", media_ctrl_ior.in ()));
         }
     }
   catch (CORBA::Exception const &ex)
@@ -490,7 +490,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint, T_VDev, T_MediaCtrl>::register_vdev ()
 
       if (TAO_debug_level > 0)
         {
-          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)%s\n", vdev_name));
+          ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)%C\n", vdev_name));
         }
       // create the name
       this->vdev_name_.length (1);
@@ -568,7 +568,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semapho
 
   if (TAO_debug_level > 0)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) semaphore is %s\n", sem_str));
+      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) semaphore is %C\n", sem_str));
     }
 
   // Release the lock on which the server is waiting
@@ -578,7 +578,7 @@ TAO_AV_Child_Process  <T_StreamEndpoint_B, T_VDev, T_MediaCtrl>::release_semapho
 
   if (semaphore.release () == -1)
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) Error releasing semaphore %s: %p\n", sem_str, "semaphore.release ()"), -1);
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) Error releasing semaphore %C: %p\n", sem_str, ACE_TEXT ("semaphore.release ()")), -1);
     }
 
   return 0;
@@ -703,7 +703,7 @@ TAO_AV_Child_Process_A<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
 
   if (TAO_debug_level > 0)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)%s\n", stream_endpoint_name));
+      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)%C\n", stream_endpoint_name));
     }
   this->stream_endpoint_name_.length (1);
   this->stream_endpoint_name_ [0].id = CORBA::string_dup (stream_endpoint_name);
@@ -728,7 +728,7 @@ TAO_AV_Child_Process_B<T_StreamEndpoint, T_VDev, T_MediaCtrl>::TAO_AV_Child_Proc
 
   if (TAO_debug_level > 0)
     {
-      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)%s\n", stream_endpoint_name));
+      ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t)%C\n", stream_endpoint_name));
     }
   this->stream_endpoint_name_.length (1);
   this->stream_endpoint_name_ [0].id = CORBA::string_dup (stream_endpoint_name);
