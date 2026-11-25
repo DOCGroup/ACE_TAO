@@ -36,8 +36,6 @@ public:
                    unsigned short port = ACE_DEFAULT_HTTP_PORT);
 
   ACEXML_URL_Addr (const ACEXML_URL_Addr &addr);
-  ACEXML_URL_Addr (ACEXML_URL_Addr &&) = delete;
-  ACEXML_URL_Addr &operator= (ACEXML_URL_Addr &&) = delete;
 
   /// Essentially the copy constructor.
   int set (const ACEXML_URL_Addr &addr);

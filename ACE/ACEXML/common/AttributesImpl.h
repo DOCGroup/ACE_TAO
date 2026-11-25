@@ -38,9 +38,6 @@ public:
 
   ACEXML_Attribute () = default;
 
-  ACEXML_Attribute (ACEXML_Attribute&&) = delete;
-  ACEXML_Attribute& operator= (ACEXML_Attribute&&) = delete;
-
   ACEXML_Attribute (ACEXML_Attribute const &attr);
 
   /// Initialize all attribute fields.

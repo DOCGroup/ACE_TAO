@@ -33,8 +33,6 @@ public:
   ACEXML_Debug_Attribute_Builder () = default;
 
   ACEXML_Debug_Attribute_Builder (ACEXML_Debug_Attribute_Builder const &rhs);
-  ACEXML_Debug_Attribute_Builder (ACEXML_Debug_Attribute_Builder &&) = delete;
-  ACEXML_Debug_Attribute_Builder &operator= (ACEXML_Debug_Attribute_Builder &&) = delete;
 
   ~ACEXML_Debug_Attribute_Builder () override;
 
