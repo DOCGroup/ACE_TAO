@@ -2,6 +2,9 @@
 #define ACE_TIMER_QUEUE_ITERATOR_CPP
 
 #include "ace/config-all.h"
+#if defined (ACE_HAS_DUMP)
+# include "ace/Log_Category.h"
+#endif /* ACE_HAS_DUMP */
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
