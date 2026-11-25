@@ -386,9 +386,9 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
   // these skew the scoreboard results.
   u_long const mask = ACE_LOG_MSG->priority_mask (ACE_Log_Msg::PROCESS);
   ACE_LOG_MSG->priority_mask (mask & ~LM_ERROR, ACE_Log_Msg::PROCESS);
-  ACE_DEBUG ((LM_DEBUG, "Was %Q, now %Q\n",
-              static_cast<ACE_UINT64> (mask),
-              static_cast<ACE_UINT64> (mask & ~LM_ERROR)));
+  ACE_DEBUG ((LM_DEBUG, "Was %Lu, now %Lu\n",
+              mask,
+              mask & ~LM_ERROR));
   int const error_count = ACE_Service_Config::process_directive (load_logger);
   ACE_LOG_MSG->priority_mask (mask);
   if (error_count != 0)

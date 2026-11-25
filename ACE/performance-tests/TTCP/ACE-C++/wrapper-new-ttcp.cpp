@@ -505,8 +505,8 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             }
 
           if (ack != data_buf_len)
-            ACE_DEBUG ((LM_DEBUG, "received ack for only %q bytes\n",
-                        static_cast<ACE_INT64> (ack)));
+            ACE_DEBUG ((LM_DEBUG, "received ack for only %Ld bytes\n",
+                        ack));
         }
       std::printf("Client finished.\n");
     }
