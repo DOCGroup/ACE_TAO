@@ -122,8 +122,8 @@ Thread_Pool::start ()
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%P|%t) thread activation ")
-                  ACE_TEXT ("failed after %Q threads\n"),
-                  static_cast<ACE_UINT64> (this->total_threads ())));
+                  ACE_TEXT ("failed after %Lu threads\n"),
+                  this->total_threads ()));
       this->failed_ = true;
     }
 }
@@ -189,8 +189,8 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_THREADS)
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%P|%t) will try to start and kill up")
-              ACE_TEXT (" to %Q threads sequentially\n"),
-              static_cast<ACE_UINT64> (MAX_THREAD)));
+              ACE_TEXT (" to %Lu threads sequentially\n"),
+              MAX_THREAD));
   int const initial_pool_size = 50;
 
   // Create the worker tasks.
@@ -215,8 +215,8 @@ run_main (int, ACE_TCHAR *[])
       if (PRINT_DEBUG_MSGS)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%Q total threads\n"),
-                      static_cast<ACE_UINT64> (thread_pool.total_threads ())));
+                      ACE_TEXT ("%Lu total threads\n"),
+                      thread_pool.total_threads ()));
         }
 
       int& n_threads = thread_pool.n_threads_;
@@ -228,10 +228,10 @@ run_main (int, ACE_TCHAR *[])
     }
 
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("%Q total threads successfully started and died;")
-              ACE_TEXT (" expected %Q.\n"),
-              static_cast<ACE_UINT64> (thread_pool.total_threads ()),
-              static_cast<ACE_UINT64> (MAX_THREAD)));
+              ACE_TEXT ("%Lu total threads successfully started and died;")
+              ACE_TEXT (" expected %Lu.\n"),
+              thread_pool.total_threads (),
+              MAX_THREAD));
 #else
   ACE_ERROR ((LM_INFO,
               ACE_TEXT ("threads not supported on this platform\n")));
