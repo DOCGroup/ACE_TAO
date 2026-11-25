@@ -56,10 +56,10 @@ class ACE_TkReactor_Export ACE_TkReactor_Input_Callback
 public:
   ACE_TkReactor_Input_Callback () = default;
 
-  ACE_TkReactor_Input_Callback (ACE_TkReactor_Input_Callback const &) = delete;
-  ACE_TkReactor_Input_Callback (ACE_TkReactor_Input_Callback &&) = delete;
-  ACE_TkReactor_Input_Callback &operator = (ACE_TkReactor_Input_Callback const &) = delete;
-  ACE_TkReactor_Input_Callback &operator = (ACE_TkReactor_Input_Callback &&) = delete;
+  ACE_TkReactor_Input_Callback (ACE_TkReactor_Input_Callback const &) = default;
+  ACE_TkReactor_Input_Callback (ACE_TkReactor_Input_Callback &&) = default;
+  ACE_TkReactor_Input_Callback &operator = (ACE_TkReactor_Input_Callback const &) = default;
+  ACE_TkReactor_Input_Callback &operator = (ACE_TkReactor_Input_Callback &&) = default;
 
   ACE_TkReactor *reactor_ {};
   ACE_HANDLE handle_ {};
