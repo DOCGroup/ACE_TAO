@@ -199,7 +199,7 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
         && siginfo->si_addr >= static_cast<char *> (this->shm_addr_table_[0])))
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,
-                          "(%P|%t) ACE_Shared_Memory_Pool::handle_signal, address %u out of range, base = %u, offset = %u\n",
+                          ACE_TEXT ("(%P|%t) ACE_Shared_Memory_Pool::handle_signal, address %@ out of range, base = %@, offset = %u\n"),
                           siginfo->si_addr,
                           this->shm_addr_table_[0],
                           static_cast<unsigned int>(offset)),
@@ -229,7 +229,7 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
   if (shmem != address)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,
-                            ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::handle_signal, %p, shmem = %u, address = %u\n"),
+                            ACE_TEXT("(%P|%t) ACE_Shared_Memory_Pool::handle_signal, %p, shmem = %@, address = %@\n"),
                             ACE_TEXT("shmat"),
                             shmem,
                             address),
