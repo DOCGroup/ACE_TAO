@@ -1,4 +1,5 @@
 #include "Job_i.h"
+#include "Guid_Utils.h"
 #include "DT_Creator.h"
 #include "Task_Stats.h"
 
@@ -69,7 +70,7 @@ Job_i::work (CORBA::ULong work,
 
   if (guid_ == 0)
     {
-      ACE_OS::memcpy (&guid_, guid->get_buffer (), sizeof (guid->length ()));
+      guid_ = rtscheduling_guid_value (guid.in ());
     }
 
   if (TAO_debug_level > 0)

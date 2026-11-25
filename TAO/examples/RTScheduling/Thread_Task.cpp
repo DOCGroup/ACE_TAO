@@ -1,4 +1,5 @@
 #include "Thread_Task.h"
+#include "Guid_Utils.h"
 #include "DT_Creator.h"
 #include "Task_Stats.h"
 
@@ -41,7 +42,7 @@ Thread_Task::svc ()
                                                 implicit_sched_param.in ());
 
       RTScheduling::Current::IdType_var guid = this->current_->id ();
-      ACE_OS::memcpy (&count_, guid->get_buffer (), guid->length ());
+      count_ = rtscheduling_guid_value (guid.in ());
 
       ACE_TCHAR msg [BUFSIZ];
       ACE_OS::sprintf (msg,

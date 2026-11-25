@@ -1,4 +1,5 @@
 #include "MIF_Scheduler.h"
+#include "../Guid_Utils.h"
 #include "tao/RTScheduling/Request_Interceptor.h"
 #include "test.h"
 #include <atomic>
@@ -153,10 +154,8 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
 {
-  size_t count = 0;
   RTScheduling::Current::IdType_var guid = this->current_->id ();
-
-  std::memcpy (&count, guid->get_buffer (), guid->length ());
+  size_t const count = rtscheduling_guid_value (guid.in ());
 
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param =
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
@@ -205,10 +204,8 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr /*implicit_sched_param*/)
 {
-  size_t count = 0;
   RTScheduling::Current::IdType_var guid = this->current_->id ();
-
-  std::memcpy (&count, guid->get_buffer (), guid->length ());
+  size_t const count = rtscheduling_guid_value (guid.in ());
 
   MIF_Scheduling::SegmentSchedulingParameterPolicy_var sched_param =
     MIF_Scheduling::SegmentSchedulingParameterPolicy::_narrow (sched_policy);
@@ -260,8 +257,7 @@ void
 MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
                                        const char *)
 {
-  size_t count = 0;
-  std::memcpy (&count, guid.get_buffer (), guid.length ());
+  size_t const count = rtscheduling_guid_value (guid);
 
   ACE_DEBUG ((LM_DEBUG,
               "MIF_Scheduler::end_scheduling_segment %B\n",
@@ -300,7 +296,8 @@ MIF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr request_
 
   RTScheduling::Current::IdType_var guid = current_->id ();
 
-  int guid_length = guid->length ();
+  rtscheduling_guid_value (guid.in ());
+  int const guid_length = guid->length ();
 
   CORBA::OctetSeq seq_buf (guid_length);
   seq_buf.length (seq_buf.maximum ());
@@ -393,6 +390,11 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
       ACE_DEBUG ((LM_DEBUG,
                   "Got scheduling info\n"));
 
+      if (serv_cxt->context_data.length () != sizeof (size_t) + sizeof (int))
+        {
+          throw CORBA::BAD_PARAM ();
+        }
+
       RTScheduling::Current::IdType* guid;
       ACE_NEW (guid,
                RTScheduling::Current::IdType);
@@ -400,16 +402,15 @@ MIF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr reque
       guid->length (sizeof(size_t));
       std::memcpy (guid->get_buffer (), serv_cxt->context_data.get_buffer (), sizeof (size_t));
 
-      size_t gu_id;
-      std::memcpy (&gu_id, guid->get_buffer (), guid->length ());
+      size_t const gu_id = rtscheduling_guid_value (*guid);
 
       ACE_DEBUG ((LM_DEBUG,
                   "MIF_Scheduler::receive_request %B\n",
                   gu_id));
 
-      CORBA::OctetSeq int_buf (sizeof (long));
+      CORBA::OctetSeq int_buf (sizeof (int));
       int_buf.length (int_buf.maximum ());
-      int i = sizeof (long);
+      size_t i = sizeof (size_t);
       for (unsigned int j = 0;j < sizeof (int);++j)
         {
           int_buf [j] = serv_cxt->context_data [i++];
@@ -447,8 +448,7 @@ MIF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr)
 {
   RTScheduling::Current::IdType_var guid = current_->id ();
 
-  size_t count;
-  std::memcpy (&count, guid->get_buffer (), guid->length ());
+  size_t const count = rtscheduling_guid_value (guid.in ());
 
   ACE_DEBUG ((LM_DEBUG,
               "MIF_Scheduler::send_reply %B\n",
@@ -490,8 +490,7 @@ MIF_Scheduler::send_other (PortableInterceptor::ServerRequestInfo_ptr)
     {
       RTScheduling::Current::IdType_var guid = current_->id ();
 
-      size_t count;
-      std::memcpy (&count, guid->get_buffer (), guid->length ());
+      size_t const count = rtscheduling_guid_value (guid.in ());
 
       ACE_DEBUG ((LM_DEBUG,
                   "MIF_Scheduler::send_other %B\n",
@@ -528,8 +527,7 @@ MIF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr)
 
   RTScheduling::Current::IdType_var guid = current_->id ();
 
-  size_t gu_id;
-  std::memcpy (&gu_id, guid->get_buffer (), guid->length ());
+  size_t const gu_id = rtscheduling_guid_value (guid.in ());
 
   if (TAO_debug_level > 0)
     {
@@ -579,8 +577,7 @@ MIF_Scheduler::receive_exception (PortableInterceptor::ClientRequestInfo_ptr)
 
   RTScheduling::Current::IdType_var guid = current_->id ();
 
-  size_t gu_id;
-  std::memcpy (&gu_id, guid->get_buffer (), guid->length ());
+  size_t const gu_id = rtscheduling_guid_value (guid.in ());
 
   DT* new_dt;
   ACE_NEW (new_dt,
@@ -623,8 +620,7 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
 
   RTScheduling::Current::IdType_var guid = current_->id ();
 
-  size_t gu_id;
-  std::memcpy (&gu_id, guid->get_buffer (), guid->length ());
+  size_t const gu_id = rtscheduling_guid_value (guid.in ());
 
   DT *new_dt {};
   ACE_NEW (new_dt,

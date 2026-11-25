@@ -17,6 +17,7 @@ project(RTSchedTestLib): naming, rtscheduling, negotiate_codesets, rtportableser
 
   Header_Files {
     DT_Creator.h
+    Guid_Utils.h
     Thread_Task.h
     POA_Holder.h
     Task_Stats.h
