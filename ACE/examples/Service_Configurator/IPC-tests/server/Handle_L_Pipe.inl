@@ -42,7 +42,11 @@ Handle_L_Pipe::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcpy (buf, ACE_TEXT_CHAR_TO_TCHAR (sa.get_path_name ()));
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local pipe\n"));
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (buf);
+    }
+  if (*strp == nullptr)
     {
       return -1;
     }

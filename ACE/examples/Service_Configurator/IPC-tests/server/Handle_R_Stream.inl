@@ -55,7 +55,11 @@ Handle_R_Stream::info (ACE_TCHAR **strp, size_t length) const
                    ACE_TEXT("tcp"),
                    ACE_TEXT("# tests remote stream\n"));
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (buf);
+    }
+  if (*strp == nullptr)
     {
       return -1;
     }

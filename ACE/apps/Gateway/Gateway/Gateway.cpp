@@ -168,7 +168,11 @@ Gateway::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcpy
     (buf, ACE_TEXT ("Gateway daemon\t   # Application-level gateway\n"));
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (buf);
+    }
+  if (*strp == nullptr)
     {
       return -1;
     }

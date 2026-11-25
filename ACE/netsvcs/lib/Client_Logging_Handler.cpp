@@ -547,7 +547,11 @@ ACE_Client_Logging_Acceptor::info (ACE_TCHAR **strp, size_t length) const
                    this->server_addr_.get_port_number (), "tcp",
                    "# client logging daemon\n");
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (buf);
+    }
+  if (*strp == nullptr)
     {
       return -1;
     }

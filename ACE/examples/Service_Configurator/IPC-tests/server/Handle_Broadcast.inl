@@ -43,7 +43,11 @@ Handle_Broadcast::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::sprintf (buf, ACE_TEXT("%d/"), sa.get_port_number ());
   ACE_OS::strcat (buf, ACE_TEXT("udp # tests broadcasting\n"));
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (buf);
+    }
+  if (*strp == nullptr)
     {
       return -1;
     }

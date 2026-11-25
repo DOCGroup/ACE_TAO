@@ -160,7 +160,11 @@ Supplier_Router::info (ACE_TCHAR **strp, size_t length) const
                    ACE_TEXT ("# supplier router"),
                    this->is_reader () ?
                      ACE_TEXT ("reader") : ACE_TEXT ("writer"));
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (module_name)) == nullptr)
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (module_name);
+    }
+  if (*strp == nullptr)
     {
       return -1;
     }

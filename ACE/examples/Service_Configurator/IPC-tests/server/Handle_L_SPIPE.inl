@@ -40,7 +40,11 @@ Handle_L_SPIPE::info (ACE_TCHAR **strp, size_t length) const
   ACE_OS::strcpy (buf, sa.get_path_name ());
   ACE_OS::strcat (buf, ACE_TEXT (" # tests local STREAM pipe\n"));
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
+    {
+      *strp = ACE_OS::strdup (buf);
+    }
+  if (*strp == nullptr)
     {
       return -1;
     }
