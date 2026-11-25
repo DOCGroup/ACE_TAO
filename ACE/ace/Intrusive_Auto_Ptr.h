@@ -49,7 +49,7 @@ public:
 
   /// Constructor that initializes an ACE_Intrusive_Auto_Ptr to
   /// the specified pointer value.
-  explicit ACE_Intrusive_Auto_Ptr (X *p = nullptr, bool addref = true);
+  ACE_Intrusive_Auto_Ptr (X *p = nullptr, bool addref = true);
 
   /// Copy constructor binds the new ACE_Intrusive_Auto_Ptr to the
   /// representation object referenced by @a r.

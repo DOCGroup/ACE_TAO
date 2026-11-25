@@ -83,7 +83,7 @@ public:
    *                 threads use the ts_object (TYPE *) method to set
    *                 a specific value.
    */
-  explicit ACE_TSS (TYPE *ts_obj = nullptr);
+  ACE_TSS (TYPE *ts_obj = nullptr);
 
   ACE_TSS (const ACE_TSS &) = delete;
   ACE_TSS (ACE_TSS &&) = delete;

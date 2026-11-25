@@ -77,7 +77,7 @@ public:
    * @param alloc Pointer to an ACE allocator.  If it is NULL then the
    *              default ACE allocator is used
    */
-  explicit ACE_Vector (size_t const init_size = DEFAULT_SIZE,
+  ACE_Vector (size_t const init_size = DEFAULT_SIZE,
                        ACE_Allocator *alloc = nullptr);
 
   ~ACE_Vector () = default;

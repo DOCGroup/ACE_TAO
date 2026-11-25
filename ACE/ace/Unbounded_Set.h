@@ -73,7 +73,7 @@ class ACE_Unbounded_Set : public
   ACE_Unbounded_Set_Ex<T, ACE_Unbounded_Set_Default_Comparator<T> >
 {
 public:
-  explicit ACE_Unbounded_Set (ACE_Allocator *alloc = nullptr);
+  ACE_Unbounded_Set (ACE_Allocator *alloc = nullptr);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -54,7 +54,7 @@ class ACE_Export ACE_NS_WString : public ACE_WString
 public:
   using ACE_WString::size_type;
 
-  explicit ACE_NS_WString (ACE_Allocator *alloc = nullptr);
+  ACE_NS_WString (ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
   ACE_NS_WString (const char *s,
@@ -130,7 +130,7 @@ public:
   /// No position constant
   static const size_type npos;
 
-  explicit ACE_SString (ACE_Allocator *alloc = nullptr);
+  ACE_SString (ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
   ACE_SString (const char *s, ACE_Allocator *alloc = nullptr);

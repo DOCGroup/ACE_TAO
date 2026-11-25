@@ -161,7 +161,7 @@ public:
   /**
    * Initialize an empty queue using the strategy provided.
    */
-  explicit ACE_Unbounded_Queue (ACE_Allocator *alloc = nullptr);
+  ACE_Unbounded_Queue (ACE_Allocator *alloc = nullptr);
 
   /**
    * Initialize the queue to be a copy of the provided queue.

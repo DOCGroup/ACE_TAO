@@ -249,7 +249,7 @@ public:
    * Initialize an empty set using the allocation strategy of the user if
    * provided.
    */
-  explicit ACE_Unbounded_Set_Ex (ACE_Allocator *alloc = nullptr);
+  ACE_Unbounded_Set_Ex (ACE_Allocator *alloc = nullptr);
 
   /**
    * Initialize an empty set using the allocation strategy of the user if
