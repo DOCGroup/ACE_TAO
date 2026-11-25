@@ -143,9 +143,8 @@ MUF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 #endif
 
 #ifdef KOKYU_DSRT_LOGGING
-  int int_guid;
-  ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T): guid is %d\n", int_guid));
+  size_t const guid_value = guid_to_size_t (guid);
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T): guid is %B\n", guid_value));
 #endif
 
   MUF_Scheduler_Traits::QoSDescriptor_t qos;
@@ -188,9 +187,8 @@ MUF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
   ACE_UNUSED_ARG ((implicit_sched_param));
 
 #ifdef KOKYU_DSRT_LOGGING
-  int int_guid ;
-  ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T): update_sched_seg::guid is %d\n", int_guid));
+  size_t const guid_value = guid_to_size_t (guid);
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T): update_sched_seg::guid is %B\n", guid_value));
 #endif
 
   MUF_Scheduling::SchedulingParameterPolicy_var sched_param_policy =
@@ -211,9 +209,8 @@ MUF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
                                        const char *)
 {
 #ifdef KOKYU_DSRT_LOGGING
-  int int_guid;
-  ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T) call to end_sched_segment for guid %d\n", int_guid));
+  size_t const guid_value = guid_to_size_t (guid);
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T) call to end_sched_segment for guid %B\n", guid_value));
 #endif
 
   kokyu_dispatcher_->cancel_schedule (guid);
@@ -277,11 +274,10 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
       criticality = sched_param->criticality;
 
 #ifdef KOKYU_DSRT_LOGGING
-      int int_guid;
-      ACE_OS::memcpy (&int_guid, guid->get_buffer (), guid->length ());
+      size_t const guid_value = guid_to_size_t (guid.in ());
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): send_request guid = %d\n",
-                  int_guid));
+                  "(%t|%T): send_request guid = %B\n",
+                  guid_value));
 #endif
 
       //Fill the guid in the SC Qos struct
@@ -387,13 +383,12 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
                RTScheduling::Current::IdType);
 
 #ifdef KOKYU_DSRT_LOGGING
-      int int_guid;
-      ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
+      size_t const guid_value = guid_to_size_t (guid);
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): Criticality = %d, guid = %d "
+                  "(%t|%T): Criticality = %d, guid = %B "
                   "in recvd service context\n",
                   criticality,
-                  int_guid));
+                  guid_value));
 #endif
       *(guid_out.ptr ()) = std::move (guid);
       schedule_guid = guid_out.ptr ();

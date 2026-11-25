@@ -148,9 +148,8 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
 #endif
 
 #ifdef KOKYU_DSRT_LOGGING
-  int int_guid;
-  ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T): guid is %d\n", int_guid));
+  size_t const guid_value = guid_to_size_t (guid);
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T): guid is %B\n", guid_value));
 #endif
 
   FP_Scheduler_Traits::QoSDescriptor_t qos;
@@ -190,9 +189,8 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
   ACE_UNUSED_ARG ((implicit_sched_param));
 
 #ifdef KOKYU_DSRT_LOGGING
-  int int_guid ;
-  ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T): update_sched_seg::guid is %d\n", int_guid));
+  size_t const guid_value = guid_to_size_t (guid);
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T): update_sched_seg::guid is %B\n", guid_value));
 #endif
 
   FP_Scheduling::SegmentSchedulingParameterPolicy_var sched_param_policy =
@@ -214,9 +212,8 @@ Fixed_Priority_Scheduler::end_scheduling_segment (const RTScheduling::Current::I
                                        const char *)
 {
 #ifdef KOKYU_DSRT_LOGGING
-  int int_guid;
-  ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
-  ACE_DEBUG ((LM_DEBUG, "(%t|%T) call to end_sched_segment for guid %d\n", int_guid));
+  size_t const guid_value = guid_to_size_t (guid);
+  ACE_DEBUG ((LM_DEBUG, "(%t|%T) call to end_sched_segment for guid %B\n", guid_value));
 #endif
 
   kokyu_dispatcher_->cancel_schedule (guid);
@@ -271,11 +268,10 @@ Fixed_Priority_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_p
       desired_priority = sched_param.base_priority;
 
 #ifdef KOKYU_DSRT_LOGGING
-      int int_guid;
-      ACE_OS::memcpy (&int_guid, guid->get_buffer (), guid->length ());
+      size_t const guid_value = guid_to_size_t (guid.in ());
       ACE_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("(%t): send_request desired_priority from current = %d, guid = %d\n"),
-                  desired_priority, int_guid));
+                  ACE_TEXT ("(%t): send_request desired_priority from current = %d, guid = %B\n"),
+                  desired_priority, guid_value));
 #endif
 
       //Fill the guid in the SC Qos struct
@@ -371,12 +367,11 @@ Fixed_Priority_Scheduler::receive_request (PortableInterceptor::ServerRequestInf
                RTScheduling::Current::IdType);
 
 #ifdef KOKYU_DSRT_LOGGING
-      int int_guid;
-      ACE_OS::memcpy (&int_guid, guid.get_buffer (), guid.length ());
+      size_t const guid_value = guid_to_size_t (guid);
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t|%T): Desired_Priority = %d, guid = %d in recvd service context\n",
+                  "(%t|%T): Desired_Priority = %d, guid = %B in recvd service context\n",
                   desired_priority,
-                  int_guid));
+                  guid_value));
 #endif
       *(guid_out.ptr ()) = std::move (guid);
       schedule_guid = guid_out.ptr ();

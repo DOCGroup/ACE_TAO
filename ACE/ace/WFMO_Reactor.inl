@@ -90,8 +90,8 @@ ACE_WFMO_Reactor_Handler_Repository::Common_Info::dump () const
               this->delete_entry_));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("Close Masks = %Q\n"),
-              static_cast<ACE_UINT64> (this->close_masks_)));
+              ACE_TEXT ("Close Masks = %Lu\n"),
+              this->close_masks_));
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */

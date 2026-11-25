@@ -32,9 +32,9 @@ Bool_Array::~Bool_Array ()
   if (option[DEBUGGING])
     ACE_DEBUG ((LM_DEBUG,
                 "\ndumping boolean array information\n"
-                "size = %B\niteration number = %B\nend of array dump\n",
-                static_cast<size_t> (size_),
-                static_cast<size_t> (generation_number_)));
+                "size = %Lu\niteration number = %Lu\nend of array dump\n",
+                size_,
+                generation_number_));
 }
 
 Bool_Array::Bool_Array ()
