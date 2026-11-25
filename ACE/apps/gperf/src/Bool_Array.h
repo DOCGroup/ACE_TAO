@@ -42,7 +42,11 @@
 class Bool_Array
 {
 public:
-  Bool_Array ();
+  Bool_Array () = default;
+  Bool_Array (Bool_Array const &) = delete;
+  Bool_Array &operator= (Bool_Array const &) = delete;
+  Bool_Array (Bool_Array &&) = delete;
+  Bool_Array &operator= (Bool_Array &&) = delete;
 
   /// Initialize the array (requires O(n) time).
   int open (u_long);
@@ -60,10 +64,10 @@ private:
   std::unique_ptr<unsigned long[]> storage_array_;
 
   /// Keep track of the current Generation.
-  unsigned long generation_number_;
+  unsigned long generation_number_ {};
 
   /// Keep track of array size.
-  unsigned long size_;
+  unsigned long size_ {};
 };
 
 #endif /* BOOL_ARRAY_H */
