@@ -292,7 +292,7 @@ Filter::put (ACE_Message_Block *mb,
 
       // Prepend the line count in front of the buffer.
       ACE_OS::sprintf (mb->rd_ptr (),
-                       ACE_SIZE_T_FORMAT_SPECIFIER
+                       ACE_SIZE_T_FORMAT_SPECIFIER_ASCII
                        ": %s",
                        this->count_++,
                        buf);
