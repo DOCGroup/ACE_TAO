@@ -145,7 +145,7 @@ public:
    */
   virtual ACE_IOStream<STREAM> &operator>> (ACE_IOStream_String &v);
 
-  /// The converse of the <String::put> operator.
+  /// The converse of the @c String::put operator.
   virtual ACE_IOStream<STREAM> &operator<< (ACE_IOStream_String &v);
 
   /// Use macros to provide get/set operators.

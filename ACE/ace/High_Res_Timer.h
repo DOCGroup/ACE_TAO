@@ -31,7 +31,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * reason that one would fail is if high-resolution time isn't
  * supported on the platform.  To avoid impacting performance
  * and complicating the interface, in that case,
- * <ACE_OS::gettimeofday> is used instead.
+ * @c ACE_OS::gettimeofday is used instead.
  * The global scale factor is required for platforms that have
  * high-resolution timers that return units other than
  * microseconds, such as clock ticks.  It is represented as a
@@ -39,7 +39,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * and is used by all instances of High Res Timer.  The member
  * functions that return or print times use the global scale
  * factor.  They divide the "time" that they get from
- * <ACE_OS::gethrtime> by global_scale_factor_ to obtain the
+ * @c ACE_OS::gethrtime by global_scale_factor_ to obtain the
  * time in microseconds.  Its units are therefore 1/microsecond.
  * On Windows the global_scale_factor_ units are 1/millisecond.
  * There's a macro @c ACE_HR_SCALE_CONVERSION which gives the
@@ -65,7 +65,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @note The elapsed time calculations in the print methods use
  * ACE_hrtime_t values.  Those methods do _not_ check for overflow!
  * @note Gabe <begeddov@proaxis.com> raises this issue regarding
- * <ACE_OS::gethrtime>: on multi-processors, the processor that
+ * @c ACE_OS::gethrtime: on multi-processors, the processor that
  * you query for your @c timer.stop() value might not be the one
  * you queried for @c timer.start().  Its not clear how much
  * divergence there would be, if any.
@@ -219,12 +219,12 @@ public:
 
   /**
    * @deprecated THIS FUNCTION IS DEPRECATED.  PLEASE USE
-   * <ACE_OS::gettimeofday> INSTEAD!  Calls <ACE_High_Res_Timer::hrtime_to_tv>
-   * passing <ACE_OS::gethrtime>.  This function can be used to parameterize
-   * objects such as <ACE_Timer_Queue::gettimeofday>.  If
+   * @c ACE_OS::gettimeofday INSTEAD!  Calls @c ACE_High_Res_Timer::hrtime_to_tv
+   * passing @c ACE_OS::gethrtime.  This function can be used to parameterize
+   * objects such as @c ACE_Timer_Queue::gettimeofday.  If
    * @c global_scale_factor_ is not set, and we're on a platform that
    * requires @c global_scale_factor_ (e.g., Win32),
-   * ACE_OS::gettimeofday will be used instead of <ACE_OS::gethrtime>.
+   * ACE_OS::gettimeofday will be used instead of @c ACE_OS::gethrtime.
    * This allows applications on Intel to use @c High_Res_Timer even
    * when @c global_scale_factor is not set.  However, setting the
    * @c global_scale_factor_ appropriately will result in the finest
@@ -249,7 +249,7 @@ public:
 private:
   /**
    * For internal use: gets the high-resolution time using
-   * <ACE_OS::gethrtime>.  Except on platforms that require that the
+   * @c ACE_OS::gethrtime.  Except on platforms that require that the
    * @c global_scale_factor_ be set, such as ACE_WIN32, uses the
    * low-resolution clock if the @c global_scale_factor_ has not been
    * set.

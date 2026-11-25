@@ -81,7 +81,7 @@ public:
 
   /**
    * Run the @c functor for all timers whose values are <=
-   * <ACE_OS::gettimeofday>.  Also accounts for @c timer_skew.
+   * @c ACE_OS::gettimeofday.  Also accounts for @c timer_skew.
    *
    * Depending on the resolution of the underlying OS the system calls
    * like select()/poll() might return at time different than that is

@@ -285,7 +285,7 @@ protected:
 
 protected:
   /// Handler to handle the wakeups. This works in conjunction with the
-  /// <ACE_Proactor::run_event_loop>.
+  /// @c ACE_Proactor::run_event_loop.
   ACE_Handler wakeup_handler_;
   int os_id_;
 

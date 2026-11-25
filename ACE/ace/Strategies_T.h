@@ -379,7 +379,7 @@ protected:
   /// Thread manager for this class (must be provided).
   ACE_Thread_Manager *thr_mgr_;
 
-  /// Flags to pass into the <SVC_HANDLER::activate> method.
+  /// Flags to pass into the @c SVC_HANDLER::activate method.
   long thr_flags_;
 
   /// Number of threads to spawn.
@@ -547,7 +547,7 @@ public:
   virtual ~ACE_Connect_Strategy ();
 
   /// The default behavior delegates to the @c connect method of the
-  /// <PEER_CONNECTOR::connect>.
+  /// @c PEER_CONNECTOR::connect.
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
                                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
                                    ACE_Time_Value *timeout,
@@ -558,7 +558,7 @@ public:
 
   /**
    * The default behavior delegates to the @c connect method of the
-   * <PEER_CONNECTOR::connect>.
+   * @c PEER_CONNECTOR::connect.
    * Please check the documentation in Connector.h for more details.
    */
   virtual int connect_svc_handler (SVC_HANDLER *&sh,

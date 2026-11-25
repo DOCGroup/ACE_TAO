@@ -98,7 +98,7 @@ public:
    * and @a reader> and @a writer as its tasks.  Previously register
    * reader or writers or closed down and deleted according to the
    * value of flags_.  Should not be called from within
-   * <ACE_Task::module_closed>.
+   * @c ACE_Task::module_closed.
    */
   int open (ACE_TCHAR const *module_name,
             ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer = nullptr,
@@ -111,7 +111,7 @@ public:
    * used to override the default behaviour, which depends on previous
    * @a flags values in calls to c'tor, @c open, @c reader, and @c writer.
    * A previous value M_DELETE[_XXX] can not be overridden.  Should
-   * not be called from within <ACE_Task::module_closed>.
+   * not be called from within @c ACE_Task::module_closed.
    */
   int close (int flags = M_DELETE_NONE);
 
@@ -125,7 +125,7 @@ public:
    * module should delete the writer during a call to close or to the
    * destructor. If a previous writer exists, it is closed.  It may
    * also be deleted, depending on the old flags_ value.  Should not
-   * be called from within <ACE_Task::module_closed>.
+   * be called from within @c ACE_Task::module_closed.
    */
   void writer (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *q, int flags = M_DELETE_WRITER);
 
@@ -137,7 +137,7 @@ public:
    * module should delete the reader during a call to close or to the
    * destructor. If a previous reader exists, it is closed.  It may
    * also be deleted, depending on the old flags_ value.  Should not
-   * be called from within <ACE_Task::module_closed>.
+   * be called from within @c ACE_Task::module_closed.
    */
   void reader (ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *q, int flags = M_DELETE_READER);
 

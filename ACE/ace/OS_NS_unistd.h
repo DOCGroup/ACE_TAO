@@ -238,7 +238,7 @@ namespace ACE_OS
 
   /**
    * Receive @a len bytes into @a buf from @a handle (uses the
-   * <ACE_OS::read> call, which uses the @c read system call on UNIX
+   * @c ACE_OS::read call, which uses the @c read system call on UNIX
    * and the @c ReadFile call on Win32). If errors occur, -1 is
    * returned.  If EOF occurs, 0 is returned.  Whatever data has been
    * read will be returned to the caller through @a bytes_transferred.
@@ -338,7 +338,7 @@ namespace ACE_OS
                  ACE_OVERLAPPED *);
 
   /**
-   * Send @a len bytes from @a buf to @a handle (uses the <ACE_OS::write>
+   * Send @a len bytes from @a buf to @a handle (uses the @c ACE_OS::write
    * calls, which is uses the @c write system call on UNIX and the
    * @c WriteFile call on Win32).  If errors occur, -1 is returned.  If
    * EOF occurs, 0 is returned.  Whatever data has been transmitted

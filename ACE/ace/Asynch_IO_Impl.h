@@ -612,7 +612,7 @@ public:
    * @a message_block.  @a message_block's @c wr_ptr will be updated to reflect
    * the added bytes if the read operation is successful completed.
    * Return code of 1 means immediate success and @c number_of_bytes_recvd
-   * will contain number of bytes read.  The <ACE_Handler::handle_read_dgram>
+   * will contain number of bytes read.  The @c ACE_Handler::handle_read_dgram
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
    * errno to get the error code.
@@ -694,7 +694,7 @@ public:
    * @c rd_ptr will be updated to reflect the sent bytes if the send operation
    * is successful completed.
    * Return code of 1 means immediate success and @c number_of_bytes_sent
-   * is updated to number of bytes sent.  The <ACE_Handler::handle_write_dgram>
+   * is updated to number of bytes sent.  The @c ACE_Handler::handle_write_dgram
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
    * errno to get the error code.

@@ -25,13 +25,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Keep exit information for a Thread in thread specific storage.
  * so that the thread-specific exit hooks will get called no
- * matter how the thread exits (e.g., via <ACE_Thread::exit>, C++
+ * matter how the thread exits (e.g., via @c ACE_Thread::exit, C++
  * or Win32 exception, "falling off the end" of the thread entry
  * point function, etc.).
  *
  * This clever little helper class is stored in thread-specific
  * storage using the @c ACE_TSS wrapper.  When a thread exits the
- * <ACE_TSS::cleanup> function deletes this object, thereby
+ * @c ACE_TSS::cleanup function deletes this object, thereby
  * closing it down gracefully.
  */
 class ACE_Export ACE_Thread_Exit

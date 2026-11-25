@@ -40,13 +40,13 @@ public:
    * if things go well.  The @a remote_sap is the file that we are
    * trying to create/open.  If it's the default value of
    * ACE_Addr::sap_any then the user is letting the OS create the
-   * filename (via <ACE_OS::mkstemp>).  The @a timeout is the amount of
+   * filename (via @c ACE_OS::mkstemp).  The @a timeout is the amount of
    * time to wait to create/open the file.  If it's 0 then we block
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  If *timeout > {0, 0} then this is the
    * maximum amount of time to wait before timing out.  The
    * @a local_sap and @a reuse_addr parameters are ignored.  The @a flags
-   * and @a perms arguments are passed down to the <ACE_OS::open>
+   * and @a perms arguments are passed down to the @c ACE_OS::open
    * method.
    */
   ACE_FILE_Connector (ACE_FILE_IO &new_io,
@@ -62,7 +62,7 @@ public:
    * if things go well.  The @a remote_sap is the file that we are
    * trying to create/open.  If it's the default value of
    * ACE_Addr::sap_any then the user is letting the OS create the
-   * filename (via <ACE_OS::mkstemp>).  The @a timeout is the amount of
+   * filename (via @c ACE_OS::mkstemp).  The @a timeout is the amount of
    * time to wait to create/open the file.  If it's 0 then we block
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  In this case, if the create/open can't
@@ -71,7 +71,7 @@ public:
    * time to wait before timing out.  If the time expires before the
    * connection is made @c errno == ETIME.  The @a local_sap and
    * @a reuse_addr parameters are ignored.  The @a flags and @a perms
-   * arguments are passed down to the <ACE_OS::open> method.
+   * arguments are passed down to the @c ACE_OS::open method.
    */
   int connect (ACE_FILE_IO &new_io,
                const ACE_FILE_Addr &remote_sap,

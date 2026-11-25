@@ -291,7 +291,7 @@ namespace ACE_OS {
 #  endif /* ACE_HAS_WCHAR */
 
   // exit_hook and set_exit_hook not in spec
-  /// Function that is called by <ACE_OS::exit>, if non-null.
+  /// Function that is called by @c ACE_OS::exit, if non-null.
   extern ACE_Export ACE_EXIT_HOOK exit_hook_;
 
   /// For use by ACE_Object_Manager only, to register its exit hook..

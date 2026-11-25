@@ -296,7 +296,7 @@ private:
  * @class ACE_QoS_Params
  *
  * @brief Wrapper class that simplifies the information passed to the QoS
- * enabled <ACE_OS::connect> and <ACE_OS::join_leaf> methods.
+ * enabled @c ACE_OS::connect and @c ACE_OS::join_leaf methods.
  */
 class ACE_Export ACE_QoS_Params
 {
@@ -377,7 +377,7 @@ using ACE_QOS_CONDITION_FUNC = int (*)(iovec *, iovec *, ACE_QoS *, ACE_QoS *, i
  * @class ACE_Accept_QoS_Params
  *
  * @brief Wrapper class that simplifies the information passed to the QoS
- * enabled <ACE_OS::accept> method.
+ * enabled @c ACE_OS::accept method.
  */
 class ACE_Export ACE_Accept_QoS_Params
 {

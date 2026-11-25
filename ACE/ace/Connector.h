@@ -309,7 +309,7 @@ protected:
   /**
    * Bridge method for connecting the @a svc_handler to the
    * @a remote_addr.  The default behavior delegates to the
-   * <PEER_CONNECTOR::connect>.
+   * @c PEER_CONNECTOR::connect.
    */
   virtual int connect_svc_handler (SVC_HANDLER *&svc_handler,
                                    const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
@@ -498,7 +498,7 @@ protected:
   /**
    * Bridge method for connecting the new connection into the
    * SVC_HANDLER.  The default behavior delegates to the
-   * <PEER_CONNECTOR::connect> in the @c Connect_Strategy.
+   * @c PEER_CONNECTOR::connect in the @c Connect_Strategy.
    */
   int connect_svc_handler (SVC_HANDLER *&sh,
                            const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
@@ -511,7 +511,7 @@ protected:
   /**
    * Bridge method for connecting the new connection into the
    * SVC_HANDLER.  The default behavior delegates to the
-   * <PEER_CONNECTOR::connect> in the @c Connect_Strategy.
+   * @c PEER_CONNECTOR::connect in the @c Connect_Strategy.
    * @a sh_copy is used to obtain a copy of the @a sh pointer, but that
    * can be kept in the stack; the motivation is a bit too long to
    * include here, but basically we want to modify @a sh safely, using

@@ -260,7 +260,7 @@ public:
    * Removes the @a mask binding of @a eh from the Select_Reactor.  If
    * there are no more bindings for this @a eh then it is removed from
    * the Select_Reactor.  Note that the Select_Reactor will call
-   * <ACE_Event_Handler::get_handle> to extract the underlying I/O
+   * @c ACE_Event_Handler::get_handle to extract the underlying I/O
    * handle.
    */
   int remove_handler (ACE_Event_Handler *eh,

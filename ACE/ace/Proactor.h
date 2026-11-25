@@ -181,19 +181,19 @@ public:
   /// @name Proactor event loop management
   /// @{
 
-  /// Run the event loop until the <ACE_Proactor::handle_events> method
+  /// Run the event loop until the @c ACE_Proactor::handle_events method
   /// returns -1 or the @c end_event_loop method is invoked.
   static int run_event_loop ();
 
   /**
-   * Run the event loop until the <ACE_Proactor::handle_events> method
+   * Run the event loop until the @c ACE_Proactor::handle_events method
    * returns -1, the @c end_event_loop method is invoked, or the
    * ACE_Time_Value expires, in which case 0 is returned.
    */
   static int run_event_loop (ACE_Time_Value &tv);
 
   /**
-   * Instruct the <ACE_Proactor::instance> to terminate its event
+   * Instruct the @c ACE_Proactor::instance to terminate its event
    * loop.
    * This method wakes up all the threads blocked on waiting for
    * completions and end the event loop.
@@ -201,7 +201,7 @@ public:
   static int end_event_loop ();
 
   /**
-   * Resets the <ACE_Proactor::end_event_loop_> static so that the
+   * Resets the @c ACE_Proactor::end_event_loop_ static so that the
    * @c run_event_loop method can be restarted.
    */
   static int reset_event_loop ();
@@ -213,7 +213,7 @@ public:
    */
   static int check_reconfiguration (ACE_Proactor *);
 
-  /// Report if the <ACE_Proactor::instance> event loop is finished.
+  /// Report if the @c ACE_Proactor::instance event loop is finished.
   static int event_loop_done ();
 
   /// Close the associated @c ACE_Proactor_Impl implementation object.
@@ -235,13 +235,13 @@ public:
   // These methods work with an instance of a proactor.
   /**
    * Run the event loop until the
-   * <ACE_Proactor::handle_events>
+   * @c ACE_Proactor::handle_events
    * method returns -1 or the @c end_proactor_event_loop method is invoked.
    */
   int proactor_run_event_loop (PROACTOR_EVENT_HOOK = nullptr);
 
   /**
-   * Run the event loop until the <ACE_Proactor::handle_events>
+   * Run the event loop until the @c ACE_Proactor::handle_events
    * method returns -1, the
    * @c end_proactor_event_loop method is invoked,
    * or the ACE_Time_Value
@@ -260,7 +260,7 @@ public:
   /// Report if the ACE_Proactor event loop is finished.
   int proactor_event_loop_done ();
 
-  /// Resets the <ACE_Proactor::end_event_loop_> static so that the
+  /// Resets the @c ACE_Proactor::end_event_loop_ static so that the
   /// @c run_event_loop method can be restarted.
   int proactor_reset_event_loop ();
 

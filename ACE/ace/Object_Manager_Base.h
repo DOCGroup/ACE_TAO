@@ -190,7 +190,7 @@ public:
   /// Accessor to singleton instance.
   static ACE_OS_Object_Manager *instance ();
 
-  /// For <ACE_OS::atexit> support.
+  /// For @c ACE_OS::atexit support.
   int at_exit (ACE_EXIT_HOOK func, const char* name = nullptr);
 
 //private:

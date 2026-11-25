@@ -588,10 +588,10 @@ private:
 
   /**
    * Keeps track of the maximum number of times that the
-   * <ACE_WFMO_Reactor_Notify::handle_input> method will iterate and
+   * @c ACE_WFMO_Reactor_Notify::handle_input method will iterate and
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify queue before breaking out of its
-   * <ACE_Message_Queue::dequeue> loop.  By default, this is set to
+   * @c ACE_Message_Queue::dequeue loop.  By default, this is set to
    * -1, which means "iterate until the queue is empty."
    */
   int max_notify_iterations_;
@@ -921,7 +921,7 @@ public:
   /// Suspend all handles temporarily.
   virtual int suspend_handlers ();
 
-  /// Resume @a event_handler. Use <ACE_Event_Handler::get_handle> to
+  /// Resume @a event_handler. Use @c ACE_Event_Handler::get_handle to
   /// get the handle.
   virtual int resume_handler (ACE_Event_Handler *event_handler);
 
@@ -1056,10 +1056,10 @@ public:
 
   /**
    * Set the maximum number of times that the
-   * <ACE_WFMO_Reactor_Notify::handle_input> method will iterate and
+   * @c ACE_WFMO_Reactor_Notify::handle_input method will iterate and
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify queue before breaking out of its
-   * <ACE_Message_Queue::dequeue> loop.  By default, this is set to
+   * @c ACE_Message_Queue::dequeue loop.  By default, this is set to
    * -1, which means "iterate until the queue is empty."  Setting this
    * to a value like "1 or 2" will increase "fairness" (and thus
    * prevent starvation) at the expense of slightly higher dispatching
@@ -1069,10 +1069,10 @@ public:
 
   /**
    * Get the maximum number of times that the
-   * <ACE_WFMO_Reactor_Notify::handle_input> method will iterate and
+   * @c ACE_WFMO_Reactor_Notify::handle_input method will iterate and
    * dispatch the ACE_Event_Handlers that are passed in via the
    * notify queue before breaking out of its
-   * <ACE_Message_Queue::dequeue> loop.
+   * @c ACE_Message_Queue::dequeue loop.
    */
   virtual int max_notify_iterations ();
 

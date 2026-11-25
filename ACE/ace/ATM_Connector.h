@@ -59,7 +59,7 @@ public:
    * *timeout > {0, 0} then this is the maximum amount of time to wait before
    * timing out.  If the time expires before the connection is made
    * @c errno == ETIME.  The @a local_sap is the value of local address
-   * to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
+   * to bind to.  If it's the default value of @c ACE_ATM_Addr::sap_any then
    * the user is letting the OS do the binding.  If @a reuse_addr == 1
    * then the @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
@@ -89,7 +89,7 @@ public:
    * *timeout > {0, 0} then this is the maximum amount of time to wait before
    * timing out.  If the time expires before the connection is made
    * @c errno == ETIME.  The @a local_sap is the value of local address
-   * to bind to.  If it's the default value of <ACE_ATM_Addr::sap_any> then
+   * to bind to.  If it's the default value of @c ACE_ATM_Addr::sap_any then
    * the user is letting the OS do the binding.  If @a reuse_addr == 1
    * then the @c local_addr is reused, even if it hasn't been cleanedup yet.
    */

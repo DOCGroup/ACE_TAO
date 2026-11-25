@@ -494,9 +494,9 @@ public:
   /// @{
 
   /**
-   * Returns 0 on success, -1 on failure with <ACE_Log_Msg::errnum> as
+   * Returns 0 on success, -1 on failure with @c ACE_Log_Msg::errnum as
    * the reason.  If errnum == EWOULDBLOCK, and notify == 1,
-   * <ACE_Token_Proxy::sleep_hook> has been called on the current
+   * @c ACE_Token_Proxy::sleep_hook has been called on the current
    * owner of the token.  If ignore_deadlock is passed as 1 and errnum
    * == EDEADLK, then deadlock was detected via ace_token_manager.
    */
@@ -522,9 +522,9 @@ public:
    * nesting_level_ > 1.  I'm not sure if this is really the right
    * thing to do (since it makes it possible for shared data to be
    * changed unexpectedly) so use with caution...  Returns 0 on
-   * success, -1 on failure with <ACE_Log_Msg::errnum> as the reason.
+   * success, -1 on failure with @c ACE_Log_Msg::errnum as the reason.
    * If errnum == EWOULDBLOCK, and notify == 1,
-   * <ACE_Token_Proxy::sleep_hook> has been called on the current
+   * @c ACE_Token_Proxy::sleep_hook has been called on the current
    * owner of the token.
    */
   int renew (ACE_TPQ_Entry *caller,
@@ -587,9 +587,9 @@ public:
   /// @{
 
   /**
-   * Returns 0 on success, -1 on failure with <ACE_Log_Msg::errnum> as
+   * Returns 0 on success, -1 on failure with @c ACE_Log_Msg::errnum as
    * the reason.  If errnum == EWOULDBLOCK, and notify == 1,
-   * <ACE_Token_Proxy::sleep_hook> has been called on the current
+   * @c ACE_Token_Proxy::sleep_hook has been called on the current
    * owner of the token.  If @a ignore_deadlock is passed as 1 and errnum
    * == EDEADLK, then deadlock was detected via ACE_Token_Manager.
    */
@@ -615,9 +615,9 @@ public:
    * nesting_level_ > 1.  I'm not sure if this is really the right
    * thing to do (since it makes it possible for shared data to be
    * changed unexpectedly) so use with caution...  Returns 0 on
-   * success, -1 on failure with <ACE_Log_Msg::errnum> as the reason.
+   * success, -1 on failure with @c ACE_Log_Msg::errnum as the reason.
    * If errnum == EWOULDBLOCK, and notify == 1,
-   * <ACE_Token_Proxy::sleep_hook> has been called on the current
+   * @c ACE_Token_Proxy::sleep_hook has been called on the current
    * owner of the token.
    */
   int renew (ACE_TPQ_Entry *caller,
@@ -721,7 +721,7 @@ private:
  * To add a new type of token (e.g. semaphore), this class is not
  * changed.  See ACE_Token_Manager for details.
  * Tokens (e.g. ACE_Mutex_Token) assume that it can always call
- * <ACE_Token_Proxy::token_acquired> on a new token owner.  This
+ * @c ACE_Token_Proxy::token_acquired on a new token owner.  This
  * is not a problem for synchronous use of token proxies (that is,
  * when acquires block until successful.)  However, for
  * implementations of the Token Server, which may use asynch

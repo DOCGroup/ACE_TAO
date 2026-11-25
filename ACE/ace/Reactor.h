@@ -115,11 +115,11 @@ public:
 
   /**
    * Run the event loop until the ACE_Reactor::handle_events() or
-   * <ACE_Reactor::alertable_handle_events> methods returns -1, the
+   * @c ACE_Reactor::alertable_handle_events methods returns -1, the
    * end_event_loop() method is invoked, or the ACE_Time_Value
    * expires.  Note that this method can only be used by the singleton
    * ACE_Reactor::instance().  Thus, to run another reactor use
-   * <ACE_Reactor::run_reactor_event_loop>.
+   * @c ACE_Reactor::run_reactor_event_loop.
    *
    * @deprecated Use ACE_Reactor::instance()->run_reactor_event_loop() instead
    */
@@ -132,7 +132,7 @@ public:
    * and close down gracefully.  Note that this method can only be
    * used by the singleton ACE_Reactor::instance().  Thus, to
    * terminate another reactor, use
-   * <ACE_Reactor::end_reactor_event_loop>.
+   * @c ACE_Reactor::end_reactor_event_loop.
    *
    * @deprecated Use ACE_Reactor::instance()->end_reactor_event_loop() instead
    */
@@ -142,7 +142,7 @@ public:
    * Report if the ACE_Reactor::instance()'s event loop is finished.
    * @note this method can only be used by the singleton
    * ACE_Reactor::instance().  Thus, to check another reactor use
-   * <ACE_Reactor::reactor_event_loop_done>.
+   * @c ACE_Reactor::reactor_event_loop_done.
    *
    * @deprecated Use ACE_Reactor::instance()->reactor_event_loop_done() instead
    */

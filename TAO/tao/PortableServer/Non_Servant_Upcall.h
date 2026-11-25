@@ -37,7 +37,7 @@ namespace TAO
      * reacquiring once the upcalls complete.  Even though we are
      * releasing the lock, other threads will not be able to make
      * progress since
-     * <Object_Adapter::non_servant_upcall_in_progress_> has been
+     * @c Object_Adapter::non_servant_upcall_in_progress_ has been
      * set.
      */
     class TAO_PortableServer_Export Non_Servant_Upcall

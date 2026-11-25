@@ -160,7 +160,7 @@ public:
   /// @}
 
   /// Returns the underlying PEER_STREAM.  Used by
-  /// <ACE_Acceptor::accept> and <ACE_Connector::connect> factories.
+  /// @c ACE_Acceptor::accept and @c ACE_Connector::connect factories.
   PEER_STREAM &peer () const;
 
   /// Overloaded new operator.  This method unobtrusively records if a
@@ -278,7 +278,7 @@ public:
    * @a relative_timeout are used to determine at what point to flush
    * the @a mq.  By default, there's no buffering at all.  The
    * @a relative_timeout value is interpreted to be in a unit that's
-   * relative to the current time returned by <ACE_OS::gettimeofday>.
+   * relative to the current time returned by @c ACE_OS::gettimeofday.
    */
   ACE_Buffered_Svc_Handler (ACE_Thread_Manager *thr_mgr = nullptr,
                             ACE_Message_Queue<SYNCH_TRAITS> *mq = nullptr,

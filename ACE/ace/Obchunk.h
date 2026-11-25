@@ -53,7 +53,7 @@ public:
   /**
    * Pointer to the beginning contents of this chunk.  This field is
    * actually overlayed by the memory allocated by
-   * <ACE_Obstack::new_chunk>.  Therefore, it *must* come last.
+   * @c ACE_Obstack::new_chunk.  Therefore, it *must* come last.
    */
   char contents_[4];
 };

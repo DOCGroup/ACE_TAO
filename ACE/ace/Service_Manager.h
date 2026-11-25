@@ -34,13 +34,13 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *   reconfiguration, which will re-read the local <svc.conf> file.
  * - Process directive: If neither "help" nor "reconfigure" is sent,
  *   simply treat the incoming string as a process directive and pass
- *   it along to <ACE_Service_Config::process_directive>.  This allows
+ *   it along to @c ACE_Service_Config::process_directive.  This allows
  *   remote configuration via command-line instructions like
  *   % echo suspend My_Remote_Service | telnet hostname 3911
  *
  * Each request is associated with a new connection, which is closed
  * when the request is processed.  In addition, you must be using the
- * singleton <ACE_Reactor::instance> in order to trigger
+ * singleton @c ACE_Reactor::instance in order to trigger
  * reconfigurations.
  */
 class ACE_Export ACE_Service_Manager : public ACE_Service_Object

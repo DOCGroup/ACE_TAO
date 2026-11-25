@@ -29,7 +29,7 @@ class ACE_Thread_Manager;
  * with it.
  * This class can be stored in thread-specific storage using the
  * ACE_TSS wrapper.  When a thread exits the
- * <ACE_TSS::cleanup> function deletes this object, thereby
+ * @c ACE_TSS::cleanup function deletes this object, thereby
  * ensuring that it gets removed from its associated
  * ACE_Thread_Manager.
  */

@@ -62,7 +62,7 @@ public:
   /// Create a new chuck of memory containing @a size bytes.
   void *malloc (size_t = 0) override;
 
-  /// Free a chuck of memory allocated by <ACE_Shared_Memory_SV::malloc>.
+  /// Free a chuck of memory allocated by @c ACE_Shared_Memory_SV::malloc.
   int free (void *p) override;
 
   /// Return the size of the shared memory segment.

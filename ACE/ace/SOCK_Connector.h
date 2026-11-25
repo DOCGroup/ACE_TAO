@@ -295,12 +295,12 @@ protected:
                    u_long flags,
                    int reuse_addr);
 
-  /// Perform operations that must be called before <ACE_OS::connect>.
+  /// Perform operations that must be called before @c ACE_OS::connect.
   int shared_connect_start (ACE_SOCK_Stream &new_stream,
                             const ACE_Time_Value *timeout,
                             const ACE_Addr &local_sap);
 
-  /// Perform operations that must be called after <ACE_OS::connect>.
+  /// Perform operations that must be called after @c ACE_OS::connect.
   int shared_connect_finish (ACE_SOCK_Stream &new_stream,
                              const ACE_Time_Value *timeout,
                              int result);

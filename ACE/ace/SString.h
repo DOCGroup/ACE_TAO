@@ -258,7 +258,7 @@ using ACE_TString = ACE_CString;
  * @brief Simple class to automatically de-allocate strings
  *
  * Keeps a pointer to a string and deallocates it (using
- * <ACE_OS::free>) on its destructor.
+ * @c ACE_OS::free) on its destructor.
  * If you need to delete using "delete[]" the
  * std::unique_ptr<char[]> is your choice.
  * The class plays the same role as unique_ptr<>

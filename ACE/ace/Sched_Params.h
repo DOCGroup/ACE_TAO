@@ -25,7 +25,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Container for scheduling-related parameters.
  *
- * ACE_Sched_Params are passed via <ACE_OS::sched_params> to the
+ * ACE_Sched_Params are passed via @c ACE_OS::sched_params to the
  * OS to specify scheduling parameters.  These parameters include
  * scheduling policy, such as FIFO (ACE_SCHED_FIFO), round-robin
  * (ACE_SCHED_RR), or an implementation-defined "OTHER"
@@ -36,19 +36,19 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * see the note below about combinations of parameters that may not
  * be legal on a particular platform.
  * For the case of thread priorities, it is intended that
- * <ACE_OS::sched_params> usually be called from @c main before
+ * @c ACE_OS::sched_params usually be called from @c main before
  * any threads have been spawned.  If spawned threads inherit
  * their parent's priority (I think that's the default behavior
  * for all of our platforms), then this sets the default base
  * priority.  Individual thread priorities can be adjusted as
- * usual using <ACE_OS::thr_prio> or via the ACE_Thread
+ * usual using @c ACE_OS::thr_prio or via the ACE_Thread
  * interface.  See the parameter descriptions in the private:
  * section below.
  * @note This class does not do any checking of parameters.  It
  * is just a container class.  If it is constructed with values
  * that are not supported on a platform, the call to
- * <ACE_OS::sched_params> will fail by returning -1 with EINVAL
- * (available through <ACE_OS::last_error>).
+ * @c ACE_OS::sched_params will fail by returning -1 with EINVAL
+ * (available through @c ACE_OS::last_error).
  */
 class ACE_Export ACE_Sched_Params
 {

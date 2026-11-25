@@ -141,13 +141,13 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  /// Perform operations that must occur before <ACE_OS::accept> is
+  /// Perform operations that must occur before @c ACE_OS::accept is
   /// called.
   int shared_accept_start (ACE_Time_Value *timeout,
                            bool restart,
                            int &in_blocking_mode) const;
 
-  /// Perform operations that must occur after <ACE_OS::accept> is
+  /// Perform operations that must occur after @c ACE_OS::accept is
   /// called.
   int shared_accept_finish (ACE_SOCK_SEQPACK_Association new_association,
                             int in_blocking_mode,

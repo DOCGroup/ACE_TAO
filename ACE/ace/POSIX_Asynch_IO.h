@@ -213,7 +213,7 @@ protected:
  * @class ACE_POSIX_Asynch_Read_Stream_Result
  *
  * @brief This class provides concrete implementation for
- *    <ACE_Asynch_Read_Stream::Result> class for POSIX platforms.
+ *    @c ACE_Asynch_Read_Stream::Result class for POSIX platforms.
  */
 class ACE_Export ACE_POSIX_Asynch_Read_Stream_Result : public virtual ACE_Asynch_Read_Stream_Result_Impl,
                                                        public ACE_POSIX_Asynch_Result
@@ -293,7 +293,7 @@ public:
  * @class ACE_POSIX_Asynch_Write_Stream_Result
  *
  * @brief This class provides concrete implementation for
- *     <ACE_Asynch_Write_Stream::Result> on POSIX platforms.
+ *     @c ACE_Asynch_Write_Stream::Result on POSIX platforms.
  *
  *     This class has all the information necessary for the
  *     @c handler to uniquiely identify the completion of the
@@ -378,7 +378,7 @@ public:
  * @class ACE_POSIX_Asynch_Read_File_Result
  *
  * @brief This class provides concrete implementation for
- *     <ACE_Asynch_Read_File::Result> class for POSIX platforms.
+ *     @c ACE_Asynch_Read_File::Result class for POSIX platforms.
  */
 class ACE_Export ACE_POSIX_Asynch_Read_File_Result : public virtual ACE_Asynch_Read_File_Result_Impl,
                                                      public ACE_POSIX_Asynch_Read_Stream_Result
@@ -420,9 +420,9 @@ protected:
  *     all POSIX implementations of Proactor.
  *
  *     Once @c open is called, multiple asynchronous @c reads can
- *     started using this class.  A <ACE_Asynch_Read_File::Result>
+ *     started using this class.  A @c ACE_Asynch_Read_File::Result
  *     will be passed back to the @c handler when the asynchronous
- *     reads completes through the <ACE_Handler::handle_read_file>
+ *     reads completes through the @c ACE_Handler::handle_read_file
  *     callback.
  *
  *     This class differs slightly from @c ACE_Asynch_Read_Stream as it
@@ -453,7 +453,7 @@ private:
   /**
    * This belongs to ACE_POSIX_Asynch_Read_Stream. We have
    * defined this here to avoid compiler warnings and forward the
-   * method to <ACE_POSIX_Asynch_Read_Stream::read>.
+   * method to @c ACE_POSIX_Asynch_Read_Stream::read.
    */
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
@@ -473,9 +473,9 @@ private:
  *     asynchronous write.
  *
  *     This class differs slightly from
- *     <ACE_Asynch_Write_Stream::Result> as it calls back
- *     <ACE_Handler::handle_write_file> on the @c handler instead of
- *     <ACE_Handler::handle_write_stream>.  No additional state is
+ *     @c ACE_Asynch_Write_Stream::Result as it calls back
+ *     @c ACE_Handler::handle_write_file on the @c handler instead of
+ *     @c ACE_Handler::handle_write_stream.  No additional state is
  *     required by this class as @c ACE_Asynch_Result can store the
  *     @a offset.
  */
@@ -544,7 +544,7 @@ private:
   /**
    * This @c write belongs to ACE_POSIX_Asynch_Write_Stream. We
    * have put this here to avoid compiler warnings. We forward this
-   * method call to the <ACE_POSIX_Asynch_Write_Stream::write>
+   * method call to the @c ACE_POSIX_Asynch_Write_Stream::write
    * one.
    */
   int write (ACE_Message_Block &message_block,
@@ -989,7 +989,7 @@ public:
  *     Once @c open is called, multiple asynchronous @c reads can be
  *     started using this class.  An ACE_Asynch_Read_Dgram::Result
  *     will be passed back to the @c handler when the asynchronous
- *     reads completes through the <ACE_Handler::handle_read_stream>
+ *     reads completes through the @c ACE_Handler::handle_read_stream
  *     callback.
  */
 class ACE_Export ACE_POSIX_Asynch_Read_Dgram : public virtual ACE_Asynch_Read_Dgram_Impl,

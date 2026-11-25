@@ -166,7 +166,7 @@ private:
     /// Max micro seconds to wait for token if not blocking forever.
     ACE_UINT32 usec_;
 
-    /// value returned in <Token_Reply::arg>;
+    /// value returned in @c Token_Reply::arg;
     ACE_UINT32 arg_;
 
     /// The data portion contains the @c tokenName_ including a 0 terminator,
