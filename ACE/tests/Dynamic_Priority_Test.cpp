@@ -363,9 +363,9 @@ performance_consumer (void * args)
   timer.stop ();
   ACE_Time_Value tv;
   timer.elapsed_time (tv);
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("%6u, %6Q, %f"),
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("%6u, %6Lu, %f"),
               local_count,
-              static_cast<ACE_UINT64> (tv.msec ()),
+              tv.msec (),
               (ACE_timer_t) tv.msec () / local_count));
 
   ACE_TEST_ASSERT (local_count == expected_count);
@@ -427,9 +427,9 @@ performance_producer (void *args)
   timer.stop ();
   ACE_Time_Value tv;
   timer.elapsed_time (tv);
-  ACE_DEBUG ((LM_INFO, ACE_TEXT ("%6d, %6Q, %f, "),
+  ACE_DEBUG ((LM_INFO, ACE_TEXT ("%6d, %6Lu, %f, "),
               local_count,
-              static_cast<ACE_UINT64> (tv.msec ()),
+              tv.msec (),
               (ACE_timer_t) tv.msec () / local_count));
 
   ACE_TEST_ASSERT (local_count == expected_count);
