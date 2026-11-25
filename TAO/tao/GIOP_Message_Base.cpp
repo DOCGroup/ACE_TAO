@@ -1555,7 +1555,6 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
         return;
       }
 
-    static const char digits[] = "0123456789ABCD";
     static const char *names[] =
     {
       "Request",
@@ -1624,11 +1623,11 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     // Print.
     TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT("TAO (%P|%t) - GIOP_Message_Base::dump_msg, ")
-                ACE_TEXT("%C GIOP message v%c.%c, %B data bytes, %s endian, ")
+                ACE_TEXT("%C GIOP message v%d.%d, %B data bytes, %s endian, ")
                 ACE_TEXT("Type %C[%u]\n"),
                 label,
-                digits[ptr[TAO_GIOP_VERSION_MAJOR_OFFSET]],
-                digits[ptr[TAO_GIOP_VERSION_MINOR_OFFSET]],
+                major,
+                minor,
                 len - TAO_GIOP_MESSAGE_HEADER_LEN ,
                 (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
                 message_name,
