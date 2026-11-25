@@ -11,6 +11,7 @@
 #include "ace/Service_Config.h"
 #include "ace/Reactor.h"
 #include "ace/Log_Msg.h"
+#include "ace/Thread_Manager.h"
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
@@ -25,5 +26,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
   // Run forever, performing the configured services until we
   // shutdown.
   ACE_Reactor::run_event_loop ();
+
+  // The ORB runs in a separate thread. Let it finish processing shutdown
+  // before service configuration and singleton teardown begin.
+  if (ACE_Thread_Manager::instance ()->wait () == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("wait")), 1);
+    }
   return 0;
 }
