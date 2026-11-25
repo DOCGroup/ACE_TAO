@@ -17,6 +17,7 @@ project(CSD_TP_Test_Lib) : taolib_with_idl, csd_threadpool, avoids_corba_e_micro
     AppShutdown.cpp
     ClientEngine.cpp
     ClientTask.cpp
+    Copy_Compatibility.cpp
     OrbRunner.cpp
     OrbTask.cpp
     TestAppBase.cpp

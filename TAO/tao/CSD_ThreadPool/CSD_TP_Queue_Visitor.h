@@ -40,10 +40,8 @@ namespace TAO
     {
     public:
       virtual ~TP_Queue_Visitor() = default;
-      TP_Queue_Visitor (TP_Queue_Visitor const &) = delete;
-      TP_Queue_Visitor &operator= (TP_Queue_Visitor const &) = delete;
-      TP_Queue_Visitor (TP_Queue_Visitor &&) = delete;
-      TP_Queue_Visitor &operator= (TP_Queue_Visitor &&) = delete;
+      TP_Queue_Visitor (TP_Queue_Visitor const &) = default;
+      TP_Queue_Visitor &operator= (TP_Queue_Visitor const &) = default;
 
       /// Returns true to continue visitation.  Return false to stop
       /// visitation.  Sets the remove_flag to true if the request should

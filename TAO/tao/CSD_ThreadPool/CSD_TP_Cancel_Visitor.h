@@ -49,10 +49,8 @@ namespace TAO
       explicit TP_Cancel_Visitor(PortableServer::Servant servant);
 
       ~TP_Cancel_Visitor() override = default;
-      TP_Cancel_Visitor (TP_Cancel_Visitor const &) = delete;
-      TP_Cancel_Visitor &operator= (TP_Cancel_Visitor const &) = delete;
-      TP_Cancel_Visitor (TP_Cancel_Visitor &&) = delete;
-      TP_Cancel_Visitor &operator= (TP_Cancel_Visitor &&) = delete;
+      TP_Cancel_Visitor (TP_Cancel_Visitor const &) = default;
+      TP_Cancel_Visitor &operator= (TP_Cancel_Visitor const &) = default;
 
       /// Returns true to continue visitation.  Returns false to stop
       /// visitation.  Sets the remove_flag to true if the request should
@@ -63,7 +61,7 @@ namespace TAO
     private:
       /// Left as nil if we are to cancel all requests, or set to a specific
       /// servant if only requests targeting that servant should be cancelled.
-      PortableServer::ServantBase_var const servant_;
+      PortableServer::ServantBase_var servant_;
     };
   }
 }
