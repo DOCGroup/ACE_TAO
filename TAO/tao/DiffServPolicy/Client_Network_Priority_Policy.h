@@ -77,7 +77,6 @@ public:
   /// Returns the scope at which this policy can be applied. See orbconf.h.
   TAO_Policy_Scope _tao_scope () const override;
 
-  TAO_Client_Network_Priority_Policy (TAO_Client_Network_Priority_Policy &&) = delete;
   TAO_Client_Network_Priority_Policy &operator= (
     TAO_Client_Network_Priority_Policy const &) = delete;
   TAO_Client_Network_Priority_Policy &operator= (TAO_Client_Network_Priority_Policy &&) = delete;
