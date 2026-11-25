@@ -109,10 +109,9 @@ ClientTask::svc ()
           this->foo_->test_var_array_arg (var_array);
 
           Bounded_Var_Size_var bd_var_size_string = new Bounded_Var_Size ();
-          CORBA::String_var buffer1 = CORBA::string_dup ("BOUNDED VAR SIZE CHAR");
-          CORBA::ULong const buffer1_length = std::strlen (buffer1.in ()) + 1;
-          // _retn transfers each buffer to sequence replace, which takes ownership.
-          bd_var_size_string->replace (buffer1_length, buffer1._retn (), true);
+          char const buffer1[] = "BOUNDED VAR SIZE CHAR";
+          bd_var_size_string->length (sizeof (buffer1));
+          std::memcpy (bd_var_size_string->get_buffer (), buffer1, sizeof (buffer1));
           this->foo_->test_bounded_var_size_arg (bd_var_size_string.in ());
 
           CORBA::String_var buffer2 = CORBA::string_dup ("UNBOUNDED VAR SIZE CHAR");
