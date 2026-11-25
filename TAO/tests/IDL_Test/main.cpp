@@ -1274,6 +1274,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       {
         something_handler x;
+        PortableServer::ServantBase * const servant = &x;
         char const * base[] =
         {
           "IDL:bug_1985_c/d/AMI_somethingHandler:1.0",
@@ -1293,7 +1294,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
               }
           }
 
-        if (!dynamic_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (&x))
+        if (!dynamic_cast<POA_bug_1985_c::d::AMI_somethingHandler*> (servant))
           {
             ++error_count;
             ACE_ERROR ((LM_ERROR,
@@ -1301,7 +1302,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         base[0]));
           }
 
-        if (!dynamic_cast<POA_bug_1985_a::b::AMI_somethingHandler*> (&x))
+        if (!dynamic_cast<POA_bug_1985_a::b::AMI_somethingHandler*> (servant))
           {
             ++error_count;
             ACE_ERROR ((LM_ERROR,
@@ -1309,7 +1310,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                        base[1]));
           }
 
-        if (!dynamic_cast<POA_Messaging::ReplyHandler*> (&x))
+        if (!dynamic_cast<POA_Messaging::ReplyHandler*> (servant))
           {
             ++error_count;
             ACE_ERROR ((LM_ERROR,
