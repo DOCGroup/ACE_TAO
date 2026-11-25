@@ -937,12 +937,12 @@ TAO_IFR_Service_Utils::set_exceptions (
   // or are calling from a mutator which has already removed the old one.
   ACE_Configuration_Section_Key excepts_key;
   config->open_section (key,
-                        sub_section,
+                        ACE_TEXT_CHAR_TO_TCHAR (sub_section),
                         true,
                         excepts_key);
 
   config->set_integer_value (excepts_key,
-                             "count",
+                             ACE_TEXT ("count"),
                              length);
 
   char *type_path {};
@@ -952,10 +952,10 @@ TAO_IFR_Service_Utils::set_exceptions (
       type_path =
         TAO_IFR_Service_Utils::reference_to_path (exceptions[i]);
 
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR const *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       config->set_string_value (excepts_key,
                                 stringified,
-                                type_path);
+                                ACE_TEXT_CHAR_TO_TCHAR (type_path));
     }
 }
 
@@ -966,17 +966,17 @@ TAO_IFR_Service_Utils::gen_valuetype_tc_r (
 {
   ACE_TString name;
   repo->config ()->get_string_value (key,
-                                     "name",
+                                     ACE_TEXT ("name"),
                                      name);
   ACE_TString id;
   repo->config ()->get_string_value (key,
-                                     "id",
+                                     ACE_TEXT ("id"),
                                      id);
   CORBA::ValueModifier tm = CORBA::VM_NONE;
   CORBA::ULong is_it = 0;
 
   repo->config ()->get_integer_value (key,
-                                      "is_abstract",
+                                      ACE_TEXT ("is_abstract"),
                                       is_it);
 
   if (is_it)
@@ -986,7 +986,7 @@ TAO_IFR_Service_Utils::gen_valuetype_tc_r (
    else
     {
       repo->config ()->get_integer_value (key,
-                                          "is_custom",
+                                          ACE_TEXT ("is_custom"),
                                           is_it);
 
       if (is_it)
@@ -996,7 +996,7 @@ TAO_IFR_Service_Utils::gen_valuetype_tc_r (
       else
         {
           repo->config ()->get_integer_value (key,
-                                              "is_truncatable",
+                                              ACE_TEXT ("is_truncatable"),
                                               is_it);
 
           if (is_it)
@@ -1009,7 +1009,7 @@ TAO_IFR_Service_Utils::gen_valuetype_tc_r (
   ACE_TString base_path;
   int status =
     repo->config ()->get_string_value (key,
-                                       "base_value",
+                                       ACE_TEXT ("base_value"),
                                        base_path);
   CORBA::TypeCode_var base_tc = CORBA::TypeCode::_nil ();
 
@@ -1032,8 +1032,8 @@ TAO_IFR_Service_Utils::gen_valuetype_tc_r (
                                                repo);
 
   return
-    repo->tc_factory ()->create_value_tc (id.c_str (),
-                                          name.c_str (),
+    repo->tc_factory ()->create_value_tc (ACE_TEXT_ALWAYS_CHAR (id.c_str ()),
+                                          ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
                                           tm,
                                           base_tc.in (),
                                           vm_seq);
@@ -1048,7 +1048,7 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
   ACE_Configuration_Section_Key members_key;
   int status =
     repo->config ()->open_section (key,
-                                   "members",
+                                   ACE_TEXT ("members"),
                                    false,
                                    members_key);
 
@@ -1060,10 +1060,10 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
 
   CORBA::ULong count = 0;
   repo->config ()->get_integer_value (members_key,
-                                      "count",
+                                      ACE_TEXT ("count"),
                                       count);
   vm_seq.length (count);
-  char *stringified {};
+  ACE_TCHAR const *stringified {};
   ACE_Configuration_Section_Key member_key, type_key;
   ACE_TString holder;
   CORBA::ULong access = 0;
@@ -1076,23 +1076,23 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
                                      false,
                                      member_key);
       repo->config ()->get_string_value (member_key,
-                                         "name",
+                                         ACE_TEXT ("name"),
                                          holder);
-      vm_seq[i].name = holder.fast_rep ();
+      vm_seq[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
       repo->config ()->get_string_value (member_key,
-                                         "id",
+                                         ACE_TEXT ("id"),
                                          holder);
-      vm_seq[i].id = holder.fast_rep ();
+      vm_seq[i].id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
       repo->config ()->get_string_value (key,
-                                         "id",
+                                         ACE_TEXT ("id"),
                                          holder);
-      vm_seq[i].defined_in = holder.fast_rep ();
+      vm_seq[i].defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
       repo->config ()->get_string_value (member_key,
-                                         "version",
+                                         ACE_TEXT ("version"),
                                          holder);
-      vm_seq[i].version = holder.fast_rep ();
+      vm_seq[i].version = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
       repo->config ()->get_string_value (member_key,
-                                         "type_path",
+                                         ACE_TEXT ("type_path"),
                                          holder);
       TAO_IDLType_i *impl =
         TAO_IFR_Service_Utils::path_to_idltype (holder,
@@ -1100,7 +1100,7 @@ TAO_IFR_Service_Utils::fill_valuemember_seq (
       vm_seq[i].type = impl->type_i ();
 
       repo->config ()->get_integer_value (member_key,
-                                          "access",
+                                          ACE_TEXT ("access"),
                                           access);
       vm_seq[i].access = static_cast<CORBA::Visibility> (access);
     }
