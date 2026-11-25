@@ -139,8 +139,8 @@ Receiver::Receiver ()
 {
   ACE_GUARD (MyMutex, locker, m_Mtx);
   ++nSessions;
-  ACE_DEBUG ((LM_DEBUG, "Receiver Ctor nSessions=%q\n",
-              static_cast<ACE_INT64> (nSessions)));
+  ACE_DEBUG ((LM_DEBUG, "Receiver Ctor nSessions=%Ld\n",
+              nSessions));
 }
 
 Receiver::~Receiver ()
@@ -148,8 +148,8 @@ Receiver::~Receiver ()
   ACE_GUARD (MyMutex, locker, m_Mtx);
   --nSessions;
   ACE_OS::closesocket (this->handle_);
-  ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor nSessions=%q\n",
-              static_cast<ACE_INT64> (nSessions)));
+  ACE_DEBUG ((LM_DEBUG, "~Receiver Dtor nSessions=%Ld\n",
+              nSessions));
 }
 
 //  return true if we alive, false  we commited suicide
