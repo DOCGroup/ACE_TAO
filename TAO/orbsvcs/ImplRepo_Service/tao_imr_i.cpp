@@ -551,7 +551,8 @@ TAO_IMR_Op_Link::parse (int argc, ACE_TCHAR **argv)
           this->peers_.length (num);
           while (last < num)
             {
-              if ((c2 = std::strchr (arg, ',')) != 0)
+              c2 = std::strchr (arg, ',');
+              if (c2 != 0)
               {
                 *c2 = 0;
               }

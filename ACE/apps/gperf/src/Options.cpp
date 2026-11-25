@@ -146,7 +146,8 @@ Options::key_sort (char *base, int len)
            curr > 0 && tmp >= base[curr - 1];
            --curr)
         {
-          if ((base[curr] = base[curr - 1]) == tmp)
+          base[curr] = base[curr - 1];
+          if (base[curr] == tmp)
             {
               // Oh no, a duplicate!!!
               return 0;
