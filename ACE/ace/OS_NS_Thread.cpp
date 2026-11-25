@@ -646,9 +646,9 @@ TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
   if (purpose == CREATE)
   {
     if (instance_ == 0)
-    {
-      instance_ = new ACE_TSS_Cleanup();
-    }
+      {
+        instance_ = new ACE_TSS_Cleanup();
+      }
     ptr_ = instance_;
     ++reference_count_;
   }
@@ -660,9 +660,9 @@ TSS_Cleanup_Instance::TSS_Cleanup_Instance (Purpose purpose)
       instance_ = 0;
       ACE_SET_BITS(flags_, FLAG_DELETING);
       while (reference_count_ > 0)
-      {
-        condition_->wait();
-      }
+        {
+          condition_->wait();
+        }
     }
   }
   else // must be normal use
@@ -1103,9 +1103,9 @@ ACE_OS::cleanup_tss (const u_int main_thread)
       // called by the ACE_Object_Manager.
       TSS_Cleanup_Instance cleanup(TSS_Cleanup_Instance::DESTROY);
       if (cleanup.valid ())
-      {
-        ; // the pointer deletes the Cleanup when it goes out of scope
-      }
+        {
+          ; // the pointer deletes the Cleanup when it goes out of scope
+        }
 
 #endif /* WIN32 || ACE_HAS_TSS_EMULATION */
 
@@ -1940,9 +1940,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
 # endif
 
   if (attributes == nullptr)
-  {
-    attributes = std::addressof (l_attributes);
-  }
+    {
+      attributes = std::addressof (l_attributes);
+    }
   int result = 0;
   int attr_init = 0;  // have we initialized the local attributes.
 
@@ -2004,9 +2004,9 @@ ACE_OS::mutex_init (ACE_mutex_t *m,
   // Only do the deletions if the <attributes> parameter wasn't
   // originally set.
   if (attributes == std::addressof (l_attributes) && attr_init)
-  {
-    ::pthread_mutexattr_destroy (&l_attributes);
-  }
+    {
+      ::pthread_mutexattr_destroy (&l_attributes);
+    }
 
   return result;
 # elif defined (ACE_HAS_WTHREADS)
@@ -2265,9 +2265,9 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
 
   // We need to adjust this to make the errno values consistent.
   if (result == -1 && errno == ETIMEDOUT)
-  {
-    errno = ETIME;
-  }
+    {
+      errno = ETIME;
+    }
   return result;
 
 #  elif defined (ACE_HAS_WTHREADS)
@@ -2559,9 +2559,9 @@ int ACE_event_t::wake_one ()
   else
 # endif
     if (ACE_OS::cond_signal (&this->eventdata_->condition_) != 0)
-    {
-      return -1;
-    }
+      {
+        return -1;
+      }
   return 0;
 }
 
@@ -2611,9 +2611,9 @@ ACE_OS::event_destroy (ACE_event_t *event)
             {
               event->eventdata_->is_signaled_ = 1;
               if (ACE_OS::cond_broadcast (&event->eventdata_->condition_) != 0)
-              {
-                return -1;
-              }
+                {
+                  return -1;
+                }
               ACE_OS::thr_yield ();
             }
 # else
@@ -2659,9 +2659,9 @@ ACE_OS::event_destroy (ACE_event_t *event)
         {
           event->eventdata_->is_signaled_ = 1;
           if (ACE_OS::cond_broadcast (&event->eventdata_->condition_) != 0)
-          {
-            return -1;
-          }
+            {
+              return -1;
+            }
           ACE_OS::thr_yield ();
         }
 
@@ -2699,9 +2699,9 @@ namespace {
           ACE_OS::cond_init (&evtdata->condition_, (short) type, name, arg);
 
         if (result != 0)
-        {
-          return result;
-        }
+          {
+            return result;
+          }
       }
 
     return init_mutex ?
@@ -2794,9 +2794,9 @@ ACE_OS::event_init (ACE_event_t *event,
       if (evtdata == MAP_FAILED)
         {
           if (owner)
-          {
-            ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name_p));
-          }
+            {
+              ACE_OS::shm_unlink (ACE_TEXT_CHAR_TO_TCHAR (name_p));
+            }
           return -1;
         }
 
@@ -2935,9 +2935,9 @@ ACE_OS::event_pulse (ACE_event_t *event)
     }
 
   if (result == -1)
-  {
-    errno = error;
-  }
+    {
+      errno = error;
+    }
 
   return result;
 #else
@@ -2953,9 +2953,9 @@ ACE_OS::event_reset (ACE_event_t *event)
   ACE_WIN32CALL_RETURN (ACE_ADAPT_RETVAL (::ResetEvent (*event), ace_result_), int, -1);
 #elif defined (ACE_HAS_THREADS)
   if (event->lock () != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   event->eventdata_->is_signaled_ = 0;
   event->eventdata_->auto_event_signaled_ = false;
@@ -2977,9 +2977,9 @@ ACE_OS::event_signal (ACE_event_t *event)
   int result = event->lock ();
 
   if (result != 0)
-  {
-    return result;
-  }
+    {
+      return result;
+    }
 
   if (event->eventdata_->manual_reset_ == 1)
     {
@@ -3002,9 +3002,9 @@ ACE_OS::event_signal (ACE_event_t *event)
           }
 
       if (result == 0)
-      {
-        event->eventdata_->is_signaled_ = 1;
-      }
+        {
+          event->eventdata_->is_signaled_ = 1;
+        }
     }
   else // Auto-reset event
     {
@@ -3022,14 +3022,14 @@ ACE_OS::event_signal (ACE_event_t *event)
     }
 
   if (event->unlock () != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (result == -1)
-  {
-    errno = error;
-  }
+    {
+      errno = error;
+    }
 
   return result;
 #else
@@ -3201,22 +3201,22 @@ ACE_OS::event_timedwait (ACE_event_t *event,
 
       // Reset the auto_event_signaled_ to false now that we have woken up.
       if (event->eventdata_->auto_event_signaled_)
-      {
-        event->eventdata_->auto_event_signaled_ = false;
-      }
+        {
+          event->eventdata_->auto_event_signaled_ = false;
+        }
 
       --event->eventdata_->waiting_threads_;
     }
 
   if (event->unlock () != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (result == -1)
-  {
-    errno = error;
-  }
+    {
+      errno = error;
+    }
 
   return result;
 #else
@@ -3723,9 +3723,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   std::unique_ptr <ACE_Base_Thread_Adapter> auto_thread_args;
 
   if (thread_adapter == nullptr)
-  {
-    auto_thread_args.reset (thread_args);
-  }
+    {
+      auto_thread_args.reset (thread_args);
+    }
 
 #if defined (ACE_HAS_THREADS)
 
@@ -3739,15 +3739,15 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
   ACE_thread_t tmp_thr;
   if (thr_id == nullptr)
-  {
-    thr_id = &tmp_thr;
-  }
+    {
+      thr_id = &tmp_thr;
+    }
 
   ACE_hthread_t tmp_handle;
   if (thr_handle == nullptr)
-  {
-    thr_handle = &tmp_handle;
-  }
+    {
+      thr_handle = &tmp_handle;
+    }
 
 # if defined (ACE_HAS_PTHREADS)
   int result;
@@ -3761,9 +3761,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
   pthread_attr_t attr;
 #   endif
   if (ACE_ADAPT_RETVAL(::pthread_attr_init(&attr), result) != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (stacksize != 0)
     {
@@ -3771,9 +3771,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
 
 #   if defined (PTHREAD_STACK_MIN)
       if (size < static_cast <size_t> (PTHREAD_STACK_MIN))
-      {
-        size = PTHREAD_STACK_MIN;
-      }
+        {
+          size = PTHREAD_STACK_MIN;
+        }
 #   endif /* PTHREAD_STACK_MIN */
 
 #   if !defined (ACE_LACKS_PTHREAD_ATTR_SETSTACKSIZE)
@@ -3827,9 +3827,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           int dstate = PTHREAD_CREATE_JOINABLE;
 
           if (ACE_BIT_ENABLED (flags, THR_DETACHED))
-          {
-            dstate = PTHREAD_CREATE_DETACHED;
-          }
+            {
+              dstate = PTHREAD_CREATE_DETACHED;
+            }
 
           if (ACE_ADAPT_RETVAL(::pthread_attr_setdetachstate (&attr, dstate),
                                result) != 0)
@@ -3988,9 +3988,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
         {
           int sched = PTHREAD_EXPLICIT_SCHED;
           if (ACE_BIT_ENABLED (flags, THR_INHERIT_SCHED))
-          {
-            sched = PTHREAD_INHERIT_SCHED;
-          }
+            {
+              sched = PTHREAD_INHERIT_SCHED;
+            }
           if (ACE_ADAPT_RETVAL(::pthread_attr_setinheritsched (&attr, sched), result) != 0)
             {
               ::pthread_attr_destroy (&attr);
@@ -4025,9 +4025,9 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
           int scope = PTHREAD_SCOPE_PROCESS;
 #     endif /* ACE_LACKS_PTHREAD_SCOPE_PROCESS */
           if (ACE_BIT_ENABLED (flags, THR_SCOPE_SYSTEM))
-          {
-            scope = PTHREAD_SCOPE_SYSTEM;
-          }
+            {
+              scope = PTHREAD_SCOPE_SYSTEM;
+            }
 
           if (ACE_ADAPT_RETVAL(::pthread_attr_setscope (&attr, scope), result) != 0)
             {

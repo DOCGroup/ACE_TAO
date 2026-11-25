@@ -169,9 +169,9 @@ ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
     {
       long const tmp = g->refcnt_.fetch_sub (1) - 1;
       if (tmp <= 0)
-      {
-        delete g;
-      }
+        {
+          delete g;
+        }
       ACE_ASSERT (tmp >= 0);
     }
 }
@@ -179,9 +179,9 @@ ACE_Service_Gestalt::intrusive_remove_ref (ACE_Service_Gestalt* g)
 ACE_Service_Gestalt::~ACE_Service_Gestalt ()
 {
   if (this->svc_repo_is_owned_)
-  {
-    delete this->repo_;
-  }
+    {
+      delete this->repo_;
+    }
 
   this->repo_ =nullptr;
 
@@ -265,9 +265,9 @@ ACE_Service_Gestalt::init_i ()
     }
 
   if (init_svc_conf_file_queue () == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   return 0;
 }
@@ -280,9 +280,9 @@ ACE_Service_Gestalt::load_static_svcs ()
   ACE_TRACE ("ACE_Service_Gestalt::load_static_svcs");
 
   if (this->static_svcs_ == nullptr)
-  {
-    return 0; // Nothing to do
-  }
+    {
+      return 0; // Nothing to do
+    }
 
   ACE_Static_Svc_Descriptor **ssdp {};
   for (ACE_STATIC_SVCS_ITERATOR iter (*this->static_svcs_);
@@ -292,9 +292,9 @@ ACE_Service_Gestalt::load_static_svcs ()
       ACE_Static_Svc_Descriptor *ssd = *ssdp;
 
       if (this->process_directive (*ssd, true) == -1)
-      {
-        return -1;
-      }
+        {
+          return -1;
+        }
     }
   return 0;
 } /* load_static_svcs () */
@@ -307,9 +307,9 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
   ACE_TRACE ("ACE_Service_Gestalt::find_static_svc_descriptor");
 
   if (this->static_svcs_ == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE_Static_Svc_Descriptor **ssdp {};
   for (ACE_STATIC_SVCS_ITERATOR iter ( *this->static_svcs_);
@@ -319,9 +319,9 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
       if (ACE_OS::strcmp ((*ssdp)->name_, name) == 0)
         {
           if (ssd != nullptr)
-          {
-            *ssd = *ssdp;
-          }
+            {
+              *ssd = *ssdp;
+            }
 
           return 0;
         }
@@ -335,9 +335,9 @@ const ACE_Static_Svc_Descriptor*
 ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
 {
   if (this->processed_static_svcs_ == nullptr || name == nullptr)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
   Processed_Static_Svc **pss {};
   for (ACE_PROCESSED_STATIC_SVCS_ITERATOR iter (*this->processed_static_svcs_);
@@ -345,9 +345,9 @@ ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
        iter.advance ())
     {
       if (ACE_OS::strcmp ((*pss)->name_, name) == 0)
-      {
-        return (*pss)->assd_;
-      }
+        {
+          return (*pss)->assd_;
+        }
     }
   return nullptr;
 }
@@ -691,9 +691,9 @@ ACE_Service_Gestalt::remove (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::remove");
   if (this->repo_ == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   return this->repo_->remove (svc_name);
 }
@@ -708,9 +708,9 @@ ACE_Service_Gestalt::suspend (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::suspend");
   if (this->repo_ == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   return this->repo_->suspend (svc_name);
 }
@@ -723,9 +723,9 @@ ACE_Service_Gestalt::resume (const ACE_TCHAR svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::resume");
   if (this->repo_ == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   return this->repo_->resume (svc_name);
 }
@@ -747,9 +747,9 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
                                           bool force_replace)
 {
   if (this->repo_ == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   if (!force_replace)
     {
@@ -770,9 +770,9 @@ ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
                                                   ssd.flags_,
                                                   gobbler);
   if (stp == nullptr)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   ACE_Service_Type *service_type {};
 
@@ -1066,22 +1066,22 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
   // if the singleton gestalt (ubergestalt) was already open,
   // do not open it again...
   if (this->is_opened_++ != 0)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   if (this->init_i () != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   u_long flags = log_msg->flags ();
 
   // Only use STDERR if the caller hasn't already set the flags.
   if (flags == 0)
-  {
-    flags = (u_long) ACE_Log_Msg::STDERR;
-  }
+    {
+      flags = (u_long) ACE_Log_Msg::STDERR;
+    }
 
   const ACE_TCHAR *key = logger_key;
 
@@ -1109,9 +1109,9 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
       // If -d was included as a startup parameter, the user wants debug
       // information printed during service initialization.
       if (ACE::debug ())
-      {
-        ACE_Log_Msg::enable_debug_messages ();
-      }
+        {
+          ACE_Log_Msg::enable_debug_messages ();
+        }
       else
       {
         // The user has requested no debugging info.
@@ -1142,9 +1142,9 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
             {
               FILE * const fp = ACE_OS::fopen (ACE_DEFAULT_SVC_CONF, ACE_TEXT ("r"));
               if (fp != nullptr)
-              {
-                ACE_OS::fclose(fp);
-              }
+                {
+                  ACE_OS::fclose(fp);
+                }
               else
               {
                 add_default = false;
@@ -1180,9 +1180,9 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
         {
           int const temp = this->process_commandline_directives ();
           if (temp == -1)
-          {
-            result = -1;
-          }
+            {
+              result = -1;
+            }
           else
           {
             result += temp;
@@ -1260,9 +1260,9 @@ ACE_Service_Gestalt::parse_args_i (int argc,
                        1); // Start at argv[1].
 
   if (this->init_svc_conf_file_queue () == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   for (int c; (argc != 0) && ((c = get_opt ()) != -1); )
   {
@@ -1345,9 +1345,9 @@ ACE_Service_Gestalt::process_directives (bool )
     {
       int const result = this->process_file (sptr->fast_rep ());
       if (result < 0)
-      {
-        return result;
-      }
+        {
+          return result;
+        }
       failed += result;
     }
 
@@ -1361,9 +1361,9 @@ ACE_Service_Gestalt::close ()
   ACE_TRACE ("ACE_Service_Gestalt::close");
 
   if (!this->is_opened_ || --this->is_opened_ != 0)
-  {
-    return 0;
-  }
+    {
+      return 0;
+    }
 
   // Delete the list fo svc.conf files
   delete this->svc_conf_file_queue_;
@@ -1393,9 +1393,9 @@ ACE_Service_Gestalt::close ()
 #endif
 
   if (this->svc_repo_is_owned_)
-  {
-    delete this->repo_;
-  }
+    {
+      delete this->repo_;
+    }
 
   this->repo_ = nullptr;
 

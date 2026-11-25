@@ -190,17 +190,17 @@ ACE::select (int width,
 # if !defined (ACE_WIN32)
       // This isn't needed for Windows... it's a no-op anyway.
       if (readfds)
-      {
-        readfds->sync ((ACE_HANDLE) width);
-      }
+        {
+          readfds->sync ((ACE_HANDLE) width);
+        }
       if (writefds)
-      {
-        writefds->sync ((ACE_HANDLE) width);
-      }
+        {
+          writefds->sync ((ACE_HANDLE) width);
+        }
       if (exceptfds)
-      {
-        exceptfds->sync ((ACE_HANDLE) width);
-      }
+        {
+          exceptfds->sync ((ACE_HANDLE) width);
+        }
 #endif /* ACE_WIN32 */
     }
   return result;
@@ -219,9 +219,9 @@ ACE::select (int width,
 
 #if !defined (ACE_WIN32)
   if (result > 0)
-  {
-    readfds.sync ((ACE_HANDLE) width);
-  }
+    {
+      readfds.sync ((ACE_HANDLE) width);
+    }
 #endif /* ACE_WIN32 */
   return result;
 }
@@ -450,9 +450,9 @@ ACE::dirname (const ACE_TCHAR *pathname, ACE_TCHAR delim)
       // not happen in normal circomstances
       size_t len = temp - pathname + 1;
       if (len > (sizeof return_dirname / sizeof (ACE_TCHAR)))
-      {
-        len = sizeof return_dirname / sizeof (ACE_TCHAR);
-      }
+        {
+          len = sizeof return_dirname / sizeof (ACE_TCHAR);
+        }
 
       ACE_OS::strsncpy (return_dirname,
                         pathname,
@@ -625,9 +625,9 @@ ACE::recv_n_i (ACE_HANDLE handle,
                         flags);
       // Check EOF.
       if (n == 0)
-      {
-        return 0;
-      }
+        {
+          return 0;
+        }
 
       // Check for other errors.
       if (n == -1)
@@ -1058,9 +1058,9 @@ ACE::recvv_n_i (ACE_HANDLE handle,
       ssize_t n = ACE_OS::recvv (handle, iov + s, iovcnt - s);
       // Check EOF.
       if (n == 0)
-      {
-        return 0;
-      }
+        {
+          return 0;
+        }
 
       // Check for other errors.
       if (n == -1)
@@ -1239,9 +1239,9 @@ ACE::recv_n (ACE_HANDLE handle,
 
                   // Errors.
                   if (result == -1 || result == 0)
-                  {
-                    return result;
-                  }
+                    {
+                      return result;
+                    }
 
                   // Reset iovec counter.
                   iovcnt = 0;
@@ -1447,9 +1447,9 @@ ACE::send_n_i (ACE_HANDLE handle,
                         flags);
       // Check EOF.
       if (n == 0)
-      {
-        return 0;
-      }
+        {
+          return 0;
+        }
 
       // Check for other errors.
       if (n == -1)
@@ -1888,9 +1888,9 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
       // Check EOF.
       if (n == 0)
-      {
-        return 0;
-      }
+        {
+          return 0;
+        }
 
       // Check for other errors.
       if (n == -1)
@@ -2073,9 +2073,9 @@ ACE::write_n (ACE_HANDLE handle,
 
                   // Errors.
                   if (result == -1 || result == 0)
-                  {
-                    return result;
-                  }
+                    {
+                      return result;
+                    }
 
                   // Reset iovec counter.
                   iovcnt = 0;
@@ -2106,9 +2106,9 @@ ACE::write_n (ACE_HANDLE handle,
 
       // Errors.
       if (result == -1 || result == 0)
-      {
-        return result;
-      }
+        {
+          return result;
+        }
     }
 
   // Return total bytes transferred.
@@ -2174,9 +2174,9 @@ ACE::send_n (ACE_HANDLE handle,
 
                   // Errors.
                   if (result == -1 || result == 0)
-                  {
-                    return result;
-                  }
+                    {
+                      return result;
+                    }
 
                   // Reset iovec counter.
                   iovcnt = 0;
@@ -2236,9 +2236,9 @@ ACE::readv_n (ACE_HANDLE handle,
                                  iovcnt - s);
 
       if (n == -1 || n == 0)
-      {
-        return n;
-      }
+        {
+          return n;
+        }
 
       for (bytes_transferred += n;
            s < iovcnt
@@ -2375,9 +2375,9 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
   int const result = ACE::handle_read_ready (handle, timeout);
 
   if (result == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE::record_and_set_non_blocking_mode (handle, val);
 
@@ -2392,9 +2392,9 @@ ACE::enter_send_timedwait (ACE_HANDLE handle,
   int const result = ACE::handle_write_ready (handle, timeout);
 
   if (result == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACE::record_and_set_non_blocking_mode (handle, val);
 
@@ -2452,9 +2452,9 @@ ACE::format_hexdump (const char *buffer,
   const ACE_TCHAR *const obuf_start = obuf;
 
   if (size > max_input_bytes)
-  {
-    size = max_input_bytes;
-  }
+    {
+      size = max_input_bytes;
+    }
 
   size_t i;
 
@@ -2589,9 +2589,9 @@ ACE::round_to_pagesize (size_t len)
   ACE_TRACE ("ACE::round_to_pagesize");
 
   if (ACE::pagesize_ == 0)
-  {
-    ACE::pagesize_ = ACE_OS::getpagesize ();
-  }
+    {
+      ACE::pagesize_ = ACE_OS::getpagesize ();
+    }
 
   return (len + (ACE::pagesize_ - 1)) & ~(ACE::pagesize_ - 1);
 }
@@ -2602,9 +2602,9 @@ ACE::round_to_allocation_granularity (size_t len)
   ACE_TRACE ("ACE::round_to_allocation_granularity");
 
   if (ACE::allocation_granularity_ == 0)
-  {
-    ACE::allocation_granularity_ = ACE_OS::allocation_granularity ();
-  }
+    {
+      ACE::allocation_granularity_ = ACE_OS::allocation_granularity ();
+    }
 
   return (len + (ACE::allocation_granularity_ - 1)) & ~(ACE::allocation_granularity_ - 1);
 }
@@ -2688,9 +2688,9 @@ ACE::handle_timed_complete (ACE_HANDLE h,
   if (n <= 0)
     {
       if (n == 0 && timeout != nullptr)
-      {
-        errno = ETIME;
-      }
+        {
+          errno = ETIME;
+        }
       return ACE_INVALID_HANDLE;
     }
 
@@ -2798,9 +2798,9 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
   ACE_TRACE ("ACE::handle_timed_accept");
   // Make sure we don't bomb out on erroneous values.
   if (listener == ACE_INVALID_HANDLE)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
 #if defined (ACE_HAS_POLL)
 
@@ -3029,9 +3029,9 @@ ACE::max_handles ()
     }
 # else
   if (r == 0 && rl.rlim_cur != RLIM_INFINITY)
-  {
-    return rl.rlim_cur;
-  }
+    {
+      return rl.rlim_cur;
+    }
   // If == RLIM_INFINITY, fall through to the ACE_LACKS_RLIMIT sections
 # endif /* RLIM_INFINITY */
 #endif /* RLIMIT_NOFILE && !ACE_LACKS_RLIMIT */
@@ -3059,9 +3059,9 @@ ACE::set_handle_limit (int new_limit,
   int max_limit = cur_limit;
 
   if (cur_limit == -1)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
 #if !defined (ACE_LACKS_RLIMIT) && defined (RLIMIT_NOFILE)
   struct rlimit rl;
@@ -3069,15 +3069,15 @@ ACE::set_handle_limit (int new_limit,
   std::memset (&rl, 0, sizeof rl);
   int const r = ACE_OS::getrlimit (RLIMIT_NOFILE, &rl);
   if (r == 0)
-  {
-    max_limit = rl.rlim_max;
-  }
+    {
+      max_limit = rl.rlim_max;
+    }
 #endif /* ACE_LACKS_RLIMIT */
 
   if (new_limit == -1)
-  {
-    new_limit = max_limit;
-  }
+    {
+      new_limit = max_limit;
+    }
 
   if (new_limit < 0)
     {
@@ -3551,9 +3551,9 @@ char *
 ACE::strnew (const char *s)
 {
   if (s == nullptr)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
   char *t {};
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (t,
@@ -3573,9 +3573,9 @@ wchar_t *
 ACE::strnew (const wchar_t *s)
 {
   if (s == nullptr)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
   size_t const n = std::wcslen (s) + 1;
   wchar_t *t {};
@@ -3599,9 +3599,9 @@ namespace
   inline bool equal_char (char a, char b, bool case_sensitive)
   {
     if (case_sensitive)
-    {
-      return a == b;
-    }
+      {
+        return a == b;
+      }
     return ACE_OS::ace_tolower (a) == ACE_OS::ace_tolower (b);
   }
 
@@ -3655,13 +3655,13 @@ ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
                 bool character_classes)
 {
   if (str == pat)
-  {
-    return true;
-  }
+    {
+      return true;
+    }
   if (pat == nullptr || str == nullptr)
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   bool star = false, escape = false;
   const char *s = str;
@@ -3699,9 +3699,9 @@ ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
            else
             {
               if (!star)
-              {
-                return false;
-              }
+                {
+                  return false;
+                }
               p = pat;
             }
           ++s;
@@ -3709,9 +3709,9 @@ ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
       else if (!equal_char (*s, *p, case_sensitive))
         {
           if (!star)
-          {
-            return false;
-          }
+            {
+              return false;
+            }
           ++s;
           p = pat;
           escape = false;
