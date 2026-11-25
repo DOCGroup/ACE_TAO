@@ -98,9 +98,9 @@ namespace TAO
                 TAOLIB_ERROR ((LM_ERROR,
                   ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
                   ACE_TEXT ("Transport_Cache_Manager_T, failed to schedule ")
-                  ACE_TEXT ("idle scanner every %d seconds, result %q\n"),
+                  ACE_TEXT ("idle scanner every %d seconds, result %Ld\n"),
                   this->idle_scan_interval_,
-                  static_cast<ACE_INT64> (this->idle_scan_timer_id_)));
+                  this->idle_scan_timer_id_));
               }
           }
         else if (TAO_debug_level > 6)
@@ -108,9 +108,9 @@ namespace TAO
             TAOLIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("TAO (%P|%t) - Transport_Cache_Manager_T::")
               ACE_TEXT ("Transport_Cache_Manager_T, scheduled idle scanner ")
-              ACE_TEXT ("every %d seconds, timer id %q\n"),
+              ACE_TEXT ("every %d seconds, timer id %Ld\n"),
               this->idle_scan_interval_,
-              static_cast<ACE_INT64> (this->idle_scan_timer_id_)));
+              this->idle_scan_timer_id_));
           }
       }
   }

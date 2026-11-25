@@ -83,17 +83,17 @@ ACE_Dynamic_Message_Strategy::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
 
   ACELIB_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("static_bit_field_mask_ = %Q\n")
-              ACE_TEXT ("static_bit_field_shift_ = %Q\n")
-              ACE_TEXT ("dynamic_priority_max_ = %Q\n")
-              ACE_TEXT ("dynamic_priority_offset_ = %Q\n")
+              ACE_TEXT ("static_bit_field_mask_ = %Lu\n")
+              ACE_TEXT ("static_bit_field_shift_ = %Lu\n")
+              ACE_TEXT ("dynamic_priority_max_ = %Lu\n")
+              ACE_TEXT ("dynamic_priority_offset_ = %Lu\n")
               ACE_TEXT ("max_late_ = [%: sec, %q usec]\n")
               ACE_TEXT ("min_pending_ = [%: sec, %q usec]\n")
               ACE_TEXT ("pending_shift_ = [%: sec, %q usec]\n"),
-              static_cast<ACE_UINT64> (this->static_bit_field_mask_),
-              static_cast<ACE_UINT64> (this->static_bit_field_shift_),
-              static_cast<ACE_UINT64> (this->dynamic_priority_max_),
-              static_cast<ACE_UINT64> (this->dynamic_priority_offset_),
+              this->static_bit_field_mask_,
+              this->static_bit_field_shift_,
+              this->dynamic_priority_max_,
+              this->dynamic_priority_offset_,
               this->max_late_.sec (),
               static_cast<ACE_INT64> (this->max_late_.usec ()),
               this->min_pending_.sec (),
