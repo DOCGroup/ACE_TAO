@@ -1,6 +1,9 @@
 #include "test_config.h"
 #include "ace/Malloc_Allocator.h"
 #include "ace/Read_Buffer.h"
+#include "ace/OS_NS_stdio.h"
+#include "ace/OS_NS_stdlib.h"
+#include "ace/OS_NS_unistd.h"
 
 #include <cstdio>
 #include <cstring>
@@ -51,6 +54,46 @@ run_main (int, ACE_TCHAR *[])
 
     ACE_TEST_ASSERT (allocator.free_count_ == 1);
   }
+
+#if !defined (ACE_LACKS_DUP) && !defined (ACE_LACKS_MKSTEMP) && !defined (ACE_LACKS_FDOPEN)
+  ACE_TCHAR filename[] = ACE_TEXT ("read_buffer_test_XXXXXX");
+  ACE_HANDLE const handle = ACE_OS::mkstemp (filename);
+  if (handle == ACE_INVALID_HANDLE)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("mkstemp failed\n")), -1);
+    }
+  if (ACE_OS::write (handle, "borrowed", 8) != 8)
+    {
+      ACE_OS::close (handle);
+      ACE_OS::unlink (filename);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to prepare borrowed handle\n")), -1);
+    }
+
+  for (int i = 0; i != 100; ++i)
+    {
+      if (ACE_OS::lseek (handle, 0, SEEK_SET) == -1)
+        {
+          ACE_OS::close (handle);
+          ACE_OS::unlink (filename);
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Borrowed handle was closed\n")), -1);
+        }
+      ACE_Read_Buffer reader (handle, false);
+      ACE_Read_Buffer_Unique_Ptr buffer (reader.read (), {reader.alloc ()});
+      if (buffer == nullptr || std::strcmp (buffer.get (), "borrowed") != 0)
+        {
+          ACE_OS::close (handle);
+          ACE_OS::unlink (filename);
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to read borrowed handle\n")), -1);
+        }
+    }
+  int const close_result = ACE_OS::close (handle);
+  ACE_OS::unlink (filename);
+  if (close_result != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to close borrowed handle\n")), -1);
+    }
+
+#endif
 
   ACE_END_TEST;
   return 0;

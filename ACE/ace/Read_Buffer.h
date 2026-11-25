@@ -61,12 +61,13 @@ public:
                    bool close_on_delete = false,
                    ACE_Allocator * = nullptr);
 
-  /// Read from an open HANDLE.
+  /// Read from an open handle. Where supported, a borrowed handle is duplicated
+  /// for the stream.
   ACE_Read_Buffer (ACE_HANDLE handle,
                    bool close_on_delete = false,
                    ACE_Allocator * = nullptr);
 
-  /// Closes the FILE *.
+  /// Closes an owned stream and leaves a borrowed FILE or handle open.
   ~ACE_Read_Buffer ();
 
   /**
@@ -115,7 +116,7 @@ private:
   /// The stream we are reading from.
   FILE *stream_;
 
-  /// Keeps track of whether we should close the FILE in the
+  /// Whether the stream is closed when this reader is destroyed.
   bool const close_on_delete_;
 
   /// Pointer to the allocator.

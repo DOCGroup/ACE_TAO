@@ -16,6 +16,48 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
+namespace
+{
+  // Takes ownership of handle, including when creating the stream fails.
+  FILE *open_read_stream (ACE_HANDLE handle)
+  {
+    if (handle == ACE_INVALID_HANDLE)
+      {
+        return nullptr;
+      }
+#if defined (ACE_WIN32)
+    int const crt_handle = ::_open_osfhandle (reinterpret_cast<intptr_t> (handle), 0);
+    if (crt_handle == -1)
+      {
+        int const saved_errno = errno;
+        ACE_OS::close (handle);
+        errno = saved_errno;
+        return nullptr;
+      }
+# if defined (ACE_USES_WCHAR)
+    FILE * const stream = ::_wfdopen (crt_handle, L"r");
+# else
+    FILE * const stream = ::_fdopen (crt_handle, "r");
+# endif
+    if (stream == nullptr)
+      {
+        int const saved_errno = errno;
+        ::_close (crt_handle);
+        errno = saved_errno;
+      }
+#else
+    FILE * const stream = ACE_OS::fdopen (handle, ACE_TEXT ("r"));
+    if (stream == nullptr)
+      {
+        int const saved_errno = errno;
+        ACE_OS::close (handle);
+        errno = saved_errno;
+      }
+#endif
+    return stream;
+  }
+}
+
 void
 ACE_Read_Buffer_Unique_Ptr_Deleter::operator() (char *buffer) const
 {
@@ -58,16 +100,17 @@ ACE_Read_Buffer::ACE_Read_Buffer (FILE *fp,
 ACE_Read_Buffer::ACE_Read_Buffer (ACE_HANDLE handle,
                                   bool close_on_delete,
                                   ACE_Allocator *alloc)
-  : stream_ (ACE_OS::fdopen (handle, ACE_TEXT ("r"))),
+#if defined (ACE_LACKS_DUP)
+  : stream_ (close_on_delete ? open_read_stream (handle)
+                             : ACE_OS::fdopen (handle, ACE_TEXT ("r"))),
     close_on_delete_ (close_on_delete),
+#else
+  : stream_ (open_read_stream (close_on_delete ? handle : ACE_OS::dup (handle))),
+    close_on_delete_ (true),
+#endif
     allocator_ (alloc)
 {
   ACE_TRACE ("ACE_Read_Buffer::ACE_Read_Buffer");
-
-  if (this->stream_ == nullptr && this->close_on_delete_)
-    {
-      ACE_OS::close (handle);
-    }
 
   if (this->allocator_ == nullptr)
     {
