@@ -66,8 +66,6 @@ public:
   Vb (Oid const &vb, SnmpSyntax const &val, SmiUINT32 status = SNMP_CLASS_SUCCESS);
 
   Vb (Vb const &vb);
-  Vb (Vb &&) = delete;
-  Vb &operator= (Vb &&) = delete;
 
   /**
    * destructor

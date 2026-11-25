@@ -130,8 +130,6 @@ public:
   friend bool operator== (SnmpTarget const &lhs, SnmpTarget const &rhs);
 
   SnmpTarget &operator= (SnmpTarget const &lhs);
-  SnmpTarget (SnmpTarget &&) = delete;
-  SnmpTarget &operator= (SnmpTarget &&) = delete;
 
 protected:
   ///     SnmpTarget(const SnmpTarget &);
@@ -178,8 +176,6 @@ class ASNMP_Export UdpTarget : public SnmpTarget
 public:
   UdpTarget();
   UdpTarget (UdpTarget const &) = default;
-  UdpTarget (UdpTarget &&) = delete;
-  UdpTarget &operator= (UdpTarget &&) = delete;
 
   /**
     * constructor with only address

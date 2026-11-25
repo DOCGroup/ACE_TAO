@@ -31,10 +31,28 @@ DAMAGES.
 
 #include <cstring>
 #include <memory>
+#include <type_traits>
 #include "ace/OS_main.h"
 #include "asnmp/octet.h"
+#include "asnmp/oid.h"
+#include "asnmp/pdu.h"
+#include "asnmp/vb.h"
 #include "asnmp/target.h"
 #include "test_config.h"
+
+static_assert (std::is_move_constructible_v<OctetStr>
+               && std::is_move_assignable_v<OctetStr>
+               && std::is_move_constructible_v<Oid>
+               && std::is_move_assignable_v<Oid>
+               && std::is_move_constructible_v<Pdu>
+               && std::is_move_assignable_v<Pdu>
+               && std::is_move_constructible_v<Vb>
+               && std::is_move_assignable_v<Vb>
+               && std::is_move_constructible_v<GenAddress>
+               && std::is_move_assignable_v<GenAddress>
+               && std::is_move_constructible_v<UdpTarget>
+               && std::is_move_assignable_v<UdpTarget>,
+               "ASNMP values and targets accept rvalues through copy operations");
 /*
   Percieved Problems with this CTarget aka UdpTarget Interface:
 

@@ -42,11 +42,9 @@ public:
   OctetStr (char const *string = "", long size = -1);
 
   OctetStr (OctetStr const &octet);
-  OctetStr (OctetStr &&) = delete;
 
   ~OctetStr ();
 
-  OctetStr &operator= (OctetStr &&) = delete;
 
   /// syntax type
   SmiUINT32 get_syntax() override;

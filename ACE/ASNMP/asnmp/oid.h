@@ -49,7 +49,6 @@ public:
   Oid (char const * dotted_oid_string = "", size_t size = unsigned(-1));
 
   Oid ( const Oid &oid);
-  Oid (Oid &&) = delete;
 
   Oid(const unsigned long *raw_oid, size_t oid_len);
 
@@ -60,7 +59,6 @@ public:
 
   /// assignment to another oid object overloaded
   Oid& operator=( const Oid &oid);
-  Oid& operator= (Oid &&) = delete;
 
   /// assignment from a dotted string
   Oid& operator= (char const *dotted_oid_string);

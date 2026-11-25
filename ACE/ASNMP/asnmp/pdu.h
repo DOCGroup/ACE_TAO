@@ -49,8 +49,6 @@ public:
 
   Pdu (Pdu const &pdu);
 
-  Pdu (Pdu &&) = delete;
-  Pdu &operator= (Pdu &&) = delete;
 
   ~Pdu();
 

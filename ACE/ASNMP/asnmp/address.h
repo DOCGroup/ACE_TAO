@@ -713,7 +713,6 @@ public:
   explicit GenAddress (Address const &addr);
 
   GenAddress (GenAddress const &addr);
-  GenAddress (GenAddress &&) = delete;
 
   ~GenAddress() override;
 
@@ -725,7 +724,6 @@ public:
 
   /// assignment of a GenAddress
   GenAddress& operator= (GenAddress const &addr);
-  GenAddress& operator= (GenAddress &&) = delete;
 
   /// copy an instance of this Value
   SnmpSyntax& operator= (SnmpSyntax& val) override;
