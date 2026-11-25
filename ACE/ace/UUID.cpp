@@ -44,9 +44,9 @@ namespace ACE_Utils
         if (this->as_string_)
           {
             if (!rhs.as_string_ || *this != rhs)
-            {
-              this->as_string_.reset ();
-            }
+              {
+                this->as_string_.reset ();
+              }
           }
 
         // Copy the contents of the UUID.
@@ -65,9 +65,9 @@ namespace ACE_Utils
   {
     // Compute the string representation only once.
     if (this->as_string_)
-    {
-      return this->as_string_.get ();
-    }
+      {
+        return this->as_string_.get ();
+      }
 
     // Get a buffer exactly the correct size. Use the nil UUID as a
     // gauge.  Don't forget the trailing nul.
@@ -354,9 +354,9 @@ namespace ACE_Utils
   UUID_Generator::init ()
   {
     if (this->is_init_)
-    {
-      return;
-    }
+      {
+        return;
+      }
 
     ACE_OS::macaddr_node_t macaddress;
     int const result = ACE_OS::getmacaddress (&macaddress);
@@ -530,9 +530,9 @@ namespace ACE_Utils
     if (this->owned_lock_.get () == lock)
       {
         if (!release_lock)
-        {
-          this->owned_lock_.release ();
-        }
+          {
+            this->owned_lock_.release ();
+          }
       }
     else if (release_lock)
       {
