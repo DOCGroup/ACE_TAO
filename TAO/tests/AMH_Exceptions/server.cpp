@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_time.h"
 #include "ace/Get_Opt.h"
@@ -137,7 +136,7 @@ ST_AMH_Server::~ST_AMH_Server ()
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }
@@ -166,7 +165,7 @@ ST_AMH_Server::start_orb_and_poa ()
 
       poa_manager->activate ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -199,7 +198,7 @@ ST_AMH_Server::register_servant (ST_AMH_Servant *servant)
 
       (void) this->write_ior_to_file (ior);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught:");
     }
@@ -213,10 +212,10 @@ ST_AMH_Server::run_event_loop ()
       ACE_Time_Value period (0, 11000);
       while (!this->orb_->orb_core ()->has_shutdown ())
         {
-              this->orb_->perform_work (&period);
+          this->orb_->perform_work (&period);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {}
 }
 
