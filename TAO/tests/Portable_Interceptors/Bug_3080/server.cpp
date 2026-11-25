@@ -86,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         if (!output_file)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
-                               "Cannot open output file <%s> for writing IOR: %s",
+                               "Cannot open output file <%s> for writing IOR: %C",
                                options.ior_file.c_str (),
                                ior.in ()),
                               1);

@@ -193,7 +193,7 @@ Task::svc ()
       CORBA::String_var ior =
         this->orb_->object_to_string (server.in ());
 
-      ACE_DEBUG ((LM_DEBUG, "Activated as <%s>\n\n", ior.in ()));
+      ACE_DEBUG ((LM_DEBUG, "Activated as <%C>\n\n", ior.in ()));
 
       if (this->options_.ior_output_file != nullptr)
         {
@@ -295,7 +295,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (errno == EPERM)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot create thread with scheduling policy %s\n"
+                                 "Cannot create thread with scheduling policy %C\n"
                                  "because the user does not have the appropriate privileges, terminating program....\n"
                                  "Check svc.conf options and/or run as root\n",
                                  sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),

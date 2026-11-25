@@ -82,8 +82,8 @@ Client_Request_Interceptor::receive_exception (
     this->orb_->object_to_string (target.in ());
 
   ACE_DEBUG ((LM_DEBUG,
-              "%s.received_exception "
-              "from \"%s\" on object: %s\n",
+              "%C.received_exception "
+              "from \"%C\" on object: %C\n",
               this->myname_,
               operation.in (),
               ior.in ()));

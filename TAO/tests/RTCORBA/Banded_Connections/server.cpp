@@ -559,7 +559,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           if (ACE_BIT_ENABLED (minor_code, TAO_RTCORBA_THREAD_CREATION_LOCATION_CODE))
             {
               ACE_ERROR_RETURN ((LM_ERROR,
-                                 "Cannot create thread with scheduling policy %s\n"
+                                 "Cannot create thread with scheduling policy %C\n"
                                  "because the user does not have the appropriate privileges, terminating program....\n"
                                  "Check svc.conf options and/or run as root\n",
                                  sched_policy_name (orb->orb_core ()->orb_params ()->ace_sched_policy ())),
