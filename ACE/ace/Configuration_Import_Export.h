@@ -54,14 +54,14 @@ public:
    * Imports the configuration database from @a filename.
    * No existing data is removed.
    */
-  virtual int import_config (const ACE_TCHAR* filename) = 0;
+  virtual int import_config (ACE_TCHAR const * filename) = 0;
 
   /**
    * This method exports the entire configuration database to @a filename.
    * Once the file is opened this method calls 'export_section' passing
    * the root section.
    */
-  virtual int export_config (const ACE_TCHAR* filename) = 0;
+  virtual int export_config (ACE_TCHAR const * filename) = 0;
 
 protected:
   ACE_Configuration &config_;
@@ -97,17 +97,17 @@ public:
    * Imports the configuration database from @a filename.
    * No existing data is removed.
    */
-  int import_config (const ACE_TCHAR* filename) override;
+  int import_config (ACE_TCHAR const * filename) override;
 
   /**
    * This method exports the entire configuration database to @a filename.
    * Once the file is opened this method calls export_section() passing
    * the root section.
    */
-  int export_config (const ACE_TCHAR* filename) override;
+  int export_config (ACE_TCHAR const * filename) override;
 
 private:
-  int export_section (const ACE_Configuration_Section_Key& section,
+  int export_section (ACE_Configuration_Section_Key const & section,
                       const ACE_TString& path,
                       FILE* out);
 
@@ -162,14 +162,14 @@ public:
    * Imports the configuration database from @a filename.
    * No existing data is removed.
    */
-  int import_config (const ACE_TCHAR* filename) override;
+  int import_config (ACE_TCHAR const * filename) override;
 
   /**
    * This method exports the entire configuration database to @a filename.
    * Once the file is opened this method calls export_section() passing
    * the root section.
    */
-  int export_config (const ACE_TCHAR* filename) override;
+  int export_config (ACE_TCHAR const * filename) override;
 
 private:
   /**
@@ -177,7 +177,7 @@ private:
    * to the file specified.  Called by export_config() when exporting
    * the entire configuration object.
    */
-  int export_section (const ACE_Configuration_Section_Key& section,
+  int export_section (ACE_Configuration_Section_Key const & section,
                       const ACE_TString& path,
                       FILE* out);
 
