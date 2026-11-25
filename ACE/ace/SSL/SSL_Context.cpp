@@ -873,7 +873,7 @@ ACE_SSL_Context::dh_params (const char *file_name,
         return -1;
       }
 
-    if (::SSL_CTX_set_tmp_dh (this->context_.get (), ret.get ()) < 0)
+    if (::SSL_CTX_set_tmp_dh (this->context_.get (), ret.get ()) != 1)
       {
         this->dh_params_ = ACE_SSL_Data_File ();
         return -1;
