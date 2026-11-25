@@ -4,6 +4,23 @@
 
 #include "IIOP_Server_Request_Interceptor.h"
 
+#include <string>
+
+namespace
+{
+  long request_id (CORBA::OctetSeq const &data)
+  {
+    if (data.length () == 0)
+      {
+        return 0;
+      }
+
+    std::string const text (
+      reinterpret_cast<char const *> (data.get_buffer ()), data.length ());
+    return ACE_OS::atoi (text.c_str ());
+  }
+}
+
 namespace Test {
   using namespace TAO;
 
@@ -172,10 +189,7 @@ namespace Test {
         IOP::ServiceContext_var sc =
           ri->get_request_service_context (id);
 
-        char const *buf =
-          reinterpret_cast <char const *> (sc->context_data.get_buffer ());
-
-        long const requestID = ACE_OS::atoi (buf);
+        long const requestID = request_id (sc->context_data);
 
         this->push_request_info (requestID);
       }
@@ -200,10 +214,7 @@ namespace Test {
     IOP::ServiceContext_var sc =
       ri->get_request_service_context (id);
 
-    char const *buf =
-      reinterpret_cast <char const *> (sc->context_data.get_buffer ());
-
-    long const requestID = ACE_OS::atoi (buf);
+    long const requestID = request_id (sc->context_data);
     this->pop_request_info (requestID);
   }
 
