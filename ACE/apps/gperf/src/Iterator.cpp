@@ -22,6 +22,21 @@
 #include "Iterator.h"
 #include "ace/OS_NS_ctype.h"
 
+namespace
+{
+  bool append_digit (int &value, char digit, int maximum)
+  {
+    int const number = digit - '0';
+    if (value > maximum / 10
+        || (value == maximum / 10 && number > maximum % 10))
+      {
+        return false;
+      }
+    value = value * 10 + number;
+    return true;
+  }
+}
+
 /// Constructor for Iterator.
 Iterator::Iterator (char *s,
                     int lo,
@@ -63,23 +78,29 @@ Iterator::operator() ()
           case '5': case '6': case '7': case '8': case '9':
             for (this->current_value_ = 0; ACE_OS::ace_isdigit (*str); ++str)
               {
-                this->current_value_ = this->current_value_ * 10 + *str - '0';
+                if (!append_digit (this->current_value_, *str, this->hi_bound))
+                  {
+                    return this->error_value;
+                  }
               }
 
             if (*str == '-')
               {
-                this->range_active_ = true;
                 this->upper_bound_ = 0;
-                for (; ACE_OS::ace_isdigit (*++str);
-                     this->upper_bound_ = this->upper_bound_ * 10 + *str - '0')
+                ++str;
+                for (; ACE_OS::ace_isdigit (*str); ++str)
                   {
-                    // Do nothing.
+                    if (!append_digit (this->upper_bound_, *str, this->hi_bound))
+                      {
+                        return this->error_value;
+                      }
                   }
 
                 if (this->upper_bound_ <= this->current_value_ || this->upper_bound_ > hi_bound)
                   {
                     return error_value;
                   }
+                this->range_active_ = true;
               }
 
             return this->current_value_ >= lo_bound && this->current_value_ <= hi_bound

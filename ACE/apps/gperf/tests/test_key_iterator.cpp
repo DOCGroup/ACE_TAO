@@ -23,5 +23,16 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Key iterator ranges interfered\n")), 1);
     }
+
+  char oversized_value[] = "999999999999999999999999999999999";
+  char oversized_range[] = "1-999999999999999999999999999999999";
+  char padded_maximum[] = "000000000000000000000000126";
+  Iterator invalid_value (oversized_value, 1, 126, 0, -1, -2);
+  Iterator invalid_range (oversized_range, 1, 126, 0, -1, -2);
+  Iterator maximum (padded_maximum, 1, 126, 0, -1, -2);
+  if (invalid_value () != -1 || invalid_range () != -1 || maximum () != 126)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Key iterator accepted an invalid number\n")), 1);
+    }
   return 0;
 }
