@@ -1072,8 +1072,14 @@ TAO_IMR_Op_IOR::run ()
             -1);
         }
 
-        ACE_OS::fprintf (file, "%s", ior.c_str ());
-        ACE_OS::fclose (file);
+        int const write_result = ACE_OS::fprintf (file, "%s", ior.c_str ());
+        int const close_result = ACE_OS::fclose (file);
+        if (write_result < 0 || close_result != 0)
+          {
+            ORBSVCS_ERROR_RETURN ((LM_ERROR,
+              ACE_TEXT ("Error: Unable to write %s\n"),
+              this->filename_.c_str ()), -1);
+          }
       }
     }
   catch (const CORBA::Exception& ex)
