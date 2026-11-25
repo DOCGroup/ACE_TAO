@@ -38,10 +38,8 @@ class ACE_Abstract_Timer_Queue
 {
 public:
   ACE_Abstract_Timer_Queue () = default;
-  ACE_Abstract_Timer_Queue (ACE_Abstract_Timer_Queue const &) = delete;
-  ACE_Abstract_Timer_Queue (ACE_Abstract_Timer_Queue &&) = delete;
-  ACE_Abstract_Timer_Queue &operator= (ACE_Abstract_Timer_Queue const &) = delete;
-  ACE_Abstract_Timer_Queue &operator= (ACE_Abstract_Timer_Queue &&) = delete;
+  ACE_Abstract_Timer_Queue (ACE_Abstract_Timer_Queue const &) = default;
+  ACE_Abstract_Timer_Queue &operator= (ACE_Abstract_Timer_Queue const &) = default;
 
   virtual ~ACE_Abstract_Timer_Queue () = 0;
 
