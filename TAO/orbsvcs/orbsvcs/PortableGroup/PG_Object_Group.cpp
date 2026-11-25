@@ -98,7 +98,7 @@ TAO::PG_Object_Group::~PG_Object_Group ()
   if (TAO_debug_level > 3)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("%T %n (%P|%t) - Destroying object group: %s"),
+                      ACE_TEXT ("%T %n (%P|%t) - Destroying object group: %C"),
                       this->group_name_ ? this->group_name_->c_str () : nullptr));
     }
 
@@ -542,7 +542,7 @@ TAO::PG_Object_Group::distribute_iogr ()
                 {
                   ORBSVCS_DEBUG ((LM_DEBUG,
                               "PG (%P|%t) -  Object_Group pushing "
-                              "IOGR to %s member: %s@%s.\n",
+                              "IOGR to %C member: %C@%C.\n",
                               (info->is_primary_ ? "Primary" : "Backup"),
                               this->role_.c_str (),
                               static_cast<const char *> (info->location_[0].id)
@@ -828,8 +828,8 @@ TAO::PG_Object_Group::create_members (size_t count)
                     {
                       ORBSVCS_ERROR ((LM_ERROR,
                                   ACE_TEXT ("PG (%P|%t) Replica Factory ")
-                                  ACE_TEXT ("@ %s refused create_object ")
-                                  ACE_TEXT ("request for type %s\n"),
+                                  ACE_TEXT ("@ %C refused create_object ")
+                                  ACE_TEXT ("request for type %C\n"),
                                   static_cast<const char *> (factory_info.the_location[0].id),
                                   static_cast<const char *> (this->type_id_.in ())
                                   ));

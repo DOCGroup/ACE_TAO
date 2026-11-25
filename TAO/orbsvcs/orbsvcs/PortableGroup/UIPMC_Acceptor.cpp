@@ -463,13 +463,12 @@ TAO_UIPMC_Acceptor::parse_options (char const *str)
           if (slot == len - 1
               || slot == ACE_CString::npos)
             ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) UIPMC option <%s> is ")
+                               ACE_TEXT ("TAO (%P|%t) UIPMC option <%C> is ")
                                ACE_TEXT ("missing a value.\n"),
                                opt.c_str ()),
                               -1);
 
           ACE_CString const name = opt.substring (0, slot);
-          ACE_CString const value = opt.substring (slot + 1);
 
           begin = end + 1;
 
@@ -485,14 +484,13 @@ TAO_UIPMC_Acceptor::parse_options (char const *str)
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("TAO (%P|%t) Invalid UIPMC endpoint format: ")
-                                 ACE_TEXT ("endpoint priorities no longer supported.\n"),
-                                 value.c_str ()),
+                                 ACE_TEXT ("endpoint priorities no longer supported.\n")),
                                 -1);
             }
           else
             {
               ORBSVCS_ERROR_RETURN ((LM_ERROR,
-                               ACE_TEXT ("TAO (%P|%t) Invalid UIPMC option: <%s>\n"),
+                               ACE_TEXT ("TAO (%P|%t) Invalid UIPMC option: <%C>\n"),
                                name.c_str ()),
                               -1);
             }
