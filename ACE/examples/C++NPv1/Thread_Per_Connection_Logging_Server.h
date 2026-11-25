@@ -40,8 +40,8 @@ public:
   /// Template Method that runs logging server's event loop. Need to
   /// reimplement this here because the threads spawned from handle_connections
   /// call handle_data; therefore, this method must not.
-  int run (int argc, char *argv[]) override {
-    if (open (argc > 1 ? atoi (argv[1]) : 0) == -1)
+  int run (int argc, ACE_TCHAR *argv[]) override {
+    if (open (argc > 1 ? ACE_OS::atoi (argv[1]) : 0) == -1)
       {
         return -1;
       }

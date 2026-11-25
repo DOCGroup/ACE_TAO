@@ -22,7 +22,7 @@ public:
   Logging_Server &operator= (Logging_Server &&) = delete;
 
   /// Template Method that runs logging server's event loop.
-  virtual int run (int argc, char *argv[]);
+  virtual int run (int argc, ACE_TCHAR *argv[]);
 
 protected:
   /// The following four methods are ``hooks'' that can be

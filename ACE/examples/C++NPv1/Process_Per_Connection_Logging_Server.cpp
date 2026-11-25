@@ -130,9 +130,9 @@ Process_Per_Connection_Logging_Server::handle_data (ACE_SOCK_Stream *client)
 }
 
 int
-Process_Per_Connection_Logging_Server::run (int argc, char *argv[])
+Process_Per_Connection_Logging_Server::run (int argc, ACE_TCHAR *argv[])
 {
-  this->prog_name_ = argv[0];
+  this->prog_name_ = ACE_TEXT_ALWAYS_CHAR (argv[0]);
   // If there are 2 command line arguments after prog_name_, this
   // is a spawned worker process. Else run as the master.
   if (argc == 3)
@@ -146,7 +146,7 @@ Process_Per_Connection_Logging_Server::run (int argc, char *argv[])
 }
 
 int
-Process_Per_Connection_Logging_Server::run_master (int argc, char *argv[])
+Process_Per_Connection_Logging_Server::run_master (int argc, ACE_TCHAR *argv[])
 {
   u_short const logger_port = argc == 2 ? ACE_OS::atoi (argv[1]) : 0;
   if (this->open (logger_port) == -1)
@@ -166,7 +166,7 @@ Process_Per_Connection_Logging_Server::run_master (int argc, char *argv[])
 }
 
 int
-Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
+Process_Per_Connection_Logging_Server::run_worker (int, ACE_TCHAR *argv[])
 {
   // The handle value is passed as a hex pointer value on Windows and a
   // decimal number everywhere else. See ace/Process.cpp for info.
@@ -178,12 +178,12 @@ Process_Per_Connection_Logging_Server::run_worker (int, char *argv[])
   char const *const fmt = "%x";
 #  endif /* ACE_WIN64 */
 #  if defined (ACE_HAS_TR24731_2005_CRT)
-  if (::sscanf_s (argv[2], fmt, &client_handle_i) == 0)
+  if (::sscanf_s (ACE_TEXT_ALWAYS_CHAR (argv[2]), fmt, &client_handle_i) == 0)
     {
       return -1;
     }
 #  else
-  if (::sscanf (argv[2], fmt, &client_handle_i) == 0)
+  if (::sscanf (ACE_TEXT_ALWAYS_CHAR (argv[2]), fmt, &client_handle_i) == 0)
     {
       return -1;
     }

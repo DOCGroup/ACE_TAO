@@ -14,7 +14,7 @@
 #include <array>
 #include <string>
 
-int Logging_Server::run (int argc, char *argv[])
+int Logging_Server::run (int argc, ACE_TCHAR *argv[])
 {
   if (this->open (argc > 1 ? ACE_OS::atoi (argv[1]) : 0) == -1)
   {
@@ -70,7 +70,7 @@ int Logging_Server::make_log_file (ACE_FILE_IO &logging_file,
 
   ACE_FILE_Connector connector;
   return connector.connect (logging_file,
-                            ACE_FILE_Addr (filename.c_str ()),
+                            ACE_FILE_Addr (ACE_TEXT_CHAR_TO_TCHAR (filename.c_str ())),
                             nullptr, // No timeout.
                             ACE_Addr::sap_any, // Ignored.
                             0, // Don't try to reuse the addr.

@@ -44,8 +44,8 @@ protected:
   int handle_connections () override;
   int handle_data (ACE_SOCK_Stream *client = nullptr) override;
 
-  int run_master (int argc, char *argv[]);
-  int run_worker (int argc, char *argv[]);
+  int run_master (int argc, ACE_TCHAR *argv[]);
+  int run_worker (int argc, ACE_TCHAR *argv[]);
 
 public:
   Process_Per_Connection_Logging_Server () = default;
@@ -54,7 +54,7 @@ public:
   Process_Per_Connection_Logging_Server &operator= (Process_Per_Connection_Logging_Server const &) = delete;
   Process_Per_Connection_Logging_Server &operator= (Process_Per_Connection_Logging_Server &&) = delete;
 
-  int run (int argc, char *argv[]) override;
+  int run (int argc, ACE_TCHAR *argv[]) override;
 };
 
 #endif /* _PROCESS_PER_CONNECTION_LOGGING_SERVER_H */
