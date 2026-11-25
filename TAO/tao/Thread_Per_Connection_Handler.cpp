@@ -32,9 +32,9 @@ TAO_Thread_Per_Connection_Handler::activate_ch (long flags,
     {
       TAOLIB_DEBUG ((LM_DEBUG,
                      ACE_TEXT ("TAO (%P|%t) - Thread_Per_Connection_Handler::")
-                     ACE_TEXT ("activate %d threads, flags = %q\n"),
+                     ACE_TEXT ("activate %d threads, flags = %Ld\n"),
                      n_threads,
-                     static_cast<ACE_INT64> (flags)));
+                     flags));
     }
 
   std::vector<std::string> names;
