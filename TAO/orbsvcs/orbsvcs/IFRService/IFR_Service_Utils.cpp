@@ -243,7 +243,7 @@ TAO_IFR_Server::open_config ()
             {
               ORBSVCS_ERROR_RETURN ((
                   LM_ERROR,
-                  ACE_TEXT ("Error:: Opening persistent heap file '%s'\n"),
+                  ACE_TEXT ("Error:: Opening persistent heap file '%C'\n"),
                   filename
                 ),
                 -1

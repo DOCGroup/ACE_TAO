@@ -1935,7 +1935,7 @@ ACE_DynScheduler::output_dispatch_timeline (char const *filename)
   {
     ORBSVCS_ERROR ((LM_ERROR,
                 ACE_TEXT("ACE_DynScheduler::output_dispatch_timeline: ")
-                ACE_TEXT("Could not open schedule file (\"%s\")"),
+                ACE_TEXT("Could not open schedule file (\"%C\")"),
                 filename));
   }
 

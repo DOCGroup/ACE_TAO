@@ -295,7 +295,7 @@ TAO::SSLIOP::Connector::corbaloc_scan (char const *endpoint, size_t &len)
        {
             ORBSVCS_DEBUG ((LM_DEBUG,
                         ACE_TEXT("(%P|%t) SSLIOP_Connector::corbaloc_scan warning: ")
-                        ACE_TEXT("supplied string contains no comma or slash: %s\n"),
+                        ACE_TEXT("supplied string contains no comma or slash: %C\n"),
                         endpoint));
        }
        len = std::strlen (endpoint);
