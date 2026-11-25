@@ -1146,14 +1146,14 @@ TAO_IFR_Service_Utils::path_to_def_kind (ACE_TString &path,
   if (status != 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "path_to_def_kind - bad path: '%s'\n",
+                  ACE_TEXT ("path_to_def_kind - bad path: '%s'\n"),
                   path.c_str ()));
       return CORBA::dk_none;
     }
 
   u_int kind = 0;
   repo->config ()->get_integer_value (TAO_IFR_Service_Utils::tmp_key_,
-                                      "def_kind",
+                                      ACE_TEXT ("def_kind"),
                                       kind);
   return static_cast<CORBA::DefinitionKind> (kind);
 }
@@ -1162,7 +1162,7 @@ CORBA::DefinitionKind
 TAO_IFR_Service_Utils::reference_to_def_kind (CORBA::IRObject_ptr obj,
                                               TAO_Repository_i *repo)
 {
-  ACE_TString path (TAO_IFR_Service_Utils::reference_to_path (obj));
+  ACE_TString path (ACE_TEXT_CHAR_TO_TCHAR (TAO_IFR_Service_Utils::reference_to_path (obj)));
   return TAO_IFR_Service_Utils::path_to_def_kind (path, repo);
 }
 
@@ -1177,7 +1177,7 @@ TAO_IFR_Service_Utils::path_to_idltype (ACE_TString &path,
   if (retval == nullptr)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "path_to_idltype - not an IDLType: '%s'\n",
+                  ACE_TEXT ("path_to_idltype - not an IDLType: '%s'\n"),
                   path.c_str ()));
       return nullptr;
     }
@@ -1197,7 +1197,7 @@ TAO_IFR_Service_Utils::path_to_contained (ACE_TString &path,
   if (retval == nullptr)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "path_to_contained - not a contained type: '%s'\n",
+                  ACE_TEXT ("path_to_contained - not a contained type: '%s'\n"),
                   path.c_str ()));
       return nullptr;
     }
@@ -1230,7 +1230,7 @@ TAO_IFR_Service_Utils::path_to_ir_object (ACE_TString &path,
     TAO_IFR_Service_Utils::path_to_def_kind (path, repo);
 
   return TAO_IFR_Service_Utils::create_objref (def_kind,
-                                               path.c_str (),
+                                               ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                                repo);
 }
 
@@ -1239,7 +1239,7 @@ TAO_IFR_Service_Utils::create_objref (CORBA::DefinitionKind def_kind,
                                       char const *obj_id,
                                       TAO_Repository_i *repo)
 {
-  ACE_TString repo_id ("IDL:omg.org/");
+  std::string repo_id ("IDL:omg.org/");
 
   switch (def_kind)
   {
