@@ -64,7 +64,7 @@ namespace TAO
           ri->operation ();
 
         ORBSVCS_DEBUG ((LM_DEBUG,
-                    ACE_TEXT ("TAO_FT (%P|%t) - %s called for %s\n"),
+                    ACE_TEXT ("TAO_FT (%P|%t) - %C called for %C\n"),
                     this->name_,
                     op.in ()));
       }

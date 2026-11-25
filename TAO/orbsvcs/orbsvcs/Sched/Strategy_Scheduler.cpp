@@ -147,7 +147,7 @@ ACE_Strategy_Scheduler::assign_priorities (
         ORBSVCS_ERROR ((
           LM_ERROR,
           "Priority assignment failure: tasks"
-          " \"%s\" and \"%s\" are out of order.\n",
+          " \"%C\" and \"%C\" are out of order.\n",
           dispatches [i-1]->task_entry ().rt_info ()->entry_point.in (),
           dispatches [i]->task_entry ().rt_info ()->entry_point.in ()));
 
@@ -283,7 +283,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
                 ORBSVCS_ERROR ((
                   LM_ERROR,
                   "Static subpriority assignment failure: tasks"
-                  " \"%s\" and \"%s\" are out of order.\n",
+                  " \"%C\" and \"%C\" are out of order.\n",
                   dispatches [i-1]->task_entry ().rt_info ()->entry_point.in (),
                   dispatches [i]->task_entry ().rt_info ()->entry_point.in ()));
 
@@ -307,7 +307,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
             ORBSVCS_ERROR ((
               LM_ERROR,
               "Dynamic subpriority assignment failure: tasks"
-              " \"%s\" and \"%s\" are out of order.\n",
+              " \"%C\" and \"%C\" are out of order.\n",
               dispatches [i-1]->task_entry ().rt_info ()->entry_point.in (),
               dispatches [i]->task_entry ().rt_info ()->entry_point.in ()));
 
@@ -334,7 +334,7 @@ ACE_Strategy_Scheduler::assign_subpriorities (
         ORBSVCS_ERROR ((
           LM_ERROR,
           "Priority assignment failure: tasks"
-          " \"%s\" and \"%s\" are out of order.\n",
+          " \"%C\" and \"%C\" are out of order.\n",
           dispatches [i-1]->task_entry ().rt_info ()->entry_point.in (),
           dispatches [i]->task_entry ().rt_info ()->entry_point.in ()));
 

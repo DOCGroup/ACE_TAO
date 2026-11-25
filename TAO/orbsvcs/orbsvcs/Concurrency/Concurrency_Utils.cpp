@@ -53,7 +53,7 @@ TAO_Concurrency_Server::init (CORBA::ORB_ptr orb,
         orb->object_to_string (obj.in ());
 
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  "listening as object <%s>\n",
+                  "listening as object <%C>\n",
                   str.in ()));
     }
   catch (CORBA::Exception const & ex)

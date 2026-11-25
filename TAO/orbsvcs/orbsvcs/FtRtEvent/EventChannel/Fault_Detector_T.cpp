@@ -47,7 +47,7 @@ Fault_Detector_T<ACCEPTOR, CONNECTOR, DETECTION_HANDLER>::connect(
     ACE_NEW_RETURN(handler, DETECTION_HANDLER(listener_), 0) ;
 
     handler->reactor(std::addressof (reactor_task_.reactor_));
-    ORBSVCS_DEBUG((LM_DEBUG, "connecting to %s\n", location[0].id.in()));
+    ORBSVCS_DEBUG((LM_DEBUG, "connecting to %C\n", location[0].id.in()));
 
     int result = connector_.connect(handler->peer(), prev_addr);
 

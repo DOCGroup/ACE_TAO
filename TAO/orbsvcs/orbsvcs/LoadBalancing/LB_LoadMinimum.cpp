@@ -203,7 +203,7 @@ TAO_LB_LoadMinimum::next_member (
     {
 /*
        ORBSVCS_DEBUG ((LM_DEBUG,
-                   "RETURNING REFERENCE FOR LOCATION \"%s\"\n",
+                   "RETURNING REFERENCE FOR LOCATION \"%C\"\n",
                    location[0].id.in ()));
 */
 
