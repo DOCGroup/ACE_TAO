@@ -1,6 +1,8 @@
 #include "Thread_Task.h"
 #include "../Scheduler.h"
 #include "tao/RTScheduling/RTScheduler_Manager.h"
+#include "tao/RTScheduling/Current.h"
+#include "tao/ORB_Core.h"
 
 #include <memory>
 
@@ -20,6 +22,37 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       TAO_Scheduler scheduler (orb.in ());
 
       manager->rtscheduler (std::addressof (scheduler));
+
+      // Cancellation must not read past short GUIDs or overwrite its local
+      // numeric buffer for GUIDs larger than size_t.
+      DT_Hash_Map hash;
+      CORBA::ULong const lengths[] = {0, 1, sizeof (size_t) + 1};
+      for (CORBA::ULong const length : lengths)
+        {
+          RTScheduling::Current::IdType guid;
+          guid.length (length);
+          for (CORBA::ULong i {}; i < length; ++i)
+            {
+              guid[i] = 1;
+            }
+          TAO_RTScheduler_Current_i *test_current =
+            new TAO_RTScheduler_Current_i (orb->orb_core (), std::addressof (hash));
+          test_current->id (guid);
+          bool cancelled = false;
+          try
+            {
+              // cancel_thread deletes the current before throwing.
+              test_current->cancel_thread ();
+            }
+          catch (CORBA::THREAD_CANCELLED const &)
+            {
+              cancelled = true;
+            }
+          if (!cancelled)
+            {
+              ACE_ERROR_RETURN ((LM_ERROR, "Cancellation did not throw\n"), 1);
+            }
+        }
 
       Thread_Task task (orb.in ());
 
