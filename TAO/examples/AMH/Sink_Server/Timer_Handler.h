@@ -1,7 +1,7 @@
 /**
  *  @file  Timer_Handler.h
  *
- *  @desc  Fires servant upcall after a specified period of delay
+ *  @brief  Fires servant upcall after a specified period of delay
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
  */

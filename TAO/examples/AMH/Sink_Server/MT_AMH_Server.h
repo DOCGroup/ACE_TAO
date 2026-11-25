@@ -1,7 +1,7 @@
 /**
  *  @file  MT_AMH_Server.h
  *
- *  @desc  Provides Multi-threaded functionality to the Base_Server.
+ *  @brief  Provides Multi-threaded functionality to the Base_Server.
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
  */

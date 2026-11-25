@@ -17,7 +17,7 @@ class Sink_i : public POA_ThreeTier
 {
 public:
   /// Construct
-  /// @param an initialized ORB
+  /// @param orb An initialized ORB
   explicit Sink_i (CORBA::ORB_ptr orb);
   Sink_i (Sink_i const &) = delete;
   Sink_i &operator= (Sink_i const &) = delete;
