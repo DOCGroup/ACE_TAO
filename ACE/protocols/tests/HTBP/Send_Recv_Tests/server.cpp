@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       || peer_acceptor.get_local_addr (server_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("(%P|%t) open: %p\n"), ACE_TEXT ("error")), 1);
+                         ACE_TEXT ("(%P|%t) open: %m\n")), 1);
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -134,7 +134,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (peer_acceptor.accept(sock_stream[0],&cli_addr,nullptr) == -1)
     {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) accept: %p\n"), ACE_TEXT ("error")));
+                    ACE_TEXT ("(%P|%t) accept: %m\n")));
       return 1;
     }
 
@@ -146,7 +146,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (peer_acceptor.accept(sock_stream[1],&cli_addr,nullptr) == -1)
     {
         ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) accept: %p\n"), ACE_TEXT ("error")));
+                    ACE_TEXT ("(%P|%t) accept: %m\n")));
       return 1;
     }
 
@@ -213,7 +213,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Test 1, recvv failed: %p\n"), ACE_TEXT ("error")));
+                  ACE_TEXT ("(%P|%t) Test 1, recvv failed: %m\n")));
       Test_Result = 1;
     }
 

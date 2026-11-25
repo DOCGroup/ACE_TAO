@@ -311,7 +311,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   if (acceptor.open (accept_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
-                         ACE_TEXT ("open: %p\n"), ACE_TEXT ("error")),
+                         ACE_TEXT ("open: %m\n")),
                         1);
     }
 

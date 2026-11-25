@@ -51,7 +51,7 @@ client (void *arg)
                    std::addressof (timeout)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) connect failed: %p\n"), ACE_TEXT ("error")));
+                  ACE_TEXT ("(%P|%t) connect failed: %m\n")));
       Test_Result = 1;
       return ACE_THR_FUNC_RETURN_NULL;
     }
@@ -111,7 +111,7 @@ client (void *arg)
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Test 1, sendfile failed: %p\n"), ACE_TEXT ("error")));
+                  ACE_TEXT ("(%P|%t) Test 1, sendfile failed: %m\n")));
       Test_Result = 1;
       goto cleanup;
     }
@@ -181,7 +181,7 @@ server (void *arg)
                              std::addressof (timeout)) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) accept: %p\n"), ACE_TEXT ("error")));
+                    ACE_TEXT ("(%P|%t) accept: %m\n")));
       Test_Result = 1;
       return ACE_THR_FUNC_RETURN_NULL;
     }
@@ -207,7 +207,7 @@ server (void *arg)
   if (len == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) Test 1, recv failed: %p\n"), ACE_TEXT ("error")));
+                  ACE_TEXT ("(%P|%t) Test 1, recv failed: %m\n")));
       Test_Result = 1;
     }
 
@@ -273,7 +273,7 @@ spawn ()
       || peer_acceptor.get_local_addr (server_addr) == -1)
     {
       ACE_ERROR ((LM_ERROR,
-                  ACE_TEXT ("(%P|%t) open: %p\n"), ACE_TEXT ("error")));
+                  ACE_TEXT ("(%P|%t) open: %m\n")));
     }
   else
     {
@@ -286,7 +286,7 @@ spawn ()
         {
         case -1:
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) fork failed: %p\n"), ACE_TEXT ("error")));
+                      ACE_TEXT ("(%P|%t) fork failed: %m\n")));
           ACE_OS::abort ();
         case 0:
           client (std::addressof (server_addr));
