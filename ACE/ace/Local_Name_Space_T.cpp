@@ -159,9 +159,9 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
     {
       // Note that the value_rep *must* come first to make sure we can
       // retrieve this pointer later on in unbind().
-      ACE_WCHAR_T *value_rep = (ACE_WCHAR_T *) (ptr);
-      ACE_WCHAR_T *name_rep = (ACE_WCHAR_T *) (ptr + value_len);
-      char *new_type = (char *) (ptr + value_len + name_len);
+      ACE_WCHAR_T *value_rep = reinterpret_cast<ACE_WCHAR_T *> (ptr);
+      ACE_WCHAR_T *name_rep = reinterpret_cast<ACE_WCHAR_T *> (ptr + value_len);
+      char *new_type = ptr + value_len + name_len;
 
       std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> name_urep (name.rep ());
       std::unique_ptr<ACE_WCHAR_T[], ACE_Array_Deleter<ACE_WCHAR_T>> value_urep (value.rep ());

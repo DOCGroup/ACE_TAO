@@ -460,15 +460,15 @@ ACE_Name_Options::~ACE_Name_Options ()
   ACE_TRACE ("ACE_Name_Options::~ACE_Name_Options");
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) this->nameserver_host_);
-  ACE_Allocator::instance()->free ((void *) this->namespace_dir_ );
-  ACE_Allocator::instance()->free ((void *) this->process_name_ );
-  ACE_Allocator::instance()->free ((void *) this->database_ );
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->nameserver_host_));
+  ACE_Allocator::instance()->free (this->namespace_dir_);
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->process_name_));
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (this->database_));
 #else
-  ACE_OS::free ((void *) this->nameserver_host_);
-  ACE_OS::free ((void *) this->namespace_dir_ );
-  ACE_OS::free ((void *) this->process_name_ );
-  ACE_OS::free ((void *) this->database_ );
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->nameserver_host_));
+  ACE_OS::free (this->namespace_dir_);
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->process_name_));
+  ACE_OS::free (const_cast<ACE_TCHAR *> (this->database_));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 

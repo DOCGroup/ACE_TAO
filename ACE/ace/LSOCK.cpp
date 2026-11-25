@@ -46,7 +46,7 @@ ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
 
   a[0] = 0xab;
   a[1] = 0xcd;
-  iov.iov_base = (char *) a;
+  iov.iov_base = reinterpret_cast<char *> (a);
   iov.iov_len = sizeof a;
   send_msg.msg_iov = &iov;
   send_msg.msg_iovlen = 1;
@@ -97,7 +97,7 @@ ACE_LSOCK::recv_handle (ACE_HANDLE &handle, char *pbuf, ssize_t *len) const
     }
   else
     {
-      iov.iov_base = (char *) a;
+      iov.iov_base = reinterpret_cast<char *> (a);
       iov.iov_len  = sizeof a;
     }
 
