@@ -134,8 +134,8 @@ ACE_Control_Block::ACE_Name_Node::dump () const
   ACELIB_DEBUG ((LM_DEBUG, ACE_TEXT ("\nnext_ = %@"), this->next_));
   ACELIB_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nname_ = (%@, %C)\n"),
-              (const char *) this->name_,
-              (const char *) this->name_));
+              static_cast<void *> (this->name_),
+              this->name_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }

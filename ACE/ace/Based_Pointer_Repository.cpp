@@ -66,7 +66,7 @@ ACE_Based_Pointer_Repository::find (void *addr, void *&base_addr)
       {
         // Check to see if <addr> is within any of the regions.
         if (addr >= ce->ext_id_
-            && addr < ((char *)ce->ext_id_ + ce->int_id_))
+            && addr < (static_cast<char *> (ce->ext_id_) + ce->int_id_))
           {
             // Assign the base address.
             base_addr = ce->ext_id_;
@@ -109,7 +109,7 @@ ACE_Based_Pointer_Repository::unbind (void *addr)
       // Check to see if <addr> is within any of the regions and if
       // so, unbind the key from the map.
       if (addr >= ce->ext_id_
-          && addr < ((char *)ce->ext_id_ + ce->int_id_))
+          && addr < (static_cast<char *> (ce->ext_id_) + ce->int_id_))
         {
           // Unbind base address.
           return this->rep_->addr_map_.unbind (ce->ext_id_);

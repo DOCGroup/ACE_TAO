@@ -230,7 +230,7 @@ TAO_ZIOP_Loader::decompress (ACE_Data_Block **db, TAO_Queued_Data& qd,
               mb.copy (qd.msg_block ()->base () + begin,
                             TAO_GIOP_MESSAGE_HEADER_LEN);
 
-              if (mb.copy ((char*)myout.get_buffer (false),
+              if (mb.copy (reinterpret_cast<char const *> (myout.get_buffer (false)),
                            static_cast<size_t> (data.original_length)) != 0)
                 {
                   TAOLIB_ERROR_RETURN((LM_ERROR,

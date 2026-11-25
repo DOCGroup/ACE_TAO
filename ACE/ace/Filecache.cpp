@@ -162,9 +162,9 @@ template <>
 ACE_Filecache_Hash_Entry::~ACE_Hash_Map_Entry ()
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
-  ACE_Allocator::instance()->free ((void *) ext_id_);
+  ACE_Allocator::instance()->free (const_cast<ACE_TCHAR *> (ext_id_));
 #else
-  ACE_OS::free ((void *) ext_id_);
+  ACE_OS::free (const_cast<ACE_TCHAR *> (ext_id_));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
