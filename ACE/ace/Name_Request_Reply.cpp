@@ -20,12 +20,12 @@ ACE_Name_Request::ACE_Name_Request ()
 // Create a ACE_Name_Request message.
 ACE_Name_Request::ACE_Name_Request (
   ACE_INT32 t, // Type of request.
-  const ACE_WCHAR_T name[], // Name
-  const ACE_UINT32 name_length, // size in bytes
-  const ACE_WCHAR_T value[], //
-  const ACE_UINT32 value_length, // size in bytes
-  const char type[], //
-  const ACE_UINT32 type_length, // size in bytes
+  ACE_WCHAR_T const name[], // Name
+  ACE_UINT32 const name_length, // size in bytes
+  ACE_WCHAR_T const value[], //
+  ACE_UINT32 const value_length, // size in bytes
+  char const type[], //
+  ACE_UINT32 const type_length, // size in bytes
   ACE_Time_Value *timeout) // Max time waiting for request.
 {
   ACE_TRACE ("ACE_Name_Request::ACE_Name_Request");
@@ -168,14 +168,14 @@ ACE_Name_Request::timeout () const
 }
 
 void
-ACE_Name_Request::timeout (const ACE_Time_Value timeout)
+ACE_Name_Request::timeout (ACE_Time_Value const timeout)
 {
   ACE_TRACE ("ACE_Name_Request::timeout");
   this->transfer_.sec_timeout_ = timeout.sec ();
   this->transfer_.usec_timeout_ = static_cast<ACE_UINT32> (timeout.usec ());
 }
 
-const ACE_WCHAR_T *
+ACE_WCHAR_T const *
 ACE_Name_Request::name () const
 {
   ACE_TRACE ("ACE_Name_Request::name");
@@ -183,13 +183,13 @@ ACE_Name_Request::name () const
 }
 
 void
-ACE_Name_Request::name (const ACE_WCHAR_T *t)
+ACE_Name_Request::name (ACE_WCHAR_T const *t)
 {
   ACE_TRACE ("ACE_Name_Request::name");
   (void) std::memcpy (this->name_, t, this->name_len ());
 }
 
-const ACE_WCHAR_T *
+ACE_WCHAR_T const *
 ACE_Name_Request::value () const
 {
   ACE_TRACE ("ACE_Name_Request::value");
@@ -197,14 +197,14 @@ ACE_Name_Request::value () const
 }
 
 void
-ACE_Name_Request::value (const ACE_WCHAR_T *c)
+ACE_Name_Request::value (ACE_WCHAR_T const *c)
 {
   ACE_TRACE ("ACE_Name_Request::value");
 
   (void) std::memcpy (this->value_, c, this->value_len());
 }
 
-const char *
+char const *
 ACE_Name_Request::type () const
 {
   ACE_TRACE ("ACE_Name_Request::type");
@@ -212,7 +212,7 @@ ACE_Name_Request::type () const
 }
 
 void
-ACE_Name_Request::type (const char *c)
+ACE_Name_Request::type (char const *c)
 {
   ACE_TRACE ("ACE_Name_Request::type");
   ACE_OS::strsncpy (this->type_,
@@ -246,7 +246,7 @@ ACE_Name_Request::encode (void *&buf)
   this->transfer_.usec_timeout_  = ACE_HTONL (this->transfer_.usec_timeout_);
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_UINT64 secs = this->transfer_.sec_timeout_;
-  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.sec_timeout_);
+  ACE_CDR::swap_8 ((char const *)&secs, (char *)&this->transfer_.sec_timeout_);
 #endif
   this->transfer_.length_ = ACE_HTONL (this->transfer_.length_);
   this->transfer_.msg_type_ = ACE_HTONL (this->transfer_.msg_type_);
@@ -269,7 +269,7 @@ ACE_Name_Request::decode ()
   this->transfer_.usec_timeout_  = ACE_NTOHL (this->transfer_.usec_timeout_);
 #if defined (ACE_LITTLE_ENDIAN)
   ACE_UINT64 secs = this->transfer_.sec_timeout_;
-  ACE_CDR::swap_8 ((const char *)&secs, (char *)&this->transfer_.sec_timeout_);
+  ACE_CDR::swap_8 ((char const *)&secs, (char *)&this->transfer_.sec_timeout_);
 #endif
   this->transfer_.length_ = ACE_NTOHL (this->transfer_.length_);
   this->transfer_.msg_type_ = ACE_NTOHL (this->transfer_.msg_type_);

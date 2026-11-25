@@ -73,12 +73,12 @@ public:
   /// @param type_length Length of @a type.
   /// @param timeout Maximum time willing to wait for the request.
   ACE_Name_Request (ACE_INT32 msg_type,
-                    const ACE_WCHAR_T name[],
-                    const ACE_UINT32 name_length,
-                    const ACE_WCHAR_T value[],
-                    const ACE_UINT32 value_length,
-                    const char type[],
-                    const ACE_UINT32 type_length,
+                    ACE_WCHAR_T const name[],
+                    ACE_UINT32 const name_length,
+                    ACE_WCHAR_T const value[],
+                    ACE_UINT32 const value_length,
+                    char const type[],
+                    ACE_UINT32 const type_length,
                     ACE_Time_Value *timeout = nullptr);
 
   /// Initialize length_ in order to ensure correct byte ordering
@@ -97,16 +97,16 @@ public:
   void block_forever (ACE_UINT32);
 
   ACE_Time_Value timeout () const;
-  void timeout (const ACE_Time_Value timeout);
+  void timeout (ACE_Time_Value const timeout);
 
-  const ACE_WCHAR_T *name () const;
-  void name (const ACE_WCHAR_T *);
+  ACE_WCHAR_T const *name () const;
+  void name (ACE_WCHAR_T const *);
 
-  const ACE_WCHAR_T *value () const;
-  void value (const ACE_WCHAR_T *);
+  ACE_WCHAR_T const *value () const;
+  void value (ACE_WCHAR_T const *);
 
-  const char *type () const;
-  void type (const char *);
+  char const *type () const;
+  void type (char const *);
 
   ACE_UINT32 name_len () const;
   void name_len (ACE_UINT32);
