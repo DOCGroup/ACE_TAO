@@ -132,7 +132,7 @@ namespace TAO
       {
         TAOLIB_DEBUG ((LM_DEBUG,
                       "TAO (%P|%t) - TAO_Eager_Buffering_Sync_Strategy::timer_check, "
-                      "Now = %u, Current = %u, New = %u\n",
+                      "Now = %Lu, Current = %Lu, New = %Lu\n",
                       now.msec (), current_deadline.msec (),
                       new_deadline.msec ()));
       }

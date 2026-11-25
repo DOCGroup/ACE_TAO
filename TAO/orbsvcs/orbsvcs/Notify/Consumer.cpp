@@ -657,7 +657,7 @@ TAO_Notify_Consumer::schedule_timer (bool is_error)
   if (DEBUG_LEVEL  > 5)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("Consumer %d: scheduling pacing/retry for %dms.\n"),
+                  ACE_TEXT ("Consumer %d: scheduling pacing/retry for %Lums.\n"),
                   static_cast<int> (this->proxy ()->id ()), tv.msec ()));
     }
 

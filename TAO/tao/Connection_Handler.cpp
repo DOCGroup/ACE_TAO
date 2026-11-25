@@ -166,7 +166,7 @@ TAO_Connection_Handler::svc_i ()
         {
           TAOLIB_DEBUG ((LM_DEBUG,
                          "TAO (%P|%t) - Connection_Handler::svc_i - "
-                         "loop <%d> shutdown = %d\n",
+                         "loop <%Lu> shutdown = %d\n",
                          current_timeout.msec (), this->is_closed_));
         }
       if (this->is_closed_)

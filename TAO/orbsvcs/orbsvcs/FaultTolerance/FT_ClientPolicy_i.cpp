@@ -80,7 +80,7 @@ TAO_FT_Request_Duration_Policy::set_time_value (ACE_Time_Value &time_value)
   if (TAO_debug_level > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO_FT (%P|%t) - Timeout is <%dms>\n"),
+                  ACE_TEXT ("TAO_FT (%P|%t) - Timeout is <%Lums>\n"),
                   time_value.msec ()));
     }
 }
@@ -163,7 +163,7 @@ TAO_FT_Heart_Beat_Policy::set_time_value (ACE_Time_Value &time_value,
   if (TAO_debug_level > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
-                  ACE_TEXT ("TAO_FT (%P|%t) - Timeout is <%dms>\n"),
+                  ACE_TEXT ("TAO_FT (%P|%t) - Timeout is <%Lums>\n"),
                   time_value.msec ()));
     }
 }
