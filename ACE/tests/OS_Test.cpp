@@ -1589,6 +1589,31 @@ swab_test ()
 }
 
 int
+strncpy_test ()
+{
+  char buffer[] = {'x', 'x', 'x', 'x', 'x'};
+
+  ACE_TEST_ASSERT (ACE_OS::strncpy (buffer, "ab", 4) == buffer);
+  ACE_TEST_ASSERT (buffer[0] == 'a' && buffer[1] == 'b'
+                   && buffer[2] == '\0' && buffer[3] == '\0'
+                   && buffer[4] == 'x');
+
+  ACE_TEST_ASSERT (ACE_OS::strncpy (buffer, "abcd", 4) == buffer);
+  ACE_TEST_ASSERT (buffer[0] == 'a' && buffer[1] == 'b'
+                   && buffer[2] == 'c' && buffer[3] == 'd'
+                   && buffer[4] == 'x');
+
+  ACE_TEST_ASSERT (ACE_OS::strncpy (buffer, "123456", 4) == buffer);
+  ACE_TEST_ASSERT (buffer[0] == '1' && buffer[1] == '2'
+                   && buffer[2] == '3' && buffer[3] == '4'
+                   && buffer[4] == 'x');
+
+  ACE_TEST_ASSERT (ACE_OS::strncpy (buffer, "z", 0) == buffer);
+  ACE_TEST_ASSERT (buffer[0] == '1');
+  return 0;
+}
+
+int
 gai_strerror_test ()
 {
   ACE_DEBUG ((LM_DEBUG,
@@ -1617,6 +1642,11 @@ run_main (int, ACE_TCHAR *[])
 
   int status = 0;
   int result;
+
+  if ((result = strncpy_test ()) != 0)
+  {
+    status = result;
+  }
 
   if ((result = access_test ()) != 0)
   {
