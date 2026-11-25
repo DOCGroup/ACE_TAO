@@ -91,7 +91,6 @@ public:
 private:
   TAO_Policy_Set &operator= (TAO_Policy_Set const &) = delete;
   TAO_Policy_Set () = delete;
-  TAO_Policy_Set (TAO_Policy_Set &&) = delete;
   TAO_Policy_Set &operator= (TAO_Policy_Set &&) = delete;
 
   /// Remove and destroy all the policy objects owned by this policy

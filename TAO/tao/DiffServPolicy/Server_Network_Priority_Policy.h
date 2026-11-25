@@ -83,7 +83,6 @@ public:
   /// This method reads the object state from a CDR representation.
   CORBA::Boolean _tao_decode (TAO_InputCDR &in_cdr) override;
 
-  TAO_Server_Network_Priority_Policy (TAO_Server_Network_Priority_Policy &&) = delete;
   TAO_Server_Network_Priority_Policy &operator= (
     TAO_Server_Network_Priority_Policy const &) = delete;
   TAO_Server_Network_Priority_Policy &operator= (TAO_Server_Network_Priority_Policy &&) = delete;

@@ -71,7 +71,6 @@ public:
   /// @}
 
   ETCL_Literal_Constraint (ETCL_Literal_Constraint const &lit);
-  ETCL_Literal_Constraint (ETCL_Literal_Constraint &&) = delete;
 
   ~ETCL_Literal_Constraint () override;
 
@@ -82,7 +81,6 @@ public:
   virtual Literal_Type expr_type () const;
 
   void operator= (ETCL_Literal_Constraint const &co);
-  void operator= (ETCL_Literal_Constraint &&) = delete;
 
   /// @name Conversion routines
   /// @{

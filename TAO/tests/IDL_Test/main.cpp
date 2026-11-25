@@ -29,6 +29,7 @@
 #include "tao/Queued_Data.h"
 #include "tao/Base_Transport_Property.h"
 #include "tao/ETCL/TAO_ETCL_Constraint.h"
+#include "tao/Policy_Set.h"
 
 #include <cstring>
 #include <memory>
@@ -48,7 +49,10 @@ static_assert (std::is_move_constructible_v<CORBA::Environment>
                && std::is_move_constructible_v<TAO_Queued_Data>
                && std::is_move_constructible_v<TAO_Base_Transport_Property>
                && std::is_move_constructible_v<TAO_ETCL_Literal_Constraint>
-               && std::is_move_assignable_v<TAO_ETCL_Literal_Constraint>,
+               && std::is_move_assignable_v<TAO_ETCL_Literal_Constraint>
+               && std::is_move_constructible_v<ETCL_Literal_Constraint>
+               && std::is_move_assignable_v<ETCL_Literal_Constraint>
+               && std::is_move_constructible_v<TAO_Policy_Set>,
                "Copyable TAO classes accept rvalues through their copy operations");
 static_assert (!std::is_abstract_v<OBV_Supports_Abstract_Operation>,
                "A directly supported abstract-interface operation uses its generated default");
