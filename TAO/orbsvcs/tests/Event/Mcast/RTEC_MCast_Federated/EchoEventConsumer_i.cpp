@@ -6,6 +6,7 @@
 #include "ace/OS_NS_unistd.h"
 
 #include <cstdio>
+#include <cstring>
 #include <sstream>
 
 EchoEventConsumer_i::EchoEventConsumer_i (CORBA::ORB_ptr orb, int event_limit)
@@ -39,8 +40,13 @@ void EchoEventConsumer_i::push (RtecEventComm::EventSet const &events)
 #else
       if (events[i].data.payload.length() > 0)
         {
-          out << "  text: " <<
-            reinterpret_cast<char const *> (events[i].data.payload.get_buffer ());
+          char const * const data = reinterpret_cast<char const *> (
+            events[i].data.payload.get_buffer ());
+          size_t const length = events[i].data.payload.length ();
+          char const * const end = static_cast<char const *> (
+            std::memchr (data, '\0', length));
+          out << "  text: ";
+          out.write (data, end != nullptr ? end - data : length);
         }
 #endif  /* !TAO_LACKS_EVENT_CHANNEL_ANY */
       std::printf ("%s\n", out.str ().c_str ()); // printf is synchronized

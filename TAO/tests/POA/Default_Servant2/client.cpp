@@ -15,6 +15,7 @@
 #include "ace/OS_NS_fcntl.h"
 
 #include <cstring>
+#include <string>
 
 struct Client_Options
 {
@@ -128,12 +129,16 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Read back the written message
       File::Descriptor::DataBuffer_var data_received = fd->read (message_length);
 
-      char const * const result =
-        reinterpret_cast<char const *> (data_received->get_buffer ());
+      std::string result;
+      if (data_received->length () != 0)
+        {
+          result.assign (reinterpret_cast<char const *> (data_received->get_buffer ()),
+                         data_received->length ());
+        }
 
       // print the read message
       ACE_DEBUG ((LM_DEBUG, "%C\n",
-                 result));
+                 result.c_str ()));
 
       // close the file
       fd->destroy ();
