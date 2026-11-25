@@ -471,8 +471,8 @@ protected:
  * @brief This class is a factory for starting off asynchronous writes
  *    on a stream.
  *
- *     Once open() is called, multiple asynchronous <writes>s can
- *     started using this class.  A ACE_Asynch_Write_Stream::Result
+ *     Once open() is called, multiple asynchronous write operations can
+ *     be started using this class.  A ACE_Asynch_Write_Stream::Result
  *     will be passed back to the @a handler when the asynchronous
  *     write completes through the
  *     ACE_Handler::handle_write_stream() callback.
@@ -637,8 +637,8 @@ protected:
  * @brief This class is a factory for starting off asynchronous reads
  *     on a file.
  *
- *     Once <open> is called, multiple asynchronous <read>s can
- *     started using this class.  A ACE_Asynch_Read_File::Result
+ *     Once @c open() is called, multiple asynchronous read operations can
+ *     be started using this class.  A ACE_Asynch_Read_File::Result
  *     will be passed back to the @a handler when the asynchronous
  *     reads completes through the @c ACE_Handler::handle_read_file
  *     callback.
@@ -689,9 +689,9 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * @c ACE_Handler::handle will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
@@ -850,7 +850,7 @@ protected:
  * @brief This class is a factory for starting off asynchronous writes
  *     on a file.
  *
- *     Once <open> is called, multiple asynchronous <write>s can be
+ *     Once @c open() is called, multiple asynchronous write operations can be
  *     started using this class.  A ACE_Asynch_Write_File::Result
  *     will be passed back to the @a handler when the asynchronous
  *     writes completes through the @c ACE_Handler::handle_write_file
@@ -899,9 +899,9 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * @c ACE_Handler::handle will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
@@ -1059,8 +1059,8 @@ protected:
  * @brief This class is a factory for starting off asynchronous accepts
  *     on a listen handle.
  *
- *     Once <open> is called, multiple asynchronous <accept>s can
- *     started using this class.  A ACE_Asynch_Accept::Result will
+ *     Once @c open() is called, multiple asynchronous accept operations can
+ *     be started using this class.  A ACE_Asynch_Accept::Result will
  *     be passed back to the @a handler when the asynchronous accept
  *     completes through the @c ACE_Handler::handle_accept
  *     callback.
@@ -1075,8 +1075,8 @@ public:
    * This starts off an asynchronous accept.  The asynchronous accept
    * call also allows any initial data to be returned to the
    * @a handler.  Upto @a bytes_to_read will be read and stored in the
-   * @a message_block.  The <accept_handle> will be used for the
-   * <accept> call.  If (<accept_handle> == INVALID_HANDLE), a new
+   * @a message_block.  The @a accept_handle will be used for the
+   * @c accept() call.  If (@a accept_handle == INVALID_HANDLE), a new
    * handle will be created.
    *
    * @a message_block must be specified. This is because the address of
@@ -1098,9 +1098,9 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * @c ACE_Handler::handle will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
@@ -1457,8 +1457,8 @@ protected:
  * @brief This class is a factory for starting off asynchronous
  *     transmit files on a stream.
  *
- *     Once <open> is called, multiple asynchronous <transmit_file>s
- *     can started using this class.  A
+ *     Once @c open() is called, multiple asynchronous transmit_file operations
+ *     can be started using this class.  A
  *     ACE_Asynch_Transmit_File::Result will be passed back to the
  *     @a handler when the asynchronous transmit file completes
  *     through the @c ACE_Handler::handle_transmit_file callback.
@@ -1477,12 +1477,12 @@ public:
   ACE_WIN32_Asynch_Transmit_File (ACE_WIN32_Proactor *win32_proactor);
 
   /**
-   * This starts off an asynchronous transmit file. The <file> is a
-   * handle to an open file.  <header_and_trailer> is a pointer to a
+   * This starts off an asynchronous transmit file. The @a file is a
+   * handle to an open file.  @a header_and_trailer is a pointer to a
    * data structure that contains pointers to data to send before and
    * after the file data is sent.  Set this parameter to 0 if you only
    * want to transmit the file data.  Upto @a bytes_to_write will be
-   * written to the <socket>.  If you want to send the entire file,
+   * written to the socket.  If you want to send the entire file,
    * let @a bytes_to_write = 0.  @a bytes_per_send is the size of each
    * block of data sent per send operation.  Please read the Win32
    * documentation on what the flags should be.
@@ -1506,9 +1506,9 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * @c ACE_Handler::handle will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
@@ -1647,7 +1647,7 @@ protected:
  * @brief This class is a factory for starting off asynchronous reads
  *     on a UDP socket.
  *
- *     Once <open> is called, multiple asynchronous <read>s can be
+ *     Once @c open() is called, multiple asynchronous read operations can be
  *     started using this class.  An ACE_Asynch_Read_Dgram::Result
  *     will be passed back to the @a handler when the asynchronous
  *     reads completes through the @c ACE_Handler::handle_read_stream
@@ -1662,20 +1662,20 @@ public:
   virtual ~ACE_WIN32_Asynch_Read_Dgram ();
 
    /** This starts off an asynchronous read.  Upto
-   * <message_block->total_size()> will be read and stored in the
-   * @a message_block.  @a message_block's <wr_ptr> will be updated to reflect
+   * @c message_block->total_size() will be read and stored in the
+   * @a message_block.  @a message_block's @c wr_ptr will be updated to reflect
    * the added bytes if the read operation is successfully completed.
-   * Return code of 1 means immediate success and <number_of_bytes_recvd>
+   * Return code of 1 means immediate success and @a number_of_bytes_recvd
    * will contain number of bytes read.  The @c ACE_Handler::handle_read_dgram
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
    * errno to get the error code.
    *
-   * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
+   * Scatter/gather is supported on WIN32 by using the @c message_block->cont()
    * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
-   * <message_block->size()> bytes will be read into each <message block> for
-   * a total of <message_block->total_size()> bytes.  All @a message_block's
-   * <wr_ptr>'s will be updated to reflect the added bytes for each
+   * @c message_block->size() bytes will be read into each message block for
+   * a total of @c message_block->total_size() bytes.  All @a message_block's
+   * @c wr_ptr pointers will be updated to reflect the added bytes for each
    * @a message_block
    */
   virtual ssize_t recv (ACE_Message_Block *message_block,
@@ -1692,9 +1692,9 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * @c ACE_Handler::handle will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
@@ -1830,8 +1830,8 @@ protected:
  * @brief This class is a factory for starting off asynchronous writes
  *    on a UDP socket.
  *
- *     Once <open> is called, multiple asynchronous <writes>s can
- *     started using this class.  A ACE_Asynch_Write_Stream::Result
+ *     Once @c open() is called, multiple asynchronous write operations can
+ *     be started using this class.  A ACE_Asynch_Write_Stream::Result
  *     will be passed back to the @a handler when the asynchronous
  *     write completes through the
  *     @c ACE_Handler::handle_write_stream callback.
@@ -1845,20 +1845,20 @@ public:
   virtual ~ACE_WIN32_Asynch_Write_Dgram ();
 
   /** This starts off an asynchronous send.  Upto
-   * <message_block->total_length()> will be sent.  @a message_block's
-   * <rd_ptr> will be updated to reflect the sent bytes if the send operation
+   * @c message_block->total_length() will be sent.  @a message_block's
+   * @c rd_ptr will be updated to reflect the sent bytes if the send operation
    * is successfully completed.
-   * Return code of 1 means immediate success and <number_of_bytes_sent>
+   * Return code of 1 means immediate success and @a number_of_bytes_sent
    * is updated to number of bytes sent.  The @c ACE_Handler::handle_write_dgram
    * method will still be called.  Return code of 0 means the IO will
    * complete proactively.  Return code of -1 means there was an error, use
    * errno to get the error code.
    *
-   * Scatter/gather is supported on WIN32 by using the <message_block->cont()>
+   * Scatter/gather is supported on WIN32 by using the @c message_block->cont()
    * method.  Up to ACE_IOV_MAX @a message_block's are supported.  Upto
-   * <message_block->length()> bytes will be sent from each <message block>
-   * for a total of <message_block->total_length()> bytes.  All
-   * @a message_block's <rd_ptr>'s will be updated to reflect the bytes sent
+   * @c message_block->length() bytes will be sent from each message block
+   * for a total of @c message_block->total_length() bytes.  All
+   * @a message_block's @c rd_ptr pointers will be updated to reflect the bytes sent
    * from each @a message_block.
    */
   virtual ssize_t send (ACE_Message_Block *message_block,
@@ -1876,9 +1876,9 @@ public:
 
   /**
    * Initializes the factory with information which will be used with
-   * each asynchronous call.  If (<handle> == ACE_INVALID_HANDLE),
-   * @c ACE_Handler::handle will be called on the @a handler to get the
-   * correct handle.
+   * each asynchronous call.  If (@a handle == ACE_INVALID_HANDLE),
+   * @c ACE_Handler::handle will be called on the handler referenced by
+   * @a handler_proxy to get the correct handle.
    */
   int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
             ACE_HANDLE handle,
