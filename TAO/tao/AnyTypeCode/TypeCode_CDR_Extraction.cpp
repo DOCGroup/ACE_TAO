@@ -368,16 +368,16 @@ TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
   // encapsulation.
   TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // Extract the repository ID and name.
   CORBA::String_var id;
   if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   static char const Object_id[]    = "IDL:omg.org/CORBA/Object:1.0";
   static char const CCMObject_id[] = "IDL:omg.org/CORBA/CCMObject:1.0";
@@ -434,9 +434,9 @@ TAO::TypeCodeFactory::tc_objref_factory (CORBA::TCKind kind,
       CORBA::String_var name;
 
       if (!(cdr >> TAO_InputCDR::to_string (name.out (), 0)))
-      {
-        return false;
-      }
+        {
+          return false;
+        }
 
       using typecode_type = TAO::TypeCode::Objref<CORBA::String_var,
                                                    TAO::True_RefCount_Policy>;
@@ -464,9 +464,9 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
   // a CDR encapsulation.
   TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // Extract the repository ID, name and number of fields.
   CORBA::String_var id, name;
@@ -536,9 +536,9 @@ TAO::TypeCodeFactory::tc_struct_factory (CORBA::TCKind kind,
             dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
 
           if (!rtc)
-          {
-            return false;  // Should never occur.
-          }
+            {
+              return false;  // Should never occur.
+            }
 
           rtc->set_recursive_tc (master_tc);
         }
@@ -577,9 +577,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
 
   TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // Extract the repository ID, name, discriminant type, default index
   // and case count.
@@ -638,9 +638,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           {
             CORBA::ULong label {};
             if (!(cdr >> label))
-            {
-              return false;
-            }
+              {
+                return false;
+              }
 
             using case_type = TypeCode::Case_Enum_T<CORBA::String_var,
                                                      CORBA::TypeCode_var>;
@@ -654,9 +654,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           {
             CORBA::ULong label {};
             if (!(cdr >> label))
-            {
-              return false;
-            }
+              {
+                return false;
+              }
 
             using case_type = TypeCode::Case_T<CORBA::ULong,
                                                 CORBA::String_var,
@@ -671,9 +671,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           {
             CORBA::Long label {};
             if (!(cdr >> label))
-            {
-              return false;
-            }
+              {
+                return false;
+              }
 
             using case_type = TypeCode::Case_T<CORBA::Long,
                                                 CORBA::String_var,
@@ -688,9 +688,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           {
             CORBA::UShort label {};
             if (!(cdr >> label))
-            {
-              return false;
-            }
+              {
+                return false;
+              }
 
             using case_type = TypeCode::Case_T<CORBA::UShort,
                                                 CORBA::String_var,
@@ -705,9 +705,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           {
             CORBA::Short label {};
             if (!(cdr >> label))
-            {
-              return false;
-            }
+              {
+                return false;
+              }
 
             using case_type = TypeCode::Case_T<CORBA::Short,
                                                 CORBA::String_var,
@@ -722,9 +722,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           {
             CORBA::Char label {};
             if (!(cdr >> CORBA::Any::to_char (label)))
-            {
-              return false;
-            }
+              {
+                return false;
+              }
 
             using case_type = TypeCode::Case_T<CORBA::Char,
                                                 CORBA::String_var,
@@ -739,9 +739,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           {
             CORBA::Boolean label {};
              if (!(cdr >> CORBA::Any::to_boolean (label)))
-             {
-               return false;
-             }
+               {
+                 return false;
+               }
 
             using case_type = TypeCode::Case_T<CORBA::Boolean,
                                                 CORBA::String_var,
@@ -756,9 +756,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           {
             CORBA::LongLong label {};
             if (!(cdr >> label))
-            {
-              return false;
-            }
+              {
+                return false;
+              }
 
             using case_type = TypeCode::Case_T<CORBA::LongLong,
                                                 CORBA::String_var,
@@ -773,9 +773,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
           {
             CORBA::ULongLong label {};
             if (!(cdr >> label))
-            {
-              return false;
-            }
+              {
+                return false;
+              }
 
             using case_type = TypeCode::Case_T<CORBA::ULongLong,
                                                 CORBA::String_var,
@@ -847,9 +847,9 @@ TAO::TypeCodeFactory::tc_union_factory (CORBA::TCKind /* kind */,
             dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
 
           if (!rtc)
-          {
-            return false;  // Should never occur.
-          }
+            {
+              return false;  // Should never occur.
+            }
 
           rtc->set_recursive_tc (master_tc);
         }
@@ -888,9 +888,9 @@ TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
   // encapsulation.
   TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // Extract the repository ID, name and number of fields.
   CORBA::String_var id, name;
@@ -908,9 +908,9 @@ TAO::TypeCodeFactory::tc_enum_factory (CORBA::TCKind /* kind */,
   for (CORBA::ULong i {}; i < nenumerators; ++i)
     {
       if (!(cdr >> TAO_InputCDR::to_string (enumerators[i].out (), 0)))
-      {
-        return false;
-      }
+        {
+          return false;
+        }
     }
 
   using typecode_type = TAO::TypeCode::Enum<
@@ -940,9 +940,9 @@ TAO::TypeCodeFactory::tc_string_factory (CORBA::TCKind kind,
 
   CORBA::ULong bound {};
   if (!(cdr >> bound))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   if (bound == 0)
     {
@@ -985,9 +985,9 @@ TAO::TypeCodeFactory::tc_sequence_factory (CORBA::TCKind kind,
   // encapsulation.
   TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // Extract the repository ID, name and content type.
   CORBA::TypeCode_var content_type;
@@ -1031,9 +1031,9 @@ TAO::TypeCodeFactory::tc_alias_factory (CORBA::TCKind kind,
   // in a CDR encapsulation.
   TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // Extract the repository ID, name and content type.
   CORBA::String_var id, name;
@@ -1147,9 +1147,9 @@ TAO::TypeCodeFactory::tc_fixed_factory (CORBA::TCKind,
 
   CORBA::UShort digits, scale;
   if (!(cdr >> digits && cdr >> scale))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   using typecode_type = TAO::TypeCode::Fixed<TAO::True_RefCount_Policy>;
 
@@ -1171,16 +1171,16 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
   // CDR encapsulation
   TAO_InputCDRByteOrderGuard const boguard (cdr);
   if (!start_cdr_encap_extraction (cdr))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   // Extract the repository ID, name and number of fields.
   CORBA::String_var id;
   if (!(cdr >> TAO_InputCDR::to_string (id.out (), 0)))
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   CORBA::String_var name;
   CORBA::ValueModifier type_modifier {};
@@ -1254,9 +1254,9 @@ TAO::TypeCodeFactory::tc_value_factory (CORBA::TCKind kind,
             dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
 
           if (!rtc)
-          {
-            return false;  // Should never occur.
-          }
+            {
+              return false;  // Should never occur.
+            }
 
           rtc->set_recursive_tc (master_tc);
         }
@@ -1480,9 +1480,9 @@ namespace
       // lists, meaning they are encoded as CDR encapsulations.
       TAO_InputCDRByteOrderGuard const boguard (indir_stream);
       if (!start_cdr_encap_extraction (indir_stream))
-      {
-        return false;
-      }
+        {
+          return false;
+        }
 
     /**
      * @todo Recursive TypeCode demarshaling is currently suboptimal
@@ -1493,9 +1493,9 @@ namespace
 
     CORBA::String_var id;
     if (!(indir_stream >> TAO_InputCDR::to_string (id.out (), 0)))
-    {
-      return false;
-    }
+      {
+        return false;
+      }
 
     if (CORBA::tk_alias == kind)
     {
@@ -1624,9 +1624,9 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
                   dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
 
               if (!rtc)
-              {
-                return false;  // Should never occur.
-              }
+                {
+                  return false;  // Should never occur.
+                }
 
               rtc->set_recursive_tc (tc_struct);
             }
@@ -1651,9 +1651,9 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
                 dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
 
               if (!rtc)
-              {
-                return false;  // Should never occur.
-              }
+                {
+                  return false;  // Should never occur.
+                }
 
               rtc->set_recursive_tc (tc_union);
             }
@@ -1680,9 +1680,9 @@ operator>> (TAO_InputCDR & cdr, CORBA::TypeCode_ptr & tc)
                 dynamic_cast<TAO::TypeCode::Indirected_Type *> (info.type);
 
               if (!rtc)
-              {
-                return false;  // Should never occur.
-              }
+                {
+                  return false;  // Should never occur.
+                }
 
               rtc->set_recursive_tc (tc_value);
             }
