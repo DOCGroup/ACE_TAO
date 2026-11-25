@@ -13,6 +13,7 @@ class TAO_IDL_FE_Export AST_Template_Module
     public virtual AST_Type
 {
 public:
+  AST_Template_Module () = delete;
   AST_Template_Module (UTL_ScopedName *n,
                        FE_Utils::T_PARAMLIST_INFO *template_params);
 

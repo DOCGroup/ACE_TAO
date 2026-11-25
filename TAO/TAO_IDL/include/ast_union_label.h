@@ -78,6 +78,7 @@ class ast_visitor;
 class TAO_IDL_FE_Export AST_UnionLabel
 {
 public:
+  AST_UnionLabel () = delete;
   // Define kind of label.
   enum UnionLabel
     {

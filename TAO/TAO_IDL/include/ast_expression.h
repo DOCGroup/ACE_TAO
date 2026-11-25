@@ -81,6 +81,7 @@ class AST_Enum;
 class TAO_IDL_FE_Export AST_Expression
 {
 public:
+  AST_Expression () = delete;
   // Enum to define all the different operators to combine expressions.
   enum ExprComb
     {

@@ -9,6 +9,7 @@ class TAO_IDL_FE_Export AST_ValueType
   : public virtual AST_Interface
 {
 public:
+  AST_ValueType () = delete;
   AST_ValueType (AST_ValueType const &) = delete;
   AST_ValueType (AST_ValueType &&) = delete;
   AST_ValueType &operator= (AST_ValueType const &) = delete;

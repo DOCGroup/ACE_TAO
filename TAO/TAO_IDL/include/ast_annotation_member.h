@@ -18,6 +18,7 @@ class AST_Expression;
 class TAO_IDL_FE_Export AST_Annotation_Member : public virtual AST_Field
 {
 public:
+  AST_Annotation_Member () = delete;
   AST_Annotation_Member (
     AST_Expression::ExprType expr_type,
     AST_Type *type, UTL_ScopedName *name);

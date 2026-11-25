@@ -23,6 +23,7 @@
 class TAO_IDL_FE_Export AST_Annotation_Appl : public virtual AST_Annotation_Decl
 {
 public:
+  AST_Annotation_Appl () = delete;
   /**
    * Store Optional Annotation Parameters
    */

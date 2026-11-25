@@ -74,6 +74,7 @@ class UTL_NameList;
 class TAO_IDL_FE_Export AST_Attribute : public virtual AST_Field
 {
 public:
+  AST_Attribute () = delete;
   AST_Attribute (bool readonly,
                  AST_Type *ft,
                  UTL_ScopedName *n,

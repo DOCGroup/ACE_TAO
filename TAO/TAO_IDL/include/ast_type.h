@@ -77,6 +77,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_Type : public virtual AST_Decl
 {
 public:
+  AST_Type () = delete;
   AST_Type (AST_Type const &) = delete;
   AST_Type (AST_Type &&) = delete;
   AST_Type &operator= (AST_Type const &) = delete;

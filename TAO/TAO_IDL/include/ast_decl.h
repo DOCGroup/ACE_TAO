@@ -129,6 +129,7 @@ protected:
 class TAO_IDL_FE_Export AST_Decl : public virtual COMMON_Base
 {
 public:
+  AST_Decl () = delete;
   // Enum defining the different kinds of AST nodes.
   enum NodeType {
         NT_module                   // Denotes a module

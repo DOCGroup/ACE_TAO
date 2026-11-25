@@ -72,6 +72,7 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 class TAO_IDL_FE_Export AST_ConcreteType : public virtual AST_Type
 {
 public:
+  AST_ConcreteType () = delete;
   AST_ConcreteType (AST_ConcreteType const &) = delete;
   AST_ConcreteType (AST_ConcreteType &&) = delete;
   AST_ConcreteType &operator= (AST_ConcreteType const &) = delete;

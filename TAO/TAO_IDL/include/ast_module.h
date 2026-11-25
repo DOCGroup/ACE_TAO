@@ -77,6 +77,7 @@ class TAO_IDL_FE_Export AST_Module : public virtual AST_Decl,
                                      public virtual UTL_Scope
 {
 public:
+  AST_Module () = delete;
   AST_Module (AST_Module const &) = delete;
   AST_Module (AST_Module &&) = delete;
   AST_Module &operator= (AST_Module const &) = delete;
