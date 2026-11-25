@@ -38,6 +38,26 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[]) const
       if (!CORBA::is_nil (orb.in ()))
         {
           SERVANT servant;
+          // Deactivate POA servants before the stack-allocated servant is destroyed.
+          struct Shutdown_Guard
+          {
+            CORBA::ORB_ptr orb;
+            bool active {true};
+
+            ~Shutdown_Guard ()
+            {
+              if (this->active)
+                {
+                  try
+                    {
+                      this->orb->shutdown (true);
+                    }
+                  catch (...)
+                    {
+                    }
+                }
+            }
+          } shutdown_guard {orb.in ()};
           result = servant.parse_args (argc, argv);
 
           if (result == 0)
@@ -63,6 +83,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[]) const
                   servant.fini ();
 
                   orb->shutdown (true);
+                  shutdown_guard.active = false;
 
                   TAOLIB_ERROR ((LM_INFO,
                                  "%T %C (%P|%t) Terminated normally. %C\n",

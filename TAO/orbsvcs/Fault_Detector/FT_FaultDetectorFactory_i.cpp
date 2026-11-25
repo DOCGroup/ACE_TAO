@@ -94,7 +94,13 @@ int TAO::FT_FaultDetectorFactory_i::write_ior ()
     ACE_OS::fopen (this->ior_output_file_.c_str (), ACE_TEXT ("w")), ACE_OS::fclose);
   if (out)
   {
-    ACE_OS::fprintf (out.get (), "%s", this->ior_.in ());
+    int const write_result = ACE_OS::fprintf (out.get (), "%s", this->ior_.in ());
+    int const close_result = ACE_OS::fclose (out.release ());
+    if (write_result < 0 || close_result != 0)
+      {
+        ORBSVCS_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR file: %s\n"),
+                               this->ior_output_file_.c_str ()), -1);
+      }
     return 0;
   }
 
@@ -303,7 +309,7 @@ int TAO::FT_FaultDetectorFactory_i::init (CORBA::ORB_ptr orb)
     result = this->write_ior ();
   }
 
-  if (this->ns_name_ != nullptr)
+  if (result == 0 && this->ns_name_ != nullptr)
   {
     this->identity_ = "name:";
     this->identity_ += this->ns_name_;
