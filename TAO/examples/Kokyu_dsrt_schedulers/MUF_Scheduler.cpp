@@ -233,7 +233,7 @@ MUF_Scheduler::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T): send_request "
-              "from \"%s\"\n",
+              "from \"%C\"\n",
               operation.in ()));
 #endif
 
@@ -337,7 +337,7 @@ MUF_Scheduler::receive_request (PortableInterceptor::ServerRequestInfo_ptr ri,
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T): receive_request from "
-              "\"%s\"\n",
+              "\"%C\"\n",
               operation.in ()));
 #endif
 
@@ -425,7 +425,7 @@ MUF_Scheduler::send_reply (PortableInterceptor::ServerRequestInfo_ptr ri)
 
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
-              "(%t|%T): send_reply from \"%s\"\n",
+              "(%t|%T): send_reply from \"%C\"\n",
               ri->operation ()));
 #endif
 
@@ -521,7 +521,7 @@ MUF_Scheduler::receive_reply (PortableInterceptor::ClientRequestInfo_ptr ri)
 #ifdef KOKYU_DSRT_LOGGING
   ACE_DEBUG ((LM_DEBUG,
               "(%t|%T):receive_reply from "
-              "\"%s\"\n",
+              "\"%C\"\n",
               opname.c_str ()));
 #endif
 

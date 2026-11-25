@@ -228,7 +228,7 @@ ServerApp::create_foo (PortableServer::POA_ptr poa, char const *servant_name)
 
   if (CORBA::is_nil (obj.in ()))
     {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) Failed to activate servant (%s).\n", servant_name));
+      ACE_ERROR ((LM_ERROR, "(%P|%t) Failed to activate servant (%C).\n", servant_name));
       throw TestException ();
     }
 
@@ -250,7 +250,7 @@ ServerApp::create_callback (PortableServer::POA_ptr poa, char const *servant_nam
 
   if (CORBA::is_nil (obj.in ()))
     {
-      ACE_ERROR ((LM_ERROR, "(%P|%t) Failed to activate servant (%s).\n", servant_name));
+      ACE_ERROR ((LM_ERROR, "(%P|%t) Failed to activate servant (%C).\n", servant_name));
       throw TestException ();
     }
 

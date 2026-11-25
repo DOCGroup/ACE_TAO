@@ -148,7 +148,7 @@ Identity_Client::run ()
         orb->object_to_string (object_group.in ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "The ior string is %s\n", iorstring.in ()));
+                  "The ior string is %C\n", iorstring.in ()));
 #if defined (DOORS_MEASURE_STATS)
       // Grab timestamp again.
       ACE_hrtime_t now = ACE_OS::gethrtime ();
@@ -171,7 +171,7 @@ Identity_Client::run ()
 
   // List <Object_Group>'s id.
   CORBA::String_var id = object_group->id ();
-  ACE_DEBUG ((LM_DEBUG, "Object Group's id is: %s\n\n", id.in ()));
+  ACE_DEBUG ((LM_DEBUG, "Object Group's id is: %C\n\n", id.in ()));
 
   // List all <Object_Group>s members.
   Load_Balancer::Member_ID_List_var id_list =
@@ -181,7 +181,7 @@ Identity_Client::run ()
               id_list->length ()));
   for (CORBA::ULong i = 0; i < id_list->length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "%s\n", static_cast<char const*>(id_list[i])));
+      ACE_DEBUG ((LM_DEBUG, "%C\n", static_cast<char const*>(id_list[i])));
     }
 
   // Perform <number_of_invocations_> method calls on <Identity>
@@ -210,7 +210,7 @@ Identity_Client::run ()
       identity_object->get_name (identity.out ());
 
       ACE_DEBUG ((LM_DEBUG,
-                  "Invocation  %s\n",
+                  "Invocation  %C\n",
                   identity.in ()));
     }
 

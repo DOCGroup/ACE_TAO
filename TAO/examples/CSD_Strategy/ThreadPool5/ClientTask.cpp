@@ -91,7 +91,7 @@ ClientTask::svc()
       if (result)
         {
           ACE_DEBUG((LM_DEBUG,
-                     "(%P|%t) ===> Message from op6() == %s\n",
+                     "(%P|%t) ===> Message from op6() == %C\n",
                      message.in ()));
         }
       else
