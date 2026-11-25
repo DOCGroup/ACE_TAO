@@ -1176,10 +1176,10 @@ int test_boxed_array_invocations (Test * test_object)
                               an_out);
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) after array_op4\n"));
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p5[0]=%s\n", (*p5)[0].in ()));
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p5[1]=%s\n", (*p5)[1].in ()));
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p6[0]=%s\n", (*p6)[0].in ()));
-      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p6[1]=%s\n", (*p6)[1].in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p5[0]=%C\n", (*p5)[0].in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p5[1]=%C\n", (*p5)[1].in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p6[0]=%C\n", (*p6)[0].in ()));
+      ACE_DEBUG ((LM_DEBUG, "(%P|%t) p6[1]=%C\n", (*p6)[1].in ()));
       OBV_VERITY (std::strcmp ((*p5)[0], "g1inout strin") == 0);
       OBV_VERITY (std::strcmp ((*p5)[1], "g2inout strin") == 0);
       OBV_VERITY (std::strcmp ((*p6)[0],  sa[0]) == 0);
