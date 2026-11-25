@@ -22,7 +22,7 @@ Supplier::run ()
     {
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
-                  "Notifier_Handler::run"));
+                  ACE_TEXT ("Notifier_Handler::run")));
     }
 }
 
@@ -40,21 +40,21 @@ Supplier::init (int argc, ACE_TCHAR *argv[])
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "Notifier_Handler did not init\n"),
+                         ACE_TEXT ("Notifier_Handler did not init\n")),
                         -1);
     }
   else if (this->ih_.initialize (std::addressof (this->nh_)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "Supplier Input handler did not init\n"),
+                         ACE_TEXT ("Supplier Input handler did not init\n")),
                         -1);
     }
   else if (nh_.reactor ()->register_handler (SIGINT, this) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "register_handler"),
+                         ACE_TEXT ("register_handler")),
                         -1);
     }
   ACE_DEBUG ((LM_DEBUG,
@@ -74,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                             "%p\n",
-                            "supplier init failed"),
+                            ACE_TEXT ("supplier init failed")),
                             1);
         }
 

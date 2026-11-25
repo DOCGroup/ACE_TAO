@@ -87,7 +87,7 @@ Notifier_Server::init (int argc,
    {
      ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                        "init_child_poa"),
+                        ACE_TEXT ("init_child_poa")),
                         -1);
    }
 

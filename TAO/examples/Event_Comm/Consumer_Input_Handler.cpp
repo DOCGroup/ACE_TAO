@@ -57,7 +57,7 @@ Consumer_Input_Handler::close ()
     {
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
-                  "remove_stdin_handler"));
+                  ACE_TEXT ("remove_stdin_handler")));
     }
 
   return 0;
@@ -74,7 +74,7 @@ int Consumer_Input_Handler::initialize (Consumer_Handler *ch)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "register_stdin_handler"),
+                         ACE_TEXT ("register_stdin_handler")),
                         -1);
     }
   return 0;

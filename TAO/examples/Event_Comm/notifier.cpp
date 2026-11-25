@@ -43,7 +43,7 @@ Notifier::Notifier (int argc, ACE_TCHAR *argv[])
     {
       ACE_ERROR ((LM_ERROR,
                   "%p\n",
-                  "register_handler"));
+                  ACE_TEXT ("register_handler")));
     }
 }
 

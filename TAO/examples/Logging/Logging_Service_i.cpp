@@ -50,7 +50,7 @@ Logger_Server::init (int argc,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "init_child_poa"),
+                         ACE_TEXT ("init_child_poa")),
                         -1);
     }
 
@@ -61,7 +61,7 @@ Logger_Server::init (int argc,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "parse_args"),
+                         ACE_TEXT ("parse_args")),
                         -1);
     }
 
@@ -82,7 +82,7 @@ Logger_Server::init (int argc,
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "init_naming_service"),
+                         ACE_TEXT ("init_naming_service")),
                         -1);
     }
 
