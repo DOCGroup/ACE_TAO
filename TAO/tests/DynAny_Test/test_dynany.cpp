@@ -53,6 +53,27 @@ Test_DynAny::run_test ()
                             -1);
         }
 
+      fixed_test_stage = "multiple DynAny round trip";
+      DynamicAny::AnySeq values;
+      values.length (2);
+      values[0] <<= CORBA::Long (42);
+      values[1] <<= CORBA::Long (73);
+      DynamicAny::DynAnySeq_var dyn_values =
+        dynany_factory->create_multiple_dyn_anys (values, true);
+      DynamicAny::AnySeq_var copied_values =
+        dynany_factory->create_multiple_anys (dyn_values.in ());
+      CORBA::Long first {};
+      CORBA::Long second {};
+      if (copied_values->length () != 2
+          || !(copied_values[0] >>= first)
+          || !(copied_values[1] >>= second)
+          || first != 42 || second != 73)
+        {
+          ACE_ERROR_RETURN ((LM_ERROR,
+                             "Multiple DynAny round trip returned incorrect values\n"),
+                            -1);
+        }
+
       DynAnyAnalyzer analyzer (this->orb_.in (),
                                dynany_factory.in (),
                                debug_);
