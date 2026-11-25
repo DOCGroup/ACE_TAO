@@ -3,6 +3,8 @@
 
 #include "TestS.h"
 
+#include <atomic>
+
 class Test_i : public virtual POA_Test
 {
 public:
@@ -25,9 +27,9 @@ public:
   void shutdown () override;
 
 private:
-  volatile bool sleep_;
-  volatile bool unsleep_;
-  volatile bool shutdown_;
+  std::atomic<bool> sleep_;
+  std::atomic<bool> unsleep_;
+  std::atomic<bool> shutdown_;
   CORBA::ORB_var orb_;
 };
 
