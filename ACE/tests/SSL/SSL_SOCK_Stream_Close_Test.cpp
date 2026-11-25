@@ -24,6 +24,8 @@ namespace
     ACE_Semaphore ready_ {0};
     ACE_Semaphore release_ {0};
     int accept_result_ {-1};
+    bool check_data_ {};
+    bool data_received_ {};
   };
 
   ACE_THR_FUNC_RETURN server (void *arg)
@@ -36,6 +38,17 @@ namespace
     state.release_.acquire ();
     if (state.accept_result_ == 0)
       {
+        if (state.check_data_)
+          {
+            char data[32768];
+            ssize_t const received = stream.recv_n (data, sizeof (data));
+            state.data_received_ = received == static_cast<ssize_t> (sizeof (data));
+            for (size_t i {}; state.data_received_ && i < sizeof (data); ++i)
+              {
+                state.data_received_ = data[i] == 'x';
+              }
+
+          }
         stream.close ();
       }
     return ACE_THR_FUNC_RETURN_NULL;
@@ -68,9 +81,10 @@ int run_main (int, ACE_TCHAR *[])
 
   ACE_SSL_SOCK_Connector connector;
   ACE_SSL_SOCK_Stream client;
-  for (int test {}; test < 2; ++test)
+  for (int test {}; test < 3; ++test)
     {
       Server_State state (listener);
+      state.check_data_ = test == 2;
       ACE_Thread_Manager manager;
       if (manager.spawn (server, std::addressof (state)) == -1)
         {
@@ -120,6 +134,19 @@ int run_main (int, ACE_TCHAR *[])
                 }
             }
 
+          if (test == 2)
+            {
+              char data[32768];
+              for (size_t i {}; i < sizeof (data); ++i)
+                {
+                  data[i] = 'x';
+                }
+              if (client.send_n (data, sizeof (data)) != static_cast<ssize_t> (sizeof (data)))
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("TLS send failed\n")));
+                  result = 1;
+                }
+            }
           int const close_result = client.close ();
           ACE_HANDLE const handle = client.get_handle ();
           int const shutdown_state = ::SSL_get_shutdown (client.ssl ());
@@ -134,6 +161,11 @@ int run_main (int, ACE_TCHAR *[])
 
       state.release_.release ();
       manager.wait ();
+      if (state.check_data_ && !state.data_received_)
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("TLS data lost on close\n")));
+          result = 1;
+        }
       if (result != 0)
         {
           break;
