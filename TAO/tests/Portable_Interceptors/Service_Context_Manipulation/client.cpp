@@ -1,6 +1,7 @@
 #include "ace/Get_Opt.h"
 #include "testC.h"
 #include "Client_ORBInitializer.h"
+#include "context_match.h"
 
 #include "tao/ORBInitializer_Registry.h"
 
@@ -65,6 +66,30 @@ run_test (Test_Interceptors::Visual_ptr server)
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
+  CORBA::OctetSeq context;
+  char const expected[] = "test";
+  if (context_matches (context, expected))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Empty service context matched\n"), 1);
+    }
+  context.length (sizeof (expected) - 1);
+  std::memcpy (context.get_buffer (), expected, context.length ());
+  if (context_matches (context, expected))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Truncated service context matched\n"), 1);
+    }
+  context.length (sizeof (expected));
+  std::memcpy (context.get_buffer (), expected, sizeof (expected));
+  if (!context_matches (context, expected))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Valid service context did not match\n"), 1);
+    }
+  context.length (sizeof (expected) + 1);
+  if (context_matches (context, expected))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "Service context with trailing data matched\n"), 1);
+    }
+
   try
     {
       PortableInterceptor::ORBInitializer_ptr temp_initializer;
