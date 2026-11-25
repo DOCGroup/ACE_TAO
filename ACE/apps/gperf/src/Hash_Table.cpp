@@ -55,7 +55,7 @@ Hash_Table::~Hash_Table ()
 
       ACE_DEBUG ((LM_DEBUG,
                   "\ndumping the hash table\ntotal available table slots = %B, total bytes = %B, total collisions = %d\n"
-                  "location, %*s, keyword\n",
+                  "location, %*C, keyword\n",
                   this->size_,
                   this->size_ * sizeof *this->table_.get (),
                   this->collisions_,
@@ -65,7 +65,7 @@ Hash_Table::~Hash_Table ()
       for (int i = static_cast<int> (this->size_ - 1); i >= 0; --i)
         if (this->table_[i])
           ACE_DEBUG ((LM_DEBUG,
-                      "%8d, %*s, %s\n",
+                      "%8d, %*C, %C\n",
                       i,
                       keysig_width,
                       this->table_[i]->keysig.c_str (),

@@ -323,7 +323,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
           {
             ACE_SET_BITS (option_word_, DEBUGGING);
             ACE_ERROR ((LM_ERROR,
-                        "Starting program %n, version %s, with debugging on.\n",
+                        "Starting program %n, version %C, with debugging on.\n",
                         version_string));
             break;
           }
@@ -697,7 +697,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         // Print out the version and quit.
         case 'v':
           ACE_ERROR ((LM_ERROR,
-                      "%n: version %s\n%r\n",
+                      "%n: version %C\n%r\n",
                       version_string,
                       &Options::usage));
           ACE_OS::exit (0);

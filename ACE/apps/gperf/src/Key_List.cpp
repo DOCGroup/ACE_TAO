@@ -1642,7 +1642,7 @@ Key_List::count_duplicates (List_Node *link,
 
       if (option[DEBUGGING])
         ACE_DEBUG ((LM_DEBUG,
-                    "%s linked keyword = %s, slot = %d, hash_value = %d\n",
+                    "%C linked keyword = %C, slot = %d, hash_value = %d\n",
                     type,
                     ptr->key.c_str (),
                     ptr->slot,
@@ -1707,7 +1707,7 @@ Key_List::output_lookup_array ()
 
           if (option[DEBUGGING])
             ACE_DEBUG ((LM_DEBUG,
-                        "keyword = %s, slot = %d, hash_value = %d, lookup_array[hash_value] = %d\n",
+                        "keyword = %C, slot = %d, hash_value = %d, lookup_array[hash_value] = %d\n",
                         temp->key.c_str (),
                         temp->slot,
                         temp->hash_value,
@@ -2322,7 +2322,7 @@ Key_List::dump ()
                dup = dup->link)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          " %s",
+                          " %C",
                           dup->key.c_str ()));
             }
         }
