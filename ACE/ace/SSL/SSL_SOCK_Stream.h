@@ -268,7 +268,10 @@ public:
   /// @}
 
   /// Close down the socket.
-  /// @note A nonblocking socket is closed even if its TLS close notification
+  /// @note The socket closes without waiting for the peer's TLS close
+  /// notification. Unread incoming data can cause a connection reset, so the
+  /// peer may not receive this stream's close notification.
+  /// A nonblocking socket is closed even if its TLS close notification
   /// cannot be sent without blocking.
   int close ();
 

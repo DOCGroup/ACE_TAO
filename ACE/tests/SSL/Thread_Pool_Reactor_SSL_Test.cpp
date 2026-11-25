@@ -130,6 +130,15 @@ Request_Handler::handle_input (ACE_HANDLE fd)
           == static_cast<ssize_t> (len * sizeof (ACE_TCHAR)))
     {
       ++this->nr_msgs_rcvd_;
+      if (this->nr_msgs_rcvd_ == cli_req_no)
+        {
+          char const acknowledged = 1;
+          if (this->peer ().send_n (std::addressof (acknowledged), 1) != 1)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to acknowledge requests: %m\n")));
+              return -1;
+            }
+        }
 
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("(%t) svr input; fd: %H; input: %s\n"),
@@ -233,12 +242,13 @@ cli_worker (void *arg)
           ACE_OS::sleep (delay);
         }
 
-      // Complete the TLS shutdown so the peer receives all sent records.
-      ::SSL_shutdown (stream.ssl ());
+      // Wait until the server has processed all requests before disconnecting.
       ACE_Time_Value const timeout (5);
-      char drain[BUFSIZ];
-      while (stream.recv (drain, sizeof (drain), std::addressof (timeout)) > 0)
+      char acknowledged {};
+      if (stream.recv_n (std::addressof (acknowledged), 1, std::addressof (timeout)) != 1
+          || acknowledged != 1)
         {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to receive acknowledgement: %m\n")));
         }
       stream.close ();
     }
