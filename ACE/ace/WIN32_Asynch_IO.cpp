@@ -1409,7 +1409,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
   DWORD dword_bytes_to_read = static_cast<DWORD> (bytes_to_read);
 
   // last one should be completely 0
-  buffer_pointers[buffer_pointers_count].Buffer = 0;
+  buffer_pointers[buffer_pointers_count].Buffer = nullptr;
 
   ACE_WIN32_Asynch_Read_File_Result *result {};
   ACE_NEW_RETURN (result,
@@ -1865,7 +1865,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
   DWORD dword_bytes_to_write = static_cast<DWORD> (bytes_to_write);
 
   // last one should be completely 0
-  buffer_pointers[buffer_pointers_count].Buffer = 0;
+  buffer_pointers[buffer_pointers_count].Buffer = nullptr;
 
   ACE_WIN32_Asynch_Write_File_Result *result {};
   ACE_NEW_RETURN (result,
