@@ -987,6 +987,19 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     }
 
+  TAO_OutputCDR truncated_output;
+  truncated_output << CORBA::ULong (1);
+  truncated_output << ACE_OutputCDR::from_char ('a');
+  TAO_InputCDR truncated_input (truncated_output);
+  array_vector unchanged {array};
+  if (TAO::demarshal_array_vector<teststruct::_b_forany> (
+        truncated_input, unchanged)
+      || unchanged.size () != 1 || unchanged[0] != array)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Truncated array vector changed the target\n"));
+    }
+
   const ACE_CDR::ULongLong test_ull =
     ACE_UINT64_LITERAL (122192928000000000);
 
