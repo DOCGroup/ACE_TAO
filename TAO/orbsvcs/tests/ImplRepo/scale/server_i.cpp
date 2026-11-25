@@ -31,7 +31,7 @@ public:
     PortableServer::POA_var poa = cur->get_POA();
     CORBA::String_var poaname = poa->the_name();
 
-    ACE_DEBUG((LM_DEBUG, "%s: get() %d\n", poaname.in(), n_));
+    ACE_DEBUG((LM_DEBUG, "%C: get() %d\n", poaname.in(), n_));
     return n_;
   }
 };
@@ -69,7 +69,7 @@ Server_i::parse_args (int argc, ACE_TCHAR* argv[])
       ACE_ERROR_RETURN ((LM_ERROR,
         "usage:  %s"
         " [-c] <count=1> ImR-ified objects."
-        " [-p] <prefix=%s> To all ImR-ified object names."
+        " [-p] <prefix=%C> To all ImR-ified object names."
         "\n",
         argv[0],
         DEFAULT_SERVER_NAME),1);
@@ -180,7 +180,7 @@ Server_i::run ()
     }
 
     ACE_DEBUG ((LM_DEBUG,
-      "\n  Started Server %s with %d imr-ified objects.\n\n",
+      "\n  Started Server %C with %d imr-ified objects.\n\n",
       this->server_name_.c_str(),
       this->count_));
 

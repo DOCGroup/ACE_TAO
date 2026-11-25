@@ -188,7 +188,7 @@ Client::test_get_all_property_names ()
           for (CORBA::ULong ni {}; ni < len; ++ni)
         {
               ACE_DEBUG ((LM_DEBUG,
-                          "%s\n",
+                          "%C\n",
                           static_cast<char const*> (names_var [ni])));
         }
         }
@@ -209,7 +209,7 @@ Client::test_get_all_property_names ()
 
           while (next_one_result)
             {
-              ACE_DEBUG ((LM_DEBUG, "%s\n", name_var.in ()));
+              ACE_DEBUG ((LM_DEBUG, "%C\n", name_var.in ()));
 
               // Call the function to iterate again.
               next_one_result = iterator_var->next_one (name_out);
@@ -263,7 +263,7 @@ Client::test_get_properties ()
             {
               // Print the name.
               ACE_DEBUG ((LM_DEBUG,
-                          "%s : ",
+                          "%C : ",
                           static_cast<char const*> (
                             properties [pi].property_name.in ())));
 
@@ -298,7 +298,7 @@ Client::test_get_properties ()
                 }
               else if (properties [pi].property_value >>= string_val)
                 {
-                  ACE_DEBUG ((LM_DEBUG, "%s\n", string_val));
+                  ACE_DEBUG ((LM_DEBUG, "%C\n", string_val));
                 }
             }
         }
@@ -451,7 +451,7 @@ Client::test_get_all_properties ()
             {
               // Print the property_name.
               ACE_DEBUG ((LM_DEBUG,
-                          "%s : ",
+                          "%C : ",
                           properties [pi].property_name.in ()));
 
               // Print the value if type is not tk_void.
@@ -471,7 +471,7 @@ Client::test_get_all_properties ()
                 {
                   char const* str {};
                   properties [pi].property_value >>= str;
-                  ACE_DEBUG ((LM_DEBUG,"%s\n", str));
+                  ACE_DEBUG ((LM_DEBUG,"%C\n", str));
                 }
 
               if (properties [pi].property_value.type () == CORBA::_tc_long)
@@ -499,7 +499,7 @@ Client::test_get_all_properties ()
           while (next_one_result)
             {
               ACE_DEBUG ((LM_DEBUG,
-                          "%s : ",
+                          "%C : ",
                           property->property_name.in ()));
 
               // Print the property_value.
@@ -528,7 +528,7 @@ Client::test_get_all_properties ()
                 {
                   char const* str {};
                   property->property_value >>= str;
-                  ACE_DEBUG ((LM_DEBUG,"%s\n", str));
+                  ACE_DEBUG ((LM_DEBUG,"%C\n", str));
                 }
 
               if (property->property_value.type () == CORBA::_tc_long)

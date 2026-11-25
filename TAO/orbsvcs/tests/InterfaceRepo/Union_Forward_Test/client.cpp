@@ -36,7 +36,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       CORBA::ULong const index {};
       CORBA::String_var const name = attributes[index]->name ();
       ACE_DEBUG ((LM_DEBUG,
-                  "found %d attributes, name = %s\n",
+                  "found %d attributes, name = %C\n",
                   n_ats,
                   name.in ()));
 
@@ -52,7 +52,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       CORBA::TypeCode_var const tc = attr->type ();
 
-      ACE_DEBUG ((LM_DEBUG, "foo attr typecode = %s\n", tc->id ()));
+      ACE_DEBUG ((LM_DEBUG, "foo attr typecode = %C\n", tc->id ()));
     }
   catch (::CORBA::Exception const &ex)
     {

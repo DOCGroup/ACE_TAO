@@ -59,7 +59,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           CORBA::String_var the_string =
             basic->get_string ();
 
-          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client request handled by object at <%s>\n",
+          ACE_DEBUG ((LM_DEBUG, "(%P|%t) - Client request handled by object at <%C>\n",
                       the_string.in ()));
         }
 
