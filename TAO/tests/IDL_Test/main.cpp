@@ -22,8 +22,10 @@
 
 #include "ace/Log_Msg.h"
 #include "tao/AnyTypeCode/Any.h"
+#include "tao/BD_String_Argument_T.h"
 
 #include <cstring>
+#include <memory>
 #include <type_traits>
 
 static_assert (std::is_abstract_v<OBV_Supports_Inherited_Operation>,
@@ -47,6 +49,35 @@ static_assert (!std::is_abstract_v<Accessor_Optimized_Refcount_Inherited>,
                "An optimized valuetype can add a supported interface with an inherited counter");
 static_assert (std::is_abstract_v<Accessor_Optimized_Operation_Derived>,
                "An optimized derived valuetype must not inherit a sliced copy");
+
+template <typename String_Var>
+void
+test_bounded_string_clone (
+  typename String_Var::s_traits::char_type *source,
+  typename String_Var::s_traits::char_type const *expected,
+  int &error_count)
+{
+  using Argument = TAO::In_BD_String_Clonable_Argument_T<
+    String_Var, 4, TAO::Any_Insert_Policy_Noop>;
+
+  Argument original (source);
+  std::unique_ptr<TAO::Argument> const copy (original.clone ());
+  Argument const * const cloned = dynamic_cast<Argument const *> (copy.get ());
+  if (source != nullptr && source[0] != 0)
+    {
+      source[0] = 0;
+    }
+
+  if (cloned == nullptr
+      || (expected == nullptr && cloned->arg () != nullptr)
+      || (expected != nullptr
+          && (cloned->arg () == nullptr
+              || ACE_OS::strcmp (cloned->arg (), expected) != 0)))
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Bounded string argument clone failed\n"));
+    }
+}
 
 class hello_i : public virtual POA_hello
 {
@@ -1394,6 +1425,24 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   test_default_initialized_union (error_count);
   test_fixed_typecodes (error_count);
   test_union_discriminators (error_count);
+
+  char empty[] = "";
+  char bounded[] = "abcd";
+  char over_bound[] = "abcdef";
+  test_bounded_string_clone<CORBA::String_var> (nullptr, nullptr, error_count);
+  test_bounded_string_clone<CORBA::String_var> (empty, "", error_count);
+  test_bounded_string_clone<CORBA::String_var> (bounded, "abcd", error_count);
+  test_bounded_string_clone<CORBA::String_var> (over_bound, "abcdef", error_count);
+
+  CORBA::WChar wide_empty[] = {0};
+  CORBA::WChar wide_bounded[] = {'a', 'b', 'c', 'd', 0};
+  CORBA::WChar wide_over_bound[] = {'a', 'b', 'c', 'd', 'e', 'f', 0};
+  CORBA::WChar const wide_expected[] = {'a', 'b', 'c', 'd', 0};
+  CORBA::WChar const wide_over_expected[] = {'a', 'b', 'c', 'd', 'e', 'f', 0};
+  test_bounded_string_clone<CORBA::WString_var> (nullptr, nullptr, error_count);
+  test_bounded_string_clone<CORBA::WString_var> (wide_empty, wide_empty, error_count);
+  test_bounded_string_clone<CORBA::WString_var> (wide_bounded, wide_expected, error_count);
+  test_bounded_string_clone<CORBA::WString_var> (wide_over_bound, wide_over_expected, error_count);
 
   return error_count ? 1 : 0;
 }
