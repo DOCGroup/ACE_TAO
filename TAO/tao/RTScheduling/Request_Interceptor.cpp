@@ -46,14 +46,11 @@ Client_Interceptor::send_request (PortableInterceptor::ClientRequestInfo_ptr ri)
           size_t const temp = ++TAO_RTScheduler_Current::guid_counter;
           std::memcpy (guid.get_buffer (), &temp, sizeof(size_t));
 
-          size_t id;
-          std::memcpy (&id, guid.get_buffer (), guid.length ());
-
           if (TAO_debug_level > 0)
             {
               TAOLIB_DEBUG ((LM_DEBUG,
                         "The Guid is %B %Ld\n",
-                        id,
+                        temp,
                         TAO_RTScheduler_Current::guid_counter.load ()));
             }
 
