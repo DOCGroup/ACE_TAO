@@ -325,8 +325,10 @@ namespace ACE
                                     const ACE_Time_Value *timeout = nullptr,
                                     size_t *bytes_transferred = nullptr);
 
-  /// File system I/O functions (these don't support timeouts).
+  /// @}
 
+  /// @name File system I/O functions (these don't support timeouts)
+  /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t read_n (ACE_HANDLE handle,
                   void *buf,
