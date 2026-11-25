@@ -71,6 +71,7 @@ class Receiver
 {
 public:
   Receiver () = default;
+  ~Receiver () = default;
 
   Receiver (Receiver const &) = delete;
   Receiver &operator= (Receiver const &) = delete;

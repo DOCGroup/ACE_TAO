@@ -16,6 +16,8 @@ Criteria_Evaluator::Criteria_Evaluator (CosLifeCycle::Criteria const &criteria)
 {
 }
 
+Criteria_Evaluator::~Criteria_Evaluator () = default;
+
 LifeCycleService::Criteria_Evaluator::SeqNamedValuePair const *
 Criteria_Evaluator::getInitialization () const
 {

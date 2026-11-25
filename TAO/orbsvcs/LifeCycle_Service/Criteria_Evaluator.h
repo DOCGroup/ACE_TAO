@@ -21,6 +21,7 @@ class Criteria_Evaluator// : public LifeCycleService::Criteria_Evaluator
 {
 public:
   explicit Criteria_Evaluator (CosLifeCycle::Criteria const & criteria);
+  ~Criteria_Evaluator ();
   Criteria_Evaluator (Criteria_Evaluator const &) = delete;
   Criteria_Evaluator (Criteria_Evaluator &&) = delete;
   Criteria_Evaluator &operator= (Criteria_Evaluator const &) = delete;
