@@ -130,6 +130,11 @@ Request_Handler::handle_input (ACE_HANDLE fd)
           == static_cast<ssize_t> (len * sizeof (ACE_TCHAR)))
     {
       ++this->nr_msgs_rcvd_;
+      if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
+        {
+          ACE_Reactor::end_event_loop ();
+          return 0;
+        }
       if (this->nr_msgs_rcvd_ == cli_req_no)
         {
           char const acknowledged = 1;
@@ -144,10 +149,6 @@ Request_Handler::handle_input (ACE_HANDLE fd)
                   ACE_TEXT ("(%t) svr input; fd: %H; input: %s\n"),
                   fd,
                   buffer));
-      if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
-      {
-        ACE_Reactor::end_event_loop ();
-      }
       return 0;
     }
   else
