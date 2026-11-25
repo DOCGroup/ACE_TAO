@@ -260,7 +260,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         {
           ORBSVCS_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push ")
-                      ACE_TEXT ("(request) %s\n"),
+                      ACE_TEXT ("(request) %C\n"),
                       static_cast<int> (this->proxy ()->id ()),
                       ex._info ().c_str ()
                       ));
@@ -315,7 +315,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         {
           ORBSVCS_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %u::push ")
-                      ACE_TEXT ("(request) %s\n"),
+                      ACE_TEXT ("(request) %C\n"),
                       this->proxy ()->id (),
                       ex._info().c_str ()
                       ));
@@ -328,7 +328,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         {
           ORBSVCS_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %u::push ")
-                      ACE_TEXT ("(request) %s\n"),
+                      ACE_TEXT ("(request) %C\n"),
                       this->proxy ()->id (),
                       ex._info().c_str ()
                       ));
@@ -395,7 +395,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         {
           ORBSVCS_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
-                      ACE_TEXT ("%d::dispatch_batch() %s\n"),
+                      ACE_TEXT ("%d::dispatch_batch() %C\n"),
                       static_cast<int> (this->proxy ()->id ()),
                       ex._info ().c_str ()
                       ));
@@ -450,7 +450,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         {
           ORBSVCS_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
-                      ACE_TEXT ("%u::dispatch_batch() %s\n"),
+                      ACE_TEXT ("%u::dispatch_batch() %C\n"),
                       this->proxy ()->id (),
                       ex._info().c_str ()
                       ));
@@ -463,7 +463,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         {
           ORBSVCS_DEBUG ((LM_ERROR,
                       ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
-                      ACE_TEXT ("%u::dispatch_batch() %s\n"),
+                      ACE_TEXT ("%u::dispatch_batch() %C\n"),
                       this->proxy ()->id (),
                       ex._info().c_str ()
                       ));
