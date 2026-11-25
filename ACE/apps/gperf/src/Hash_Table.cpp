@@ -32,8 +32,7 @@
 // number of items in the hash table, else there's trouble!!!
 
 Hash_Table::Hash_Table (size_t s)
-  : size_ (ACE_POW (s)),
-    collisions_ (0)
+  : size_ (ACE_POW (s))
 {
   if (this->size_ == 0)
     {
@@ -63,13 +62,17 @@ Hash_Table::~Hash_Table ()
                   "keysig"));
 
       for (int i = static_cast<int> (this->size_ - 1); i >= 0; --i)
-        if (this->table_[i])
-          ACE_DEBUG ((LM_DEBUG,
-                      "%8d, %*C, %C\n",
-                      i,
-                      keysig_width,
-                      this->table_[i]->keysig.c_str (),
-                      this->table_[i]->key.c_str ()));
+        {
+          if (this->table_[i])
+            {
+              ACE_DEBUG ((LM_DEBUG,
+                          "%8d, %*C, %C\n",
+                          i,
+                          keysig_width,
+                          this->table_[i]->keysig.c_str (),
+                          this->table_[i]->key.c_str ()));
+            }
+        }
       ACE_DEBUG ((LM_DEBUG,
                   "end dumping hash table\n\n"));
     }
@@ -84,12 +87,12 @@ List_Node *
 Hash_Table::find (List_Node *item,
                   int ignore_length)
 {
-  size_t hash_val = ACE::hash_pjw (item->keysig.c_str ());
+  size_t const hash_val = ACE::hash_pjw (item->keysig.c_str ());
   // The following works since the hash table size_ is always a power
   // of 2...
-  size_t size = this->size_ - 1;
+  size_t const size = this->size_ - 1;
   size_t probe;
-  size_t increment = ((hash_val ^ (ignore_length == 0 ? item->length : 0)) | 1) & size;
+  size_t const increment = ((hash_val ^ (ignore_length == 0 ? item->length : 0)) | 1) & size;
 
   for (probe = hash_val & size;
        this->table_[probe]

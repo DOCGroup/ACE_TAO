@@ -64,7 +64,7 @@ private:
   size_t size_;
 
   /// Find out how well our double hashing is working!
-  int collisions_;
+  int collisions_ {};
 };
 
 #endif /* HASH_TABLE_H */
