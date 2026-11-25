@@ -151,6 +151,7 @@ namespace TAO
     using var_type = TAO_FixedArray_Var_T<typename T_forany::_array_type,
                                           typename T_forany::_slice_type,
                                           typename T_forany::_tag_type>;
+    using vector_type = std::vector<typename T_forany::_slice_type *>;
     ::CORBA::ULong const length = source.size ();
 
     if (! (strm << length))
@@ -158,7 +159,7 @@ namespace TAO
         return false;
       }
 
-    for (std::vector<typename T_forany::_slice_type *> i =
+    for (typename vector_type::const_iterator i =
            source.begin ();
          i != source.end ();
          ++i)
