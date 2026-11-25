@@ -88,7 +88,7 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::~ACE_Metrics_Timeprobe ()
 {
    if (name_ != nullptr)
     {
-         this->allocator ()->free ((void*) name_);
+         this->allocator ()->free (this->name_);
     }
 }
 

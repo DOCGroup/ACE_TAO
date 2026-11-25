@@ -145,7 +145,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_head
   ACE_Message_Block *mb {};
 
   ACE_NEW_RETURN (mb,
-                  ACE_Message_Block ((char *) new_item,
+                  ACE_Message_Block (reinterpret_cast<char *> (new_item),
                                      sizeof (*new_item),
                                      ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::DEFAULT_PRIORITY),
                   -1);
@@ -182,7 +182,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_prio
   ACE_Message_Block *mb {};
 
   ACE_NEW_RETURN (mb,
-                  ACE_Message_Block ((char *) new_item,
+                  ACE_Message_Block (reinterpret_cast<char *> (new_item),
                                      sizeof (*new_item),
                                      priority),
                   -1);
@@ -206,7 +206,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_dead
   ACE_Message_Block *mb {};
 
   ACE_NEW_RETURN (mb,
-                  ACE_Message_Block ((char *) new_item,
+                  ACE_Message_Block (reinterpret_cast<char *> (new_item),
                                      sizeof (*new_item),
                                      ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::DEFAULT_PRIORITY ),
                   -1);
@@ -233,7 +233,7 @@ ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::enqueue_tail
   ACE_Message_Block *mb {};
 
   ACE_NEW_RETURN (mb,
-                  ACE_Message_Block ((char *) new_item,
+                  ACE_Message_Block (reinterpret_cast<char *> (new_item),
                                      sizeof (*new_item),
                                      ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::DEFAULT_PRIORITY),
                   -1);
@@ -515,7 +515,7 @@ ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::wrap_with_
   ACE_Message_Block *mb_head {};
 
   ACE_NEW_RETURN (mb_head,
-                  ACE_Message_Block ((char *) new_item,
+                  ACE_Message_Block (reinterpret_cast<char *> (new_item),
                                      sizeof (*new_item),
                                      ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::DEFAULT_PRIORITY),
                   nullptr);
@@ -528,7 +528,7 @@ ACE_Message_Queue_Ex_N<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::wrap_with_
     {
       ACE_Message_Block *mb_temp {};
       ACE_NEW_NORETURN (mb_temp,
-                        ACE_Message_Block ((char *) pobj,
+                        ACE_Message_Block (reinterpret_cast<char *> (pobj),
                                            sizeof (*pobj),
                                            ACE_Message_Queue_Ex<ACE_MESSAGE_TYPE, ACE_SYNCH_USE, TIME_POLICY>::DEFAULT_PRIORITY));
       if (mb_temp == nullptr)
