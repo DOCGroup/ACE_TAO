@@ -58,7 +58,7 @@ private:
         ACE_Reactor::instance ()->schedule_timer (this, nullptr, this->tv_);
   }
 
-public: // needed for destructor due to "aCC: HP ANSI C++ B3910B A.03.39" compiler bug
+public:
 
   ~JAWS_IO_Reactive_Handler () override
   {

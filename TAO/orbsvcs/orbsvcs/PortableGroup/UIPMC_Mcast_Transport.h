@@ -40,8 +40,7 @@ namespace TAO_PG
  */
 class TAO_PortableGroup_Export TAO_UIPMC_Mcast_Transport : public TAO_Transport
 {
-  // This is necessary on some old compilers such as Studio 9 for SunOS
-  // to let UIPMC_Recv_Packet_Cleanup_Guard access private cleanup_packets().
+  // The guard invokes the private cleanup_packets() method.
   friend class TAO_PG::UIPMC_Recv_Packet_Cleanup_Guard;
 
 public:

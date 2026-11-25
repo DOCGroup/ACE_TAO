@@ -634,7 +634,7 @@ protected:
 #endif
 };
 
-// This typedef is used to get around a compiler bug in g++/vxworks.
+/// Default thread-safe message queue type.
 using ACE_DEFAULT_MESSAGE_QUEUE_TYPE = ACE_Message_Queue<ACE_MT_SYNCH>;
 
 /**
