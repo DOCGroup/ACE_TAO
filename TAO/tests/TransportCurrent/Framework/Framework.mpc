@@ -5,6 +5,7 @@ project(*Server): taoserver, tc, pi_server {
   libpaths += ../lib
 
   Source_Files {
+    Core_Compatibility.cpp
     server.cpp
     Current_Test_Impl.cpp
     Tester.cpp
