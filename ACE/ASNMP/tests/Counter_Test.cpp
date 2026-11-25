@@ -88,12 +88,12 @@ static void  TestCounter()
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) c1(\"\") [%Q]\n",
     static_cast<ACE_UINT64> (c1)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c2(\"%q\") [%Q]\n",
-    static_cast<ACE_INT64> (l), static_cast<ACE_UINT64> (c2)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c3(\"%q\") [%Q]\n",
-    static_cast<ACE_INT64> (nl), static_cast<ACE_UINT64> (c3)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c4(\"%Q\") [%Q]\n",
-    static_cast<ACE_UINT64> (ul), static_cast<ACE_UINT64> (c4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c2(\"%Ld\") [%Q]\n",
+    l, static_cast<ACE_UINT64> (c2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c3(\"%Ld\") [%Q]\n",
+    nl, static_cast<ACE_UINT64> (c3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) c4(\"%Lu\") [%Q]\n",
+    ul, static_cast<ACE_UINT64> (c4)));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) c5(\"%d\") [%Q]\n",
     i, static_cast<ACE_UINT64> (c5)));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) c6(\"%d\") [%Q]\n",

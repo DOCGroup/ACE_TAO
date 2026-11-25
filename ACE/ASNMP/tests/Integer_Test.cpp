@@ -84,12 +84,12 @@ static void TestInteger32()
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) i1(\"\") [%Q]\n",
     static_cast<ACE_UINT64> (i1)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i2(\"%q\") [%Q]\n",
-    static_cast<ACE_INT64> (l), static_cast<ACE_UINT64> (i2)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i3(\"%q\") [%Q]\n",
-    static_cast<ACE_INT64> (nl), static_cast<ACE_UINT64> (i3)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i4(\"%Q\") [%Q]\n",
-    static_cast<ACE_UINT64> (ul), static_cast<ACE_UINT64> (i4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i2(\"%Ld\") [%Q]\n",
+    l, static_cast<ACE_UINT64> (i2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i3(\"%Ld\") [%Q]\n",
+    nl, static_cast<ACE_UINT64> (i3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) i4(\"%Lu\") [%Q]\n",
+    ul, static_cast<ACE_UINT64> (i4)));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) i5(\"%d\") [%Q]\n",
     i, static_cast<ACE_UINT64> (i5)));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) i6(\"%d\") [%Q]\n",
@@ -148,12 +148,12 @@ static void TestUnsignedInteger32()
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) u1(\"\") [%Q]\n",
     static_cast<ACE_UINT64> (u1)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u2(\"%q\") [%Q]\n",
-    static_cast<ACE_INT64> (l), static_cast<ACE_UINT64> (u2)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u3(\"%q\") [%Q]\n",
-    static_cast<ACE_INT64> (nl), static_cast<ACE_UINT64> (u3)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u4(\"%Q\") [%Q]\n",
-    static_cast<ACE_UINT64> (ul), static_cast<ACE_UINT64> (u4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u2(\"%Ld\") [%Q]\n",
+    l, static_cast<ACE_UINT64> (u2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u3(\"%Ld\") [%Q]\n",
+    nl, static_cast<ACE_UINT64> (u3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) u4(\"%Lu\") [%Q]\n",
+    ul, static_cast<ACE_UINT64> (u4)));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) u5(\"%d\") [%Q]\n",
     i, static_cast<ACE_UINT64> (u5)));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) u6(\"%d\") [%Q]\n",

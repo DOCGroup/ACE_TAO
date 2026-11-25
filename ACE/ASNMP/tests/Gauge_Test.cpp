@@ -84,12 +84,12 @@ TestGuage ()
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) g1(\"\") [%Q]\n",
     static_cast<ACE_UINT64> (g1)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g2(\"%q\") [%Q]\n",
-    static_cast<ACE_INT64> (l), static_cast<ACE_UINT64> (g2)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g3(\"%q\") [%Q]\n",
-    static_cast<ACE_INT64> (nl), static_cast<ACE_UINT64> (g3)));
-  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g4(\"%Q\") [%Q]\n",
-    static_cast<ACE_UINT64> (ul), static_cast<ACE_UINT64> (g4)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g2(\"%Ld\") [%Q]\n",
+    l, static_cast<ACE_UINT64> (g2)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g3(\"%Ld\") [%Q]\n",
+    nl, static_cast<ACE_UINT64> (g3)));
+  ACE_DEBUG ((LM_DEBUG, "(%P|%t) g4(\"%Lu\") [%Q]\n",
+    ul, static_cast<ACE_UINT64> (g4)));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) g5(\"%d\") [%Q]\n",
     i, static_cast<ACE_UINT64> (g5)));
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) g6(\"%d\") [%Q]\n",
