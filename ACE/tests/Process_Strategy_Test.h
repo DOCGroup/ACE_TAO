@@ -36,7 +36,7 @@ public:
   Counting_Service (ACE_Thread_Manager * = nullptr);
 
   /// Hook that is used to initialize the service (called by the
-  /// <ACE_Strategy_Acceptor::handle_input> Template Method).
+  /// @c ACE_Strategy_Acceptor::handle_input Template Method).
   int open (void *v) override;
 
 protected:

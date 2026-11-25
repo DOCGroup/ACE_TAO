@@ -45,7 +45,7 @@ public:
   Connection_Handler &operator= (Connection_Handler &&) = delete;
 
   /// Initialize and activate a single-threaded @c Connection_Handler
-  /// (called by <ACE_Connector::handle_output>).
+  /// (called by @c ACE_Connector::handle_output).
   int open (void * = nullptr) override;
 
   /// Current state of the connection handler.

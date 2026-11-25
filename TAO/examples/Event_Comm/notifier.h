@@ -9,7 +9,7 @@
   *
   * @brief Notifier driver for the TAO Publish/Subscribe example.
   *
-  * The driver class for the <Event_Comm::Notifier> object.
+  * The driver class for the @c Event_Comm::Notifier object.
   */
 class Notifier : public ACE_Event_Handler
 {

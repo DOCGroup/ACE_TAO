@@ -19,7 +19,7 @@
 /**
  * @class Notifier_Handler
  *
- * @brief Holds the <Event_Comm::Notifier> object which is obtained from
+ * @brief Holds the @c Event_Comm::Notifier object which is obtained from
  * the naming service.
  */
 class Notifier_Handler
@@ -58,7 +58,7 @@ private:
   /// Remember our orb.
   CORBA::ORB_var orb_ {};
 
-  /// Pointer to an <Event_Comm::Notifier> object.
+  /// Pointer to an @c Event_Comm::Notifier object.
   Event_Comm::Notifier *notifier_ {};
 
   /// An instance of the name client used for resolving the factory

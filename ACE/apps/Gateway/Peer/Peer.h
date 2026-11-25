@@ -78,7 +78,7 @@ public:
   Peer_Handler &operator= (Peer_Handler &&) = delete;
 
   /// Initialize the handler when called by
-  /// <ACE_Acceptor::handle_input>.
+  /// @c ACE_Acceptor::handle_input.
   int open (void * = nullptr) override;
 
   /// Receive and process peer events.

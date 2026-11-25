@@ -23,7 +23,7 @@ private:
     ACE_SOCK_Stream logging_peer_;
   };
 
-  /// Passed as a parameter to <ACE_Thread_Manager::spawn>.
+  /// Passed as a parameter to @c ACE_Thread_Manager::spawn.
   static ACE_THR_FUNC_RETURN run_svc (void *arg);
 
 protected:
