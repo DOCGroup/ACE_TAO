@@ -58,8 +58,8 @@ malloc_recurse (int count)
       {
         ACE_ERROR ((LM_ERROR,
                     "(%P|%t) *** malloc of size %d failed, %p\n%a",
-                   "malloc",
-                    alloc_size));
+                    alloc_size,
+                    "malloc"));
       }
       else
         {
@@ -69,7 +69,7 @@ malloc_recurse (int count)
           if (Options::instance ()->debug ())
           {
             ACE_DEBUG ((LM_INFO,
-                        "(%P|%t) %p (alloc), size = %d\n",
+                        "(%P|%t) %@ (alloc), size = %d\n",
                         ptr,
                         alloc_size));
           }
@@ -80,7 +80,7 @@ malloc_recurse (int count)
           if (Options::instance ()->debug ())
           {
             ACE_DEBUG ((LM_INFO,
-                        "(%P|%t) %p (free), size = %d\n",
+                        "(%P|%t) %@ (free), size = %d\n",
                         ptr,
                         alloc_size));
           }
