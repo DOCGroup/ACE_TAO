@@ -48,7 +48,7 @@ int Consumer::open (void*)
   {
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT("Consumer::open Error spanwing thread %p\n"),
-                      "err="),
+                      ACE_TEXT ("err=")),
                      -1);
   }
   return 0;
@@ -95,14 +95,14 @@ ACE_THR_FUNC_RETURN producer (void *arg)
     {
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT("producer Error allocating data %p\n"),
-                 "err="));
+                 ACE_TEXT ("err=")));
       return (ACE_THR_FUNC_RETURN)-1;
     }
     if(c->putq (pMsg)==-1)
     {
       ACE_ERROR((LM_ERROR,
                  ACE_TEXT("producer Error putq data %p\n"),
-                 "err="));
+                 ACE_TEXT ("err=")));
       return (ACE_THR_FUNC_RETURN)-1;
     }
   }
@@ -133,7 +133,7 @@ run_main (int, ACE_TCHAR *[])
   {
     ACE_ERROR_RETURN((LM_ERROR,
                       ACE_TEXT ("main Error spawning threads %p\n"),
-                      "err="),-1);
+                      ACE_TEXT ("err=")),-1);
   }
 
   // wait all threads
@@ -142,7 +142,7 @@ run_main (int, ACE_TCHAR *[])
   {
     ACE_ERROR((LM_ERROR,
                ACE_TEXT("main Error Thread_Manager->wait %p\n"),
-               "err="));
+               ACE_TEXT ("err=")));
     return -1;
   }
 #else

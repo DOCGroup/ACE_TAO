@@ -89,7 +89,7 @@ client (void *)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P) %p\n",
-                  "Socket open"));
+                  ACE_TEXT ("Socket open")));
     }
 
   if (stream.send (4,
@@ -100,14 +100,14 @@ client (void *)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P) %p\n",
-                  "Socket send"));
+                  ACE_TEXT ("Socket send")));
     }
 
   if (stream.close () == -1)
     {
       ACE_ERROR ((LM_ERROR,
                   "(%P) %p\n",
-                  "Socket close"));
+                  ACE_TEXT ("Socket close")));
     }
 
   ACE_DEBUG ((LM_DEBUG,
@@ -213,7 +213,7 @@ public:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P) %p\n",
-                           "read header"),
+                           ACE_TEXT ("read header")),
                           -1);
       }
 
@@ -224,7 +224,7 @@ public:
       {
         ACE_ERROR_RETURN ((LM_ERROR,
                            "(%P) %p\n",
-                           "read message"),
+                           ACE_TEXT ("read message")),
                           -1);
       }
     ACE_DEBUG ((LM_DEBUG,
@@ -298,7 +298,7 @@ run_main (int, ACE_TCHAR *[])
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "open"),
+                         ACE_TEXT ("open")),
                         -1);
     }
 
