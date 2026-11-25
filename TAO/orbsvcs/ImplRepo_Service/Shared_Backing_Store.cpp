@@ -873,6 +873,13 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
     }
 
   this->write_listing (list);
+  int const flush_error = ACE_OS::fflush (list);
+  if (flush_error != 0 || std::ferror (list) != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Could not write listing file %s\n"),
+                             this->listing_file_.c_str ()), -1);
+    }
 
   const ACE_TString bfname = this->listing_file_ + ACE_TEXT (".bak");
 
