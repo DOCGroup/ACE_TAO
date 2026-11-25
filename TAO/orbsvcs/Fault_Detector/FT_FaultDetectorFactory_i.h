@@ -222,6 +222,7 @@ namespace TAO
      * A file to which the factory's IOR should be written.
      */
     std::basic_string<ACE_TCHAR> ior_output_file_;
+    bool ior_written_ {};
 
     /// Optional Naming Service registration state.
     char const * ns_name_ {};

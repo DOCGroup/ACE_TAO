@@ -149,6 +149,7 @@ namespace TAO
      * A file to which the notifier's IOR should be written.
      */
     std::basic_string<ACE_TCHAR> ior_output_file_;
+    bool ior_written_ {};
 
     /**
      * A name to be used to register the notifier with the name service.

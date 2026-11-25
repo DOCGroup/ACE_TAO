@@ -101,6 +101,7 @@ int TAO::FT_FaultNotifier_i::write_ior ()
         ORBSVCS_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot write IOR file: %s\n"),
                                this->ior_output_file_.c_str ()), -1);
       }
+    this->ior_written_ = true;
     return 0;
   }
 
@@ -179,10 +180,10 @@ void TAO::FT_FaultNotifier_i::_remove_ref ()
 
 int TAO::FT_FaultNotifier_i::fini ()
 {
-  if (!this->ior_output_file_.empty ())
+  if (this->ior_written_)
   {
     ACE_OS::unlink (this->ior_output_file_.c_str ());
-    this->ior_output_file_.clear ();
+    this->ior_written_ = false;
   }
   if (this->ns_name_ != nullptr && this->naming_context_.in() != nullptr)
   {
