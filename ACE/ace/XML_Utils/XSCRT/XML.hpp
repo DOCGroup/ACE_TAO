@@ -4,6 +4,8 @@
 #ifndef XSCRT_XML_HPP
 #define XSCRT_XML_HPP
 
+#include "ace/XML_Utils/XercesString.h"
+
 #include <algorithm>
 #include <cstdint>
 #include <memory>
@@ -127,18 +129,11 @@ namespace XSCRT
         return std::basic_string<char> ();
       }
 
-      char *buf = xercesc::XMLString::transcode (s);
-      if (buf == nullptr)
+      ::XML::detail::Transcoded_String const buffer (xercesc::XMLString::transcode (s));
+      if (buffer == nullptr)
       {
         throw std::bad_alloc ();
       }
-
-      std::unique_ptr<char, void (*) (char *)> buffer (
-        buf,
-        [] (char *value)
-        {
-          xercesc::XMLString::release (std::addressof (value));
-        });
 
       return std::basic_string<char> (buffer.get ());
     }
