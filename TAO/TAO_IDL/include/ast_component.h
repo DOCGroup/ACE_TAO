@@ -30,14 +30,14 @@ public:
 
   ~AST_Component () override;
 
-  // This also calls the base class version.
+  /// This also calls the base class version.
   void redefine (AST_Interface *from) override;
 
-  // Extend lookup to the base component.
+  /// Extend lookup to the base component.
   AST_Decl *look_in_inherited (UTL_ScopedName *e,
                                        bool full_def_only) override;
 
-  // Extend lookup to the supported interfaces.
+  /// Extend lookup to the supported interfaces.
   AST_Decl *look_in_supported (UTL_ScopedName *e,
                                bool full_def_only) override;
 
@@ -49,7 +49,7 @@ public:
 
   long n_supports () const;
 
-  // Override for component of UTL_Scope method.
+  /// Override for component of UTL_Scope method.
   AST_Decl *special_lookup (UTL_ScopedName *e,
                                     bool full_def_only,
                                     AST_Decl *&final_parent_decl) override;

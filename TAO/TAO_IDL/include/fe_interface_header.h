@@ -120,7 +120,7 @@ protected:
 
   void compile_one_inheritance (AST_Type *i);
 
-  // Called from compile_inheritance().
+  /// Called from compile_inheritance().
   int check_inherit (AST_Interface *i,
                      bool for_valuetype);
 

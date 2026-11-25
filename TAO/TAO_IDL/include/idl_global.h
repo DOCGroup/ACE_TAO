@@ -107,9 +107,8 @@ class TAO_IDL_FE_Export IDL_GlobalData
 public:
   // Types
 
-  // The ParseState type encodes the state of the Yacc parser so that
-  // better error messages can be produced, and for use by BEs in situations
-  // where context sensitive behavior is required
+  /// Encodes the Yacc parser state for error messages and backend operations
+  /// that require context-sensitive behavior.
   enum ParseState {
       PS_NoState                // No state
     , PS_TypeDeclSeen           // Seen complete type declaration
