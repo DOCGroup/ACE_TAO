@@ -17,6 +17,7 @@
  *  and specify the status to be returned from the process.
  *
  *  The application should create a C/C++ main that looks something like:
+ *  @code
  *    #include <tao/Utils/Server_Main.h>
  *    #include "Xyzzy_i.h"
  *    int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -24,6 +25,7 @@
  *      Server_Main<Xyzzy_i> servant ("Xyzzy");
  *      return servant.run(argc, argv);
  *    }
+ *  @endcode
  *
  *  The servant implementation (Xyzzy_i in this case) must implement
  *  the following methods:
