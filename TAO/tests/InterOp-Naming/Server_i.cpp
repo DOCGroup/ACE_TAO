@@ -114,14 +114,14 @@ Server_i::init (int argc, ACE_TCHAR *argv[])
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Unable to open %s for writing: %p\n"),
-                                 options.ior_output_file),
+                                 options.ior_output_file, ACE_TEXT ("fopen")),
                                 -1);
             }
           if (ACE_OS::fprintf (ior_file.get (), "%s", ior.in ()) < 0)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Unable to write %s: %p\n"),
-                                 options.ior_output_file),
+                                 options.ior_output_file, ACE_TEXT ("fprintf")),
                                 -1);
             }
         }

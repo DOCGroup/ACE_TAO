@@ -140,14 +140,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Cannot open server IOR file %s: %p\n"),
-                                 options.server_ior_file),
+                                 options.server_ior_file, ACE_TEXT ("fopen")),
                                 1);
             }
           if (ACE_OS::fputs (ior.in (), ior_file.get ()) == EOF)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("Cannot write server IOR file %s: %p\n"),
-                                 options.server_ior_file),
+                                 options.server_ior_file, ACE_TEXT ("fputs")),
                                 1);
             }
 

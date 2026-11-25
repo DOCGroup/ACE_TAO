@@ -135,7 +135,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Unable to open %s for writing: %p\n"),
-                               options.ior_output_filename.c_str ()),
+                               options.ior_output_filename.c_str (), ACE_TEXT ("fopen")),
                               -1);
           }
 

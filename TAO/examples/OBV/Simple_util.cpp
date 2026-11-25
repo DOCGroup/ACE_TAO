@@ -190,7 +190,7 @@ Client<InterfaceObj, Var>::parse_args ()
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("Unable to read ior from %s : %p\n"),
-                               get_opts.opt_arg ()),
+                               get_opts.opt_arg (), ACE_TEXT ("read")),
                               -1);
           }
         break;
