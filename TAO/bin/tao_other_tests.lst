@@ -41,6 +41,7 @@ TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM !
 TAO/orbsvcs/tests/AVStreams/Pluggable/run_test.pl -p SCTP_SEQ: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO SCTP !LynxOS !ACE_FOR_TAO
 TAO/orbsvcs/tests/AVStreams/Full_Profile/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS
 TAO/orbsvcs/tests/AVStreams/Multicast/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS
+TAO/orbsvcs/tests/AVStreams/SFP/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS
 #TAO/orbsvcs/tests/AVStreams/Multicast_Full_Profile/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 #TAO/orbsvcs/tests/AVStreams/Latency/run_test.pl: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO
 TAO/orbsvcs/tests/AVStreams/Simple_Two_Stage/run_test.pl -p TCP,UDP,RTP_UDP: !MINIMUM !CORBA_E_COMPACT !CORBA_E_MICRO !ACE_FOR_TAO !LynxOS

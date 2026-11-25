@@ -737,24 +737,17 @@ int
 TAO_SFP_Base::peek_message_type (TAO_AV_Transport *transport,
                                  flowProtocol::MsgType &msg_type)
 {
-  char peek_buffer [TAO_SFP_MAGIC_NUMBER_LEN+2];// 2 is for flags + message_type.
-  int peek_len = TAO_SFP_MAGIC_NUMBER_LEN +2;
-  char magic_number [TAO_SFP_MAGIC_NUMBER_LEN+1];
-  ssize_t n =transport->recv (peek_buffer,
-                              peek_len,
-                              MSG_PEEK);
-  std::strncpy (magic_number,
-                peek_buffer,
-                TAO_SFP_MAGIC_NUMBER_LEN);
-  magic_number [TAO_SFP_MAGIC_NUMBER_LEN] = 0;
-  if (n == -1)
+  // The flags and message type follow the magic number.
+  char peek_buffer[TAO_SFP_MAGIC_NUMBER_LEN + 2];
+  ssize_t const n = transport->recv (peek_buffer, sizeof (peek_buffer), MSG_PEEK);
+  if (n != static_cast<ssize_t> (sizeof (peek_buffer)))
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "SFP::handle_input -peek"), -1);
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "SFP::handle_input - incomplete header\n"), -1);
     }
-  else if (n == 0)
-    {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "SFP::handle_input -peek"), -1);
-    }
+
+  char magic_number[TAO_SFP_MAGIC_NUMBER_LEN + 1];
+  std::memcpy (magic_number, peek_buffer, TAO_SFP_MAGIC_NUMBER_LEN);
+  magic_number[TAO_SFP_MAGIC_NUMBER_LEN] = '\0';
 
   if (std::strcmp (magic_number,TAO_SFP_START_MAGIC_NUMBER) == 0)
     {

@@ -1,0 +1,7 @@
+project(*SFP_Peek_Test) : avstreamsexe {
+  exename = SFP_Peek_Test
+
+  Source_Files {
+    SFP_Peek_Test.cpp
+  }
+}
