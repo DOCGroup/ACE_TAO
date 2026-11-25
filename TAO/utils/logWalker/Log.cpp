@@ -253,7 +253,7 @@ Log::parse_dump_giop_msg_i ()
   if (pp == nullptr)
     {
       ACE_ERROR((LM_ERROR,
-                 "%B: dump_msg, could not find pp for incoming, text = %s\n",
+                 "%B: dump_msg, could not find pp for incoming, text = %C\n",
                  this->offset_, this->info_));
       return;
     }
@@ -267,7 +267,7 @@ Log::parse_dump_giop_msg_i ()
       if (inv == nullptr)
         {
           ACE_ERROR ((LM_ERROR,
-                      "%B: process %s already has invocation %Ld\n",
+                      "%B: process %C already has invocation %Ld\n",
                       this->offset_, pp->id(), rid));
           break;
         }
@@ -371,7 +371,7 @@ Log::parse_got_existing_i ()
     {
       ACE_ERROR ((LM_ERROR,
                   "%B: Error parsing %C, can't find peer "
-                  "for handle %Ld, text = %s\n",
+                  "for handle %Ld, text = %C\n",
                   this->offset_, this->origin_.c_str(), handle, this->info_));
       return;
     }
@@ -390,7 +390,7 @@ Log::parse_muxed_tms_i ()
     {
       ACE_ERROR ((LM_ERROR,
                   "%B: Error parsing %C, can't find peer "
-                  "for handle %Ld, text = %s\n",
+                  "for handle %Ld, text = %C\n",
                   this->offset_, this->origin_.c_str(), handle, this->info_));
       return;
     }
@@ -399,7 +399,7 @@ Log::parse_muxed_tms_i ()
   Invocation *inv = pp->new_invocation(req_id, this->thr_);
   if (inv == nullptr)
     {
-      ACE_ERROR ((LM_ERROR,"%B: peer %s already has invocation id %Ld\n",
+      ACE_ERROR ((LM_ERROR,"%B: peer %C already has invocation id %Ld\n",
                   this->offset_, pp->id(), req_id));
     }
   this->thr_->incoming_from (pp);
@@ -414,7 +414,7 @@ Log::parse_exclusive_tms_i ()
     {
       ACE_ERROR ((LM_ERROR,
                   "%B: Error parsing %C, can't find peer "
-                  "for handle %Ld, text = %s\n",
+                  "for handle %Ld, text = %C\n",
                   this->offset_, this->origin_.c_str(), handle, this->info_));
       return;
     }
@@ -424,7 +424,7 @@ Log::parse_exclusive_tms_i ()
   Invocation *inv = pp->new_invocation(req_id, this->thr_);
   if (inv == nullptr)
     {
-      ACE_ERROR ((LM_ERROR,"%B: peer %s already has invocation id %Ld\n",
+      ACE_ERROR ((LM_ERROR,"%B: peer %C already has invocation id %Ld\n",
                   this->offset_, pp->id(), req_id));
     }
   this->thr_->incoming_from (pp);
@@ -441,7 +441,7 @@ Log::parse_process_parsed_msgs_i ()
     {
       ACE_ERROR ((LM_ERROR,
                   "%B: Error parsing %C, can't find peer "
-                  "for handle %Ld, text = %s\n",
+                  "for handle %Ld, text = %C\n",
                   this->offset_, this->origin_.c_str(), handle, this->info_));
       pp = new PeerProcess (this->offset_, this->timestamp_, true);
       Transport *t = new Transport ("<unknown>", false, this->offset_, this->timestamp_);
@@ -491,7 +491,7 @@ Log::parse_make_idle_i ()
     {
       ACE_ERROR ((LM_ERROR,
                   "%B: make idle, error parsing %C, can't find peer "
-                  "for handle %Ld, text = %s\n",
+                  "for handle %Ld, text = %C\n",
                   this->offset_, this->origin_.c_str(), handle, this->info_));
       return;
     }
@@ -508,7 +508,7 @@ Log::parse_cleanup_queue_i ()
     {
       ACE_ERROR ((LM_ERROR,
                   "%B: cleanup queue, error parsing %C, can't find peer "
-                  "for handle %Ld, text = %s\n",
+                  "for handle %Ld, text = %C\n",
                   this->offset_, this->origin_.c_str(), handle, this->info_));
       return;
     }
@@ -682,7 +682,7 @@ Log::parse_handler_open_i (bool is_ssl)
     }
   if (pp == nullptr)
   {
-    ACE_ERROR ((LM_ERROR,"%B: handler_open: no pending peer for addr %s\n",
+    ACE_ERROR ((LM_ERROR,"%B: handler_open: no pending peer for addr %C\n",
                 this->offset_, addr));
     return;
   }
@@ -719,7 +719,7 @@ Log::parse_handler_open_i (bool is_ssl)
         {
           ACE_ERROR ((LM_ERROR,
                       "%B: Pending peer exists, but no last transport "
-                      "set, file %s\n",
+                      "set, file %C\n",
                       this->offset_, this->origin_.c_str()));
           return;
         }
@@ -908,7 +908,7 @@ Log::parse_notify_poa_helper_i ()
   if (inv == nullptr)
     {
       ACE_ERROR ((LM_ERROR,
-                  "%B: notify_poa_helper line = %s, no current invocation on thread\n",
+                  "%B: notify_poa_helper line = %C, no current invocation on thread\n",
                   this->offset_, this->info_));
       return;
     }
