@@ -14,6 +14,7 @@
 #include "ace/Message_Block.h"
 #include <algorithm>
 #include <cstdio>
+#include <cstring>
 #include <memory>
 #include <string>
 
@@ -1549,6 +1550,11 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
         return;
       }
 
+    if (ptr == nullptr || len < TAO_GIOP_MESSAGE_HEADER_LEN)
+      {
+        return;
+      }
+
     static const char digits[] = "0123456789ABCD";
     static const char *names[] =
     {
@@ -1579,8 +1585,8 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
 
     // request/reply id.
     CORBA::ULong tmp {};
-    CORBA::ULong *id = std::addressof(tmp);
-    char *tmp_id {};
+    size_t id_offset = TAO_GIOP_MESSAGE_HEADER_LEN;
+    bool has_id {};
 
     if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Request ||
         ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::Reply ||
@@ -1589,43 +1595,30 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
         if (major == 1 && minor < 2)
           {
             // @@ Only works if ServiceContextList is empty....
-            tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN  + 4);
+            id_offset += 4;
           }
-        else
-          {
-            tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN);
-          }
-#if !defined (ACE_DISABLE_SWAP_ON_READ)
-        if (byte_order == TAO_ENCAP_BYTE_ORDER)
-          {
-            id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
-          }
-        else
-          {
-            ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
-          }
-#else
-        id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
-#endif /* ACE_DISABLE_SWAP_ON_READ */
-
+        has_id = true;
       }
     else if (ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::CancelRequest ||
              ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::LocateRequest ||
              ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET] == GIOP::LocateReply)
       {
-        tmp_id = (char * ) (ptr + TAO_GIOP_MESSAGE_HEADER_LEN);
+        has_id = true;
+      }
+
+    if (has_id && len >= id_offset + sizeof (tmp))
+      {
+        char const * const tmp_id = reinterpret_cast<char const *> (ptr + id_offset);
 #if !defined (ACE_DISABLE_SWAP_ON_READ)
-        if (byte_order == TAO_ENCAP_BYTE_ORDER)
+        if (byte_order != TAO_ENCAP_BYTE_ORDER)
           {
-            id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
+            ACE_CDR::swap_4 (tmp_id, reinterpret_cast<char *> (std::addressof (tmp)));
           }
         else
-          {
-            ACE_CDR::swap_4 (tmp_id, reinterpret_cast <char*> (id));
-          }
-#else
-        id = reinterpret_cast <ACE_CDR::ULong*> (tmp_id);
 #endif /* ACE_DISABLE_SWAP_ON_READ */
+          {
+            std::memcpy (std::addressof (tmp), tmp_id, sizeof (tmp));
+          }
       }
 
     // Print.
@@ -1639,7 +1632,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
                 len - TAO_GIOP_MESSAGE_HEADER_LEN ,
                 (byte_order == TAO_ENCAP_BYTE_ORDER) ? ACE_TEXT("my") : ACE_TEXT("other"),
                 message_name,
-                *id));
+                tmp));
     TAOLIB_HEX_DUMP ((LM_DEBUG,
                    reinterpret_cast<char const *> (ptr),
                    len,
