@@ -39,9 +39,6 @@ public:
    *        The Loopback_Consumer consumes the same event, the
    *        Loopback_Supplier generates (base_event_type + 1), and the
    *        consumer subscribes for that type too.
-   * @param iterations The number of iterations expected on the test.
-   * @param workload_in_usecs The consumer workload, in microseconds.
-   * @param gsf The high resolution timer global scale factor.
    *
    */
   void init (CORBA::Long experiment_id,

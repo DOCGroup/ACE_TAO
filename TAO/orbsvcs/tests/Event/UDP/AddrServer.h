@@ -21,7 +21,7 @@
  * (type,source) pair and the (ipaddr,port) pair using a
  * AddrServer.
  * This class implements a very simple server that simply maps the
- * <type> component to the <ipaddr> and uses a fixed <port>,
+ * @c type component to the @c ipaddr and uses a fixed @c port,
  * provided at initialization time.
  */
 class AddrServer : public POA_RtecUDPAdmin::AddrServer

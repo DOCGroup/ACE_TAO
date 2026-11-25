@@ -44,7 +44,7 @@ public:
 
   /**
    * This test throws an exception that the operation
-   * <secure_universal_time> has not been currently implemented in the
+   * @c secure_universal_time has not been currently implemented in the
    * given server.
    */
   void test_for_secure_universal_time ();
