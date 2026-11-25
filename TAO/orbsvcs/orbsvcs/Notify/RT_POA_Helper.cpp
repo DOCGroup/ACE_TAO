@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/Notify/RT_POA_Helper.h"
 #include "tao/RTCORBA/RTCORBA.h"
 #include "tao/debug.h"

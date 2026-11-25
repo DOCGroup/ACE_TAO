@@ -4,7 +4,6 @@
 #include "orbsvcs/Notify/Method_Request.h"
 #include "orbsvcs/Notify/Notify_Extensions.h"
 #include "orbsvcs/Notify/QoSProperties.h"
-#include "orbsvcs/Notify/Notify_Extensions.h"
 
 #include "orbsvcs/CosNotificationC.h"
 #include "orbsvcs/Time_Utilities.h"

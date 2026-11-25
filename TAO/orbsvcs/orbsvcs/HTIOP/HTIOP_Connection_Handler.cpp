@@ -1,5 +1,4 @@
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/HTIOP/HTIOP_Connection_Handler.h"
 
 #include "orbsvcs/HTIOP/HTIOP_Transport.h"

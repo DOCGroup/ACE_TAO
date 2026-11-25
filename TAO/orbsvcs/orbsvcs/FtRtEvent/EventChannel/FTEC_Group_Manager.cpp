@@ -4,7 +4,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/Fault_Detector.h"
 #include "orbsvcs/FtRtEvent/EventChannel/IOGR_Maker.h"
 #include "orbsvcs/FtRtEvent/EventChannel/GroupInfoPublisher.h"
-#include "orbsvcs/FtRtEvent/EventChannel/Replication_Service.h"
 #include "../Utils/Log.h"
 #include "tao/CDR.h"
 #include "orbsvcs/PortableGroup/PG_Operators.h"

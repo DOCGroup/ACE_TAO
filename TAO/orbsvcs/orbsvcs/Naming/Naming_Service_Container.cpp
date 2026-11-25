@@ -8,7 +8,6 @@
 #define NS_CONTAINER_CPP
 
 #include "orbsvcs/Log_Macros.h"
-#include "orbsvcs/Log_Macros.h"
 #include "ace/Malloc_Base.h"
 
 #include <memory>

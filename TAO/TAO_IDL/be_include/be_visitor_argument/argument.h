@@ -12,7 +12,6 @@
 #include "ast_argument.h"
 
 #include <string>
-#include <string>
 
 /**
  * @class be_visitor_args

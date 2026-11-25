@@ -17,7 +17,6 @@
 
 #include "ace/SString.h"
 #include "ace/Containers_T.h"
-#include "ace/Containers_T.h"
 #include "ace/OS_NS_ctype.h"
 #include "ace/INet/INet_Export.h"
 #include <cstdlib>

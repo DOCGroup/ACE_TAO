@@ -30,7 +30,6 @@
 
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_math.h"
-#include "ace/OS_NS_math.h"
 #include "hist.h"
 namespace ACE_SCTP
 {

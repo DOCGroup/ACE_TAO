@@ -14,7 +14,6 @@
 #include "tao/RTCORBA/Thread_Pool.h"
 #include "tao/Thread_Lane_Resources.h"
 #include "tao/Acceptor_Registry.h"
-#include "tao/Thread_Lane_Resources.h"
 #include "tao/Thread_Lane_Resources_Manager.h"
 
 #include "tao/RTCORBA/RT_Policy_i.h"

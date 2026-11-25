@@ -16,7 +16,6 @@
 #include "orbsvcs/AVStreamsS.h"
 #include "orbsvcs/Property/CosPropertyService_i.h"
 #include "orbsvcs/CosNamingC.h"
-#include "orbsvcs/AV/AV_Core.h"
 #include "orbsvcs/AV/Endpoint_Strategy.h"
 #include "orbsvcs/Null_MediaCtrlS.h"
 #include "orbsvcs/AV/FlowSpec_Entry.h"

@@ -7,8 +7,6 @@
 #include "tao/ORB_Core.h"
 #include "tao/Exception.h"
 #include "tao/ORB_Constants.h"
-#include "tao/ORB_Core.h"
-#include "tao/PI/ORBInitInfo.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

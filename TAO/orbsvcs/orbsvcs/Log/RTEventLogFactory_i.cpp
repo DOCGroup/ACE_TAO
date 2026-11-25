@@ -8,11 +8,9 @@
 #include "orbsvcs/ESF/ESF_Peer_Workers.h"
 #include "orbsvcs/ESF/ESF_Peer_Admin.h"
 #include "orbsvcs/ESF/ESF_Shutdown_Proxy.h"
-#include "orbsvcs/Event/EC_ConsumerAdmin.h"
 #include "orbsvcs/Event_Utilities.h"
 #include "orbsvcs/Sched/Config_Scheduler.h"
 #include "orbsvcs/Event/EC_Default_Factory.h"
-#include "orbsvcs/Event/EC_Event_Channel.h"
 #include "ace/OS_NS_stdio.h"
 
 #include <memory>

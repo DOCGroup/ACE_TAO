@@ -12,7 +12,6 @@
 #include "tao/Wait_Strategy.h"
 #include "tao/Stub.h"
 #include "tao/ORB_Core.h"
-#include "tao/debug.h"
 #include "tao/GIOP_Message_Base.h"
 #include "tao/Acceptor_Registry.h"
 #include "tao/Thread_Lane_Resources.h"

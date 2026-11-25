@@ -31,7 +31,6 @@
 #include "ace/Map_T.h"
 #include <memory>
 
-#include "tao/PortableServer/Servant_Location.h"
 
 #if defined(_MSC_VER)
 #pragma warning(push)

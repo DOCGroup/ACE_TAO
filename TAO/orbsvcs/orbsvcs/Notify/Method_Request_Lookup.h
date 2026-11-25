@@ -20,7 +20,6 @@
 #include "orbsvcs/Notify/Consumer_Map.h"
 #include "orbsvcs/Notify/Delivery_Request.h"
 
-#include "orbsvcs/ESF/ESF_Worker.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

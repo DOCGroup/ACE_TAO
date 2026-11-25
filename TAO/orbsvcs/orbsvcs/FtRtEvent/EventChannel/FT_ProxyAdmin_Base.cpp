@@ -1,7 +1,6 @@
 #include "orbsvcs/FtRtEvent/EventChannel/FT_ProxyAdmin_Base.h"
 #include "tao/PortableServer/PortableServer.h"
 #include "tao/PortableServer/Servant_Base.h"
-#include "tao/PortableServer/PortableServer.h"
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

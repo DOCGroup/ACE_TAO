@@ -21,7 +21,6 @@
 #include "ace/Timer_Heap.h"
 #include "ace/Timer_Wheel.h"
 #include "ace/Timer_Hash.h"
-#include "ace/Timer_Queue.h"
 #include "ace/Time_Policy.h"
 #include "ace/Recursive_Thread_Mutex.h"
 #include "ace/Null_Mutex.h"

@@ -1,6 +1,5 @@
 #include "PCB.h"
 #include "ace/Log_Msg.h"
-#include "PCB.h"
 #include "PTimerDispatcher.h"
 
 int PCB::handleEvent (void const *arg)

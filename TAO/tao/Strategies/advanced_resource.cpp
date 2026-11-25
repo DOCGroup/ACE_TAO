@@ -23,7 +23,6 @@
 #include "tao/Load_Protocol_Factory_T.h"
 
 #include "ace/Arg_Shifter.h"
-#include "ace/Service_Config.h"
 #include "ace/Select_Reactor.h"
 #include "ace/Single_Input_Reactor.h"
 #include "ace/WFMO_Reactor.h"
