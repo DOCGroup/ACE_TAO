@@ -11,6 +11,7 @@
 #include "ACEXML/parser/parser/Parser.h"
 #include "ACEXML/common/FileCharStream.h"
 #include "ACEXML/common/XML_Util.h"
+#include <cstdio>
 #include <memory>
 
 XML_Backing_Store::XML_Backing_Store(const Options& opts,
@@ -80,6 +81,16 @@ XML_Backing_Store::persist ()
     }
 
   ACE_OS::fprintf (fp.get (), "</%s>\n", Locator_XMLHandler::ROOT_TAG);
+
+  int const write_error = std::ferror (fp.get ());
+  int const close_error = ACE_OS::fclose (fp.release ());
+  if (write_error != 0 || close_error != 0)
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR,
+                             ACE_TEXT ("Couldn't write to file %C\n"),
+                             this->filename_.c_str ()),
+                            -1);
+    }
 
   return 0;
 }
