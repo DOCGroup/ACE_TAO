@@ -76,7 +76,9 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
 
   if (!Policy_Verifier::check_reference (this->base_object_.in (),
                                          "Unable to convert the IOR to the proper object reference.\n"))
-    return false;
+    {
+      return false;
+    }
 
   object = this->orb_->string_to_object (
     this->overridden_object_ref_.c_str ());
@@ -90,7 +92,9 @@ Policy_Verifier::init (int argc, ACE_TCHAR *argv[])
 
   if (!Policy_Verifier::check_reference (this->overridden_object_.in (),
                                          "Unable to convert the IOR to the proper object reference.\n"))
-    return false;
+    {
+      return false;
+    }
 
   return true;
 }
