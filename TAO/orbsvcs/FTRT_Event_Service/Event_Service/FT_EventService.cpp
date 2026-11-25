@@ -271,7 +271,7 @@ FT_EventService::report_factory (CORBA::ORB_ptr orb,
             }
           } const stream_closer {stream};
 
-          ORBSVCS_DEBUG ((LM_DEBUG, "connecting to %s\n", addr));
+          ORBSVCS_DEBUG ((LM_DEBUG, ACE_TEXT ("connecting to %C\n"), addr));
           if (connector.connect (stream, factory_addr) == -1)
           {
             ORBSVCS_ERROR_RETURN ((LM_ERROR, "(%P|%t) Invalid Factory Address\n"), -1);

@@ -29,7 +29,7 @@ resolve_init (CORBA::ORB_ptr orb,
   catch (CORBA::Exception const &)
     {
       ORBSVCS_ERROR ((LM_ERROR,
-                      " (%P|%t) Unable to initialize %s.\n",
+                      ACE_TEXT (" (%P|%t) Unable to initialize %C.\n"),
                       id));
       if (!CORBA::is_nil (obj.in ()))
         {
