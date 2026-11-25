@@ -40,10 +40,8 @@ public :
 
   ~ACE_QoS_Session_Factory ();
 
-  ACE_QoS_Session_Factory (ACE_QoS_Session_Factory const &) = delete;
-  ACE_QoS_Session_Factory &operator= (ACE_QoS_Session_Factory const &) = delete;
-  ACE_QoS_Session_Factory (ACE_QoS_Session_Factory &&) = delete;
-  ACE_QoS_Session_Factory &operator= (ACE_QoS_Session_Factory &&) = delete;
+  ACE_QoS_Session_Factory (ACE_QoS_Session_Factory const &) = default;
+  ACE_QoS_Session_Factory &operator= (ACE_QoS_Session_Factory const &) = default;
 
   /// Types of sessions for this factory to manage.
   enum ACE_QoS_Session_Type
