@@ -60,7 +60,7 @@ public:
   /// @}
 
 protected:
-  /// Runs the Scheduler's event loop, which dequeues <Method_Requests>
+  /// Runs the Scheduler's event loop, which dequeues method requests
   /// and dispatches them.
   int svc () override;
 

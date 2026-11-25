@@ -58,11 +58,11 @@ public:
   /// Activate the task.
   Worker_Task ();
 
-  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// Iterate @c n_iterations time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
   int svc () override;
 
-  /// Allows the producer to pass messages to the <Message_Block>.
+  /// Allows the producer to pass message blocks to the task.
   int put (ACE_Message_Block *mb, ACE_Time_Value *tv = nullptr) override;
 
 private:

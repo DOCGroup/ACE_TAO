@@ -178,9 +178,9 @@ public:
   void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
   /**
-   * Get the I/O handle used by this <handler>. This method will be
+   * Get the I/O handle used by this handler. This method will be
    * called by the ACE_Asynch_* classes when an ACE_INVALID_HANDLE is
-   * passed to <open>.
+   * passed to @c open().
    */
   ACE_HANDLE handle () const override;
 
@@ -193,7 +193,7 @@ public:
   /**
    * Called when output events should start.  Note that this is
    * automatically invoked by the
-   * <ACE_Reactor_Notificiation_Strategy>.
+   * @c ACE_Reactor_Notification_Strategy.
    */
   int handle_output (ACE_HANDLE fd) override;
 

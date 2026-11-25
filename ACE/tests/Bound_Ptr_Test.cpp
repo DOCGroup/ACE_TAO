@@ -167,7 +167,7 @@ Printer::print ()
 /**
  * @class Method_Request_print
  *
- * @brief Reification of the <print> method.
+ * @brief Reification of the @c print() method.
  */
 class Method_Request_print : public ACE_Method_Request
 {
@@ -210,7 +210,7 @@ Method_Request_print::call ()
 /**
  * @class Method_Request_end
  *
- * @brief Reification of the <end> method.
+ * @brief Reification of the @c end() method.
  */
 class Method_Request_end : public ACE_Method_Request
 {

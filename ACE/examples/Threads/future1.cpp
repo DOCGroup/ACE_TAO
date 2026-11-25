@@ -82,7 +82,7 @@ private:
 /**
  * @class Method_Request_work
  *
- * @brief Reification of the <work> method.
+ * @brief Reification of the @c work() method.
  */
 class Method_Request_work : public ACE_Method_Request
 {
@@ -130,7 +130,7 @@ Method_Request_work::call ()
 /**
  * @class Method_Request_name
  *
- * @brief Reification of the <name> method.
+ * @brief Reification of the @c name() method.
  */
 class Method_Request_name : public ACE_Method_Request
 {
@@ -173,7 +173,7 @@ Method_Request_name::call ()
 /**
  * @class Method_Request_end
  *
- * @brief Reification of the <end> method.
+ * @brief Reification of the @c end() method.
  */
 class Method_Request_end : public ACE_Method_Request
 {

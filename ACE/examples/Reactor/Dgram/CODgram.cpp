@@ -47,7 +47,7 @@ public:
   Dgram_Endpoint &operator= (Dgram_Endpoint const &) = delete;
   Dgram_Endpoint &operator= (Dgram_Endpoint &&) = delete;
 
-  /// @name Hook methods inherited from the <ACE_Event_Handler>
+  /// @name Hook methods inherited from the @c ACE_Event_Handler
   /// @{
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE handle) override;

@@ -108,12 +108,12 @@ public:
 protected:
   // These methods are called by the framework
 
-  /// This is called when asynchronous <read> operation from the socket
+  /// This is called when asynchronous read operation from the socket
   /// complete.
   void handle_read_stream (const ACE_Asynch_Read_Stream::Result
                            &result) override;
 
-  /// This is called when an asynchronous <write> to the file
+  /// This is called when an asynchronous write to the file
   /// completes.
   void handle_write_stream (const ACE_Asynch_Write_Stream::Result
                             &result) override;

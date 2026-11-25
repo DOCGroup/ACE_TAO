@@ -302,7 +302,7 @@ public:
   //FUZZ: enable check_for_lack_ACE_OS
 
 protected:
-  /// This is called by the framework when asynchronous <read> operation from the
+  /// This is called by the framework when asynchronous read operation from the
   /// socket completes.
   virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
 
@@ -351,7 +351,7 @@ public:
   void on_delete_receiver ();
 
 protected:
-  /// This is called by the framework when an asynchronous <write> to the file
+  /// This is called by the framework when an asynchronous write to the file
   /// completes.
   virtual void handle_write_file (const ACE_Asynch_Write_File::Result &result);
 

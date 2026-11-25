@@ -119,45 +119,45 @@ public:
   ///FUZZ: enable check_for_lack_ACE_OS
   int close (u_long) override;
 
-  /// Generates events and sends them to the <Reactor>'s <notify>
+  /// Generates events and sends them to the @c ACE_Reactor's @c notify()
   /// method.
   int svc () override;
 
-  /// Releases the <waiter_> semaphore when called by the <Reactor>'s
+  /// Releases the @c waiter_ semaphore when called by the @c ACE_Reactor's
   /// notify handler.
   int handle_exception (ACE_HANDLE) override;
 
   /**
-   * Called every time through the main <ACE_Reactor> event loop to
+   * Called every time through the main @c ACE_Reactor event loop to
    * illustrate the difference between "limited" and "unlimited"
    * notification.
    */
   int handle_output (ACE_HANDLE) override;
 
-  /// Release the <waiter_>.
+  /// Release the @c waiter_.
   void release ();
 
 private:
   /// Perform the notifications.
   int perform_notifications (int notifications);
 
-  /// Used to hand-shake between the <Supplier_Task> and the
-  /// <Reactor>'s notify mechanism.
+  /// Used to hand-shake between the @c Supplier_Task and the
+  /// @c ACE_Reactor's notify mechanism.
   ACE_Thread_Semaphore waiter_;
 
   /**
    * We use this pipe just to get a handle that is always "active,"
-   * i.e., the <ACE_Reactor> will always dispatch its <handle_output>
+   * i.e., the @c ACE_Reactor will always dispatch its @c handle_output()
    * method.
    */
   ACE_Pipe pipe_;
 
-  /// Keeps track of whether the notification pipe in the <ACE_Reactor>
+  /// Keeps track of whether the notification pipe in the @c ACE_Reactor
   /// has been diabled or not.
   int disable_notify_pipe_;
 
   /**
-   * Keeps track of whether we're running with a <LONG_TIMEOUT>, which
+   * Keeps track of whether we're running with a @c LONG_TIMEOUT, which
    * is used for the ACE_HAS_REACTOR_NOTIFICATION_QUEUE portion of
    * this test.
    */

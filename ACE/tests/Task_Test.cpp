@@ -39,7 +39,7 @@ public:
   ///FUZZ: enable check_for_lack_ACE_OS
   int close (u_long flags = 0) override;
 
-  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// Iterate @c n_iterations time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
   int svc () override;
 

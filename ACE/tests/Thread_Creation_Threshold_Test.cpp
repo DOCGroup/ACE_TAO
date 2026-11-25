@@ -39,17 +39,17 @@ namespace
 /**
  * @class Thread_Pool
  *
- * @brief Defines a thread pool abstraction based on the <ACE_Task>.
+ * @brief Defines a thread pool abstraction based on the @c ACE_Task.
  */
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  /// Create the thread pool containing <n_threads>.
+  /// Create the thread pool containing @a n_threads.
   Thread_Pool (int n_threads);
 
   ~Thread_Pool () override;
 
-  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// Iterate @c n_iterations time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
   int svc () override;
 

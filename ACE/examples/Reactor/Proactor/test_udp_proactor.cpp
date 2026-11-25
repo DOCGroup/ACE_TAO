@@ -214,7 +214,7 @@ Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 /**
  * @class Sender
  *
- * @brief The class will be created by <main>.
+ * @brief The class will be created by @c main().
  */
 class Sender : public ACE_Handler
 {

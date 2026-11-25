@@ -396,11 +396,11 @@ protected:
    *
    * These methods are called by the framework
    */
-  /// This is called when asynchronous <read> operation from the
+  /// This is called when asynchronous read operation from the
   /// socket completes.
   void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
 
-  /// This is called when an asynchronous <write> to the socket
+  /// This is called when an asynchronous write to the socket
   /// completes.
   void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result) override;
 

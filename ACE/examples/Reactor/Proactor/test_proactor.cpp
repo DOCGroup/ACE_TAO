@@ -270,7 +270,7 @@ Receiver::handle_write_file (const ACE_Asynch_Write_File::Result &result)
 /**
  * @class Sender
  *
- * @brief The class will be created by <main>.  After connecting to the
+ * @brief The class will be created by @c main().  After connecting to the
  * host, this class will then read data from a file and send it
  * to the network connection.
  */

@@ -34,12 +34,12 @@ static int manual = 0;
 /**
  * @class Thread_Pool
  *
- * @brief Defines a thread pool abstraction based on the <ACE_Task>.
+ * @brief Defines a thread pool abstraction based on the @c ACE_Task.
  */
 class Thread_Pool : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
-  /// Create the thread pool containing <n_threads>.
+  /// Create the thread pool containing @a n_threads.
   Thread_Pool (int n_threads);
 
   ~Thread_Pool () override;
@@ -59,11 +59,11 @@ public:
    */
   int test_empty_message_shutdown ();
 
-  /// Iterate <n_iterations> time printing off a message and "waiting"
+  /// Iterate @c n_iterations time printing off a message and "waiting"
   /// for all other threads to complete this iteration.
   int svc () override;
 
-  /// Allows the producer to pass messages to the <Thread_Pool>.
+  /// Allows the producer to pass messages to the @c Thread_Pool.
   int put (ACE_Message_Block *mb,
                    ACE_Time_Value *tv = nullptr) override;
 
@@ -76,7 +76,7 @@ private:
   /// Close hook.
   int close (u_long) override;
 
-  /// Serialize access to <ACE_Message_Block> reference count, which
+  /// Serialize access to @c ACE_Message_Block reference count, which
   /// will be decremented by multiple threads.
   ACE_Lock_Adapter<ACE_Thread_Mutex> lock_adapter_;
 
