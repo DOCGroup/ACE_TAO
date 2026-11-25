@@ -51,9 +51,9 @@ ACE_INET_Addr::addr_to_string (ACE_TCHAR s[],
     }
 
   if (!result)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   size_t total_len =
     std::strlen (hoststr)
@@ -115,9 +115,9 @@ ACE_INET_Addr::operator == (ACE_INET_Addr const &sap) const
 
   if (this->get_type () != sap.get_type ()
       || this->get_size () != sap.get_size ())
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   return (std::memcmp (&this->inet_addr_,
                        &sap.inet_addr_,
@@ -174,9 +174,9 @@ ACE_INET_Addr::next ()
 {
   if (this->inet_addrs_.empty () ||
       this->inet_addrs_iter_ == this->inet_addrs_.end ())
-  {
-    return false;
-  }
+    {
+      return false;
+    }
 
   union ip46 next_a = *this->inet_addrs_iter_++;
   this->set_addr (&next_a, sizeof (next_a));
@@ -201,9 +201,9 @@ ACE_INET_Addr &
 ACE_INET_Addr::operator= (ACE_INET_Addr const & rhs)
 {
   if (this != std::addressof (rhs))
-  {
-    this->set (rhs);
-  }
+    {
+      this->set (rhs);
+    }
   return *this;
 }
 
@@ -532,9 +532,9 @@ static int get_port_number_from_name (char const port_name[],
                                          &sentry,
                                          buf);
   if (sp != nullptr)
-  {
-    port_number = sp->s_port;
-  }
+    {
+      port_number = sp->s_port;
+    }
 #endif /* ACE_LACKS_GETSERVBYNAME */
 
   return port_number;
@@ -865,9 +865,9 @@ ACE_INET_Addr::get_host_name (wchar_t hostname[],
 
   // We have a build in limitation of MAXHOSTNAMELEN
   if (len > MAXHOSTNAMELEN + 1)
-  {
-    len = MAXHOSTNAMELEN + 1;
-  }
+    {
+      len = MAXHOSTNAMELEN + 1;
+    }
 
   // Call the char version
   int const result = this->get_host_name (char_hostname, len);
@@ -892,9 +892,9 @@ ACE_INET_Addr::get_host_name () const
 
   static char name[MAXHOSTNAMELEN + 1];
   if (this->get_host_name (name, MAXHOSTNAMELEN + 1) == -1)
-  {
-    std::strcpy (name, "<unknown>");
-  }
+    {
+      std::strcpy (name, "<unknown>");
+    }
   return name;
 }
 
@@ -905,9 +905,9 @@ ACE_INET_Addr::set_port_number (u_short port_number,
   ACE_TRACE ("ACE_INET_Addr::set_port_number");
 
   if (encode)
-  {
-    port_number = ACE_HTONS (port_number);
-  }
+    {
+      port_number = ACE_HTONS (port_number);
+    }
 
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
