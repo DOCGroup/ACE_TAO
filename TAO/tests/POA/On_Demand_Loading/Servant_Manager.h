@@ -1,7 +1,7 @@
 /**
  *  @file     Servant_Manager.h
  *
- *   Helper class for <ServantActivator_i> and <ServantLoactor_i>.
+ *   Helper class for @c ServantActivator_i and @c ServantLocator_i.
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
  */
@@ -64,11 +64,9 @@ public:
 
   /**
    * Obtains a servant on activation by linking and loading the
-   * appropriate DLL and creating the servant object.  The <str>
+   * appropriate DLL and creating the servant object.  The @a str
    * argument is the ObjectId that contains the servant DLL name and
-   * the factory function name. The <long> argument is an
-   * servant-specific argument needed to create the servant for this
-   * particular use-case.
+   * the factory function name.
    */
   PortableServer::Servant obtain_servant (ACE_TCHAR const *str,
                                           PortableServer::POA_ptr poa);

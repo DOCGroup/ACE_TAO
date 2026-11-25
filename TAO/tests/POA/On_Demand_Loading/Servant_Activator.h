@@ -1,7 +1,7 @@
 /**
  *  @file     Servant_Activator.h
  *
- *   Defines a <ServantActivator_i> class, which uses a
+ *   Defines a @c ServantActivator_i class, which uses a
  *   Servant_Manager to activate a servant by loading it and
  *   associates it with an object on-demand.
  *

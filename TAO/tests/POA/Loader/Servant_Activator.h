@@ -1,7 +1,7 @@
 /**
  *  @file     Servant_Activator.h
  *
- *   Defines a <ServantActivator> class, which activates a servant by
+ *   Defines a @c ServantActivator class, which activates a servant by
  *   obtaining it and associates it with an object on-demand.
  *
  *  @author  Kirthika Parameswaran <kirthika@cs.wustl.edu>
