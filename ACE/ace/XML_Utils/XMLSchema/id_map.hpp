@@ -92,7 +92,7 @@ public:
 
   void resolve_single_idref (String const &idref, XSCRT::Type *element) const
   {
-    ID_MAP::const_iterator const id_iter = this->id_map_.find (idref);
+    id_iterator const id_iter = this->id_map_.find (idref);
     if (id_iter != this->id_map_.end ())
     {
       element->set_idref (idref, id_iter->second);
@@ -107,7 +107,7 @@ public:
   {
     for (IDREF_MAP::value_type const &idref_entry : this->idref_map_)
     {
-      ID_MAP::const_iterator const id_iter = this->id_map_.find (idref_entry.first);
+      id_iterator const id_iter = this->id_map_.find (idref_entry.first);
       if (id_iter != this->id_map_.end ())
       {
         idref_entry.second->set_idref (id_iter->first, id_iter->second);
