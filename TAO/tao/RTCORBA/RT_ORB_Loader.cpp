@@ -59,8 +59,8 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
   while (arg_shifter.is_anything_left ())
     {
       ACE_TCHAR const *current_arg {};
-      if ((current_arg = arg_shifter.get_the_parameter
-                  (ACE_TEXT("-ORBPriorityMapping"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ORBPriorityMapping"));
+      if (current_arg != nullptr)
         {
           ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
@@ -89,9 +89,10 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                         name));
             }
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                                 (ACE_TEXT("-ORBSchedPolicy"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ORBSchedPolicy"));
+      if (current_arg != nullptr)
         {
           ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
@@ -120,9 +121,10 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                         name));
             }
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                                 (ACE_TEXT("-ORBScopePolicy"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-ORBScopePolicy"));
+      if (current_arg != nullptr)
         {
           ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
@@ -143,9 +145,10 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                         name));
             }
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                                 (ACE_TEXT("-RTORBNetworkPriorityMapping"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RTORBNetworkPriorityMapping"));
+      if (current_arg != nullptr)
         {
           ACE_TCHAR const * const name = current_arg;
           if (ACE_OS::strcasecmp (name,
@@ -155,18 +158,20 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
                 TAO_RT_ORBInitializer::TAO_NETWORK_PRIORITY_MAPPING_LINEAR;
             }
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                                   (ACE_TEXT("-RTORBDynamicThreadIdleTimeout"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RTORBDynamicThreadIdleTimeout"));
+      if (current_arg != nullptr)
         {
           ACE_TCHAR const * const name = current_arg;
           int const timeout = ACE_OS::atoi (name);
           dynamic_thread_time = ACE_Time_Value (0, timeout);
           lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_IDLE;
           arg_shifter.consume_arg ();
+          continue;
         }
-      else if ((current_arg = arg_shifter.get_the_parameter
-                                   (ACE_TEXT("-RTORBDynamicThreadRunTime"))) != nullptr)
+      current_arg = arg_shifter.get_the_parameter (ACE_TEXT("-RTORBDynamicThreadRunTime"));
+      if (current_arg != nullptr)
         {
           ACE_TCHAR const * const name = current_arg;
           int const timeout = ACE_OS::atoi (name);
@@ -174,18 +179,18 @@ TAO_RT_ORB_Loader::init (int argc, ACE_TCHAR* argv[])
           lifespan = TAO_RT_ORBInitializer::TAO_RTCORBA_DT_FIXED;
           arg_shifter.consume_arg ();
         }
-    else
-      {
-        ACE_TCHAR const * const unknown_arg = arg_shifter.get_current ();
-        arg_shifter.ignore_arg ();
-        if (TAO_debug_level > 0)
+      else
         {
-          TAOLIB_ERROR ((LM_ERROR,
-                      ACE_TEXT("RT_ORB_Loader: Unknown option ")
-                      ACE_TEXT("<%s>.\n"),
-                      unknown_arg));
+          ACE_TCHAR const * const unknown_arg = arg_shifter.get_current ();
+          arg_shifter.ignore_arg ();
+          if (TAO_debug_level > 0)
+            {
+              TAOLIB_ERROR ((LM_ERROR,
+                             ACE_TEXT("RT_ORB_Loader: Unknown option ")
+                             ACE_TEXT("<%s>.\n"),
+                             unknown_arg));
+            }
         }
-      }
     }
 
   // Register the ORB initializer.
