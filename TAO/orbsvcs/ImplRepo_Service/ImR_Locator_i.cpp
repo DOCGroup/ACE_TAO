@@ -63,12 +63,7 @@ ImR_Locator_i::ImR_Locator_i ()
   , lock_ ()
   , shutdown_handler_ (this)
 {
-  // Visual C++ 6.0 is not smart enough to do a direct assignment
-  // while allocating the INS_Locator.  So, we have to do it in
-  // two steps.
-  INS_Locator* locator;
-  ACE_NEW (locator, INS_Locator (*this));
-  ins_locator_ = locator;
+  ACE_NEW (this->ins_locator_, INS_Locator (*this));
 }
 
 ImR_Locator_i::~ImR_Locator_i () = default;
