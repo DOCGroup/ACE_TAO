@@ -622,10 +622,15 @@ send_n (const void *buf, int len)
   int n;
 
   for (bytes_written = 0; bytes_written < len; bytes_written += n)
-    if ((n = write (connection_descriptor,
-                    static_cast<char const *> (buf) + bytes_written,
-                    len - bytes_written)) == -1)
-      return -1;
+    {
+      n = write (connection_descriptor,
+                 static_cast<char const *> (buf) + bytes_written,
+                 len - bytes_written);
+      if (n == -1)
+        {
+          return -1;
+        }
+    }
 
   return bytes_written;
 }
@@ -637,16 +642,19 @@ recv_n (void *buf, int len)
   int n;
 
   for (bytes_read = 0; bytes_read < len; bytes_read += n)
-    if ((n = read (connection_descriptor,
-                   static_cast<char *> (buf) + bytes_read,
-                   len - bytes_read)) == -1)
-      {
-        return -1;
-      }
-    else if (n == 0)
-      {
-        break;
-      }
+    {
+      n = read (connection_descriptor,
+                static_cast<char *> (buf) + bytes_read,
+                len - bytes_read);
+      if (n == -1)
+        {
+          return -1;
+        }
+      else if (n == 0)
+        {
+          break;
+        }
+    }
 
   return bytes_read;
 }
