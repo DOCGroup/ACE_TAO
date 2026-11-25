@@ -24,7 +24,7 @@ ACE_Name_Proxy::ACE_Name_Proxy ()
 
 /// Establish binding with the ACE_Name Server at remote_addr.
 int
-ACE_Name_Proxy::open (const ACE_INET_Addr &remote_addr,
+ACE_Name_Proxy::open (ACE_INET_Addr const &remote_addr,
                       ACE_Synch_Options& options)
 {
   ACE_TRACE ("ACE_Name_Proxy::open");
@@ -41,7 +41,7 @@ ACE_Name_Proxy::open (const ACE_INET_Addr &remote_addr,
 
 /// Establish binding with the ACE_Name Server at remote_addr.
 ACE_Name_Proxy::ACE_Name_Proxy (
-  const ACE_INET_Addr &remote_addr,
+  ACE_INET_Addr const &remote_addr,
   ACE_Synch_Options& options)
 {
   ACE_TRACE ("ACE_Name_Proxy::ACE_Name_Proxy");

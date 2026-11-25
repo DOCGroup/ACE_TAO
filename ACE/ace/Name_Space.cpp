@@ -36,7 +36,7 @@ ACE_Name_Binding::ACE_Name_Binding (ACE_NS_WString const &name,
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }
 
-ACE_Name_Binding::ACE_Name_Binding (const ACE_Name_Binding &s)
+ACE_Name_Binding::ACE_Name_Binding (ACE_Name_Binding const &s)
   : name_ (s.name_),
     value_ (s.value_),
     type_ (ACE_OS::strdup (s.type_))
@@ -44,8 +44,8 @@ ACE_Name_Binding::ACE_Name_Binding (const ACE_Name_Binding &s)
   ACE_TRACE ("ACE_Name_Binding::ACE_Name_Binding");
 }
 
-const ACE_Name_Binding&
-ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
+ACE_Name_Binding const &
+ACE_Name_Binding::operator = (ACE_Name_Binding const &s)
 {
   ACE_TRACE ("ACE_Name_Binding::operator =");
 
@@ -65,7 +65,7 @@ ACE_Name_Binding::operator = (const ACE_Name_Binding &s)
 }
 
 bool
-ACE_Name_Binding::operator == (const ACE_Name_Binding &s) const
+ACE_Name_Binding::operator == (ACE_Name_Binding const &s) const
 {
   ACE_TRACE ("ACE_Name_Binding::operator ==");
   return this->name_ == s.name_

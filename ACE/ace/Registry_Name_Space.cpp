@@ -57,7 +57,7 @@ ACE_Registry_Name_Space::bind (ACE_NS_WString const &name,
   ACE_UNUSED_ARG(type);
 
   // Pointer to data
-  const ACE_WSTRING_TYPE *data = value.fast_rep ();
+  ACE_WSTRING_TYPE const *data = value.fast_rep ();
 
   // Size
   size_t const size = value.length () * sizeof (ACE_WSTRING_TYPE);
@@ -84,7 +84,7 @@ ACE_Registry_Name_Space::rebind (ACE_NS_WString const &name,
   ACE_UNUSED_ARG(type);
 
   // Pointer to data
-  const ACE_WSTRING_TYPE *data = value.fast_rep ();
+  ACE_WSTRING_TYPE const *data = value.fast_rep ();
 
   // Size
   size_t const size = value.length () * sizeof (ACE_WSTRING_TYPE);

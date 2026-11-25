@@ -62,21 +62,21 @@ public:
    * call the corresponding ACE_Hash_Map_Manager operation.
    */
   /// @{
-  int bind (const ACE_NS_String &,
-            const ACE_NS_Internal &,
+  int bind (ACE_NS_String const &,
+            ACE_NS_Internal const &,
             ALLOCATOR *alloc);
 
-  int unbind (const ACE_NS_String &,
+  int unbind (ACE_NS_String const &,
               ACE_NS_Internal &,
               ALLOCATOR *alloc);
 
-  int rebind (const ACE_NS_String &,
-              const ACE_NS_Internal &,
+  int rebind (ACE_NS_String const &,
+              ACE_NS_Internal const &,
               ACE_NS_String &,
               ACE_NS_Internal &,
               ALLOCATOR *alloc);
 
-  int find (const ACE_NS_String &,
+  int find (ACE_NS_String const &,
             ACE_NS_Internal &,
             ALLOCATOR *alloc);
 

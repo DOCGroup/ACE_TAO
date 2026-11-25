@@ -37,14 +37,14 @@ public:
 
   ACE_Name_Binding ();
 
-  ACE_Name_Binding (const ACE_Name_Binding &);
+  ACE_Name_Binding (ACE_Name_Binding const &);
 
-  const ACE_Name_Binding& operator= (const ACE_Name_Binding &);
+  ACE_Name_Binding const & operator= (ACE_Name_Binding const &);
 
   ~ACE_Name_Binding ();
 
   /// Test for equality.
-  bool operator == (const ACE_Name_Binding &s) const;
+  bool operator == (ACE_Name_Binding const &s) const;
 
   /// Name of the binding.
   ACE_NS_WString name_;

@@ -49,11 +49,11 @@ public:
 
   /// @name Establishing a binding with the ACE_Name Server
   /// @{
-  ACE_Name_Proxy (const ACE_INET_Addr &remote_addr, // Address of ACE_Name Server.
+  ACE_Name_Proxy (ACE_INET_Addr const &remote_addr, // Address of ACE_Name Server.
                   ACE_Synch_Options& options =
                   ACE_Synch_Options::defaults);
 
-  int open (const ACE_INET_Addr &remote_addr,  // Address of ACE_Name Server.
+  int open (ACE_INET_Addr const &remote_addr,  // Address of ACE_Name Server.
             ACE_Synch_Options& options =
             ACE_Synch_Options::defaults);
   /// @}

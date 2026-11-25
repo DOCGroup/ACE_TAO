@@ -40,7 +40,7 @@ public:
 
   /// Initialization method.
   ACE_NS_String (ACE_WCHAR_T *dst,
-                 const ACE_WCHAR_T *src,
+                 ACE_WCHAR_T const *src,
                  size_t len);
 
   /// Converts an ACE_NS_WString to an ACE_NS_String;
@@ -56,13 +56,13 @@ public:
   char *char_rep () const;
 
   /// Matches on substrings.
-  int strstr (const ACE_NS_String &) const;
+  int strstr (ACE_NS_String const &) const;
 
   /// Compare an ACE_NS_String.
-  bool operator == (const ACE_NS_String &) const;
+  bool operator == (ACE_NS_String const &) const;
 
   /// Compare an ACE_NS_String.
-  bool operator != (const ACE_NS_String &) const;
+  bool operator != (ACE_NS_String const &) const;
 
   /// Returns length of the string
   size_t len () const;
@@ -100,7 +100,7 @@ public:
   ACE_NS_Internal (ACE_NS_String &value, char const *type);
 
   /// Compare an ACE_NS_Internal
-  bool operator == (const ACE_NS_Internal &) const;
+  bool operator == (ACE_NS_Internal const &) const;
 
   /// Return value.
   ACE_NS_String value ();
