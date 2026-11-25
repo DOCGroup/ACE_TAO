@@ -112,11 +112,11 @@ TAO_Notify_Tests_SupplierAdmin_Command::handle_offers ()
 
   for (; i < added_.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "+(%s,%s), ", added_[i].domain_name.in (), added_[i].type_name.in ()));
+      ACE_DEBUG ((LM_DEBUG, "+(%C,%C), ", added_[i].domain_name.in (), added_[i].type_name.in ()));
     }
   for (i = 0; i < removed_.length (); ++i)
     {
-      ACE_DEBUG ((LM_DEBUG, "-(%s,%s), ", removed_[i].domain_name.in (), removed_[i].type_name.in ()));
+      ACE_DEBUG ((LM_DEBUG, "-(%C,%C), ", removed_[i].domain_name.in (), removed_[i].type_name.in ()));
     }
 
   ACE_DEBUG ((LM_DEBUG, "\n"));

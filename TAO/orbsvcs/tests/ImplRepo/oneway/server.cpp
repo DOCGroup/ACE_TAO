@@ -149,15 +149,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     test_ior = orb->object_to_string (tva.in());
     base += "_a";
-    ACE_DEBUG ((LM_DEBUG, "%s:\n%s\n", base.c_str(), test_ior.in()));
+    ACE_DEBUG ((LM_DEBUG, "%C:\n%C\n", base.c_str(), test_ior.in()));
     table->bind (base.c_str (), test_ior.in ());
     base[base.length()-1] = 'b';
     test_ior = orb->object_to_string (tvb.in());
-    ACE_DEBUG ((LM_DEBUG, "%s:\n%s\n", base.c_str(), test_ior.in()));
+    ACE_DEBUG ((LM_DEBUG, "%C:\n%C\n", base.c_str(), test_ior.in()));
     table->bind (base.c_str (), test_ior.in ());
 
     ACE_DEBUG ((LM_DEBUG,
-      "Started Server %s \n",
+      "Started Server %C \n",
       base.c_str()));
 
     orb->run();

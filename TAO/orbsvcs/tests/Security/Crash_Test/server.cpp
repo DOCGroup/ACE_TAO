@@ -114,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       else
         {
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("SERVER (%P): Activated as <%s>\n"),
+                      ACE_TEXT ("SERVER (%P): Activated as <%C>\n"),
                       ior.in ()));
         }
 

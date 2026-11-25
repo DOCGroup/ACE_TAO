@@ -103,7 +103,7 @@ BasicLog_Test::init_factory ()
   if (TAO_debug_level > 0)
     {
       ACE_DEBUG ((LM_DEBUG,
-                  "The logger IOR is <%s>\n",
+                  "The logger IOR is <%C>\n",
                   str.in ()));
     }
 
