@@ -96,13 +96,11 @@
 
 #ifdef INCLUDE_SNMP_ERR_STRINGS_
 
-// ASCII strings returned through Snmp::error() function.  NOTE: altering
-// the strings in this header file will not affect the return values of
-// Snmp::error(), unless you rebuild the ASNMP library from source.
-
 #define MAX_POS_ERROR                    SNMP_ERROR_INCONSIS_NAME
 #define MAX_NEG_ERROR                    SNMP_CLASS_SHUTDOWN
 
+/// ASCII strings returned by Snmp::error().
+/// @note Changes to these strings require rebuilding the ASNMP library.
 static const char * pErrs[] = {
   "Success",                                                  // 0
   "SNMP: Response PDU Too Big",                               // 1
