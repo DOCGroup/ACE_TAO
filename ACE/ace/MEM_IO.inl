@@ -151,8 +151,8 @@ ACE_MEM_IO::recv (void *buf,
   size_t const length = (len > buf_len ? buf_len : len);
 
   std::memcpy (static_cast<char *> (buf) + count,
-                static_cast<char *> (this->recv_buffer_->data ()) + this->cur_offset_,
-                length);
+               static_cast<char *> (this->recv_buffer_->data ()) + this->cur_offset_,
+               length);
   this->cur_offset_ += ACE_Utils::truncate_cast<ssize_t> (length);
   count += length;
 
