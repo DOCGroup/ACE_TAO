@@ -20,8 +20,8 @@ class Consumer_Handler;
  *
  * @brief Creating a class to handle signal events.
  *
- * Since only signals need to be handled, only the <handle_signal> method
- * is overlaoded.
+ * Since only signals need to be handled, only the @c handle_signal method
+ * is overloaded.
  */
 class Consumer_Signal_Handler : public ACE_Event_Handler
 {

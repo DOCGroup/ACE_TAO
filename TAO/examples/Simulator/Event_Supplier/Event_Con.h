@@ -38,10 +38,10 @@ public:
   Demo_Consumer &operator= (Demo_Consumer &&) = delete;
 
   /**
-   * Uses the name server to obtain a reference to the <supplier_name>
+   * Uses the name server to obtain a reference to the supplier
    * and registers with channel to receive notifications from the
    * supplier.  Also registers to receive shutdown messages from the
-   * supplier.  Stores <my_name> for printing out messages.  Returns 0
+   * supplier.  Stores @a my_name for printing out messages.  Returns 0
    * on success, -1 on failure.
    */
   int open_consumer (RtecEventChannelAdmin::EventChannel_ptr ec,
@@ -51,7 +51,7 @@ public:
   void disconnect_push_consumer () override;
 
   /**
-   * If the <events>[0] is a notification, prints out the data from
+   * If the @c events[0] is a notification, prints out the data from
    * the supplier.  If its a shutdown message, the consumer
    * disconnects from the channel.  This operation remains public to
    * allow short-circuiting.
