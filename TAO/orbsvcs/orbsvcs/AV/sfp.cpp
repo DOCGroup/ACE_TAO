@@ -810,20 +810,19 @@ TAO_SFP_Base::read_start_message (TAO_AV_Transport *transport,
                                   flowProtocol::Start &start,
                                   TAO_InputCDR &input)
 {
-  input.grow (start_len);
+  if (input.grow (start_len) != 0)
+    {
+      return -1;
+    }
   char *buf = input.rd_ptr ();
-  int n = transport->recv (buf,
-                           start_len);
-  if (n != static_cast<int> (start_len))
-  {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_start\n"),0);
-  }
-  else
-  {
-    if (!(input >> start))
-      {
-        return -1;
-      }
+  ssize_t const n = transport->recv (buf, start_len);
+  if (n != static_cast<ssize_t> (start_len))
+    {
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_SFP_Base::read_start_message: incomplete message\n"), -1);
+    }
+  if (!(input >> start))
+    {
+      return -1;
     }
   return 0;
 }
@@ -855,20 +854,19 @@ TAO_SFP_Base::read_credit_message (TAO_AV_Transport *transport,
                                    flowProtocol::credit &credit,
                                    TAO_InputCDR &input)
 {
-  input.grow (start_len);
-  char *buf = input.rd_ptr ();
-  int n = transport->recv (buf,
-                           credit_len);
-  if (n != static_cast<int> (credit_len))
+  if (input.grow (credit_len) != 0)
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "%p", "TAO_SFP_Base::read_credit_message"), 0);
+      return -1;
     }
-  else
+  char *buf = input.rd_ptr ();
+  ssize_t const n = transport->recv (buf, credit_len);
+  if (n != static_cast<ssize_t> (credit_len))
     {
-      if (!(input >> credit))
-      {
-        return -1;
-      }
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_SFP_Base::read_credit_message: incomplete message\n"), -1);
+    }
+  if (!(input >> credit))
+    {
+      return -1;
     }
   return 0;
 }
@@ -878,20 +876,19 @@ TAO_SFP_Base::read_endofstream_message (TAO_AV_Transport *transport,
                                         flowProtocol::frameHeader &endofstream,
                                         TAO_InputCDR &input)
 {
-  input.grow (start_len);
-  char *buf = input.rd_ptr ();
-  int n = transport->recv (buf,
-                           frame_header_len);
-  if (n != static_cast<int> (frame_header_len))
+  if (input.grow (frame_header_len) != 0)
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "%p", "TAO_SFP_Base::read_endofstream_message"), 0);
+      return -1;
     }
-  else
+  char *buf = input.rd_ptr ();
+  ssize_t const n = transport->recv (buf, frame_header_len);
+  if (n != static_cast<ssize_t> (frame_header_len))
     {
-      if (!(input >> endofstream))
-      {
-        return -1;
-      }
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_SFP_Base::read_endofstream_message: incomplete message\n"), -1);
+    }
+  if (!(input >> endofstream))
+    {
+      return -1;
     }
   return 0;
 }
@@ -901,21 +898,19 @@ TAO_SFP_Base::peek_frame_header (TAO_AV_Transport *transport,
                                  flowProtocol::frameHeader &header,
                                  TAO_InputCDR &input)
 {
-  input.grow (frame_header_len);
-  char *buf = input.rd_ptr ();
-  int n = transport->recv (buf,
-                           frame_header_len,
-                           MSG_PEEK);
-  if (n != static_cast<int> (frame_header_len))
+  if (input.grow (frame_header_len) != 0)
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "%p", "TAO_SFP_Base::read_endofstream_message"), 0);
+      return -1;
     }
-  else
+  char *buf = input.rd_ptr ();
+  ssize_t const n = transport->recv (buf, frame_header_len, MSG_PEEK);
+  if (n != static_cast<ssize_t> (frame_header_len))
     {
-      if (!(input >> header))
-      {
-        return -1;
-      }
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_SFP_Base::peek_frame_header: incomplete message\n"), -1);
+    }
+  if (!(input >> header))
+    {
+      return -1;
     }
   return 0;
 }
@@ -925,21 +920,19 @@ TAO_SFP_Base::peek_fragment_header (TAO_AV_Transport *transport,
                                     flowProtocol::fragment &fragment,
                                     TAO_InputCDR &input)
 {
-  input.grow (fragment_len);
-  char *buf = input.rd_ptr ();
-  int n = transport->recv (buf,
-                           fragment_len,
-                           MSG_PEEK);
-  if (n != static_cast<int> (fragment_len))
+  if (input.grow (fragment_len) != 0)
     {
-      ORBSVCS_ERROR_RETURN ((LM_ERROR, "%p", "TAO_SFP_Base::read_endofstream_message"), 0);
+      return -1;
     }
-  else
+  char *buf = input.rd_ptr ();
+  ssize_t const n = transport->recv (buf, fragment_len, MSG_PEEK);
+  if (n != static_cast<ssize_t> (fragment_len))
     {
-      if (!(input >> fragment))
-      {
-        return -1;
-      }
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_SFP_Base::peek_fragment_header: incomplete message\n"), -1);
+    }
+  if (!(input >> fragment))
+    {
+      return -1;
     }
   return 0;
 }

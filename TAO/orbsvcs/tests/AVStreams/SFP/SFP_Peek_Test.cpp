@@ -10,8 +10,8 @@ namespace
   class Test_Transport : public TAO_AV_Transport
   {
   public:
-    Test_Transport (char const *data, ssize_t size)
-      : data_ (data), size_ (size) {}
+    Test_Transport (char const *data, ssize_t size, int flags = MSG_PEEK)
+      : data_ (data), size_ (size), flags_ (flags) {}
 
     int open (ACE_Addr *) override { return -1; }
     int close () override { return 0; }
@@ -28,7 +28,7 @@ namespace
 
     ssize_t recv (char *buffer, size_t length, int flags, ACE_Time_Value *) override
     {
-      if ((flags != 0 && flags != MSG_PEEK) || size_ > static_cast<ssize_t> (length))
+      if (flags != flags_ || size_ > static_cast<ssize_t> (length))
         {
           return -1;
         }
@@ -42,7 +42,32 @@ namespace
   private:
     char const *data_;
     ssize_t size_;
+    int flags_;
   };
+
+  template <typename T>
+  bool check_message (T const &original, T &decoded,
+                      int (*reader) (TAO_AV_Transport *, T &, TAO_InputCDR &), int flags)
+  {
+    TAO_OutputCDR output;
+    if (!(output << original))
+      {
+        return false;
+      }
+    Test_Transport complete (output.buffer (), static_cast<ssize_t> (output.total_length ()), flags);
+    TAO_InputCDR input (size_t {});
+    if (reader (std::addressof (complete), decoded, input) != 0)
+      {
+        return false;
+      }
+
+    Test_Transport truncated (output.buffer (), static_cast<ssize_t> (output.total_length () - 1), flags);
+    TAO_InputCDR short_input (size_t {});
+    ACE_LOG_MSG->set_flags (ACE_Log_Msg::SILENT);
+    int const result = reader (std::addressof (truncated), decoded, short_input);
+    ACE_LOG_MSG->clr_flags (ACE_Log_Msg::SILENT);
+    return result == -1;
+  }
 }
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
@@ -94,7 +119,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot serialize start reply\n")), 1);
     }
 
-  Test_Transport reply_transport (output.buffer (), static_cast<ssize_t> (output.total_length ()));
+  Test_Transport reply_transport (output.buffer (), static_cast<ssize_t> (output.total_length ()), 0);
   TAO_InputCDR input (size_t {});
   flowProtocol::StartReply decoded {};
   if (TAO_SFP_Base::read_start_reply_message (std::addressof (reply_transport), decoded, input) != 0
@@ -104,7 +129,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot decode start reply\n")), 1);
     }
 
-  Test_Transport short_reply (output.buffer (), static_cast<ssize_t> (output.total_length () - 1));
+  Test_Transport short_reply (output.buffer (), static_cast<ssize_t> (output.total_length () - 1), 0);
   TAO_InputCDR short_input (size_t {});
   ACE_LOG_MSG->set_flags (ACE_Log_Msg::SILENT);
   int const short_result = TAO_SFP_Base::read_start_reply_message (
@@ -113,6 +138,32 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
   if (short_result != -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Incomplete start reply was accepted\n")), 1);
+    }
+
+  flowProtocol::Start start {};
+  flowProtocol::Start decoded_start {};
+  start.major_version = 1;
+  flowProtocol::credit credit {};
+  flowProtocol::credit decoded_credit {};
+  credit.cred_num = 42;
+  flowProtocol::frameHeader header {};
+  flowProtocol::frameHeader decoded_header {};
+  header.message_size = 123;
+  flowProtocol::fragment fragment {};
+  flowProtocol::fragment decoded_fragment {};
+  fragment.frag_number = 17;
+  if (!check_message (start, decoded_start, TAO_SFP_Base::read_start_message, 0)
+      || decoded_start.major_version != start.major_version
+      || !check_message (credit, decoded_credit, TAO_SFP_Base::read_credit_message, 0)
+      || decoded_credit.cred_num != credit.cred_num
+      || !check_message (header, decoded_header, TAO_SFP_Base::read_endofstream_message, 0)
+      || decoded_header.message_size != header.message_size
+      || !check_message (header, decoded_header, TAO_SFP_Base::peek_frame_header, MSG_PEEK)
+      || decoded_header.message_size != header.message_size
+      || !check_message (fragment, decoded_fragment, TAO_SFP_Base::peek_fragment_header, MSG_PEEK)
+      || decoded_fragment.frag_number != fragment.frag_number)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("SFP message reader failed\n")), 1);
     }
   return 0;
 }
