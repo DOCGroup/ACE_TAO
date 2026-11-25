@@ -62,7 +62,7 @@ class TAO_Persistent_Naming_Context_Factory;
 class TAO_Naming_Serv_Export TAO_Naming_Server
 {
 public:
-  explicit TAO_Naming_Server (size_t bsize = 1);
+  TAO_Naming_Server (size_t bsize = 1);
 
   /**
    * Constructor.  Attempts to find an existing Naming Service if

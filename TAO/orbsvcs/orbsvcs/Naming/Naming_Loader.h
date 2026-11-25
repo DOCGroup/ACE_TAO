@@ -28,7 +28,7 @@ public:
   /// By default will use the standard Naming_Server.  If a server is provided
   /// it will use that one instead. This object takes ownership of the provided
   /// Naming Server.
-  explicit TAO_Naming_Loader (TAO_Naming_Server *server = nullptr);
+  TAO_Naming_Loader (TAO_Naming_Server *server = nullptr);
 
   ~TAO_Naming_Loader () override;
 

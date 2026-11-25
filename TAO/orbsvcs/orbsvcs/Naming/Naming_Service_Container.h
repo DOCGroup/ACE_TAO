@@ -135,7 +135,7 @@ public:
 
   /// Constructor.  Use user specified allocation strategy
   /// if specified.
-  explicit ACE_Unbounded_List (ACE_Allocator *alloc = nullptr);
+  ACE_Unbounded_List (ACE_Allocator *alloc = nullptr);
 
   ACE_Unbounded_List (ACE_Unbounded_List<T> const &);
 

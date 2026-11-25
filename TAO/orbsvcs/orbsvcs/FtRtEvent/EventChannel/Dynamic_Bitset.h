@@ -31,7 +31,7 @@ public:
     size_type bit_;
   };
 
-  explicit Dynamic_Bitset (size_type size = 0);
+  Dynamic_Bitset (size_type size = 0);
   ~Dynamic_Bitset ();
   Dynamic_Bitset (Dynamic_Bitset const & other);
   Dynamic_Bitset (Dynamic_Bitset &&) = delete;
