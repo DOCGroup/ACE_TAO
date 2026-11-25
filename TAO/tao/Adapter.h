@@ -42,6 +42,8 @@ class TAO_Export TAO_Adapter
 {
 public:
   TAO_Adapter () = default;
+  TAO_Adapter (TAO_Adapter const &) = default;
+  TAO_Adapter &operator= (TAO_Adapter const &) = default;
   virtual ~TAO_Adapter ();
 
   /// Initialize the Adapter
@@ -108,11 +110,6 @@ public:
   /// pointer for lazily evaluated object references.
   virtual CORBA::Long initialize_collocated_object (TAO_Stub *) = 0;
 
-private:
-  TAO_Adapter (TAO_Adapter const &) = delete;
-  TAO_Adapter &operator= (TAO_Adapter const &) = delete;
-  TAO_Adapter (TAO_Adapter &&) = delete;
-  TAO_Adapter &operator= (TAO_Adapter &&) = delete;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

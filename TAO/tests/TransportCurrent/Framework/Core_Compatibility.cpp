@@ -5,6 +5,7 @@
  */
 
 #include "tao/Acceptor_Filter.h"
+#include "tao/Adapter.h"
 #include "tao/Connection_Purging_Strategy.h"
 #include "tao/PolicyFactory_Registry_Adapter.h"
 #include "tao/PortableServer/Default_Acceptor_Filter.h"
@@ -14,6 +15,19 @@
 
 namespace
 {
+  struct Object_Adapter : TAO_Adapter
+  {
+    void open () override;
+    void close (int) override;
+    void check_close (int) override;
+    int priority () const override;
+    int dispatch (TAO::ObjectKey &, TAO_ServerRequest &, CORBA::Object_out) override;
+    char const *name () const override;
+    CORBA::Object_ptr root () override;
+    CORBA::Object_ptr create_collocated_object (TAO_Stub *, TAO_MProfile const &) override;
+    CORBA::Long initialize_collocated_object (TAO_Stub *) override;
+  };
+
   struct Handler : TAO_Service_Context_Handler
   {
     int process_service_context (TAO_Transport &, IOP::ServiceContext const &,
@@ -70,4 +84,6 @@ namespace
   static_assert (!std::is_copy_assignable<Strategy>::value);
   static_assert (std::is_copy_constructible<TAO_Default_Acceptor_Filter>::value);
   static_assert (std::is_move_assignable<TAO_Default_Acceptor_Filter>::value);
+  static_assert (std::is_copy_constructible<Object_Adapter>::value);
+  static_assert (std::is_move_assignable<Object_Adapter>::value);
 }
