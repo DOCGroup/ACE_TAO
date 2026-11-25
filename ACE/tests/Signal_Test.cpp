@@ -100,7 +100,7 @@ handle_signal (int signum)
 #if 0
       ACE_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) %p\n"),
-                  "sigwait"));
+                  ACE_TEXT ("sigwait")));
 #endif
       return -1;
       /* NOTREACHED */

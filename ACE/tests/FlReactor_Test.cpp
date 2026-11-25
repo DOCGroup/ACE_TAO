@@ -245,7 +245,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          "%p\n",
-                         "open acceptor"),
+                         ACE_TEXT ("open acceptor")),
                         -1);
     }
 

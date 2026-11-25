@@ -794,7 +794,7 @@ Server::open (ACE_HANDLE handle, ACE_Message_Block &)
                                         &nodelay,
                                         sizeof (nodelay)))
     {
-      ACE_ERROR ((LM_ERROR, "%p\n", "set_option"));
+      ACE_ERROR ((LM_ERROR, "%p\n", ACE_TEXT ("set_option")));
     }
 
     if (this->ws_.open (*this, this->handle_) == -1)
@@ -1338,7 +1338,7 @@ Client::open (ACE_HANDLE handle, ACE_Message_Block &)
                                   &nodelay,
                                   sizeof (nodelay)))
     {
-      ACE_ERROR ((LM_ERROR, "%p\n", "set_option"));
+      ACE_ERROR ((LM_ERROR, "%p\n", ACE_TEXT ("set_option")));
     }
 
     // Open ACE_Asynch_Write_Stream
