@@ -833,20 +833,19 @@ TAO_SFP_Base::read_start_reply_message (TAO_AV_Transport *transport,
                                         flowProtocol::StartReply &start_reply,
                                         TAO_InputCDR &input)
 {
-  input.grow (start_len);
-  char *buf = input.rd_ptr ();
-  int n = transport->recv (buf,
-                           start_reply_len);
-  if (n != static_cast<int> (start_len))
+  if (input.grow (start_reply_len) != 0)
     {
-    ORBSVCS_ERROR_RETURN ((LM_ERROR,"%p","TAO_SFP_Base::read_start_reply_message"),0);
+      return -1;
     }
-  else
+  char *buf = input.rd_ptr ();
+  ssize_t const n = transport->recv (buf, start_reply_len);
+  if (n != static_cast<ssize_t> (start_reply_len))
     {
-      if (!(input >> start_reply))
-      {
-        return -1;
-      }
+      ORBSVCS_ERROR_RETURN ((LM_ERROR, "TAO_SFP_Base::read_start_reply_message: incomplete reply\n"), -1);
+    }
+  if (!(input >> start_reply))
+    {
+      return -1;
     }
   return 0;
 }
