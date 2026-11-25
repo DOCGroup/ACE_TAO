@@ -114,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (CORBA::is_nil (server.in ()))
         {
           ACE_ERROR_RETURN ((LM_DEBUG,
-                             "Nil server reference <%s>\n",
+                             "Nil server reference <%C>\n",
                              ior.in ()),
                             1);
         }

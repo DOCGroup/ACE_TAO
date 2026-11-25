@@ -110,7 +110,7 @@ int ClientTask::svc ()
                       ndx));
           CORBA::String_var const the_string = target_->get_string (ndx);
           ACE_DEBUG ((LM_DEBUG,
-                      ACE_TEXT ("Client %d received return text of: [%s %d].\n"),
+                      ACE_TEXT ("Client %d received return text of: [%C %d].\n"),
                       ndx, the_string.in (), ndx));
           {
             ACE_GUARD_RETURN (ACE_Mutex, mon, this->lock_, -1);

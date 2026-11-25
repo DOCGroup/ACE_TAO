@@ -44,7 +44,7 @@ Current_Test_Impl::test_transport_current ()
   CORBA::String_var rhost (tc->remote_host ());
   CORBA::String_var lhost (tc->local_host ());
   ACE_DEBUG ((LM_DEBUG,
-              ACE_TEXT ("(%P|%t) server - [%s:%d] -> [%s:%d]\n"),
+              ACE_TEXT ("(%P|%t) server - [%C:%d] -> [%C:%d]\n"),
               rhost.in (), tc->remote_port (),
               lhost.in (), tc->local_port ()));
 

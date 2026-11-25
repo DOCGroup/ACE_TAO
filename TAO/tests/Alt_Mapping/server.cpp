@@ -104,7 +104,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       if (TAO_debug_level > 0)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%P|%t) The IOR is <%s>\n",
+                      "(%P|%t) The IOR is <%C>\n",
                       str.in ()));
         }
 

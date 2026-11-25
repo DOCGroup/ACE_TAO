@@ -65,7 +65,7 @@ MessageImpl::print ()
   CORBA::String_var const user_value (user ());
   CORBA::String_var const subject_value (subject ());
   CORBA::String_var const text_value (text ());
-  ACE_DEBUG ((LM_DEBUG, "User: %s\n", user_value.in ()));
-  ACE_DEBUG ((LM_DEBUG, "Subject: %s\n", subject_value.in ()));
-  ACE_DEBUG ((LM_DEBUG, "Text: %s\n", text_value.in ()));
+  ACE_DEBUG ((LM_DEBUG, "User: %C\n", user_value.in ()));
+  ACE_DEBUG ((LM_DEBUG, "Subject: %C\n", subject_value.in ()));
+  ACE_DEBUG ((LM_DEBUG, "Text: %C\n", text_value.in ()));
 }
