@@ -146,8 +146,7 @@ ACE_Asynch_Operation::get_proactor (ACE_Proactor *user_proactor,
 // ************************************************************
 
 ACE_Asynch_Read_Stream::ACE_Asynch_Read_Stream ()
-{
-}
+= default;
 
 ACE_Asynch_Read_Stream::~ACE_Asynch_Read_Stream ()
 {
@@ -265,8 +264,7 @@ ACE_Asynch_Read_Stream::Result::implementation () const
 // ***************************************************
 
 ACE_Asynch_Write_Stream::ACE_Asynch_Write_Stream ()
-{
-}
+= default;
 
 ACE_Asynch_Write_Stream::~ACE_Asynch_Write_Stream ()
 {
@@ -384,8 +382,7 @@ ACE_Asynch_Write_Stream::Result::implementation () const
 // ************************************************************
 
 ACE_Asynch_Read_File::ACE_Asynch_Read_File ()
-{
-}
+= default;
 
 ACE_Asynch_Read_File::~ACE_Asynch_Read_File ()
 {
@@ -493,8 +490,7 @@ ACE_Asynch_Read_File::Result::implementation () const
 // ************************************************************
 
 ACE_Asynch_Write_File::ACE_Asynch_Write_File ()
-{
-}
+= default;
 
 ACE_Asynch_Write_File::~ACE_Asynch_Write_File ()
 {
@@ -602,8 +598,7 @@ ACE_Asynch_Write_File::Result::implementation () const
 // *********************************************************************
 
 ACE_Asynch_Accept::ACE_Asynch_Accept ()
-{
-}
+= default;
 
 ACE_Asynch_Accept::~ACE_Asynch_Accept ()
 {
@@ -710,8 +705,7 @@ ACE_Asynch_Accept::Result::implementation () const
 // *********************************************************************
 
 ACE_Asynch_Connect::ACE_Asynch_Connect ()
-{
-}
+= default;
 
 ACE_Asynch_Connect::~ACE_Asynch_Connect ()
 {
@@ -800,8 +794,7 @@ ACE_Asynch_Connect::Result::implementation () const
 // ************************************************************
 
 ACE_Asynch_Transmit_File::ACE_Asynch_Transmit_File ()
-{
-}
+= default;
 
 ACE_Asynch_Transmit_File::~ACE_Asynch_Transmit_File ()
 {
@@ -1184,8 +1177,7 @@ ACE_Service_Handler::open (ACE_HANDLE,
 // ************************************************************
 
 ACE_Asynch_Read_Dgram::ACE_Asynch_Read_Dgram ()
-{
-}
+= default;
 
 ACE_Asynch_Read_Dgram::~ACE_Asynch_Read_Dgram ()
 {
@@ -1294,8 +1286,7 @@ ACE_Asynch_Read_Dgram::Result::implementation () const
 // ************************************************************
 
 ACE_Asynch_Write_Dgram::ACE_Asynch_Write_Dgram ()
-{
-}
+= default;
 
 ACE_Asynch_Write_Dgram::~ACE_Asynch_Write_Dgram ()
 {

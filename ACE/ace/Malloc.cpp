@@ -121,8 +121,7 @@ ACE_Control_Block::ACE_Name_Node::name () const
 }
 
 ACE_Control_Block::ACE_Malloc_Header::ACE_Malloc_Header ()
-{
-}
+= default;
 
 void
 ACE_Control_Block::ACE_Name_Node::dump () const

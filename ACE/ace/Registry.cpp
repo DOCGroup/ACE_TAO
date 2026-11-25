@@ -792,8 +792,7 @@ ACE_Registry::Binding_Iterator::Iteration_State::iterator (Binding_Iterator *ite
 }
 
 ACE_Registry::Binding_Iterator::Iteration_State::Iteration_State ()
-{
-}
+= default;
 
 ACE_Registry::Binding_Iterator::Iteration_State::~Iteration_State () = default;
 

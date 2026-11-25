@@ -295,8 +295,7 @@ ACE_Flow_Spec::priority (int p)
 }
 
 ACE_QoS::ACE_QoS ()
-{
-}
+= default;
 
 ACE_Flow_Spec*
 ACE_QoS::sending_flowspec () const
