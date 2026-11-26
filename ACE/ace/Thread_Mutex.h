@@ -66,8 +66,9 @@ public:
 
   /**
    * Block the thread until we acquire the mutex or until @a tv times
-   * out, in which case -1 is returned with @c errno == @c ETIME.  Note
-   * that @a tv is assumed to be in "absolute" rather than "relative"
+   * out, in which case -1 is returned with @c errno == @c ETIME.
+   *
+   * @note @a tv is assumed to be in "absolute" rather than "relative"
    * time.  The value of @a tv is updated upon return to show the
    * actual (absolute) acquisition time.
    */
@@ -76,8 +77,9 @@ public:
   /**
    * If @a tv == 0 the call acquire() directly.  Otherwise, Block the
    * thread until we acquire the mutex or until @a tv times out, in
-   * which case -1 is returned with @c errno == @c ETIME.  Note that
-   * @a tv is assumed to be in "absolute" rather than "relative" time.
+   * which case -1 is returned with @c errno == @c ETIME.
+   *
+   * @note @a tv is assumed to be in "absolute" rather than "relative" time.
    * The value of @a tv is updated upon return to show the actual
    * (absolute) acquisition time.
    */
