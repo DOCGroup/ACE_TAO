@@ -1,7 +1,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_FilterAdmin::match (const TAO_Notify_Event* event)
+TAO_Notify_FilterAdmin::match (TAO_Notify_Event const* event)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());

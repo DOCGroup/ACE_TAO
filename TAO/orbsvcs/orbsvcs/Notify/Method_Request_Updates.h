@@ -24,7 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 using TAO_Notify_Method_Request_Updates_Base =
   TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq,
                                       TAO_Notify_Proxy::Ptr,
-                                      const TAO_Notify_EventTypeSeq&,
+                                      TAO_Notify_EventTypeSeq const&,
                                       TAO_Notify_Proxy *>;
 
 /**
@@ -37,7 +37,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates
   , public TAO_Notify_Method_Request_Queueable
 {
 public:
-  TAO_Notify_Method_Request_Updates (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy);
+  TAO_Notify_Method_Request_Updates (TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed, TAO_Notify_Proxy* proxy);
 
   ~TAO_Notify_Method_Request_Updates () override = default;
 
@@ -48,9 +48,9 @@ public:
 /*****************************************************************************/
 
 using TAO_Notify_Method_Request_Updates_No_Copy_Base =
-  TAO_Notify_Method_Request_Updates_T<const TAO_Notify_EventTypeSeq&,
+  TAO_Notify_Method_Request_Updates_T<TAO_Notify_EventTypeSeq const&,
                                       TAO_Notify_Proxy *,
-                                      const TAO_Notify_EventTypeSeq&,
+                                      TAO_Notify_EventTypeSeq const&,
                                       TAO_Notify_Proxy *>;
 
 /**
@@ -63,7 +63,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Updates_No_Copy
   , public TAO_Notify_Method_Request
 {
 public:
-  TAO_Notify_Method_Request_Updates_No_Copy (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed, TAO_Notify_Proxy* proxy);
+  TAO_Notify_Method_Request_Updates_No_Copy (TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed, TAO_Notify_Proxy* proxy);
 
   ~TAO_Notify_Method_Request_Updates_No_Copy () override = default;
 

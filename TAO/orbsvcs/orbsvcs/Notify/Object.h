@@ -131,7 +131,7 @@ protected:
 
   /// Notification that can be overridden by subclasses to be informed that
   /// @c qos_properties_ have been modified.
-  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+  virtual void qos_changed (TAO_Notify_QoSProperties const& qos_properties);
 
   /// Called by derived types to save their attributes. Each
   /// derived type should call its superclass version before

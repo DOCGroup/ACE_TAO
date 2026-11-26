@@ -54,7 +54,7 @@ TAO_Notify_ProxySupplier::connect (TAO_Notify_Consumer *consumer)
   TAO_Notify_Consumer::Ptr auto_consumer (consumer);
 
   TAO_Notify_Atomic_Property_Long& consumer_count = this->admin_properties().consumers ();
-  const TAO_Notify_Property_Long& max_consumers = this->admin_properties().max_consumers ();
+  TAO_Notify_Property_Long const& max_consumers = this->admin_properties().max_consumers ();
 
   if (max_consumers != 0 && consumer_count >= max_consumers.value ())
   {

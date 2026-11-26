@@ -23,13 +23,13 @@ TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (CosNotification::EventTypeSeq 
 }
 
 TAO_Notify_EventTypeSeq &
-TAO_Notify_EventTypeSeq::operator = (const TAO_Notify_EventTypeSeq & rhs)
+TAO_Notify_EventTypeSeq::operator = (TAO_Notify_EventTypeSeq const & rhs)
 {
   this->event_types_ = rhs.event_types_;
   return *this;
 }
 
-TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs)
+TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (TAO_Notify_EventTypeSeq const & rhs)
   : TAO_Notify_Object ()
   , TAO_Notify::Topology_Savable ()
   , TAO_Notify::Topology_Object ()
@@ -124,7 +124,7 @@ void
 TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& event_type_seq) const
 {
   // If the special exists in us, don't include it.
-  const TAO_Notify_EventType& special = TAO_Notify_EventType::special ();
+  TAO_Notify_EventType const& special = TAO_Notify_EventType::special ();
 
   if (this->contains (special))
     {
@@ -170,7 +170,7 @@ TAO_Notify_EventTypeSeq::remove_seq (CosNotification::EventTypeSeq const& event_
 }
 
 void
-TAO_Notify_EventTypeSeq::insert_seq (const TAO_Notify_EventTypeSeq& event_type_seq)
+TAO_Notify_EventTypeSeq::insert_seq (TAO_Notify_EventTypeSeq const& event_type_seq)
 {
   for (TAO_Notify_EventType const & event_type : event_type_seq)
   {
@@ -179,7 +179,7 @@ TAO_Notify_EventTypeSeq::insert_seq (const TAO_Notify_EventTypeSeq& event_type_s
 }
 
 void
-TAO_Notify_EventTypeSeq::remove_seq (const TAO_Notify_EventTypeSeq& event_type_seq)
+TAO_Notify_EventTypeSeq::remove_seq (TAO_Notify_EventTypeSeq const& event_type_seq)
 {
   if (std::addressof (event_type_seq) == this)
     {
@@ -196,7 +196,7 @@ TAO_Notify_EventTypeSeq::remove_seq (const TAO_Notify_EventTypeSeq& event_type_s
 void
 TAO_Notify_EventTypeSeq::add_and_remove (TAO_Notify_EventTypeSeq& seq_added, TAO_Notify_EventTypeSeq& seq_remove)
 {
-  const TAO_Notify_EventType& special = TAO_Notify_EventType::special ();
+  TAO_Notify_EventType const& special = TAO_Notify_EventType::special ();
 
   if (this->contains (special)) // If this object has the special type.
     {
@@ -297,7 +297,7 @@ TAO_Notify_EventTypeSeq::add_and_remove (TAO_Notify_EventTypeSeq& seq_added, TAO
 }
 
 void
-TAO_Notify_EventTypeSeq::intersection (const TAO_Notify_EventTypeSeq& rhs, const TAO_Notify_EventTypeSeq& lhs)
+TAO_Notify_EventTypeSeq::intersection (TAO_Notify_EventTypeSeq const& rhs, TAO_Notify_EventTypeSeq const& lhs)
 {
   // linear search.
   for (TAO_Notify_EventType const & rhs_event_type : rhs)

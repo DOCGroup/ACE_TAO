@@ -32,7 +32,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Event
 {
 public:
   /// Construct from event
-  explicit TAO_Notify_Method_Request_Event (const TAO_Notify_Event *);
+  explicit TAO_Notify_Method_Request_Event (TAO_Notify_Event const *);
 
   /// Construct from a delivery request
   explicit TAO_Notify_Method_Request_Event (
@@ -40,20 +40,20 @@ public:
 
   /// Construct from another Method Request
   /// Event is passed separately because it may be a copy of the one in request.
-  TAO_Notify_Method_Request_Event (const TAO_Notify_Method_Request_Event & rhs,
-    const TAO_Notify_Event * event);
+  TAO_Notify_Method_Request_Event (TAO_Notify_Method_Request_Event const & rhs,
+    TAO_Notify_Event const * event);
 
 public:
   virtual ~TAO_Notify_Method_Request_Event ();
 
-  const TAO_Notify_Event * event() const;
+  TAO_Notify_Event const * event() const;
   void complete ();
   unsigned long sequence ();
   bool should_retry ();
 
 protected:
   /// The Event
-  const TAO_Notify_Event * event_;
+  TAO_Notify_Event const * event_;
 
   /// Pointer to the routing slip's delivery request (if any)
   TAO_Notify::Delivery_Request_Ptr delivery_request_;
@@ -74,7 +74,7 @@ public:
   /// Not the event_var is passed as a separate parameter to avoid throwing
   /// exceptions from the constructor if it's necessary to copy the event.
   TAO_Notify_Method_Request_Event_Queueable (
-    const TAO_Notify_Method_Request_Event & prev_request,
+    TAO_Notify_Method_Request_Event const & prev_request,
     TAO_Notify_Event::Ptr const & event);
 
   explicit TAO_Notify_Method_Request_Event_Queueable (

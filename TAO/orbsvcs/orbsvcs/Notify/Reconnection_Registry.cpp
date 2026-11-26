@@ -133,7 +133,7 @@ namespace TAO_Notify
   Topology_Object*
   Reconnection_Registry::load_child (ACE_CString const & type,
         CORBA::Long,
-        const NVPList& attrs)
+        NVPList const& attrs)
   {
     if (type == REGISTRY_CALLBACK_TYPE)
     {

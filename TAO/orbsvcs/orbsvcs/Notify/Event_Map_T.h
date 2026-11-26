@@ -55,16 +55,16 @@ public:
   /// Associate PROXY and event_type.
   /// Returns 1 if @a event_type is seen for the first time; otherwise returns 0.
   /// Returns -1 on error.
-  int insert (PROXY* proxy, const TAO_Notify_EventType& event_type);
+  int insert (PROXY* proxy, TAO_Notify_EventType const& event_type);
 
   /// Remove association of PROXY and event_type.
   /// Returns 1 if @a event_type is seen for the last time; otherwise returns 0.
   /// Returns -1 on error.
-  int remove (PROXY* proxy, const TAO_Notify_EventType& event_type);
+  int remove (PROXY* proxy, TAO_Notify_EventType const& event_type);
 
   /// Find the collection mapped to @a event_type.
   /// The usage_count on the entry returned is incremented.
-  ENTRY* find (const TAO_Notify_EventType& event_type);
+  ENTRY* find (TAO_Notify_EventType const& event_type);
 
   /// Find the default broadcast list.
   typename ENTRY::COLLECTION* broadcast_collection ();
@@ -76,7 +76,7 @@ public:
   void release (ENTRY* entry);
 
   /// Access all the event types available
-  const TAO_Notify_EventTypeSeq& event_types ();
+  TAO_Notify_EventTypeSeq const& event_types ();
 
   /// Access number of proxys connected in all.
   int proxy_count ();

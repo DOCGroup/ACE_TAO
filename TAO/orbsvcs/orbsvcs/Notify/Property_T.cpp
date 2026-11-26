@@ -29,7 +29,7 @@ TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (char const *name, co
 
 template <class TYPE>
 TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (
-  const TAO_Notify_PropertyBase_T &rhs)
+  TAO_Notify_PropertyBase_T const &rhs)
   : name_ (rhs.name_),
     value_ (rhs.value_),
     valid_ (rhs.valid_)
@@ -60,7 +60,7 @@ TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (char const *name, const TYPE
 }
 
 template <class TYPE> int
-TAO_Notify_Property_T<TYPE>::set (const TAO_Notify_PropertySeq& property_seq)
+TAO_Notify_Property_T<TYPE>::set (TAO_Notify_PropertySeq const& property_seq)
 {
   CosNotification::PropertyValue value;
 
@@ -102,7 +102,7 @@ TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (char const *name
 
 template <class TYPE> int
 TAO_Notify_StructProperty_T<TYPE>::set (
-  const TAO_Notify_PropertySeq& property_seq)
+  TAO_Notify_PropertySeq const& property_seq)
 {
   CosNotification::PropertyValue value;
 

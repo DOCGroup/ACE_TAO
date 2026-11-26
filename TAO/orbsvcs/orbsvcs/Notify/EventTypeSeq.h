@@ -35,14 +35,14 @@ public:
 
   TAO_Notify_EventTypeSeq ();
   explicit TAO_Notify_EventTypeSeq (CosNotification::EventTypeSeq const& event_type_seq);
-  TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs);
-  TAO_Notify_EventTypeSeq & operator = (const TAO_Notify_EventTypeSeq & rhs);
+  TAO_Notify_EventTypeSeq (TAO_Notify_EventTypeSeq const & rhs);
+  TAO_Notify_EventTypeSeq & operator = (TAO_Notify_EventTypeSeq const & rhs);
 
   /// Preprocess the types added and removed.
   void add_and_remove (TAO_Notify_EventTypeSeq& added, TAO_Notify_EventTypeSeq& removed);
 
   /// Populate this sequence with the intersection of rhs and lhs.
-  void intersection (const TAO_Notify_EventTypeSeq& rhs, const TAO_Notify_EventTypeSeq& lhs);
+  void intersection (TAO_Notify_EventTypeSeq const& rhs, TAO_Notify_EventTypeSeq const& lhs);
 
   /// insert_seq the contents of @a event_type_seq into this object.
   void insert_seq (CosNotification::EventTypeSeq const& event_type_seq);
@@ -51,10 +51,10 @@ public:
   void remove_seq (CosNotification::EventTypeSeq const& event_type_seq);
 
   /// insert_seq the contents of @a event_type_seq into this object.
-  void insert_seq (const TAO_Notify_EventTypeSeq& event_type_seq);
+  void insert_seq (TAO_Notify_EventTypeSeq const& event_type_seq);
 
   /// remove_seq the contents of @a event_type_seq from this object.
-  void remove_seq (const TAO_Notify_EventTypeSeq& event_type_seq);
+  void remove_seq (TAO_Notify_EventTypeSeq const& event_type_seq);
 
   /// Populate @a event_type with the contents of this object.
   void populate (CosNotification::EventTypeSeq& event_type) const;

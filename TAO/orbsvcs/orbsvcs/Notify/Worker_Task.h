@@ -46,7 +46,7 @@ public:
   TAO_Notify_Worker_Task &operator= (TAO_Notify_Worker_Task &&) = delete;
 
   /// Update QoS Properties.
-  virtual void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);
+  virtual void update_qos_properties (TAO_Notify_QoSProperties const& qos_properties);
 
   /// Public method to be implemented by subclasses.
   /// Exec the request.

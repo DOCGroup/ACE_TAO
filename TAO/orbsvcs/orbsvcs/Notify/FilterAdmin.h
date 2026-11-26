@@ -48,7 +48,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   CORBA::Boolean match (TAO_Notify_Event::Ptr const &event);
 
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_Notify_Event* event);
+  CORBA::Boolean match (TAO_Notify_Event const* event);
   /// @}
 
   virtual CosNotifyFilter::FilterID add_filter (CosNotifyFilter::Filter_ptr new_filter);

@@ -49,7 +49,7 @@ public:
   /// Order Policy
   /// Discard Policy
   /// MaxEventsPerConsumer
-  void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties);
+  void update_qos_properties (TAO_Notify_QoSProperties const& qos_properties);
 
   /// Enqueue according the enqueing strategy.
   /// Return -1 on error else the number of items in the queue.
@@ -105,7 +105,7 @@ private:
   CORBA::Long& global_queue_length_;
 
   /// The maximum events that can be queued overall.
-  const TAO_Notify_Property_Long& max_queue_length_;
+  TAO_Notify_Property_Long const& max_queue_length_;
 
   /// Order of events in internal buffers.
   TAO_Notify_Property_Short order_policy_;

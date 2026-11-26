@@ -55,7 +55,7 @@ public:
     size_t const block_number,
     size_t const block_size);
   /// The copy constructor.  Makes a deep copy of the passed in PSB.
-  Persistent_Storage_Block(const Persistent_Storage_Block& psb);
+  Persistent_Storage_Block(Persistent_Storage_Block const& psb);
   Persistent_Storage_Block& operator= (Persistent_Storage_Block const &psb);
   ~Persistent_Storage_Block();
 

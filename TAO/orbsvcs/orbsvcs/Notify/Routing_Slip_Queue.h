@@ -62,7 +62,7 @@ namespace TAO_Notify
     /**
      * \brief Add a routing slip to the tail of the queue and dispatch if necessary.
      */
-    void add (const Routing_Slip_Ptr & routing_slip);
+    void add (Routing_Slip_Ptr const & routing_slip);
     /**
      * \brief A call back to indicate that processing is complete for a previously-queued
      * Routing_Slip.

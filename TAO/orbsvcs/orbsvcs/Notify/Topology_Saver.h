@@ -62,7 +62,7 @@ namespace TAO_Notify
     */
     virtual bool begin_object (CORBA::Long id,
       ACE_CString const &type,
-      const NVPList& attrs,
+      NVPList const& attrs,
       bool changed) = 0;
 
     /** \brief Report deleted children to the saver.

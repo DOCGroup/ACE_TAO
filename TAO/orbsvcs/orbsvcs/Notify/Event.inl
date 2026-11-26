@@ -1,18 +1,18 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const TAO_Notify_Property_Short&
+ACE_INLINE TAO_Notify_Property_Short const&
 TAO_Notify_Event::priority () const
 {
   return this->priority_;
 }
 
-ACE_INLINE const TAO_Notify_Property_Time&
+ACE_INLINE TAO_Notify_Property_Time const&
 TAO_Notify_Event::timeout () const
 {
   return this->timeout_;
 }
 
-ACE_INLINE const TAO_Notify_Property_Boolean&
+ACE_INLINE TAO_Notify_Property_Boolean const&
 TAO_Notify_Event::reliable () const
 {
   return this->reliable_;

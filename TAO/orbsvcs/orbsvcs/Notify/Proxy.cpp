@@ -55,7 +55,7 @@ TAO_Notify_Proxy::subscribed_types (TAO_Notify_EventTypeSeq& subscribed_types)
 }
 
 void
-TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
+TAO_Notify_Proxy::types_changed (TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed)
 {
   // return if the updates for this proxy are turned off or
   // if all the updates in the channel are switched off.
@@ -77,7 +77,7 @@ TAO_Notify_Proxy::types_changed (const TAO_Notify_EventTypeSeq& added, const TAO
 }
 
 CosNotification::EventTypeSeq*
-TAO_Notify_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, const TAO_Notify_EventTypeSeq& types)
+TAO_Notify_Proxy::obtain_types (CosNotifyChannelAdmin::ObtainInfoMode mode, TAO_Notify_EventTypeSeq const& types)
 {
   CosNotification::EventTypeSeq_var event_type_seq;
 

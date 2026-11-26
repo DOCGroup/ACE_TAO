@@ -36,7 +36,7 @@ public:
 
   explicit TAO_Notify_PropertyBase_T (char const *name);
 
-  TAO_Notify_PropertyBase_T (const TAO_Notify_PropertyBase_T &rhs);
+  TAO_Notify_PropertyBase_T (TAO_Notify_PropertyBase_T const &rhs);
 
   ~TAO_Notify_PropertyBase_T () = default;
 
@@ -91,7 +91,7 @@ public:
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
-  int set (const TAO_Notify_PropertySeq& property_seq);
+  int set (TAO_Notify_PropertySeq const& property_seq);
 
   /// Init this Property from the CosNotification::PropertyValue
   /// Returns 0 on success, -1 on error
@@ -114,7 +114,7 @@ public:
 
   /// Init this Property from the sequence.
   /// Returns 0 on success, -1 on error
-  int set (const TAO_Notify_PropertySeq& property_seq);
+  int set (TAO_Notify_PropertySeq const& property_seq);
 
   /// Return the name
   char const *name () const;

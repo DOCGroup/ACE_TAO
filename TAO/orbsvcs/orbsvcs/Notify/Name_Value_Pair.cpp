@@ -38,21 +38,21 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  NVP::NVP(const TAO_Notify_Property_Short& p)
+  NVP::NVP(TAO_Notify_Property_Short const& p)
     : name(p.name())
   {
     std::string const string_value = std::to_string (p.value ());
     value = string_value.c_str ();
   }
 
-  NVP::NVP(const TAO_Notify_Property_Long& p)
+  NVP::NVP(TAO_Notify_Property_Long const& p)
     : name(p.name())
   {
     std::string const string_value = std::to_string (static_cast<long> (p.value ()));
     value = string_value.c_str ();
   }
 
-  NVP::NVP(const TAO_Notify_Property_Time& p)
+  NVP::NVP(TAO_Notify_Property_Time const& p)
     : name(p.name())
   {
     ACE_TCHAR buf[128];
@@ -61,7 +61,7 @@ namespace TAO_Notify
     value = ACE_TEXT_ALWAYS_CHAR (buf);
   }
 
-  NVP::NVP(const TAO_Notify_Property_Boolean& p)
+  NVP::NVP(TAO_Notify_Property_Boolean const& p)
     : name(p.name())
   {
     value = p.value() ? "true" : "false";

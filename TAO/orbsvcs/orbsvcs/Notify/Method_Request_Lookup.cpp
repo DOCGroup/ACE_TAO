@@ -22,7 +22,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
-      const TAO_Notify_Event * event,
+      TAO_Notify_Event const * event,
       TAO_Notify_ProxyConsumer * proxy)
   : TAO_Notify_Method_Request_Event (event)
   , proxy_consumer_ (proxy)
@@ -193,7 +193,7 @@ TAO_Notify_Method_Request_Lookup_Queueable::execute ()
 /******************************************************************************************************/
 
 TAO_Notify_Method_Request_Lookup_No_Copy::TAO_Notify_Method_Request_Lookup_No_Copy (
-        const TAO_Notify_Event* event,
+        TAO_Notify_Event const* event,
         TAO_Notify_ProxyConsumer* proxy_consumer)
   : TAO_Notify_Method_Request_Lookup (event, proxy_consumer)
 {

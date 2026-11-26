@@ -23,13 +23,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxyConsumer>
 {
 public:
-  TAO_Notify_ProxyConsumer_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
+  TAO_Notify_ProxyConsumer_Update_Worker (TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed);
 
 protected:
   void work (TAO_Notify_ProxyConsumer* proxy) override;
 
-  const TAO_Notify_EventTypeSeq& added_;
-  const TAO_Notify_EventTypeSeq& removed_;
+  TAO_Notify_EventTypeSeq const& added_;
+  TAO_Notify_EventTypeSeq const& removed_;
 };
 
 /********************************************************************************/
@@ -42,13 +42,13 @@ protected:
 class TAO_Notify_Serv_Export TAO_Notify_ProxySupplier_Update_Worker : public TAO_ESF_Worker<TAO_Notify_ProxySupplier>
 {
 public:
-  TAO_Notify_ProxySupplier_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
+  TAO_Notify_ProxySupplier_Update_Worker (TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed);
 
 protected:
   void work (TAO_Notify_ProxySupplier* proxy) override;
 
-  const TAO_Notify_EventTypeSeq& added_;
-  const TAO_Notify_EventTypeSeq& removed_;
+  TAO_Notify_EventTypeSeq const& added_;
+  TAO_Notify_EventTypeSeq const& removed_;
 };
 
 /********************************************************************************/
@@ -129,7 +129,7 @@ TAO_Notify_Event_Manager::disconnect (TAO_Notify_ProxyConsumer* proxy_consumer)
 }
 
 void
-TAO_Notify_Event_Manager::offer_change (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
+TAO_Notify_Event_Manager::offer_change (TAO_Notify_ProxyConsumer* proxy_consumer, TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed)
 {
   TAO_Notify_EventTypeSeq new_added, last_removed;
 
@@ -148,7 +148,7 @@ TAO_Notify_Event_Manager::offer_change (TAO_Notify_ProxyConsumer* proxy_consumer
 }
 
 void
-TAO_Notify_Event_Manager::subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
+TAO_Notify_Event_Manager::subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed)
 {
   TAO_Notify_EventTypeSeq new_added, last_removed;
 
@@ -166,7 +166,7 @@ TAO_Notify_Event_Manager::subscription_change (TAO_Notify_ProxySupplier* proxy_s
 }
 
 void
-TAO_Notify_Event_Manager::subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq)
+TAO_Notify_Event_Manager::subscribe (TAO_Notify_ProxySupplier* proxy_supplier, TAO_Notify_EventTypeSeq const& seq, TAO_Notify_EventTypeSeq& new_seq)
 {
   for (TAO_Notify_EventType const & event_type : seq)
     {
@@ -180,7 +180,7 @@ TAO_Notify_Event_Manager::subscribe (TAO_Notify_ProxySupplier* proxy_supplier, c
 }
 
 void
-TAO_Notify_Event_Manager::un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq)
+TAO_Notify_Event_Manager::un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier, TAO_Notify_EventTypeSeq const& seq, TAO_Notify_EventTypeSeq& last_seq)
 {
   for (TAO_Notify_EventType const & event_type : seq)
     {
@@ -194,7 +194,7 @@ TAO_Notify_Event_Manager::un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier
 }
 
 void
-TAO_Notify_Event_Manager::publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq)
+TAO_Notify_Event_Manager::publish (TAO_Notify_ProxyConsumer* proxy_consumer, TAO_Notify_EventTypeSeq const& seq, TAO_Notify_EventTypeSeq& new_seq)
 {
   for (TAO_Notify_EventType const & event_type : seq)
     {
@@ -208,7 +208,7 @@ TAO_Notify_Event_Manager::publish (TAO_Notify_ProxyConsumer* proxy_consumer, con
 }
 
 void
-TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq)
+TAO_Notify_Event_Manager::un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, TAO_Notify_EventTypeSeq const& seq, TAO_Notify_EventTypeSeq& last_seq)
 {
   for (TAO_Notify_EventType const & event_type : seq)
     {
@@ -235,13 +235,13 @@ TAO_Notify_Event_Manager::supplier_map ()
   return *this->supplier_map_;
 }
 
-const TAO_Notify_EventTypeSeq&
+TAO_Notify_EventTypeSeq const&
 TAO_Notify_Event_Manager::offered_types () const
 {
   return this->supplier_map_->event_types ();
 }
 
-const TAO_Notify_EventTypeSeq&
+TAO_Notify_EventTypeSeq const&
 TAO_Notify_Event_Manager::subscription_types () const
 {
   return this->consumer_map_->event_types ();
@@ -249,7 +249,7 @@ TAO_Notify_Event_Manager::subscription_types () const
 
 /********************************************************************************/
 
-TAO_Notify_ProxyConsumer_Update_Worker::TAO_Notify_ProxyConsumer_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
+TAO_Notify_ProxyConsumer_Update_Worker::TAO_Notify_ProxyConsumer_Update_Worker (TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed)
   :added_ (added), removed_ (removed)
 {
 }
@@ -262,7 +262,7 @@ TAO_Notify_ProxyConsumer_Update_Worker::work (TAO_Notify_ProxyConsumer* proxy)
 
 /*****************************************************************************/
 
-TAO_Notify_ProxySupplier_Update_Worker::TAO_Notify_ProxySupplier_Update_Worker (const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed)
+TAO_Notify_ProxySupplier_Update_Worker::TAO_Notify_ProxySupplier_Update_Worker (TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed)
   :added_ (added), removed_ (removed)
 {
 }

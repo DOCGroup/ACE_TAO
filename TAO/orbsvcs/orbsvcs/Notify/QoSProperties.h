@@ -48,20 +48,20 @@ public:
 
   /// @name QoS property accessors
   /// @{
-  const TAO_Notify_Property_ThreadPool& thread_pool () const;
-  const TAO_Notify_Property_ThreadPoolLanes& thread_pool_lane () const;
+  TAO_Notify_Property_ThreadPool const& thread_pool () const;
+  TAO_Notify_Property_ThreadPoolLanes const& thread_pool_lane () const;
 
-  const TAO_Notify_Property_Short& event_reliability () const;
-  const TAO_Notify_Property_Short& connection_reliability () const;
-  const TAO_Notify_Property_Short& priority () const;
-  const TAO_Notify_Property_Time& timeout () const;
-  const TAO_Notify_Property_Boolean& stop_time_supported () const;
-  const TAO_Notify_Property_Long& maximum_batch_size () const;
-  const TAO_Notify_Property_Time& pacing_interval () const;
-  const TAO_Notify_Property_Long& max_events_per_consumer () const;
-  const TAO_Notify_Property_Short& discard_policy() const;
-  const TAO_Notify_Property_Short& order_policy() const;
-  const TAO_Notify_Property_Time& blocking_policy() const;
+  TAO_Notify_Property_Short const& event_reliability () const;
+  TAO_Notify_Property_Short const& connection_reliability () const;
+  TAO_Notify_Property_Short const& priority () const;
+  TAO_Notify_Property_Time const& timeout () const;
+  TAO_Notify_Property_Boolean const& stop_time_supported () const;
+  TAO_Notify_Property_Long const& maximum_batch_size () const;
+  TAO_Notify_Property_Time const& pacing_interval () const;
+  TAO_Notify_Property_Long const& max_events_per_consumer () const;
+  TAO_Notify_Property_Short const& discard_policy() const;
+  TAO_Notify_Property_Short const& order_policy() const;
+  TAO_Notify_Property_Time const& blocking_policy() const;
 
   /// The non-const accessors are used during topology load.
   TAO_Notify_Property_Short& event_reliability ();

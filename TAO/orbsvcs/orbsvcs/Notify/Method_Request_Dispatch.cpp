@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Constuct from event
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
-      const TAO_Notify_Event * event,
+      TAO_Notify_Event const * event,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Event (event)
@@ -44,8 +44,8 @@ TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
 // event is passed separately because we may be using a copy
 // of the one in the previous method request
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
-      const TAO_Notify_Method_Request_Event & request,
-      const TAO_Notify_Event * event,
+      TAO_Notify_Method_Request_Event const & request,
+      TAO_Notify_Event const * event,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Event (request, event)
@@ -190,7 +190,7 @@ TAO_Notify_Method_Request_Dispatch::unmarshal (
 // event is passed separately because we may be using a copy
 // of the one in the previous method request
 TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch_Queueable (
-      const TAO_Notify_Method_Request_Event & request,
+      TAO_Notify_Method_Request_Event const & request,
       TAO_Notify_Event::Ptr & event,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
@@ -225,7 +225,7 @@ TAO_Notify_Method_Request_Dispatch_Queueable::execute ()
 
   /// Constuct construct from another method request
 TAO_Notify_Method_Request_Dispatch_No_Copy::TAO_Notify_Method_Request_Dispatch_No_Copy (
-      const TAO_Notify_Method_Request_Event & request,
+      TAO_Notify_Method_Request_Event const & request,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Dispatch (request, request.event (), proxy_supplier, filtering)

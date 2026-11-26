@@ -326,7 +326,7 @@ TAO_Notify_Object::find_qos_property_value (
 }
 
 void
-TAO_Notify_Object::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/)
+TAO_Notify_Object::qos_changed (TAO_Notify_QoSProperties const& /*qos_properties*/)
 {
   // NOP.
 }

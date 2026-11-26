@@ -35,13 +35,13 @@ namespace TAO_Notify
     /// Construct an undefined name/value (to allow use in collections)
     NVP() = default;
     /// Construct from a property containing a short value.
-    explicit NVP(const TAO_Notify_Property_Short& p);
+    explicit NVP(TAO_Notify_Property_Short const& p);
     /// Construct from a property containing a long value.
-    explicit NVP(const TAO_Notify_Property_Long& p);
+    explicit NVP(TAO_Notify_Property_Long const& p);
     /// Construct from a property containing a time value
-    explicit NVP(const TAO_Notify_Property_Time& p);
+    explicit NVP(TAO_Notify_Property_Time const& p);
     /// Construct from a property containing a boolean value
-    explicit NVP(const TAO_Notify_Property_Boolean& p);
+    explicit NVP(TAO_Notify_Property_Boolean const& p);
 
     /// Construct from name and long value.
     NVP(char const *n, CORBA::Long v);

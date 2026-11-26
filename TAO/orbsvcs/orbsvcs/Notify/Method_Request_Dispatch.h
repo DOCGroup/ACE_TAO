@@ -40,7 +40,7 @@ public:
 
   /// Constuct from event
   TAO_Notify_Method_Request_Dispatch (
-    const TAO_Notify_Event * event,
+    TAO_Notify_Event const * event,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
@@ -54,8 +54,8 @@ public:
   /// event is passed separately because we may be using a copy
   /// of the one in the previous method request
   TAO_Notify_Method_Request_Dispatch (
-    const TAO_Notify_Method_Request_Event & request,
-    const TAO_Notify_Event * event,
+    TAO_Notify_Method_Request_Event const & request,
+    TAO_Notify_Event const * event,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
@@ -95,7 +95,7 @@ public:
   /// event is passed separately because we may be using a copy
   /// of the one in the previous method request
   TAO_Notify_Method_Request_Dispatch_Queueable (
-    const TAO_Notify_Method_Request_Event & request,
+    TAO_Notify_Method_Request_Event const & request,
     TAO_Notify_Event::Ptr & event,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
@@ -131,7 +131,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Dispatch_No_Copy
 public:
   /// Constuct construct from another method request
   TAO_Notify_Method_Request_Dispatch_No_Copy (
-    const TAO_Notify_Method_Request_Event & request,
+    TAO_Notify_Method_Request_Event const & request,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 

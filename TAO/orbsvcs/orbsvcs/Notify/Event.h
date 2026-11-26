@@ -46,9 +46,9 @@ public:
 
   TAO_Notify_Event ();
 
-  TAO_Notify_Event (const TAO_Notify_Event &) = delete;
+  TAO_Notify_Event (TAO_Notify_Event const &) = delete;
   TAO_Notify_Event (TAO_Notify_Event &&) = delete;
-  TAO_Notify_Event &operator= (const TAO_Notify_Event &) = delete;
+  TAO_Notify_Event &operator= (TAO_Notify_Event const &) = delete;
   TAO_Notify_Event &operator= (TAO_Notify_Event &&) = delete;
 
   ~TAO_Notify_Event () override;
@@ -60,7 +60,7 @@ public:
   static void translate (CosNotification::StructuredEvent const& notification, CORBA::Any& any);
 
   /// Get the event type.
-  virtual const TAO_Notify_EventType& type () const = 0;
+  virtual TAO_Notify_EventType const& type () const = 0;
 
   /// Returns true if the filter matches.
   virtual CORBA::Boolean do_match (CosNotifyFilter::Filter_ptr filter) const = 0;
@@ -97,13 +97,13 @@ public:
   /// @name Accessors
   /// @{
   /// Priority
-  const TAO_Notify_Property_Short& priority () const;
+  TAO_Notify_Property_Short const& priority () const;
 
   /// Timeout
-  const TAO_Notify_Property_Time& timeout () const;
+  TAO_Notify_Property_Time const& timeout () const;
 
   /// Reliable
-  const TAO_Notify_Property_Boolean& reliable() const;
+  TAO_Notify_Property_Boolean const& reliable() const;
 
   /// Event creation time
   ACE_Time_Value const& creation_time () const;

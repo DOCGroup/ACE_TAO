@@ -43,7 +43,7 @@ public:
   /// Normal constructor
   /// \param routing_slip the routing slip that owns this Delivery Request.
   /// \param request_id an id that identifies this Delivery Request to the Routing Slip.
-  Delivery_Request (const Routing_Slip_Ptr & routing_slip, size_t request_id);
+  Delivery_Request (Routing_Slip_Ptr const & routing_slip, size_t request_id);
 
   /// \brief A static "factory" method for use during restart.
   ///
@@ -53,7 +53,7 @@ public:
   /// \param cdr A CDR stream from which the peristent information for this Delivery Requect can be retrieved.
   /// \return a pointer to the newly-allocated Delivery Request
   static Delivery_Request_Ptr create (
-    const Routing_Slip_Ptr & routing_slip,
+    Routing_Slip_Ptr const & routing_slip,
     size_t request_id,
     TAO_Notify_EventChannelFactory & ecf,
     TAO_InputCDR & cdr);
@@ -75,7 +75,7 @@ public:
   TAO_Notify_Event::Ptr const & event () const;
 
   /// \brief An accessor method for the routing slip that owns this request.
-  const Routing_Slip_Ptr & routing_slip ()const;
+  Routing_Slip_Ptr const & routing_slip ()const;
 
   /// \brief Capture Delivery Type for the Delivery Method
   ///

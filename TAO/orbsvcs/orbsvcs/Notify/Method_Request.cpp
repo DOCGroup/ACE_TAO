@@ -15,13 +15,13 @@ TAO_Notify_Method_Request_Queueable::copy ()
 
 TAO_Notify_Method_Request_Queueable::TAO_Notify_Method_Request_Queueable () = default;
 
-TAO_Notify_Method_Request_Queueable::TAO_Notify_Method_Request_Queueable(const TAO_Notify_Event * event)
+TAO_Notify_Method_Request_Queueable::TAO_Notify_Method_Request_Queueable(TAO_Notify_Event const * event)
 {
   this->init (event);
 }
 
 void
-TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event* event)
+TAO_Notify_Method_Request_Queueable::init (TAO_Notify_Event const* event)
 {
   ACE_ASSERT( event != nullptr );
   // Set the parameters that affect queuing in the message queue.
@@ -39,7 +39,7 @@ TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event* event)
   // timeout for the event is relative to the time it was received.
   // So, we do a little conversion and set it on the message block (us)
 
-  const TAO_Notify_Property_Time& timeout = event->timeout ();
+  TAO_Notify_Property_Time const& timeout = event->timeout ();
 
   if (timeout.is_valid () && timeout != 0)
   {

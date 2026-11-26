@@ -65,13 +65,13 @@ public:
 
   /// Check if this event passes the admin and proxy filters.
   CORBA::Boolean check_filters (
-      const TAO_Notify_Event* event,
+      TAO_Notify_Event const* event,
       TAO_Notify_FilterAdmin& parent_filter_admin,
       CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator);
 
   /// Inform this proxy that the following types are being advertised.
-  void types_changed (const TAO_Notify_EventTypeSeq& added,
-                      const TAO_Notify_EventTypeSeq& removed);
+  void types_changed (TAO_Notify_EventTypeSeq const& added,
+                      TAO_Notify_EventTypeSeq const& removed);
 
   /// Have updates been turned off.
   CORBA::Boolean updates_off ();
@@ -85,7 +85,7 @@ public:
   /// Implement the Obtain Types.
   virtual CosNotification::EventTypeSeq* obtain_types (
       CosNotifyChannelAdmin::ObtainInfoMode mode,
-      const TAO_Notify_EventTypeSeq& types);
+      TAO_Notify_EventTypeSeq const& types);
 
   /// Notification of subscriptions/offers set at the admin.
   virtual void admin_types_changed (CosNotification::EventTypeSeq const & added,

@@ -36,7 +36,7 @@ TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
 
 void
 TAO_Notify_Buffering_Strategy::update_qos_properties
-  (const TAO_Notify_QoSProperties& qos_properties)
+  (TAO_Notify_QoSProperties const& qos_properties)
 {
   this->order_policy_.set (qos_properties);
   this->discard_policy_.set (qos_properties);

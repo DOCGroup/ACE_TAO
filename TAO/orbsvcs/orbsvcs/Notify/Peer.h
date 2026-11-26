@@ -54,11 +54,11 @@ public:
   virtual TAO_Notify_Proxy* proxy () = 0;
 
   // Dispatch updates
-  virtual void dispatch_updates (const TAO_Notify_EventTypeSeq & added,
-                                 const TAO_Notify_EventTypeSeq & removed);
+  virtual void dispatch_updates (TAO_Notify_EventTypeSeq const & added,
+                                 TAO_Notify_EventTypeSeq const & removed);
 
   /// QoS changed notification from the Peer.
-  virtual void qos_changed (const TAO_Notify_QoSProperties& qos_properties);
+  virtual void qos_changed (TAO_Notify_QoSProperties const& qos_properties);
 
   /// Handle dispatch exceptions.
   void handle_dispatch_exception ();

@@ -66,7 +66,7 @@ public:
   void shutdown () override;
 
   /// Update QoS Properties.
-  void update_qos_properties (const TAO_Notify_QoSProperties& qos_properties) override;
+  void update_qos_properties (TAO_Notify_QoSProperties const& qos_properties) override;
 
   /// The object used by clients to register timers.
   TAO_Notify_Timer* timer () override;

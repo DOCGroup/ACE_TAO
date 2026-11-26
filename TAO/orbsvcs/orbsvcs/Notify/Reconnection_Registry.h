@@ -72,7 +72,7 @@ namespace TAO_Notify
 
     Topology_Object* load_child (ACE_CString const & type,
       CORBA::Long id,
-      const NVPList& attrs) override;
+      NVPList const& attrs) override;
 
     void send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
 

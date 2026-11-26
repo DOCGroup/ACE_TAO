@@ -31,9 +31,9 @@ class TAO_Notify_Serv_Export TAO_Notify_POA_Helper
 public:
   TAO_Notify_POA_Helper ();
 
-  TAO_Notify_POA_Helper (const TAO_Notify_POA_Helper &) = delete;
+  TAO_Notify_POA_Helper (TAO_Notify_POA_Helper const &) = delete;
   TAO_Notify_POA_Helper (TAO_Notify_POA_Helper &&) = delete;
-  TAO_Notify_POA_Helper &operator= (const TAO_Notify_POA_Helper &) = delete;
+  TAO_Notify_POA_Helper &operator= (TAO_Notify_POA_Helper const &) = delete;
   TAO_Notify_POA_Helper &operator= (TAO_Notify_POA_Helper &&) = delete;
 
   /// Create a new PortableServer::POA.

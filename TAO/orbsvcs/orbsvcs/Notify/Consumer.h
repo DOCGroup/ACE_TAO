@@ -191,7 +191,7 @@ protected:
   bool have_not_yet_verified_publish_ = true;
 
   /// The Pacing Interval
-  const TAO_Notify_Property_Time & pacing_;
+  TAO_Notify_Property_Time const & pacing_;
 
   /// Max. batch size.
   TAO_Notify_Property_Long max_batch_size_;

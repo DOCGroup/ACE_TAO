@@ -34,7 +34,7 @@ Persistent_Storage_Block::Persistent_Storage_Block(size_t const block_number,
 }
 
 Persistent_Storage_Block::Persistent_Storage_Block(
-  const Persistent_Storage_Block& psb)
+  Persistent_Storage_Block const& psb)
   : block_number_(psb.block_number_)
   , no_write_(psb.no_write_)
   , sync_(psb.sync_)

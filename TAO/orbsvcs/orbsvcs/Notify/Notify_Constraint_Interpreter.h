@@ -37,9 +37,9 @@ public:
 
   ~TAO_Notify_Constraint_Interpreter () override;
 
-  TAO_Notify_Constraint_Interpreter (const TAO_Notify_Constraint_Interpreter&) = delete;
+  TAO_Notify_Constraint_Interpreter (TAO_Notify_Constraint_Interpreter const&) = delete;
   TAO_Notify_Constraint_Interpreter (TAO_Notify_Constraint_Interpreter&&) = delete;
-  TAO_Notify_Constraint_Interpreter& operator= (const TAO_Notify_Constraint_Interpreter&) = delete;
+  TAO_Notify_Constraint_Interpreter& operator= (TAO_Notify_Constraint_Interpreter const&) = delete;
   TAO_Notify_Constraint_Interpreter& operator= (TAO_Notify_Constraint_Interpreter&&) = delete;
 
   /**

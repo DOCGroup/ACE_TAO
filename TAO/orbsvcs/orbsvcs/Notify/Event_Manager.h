@@ -79,33 +79,33 @@ public:
   TAO_Notify_Supplier_Map& supplier_map ();
 
   /// Offer change received on @a proxy_consumer.
-  void offer_change (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
+  void offer_change (TAO_Notify_ProxyConsumer* proxy_consumer, TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed);
 
   /// Subscription change received on @a proxy_supplier.
-  void subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& added, const TAO_Notify_EventTypeSeq& removed);
+  void subscription_change (TAO_Notify_ProxySupplier* proxy_supplier, TAO_Notify_EventTypeSeq const& added, TAO_Notify_EventTypeSeq const& removed);
 
   /// What are the types being offered.
-  const TAO_Notify_EventTypeSeq& offered_types () const;
+  TAO_Notify_EventTypeSeq const& offered_types () const;
 
   /// What are the types being subscribed.
-  const TAO_Notify_EventTypeSeq& subscription_types () const;
+  TAO_Notify_EventTypeSeq const& subscription_types () const;
 
 protected:
   /// Subscribe @a proxy_supplier to the event type sequence list @a seq.
-  void subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq);
+  void subscribe (TAO_Notify_ProxySupplier* proxy_supplier, TAO_Notify_EventTypeSeq const& seq, TAO_Notify_EventTypeSeq& new_seq);
 
   /// Unsubscribe @a proxy_supplier to the event type sequence list @a seq.
-  void un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq);
+  void un_subscribe (TAO_Notify_ProxySupplier* proxy_supplier, TAO_Notify_EventTypeSeq const& seq, TAO_Notify_EventTypeSeq& last_seq);
 
   /// Subscribe @a proxy_consumer to the event type sequence list @a seq.
-  void publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& new_seq);
+  void publish (TAO_Notify_ProxyConsumer* proxy_consumer, TAO_Notify_EventTypeSeq const& seq, TAO_Notify_EventTypeSeq& new_seq);
 
   /// Subscribe @a proxy_consumer to the event type sequence list @a seq.
-  void un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, const TAO_Notify_EventTypeSeq& seq, TAO_Notify_EventTypeSeq& last_seq);
+  void un_publish (TAO_Notify_ProxyConsumer* proxy_consumer, TAO_Notify_EventTypeSeq const& seq, TAO_Notify_EventTypeSeq& last_seq);
 
 private:
-  TAO_Notify_Event_Manager (const TAO_Notify_Event_Manager&) = delete;
-  TAO_Notify_Event_Manager& operator= (const TAO_Notify_Event_Manager&) = delete;
+  TAO_Notify_Event_Manager (TAO_Notify_Event_Manager const&) = delete;
+  TAO_Notify_Event_Manager& operator= (TAO_Notify_Event_Manager const&) = delete;
   TAO_Notify_Event_Manager (TAO_Notify_Event_Manager&&) = delete;
   TAO_Notify_Event_Manager& operator= (TAO_Notify_Event_Manager&&) = delete;
 

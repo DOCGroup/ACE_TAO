@@ -34,7 +34,7 @@ public:
   explicit TAO_Notify_Property_Boolean (char const *name);
 
   /// Assignment from TAO_Notify_Property_Boolean
-  TAO_Notify_Property_Boolean& operator= (const TAO_Notify_Property_Boolean& rhs);
+  TAO_Notify_Property_Boolean& operator= (TAO_Notify_Property_Boolean const& rhs);
 
   /// Assignment from CORBA::Boolean
   TAO_Notify_Property_Boolean& operator= (CORBA::Boolean const& rhs);
@@ -45,7 +45,7 @@ public:
   /// Inequality comparison operator.
   bool operator!= (CORBA::Boolean const &rhs) const;
 
-  int set (const TAO_Notify_PropertySeq& property_seq);
+  int set (TAO_Notify_PropertySeq const& property_seq);
 
   void get (CosNotification::PropertySeq& prop_seq);
 

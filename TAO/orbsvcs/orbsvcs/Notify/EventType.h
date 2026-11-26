@@ -34,7 +34,7 @@ public:
   TAO_Notify_EventType ();
   TAO_Notify_EventType (char const *domain_name, char const *type_name);
   explicit TAO_Notify_EventType (CosNotification::EventType const& event_type);
-  TAO_Notify_EventType (const TAO_Notify_EventType& event_type);
+  TAO_Notify_EventType (TAO_Notify_EventType const& event_type);
 
   virtual ~TAO_Notify_EventType ();
 
@@ -44,14 +44,14 @@ public:
   /// Assignment from CosNotification::EventType
   TAO_Notify_EventType& operator=(CosNotification::EventType const& event_type);
 
-  TAO_Notify_EventType& operator=(const TAO_Notify_EventType& event_type);
+  TAO_Notify_EventType& operator=(TAO_Notify_EventType const& event_type);
 
   /// @name Comparison operators
   /// @{
-  bool operator==(const TAO_Notify_EventType& notify_event_type) const;
+  bool operator==(TAO_Notify_EventType const& notify_event_type) const;
 
   /// != operator
-  bool operator!=(const TAO_Notify_EventType& notify_event_type) const;
+  bool operator!=(TAO_Notify_EventType const& notify_event_type) const;
   /// @}
 
   /// Return the special event type.

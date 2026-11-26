@@ -19,7 +19,7 @@ TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (char const *name, CORB
 }
 
 int
-TAO_Notify_Property_Boolean::set (const TAO_Notify_PropertySeq& property_seq)
+TAO_Notify_Property_Boolean::set (TAO_Notify_PropertySeq const& property_seq)
 {
   CosNotification::PropertyValue value;
 

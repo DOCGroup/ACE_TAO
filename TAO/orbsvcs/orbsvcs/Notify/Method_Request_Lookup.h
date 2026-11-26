@@ -47,7 +47,7 @@ public:
     TAO_InputCDR & cdr);
 
 protected:
-  TAO_Notify_Method_Request_Lookup (const TAO_Notify_Event * event, TAO_Notify_ProxyConsumer * proxy);
+  TAO_Notify_Method_Request_Lookup (TAO_Notify_Event const * event, TAO_Notify_ProxyConsumer * proxy);
 
   TAO_Notify_Method_Request_Lookup (TAO_Notify::Delivery_Request_Ptr const& delivery, TAO_Notify_ProxyConsumer * proxy);
 
@@ -106,7 +106,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_No_Copy
 {
 public:
   TAO_Notify_Method_Request_Lookup_No_Copy (
-    const TAO_Notify_Event* event,
+    TAO_Notify_Event const* event,
     TAO_Notify_ProxyConsumer* proxy_consumer);
 
   ~TAO_Notify_Method_Request_Lookup_No_Copy () override = default;

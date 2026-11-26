@@ -51,7 +51,7 @@ TAO_Notify_EventType::TAO_Notify_EventType (
   this->init_i (event_type.domain_name.in (), event_type.type_name.in ());
 }
 
-TAO_Notify_EventType::TAO_Notify_EventType (const TAO_Notify_EventType& event_type) = default;
+TAO_Notify_EventType::TAO_Notify_EventType (TAO_Notify_EventType const& event_type) = default;
 
 TAO_Notify_EventType::~TAO_Notify_EventType () = default;
 
@@ -83,7 +83,7 @@ TAO_Notify_EventType::operator=(CosNotification::EventType const& event_type)
 }
 
 TAO_Notify_EventType&
-TAO_Notify_EventType::operator=(const TAO_Notify_EventType& event_type)
+TAO_Notify_EventType::operator=(TAO_Notify_EventType const& event_type)
 {
   if (this == std::addressof (event_type))
   {
@@ -96,7 +96,7 @@ TAO_Notify_EventType::operator=(const TAO_Notify_EventType& event_type)
 }
 
 bool
-TAO_Notify_EventType::operator==(const TAO_Notify_EventType& event_type) const
+TAO_Notify_EventType::operator==(TAO_Notify_EventType const& event_type) const
 {
   return (std::strcmp (this->event_type_.domain_name,
                           event_type.event_type_.domain_name) == 0 ||
@@ -109,7 +109,7 @@ TAO_Notify_EventType::operator==(const TAO_Notify_EventType& event_type) const
 }
 
 bool
-TAO_Notify_EventType::operator!=(const TAO_Notify_EventType& event_type) const
+TAO_Notify_EventType::operator!=(TAO_Notify_EventType const& event_type) const
 {
   return !(*this == event_type);
 }

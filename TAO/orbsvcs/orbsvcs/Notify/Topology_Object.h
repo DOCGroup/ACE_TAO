@@ -123,7 +123,7 @@ namespace TAO_Notify
     /// its new ID.
     virtual Topology_Object* load_child (ACE_CString const & type,
       CORBA::Long id,
-      const NVPList& attrs);
+      NVPList const& attrs);
 
     /// \brief Find the id associated with topology object.
     ///

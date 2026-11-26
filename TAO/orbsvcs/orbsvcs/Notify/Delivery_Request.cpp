@@ -23,7 +23,7 @@ namespace TAO_Notify
 {
 ///////////////////
 // Delivery_Request
-Delivery_Request::Delivery_Request (const Routing_Slip_Ptr & routing_slip, size_t request_id)
+Delivery_Request::Delivery_Request (Routing_Slip_Ptr const & routing_slip, size_t request_id)
   : routing_slip_ (routing_slip)
   , request_id_ (request_id)
 {
@@ -97,7 +97,7 @@ Delivery_Request::dispatch (
   this->routing_slip_->dispatch (proxy_supplier, filter);
 }
 
-const Routing_Slip_Ptr &
+Routing_Slip_Ptr const &
 Delivery_Request::routing_slip () const
 {
   return this->routing_slip_;

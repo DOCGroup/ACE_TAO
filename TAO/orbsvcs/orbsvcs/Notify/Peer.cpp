@@ -9,7 +9,7 @@ TAO_Notify_Peer::TAO_Notify_Peer () = default;
 TAO_Notify_Peer::~TAO_Notify_Peer () = default;
 
 void
-TAO_Notify_Peer::qos_changed (const TAO_Notify_QoSProperties& /*qos_properties*/)
+TAO_Notify_Peer::qos_changed (TAO_Notify_QoSProperties const& /*qos_properties*/)
 {
   // NOP.
 }
@@ -28,7 +28,7 @@ TAO_Notify_Peer::handle_dispatch_exception ()
 }
 
 void
-TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const TAO_Notify_EventTypeSeq & removed)
+TAO_Notify_Peer::dispatch_updates (TAO_Notify_EventTypeSeq const & added, TAO_Notify_EventTypeSeq const & removed)
 {
   TAO_Notify_EventTypeSeq subscribed_types ;
   this->proxy ()->subscribed_types (subscribed_types);
@@ -38,7 +38,7 @@ TAO_Notify_Peer::dispatch_updates (const TAO_Notify_EventTypeSeq & added, const 
       CosNotification::EventTypeSeq cos_added;
       CosNotification::EventTypeSeq cos_removed;
 
-      const TAO_Notify_EventType& special = TAO_Notify_EventType::special ();
+      TAO_Notify_EventType const& special = TAO_Notify_EventType::special ();
 
       // Don;t inform of types that we already know about.
       // E.g. if we're subscribed for {A,B,C,F}

@@ -193,7 +193,7 @@ TAO_Notify_ThreadPool_Task::close (u_long)
 }
 
 void
-TAO_Notify_ThreadPool_Task::update_qos_properties (const TAO_Notify_QoSProperties& qos_properties)
+TAO_Notify_ThreadPool_Task::update_qos_properties (TAO_Notify_QoSProperties const& qos_properties)
 {
   this->buffering_strategy_->update_qos_properties (qos_properties);
 }

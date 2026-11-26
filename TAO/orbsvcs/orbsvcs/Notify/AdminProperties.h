@@ -54,10 +54,10 @@ public:
 
   /// @name Const property accessors
   /// @{
-  const TAO_Notify_Property_Long& max_global_queue_length () const;
-  const TAO_Notify_Property_Long& max_consumers () const;
-  const TAO_Notify_Property_Long& max_suppliers () const;
-  const TAO_Notify_Property_Boolean& reject_new_events () const;
+  TAO_Notify_Property_Long const& max_global_queue_length () const;
+  TAO_Notify_Property_Long const& max_consumers () const;
+  TAO_Notify_Property_Long const& max_suppliers () const;
+  TAO_Notify_Property_Boolean const& reject_new_events () const;
   /// @}
 
   /// @name Mutable property and queue accessors

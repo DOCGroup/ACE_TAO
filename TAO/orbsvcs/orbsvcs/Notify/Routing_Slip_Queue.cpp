@@ -18,7 +18,7 @@ namespace TAO_Notify
   }
 
   void
-  Routing_Slip_Queue::add (const Routing_Slip_Ptr & routing_slip)
+  Routing_Slip_Queue::add (Routing_Slip_Ptr const & routing_slip)
   {
     ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->internals_);
     if (this->allowed_ == 0)

@@ -1,7 +1,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class PROXY, class ACE_LOCK> ACE_INLINE  TAO_Notify_Event_Map_Entry_T<PROXY>*
-TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::find (const TAO_Notify_EventType& event_type)
+TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::find (TAO_Notify_EventType const& event_type)
 {
   TAO_Notify_Event_Map_Entry_T<PROXY>* entry {};
 
@@ -65,7 +65,7 @@ TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::proxy_count ()
   return this->proxy_count_;
 }
 
-template <class PROXY, class ACE_LOCK> ACE_INLINE const TAO_Notify_EventTypeSeq&
+template <class PROXY, class ACE_LOCK> ACE_INLINE TAO_Notify_EventTypeSeq const&
 TAO_Notify_Event_Map_T<PROXY, ACE_LOCK>::event_types ()
 {
   return this->event_types_;

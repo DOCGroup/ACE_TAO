@@ -7,7 +7,7 @@ TAO_Notify_Proxy::updates_off ()
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_Notify_Proxy::check_filters (const TAO_Notify_Event* event
+TAO_Notify_Proxy::check_filters (TAO_Notify_Event const* event
                              , TAO_Notify_FilterAdmin& parent_filter_admin
                              , CosNotifyChannelAdmin::InterFilterGroupOperator filter_operator)
 {

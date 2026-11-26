@@ -36,9 +36,9 @@ class TAO_Notify_Serv_Export TAO_Notify_Constraint_Visitor
 public:
   TAO_Notify_Constraint_Visitor ();
 
-  TAO_Notify_Constraint_Visitor (const TAO_Notify_Constraint_Visitor&) = delete;
+  TAO_Notify_Constraint_Visitor (TAO_Notify_Constraint_Visitor const&) = delete;
   TAO_Notify_Constraint_Visitor (TAO_Notify_Constraint_Visitor&&) = delete;
-  TAO_Notify_Constraint_Visitor& operator= (const TAO_Notify_Constraint_Visitor&) = delete;
+  TAO_Notify_Constraint_Visitor& operator= (TAO_Notify_Constraint_Visitor const&) = delete;
   TAO_Notify_Constraint_Visitor& operator= (TAO_Notify_Constraint_Visitor&&) = delete;
 
   /// Put the event data into our hash map.

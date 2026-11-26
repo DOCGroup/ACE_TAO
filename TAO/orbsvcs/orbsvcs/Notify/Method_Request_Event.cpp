@@ -4,7 +4,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
-      const TAO_Notify_Event * event)
+      TAO_Notify_Event const * event)
   : event_ (event)
 {
 }
@@ -19,8 +19,8 @@ TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
 }
 
 TAO_Notify_Method_Request_Event::TAO_Notify_Method_Request_Event (
-      const TAO_Notify_Method_Request_Event & rhs,
-      const TAO_Notify_Event * event)
+      TAO_Notify_Method_Request_Event const & rhs,
+      TAO_Notify_Event const * event)
   : event_ (event)
   , delivery_request_ (rhs.delivery_request_)
 {
@@ -58,7 +58,7 @@ TAO_Notify_Method_Request_Event::should_retry ()
 /**********************************************************/
 
 TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queueable (
-      const TAO_Notify_Method_Request_Event & prev_request,
+      TAO_Notify_Method_Request_Event const & prev_request,
       TAO_Notify_Event::Ptr const& event)
   : TAO_Notify_Method_Request_Queueable (event.get ())
   , TAO_Notify_Method_Request_Event (prev_request, event.get ())
@@ -82,7 +82,7 @@ TAO_Notify_Method_Request_Event_Queueable::execute ()
   return -1;
 }
 
-const TAO_Notify_Event *
+TAO_Notify_Event const *
 TAO_Notify_Method_Request_Event::event() const
 {
   return this->event_;
