@@ -21,7 +21,7 @@ EDF_Sched_Param_Policy::value ()
 }
 
 void
-EDF_Sched_Param_Policy::value (const EDF_Scheduling::SchedulingParameter& value)
+EDF_Sched_Param_Policy::value (EDF_Scheduling::SchedulingParameter const & value)
 {
   this->value_ = value;
 }
@@ -86,7 +86,7 @@ EDF_Scheduler::shutdown ()
 }
 
 EDF_Scheduling::SchedulingParameterPolicy_ptr
-EDF_Scheduler::create_scheduling_parameter (const EDF_Scheduling::SchedulingParameter & value)
+EDF_Scheduler::create_scheduling_parameter (EDF_Scheduling::SchedulingParameter const & value)
 {
   /* MEASURE: Time to create scheduling parameter */
   DSUI_EVENT_LOG (EDF_SCHED_FAM, CREATE_SCHED_PARAM, 0, 0, 0);
@@ -106,7 +106,7 @@ EDF_Scheduler::create_scheduling_parameter (const EDF_Scheduling::SchedulingPara
 }
 
 void
-EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &guid,
+EDF_Scheduler::begin_new_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                              char const *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
@@ -141,7 +141,7 @@ EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 }
 
 void
-EDF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
+EDF_Scheduler::begin_nested_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                                 char const *name,
                                                 CORBA::Policy_ptr sched_param,
                                                 CORBA::Policy_ptr implicit_sched_param)
@@ -155,7 +155,7 @@ EDF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
 }
 
 void
-EDF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& guid,
+EDF_Scheduler::update_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                           char const *name,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr implicit_sched_param)
@@ -183,7 +183,7 @@ EDF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
 }
 
 void
-EDF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
+EDF_Scheduler::end_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                        char const *)
 {
   size_t const guid_value = guid_to_size_t (guid);
@@ -196,7 +196,7 @@ EDF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 }
 
 void
-EDF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
+EDF_Scheduler::end_nested_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                               char const *,
                                               CORBA::Policy_ptr)
 {
@@ -632,7 +632,7 @@ EDF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
 }
 
 void
-EDF_Scheduler::cancel (const RTScheduling::Current::IdType &)
+EDF_Scheduler::cancel (RTScheduling::Current::IdType const &)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -644,7 +644,7 @@ EDF_Scheduler::scheduling_policies ()
 }
 
 void
-EDF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
+EDF_Scheduler::scheduling_policies (CORBA::PolicyList const &)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

@@ -13,7 +13,7 @@ MIF_Sched_Param_Policy::MIF_Sched_Param_Policy ()
 }
 
 MIF_Sched_Param_Policy::MIF_Sched_Param_Policy (
-    const MIF_Sched_Param_Policy &rhs
+    MIF_Sched_Param_Policy const &rhs
   )
   : CORBA::Object (),
   CORBA::Policy (),
@@ -30,7 +30,7 @@ MIF_Sched_Param_Policy::value ()
 }
 
 void
-MIF_Sched_Param_Policy::value (const MIF_Scheduling::SchedulingParameter& value)
+MIF_Sched_Param_Policy::value (MIF_Scheduling::SchedulingParameter const & value)
 {
   this->value_ = value;
 }
@@ -117,7 +117,7 @@ MIF_Scheduler::shutdown ()
 }
 
 MIF_Scheduling::SchedulingParameterPolicy_ptr
-MIF_Scheduler::create_scheduling_parameter (const MIF_Scheduling::SchedulingParameter & value)
+MIF_Scheduler::create_scheduling_parameter (MIF_Scheduling::SchedulingParameter const & value)
 {
   MIF_Scheduling::SchedulingParameterPolicy_ptr sched_param_policy;
   ACE_NEW_THROW_EX (sched_param_policy,
@@ -134,7 +134,7 @@ MIF_Scheduler::create_scheduling_parameter (const MIF_Scheduling::SchedulingPara
 }
 
 void
-MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType& guid,
+MIF_Scheduler::begin_new_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                              char const *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
@@ -165,7 +165,7 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 }
 
 void
-MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
+MIF_Scheduler::begin_nested_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                                            char const *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
@@ -177,7 +177,7 @@ MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
 }
 
 void
-MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& guid,
+MIF_Scheduler::update_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                           char const *name,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr implicit_sched_param)
@@ -204,7 +204,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
 
 void
 MIF_Scheduler::end_scheduling_segment (
-                    const RTScheduling::Current::IdType &guid,
+                    RTScheduling::Current::IdType const &guid,
                     char const *)
 {
 #ifdef KOKYU_DSRT_LOGGING
@@ -217,7 +217,7 @@ MIF_Scheduler::end_scheduling_segment (
 
 void
 MIF_Scheduler::end_nested_scheduling_segment (
-                   const RTScheduling::Current::IdType &,
+                   RTScheduling::Current::IdType const &,
                    char const *,
                    CORBA::Policy_ptr)
 {
@@ -541,7 +541,7 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
 }
 
 void
-MIF_Scheduler::cancel (const RTScheduling::Current::IdType &)
+MIF_Scheduler::cancel (RTScheduling::Current::IdType const &)
 {
 }
 
@@ -552,7 +552,7 @@ MIF_Scheduler::scheduling_policies ()
 }
 
 void
-MIF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
+MIF_Scheduler::scheduling_policies (CORBA::PolicyList const &)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

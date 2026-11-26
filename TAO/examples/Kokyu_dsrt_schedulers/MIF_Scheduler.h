@@ -41,11 +41,11 @@ public MIF_Scheduling::SchedulingParameterPolicy,
 {
  public:
      MIF_Sched_Param_Policy ();
-     MIF_Sched_Param_Policy (const MIF_Sched_Param_Policy &rhs);
+     MIF_Sched_Param_Policy (MIF_Sched_Param_Policy const &rhs);
 
     MIF_Scheduling::SchedulingParameter value () override;
 
-    void value (const MIF_Scheduling::SchedulingParameter & value) override;
+    void value (MIF_Scheduling::SchedulingParameter const & value) override;
 
      CORBA::Policy_ptr copy () override;
 
@@ -71,29 +71,29 @@ public ::CORBA::LocalObject
 
   MIF_Scheduling::SchedulingParameterPolicy_ptr
     create_scheduling_parameter (
-      const MIF_Scheduling::SchedulingParameter & value) override;
+      MIF_Scheduling::SchedulingParameter const & value) override;
 
   void shutdown ();
 
-  void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
+  void begin_new_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                      char const *name,
                                      CORBA::Policy_ptr sched_param,
                                      CORBA::Policy_ptr implicit_sched_param) override;
 
-  void begin_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
+  void begin_nested_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                         char const *name,
                                         CORBA::Policy_ptr sched_param,
                                         CORBA::Policy_ptr implicit_sched_param) override;
 
-  void update_scheduling_segment (const RTScheduling::Current::IdType & guid,
+  void update_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                   char const *name,
                                   CORBA::Policy_ptr sched_param,
                                   CORBA::Policy_ptr implicit_sched_param) override;
 
-  void end_scheduling_segment (const RTScheduling::Current::IdType & guid,
+  void end_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                char const *name) override;
 
-  void end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
+  void end_nested_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                       char const *name,
                                       CORBA::Policy_ptr outer_sched_param) override;
 
@@ -119,11 +119,11 @@ public ::CORBA::LocalObject
 
   void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  void cancel (const RTScheduling::Current::IdType & guid) override;
+  void cancel (RTScheduling::Current::IdType const & guid) override;
 
   CORBA::PolicyList * scheduling_policies () override;
 
-  void scheduling_policies (const CORBA::PolicyList & scheduling_policies) override;
+  void scheduling_policies (CORBA::PolicyList const & scheduling_policies) override;
 
   CORBA::PolicyList * poa_policies () override;
 

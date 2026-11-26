@@ -41,12 +41,12 @@ public FP_Scheduling::SegmentSchedulingParameterPolicy,
 {
  public:
      FP_Segment_Sched_Param_Policy ();
-     FP_Segment_Sched_Param_Policy (const FP_Segment_Sched_Param_Policy &rhs);
+     FP_Segment_Sched_Param_Policy (FP_Segment_Sched_Param_Policy const &rhs);
 
      FP_Scheduling::SegmentSchedulingParameter value () override;
 
      void value (
-        const FP_Scheduling::SegmentSchedulingParameter & value) override;
+        FP_Scheduling::SegmentSchedulingParameter const & value) override;
 
      CORBA::Policy_ptr copy () override;
 
@@ -74,27 +74,27 @@ public ::CORBA::LocalObject
 
   FP_Scheduling::SegmentSchedulingParameterPolicy_ptr
     create_segment_scheduling_parameter (
-        const FP_Scheduling::SegmentSchedulingParameter & value) override;
+        FP_Scheduling::SegmentSchedulingParameter const & value) override;
 
-  void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
+  void begin_new_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                              char const *name,
                                              CORBA::Policy_ptr sched_param,
                                              CORBA::Policy_ptr implicit_sched_param) override;
 
-  void begin_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
+  void begin_nested_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                                 char const *name,
                                                 CORBA::Policy_ptr sched_param,
                                                 CORBA::Policy_ptr implicit_sched_param) override;
 
-  void update_scheduling_segment (const RTScheduling::Current::IdType & guid,
+  void update_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                           char const *name,
                                           CORBA::Policy_ptr sched_param,
                                           CORBA::Policy_ptr implicit_sched_param) override;
 
-  void end_scheduling_segment (const RTScheduling::Current::IdType & guid,
+  void end_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                char const *name) override;
 
-  void end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
+  void end_nested_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                               char const *name,
                                               CORBA::Policy_ptr outer_sched_param) override;
 
@@ -120,11 +120,11 @@ public ::CORBA::LocalObject
 
   void receive_other (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
-  void cancel (const RTScheduling::Current::IdType & guid) override;
+  void cancel (RTScheduling::Current::IdType const & guid) override;
 
   CORBA::PolicyList * scheduling_policies () override;
 
-  void scheduling_policies (const CORBA::PolicyList & scheduling_policies) override;
+  void scheduling_policies (CORBA::PolicyList const & scheduling_policies) override;
 
   CORBA::PolicyList * poa_policies () override;
 

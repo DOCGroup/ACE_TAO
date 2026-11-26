@@ -13,7 +13,7 @@ MUF_Sched_Param_Policy::MUF_Sched_Param_Policy ()
 }
 
 MUF_Sched_Param_Policy::MUF_Sched_Param_Policy (
-    const MUF_Sched_Param_Policy &rhs
+    MUF_Sched_Param_Policy const &rhs
   )
   : CORBA::Object (),
   CORBA::Policy (),
@@ -30,7 +30,7 @@ MUF_Sched_Param_Policy::value ()
 }
 
 void
-MUF_Sched_Param_Policy::value (const MUF_Scheduling::SchedulingParameter& value)
+MUF_Sched_Param_Policy::value (MUF_Scheduling::SchedulingParameter const & value)
 {
   this->value_ = value;
 }
@@ -115,7 +115,7 @@ MUF_Scheduler::shutdown ()
 }
 
 MUF_Scheduling::SchedulingParameterPolicy_ptr
-MUF_Scheduler::create_scheduling_parameter (const MUF_Scheduling::SchedulingParameter & value)
+MUF_Scheduler::create_scheduling_parameter (MUF_Scheduling::SchedulingParameter const & value)
 {
   MUF_Scheduling::SchedulingParameterPolicy_ptr sched_param_policy;
   ACE_NEW_THROW_EX (sched_param_policy,
@@ -132,7 +132,7 @@ MUF_Scheduler::create_scheduling_parameter (const MUF_Scheduling::SchedulingPara
 }
 
 void
-MUF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &guid,
+MUF_Scheduler::begin_new_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                              char const *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
@@ -166,7 +166,7 @@ MUF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 }
 
 void
-MUF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
+MUF_Scheduler::begin_nested_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                                            char const *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
@@ -178,7 +178,7 @@ MUF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
 }
 
 void
-MUF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& guid,
+MUF_Scheduler::update_scheduling_segment (RTScheduling::Current::IdType const & guid,
                                           char const *name,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr implicit_sched_param)
@@ -205,7 +205,7 @@ MUF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
 }
 
 void
-MUF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
+MUF_Scheduler::end_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                        char const *)
 {
 #ifdef KOKYU_DSRT_LOGGING
@@ -217,7 +217,7 @@ MUF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 }
 
 void
-MUF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
+MUF_Scheduler::end_nested_scheduling_segment (RTScheduling::Current::IdType const &,
                                                          char const *,
                                                          CORBA::Policy_ptr)
 {
@@ -585,7 +585,7 @@ MUF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr ri)
 }
 
 void
-MUF_Scheduler::cancel (const RTScheduling::Current::IdType &)
+MUF_Scheduler::cancel (RTScheduling::Current::IdType const &)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -597,7 +597,7 @@ MUF_Scheduler::scheduling_policies ()
 }
 
 void
-MUF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
+MUF_Scheduler::scheduling_policies (CORBA::PolicyList const &)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
