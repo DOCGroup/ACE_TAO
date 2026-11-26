@@ -208,7 +208,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffered stream failed to report write errors\n")), 1);
       }
     handler.fail_write_ = false;
-    if (output.pubsync () != 0 || handler.written_data_ != "abcdefgx")
+    if (output.pubsync () != 0 || handler.written_data_ != "abcdefg"
+        || output.overflow ('x') == std::char_traits<char>::eof ()
+        || handler.written_data_ != "abcdefgx")
       {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffered stream lost data after a failed flush\n")), 1);
       }
@@ -228,7 +230,9 @@ ACE_TMAIN (int, ACE_TCHAR *[])
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bidirectional stream failed to report write errors\n")), 1);
       }
     handler.fail_write_ = false;
-    if (output.pubsync () != 0 || handler.written_data_ != "abcdefgx")
+    if (output.pubsync () != 0 || handler.written_data_ != "abcdefg"
+        || output.overflow ('x') == std::char_traits<char>::eof ()
+        || handler.written_data_ != "abcdefgx")
       {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bidirectional stream lost data after a failed flush\n")), 1);
       }

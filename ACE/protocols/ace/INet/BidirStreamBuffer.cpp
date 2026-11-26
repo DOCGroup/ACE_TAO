@@ -61,6 +61,10 @@ namespace ACE
         }
         if (this->flush_buffer () == std::streamsize (-1))
           {
+            if (c != char_traits::eof ())
+              {
+                this->pbump (-1);
+              }
             return char_traits::eof ();
           }
 
