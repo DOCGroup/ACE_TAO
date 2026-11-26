@@ -1,5 +1,7 @@
 #include "orbsvcs/Event/EC_Negation_Filter.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Negation_Filter::TAO_EC_Negation_Filter (TAO_EC_Filter* child)
@@ -16,13 +18,13 @@ TAO_EC_Negation_Filter::~TAO_EC_Negation_Filter ()
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Negation_Filter::begin () const
 {
-  return const_cast<TAO_EC_Filter**> (&this->child_);
+  return std::addressof (this->child_);
 }
 
 TAO_EC_Filter::ChildrenIterator
 TAO_EC_Negation_Filter::end () const
 {
-  return const_cast<TAO_EC_Filter**> (&this->child_) + 1;
+  return std::addressof (this->child_) + 1;
 }
 
 int
