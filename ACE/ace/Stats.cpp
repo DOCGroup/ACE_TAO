@@ -310,7 +310,7 @@ ACE_Stats::quotient (const ACE_UINT64 dividend,
 }
 
 void
-ACE_Stats::quotient (const ACE_Stats_Value &dividend,
+ACE_Stats::quotient (ACE_Stats_Value const &dividend,
                      const ACE_UINT32 divisor,
                      ACE_Stats_Value &quotient)
 {

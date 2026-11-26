@@ -174,7 +174,7 @@ public:
                         ACE_Stats_Value &quotient);
 
   /// Utility division function, for ACE_Stats_Value dividend.
-  static void quotient (const ACE_Stats_Value &dividend,
+  static void quotient (ACE_Stats_Value const &dividend,
                         const ACE_UINT32 divisor,
                         ACE_Stats_Value &quotient);
 

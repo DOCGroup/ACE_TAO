@@ -80,30 +80,30 @@ public:
    */
   ACE_Based_Pointer_Basic (CONCRETE *initial);
 
-  ACE_Based_Pointer_Basic (const ACE_Based_Pointer_Basic &) = delete;
+  ACE_Based_Pointer_Basic (ACE_Based_Pointer_Basic const &) = delete;
   ACE_Based_Pointer_Basic (ACE_Based_Pointer_Basic &&) = delete;
 
   /// Constructor for know base address. @a o is only used to
   /// resolve overload ambiguity.
-  ACE_Based_Pointer_Basic (const void *base_addr, int o);
+  ACE_Based_Pointer_Basic (void const *base_addr, int o);
 
   void operator= (CONCRETE *from);
 
-  void operator= (const ACE_Based_Pointer_Basic &);
+  void operator= (ACE_Based_Pointer_Basic const &);
 
   CONCRETE operator * () const;
 
-  bool operator< (const ACE_Based_Pointer_Basic &) const;
+  bool operator< (ACE_Based_Pointer_Basic const &) const;
 
-  bool operator<= (const ACE_Based_Pointer_Basic &) const;
+  bool operator<= (ACE_Based_Pointer_Basic const &) const;
 
-  bool operator> (const ACE_Based_Pointer_Basic &) const;
+  bool operator> (ACE_Based_Pointer_Basic const &) const;
 
-  bool operator>= (const ACE_Based_Pointer_Basic &) const;
+  bool operator>= (ACE_Based_Pointer_Basic const &) const;
 
-  bool operator== (const ACE_Based_Pointer_Basic &) const;
+  bool operator== (ACE_Based_Pointer_Basic const &) const;
 
-  bool operator!= (const ACE_Based_Pointer_Basic &) const;
+  bool operator!= (ACE_Based_Pointer_Basic const &) const;
 
   CONCRETE operator[] (int index) const;
 
@@ -159,12 +159,12 @@ public:
   /// Initialize this object with known @a base_addr.  @a dummy is
   /// a dummy value used to resolve overload ambiguity and it
   /// otherwise ignored.
-  ACE_Based_Pointer (const void *base_addr, int dummy);
+  ACE_Based_Pointer (void const *base_addr, int dummy);
 
-  ACE_Based_Pointer (const ACE_Based_Pointer &) = delete;
+  ACE_Based_Pointer (ACE_Based_Pointer const &) = delete;
   ACE_Based_Pointer (ACE_Based_Pointer &&) = delete;
 
-  void operator= (const ACE_Based_Pointer &);
+  void operator= (ACE_Based_Pointer const &);
 
   /// Pseudo-assignment operator.
   void operator = (CONCRETE *from);
