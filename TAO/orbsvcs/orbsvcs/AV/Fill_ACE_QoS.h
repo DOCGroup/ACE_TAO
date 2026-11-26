@@ -33,10 +33,11 @@ class Fill_ACE_QoS
 public:
   using FLOW_SPEC_HASH_MAP = ACE_Hash_Map_Manager<ACE_CString, ACE_Flow_Spec *, ACE_Null_Mutex>;
 
-  //Initialization and termination methods.
+  /// @name Initialization and termination methods
+  /// @{
   Fill_ACE_QoS ();
-
   ~Fill_ACE_QoS ();
+  /// @}
 
   /// To be used by receivers. Fills the receiver qos and sets the
   /// sender qos to NO_TRAFFIC.
