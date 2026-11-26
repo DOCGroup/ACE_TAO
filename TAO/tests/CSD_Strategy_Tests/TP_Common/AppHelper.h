@@ -14,7 +14,7 @@ struct RefHelper
   using T_var = typename T::_var_type;
 
   static T_ptr string_to_ref(CORBA::ORB_ptr orb,
-                             const ACE_TCHAR* ior)
+                             ACE_TCHAR const *ior)
   {
     CORBA::Object_var obj = orb->string_to_object(ior);
 
@@ -38,7 +38,7 @@ struct RefHelper
   }
 
   static T_ptr resolve_initial_ref(CORBA::ORB_ptr orb,
-                                   const char* name)
+                                   char const *name)
   {
     CORBA::Object_var obj
       = orb->resolve_initial_references(name);
@@ -69,10 +69,10 @@ struct CSD_TP_Test_Export AppHelper
 {
   static void ref_to_file(CORBA::ORB_ptr    orb,
                           CORBA::Object_ptr obj,
-                          const ACE_TCHAR*  filename);
+                          ACE_TCHAR const *filename);
 
   static PortableServer::POA_ptr create_poa
-                              (const char*                    name,
+                              (char const *name,
                                PortableServer::POA_ptr        root_poa,
                                PortableServer::POAManager_ptr mgr,
                                CORBA::PolicyList&             policies);

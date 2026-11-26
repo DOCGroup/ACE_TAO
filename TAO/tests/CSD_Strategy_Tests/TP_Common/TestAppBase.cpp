@@ -1,13 +1,13 @@
 #include "TestAppBase.h"
 
-TestAppBase::TestAppBase(const char* name)
+TestAppBase::TestAppBase(char const *name)
   : name_(name)
 {
 }
 
 TestAppBase::~TestAppBase() = default;
 
-const char*
+char const *
 TestAppBase::name() const
 {
   return this->name_.c_str();

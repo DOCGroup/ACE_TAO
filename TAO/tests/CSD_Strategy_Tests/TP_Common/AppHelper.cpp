@@ -3,7 +3,7 @@
 void
 AppHelper::ref_to_file(CORBA::ORB_ptr    orb,
                        CORBA::Object_ptr obj,
-                       const ACE_TCHAR*  filename)
+                       ACE_TCHAR const *filename)
 {
   CORBA::String_var ior = orb->object_to_string(obj);
 
@@ -22,7 +22,7 @@ AppHelper::ref_to_file(CORBA::ORB_ptr    orb,
 }
 
 PortableServer::POA_ptr
-AppHelper::create_poa(const char*                    name,
+AppHelper::create_poa(char const *name,
                       PortableServer::POA_ptr        root_poa,
                       PortableServer::POAManager_ptr mgr,
                       CORBA::PolicyList&             policies)

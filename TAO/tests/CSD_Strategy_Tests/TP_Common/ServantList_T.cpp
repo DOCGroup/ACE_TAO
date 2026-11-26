@@ -7,7 +7,7 @@ void
 ServantList<T>::create_and_activate(unsigned                num_servants,
                                     CORBA::ORB_ptr          orb,
                                     PortableServer::POA_ptr poa,
-                                    const ACE_TCHAR*        ior_fname_prefix)
+                                    ACE_TCHAR const *ior_fname_prefix)
 {
   for (unsigned i = 0; i < num_servants; ++i)
     {
