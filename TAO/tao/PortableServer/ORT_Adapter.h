@@ -53,8 +53,8 @@ namespace TAO
   {
   public:
     /// Activate the ORT library
-    virtual int activate (const char *server_id,
-                          const char *orb_id,
+    virtual int activate (char const *server_id,
+                          char const *orb_id,
                           PortableInterceptor::AdapterName *,
                           PortableServer::POA_ptr poa) = 0;
 
@@ -82,7 +82,7 @@ namespace TAO
      */
     /// @{
     virtual CORBA::Object_ptr make_object (
-      const char * repository_id,
+      char const *repository_id,
       const PortableInterceptor::ObjectId & id) = 0;
     /// @}
   };

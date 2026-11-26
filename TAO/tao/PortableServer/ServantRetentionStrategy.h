@@ -90,13 +90,13 @@ namespace TAO
         PortableServer::Servant servant) = 0;
 
       virtual CORBA::Object_ptr create_reference (
-        const char *intf,
+        char const *intf,
         CORBA::Short priority) = 0;
 
 #if !defined (CORBA_E_MICRO)
       virtual CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId &oid,
-        const char *intf,
+        char const *intf,
         CORBA::Short priority) = 0;
 #endif
 

@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace PortableServer
 {
   PortableServer::ObjectId *
-  string_to_ObjectId (const char *string)
+  string_to_ObjectId (char const *string)
   {
     // Passing in a nil pointer is illegal so throw an exception to
     // indicate that

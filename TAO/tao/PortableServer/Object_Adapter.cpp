@@ -62,7 +62,7 @@ namespace PortableServer
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_Object_Adapter_Timeprobe_Description[] =
+static char const *TAO_Object_Adapter_Timeprobe_Description[] =
 {
   "Object_Adapter::dispatch_servant - start",
   "Object_Adapter::dispatch_servant - end",
@@ -333,7 +333,7 @@ TAO_Object_Adapter::dispatch_servant (const TAO::ObjectKey &key,
 
   // Set up state in the POA et al (including the POA Current), so
   // that we know that this servant is currently in an upcall.
-  const char *operation = req.operation ();
+  char const *operation = req.operation ();
   int result = servant_upcall.prepare_for_upcall (key, operation, forward_to);
 
   if (result != TAO_Adapter::DS_OK)
@@ -847,7 +847,7 @@ TAO_Object_Adapter::dispatch (TAO::ObjectKey &key,
   return result;
 }
 
-const char *
+char const *
 TAO_Object_Adapter::name () const
 {
   return TAO_OBJID_ROOTPOA;

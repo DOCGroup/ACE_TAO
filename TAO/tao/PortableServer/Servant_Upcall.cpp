@@ -34,7 +34,7 @@ namespace TAO
     int
     Servant_Upcall::prepare_for_upcall (
       const TAO::ObjectKey &key,
-      const char *operation,
+      char const *operation,
       CORBA::Object_out forward_to)
     {
       while (true)
@@ -68,7 +68,7 @@ namespace TAO
     int
     Servant_Upcall::prepare_for_upcall_i (
       const TAO::ObjectKey &key,
-      const char *operation,
+      char const *operation,
       CORBA::Object_out forward_to,
       bool &wait_occurred_restart_call)
     {

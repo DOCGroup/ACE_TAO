@@ -34,7 +34,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_ServantBase_Timeprobe_Description[] =
+static char const *TAO_ServantBase_Timeprobe_Description[] =
 {
   "TAO_ServantBase::_find - start",
   "TAO_ServantBase::_find - end"
@@ -361,7 +361,7 @@ TAO_ServantBase::_repository_id_thru_poa_skel (TAO_ServerRequest & server_reques
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 CORBA::Boolean
-TAO_ServantBase::_is_a (const char *logical_type_id)
+TAO_ServantBase::_is_a (char const *logical_type_id)
 {
   static char const id[] = "IDL:omg.org/CORBA/Object:1.0";
   return std::strcmp (logical_type_id, id) == 0;
@@ -407,7 +407,7 @@ TAO_ServantBase::_repository_id ()
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
 int
-TAO_ServantBase::_find (const char *opname,
+TAO_ServantBase::_find (char const *opname,
                         TAO_Skeleton& skelfunc,
                         size_t const length)
 {
@@ -417,7 +417,7 @@ TAO_ServantBase::_find (const char *opname,
 }
 
 int
-TAO_ServantBase::_find (const char *opname,
+TAO_ServantBase::_find (char const *opname,
                         TAO_Collocated_Skeleton& skelfunc,
                         TAO::Collocation_Strategy st,
                         size_t const length)
@@ -537,7 +537,7 @@ TAO_ServantBase::asynchronous_upcall_dispatch (
   TAO_ServantBase *derived_this)
 {
   TAO_Skeleton skel;
-  const char *opname = req.operation ();
+  char const *opname = req.operation ();
 
   // It seems that I might have missed s/g here.  What if
   // it is a one way that is SYNC_WITH_SERVER.
@@ -608,7 +608,7 @@ TAO_ServantBase::_collocated_dispatch (::CORBA::Object_ptr obj,
                                        bool &is_forwarded,
                                        TAO::Argument ** args,
                                        int num_args,
-                                       const char * op,
+                                       char const *op,
                                        size_t op_len,
                                        TAO::Collocation_Strategy strategy)
 {

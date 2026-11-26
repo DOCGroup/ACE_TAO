@@ -74,11 +74,11 @@ public:
 
   TAO_POA_Manager (TAO_Object_Adapter &object_adapter,
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
-                   const char * id,
+                   char const *id,
                    const ::CORBA::PolicyList & policies,
                    PortableServer::POAManagerFactory_ptr poa_manager_factory);
 #else
-                   const char * id);
+                   char const *id);
 #endif
 
   ~TAO_POA_Manager ();

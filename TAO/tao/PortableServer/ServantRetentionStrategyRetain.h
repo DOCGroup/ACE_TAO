@@ -84,12 +84,12 @@ namespace TAO
 
       CORBA::Object_ptr servant_to_reference (PortableServer::Servant servant) override;
 
-      CORBA::Object_ptr create_reference (const char *intf, CORBA::Short priority) override;
+      CORBA::Object_ptr create_reference (char const *intf, CORBA::Short priority) override;
 
 #if !defined (CORBA_E_MICRO)
       CORBA::Object_ptr create_reference_with_id (
         const PortableServer::ObjectId &oid,
-        const char *intf,
+        char const *intf,
         CORBA::Short priority) override;
 #endif
 

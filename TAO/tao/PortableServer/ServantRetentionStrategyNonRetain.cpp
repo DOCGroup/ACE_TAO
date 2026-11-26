@@ -165,7 +165,7 @@ namespace TAO
 
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::create_reference (
-      const char *intf,
+      char const *intf,
       CORBA::Short priority)
     {
       // This operation creates an object reference that encapsulates a
@@ -223,7 +223,7 @@ namespace TAO
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::create_reference_with_id (
       const PortableServer::ObjectId &oid,
-      const char *intf,
+      char const *intf,
       CORBA::Short priority)
     {
       // This operation creates an object reference that encapsulates the

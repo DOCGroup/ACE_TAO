@@ -19,7 +19,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 size_t TAO_Active_Object_Map::system_id_size_ = 0;
 
 static void
-hexstring (ACE_CString& hexstr, const char* s, size_t l)
+hexstring (ACE_CString& hexstr, char const *s, size_t l)
 {
   static constexpr char hex_chars[] = "0123456789abcdef";
   char buf[2] {};

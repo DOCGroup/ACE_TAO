@@ -55,14 +55,14 @@ namespace TAO
       this->cookie_ = cookie;
     }
 
-    ACE_INLINE const char *
+    ACE_INLINE char const *
     Servant_Upcall::operation () const
     {
       return this->operation_;
     }
 
     ACE_INLINE void
-    Servant_Upcall::operation (const char *name)
+    Servant_Upcall::operation (char const *name)
     {
       this->operation_ = name;
     }

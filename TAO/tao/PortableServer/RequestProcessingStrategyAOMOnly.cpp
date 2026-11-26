@@ -49,7 +49,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::locate_servant (
-      const char * /*operation*/,
+      char const */*operation*/,
       const PortableServer::ObjectId &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,

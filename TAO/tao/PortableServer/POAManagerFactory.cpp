@@ -21,7 +21,7 @@ TAO_POAManager_Factory::~TAO_POAManager_Factory ()
 
 ::PortableServer::POAManager_ptr
 TAO_POAManager_Factory::create_POAManager (
-  const char * id,
+  char const *id,
   const ::CORBA::PolicyList & policies)
 {
   // Validate the policy.
@@ -99,7 +99,7 @@ TAO_POAManager_Factory::list ()
 }
 
 ::PortableServer::POAManager_ptr
-TAO_POAManager_Factory::find (const char * id)
+TAO_POAManager_Factory::find (char const *id)
 {
   ::PortableServer::POAManager_ptr poamanager =
     ::PortableServer::POAManager::_nil();

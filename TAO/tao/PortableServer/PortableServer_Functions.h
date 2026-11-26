@@ -30,7 +30,7 @@ namespace PortableServer
     const PortableServer::ObjectId &id);
 
   extern TAO_PortableServer_Export PortableServer::ObjectId *string_to_ObjectId (
-    const char *id);
+    char const *id);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

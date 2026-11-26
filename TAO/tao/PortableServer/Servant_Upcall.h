@@ -89,12 +89,12 @@ namespace TAO
 
       /// Locate POA and servant.
       int prepare_for_upcall (const TAO::ObjectKey &key,
-                              const char *operation,
+                              char const *operation,
                               CORBA::Object_out forward_to);
 
       /// Helper.
       int prepare_for_upcall_i (const TAO::ObjectKey &key,
-                                const char *operation,
+                                char const *operation,
                                 CORBA::Object_out forward_to,
                                 bool &wait_occurred_restart_call);
 
@@ -136,10 +136,10 @@ namespace TAO
       void locator_cookie (void* cookie);
 
       /// Get the operation name.
-      const char *operation () const;
+      char const *operation () const;
 
       /// Set the operation name.
-      void operation (const char *);
+      void operation (char const *);
 
   #endif /* TAO_HAS_MINIMUM_POA == 0 */
 

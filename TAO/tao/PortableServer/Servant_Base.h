@@ -102,7 +102,7 @@ public:
   virtual PortableServer::POA_ptr _default_POA ();
 
   /// Local implementation of the CORBA::Object::_is_a method.
-  CORBA::Boolean _is_a (const char *logical_type_id) override;
+  CORBA::Boolean _is_a (char const *logical_type_id) override;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
   /// Default _non_existent: always returns false.
@@ -140,17 +140,17 @@ public:
 
   /// Please see documentation in tao/Abstract_Servant_Base.h for
   /// details.
-  int _find (const char *opname,
+  int _find (char const *opname,
                      TAO_Skeleton &skelfunc,
                      size_t const length = 0) override;
 
-  int _find (const char *opname,
+  int _find (char const *opname,
                      TAO_Collocated_Skeleton &skelfunc,
                      TAO::Collocation_Strategy st,
                      size_t const length = 0) override;
 
   /// Get this interface's repository id (TAO specific).
-  const char *_interface_repository_id () const override = 0;
+  char const *_interface_repository_id () const override = 0;
 
   /// @{
   /**
@@ -177,7 +177,7 @@ public:
                                      bool &is_forwarded,
                                      TAO::Argument ** args,
                                      int num_args,
-                                     const char * op,
+                                     char const *op,
                                      size_t op_len,
                                      TAO::Collocation_Strategy strategy) override;
 
