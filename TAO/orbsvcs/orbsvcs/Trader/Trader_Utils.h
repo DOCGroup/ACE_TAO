@@ -431,21 +431,20 @@ public:
 
   explicit TAO_Policy_Creator (int num_policies = 0);
 
+  /// @name Query cardinalities
+  /// @note The specification implies that these limits apply to all offers
+  /// on linked traders. Since a trader cannot return the number of offers it
+  /// searched or matched to the calling trader, limits apply per trader.
+  /// @{
   /// Set the maximum number of offers searched for the query.
   void search_card (CORBA::ULong scard);
 
-  /// Set the maximum number of offers searched for the query.
+  /// Set the maximum number of offers matched for the query.
   void match_card (CORBA::ULong mcard);
 
-  /// Set the maximum number of offers rerturned for the query.
+  /// Set the maximum number of offers returned for the query.
   void return_card (CORBA::ULong rcard);
-
-  // A note about cardinalities: The spec implies that these
-  // cardinalities apply to the global office space, that is, all
-  // offers on all linked traders. However, there's no mechanism for
-  // one trader to return to the calling trader the number of offers
-  // searched or matched. Thus, these cardinalities are applied on a
-  // per-trader basis.
+  /// @}
 
   /// Consider offers with modifiable properties.
   void use_modifiable_properties (CORBA::Boolean mod_props);
