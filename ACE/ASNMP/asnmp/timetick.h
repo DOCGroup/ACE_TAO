@@ -44,7 +44,6 @@ public:
 
   ~TimeTicks () override = default;
 
-
   /// syntax type
   SmiUINT32 get_syntax() override;
 

@@ -44,7 +44,6 @@ public:
 
   ~SnmpUInt32 () override = default;
 
-
   /// syntax type
   SmiUINT32 get_syntax() override;
 
@@ -88,7 +87,6 @@ public:
   SnmpInt32 (SnmpInt32 const &c);
 
   ~SnmpInt32 () override = default;
-
 
   /// syntax type
   SmiUINT32 get_syntax() override;
