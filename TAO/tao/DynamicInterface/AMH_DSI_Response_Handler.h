@@ -40,16 +40,16 @@ public:
   TAO_AMH_DSI_Response_Handler_var ();
   TAO_AMH_DSI_Response_Handler_var (TAO_AMH_DSI_Response_Handler_ptr);
   TAO_AMH_DSI_Response_Handler_var (
-      const TAO_AMH_DSI_Response_Handler_var &);
+      TAO_AMH_DSI_Response_Handler_var const &);
   ~TAO_AMH_DSI_Response_Handler_var ();
 
   TAO_AMH_DSI_Response_Handler_var &operator= (
       TAO_AMH_DSI_Response_Handler_ptr);
   TAO_AMH_DSI_Response_Handler_var &operator= (
-      const TAO_AMH_DSI_Response_Handler_var &);
+      TAO_AMH_DSI_Response_Handler_var const &);
   TAO_AMH_DSI_Response_Handler_ptr operator-> () const;
 
-  operator const TAO_AMH_DSI_Response_Handler_ptr &() const;
+  operator TAO_AMH_DSI_Response_Handler_ptr const &() const;
   operator TAO_AMH_DSI_Response_Handler_ptr &();
 
   TAO_AMH_DSI_Response_Handler_ptr in () const;
@@ -77,16 +77,16 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder_var
 public:
   TAO_AMH_DSI_Exception_Holder_var ();
   TAO_AMH_DSI_Exception_Holder_var (TAO_AMH_DSI_Exception_Holder*);
-  TAO_AMH_DSI_Exception_Holder_var (const TAO_AMH_DSI_Exception_Holder*);
-  TAO_AMH_DSI_Exception_Holder_var (const TAO_AMH_DSI_Exception_Holder_var &);
+  TAO_AMH_DSI_Exception_Holder_var (TAO_AMH_DSI_Exception_Holder const *);
+  TAO_AMH_DSI_Exception_Holder_var (TAO_AMH_DSI_Exception_Holder_var const &);
   ~TAO_AMH_DSI_Exception_Holder_var ();
 
   TAO_AMH_DSI_Exception_Holder_var &operator= (TAO_AMH_DSI_Exception_Holder*);
   TAO_AMH_DSI_Exception_Holder_var &operator= (
-      const TAO_AMH_DSI_Exception_Holder_var &);
+      TAO_AMH_DSI_Exception_Holder_var const &);
   TAO_AMH_DSI_Exception_Holder* operator-> () const;
 
-  operator const TAO_AMH_DSI_Exception_Holder* () const;
+  operator TAO_AMH_DSI_Exception_Holder const * () const;
   operator TAO_AMH_DSI_Exception_Holder*& ();
 
   TAO_AMH_DSI_Exception_Holder* in () const;
@@ -114,11 +114,11 @@ class TAO_DynamicInterface_Export TAO_AMH_DSI_Exception_Holder_out
 public:
   TAO_AMH_DSI_Exception_Holder_out (TAO_AMH_DSI_Exception_Holder* &);
   TAO_AMH_DSI_Exception_Holder_out (TAO_AMH_DSI_Exception_Holder_var &);
-  TAO_AMH_DSI_Exception_Holder_out (const TAO_AMH_DSI_Exception_Holder_out &);
+  TAO_AMH_DSI_Exception_Holder_out (TAO_AMH_DSI_Exception_Holder_out const &);
   TAO_AMH_DSI_Exception_Holder_out &operator= (
-      const TAO_AMH_DSI_Exception_Holder_out &);
+      TAO_AMH_DSI_Exception_Holder_out const &);
   TAO_AMH_DSI_Exception_Holder_out &operator= (
-      const TAO_AMH_DSI_Exception_Holder_var &);
+      TAO_AMH_DSI_Exception_Holder_var const &);
   TAO_AMH_DSI_Exception_Holder_out &operator= (
       TAO_AMH_DSI_Exception_Holder*);
   operator TAO_AMH_DSI_Exception_Holder*& ();
@@ -168,8 +168,8 @@ protected:
   CORBA::Boolean _tao_unmarshal_v (TAO_InputCDR &) override;
 
 private:
-  TAO_AMH_DSI_Exception_Holder (const TAO_AMH_DSI_Exception_Holder &);
-  void operator= (const TAO_AMH_DSI_Exception_Holder &);
+  TAO_AMH_DSI_Exception_Holder (TAO_AMH_DSI_Exception_Holder const &);
+  void operator= (TAO_AMH_DSI_Exception_Holder const &);
   std::unique_ptr<CORBA::Exception> exception_;
 
 protected:

@@ -118,7 +118,7 @@ TAO_AMH_DSI_Exception_Holder_var::operator= (
   return *this;
 }
 
-TAO_AMH_DSI_Exception_Holder_var::operator const TAO_AMH_DSI_Exception_Holder* () const // cast
+TAO_AMH_DSI_Exception_Holder_var::operator TAO_AMH_DSI_Exception_Holder const * () const // cast
 {
   return this->ptr_;
 }
@@ -192,13 +192,13 @@ TAO_AMH_DSI_Exception_Holder_out::TAO_AMH_DSI_Exception_Holder_out (
 }
 
 TAO_AMH_DSI_Exception_Holder_out::TAO_AMH_DSI_Exception_Holder_out (
-    const TAO_AMH_DSI_Exception_Holder_out &p)
+    TAO_AMH_DSI_Exception_Holder_out const &p)
   : ptr_ (const_cast<TAO_AMH_DSI_Exception_Holder_out&> (p).ptr_)
 {}
 
 TAO_AMH_DSI_Exception_Holder_out &
 TAO_AMH_DSI_Exception_Holder_out::operator= (
-    const TAO_AMH_DSI_Exception_Holder_out &p)
+    TAO_AMH_DSI_Exception_Holder_out const &p)
 {
   this->ptr_ = const_cast<TAO_AMH_DSI_Exception_Holder_out &> (p).ptr_;
   return *this;
@@ -206,7 +206,7 @@ TAO_AMH_DSI_Exception_Holder_out::operator= (
 
 TAO_AMH_DSI_Exception_Holder_out &
 TAO_AMH_DSI_Exception_Holder_out::operator= (
-    const TAO_AMH_DSI_Exception_Holder_var &p)
+    TAO_AMH_DSI_Exception_Holder_var const &p)
 {
   TAO_AMH_DSI_Exception_Holder *tmp = p.ptr ();
   CORBA::add_ref (tmp);
@@ -344,7 +344,7 @@ TAO_AMH_DSI_Response_Handler::invoke_reply (CORBA::NVList_ptr args,
       }
     this->_tao_rh_send_reply ();
   }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       // TODO:
     }
@@ -357,7 +357,7 @@ TAO_AMH_DSI_Response_Handler::invoke_excep (TAO_AMH_DSI_Exception_Holder * h)
     {
       h->raise_invoke ();
     }
-  catch (const CORBA::Exception & ex)
+  catch (CORBA::Exception const & ex)
     {
       this->_tao_rh_send_exception (ex);
     }
@@ -408,7 +408,7 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
       //  this->sent_gateway_exception_ = true;
       this->_tao_rh_send_reply ();
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       // TODO:
     }
@@ -453,7 +453,7 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
   //  this->sent_gateway_exception_ = true;
     this->_tao_rh_send_reply ();
   }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
   {
     // TODO:
   }

@@ -184,7 +184,7 @@ TAO_DII_Asynch_Reply_Dispatcher::dispatch_reply (
                                        this->callback_,
                                        this->reply_status_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       if (TAO_debug_level >= 4)
         {
@@ -216,7 +216,7 @@ TAO_DII_Asynch_Reply_Dispatcher::connection_closed ()
           this->callback_,
           GIOP::SYSTEM_EXCEPTION);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       if (TAO_debug_level >= 4)
         {
