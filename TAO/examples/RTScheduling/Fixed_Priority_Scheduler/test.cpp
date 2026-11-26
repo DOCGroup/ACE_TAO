@@ -256,11 +256,11 @@ DT_Test::svc ()
 
       dt_creator_->create_distributable_threads (current_.in ());
     }
-  catch (const CORBA::BAD_INV_ORDER &)
+  catch (CORBA::BAD_INV_ORDER const &)
     {
       // This exception can occur if ORB is already shutdown.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
@@ -287,7 +287,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       DT_TEST::instance ()->run (argc, argv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       status = 1;

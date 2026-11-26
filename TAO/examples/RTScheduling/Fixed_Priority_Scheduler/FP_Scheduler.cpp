@@ -52,7 +52,7 @@ Fixed_Priority_Scheduler::Fixed_Priority_Scheduler (CORBA::ORB_ptr orb)
       this->current_ =
         RTScheduling::Current::_narrow (object.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }
@@ -78,7 +78,7 @@ Fixed_Priority_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority
 }
 
 void
-Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &,
+Fixed_Priority_Scheduler::begin_new_scheduling_segment (RTScheduling::Current::IdType const &,
                                                         char const *,
                                                         CORBA::Policy_ptr /*sched_policy*/,
                                                         CORBA::Policy_ptr)
@@ -86,7 +86,7 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
 }
 
 void
-Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
+Fixed_Priority_Scheduler::begin_nested_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                                            char const *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
@@ -98,7 +98,7 @@ Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::C
 }
 
 void
-Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &guid,
+Fixed_Priority_Scheduler::update_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                                      char const *name,
                                                      CORBA::Policy_ptr sched_param,
                                                      CORBA::Policy_ptr implicit_sched_param)
@@ -110,13 +110,13 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
 }
 
 void
-Fixed_Priority_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &,
+Fixed_Priority_Scheduler::end_scheduling_segment (RTScheduling::Current::IdType const &,
                                                   char const *)
 {
 }
 
 void
-Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
+Fixed_Priority_Scheduler::end_nested_scheduling_segment (RTScheduling::Current::IdType const &,
                                                          char const *,
                                                          CORBA::Policy_ptr)
 {
@@ -229,7 +229,7 @@ Fixed_Priority_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_
 }
 
 void
-Fixed_Priority_Scheduler::cancel (const RTScheduling::Current::IdType &)
+Fixed_Priority_Scheduler::cancel (RTScheduling::Current::IdType const &)
 {
 }
 
@@ -240,7 +240,7 @@ Fixed_Priority_Scheduler::scheduling_policies ()
 }
 
 void
-Fixed_Priority_Scheduler::scheduling_policies (const CORBA::PolicyList &)
+Fixed_Priority_Scheduler::scheduling_policies (CORBA::PolicyList const &)
 {
 }
 

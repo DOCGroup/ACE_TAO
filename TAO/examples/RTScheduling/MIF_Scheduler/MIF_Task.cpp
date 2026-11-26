@@ -147,7 +147,7 @@ MIF_Task::perform_task ()
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;

@@ -69,7 +69,7 @@ MIF_DT_Creator::yield (time_t suspend_time,
           }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }
@@ -90,7 +90,7 @@ MIF_DT_Creator::wait ()
         {
           (void)this->orb_->work_pending ();
         }
-      catch (const CORBA::BAD_INV_ORDER &)
+      catch (CORBA::BAD_INV_ORDER const &)
         {
           // If there is BAD_INV_ORDER exception there is
           // no point in running this loop any more.

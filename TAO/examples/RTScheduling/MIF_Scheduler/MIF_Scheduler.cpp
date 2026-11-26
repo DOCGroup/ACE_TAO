@@ -84,7 +84,7 @@ MIF_Scheduler::MIF_Scheduler (CORBA::ORB_ptr orb)
       this->mapping_manager_ =
         RTCORBA::PriorityMappingManager::_narrow (object.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }
@@ -149,7 +149,7 @@ MIF_Scheduler::create_segment_scheduling_parameter (CORBA::Short importance)
 }
 
 void
-MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &/*guid*/,
+MIF_Scheduler::begin_new_scheduling_segment (RTScheduling::Current::IdType const &/*guid*/,
                                              char const *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
@@ -187,7 +187,7 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 }
 
 void
-MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
+MIF_Scheduler::begin_nested_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                                            char const *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
@@ -199,7 +199,7 @@ MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
 }
 
 void
-MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/*guid*/,
+MIF_Scheduler::update_scheduling_segment (RTScheduling::Current::IdType const &/*guid*/,
                                           char const */*name*/,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr /*implicit_sched_param*/)
@@ -254,7 +254,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
 }
 
 void
-MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
+MIF_Scheduler::end_scheduling_segment (RTScheduling::Current::IdType const &guid,
                                        char const *)
 {
   size_t const count = rtscheduling_guid_value (guid);
@@ -277,7 +277,7 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 }
 
 void
-MIF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
+MIF_Scheduler::end_nested_scheduling_segment (RTScheduling::Current::IdType const &,
                                                          char const *,
                                                          CORBA::Policy_ptr)
 {
@@ -628,7 +628,7 @@ MIF_Scheduler::receive_other (PortableInterceptor::ClientRequestInfo_ptr)
 }
 
 void
-MIF_Scheduler::cancel (const RTScheduling::Current::IdType &)
+MIF_Scheduler::cancel (RTScheduling::Current::IdType const &)
 {
 }
 
@@ -639,7 +639,7 @@ MIF_Scheduler::scheduling_policies ()
 }
 
 void
-MIF_Scheduler::scheduling_policies (const CORBA::PolicyList &)
+MIF_Scheduler::scheduling_policies (CORBA::PolicyList const &)
 {
 }
 

@@ -21,13 +21,13 @@ Job_i::Job_i (DT_Creator* dt_creator)
 
 Job_i::~Job_i () = default;
 
-const ACE_CString&
+ACE_CString const &
 Job_i::name ()
 {
   return job_name_;
 }
 
-const ACE_CString&
+ACE_CString const &
 Job_i::poa ()
 {
   return POA_name_;

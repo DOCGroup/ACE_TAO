@@ -212,7 +212,7 @@ DT_Creator::register_synch_obj ()
       //
 
     }
-  catch (const CosNaming::NamingContext::AlreadyBound& )
+  catch (CosNaming::NamingContext::AlreadyBound const & )
     {
       //
       // The synch context already exists, probably created by the
@@ -339,7 +339,7 @@ DT_Creator::activate_job_list ()
       CORBA::String_var ior =
         orb_->object_to_string (server.in ());
 
-      const ACE_CString &job_name = job_impl->name ();
+      ACE_CString const &job_name = job_impl->name ();
 
       CosNaming::Name_var naming_name =
         this->naming_->to_name (job_name.c_str ());
@@ -458,7 +458,7 @@ DT_Creator::create_distributable_threads (RTScheduling::Current_ptr current)
         {
           this->orb_->perform_work ();
         }
-      catch (const CORBA::Exception &)
+      catch (CORBA::Exception const &)
         {
           return;
         }

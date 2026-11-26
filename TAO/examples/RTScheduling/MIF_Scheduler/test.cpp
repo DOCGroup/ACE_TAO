@@ -217,7 +217,7 @@ DT_Test::svc ()
     {
       dt_creator_->create_distributable_threads (current_.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return -1;
@@ -246,7 +246,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
          "%t Main Thread\n"));
       DT_TEST::instance ()->run (argc, argv);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       status = 1;

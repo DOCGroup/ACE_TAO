@@ -36,8 +36,8 @@ class RTSCHEDTESTLIB_Export Job_i : public POA_Job
 
   /// @name Accessors
   /// @{
-  const ACE_CString& name ();
-  const ACE_CString& poa ();
+  ACE_CString const & name ();
+  ACE_CString const & poa ();
   /// @}
 
   /// Implements the Job::work operation.
