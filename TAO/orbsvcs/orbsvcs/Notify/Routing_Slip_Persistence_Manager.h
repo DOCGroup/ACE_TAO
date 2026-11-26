@@ -79,8 +79,8 @@ public:
   /// Persistent_File_Allocator.
   bool remove();
 
-  /////////////////////////////////////////
-  // Methods to be used during reload only.
+  /// @name Methods used during reload
+  /// @{
 
   /// \brief Call this method to recover data during event reload.
   ///
@@ -96,6 +96,7 @@ public:
   /// method to get the next RSPM.  It returns a null pointer
   /// when all persistent events have been reloaded.
   Routing_Slip_Persistence_Manager * load_next ();
+  /// @}
 
   /// @name Routing slip implementation methods
   /// Should not be called by Routing_Slip.

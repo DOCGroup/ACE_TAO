@@ -85,8 +85,8 @@ public:
   Routing_Slip &operator= (Routing_Slip const &) = delete;
   Routing_Slip &operator= (Routing_Slip &&) = delete;
 
-  //////////////////
-  // Action requests
+  /// @name Action requests
+  /// @{
 
   /// Route this event to destinations
   /// must be the Action request after
@@ -97,14 +97,14 @@ public:
   /// \param proxy_supplier the proxy supplier that will deliver the event
   /// \param filter should consumer-based filtering be applied?
   void dispatch (TAO_Notify_ProxySupplier * proxy_supplier, bool filter);
+  /// @}
 
-  /////////////////////////////////////////
   /// \brief Wait until the event/routing_slip has
   /// been saved at least once.
   void wait_persist ();
 
-  /////////////////////////////////////
-  // signals from the rest of the world
+  /// @name Signals from the rest of the world
+  /// @{
 
   /// \brief A delivery request has been satisfied.
   void delivery_request_complete (size_t request_id);
@@ -114,6 +114,7 @@ public:
 
   /// \brief The persistent storage has completed the last request.
   void persist_complete () override;
+  /// @}
 
   /// Access the event associated with this routing slip.
   TAO_Notify_Event::Ptr const & event () const;

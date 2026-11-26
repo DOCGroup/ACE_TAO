@@ -51,8 +51,8 @@ namespace TAO_Notify
 
     ~Reconnection_Registry () override;
 
-    //////////////////////////
-    // During normal operation
+    /// @name Normal operation
+    /// @{
 
     /// Add a new callback to the registry
     ::NotifyExt::ReconnectionRegistry::ReconnectionID register_callback (
@@ -62,19 +62,22 @@ namespace TAO_Notify
     void unregister_callback (::NotifyExt::ReconnectionRegistry::ReconnectionID id);
 
     CORBA::Boolean is_alive ();
+    /// @}
 
-    //////////////////////
-    // During topology save
+    /// @name Topology save
+    /// @{
     void save_persistent (Topology_Saver& saver) override;
+    /// @}
 
-    ///////////////////////////////////////
-    // During reload of persistent topology
+    /// @name Persistent topology reload
+    /// @{
 
     Topology_Object* load_child (ACE_CString const & type,
       CORBA::Long id,
       NVPList const& attrs) override;
 
     void send_reconnect (CosNotifyChannelAdmin::EventChannelFactory_ptr dest_factory);
+    /// @}
 
   private:
     void release () override;
