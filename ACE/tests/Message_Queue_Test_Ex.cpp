@@ -45,7 +45,7 @@ static ACE_High_Res_Timer *timer {};
 
 // Helper printing function
 static void
-print_message (const ACE_TCHAR *message)
+print_message (ACE_TCHAR const *message)
 {
   ACE_Time_Value tv;
   timer->elapsed_time (tv);
@@ -197,7 +197,7 @@ struct Receive_Messages
 static int
 single_thread_performance_test ()
 {
-  const ACE_TCHAR *message =
+  ACE_TCHAR const *message =
     ACE_TEXT ("ACE_Message_Queue_Ex<ACE_NULL_SYNCH>, single thread");
 
   // Create a message queue.
@@ -284,7 +284,7 @@ MQ_Ex_N_Tester::single_thread_performance_test ()
 int
 MQ_Ex_N_Tester::test_enqueue_tail ()
 {
-  const ACE_TCHAR *message =
+  ACE_TCHAR const *message =
     ACE_TEXT ("ACE_Message_Queue_Ex_N<ACE_NULL_SYNCH>, test_enqueue_tail");
 
   // Send_Messages creates messages and deletes them when it gets out of scope
@@ -336,7 +336,7 @@ MQ_Ex_N_Tester::test_enqueue_tail ()
 int
 MQ_Ex_N_Tester::test_enqueue_head ()
 {
-  const ACE_TCHAR *message =
+  ACE_TCHAR const *message =
     ACE_TEXT ("ACE_Message_Queue_Ex_N<ACE_NULL_SYNCH>, test_enqueue_head");
 
   // Send_Messages creates messages and deletes them when it gets out of scope
@@ -446,7 +446,7 @@ static int
 performance_test ()
 {
   Queue_Wrapper queue_wrapper;
-  const ACE_TCHAR *message =
+  ACE_TCHAR const *message =
     ACE_TEXT ("ACE_Message_Queue_Ex<ACE_SYNCH>");
   int i = 0;
 
@@ -511,7 +511,7 @@ performance_test ()
 int
 MQ_Ex_N_Tester::performance_test ()
 {
-  const ACE_TCHAR *message =
+  ACE_TCHAR const *message =
     ACE_TEXT ("ACE_Message_Queue_Ex_N<ACE_SYNCH>");
 
   Send_Messages messages (max_messages, chain_limit);

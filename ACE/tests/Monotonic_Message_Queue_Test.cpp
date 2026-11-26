@@ -191,18 +191,18 @@ public:
       mq_ (mq)
   {}
 
-  int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg) override;
 
-  bool trigger_in(const ACE_Time_Value &delay);
+  bool trigger_in(ACE_Time_Value const &delay);
 
 private:
   ACE_Reactor* reactor_;
   SYNCH_QUEUE& mq_;
 };
 
-int TestHandler::handle_timeout (const ACE_Time_Value &,
-                                 const void *)
+int TestHandler::handle_timeout (ACE_Time_Value const &,
+                                 void const *)
 {
   const char S1[] = "message";
 
@@ -215,13 +215,13 @@ int TestHandler::handle_timeout (const ACE_Time_Value &,
   return 0;
 }
 
-bool TestHandler::trigger_in(const ACE_Time_Value &delay)
+bool TestHandler::trigger_in(ACE_Time_Value const &delay)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) TestHandler::trigger_in - scheduling timer\n"));
   return -1 != reactor_->schedule_timer (this, nullptr, delay, ACE_Time_Value (0));
 }
 
-void set_system_time(const ACE_Time_Value& tv)
+void set_system_time(ACE_Time_Value const & tv)
 {
 #    if defined (ACE_WIN32)
   ACE_Date_Time curdt (tv);

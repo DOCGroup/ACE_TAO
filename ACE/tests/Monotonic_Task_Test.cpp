@@ -41,7 +41,7 @@
 
 #  if defined (ACE_HAS_THREADS)
 
-void set_system_time(const ACE_Time_Value& tv)
+void set_system_time(ACE_Time_Value const & tv)
 {
 #    if defined (ACE_WIN32)
   ACE_Date_Time curdt (tv);
