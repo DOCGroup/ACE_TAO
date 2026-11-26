@@ -432,7 +432,7 @@ ACE_WFMO_Reactor_Handler_Repository::unbind (ACE_HANDLE handle,
 ACE_INLINE int
 ACE_WFMO_Reactor::reset_timer_interval
   (long timer_id,
-   const ACE_Time_Value &interval)
+   ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::reset_timer_interval");
 
@@ -454,9 +454,9 @@ ACE_WFMO_Reactor::reset_timer_interval
 
 ACE_INLINE long
 ACE_WFMO_Reactor::schedule_timer (ACE_Event_Handler *handler,
-                                  const void *arg,
-                                  const ACE_Time_Value &delay_time,
-                                  const ACE_Time_Value &interval)
+                                  void const *arg,
+                                  ACE_Time_Value const &delay_time,
+                                  ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::schedule_timer");
 
@@ -492,7 +492,7 @@ ACE_WFMO_Reactor::cancel_timer (ACE_Event_Handler *handler,
 
 ACE_INLINE int
 ACE_WFMO_Reactor::cancel_timer (long timer_id,
-                                const void **arg,
+                                void const **arg,
                                 int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_WFMO_Reactor::cancel_timer");
@@ -561,7 +561,7 @@ ACE_WFMO_Reactor::register_handler (ACE_HANDLE event_handle,
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor::register_handler (const ACE_Handle_Set &handles,
+ACE_WFMO_Reactor::register_handler (ACE_Handle_Set const &handles,
                                     ACE_Event_Handler *handler,
                                     ACE_Reactor_Mask mask)
 {
@@ -646,7 +646,7 @@ ACE_WFMO_Reactor::remove_handler (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor::remove_handler (const ACE_Handle_Set &handles,
+ACE_WFMO_Reactor::remove_handler (ACE_Handle_Set const &handles,
                                   ACE_Reactor_Mask mask)
 {
   ACE_Handle_Set_Iterator handle_iter (handles);
@@ -695,7 +695,7 @@ ACE_WFMO_Reactor::suspend_handler (ACE_Event_Handler *event_handler)
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor::suspend_handler (const ACE_Handle_Set &handles)
+ACE_WFMO_Reactor::suspend_handler (ACE_Handle_Set const &handles)
 {
   ACE_Handle_Set_Iterator handle_iter (handles);
   ACE_HANDLE h;
@@ -796,7 +796,7 @@ ACE_WFMO_Reactor::resume_handler (ACE_Event_Handler *event_handler)
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor::resume_handler (const ACE_Handle_Set &handles)
+ACE_WFMO_Reactor::resume_handler (ACE_Handle_Set const &handles)
 {
   ACE_Handle_Set_Iterator handle_iter (handles);
   ACE_HANDLE h;
@@ -1008,7 +1008,7 @@ ACE_WFMO_Reactor::register_handler (int signum,
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor::register_handler (const ACE_Sig_Set &sigset,
+ACE_WFMO_Reactor::register_handler (ACE_Sig_Set const &sigset,
                                     ACE_Event_Handler *new_sh,
                                     ACE_Sig_Action *new_disp)
 {
@@ -1043,7 +1043,7 @@ ACE_WFMO_Reactor::remove_handler (int signum,
 }
 
 ACE_INLINE int
-ACE_WFMO_Reactor::remove_handler (const ACE_Sig_Set &sigset)
+ACE_WFMO_Reactor::remove_handler (ACE_Sig_Set const &sigset)
 {
   int result = 0;
 

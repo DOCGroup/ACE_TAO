@@ -1133,7 +1133,7 @@ ACE_WFMO_Reactor_Handler_Repository::dump () const
 /************************************************************/
 
 int
-ACE_WFMO_Reactor::work_pending (const ACE_Time_Value &)
+ACE_WFMO_Reactor::work_pending (ACE_Time_Value const &)
 {
   ACE_NOTSUP_RETURN (-1);
 }

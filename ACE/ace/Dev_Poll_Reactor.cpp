@@ -929,7 +929,7 @@ ACE_Dev_Poll_Reactor::close ()
 }
 
 int
-ACE_Dev_Poll_Reactor::work_pending (const ACE_Time_Value & max_wait_time)
+ACE_Dev_Poll_Reactor::work_pending (ACE_Time_Value const & max_wait_time)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::work_pending");
 
@@ -1588,7 +1588,7 @@ ACE_Dev_Poll_Reactor::register_handler (
 }
 
 int
-ACE_Dev_Poll_Reactor::register_handler (const ACE_Handle_Set &handle_set,
+ACE_Dev_Poll_Reactor::register_handler (ACE_Handle_Set const &handle_set,
                                         ACE_Event_Handler *event_handler,
                                         ACE_Reactor_Mask mask)
 {
@@ -1633,7 +1633,7 @@ ACE_Dev_Poll_Reactor::register_handler (int signum,
 }
 
 int
-ACE_Dev_Poll_Reactor::register_handler (const ACE_Sig_Set &sigset,
+ACE_Dev_Poll_Reactor::register_handler (ACE_Sig_Set const &sigset,
                                         ACE_Event_Handler *new_sh,
                                         ACE_Sig_Action *new_disp)
 {
@@ -1738,7 +1738,7 @@ ACE_Dev_Poll_Reactor::remove_handler_i (ACE_HANDLE handle,
 }
 
 int
-ACE_Dev_Poll_Reactor::remove_handler (const ACE_Handle_Set &handle_set,
+ACE_Dev_Poll_Reactor::remove_handler (ACE_Handle_Set const &handle_set,
                                       ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::remove_handler");
@@ -1772,7 +1772,7 @@ ACE_Dev_Poll_Reactor::remove_handler (int signum,
 }
 
 int
-ACE_Dev_Poll_Reactor::remove_handler (const ACE_Sig_Set &sigset)
+ACE_Dev_Poll_Reactor::remove_handler (ACE_Sig_Set const &sigset)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::remove_handler");
 
@@ -1827,7 +1827,7 @@ ACE_Dev_Poll_Reactor::suspend_handler (ACE_HANDLE handle)
 }
 
 int
-ACE_Dev_Poll_Reactor::suspend_handler (const ACE_Handle_Set &handles)
+ACE_Dev_Poll_Reactor::suspend_handler (ACE_Handle_Set const &handles)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::suspend_handler");
 
@@ -1952,7 +1952,7 @@ ACE_Dev_Poll_Reactor::resume_handler (ACE_HANDLE handle)
 }
 
 int
-ACE_Dev_Poll_Reactor::resume_handler (const ACE_Handle_Set &handles)
+ACE_Dev_Poll_Reactor::resume_handler (ACE_Handle_Set const &handles)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::resume_handler");
 
@@ -2076,9 +2076,9 @@ ACE_Dev_Poll_Reactor::uses_event_associations ()
 
 long
 ACE_Dev_Poll_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
-                                      const void *arg,
-                                      const ACE_Time_Value &delay,
-                                      const ACE_Time_Value &interval)
+                                      void const *arg,
+                                      ACE_Time_Value const &delay,
+                                      ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::schedule_timer");
 
@@ -2099,7 +2099,7 @@ ACE_Dev_Poll_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
 
 int
 ACE_Dev_Poll_Reactor::reset_timer_interval (long timer_id,
-                                            const ACE_Time_Value &interval)
+                                            ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::reset_timer_interval");
 
@@ -2134,7 +2134,7 @@ ACE_Dev_Poll_Reactor::cancel_timer (ACE_Event_Handler *handler,
 
 int
 ACE_Dev_Poll_Reactor::cancel_timer (long timer_id,
-                                    const void **arg,
+                                    void const **arg,
                                     int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::cancel_timer");

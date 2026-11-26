@@ -463,7 +463,7 @@ public:
    *       resolutions with the @c ACE_Dev_Poll_Reactor.
    */
   int work_pending (
-    const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero) override;
+    ACE_Time_Value const &max_wait_time = ACE_Time_Value::zero) override;
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
@@ -553,7 +553,7 @@ public:
 
   /// Register @a event_handler with all the @a handles in the @c
   /// Handle_Set.
-  int register_handler (const ACE_Handle_Set &handles,
+  int register_handler (ACE_Handle_Set const &handles,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask) override;
 
@@ -571,7 +571,7 @@ public:
 
   /// Registers @a new_sh to handle a set of signals @a sigset using the
   /// @a new_disp.
-  int register_handler (const ACE_Sig_Set &sigset,
+  int register_handler (ACE_Sig_Set const &sigset,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = nullptr) override;
 
@@ -598,7 +598,7 @@ public:
    * ACE_Event_Handler::DONT_CALL then the @c handle_close method of
    * the associated @c event_handlers is not invoked.
    */
-  int remove_handler (const ACE_Handle_Set &handle_set,
+  int remove_handler (ACE_Handle_Set const &handle_set,
                               ACE_Reactor_Mask mask) override;
 
   /**
@@ -613,7 +613,7 @@ public:
                               int sigkey = -1) override;
 
   /// Calls @c remove_handler for every signal in @a sigset.
-  int remove_handler (const ACE_Sig_Set &sigset) override;
+  int remove_handler (ACE_Sig_Set const &sigset) override;
 
   /// @}
 
@@ -628,7 +628,7 @@ public:
   int suspend_handler (ACE_HANDLE handle) override;
 
   /// Suspend all handles in handle set temporarily.
-  int suspend_handler (const ACE_Handle_Set &handles) override;
+  int suspend_handler (ACE_Handle_Set const &handles) override;
 
   /// Suspend all handles temporarily.
   int suspend_handlers () override;
@@ -641,7 +641,7 @@ public:
   int resume_handler (ACE_HANDLE handle) override;
 
   /// Resume all handles in handle set.
-  int resume_handler (const ACE_Handle_Set &handles) override;
+  int resume_handler (ACE_Handle_Set const &handles) override;
 
   /// Resume all handles.
   int resume_handlers () override;
@@ -680,9 +680,9 @@ public:
    * @return -1 on failure, a timer_id value on success
    */
   long schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval = ACE_Time_Value::zero) override;
+                               void const *arg,
+                               ACE_Time_Value const &delay,
+                               ACE_Time_Value const &interval = ACE_Time_Value::zero) override;
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -692,7 +692,7 @@ public:
    * timer.  Returns 0 if successful, -1 if not.
    */
   int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval) override;
+                                    ACE_Time_Value const &interval) override;
 
   /// Cancel all Event_Handlers that match the address of
   /// @a event_handler.  Returns number of handlers cancelled.
@@ -709,7 +709,7 @@ public:
    * wasn't found.
    */
   int cancel_timer (long timer_id,
-                            const void **arg = nullptr,
+                            void const **arg = nullptr,
                             int dont_call_handle_close = 1) override;
 
   /// @}

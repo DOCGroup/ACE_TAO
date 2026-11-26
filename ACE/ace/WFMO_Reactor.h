@@ -723,7 +723,7 @@ public:
    * use handle_events (ACE_Time_Value::zero) to get basically the
    * same effect, i.e., it won't block the caller if there are no events.
    */
-  virtual int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero);
+  virtual int work_pending (ACE_Time_Value const &max_wait_time = ACE_Time_Value::zero);
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
@@ -833,7 +833,7 @@ public:
 
   /// Register @a event_handler with all the @a handles in the
   /// @c Handle_Set.
-  virtual int register_handler (const ACE_Handle_Set &handles,
+  virtual int register_handler (ACE_Handle_Set const &handles,
                                 ACE_Event_Handler *event_handler,
                                 ACE_Reactor_Mask mask);
 
@@ -850,7 +850,7 @@ public:
 
   /// Registers @a new_sh to handle a set of signals @a sigset using the
   /// @a new_disp.
-  virtual int register_handler (const ACE_Sig_Set &sigset,
+  virtual int register_handler (ACE_Sig_Set const &sigset,
                                 ACE_Event_Handler *new_sh,
                                 ACE_Sig_Action *new_disp = nullptr);
 
@@ -886,7 +886,7 @@ public:
    * bind of Event_Handler.  If there are no more bindings for any
    * of these handles then they are removed from WFMO_Reactor.
    */
-  virtual int remove_handler (const ACE_Handle_Set &handle_set,
+  virtual int remove_handler (ACE_Handle_Set const &handle_set,
                               ACE_Reactor_Mask);
 
   /**
@@ -902,7 +902,7 @@ public:
                               int sigkey = -1);
 
   /// Calls remove_handler() for every signal in @a sigset.
-  virtual int remove_handler (const ACE_Sig_Set &sigset);
+  virtual int remove_handler (ACE_Sig_Set const &sigset);
   /// @}
 
   /// @name Handler suspension and resumption
@@ -916,7 +916,7 @@ public:
   virtual int suspend_handler (ACE_HANDLE handle);
 
   /// Suspend all @a handles in handle set temporarily.
-  virtual int suspend_handler (const ACE_Handle_Set &handles);
+  virtual int suspend_handler (ACE_Handle_Set const &handles);
 
   /// Suspend all handles temporarily.
   virtual int suspend_handlers ();
@@ -929,7 +929,7 @@ public:
   virtual int resume_handler (ACE_HANDLE handle);
 
   /// Resume all @a handles in handle set.
-  virtual int resume_handler (const ACE_Handle_Set &handles);
+  virtual int resume_handler (ACE_Handle_Set const &handles);
 
   /// Resume all @c handles.
   virtual int resume_handlers ();
@@ -970,9 +970,9 @@ public:
    * @return -1 on failure, a timer_id value on success
    */
   virtual long schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval = ACE_Time_Value::zero);
+                               void const *arg,
+                               ACE_Time_Value const &delay,
+                               ACE_Time_Value const &interval = ACE_Time_Value::zero);
 
   /**
    * Resets the interval of the timer represented by @a timer_id to
@@ -982,7 +982,7 @@ public:
    * timer.  Returns 0 if successful, -1 if not.
    */
   virtual int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval);
+                                    ACE_Time_Value const &interval);
 
   /// Cancel all Event_Handlers that match the address of
   /// @a event_handler.  Returns number of handler's cancelled.
@@ -999,7 +999,7 @@ public:
    * wasn't found.
    */
   virtual int cancel_timer (long timer_id,
-                            const void **arg = nullptr,
+                            void const **arg = nullptr,
                             int dont_call_handle_close = 1);
   /// @}
 
