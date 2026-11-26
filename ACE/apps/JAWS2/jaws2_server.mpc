@@ -1,0 +1,17 @@
+project(JAWS2_server) : aceexe {
+  exename = jaws2_server
+  avoids += uses_wchar ace_for_tao
+  after += HTTPU JAWS2
+  libs += HTTPU JAWS2
+  includes += .
+
+  Source_Files {
+    HTTP_10.cpp
+    HTTP_10_Parse.cpp
+    HTTP_10_Read.cpp
+    HTTP_10_Request.cpp
+    HTTP_10_Write.cpp
+    HTTP_Policy.cpp
+    main.cpp
+  }
+}
