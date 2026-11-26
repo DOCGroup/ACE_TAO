@@ -249,14 +249,14 @@ public:
   /// Constructor for outgoing RTP packets
   RTP_Packet(unsigned char padding,
              unsigned char marker,
-             unsigned char payloadType,
-             ACE_UINT32 sequenceNumber,
-             ACE_UINT32 timeStamp,
-             ACE_UINT32 syncSource,
-             unsigned char contribSourcCount,
-             ACE_UINT32 contribSourceList[],
+             unsigned char payload_type,
+             ACE_UINT32 seq_num,
+             ACE_UINT32 timestamp,
+             ACE_UINT32 ssrc,
+             unsigned char csrc_count,
+             ACE_UINT32 *csrc_list,
              char *data,
-             ACE_UINT16 dataSize);
+             ACE_UINT16 data_size);
 
   ~RTP_Packet();
 
