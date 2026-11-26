@@ -3172,9 +3172,9 @@ ACE::minimum_frame_size (u_long period1, u_long period2)
 }
 
 u_long
-ACE::is_prime (const u_long n,
-               const u_long min_factor,
-               const u_long max_factor)
+ACE::is_prime (u_long const n,
+               u_long const min_factor,
+               u_long const max_factor)
 {
   if (n > 3)
     {

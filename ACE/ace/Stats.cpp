@@ -201,7 +201,7 @@ ACE_Stats::reset ()
 }
 
 int
-ACE_Stats::print_summary (const u_int precision,
+ACE_Stats::print_summary (u_int const precision,
                           ACE_UINT32 const scale_factor,
                           FILE *file) const
 {

@@ -1,7 +1,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_Stats_Value::ACE_Stats_Value (const u_int precision)
+ACE_Stats_Value::ACE_Stats_Value (u_int const precision)
   : precision_ (precision)
 {
 }

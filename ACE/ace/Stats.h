@@ -42,7 +42,7 @@ public:
    * good value, or maybe 4.  5 will probably be too large for
    * non-trivial data sets.
    */
-  explicit ACE_Stats_Value (const u_int precision);
+  explicit ACE_Stats_Value (u_int const precision);
 
   /// Accessor for precision.
   u_int precision () const;
@@ -155,7 +155,7 @@ public:
    * scale factor, it successively tries to reduce it.  Returns -1 if
    * there is overflow even with a 0 scale factor.
    */
-  int print_summary (const u_int precision,
+  int print_summary (u_int const precision,
                      ACE_UINT32 const scale_factor = 1,
                      FILE *
 #ifdef ACE_LACKS_STDOUT

@@ -618,9 +618,9 @@ namespace ACE
    * among threads. For just one thread, typical values are 2 and
    * n/2.
    */
-  extern ACE_Export u_long is_prime (const u_long n,
-                                     const u_long min_factor,
-                                     const u_long max_factor);
+  extern ACE_Export u_long is_prime (u_long const n,
+                                     u_long const min_factor,
+                                     u_long const max_factor);
 
   /// Map troublesome win32 errno values to values that standard C
   /// strerr function understands.  Thank you Microsoft.
