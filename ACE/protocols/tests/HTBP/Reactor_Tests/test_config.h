@@ -137,7 +137,7 @@ class ACE_Test_Output
 public:
   ACE_Test_Output ();
   ~ACE_Test_Output ();
-  int set_output (const ACE_TCHAR *filename, int append = 0);
+  int set_output (ACE_TCHAR const *filename, int append = 0);
   OFSTREAM *output_file ();
   void close ();
 
@@ -174,7 +174,7 @@ ACE_Test_Output::output_file ()
 }
 
 inline int
-ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
+ACE_Test_Output::set_output (ACE_TCHAR const *filename, int append)
 {
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
