@@ -71,6 +71,7 @@ public:
 protected:
   /// @name Register timers and handles with FOX
   /// @{
+
   /// Register a single @a handler.
   int register_handler_i (ACE_HANDLE handle,
                           ACE_Event_Handler *handler,
@@ -92,11 +93,11 @@ protected:
   /// Wait for events to occur.
   int wait_for_multiple_events (ACE_Select_Reactor_Handle_Set &,
                                 ACE_Time_Value *) override;
+  /// @}
 
   int FoxWaitForMultipleEvents (int,
                                 ACE_Select_Reactor_Handle_Set &,
                                 ACE_Time_Value *);
-  /// @}
 
 private:
   /// This method ensures there's an Fox timeout for the first timeout
