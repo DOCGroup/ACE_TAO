@@ -41,7 +41,7 @@ public:
   {
   }
 
-  inline String_Manager_T (const String_Manager_T<charT> &rhs) :
+  inline String_Manager_T (String_Manager_T<charT> const &rhs) :
     ptr_ (s_traits::duplicate (rhs.ptr_))
   {
   }
@@ -57,7 +57,7 @@ public:
   }
 
   /// Assignment from another managed type
-  inline String_Manager_T &operator= (const String_Manager_T<charT> &rhs) {
+  inline String_Manager_T &operator= (String_Manager_T<charT> const &rhs) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager_T <character_type> tmp (rhs);
@@ -66,7 +66,7 @@ public:
   }
 
   /// Assignment from var type will make a copy
-  inline String_Manager_T &operator= (const typename s_traits::string_var& value) {
+  inline String_Manager_T &operator= (typename s_traits::string_var const &value) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager_T <character_type> tmp (value.in ());
@@ -92,7 +92,7 @@ public:
   }
 
   /// Cast (read-only)
-  inline operator character_type const*() const {
+  inline operator character_type const *() const {
     return this->ptr_;
   }
 

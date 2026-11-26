@@ -199,7 +199,7 @@ namespace TAO
     }
 
     /// Assignment from a constant char*.
-    inline String_out& operator= (character_type const* p)
+    inline String_out& operator= (character_type const *p)
     {
       this->ptr_ = s_traits::duplicate (p);
       return *this;
@@ -222,7 +222,7 @@ namespace TAO
     character_type *&ptr_;
 
     // Assignment from _var disallowed
-    void operator= (const typename s_traits::string_var &);
+    void operator= (typename s_traits::string_var const &) = delete;
   };
 
   /**
