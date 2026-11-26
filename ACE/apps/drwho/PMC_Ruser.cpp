@@ -197,6 +197,4 @@ PMC_Ruser::process ()
     }
 }
 
-PMC_Ruser::PMC_Ruser ()
-{
-}
+PMC_Ruser::PMC_Ruser () = default;

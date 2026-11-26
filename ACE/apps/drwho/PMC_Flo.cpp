@@ -128,6 +128,4 @@ PMC_Flo::process ()
   PM_Client::process ();
 }
 
-PMC_Flo::PMC_Flo ()
-{
-}
+PMC_Flo::PMC_Flo () = default;

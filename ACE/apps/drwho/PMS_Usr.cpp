@@ -78,6 +78,4 @@ PMS_Usr::decode (char *packet, int &packet_length)
   return 1;
 }
 
-PMS_Usr::PMS_Usr ()
-{
-}
+PMS_Usr::PMS_Usr () = default;

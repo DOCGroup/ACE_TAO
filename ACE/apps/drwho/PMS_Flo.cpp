@@ -78,6 +78,4 @@ PMS_Flo::decode (char *packet, int &packet_length)
   return 1;
 }
 
-PMS_Flo::PMS_Flo ()
-{
-}
+PMS_Flo::PMS_Flo () = default;

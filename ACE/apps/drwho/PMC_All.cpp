@@ -99,6 +99,4 @@ PMC_All::process ()
   PM_Client::process ();
 }
 
-PMC_All::PMC_All ()
-{
-}
+PMC_All::PMC_All () = default;

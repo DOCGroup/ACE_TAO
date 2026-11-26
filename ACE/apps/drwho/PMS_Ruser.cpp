@@ -146,6 +146,4 @@ PMS_Ruser::handle_protocol_entries (char *buf_ptr,
   return buf_ptr;
 }
 
-PMS_Ruser::PMS_Ruser ()
-{
-}
+PMS_Ruser::PMS_Ruser () = default;
