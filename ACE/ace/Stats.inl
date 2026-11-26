@@ -15,7 +15,7 @@ ACE_Stats_Value::precision () const
 
 ACE_INLINE
 void
-ACE_Stats_Value::whole (const ACE_UINT32 value)
+ACE_Stats_Value::whole (ACE_UINT32 const value)
 {
   whole_ = value;
 }
@@ -29,7 +29,7 @@ ACE_Stats_Value::whole () const
 
 ACE_INLINE
 void
-ACE_Stats_Value::fractional (const ACE_UINT32 value)
+ACE_Stats_Value::fractional (ACE_UINT32 const value)
 {
   fractional_ = value;
 }
