@@ -123,21 +123,21 @@ public:
    * of any newly activated thread(s) will inherit the existing
    * @a grp_id of the existing thread(s) in the @c Task.
    *
-   * The <{flags}> are a bitwise-OR of the following:
-   * = BEGIN<INDENT>
+   * The @a flags are a bitwise-OR of the following:
+   * @code
    * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
    * THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
    * THR_SCHED_RR, THR_SCHED_DEFAULT, THR_EXPLICIT_SCHED,
    * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
-   * = END<INDENT>
+   * @endcode
    * If THR_SCHED_INHERIT is not desirable, applications should
    * specifically pass in THR_EXPLICIT_SCHED.
    *
    *
-   * By default, or if <{priority}> is set to
+   * By default, or if @a priority is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for
-   * the given scheduling policy (specified in <{flags}>, e.g.,
+   * the given scheduling policy (specified in @a flags, e.g.,
    * @c THR_SCHED_DEFAULT) is used.  This value is calculated
    * dynamically, and is the median value between the minimum and
    * maximum priority values for the given policy.  If an explicit

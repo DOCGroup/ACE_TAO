@@ -48,19 +48,19 @@ public:
   /**
    * Creates a new thread having @a flags attributes and running @a func
    * with @a args (if @a thread_adapter is non-0 then @a func and @a args
-   * are ignored and are obtained from @a thread_adapter>.  @a thr_id
+   * are ignored and are obtained from @a thread_adapter).  @a thr_id
    * and @a t_handle are set to the thread's ID and handle (?),
    * respectively.  The thread runs at @a priority priority (see
    * below).
    *
    * The @a flags are a bitwise-OR of the following:
-   * = BEGIN<INDENT>
+   * @code
    * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
    * THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
    * THR_SCHED_RR, THR_SCHED_DEFAULT, THR_EXPLICIT_SCHED,
    * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
-   * = END<INDENT>
+   * @endcode
    *
    * By default, or if @a priority is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for

@@ -1598,13 +1598,13 @@ namespace ACE_OS {
    * below).
    *
    * The @a flags are a bitwise-OR of the following:
-   * = BEGIN<INDENT>
+   * @code
    * THR_CANCEL_DISABLE, THR_CANCEL_ENABLE, THR_CANCEL_DEFERRED,
    * THR_CANCEL_ASYNCHRONOUS, THR_BOUND, THR_NEW_LWP, THR_DETACHED,
    * THR_SUSPENDED, THR_DAEMON, THR_JOINABLE, THR_SCHED_FIFO,
    * THR_SCHED_RR, THR_SCHED_DEFAULT, THR_EXPLICIT_SCHED,
    * THR_SCOPE_SYSTEM, THR_SCOPE_PROCESS
-   * = END<INDENT>
+   * @endcode
    *
    * By default, or if @a priority is set to
    * ACE_DEFAULT_THREAD_PRIORITY, an "appropriate" priority value for

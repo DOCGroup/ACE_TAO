@@ -30,7 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * @class ACE_Mutex_Invariants
  *
  * @brief Mutex Invariants
- * = INVARIANTS
+ * @par Invariants
  * 1. Only one owner at a time.
  */
 class ACE_Export ACE_Mutex_Invariants

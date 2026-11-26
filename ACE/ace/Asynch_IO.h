@@ -221,7 +221,7 @@ public:
    * There is slight difference in the semantics between NT and POSIX
    * platforms which is given below.
    *
-   * = Win32 :
+   * @par Win32
    *
    *   cancels all pending accepts operations that were issued by the
    *   calling thread.  The function does not cancel asynchronous
@@ -229,7 +229,7 @@ public:
    *   All I/O operations that are canceled will complete with the
    *   error ERROR_OPERATION_ABORTED.
    *
-   * = POSIX:
+   * @par POSIX
    *
    *   Attempts to cancel one or more asynchronous I/O requests
    *   currently outstanding against the {handle} registered in this
