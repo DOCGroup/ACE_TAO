@@ -65,7 +65,7 @@ public:
   File_Parser &operator= (File_Parser &&) = delete;
 
   /// Open or close the configured input file.
-  int open (const ACE_TCHAR filename[]);
+  int open (ACE_TCHAR const filename[]);
   int close ();
 
   /// Pure virtual hook for subclasses to fill in an entry using the

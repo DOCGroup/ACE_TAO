@@ -275,7 +275,7 @@ HTTP_Server::thread_per_request (HTTP_Handler_Factory &factory)
 
   // When we are throttling, this is the amount of time to wait before
   // checking for runnability again.
-  const ACE_Time_Value wait_time (0, 10);
+  ACE_Time_Value const wait_time (0, 10);
 
   for (;;)
     {
