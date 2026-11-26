@@ -90,7 +90,7 @@ Test_ObjRef::init_parameters (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (msg_str);
     }
@@ -113,7 +113,7 @@ Test_ObjRef::reset_parameters ()
       // set the attribute of the object
       this->in_->description (desc); // set the attribute for the in object
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("set coffee attribute");
       return -1;
@@ -138,7 +138,7 @@ Test_ObjRef::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_ObjRef::run_sii_test\n");
     }
@@ -187,7 +187,7 @@ Test_ObjRef::check_validity ()
         return true; // success
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Retrieving description");
       return false;
@@ -245,7 +245,7 @@ Test_ObjRef::print_values ()
           ret = ret_desc->name.in ();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Retrieving Description");
       return;

@@ -42,7 +42,7 @@ Test_Any::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::Any *tmp;
+  CORBA::Any const *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::Any (*tmp);
 
@@ -59,7 +59,7 @@ Test_Any::dii_req_invoke (CORBA::Request *req)
 }
 
 #if 0 /* any_table isn't currently used */
-static const CORBA::TypeCode_ptr any_table [] =
+static CORBA::TypeCode_ptr const any_table [] =
 {
   // primitive parameterless typecodes
   CORBA::_tc_short,
@@ -84,7 +84,7 @@ Test_Any::init_parameters (Param_Test_ptr objref)
       this->reset_parameters ();
       return 0;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception ("System Exception doing make_coffee");
     }
@@ -278,7 +278,7 @@ Test_Any::run_sii_test (Param_Test_ptr objref)
                                      this->inout_,
                                      this->out_.out ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return -1;
     }
@@ -296,7 +296,7 @@ Test_Any::check_validity ()
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
   Param_Test::Fixed_Array_forany array_in, array_inout, array_out, array_ret;
   const Param_Test::Bounded_Short_Seq *bdss_in, *bdss_inout, *bdss_out, *bdss_ret;
-  const CORBA::ShortSeq *ubss_in, *ubss_inout, *ubss_out, *ubss_ret;
+  CORBA::ShortSeq const *ubss_in, *ubss_inout, *ubss_out, *ubss_ret;
   const Param_Test::Fixed_Struct *fs_in, *fs_inout, *fs_out, *fs_ret;
   const Param_Test::Big_Union *bu_in, *bu_inout, *bu_out, *bu_ret;
   const Param_Test::Small_Union *su_in, *su_inout, *su_out, *su_ret;

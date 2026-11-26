@@ -117,7 +117,7 @@ Param_Test_i::test_bounded_string (char const *s1,
 // the in string. For the inout, we append the same string to itself and send
 // it back
 CORBA::WChar *
-Param_Test_i::test_unbounded_wstring (const CORBA::WChar *ws1,
+Param_Test_i::test_unbounded_wstring (CORBA::WChar const *ws1,
                                       CORBA::WChar *&ws2,
                                       CORBA::WString_out ws3)
 {
@@ -142,7 +142,7 @@ Param_Test_i::test_unbounded_wstring (const CORBA::WChar *ws1,
 // the in string. For the inout, we append the same string to itself and send
 // it back
 CORBA::WChar *
-Param_Test_i::test_bounded_wstring (const CORBA::WChar *ws1,
+Param_Test_i::test_bounded_wstring (CORBA::WChar const *ws1,
                                     CORBA::WChar *&ws2,
                                     CORBA::WString_out ws3)
 {
@@ -177,7 +177,7 @@ Param_Test_i::test_fixed_struct (const Param_Test::Fixed_Struct &s1,
 // Sequence operations.
 
 CORBA::LongSeq *
-Param_Test_i::test_long_sequence (const CORBA::LongSeq & s1,
+Param_Test_i::test_long_sequence (CORBA::LongSeq const & s1,
                                   CORBA::LongSeq & s2,
                                   CORBA::LongSeq_out s3)
 {
@@ -193,7 +193,7 @@ Param_Test_i::test_long_sequence (const CORBA::LongSeq & s1,
 }
 
 CORBA::ShortSeq *
-Param_Test_i::test_short_sequence (const CORBA::ShortSeq & s1,
+Param_Test_i::test_short_sequence (CORBA::ShortSeq const & s1,
                                    CORBA::ShortSeq & s2,
                                    CORBA::ShortSeq_out s3)
 {
@@ -241,7 +241,7 @@ Param_Test_i::test_bounded_long_sequence (const Param_Test::Bounded_Long_Seq & s
 }
 
 CORBA::StringSeq *
-Param_Test_i::test_strseq (const CORBA::StringSeq &s1,
+Param_Test_i::test_strseq (CORBA::StringSeq const &s1,
                            CORBA::StringSeq &s2,
                            CORBA::StringSeq_out s3)
 {
@@ -296,7 +296,7 @@ Param_Test_i::test_bounded_strseq (const Param_Test::Bounded_StrSeq & s1,
 }
 
 CORBA::WStringSeq *
-Param_Test_i::test_wstrseq (const CORBA::WStringSeq &ws1,
+Param_Test_i::test_wstrseq (CORBA::WStringSeq const &ws1,
                             CORBA::WStringSeq &ws2,
                             CORBA::WStringSeq_out ws3)
 {
@@ -518,7 +518,7 @@ Param_Test_i::test_bounded_coffe_mix (const Param_Test::Bounded_Coffee_Mix & s1,
 }
 
 CORBA::AnySeq *
-Param_Test_i::test_anyseq (const CORBA::AnySeq &s1,
+Param_Test_i::test_anyseq (CORBA::AnySeq const &s1,
                            CORBA::AnySeq &s2,
                            CORBA::AnySeq_out s3)
 {
@@ -653,11 +653,11 @@ Param_Test_i::test_objref (Coffee_ptr o1,
           o3 = Coffee::_nil ();
         }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception ("System Exception");
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const& userex)
     {
       userex._tao_print_exception ("User Exception");
     }
@@ -681,7 +681,7 @@ Param_Test_i::test_typecode (CORBA::TypeCode_ptr t1,
 
 // test for Anys
 CORBA::Any *
-Param_Test_i::test_any (const CORBA::Any &a1,
+Param_Test_i::test_any (CORBA::Any const &a1,
                         CORBA::Any &a2,
                         CORBA::Any_out a3)
 {
@@ -690,7 +690,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
   char const *str_in;
   Coffee_ptr coffee;
   Param_Test::Fixed_Array_forany array;
-  const CORBA::ShortSeq *ub_short_sequence;
+  CORBA::ShortSeq const *ub_short_sequence;
   const Param_Test::Bounded_Short_Seq *bd_short_sequence;
   const Param_Test::Fixed_Struct *fixed_structure;
   const Param_Test::Big_Union *big_union;
@@ -970,7 +970,7 @@ Param_Test_i::test_recursive_union (const Param_Test::Recursive_Union& ru1,
 }
 
 CORBA::Any*
-Param_Test_i::test_complex_any (const CORBA::Any &a1,
+Param_Test_i::test_complex_any (CORBA::Any const &a1,
                                 CORBA::Any &a2,
                                 CORBA::Any_out a3)
 {

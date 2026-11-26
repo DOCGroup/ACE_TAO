@@ -114,7 +114,7 @@ Test_Array_Sequence::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Array_Sequence::run_sii_test\n");
     }

@@ -74,12 +74,12 @@ public:
                              CORBA::String_out s3) override;
 
   /// test for unbounded wstrings
-  CORBA::WChar *test_unbounded_wstring (const CORBA::WChar *ws1,
+  CORBA::WChar *test_unbounded_wstring (CORBA::WChar const *ws1,
                                         CORBA::WChar *&ws2,
                                         CORBA::WString_out ws3) override;
 
   /// test for bounded wstrings
-  CORBA::WChar *test_bounded_wstring (const CORBA::WChar *ws1,
+  CORBA::WChar *test_bounded_wstring (CORBA::WChar const *ws1,
                                       CORBA::WChar *&ws2,
                                       CORBA::WString_out ws3) override;
 
@@ -91,7 +91,7 @@ public:
 
   /// Sequence test operations.
   CORBA::LongSeq * test_long_sequence (
-      const CORBA::LongSeq & s1,
+      CORBA::LongSeq const & s1,
       CORBA::LongSeq & s2,
       CORBA::LongSeq_out s3) override;
   Param_Test::Bounded_Long_Seq * test_bounded_long_sequence (
@@ -99,7 +99,7 @@ public:
       Param_Test::Bounded_Long_Seq & s2,
       Param_Test::Bounded_Long_Seq_out s3) override;
   CORBA::ShortSeq * test_short_sequence (
-      const CORBA::ShortSeq & s1,
+      CORBA::ShortSeq const & s1,
       CORBA::ShortSeq & s2,
       CORBA::ShortSeq_out s3) override;
   Param_Test::Bounded_Short_Seq * test_bounded_short_sequence (
@@ -107,7 +107,7 @@ public:
       Param_Test::Bounded_Short_Seq & s2,
       Param_Test::Bounded_Short_Seq_out s3) override;
   CORBA::StringSeq * test_strseq (
-      const CORBA::StringSeq & s1,
+      CORBA::StringSeq const & s1,
       CORBA::StringSeq & s2,
       CORBA::StringSeq_out s3) override;
   Param_Test::Bounded_StrSeq * test_bounded_strseq (
@@ -115,7 +115,7 @@ public:
       Param_Test::Bounded_StrSeq & s2,
       Param_Test::Bounded_StrSeq_out s3) override;
   CORBA::WStringSeq * test_wstrseq (
-      const CORBA::WStringSeq & ws1,
+      CORBA::WStringSeq const & ws1,
       CORBA::WStringSeq & ws2,
       CORBA::WStringSeq_out ws3) override;
   Param_Test::Bounded_WStrSeq * test_bounded_wstrseq (
@@ -151,7 +151,7 @@ public:
       Param_Test::Bounded_Coffee_Mix & s2,
       Param_Test::Bounded_Coffee_Mix_out s3) override;
   CORBA::AnySeq * test_anyseq (
-          const CORBA::AnySeq & s1,
+          CORBA::AnySeq const & s1,
           CORBA::AnySeq & s2,
           CORBA::AnySeq_out s3) override;
 
@@ -195,7 +195,7 @@ public:
 
   /// test for Anys
   CORBA::Any *
-  test_any (const CORBA::Any &a1,
+  test_any (CORBA::Any const &a1,
             CORBA::Any &a2,
             CORBA::Any_out a3) override;
 
@@ -231,7 +231,7 @@ public:
                           Param_Test::Recursive_Union_out ru3) override;
 
   CORBA::Any*
-    test_complex_any (const CORBA::Any &a1,
+    test_complex_any (CORBA::Any const &a1,
                       CORBA::Any &a2,
                       CORBA::Any_out a3) override;
 

@@ -39,7 +39,7 @@ Test_Unbounded_WString::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::WChar *tmp;
+  CORBA::WChar const *tmp;
   req->return_value () >>= tmp;
   this->ret_ = CORBA::wstring_dup (tmp);
 
@@ -95,7 +95,7 @@ Test_Unbounded_WString::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Unbounded_WString::run_sii_test\n");
     }

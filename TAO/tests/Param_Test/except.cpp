@@ -106,7 +106,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
     }
   // Catch the SystemException type CORBA::NO_MEMORY thrown by the
   // server to test the system exception.
-  catch (const CORBA::NO_MEMORY&)
+  catch (CORBA::NO_MEMORY const&)
     {
       // 'NO_MEMORY' system exception should be caught here. This
       // happens when the IN arg == 2.
@@ -158,7 +158,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
             }
         }
     }
-  catch (const CORBA::UNKNOWN&)
+  catch (CORBA::UNKNOWN const&)
     {
       // 'BadBoy' should be caught here. This happens when the IN arg == 3.
       // Otherwise we don't set the other arg values so the validity
@@ -273,7 +273,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
       this->ret_ = this->in_ * 4;
       return 0;
     }
-  catch (const CORBA::NO_MEMORY& ex)
+  catch (CORBA::NO_MEMORY const& ex)
     {
       // 'SystemException' should be caught here, 'CORBA::NO_MEMORY'
       // system exception is thrown by the servant when the
@@ -314,7 +314,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
       this->ret_ = this->in_ * 4;
       return 0;
     }
-  catch (const CORBA::UNKNOWN& ex)
+  catch (CORBA::UNKNOWN const& ex)
     {
       // 'BadBoy' should be caught here, since generated code for
       // Param_Test::test_exception() knows nothing about it.

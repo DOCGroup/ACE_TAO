@@ -41,7 +41,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                             -1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught unexpected CORBA exception:");
 
@@ -97,7 +97,7 @@ Driver::init (int argc, ACE_TCHAR **argv)
 
       this->objref_ = Param_Test::_narrow (temp.in());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (exception_string);
       return -1;
@@ -760,7 +760,7 @@ Driver::run ()
       this->objref_ = Param_Test::_nil ();
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("during shutdown");
     }

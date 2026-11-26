@@ -65,8 +65,8 @@ private:
   CORBA::Any_var ret_;
 
   /// Compares the sequence extracted from in_ to one of the others.
-  CORBA::Boolean comp_engine (const CORBA::AnySeq *in_seq,
-                              const CORBA::AnySeq *comp_seq);
+  CORBA::Boolean comp_engine (CORBA::AnySeq const *in_seq,
+                              CORBA::AnySeq const *comp_seq);
 };
 
 #endif /* PARAM_TEST_COMPLEX_ANY_H */

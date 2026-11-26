@@ -65,11 +65,11 @@ Test_Big_Union::init_parameters (Param_Test_ptr objref)
       this->reset_parameters ();
       return 0;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception ("System Exception doing make_coffee");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         "An exception caught in make_coffee");
@@ -217,7 +217,7 @@ Test_Big_Union::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Big_Union::run_sii_test\n");
     }
@@ -292,7 +292,7 @@ Test_Big_Union::check_validity ()
               return false;
             }
           }
-        catch (const CORBA::Exception&)
+        catch (CORBA::Exception const&)
           {
             return false;
           }
@@ -350,13 +350,13 @@ Test_Big_Union::check_validity ()
       break;
     case 5:
       {
-        const CORBA::ShortSeq& in =
+        CORBA::ShortSeq const& in =
           this->in_.the_sequence ();
-        const CORBA::ShortSeq& inout =
+        CORBA::ShortSeq const& inout =
           this->inout_.the_sequence ();
-        const CORBA::ShortSeq& out =
+        CORBA::ShortSeq const& out =
           this->out_->the_sequence ();
-        const CORBA::ShortSeq& ret =
+        CORBA::ShortSeq const& ret =
           this->ret_->the_sequence ();
 
         if (in.length () != out.length ()

@@ -45,11 +45,11 @@ public:
 
 protected:
   /// compare
-  CORBA::Boolean compare (const CORBA::AnySeq &s1,
+  CORBA::Boolean compare (CORBA::AnySeq const &s1,
                           const Param_Test::StructSeq &s2);
 
   /// print individual sequence
-  void print_sequence (const CORBA::AnySeq &s);
+  void print_sequence (CORBA::AnySeq const &s);
 
 private:
   /// operation name

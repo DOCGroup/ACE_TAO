@@ -81,7 +81,7 @@ Test_Objref_Struct::init_parameters (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Objref_Struct::init_parameters\n");
     }
@@ -118,7 +118,7 @@ Test_Objref_Struct::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Objref_Struct::run_sii_test\n");
     }
@@ -162,7 +162,7 @@ Test_Objref_Struct::check_validity ()
 
       return true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Objref_Struct::check_validity\n");
     }
@@ -227,7 +227,7 @@ Test_Objref_Struct::print_values ()
                   s_out->name.in (),
                   s_ret->name.in () ));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Objref_Struct::print_values\n");
     }

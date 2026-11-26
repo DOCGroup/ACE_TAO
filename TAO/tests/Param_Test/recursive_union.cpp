@@ -8,8 +8,8 @@
 
 #include "recursive_union.h"
 
-const CORBA::ULong MAX_DEPTH = 3;
-const CORBA::ULong MAX_SEQ_LENGTH = 2;
+CORBA::ULong const MAX_DEPTH = 3;
+CORBA::ULong const MAX_SEQ_LENGTH = 2;
 
 // ************************************************************************
 //               Test_Recursive_Union
@@ -105,7 +105,7 @@ Test_Recursive_Union::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Recursive_Union::run_sii_test\n");
     }

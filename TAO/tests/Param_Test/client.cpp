@@ -83,7 +83,7 @@ Param_Test_Client<T>::run_sii_test ()
               this->test_object_->print_values ();
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           this->results_.error_count (this->results_.error_count () + 1);
           ex._tao_print_exception (opname);
@@ -184,7 +184,7 @@ Param_Test_Client<T>::run_dii_test ()
           // Make the invocation, verify the result.
           this->test_object_->dii_req_invoke (req.in ());
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           this->results_.error_count (this->results_.error_count () + 1);
 

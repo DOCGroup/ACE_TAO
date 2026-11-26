@@ -9,7 +9,7 @@
 #include "helper.h"
 #include "bd_array_seq.h"
 
-const CORBA::ULong MAX_ARRAYSEQ_LEN = 1;
+CORBA::ULong const MAX_ARRAYSEQ_LEN = 1;
 
 // ************************************************************************
 //               Test_Bounded_Array_Sequence
@@ -113,7 +113,7 @@ Test_Bounded_Array_Sequence::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Bounded_Array_Sequence::run_sii_test\n");
     }

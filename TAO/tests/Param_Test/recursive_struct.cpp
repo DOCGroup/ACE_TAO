@@ -9,8 +9,8 @@
 
 #include "recursive_struct.h"
 
-const CORBA::ULong MAX_DEPTH = 5;
-const CORBA::ULong MAX_SEQ_LENGTH = 3;
+CORBA::ULong const MAX_DEPTH = 5;
+CORBA::ULong const MAX_SEQ_LENGTH = 3;
 
 // ************************************************************************
 //               Test_Recursive_Struct
@@ -104,7 +104,7 @@ Test_Recursive_Struct::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Recursive_Struct::run_sii_test\n");
     }

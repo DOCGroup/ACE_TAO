@@ -49,7 +49,7 @@ Test_Complex_Any::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const CORBA::Any *tmp;
+  CORBA::Any const *tmp;
   req->return_value () >>= tmp;
   this->ret_ = new CORBA::Any (*tmp);
 
@@ -167,7 +167,7 @@ Test_Complex_Any::run_sii_test (Param_Test_ptr objref)
                                              this->inout_,
                                              this->out_.out ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return -1;
     }
@@ -220,8 +220,8 @@ Test_Complex_Any::check_validity ()
 
 // Private helper function for check_validity.
 CORBA::Boolean
-Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
-                               const CORBA::AnySeq *level2_comp_seq)
+Test_Complex_Any::comp_engine (CORBA::AnySeq const *level2_in_seq,
+                               CORBA::AnySeq const *level2_comp_seq)
 {
   if (level2_in_seq->length() != level2_comp_seq->length())
     {
@@ -273,10 +273,10 @@ Test_Complex_Any::comp_engine (const CORBA::AnySeq *level2_in_seq,
               return false;
             }
 
-          const CORBA::Any *level6_in_any;
-          const CORBA::Any *level6_test_any;
-          const CORBA::Any *level7_in_any;
-          const CORBA::Any *level7_test_any;
+          CORBA::Any const *level6_in_any;
+          CORBA::Any const *level6_test_any;
+          CORBA::Any const *level7_in_any;
+          CORBA::Any const *level7_test_any;
 
           if (!(level4_in_struct->level5_any >>= level6_in_any))
           {

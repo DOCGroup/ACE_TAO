@@ -12,8 +12,8 @@
 #include "ub_any_seq.h"
 #include "tao/debug.h"
 
-const CORBA::ULong TEST_SEQ_LENGTH = 5;
-const CORBA::ULong NUM_TEST_TYPES = 4;
+CORBA::ULong const TEST_SEQ_LENGTH = 5;
+CORBA::ULong const NUM_TEST_TYPES = 4;
 
 // ************************************************************************
 //               Test_AnySeq
@@ -116,7 +116,7 @@ Test_AnySeq::init_parameters (Param_Test_ptr objref)
                 this->in_[i] <<= cobj.in ();
                 this->inout_[i] <<= 0; // different from in_
               }
-            catch (const CORBA::SystemException& sysex)
+            catch (CORBA::SystemException const& sysex)
               {
                 sysex._tao_print_exception (
                   "System Exception doing make_coffee");
@@ -194,7 +194,7 @@ Test_AnySeq::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_AnySeq::run_sii_test\n");
     }
@@ -312,7 +312,7 @@ Test_AnySeq::print_values ()
 }
 
 void
-Test_AnySeq::print_sequence (const CORBA::AnySeq &s)
+Test_AnySeq::print_sequence (CORBA::AnySeq const &s)
 {
   ACE_DEBUG ((LM_DEBUG,
               "maximum = %u\n"

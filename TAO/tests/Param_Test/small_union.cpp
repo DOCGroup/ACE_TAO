@@ -63,11 +63,11 @@ Test_Small_Union::init_parameters (Param_Test_ptr objref)
       this->reset_parameters ();
       return 0;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception ("System Exception doing make_coffee");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         "An exception caught in make_coffee");
@@ -115,7 +115,7 @@ Test_Small_Union::run_sii_test (Param_Test_ptr objref)
 
       return 0;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Test_Small_Union::run_sii_test\n");
     }

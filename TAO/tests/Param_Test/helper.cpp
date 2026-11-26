@@ -13,7 +13,7 @@
 
 #include "ace/OS_NS_ctype.h"
 
-const CORBA::ULong TEST_BUFSIZE = 128;
+CORBA::ULong const TEST_BUFSIZE = 128;
 
 Generator::Generator ()
 {

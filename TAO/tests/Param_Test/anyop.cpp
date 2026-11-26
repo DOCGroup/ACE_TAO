@@ -180,7 +180,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             *i <<= CORBA::Short (123);
             nested_any <<= *i;
 
-            const CORBA::Any *o {};
+            CORBA::Any const *o {};
             CORBA::Short oo {};
 
             if (!(nested_any >>= o)
@@ -311,7 +311,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("IDL Types");
       return 1;
