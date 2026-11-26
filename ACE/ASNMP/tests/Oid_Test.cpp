@@ -31,6 +31,7 @@ DAMAGES.
 
 #include <array>
 #include <cstring>
+#include <utility>
 #include "ace/OS_main.h"
 #include "asnmp/oid.h"
 #include "test_config.h"
@@ -83,6 +84,18 @@ static void OidTest()
   ACE_TEST_ASSERT(d2[2] == 3UL);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Oid:d2(\"1.2.3\") [%s]\n",
     d2.to_string()));
+
+  Oid move_source ("1.2.3");
+  SmiUINT32 * const original_oid = move_source.oidval ()->ptr;
+  Oid move_constructed (std::move (move_source));
+  Oid move_assigned ("1.9");
+  move_assigned = std::move (move_constructed);
+  Oid * const self_oid = std::addressof (move_assigned);
+  move_assigned = std::move (*self_oid);
+  ACE_TEST_ASSERT (move_source.valid () == 0);
+  ACE_TEST_ASSERT (move_constructed.valid () == 0);
+  ACE_TEST_ASSERT (move_assigned.oidval ()->ptr == original_oid);
+  ACE_TEST_ASSERT (move_assigned == d2);
 
   Oid d_prefix ("1.2.3tail", 5);
   ACE_TEST_ASSERT (d_prefix.valid () == 1);

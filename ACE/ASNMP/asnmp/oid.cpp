@@ -108,6 +108,14 @@ Oid::Oid ( const Oid &oid)
   }
 }
 
+Oid::Oid (Oid &&oid) noexcept
+  : SnmpSyntax (oid),
+    iv_str (std::move (oid.iv_str))
+{
+  oid.smival.value.oid.ptr = nullptr;
+  oid.smival.value.oid.len = 0;
+}
+
 /// Construct an OID from raw integer values.
 Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
 {
@@ -167,6 +175,19 @@ Oid& Oid::operator=( const Oid &oid)
 
   const SmiLPOID srcOid = (SmiLPOID) &(oid.smival.value.oid);
   init_value(srcOid, oid.smival.value.oid.len);
+  return *this;
+}
+
+Oid &Oid::operator= (Oid &&oid) noexcept
+{
+  if (this != std::addressof (oid))
+    {
+      this->set_invalid ();
+      this->smival = oid.smival;
+      this->iv_str = std::move (oid.iv_str);
+      oid.smival.value.oid.ptr = nullptr;
+      oid.smival.value.oid.len = 0;
+    }
   return *this;
 }
 
