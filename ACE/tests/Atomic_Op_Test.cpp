@@ -72,7 +72,7 @@ Exchange_Tester<T>::svc ()
 }
 
 template <typename TYPE, typename dummy>
-int test (const ACE_TCHAR* type, int iterations)
+int test (ACE_TCHAR const * type, int iterations)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Measuring %d iterations for %s\n"), iterations, type));
 
@@ -249,7 +249,7 @@ int test (const ACE_TCHAR* type, int iterations)
 }
 
 template <typename TYPE>
-int test (const ACE_TCHAR* type, int iterations)
+int test (ACE_TCHAR const * type, int iterations)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Measuring %d iterations for %s\n"), iterations, type));
 

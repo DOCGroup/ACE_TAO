@@ -30,13 +30,13 @@ throw_exception ()
 class My_Handler : public ACE_Event_Handler, public ACE_SOCK_Dgram
 {
 public:
-  My_Handler (const ACE_INET_Addr &local_addr);
+  My_Handler (ACE_INET_Addr const &local_addr);
 
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE handle) override;
 };
 
-My_Handler::My_Handler (const ACE_INET_Addr &local_addr)
+My_Handler::My_Handler (ACE_INET_Addr const &local_addr)
   : ACE_SOCK_Dgram (local_addr)
 {
 }

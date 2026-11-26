@@ -21,8 +21,8 @@ class Deadlock : public ACE_Task_Base
 public:
   int svc () override;
 
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act) override;
 };
 
 int
@@ -42,8 +42,8 @@ Deadlock::svc ()
 }
 
 int
-Deadlock::handle_timeout (const ACE_Time_Value &,
-                          const void *)
+Deadlock::handle_timeout (ACE_Time_Value const &,
+                          void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Deadlock timeout\n")));
@@ -56,8 +56,8 @@ class Event_Handler : public ACE_Event_Handler
 public:
   Event_Handler (Deadlock &deadlock);
 
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act) override;
 
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask close_mask) override;
@@ -71,8 +71,8 @@ Event_Handler::Event_Handler (Deadlock &deadlock)
 }
 
 int
-Event_Handler::handle_timeout (const ACE_Time_Value &,
-                               const void *)
+Event_Handler::handle_timeout (ACE_Time_Value const &,
+                               void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Event_Handler timeout\n")));

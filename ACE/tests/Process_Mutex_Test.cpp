@@ -20,7 +20,7 @@
 
 static int release_mutex = 1;
 static int child_process = 0;
-static const ACE_TCHAR *mutex_name = ACE_DEFAULT_MUTEX;
+static ACE_TCHAR const *mutex_name = ACE_DEFAULT_MUTEX;
 #if defined (__Lynx__)
 static const u_int n_processes = 4;
 #else  /* ! __Lynx__ */

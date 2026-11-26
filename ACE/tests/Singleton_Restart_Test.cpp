@@ -5,7 +5,7 @@
 #include "ace/Init_ACE.h"
 #include "ace/Singleton.h"
 
-int restart_test_logging (const ACE_TCHAR *program)
+int restart_test_logging (ACE_TCHAR const *program)
 {
   if (ACE_LOG_MSG->open (program, ACE_Log_Msg::OSTREAM |
                          ACE_Log_Msg::VERBOSE_LITE) != 0)
@@ -21,7 +21,7 @@ int restart_test_logging (const ACE_TCHAR *program)
   return 0;
 }
 
-void report_error (const ACE_TCHAR *lock)
+void report_error (ACE_TCHAR const *lock)
 {
   ACE_ERROR ((LM_ERROR, ACE_TEXT ("ACE_Singleton<int, %s> ")
               ACE_TEXT ("failed to allocate\n"), lock));
