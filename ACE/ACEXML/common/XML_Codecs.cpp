@@ -28,7 +28,7 @@ ACEXML_Base64::encode (ACEXML_Char const * input,
   buf[len] = 0;
 
   size_t encode_len = 0;
-  std::unique_ptr<ACE_Byte[]> const encoded_buf (
+  ACE_Base64::Buffer const encoded_buf (
     ACE_Base64::encode (buf.get (), len, &encode_len));
 
   if (encoded_buf == nullptr)
@@ -78,7 +78,7 @@ ACEXML_Base64::decode (ACEXML_Char const * input,
 
   size_t decode_len = 0;
 
-  std::unique_ptr<ACE_Byte[]> const decoded_buf (
+  ACE_Base64::Buffer const decoded_buf (
     ACE_Base64::decode (buf.get (), &decode_len));
 
   if (decoded_buf == nullptr)

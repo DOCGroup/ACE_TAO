@@ -250,16 +250,22 @@ ACE_Base64::decode (ACE_Byte const *input, size_t *output_len)
 
   if (has_error)
     {
-#if defined (ACE_HAS_ALLOC_HOOKS)
-      ACE_Allocator::instance()->free(result);
-#else
-      delete[] result;
-#endif /* ACE_HAS_ALLOC_HOOKS */
+      ACE_Base64::free (result);
       return nullptr;
     }
   result[pos] = 0;
   *output_len = pos;
   return result;
+}
+
+void
+ACE_Base64::free (ACE_Byte *buffer)
+{
+#if defined (ACE_HAS_ALLOC_HOOKS)
+  ACE_Allocator::instance ()->free (buffer);
+#else
+  delete[] buffer;
+#endif /* ACE_HAS_ALLOC_HOOKS */
 }
 
 void

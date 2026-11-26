@@ -34,7 +34,7 @@ namespace ACE
           if (scheme == SCHEME)
             {
               size_t out_len = 0;
-              std::unique_ptr<ACE_Byte[]> const safe_buf (ACE_Base64::decode (
+              ACE_Base64::Buffer const safe_buf (ACE_Base64::decode (
                 reinterpret_cast<ACE_Byte const *> (info.c_str ()),
                 std::addressof (out_len)));
               ACE_CString const credentials (reinterpret_cast<char *> (safe_buf.get ()), out_len);
@@ -56,7 +56,7 @@ namespace ACE
         credentials += ':';
         credentials += this->passwd_;
         size_t out_len = 0;
-        std::unique_ptr<ACE_Byte[]> const safe_buf (
+        ACE_Base64::Buffer const safe_buf (
             ACE_Base64::encode (reinterpret_cast<ACE_Byte const *> (credentials.c_str ()),
                                 credentials.length (),
                                 std::addressof (out_len),

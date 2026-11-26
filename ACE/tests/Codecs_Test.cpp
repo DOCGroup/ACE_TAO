@@ -8,7 +8,6 @@
 
 #include "test_config.h"
 #include "ace/Codecs.h"
-#include <memory>
 #include "ace/ACE.h"
 
 // Don't change the strings thinking that they are typos
@@ -40,7 +39,7 @@ encode_decode_stream (ACE_Byte const * stream, size_t length)
               ACE_TEXT ("Base64 encoded stream = %C\n"),
               encodeBuf));
 
-  std::unique_ptr<ACE_Byte[]> const cleanup_encodeBuf (encodeBuf);
+  ACE_Base64::Buffer const cleanup_encodeBuf (encodeBuf);
 
   size_t decode_len = 0;
   ACE_Byte* decodeBuf = ACE_Base64::decode (encodeBuf, &decode_len);
@@ -52,7 +51,13 @@ encode_decode_stream (ACE_Byte const * stream, size_t length)
       return -1;
     }
 
-  std::unique_ptr<ACE_Byte[]> const cleanup_decodeBuf (decodeBuf);
+  ACE_Base64::Buffer const cleanup_decodeBuf (decodeBuf);
+
+  if (decode_len != length)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Decoded stream has an unexpected length\n")));
+      return -1;
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Decoded Base64 encoded stream = %C\n"),

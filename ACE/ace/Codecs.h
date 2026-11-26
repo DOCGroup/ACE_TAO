@@ -24,6 +24,7 @@
 #include "ace/Global_Macros.h"
 
 #include <array>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -48,7 +49,7 @@ public:
    * @param output_len Length of the encoded Base64 byte stream.
    * @param is_chunked If true, terminate 72 character blocks with newline
    * @return Encoded Base64 data in byte stream or nullptr if input data cannot
-   *         be encoded.
+   *         be encoded. Release the result with free() or Buffer.
    */
   static ACE_Byte *encode (ACE_Byte const *input,
                            size_t const input_len,
@@ -60,10 +61,23 @@ public:
    * @param input Encoded Base64 data in byte stream.
    * @param output_len Length of the binary byte stream.
    * @return Binary data in byte stream or nullptr if input data cannot
-   *         be encoded.
+   *         be decoded. Release the result with free() or Buffer.
    */
   static ACE_Byte *decode (ACE_Byte const *input,
                            size_t *output_len);
+
+  /// Release a buffer returned by encode() or decode().
+  static void free (ACE_Byte *buffer);
+
+  struct Deleter
+  {
+    void operator() (ACE_Byte *buffer) const
+    {
+      ACE_Base64::free (buffer);
+    }
+  };
+
+  using Buffer = std::unique_ptr<ACE_Byte[], Deleter>;
 
   /**
    * Return the length of the encoded input data
