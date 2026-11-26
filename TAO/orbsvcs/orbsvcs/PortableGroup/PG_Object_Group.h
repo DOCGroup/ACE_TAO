@@ -103,9 +103,9 @@ namespace TAO
       TAO_PG_Location_Equal_To,
       MemberMapMutex>;
 
-    /////////////////////
-    // Construct/Destruct
   public:
+    /// @name Construction and destruction
+    /// @{
     /**
      * @@TODO DOC
      */
@@ -133,11 +133,8 @@ namespace TAO
     PG_Object_Group (PG_Object_Group &&) = delete;
     PG_Object_Group &operator= (PG_Object_Group const &) = delete;
     PG_Object_Group &operator= (PG_Object_Group &&) = delete;
+    /// @}
 
-    /////////////////
-    // public methods
-
-  public:
     /// return a duplicated reference to this group (IOGR)
     PortableGroup::ObjectGroup_ptr reference() const;
 
