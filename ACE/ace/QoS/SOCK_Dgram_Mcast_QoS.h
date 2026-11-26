@@ -22,17 +22,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Defines the member functions for the ACE QoS enabled socket
  * wrapper for UDP/IP multicast.
+ *
+ * @note There is no public @c open() method, so this class cannot be used
+ * until it subscribes to a multicast group. To send without listening,
+ * use @c ACE_SOCK_Dgram or @c ACE_SOCK_CODgram instead.
  */
 class ACE_QoS_Export ACE_SOCK_Dgram_Mcast_QoS : public ACE_SOCK_Dgram_Mcast
 {
 public:
   /// Uses the same default options as ACE_SOCK_Dgram_Mcast.
   ACE_SOCK_Dgram_Mcast_QoS (options opts = DEFOPTS);
-
-  // Note that there is no public <open> method.  Therefore, this
-  // class cannot be used unless you <subscribe> to a multicast group.
-  // If you just want to send (and not listen) to a multicast group,
-  // use <ACE_SOCK_Dgram> or <ACE_SOCK_CODgram> instead.
 
   ~ACE_SOCK_Dgram_Mcast_QoS ();
 
