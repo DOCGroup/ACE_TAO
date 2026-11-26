@@ -59,7 +59,7 @@ TAO_RTScheduler_Current::dt_hash ()
 
 void
 TAO_RTScheduler_Current::begin_scheduling_segment (
-    const char * name,
+    char const *name,
     CORBA::Policy_ptr sched_param,
     CORBA::Policy_ptr implicit_sched_param)
 {
@@ -85,7 +85,7 @@ TAO_RTScheduler_Current::begin_scheduling_segment (
 }
 
 void
-TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
+TAO_RTScheduler_Current::update_scheduling_segment (char const *name,
                                                     CORBA::Policy_ptr sched_param,
                                                     CORBA::Policy_ptr implicit_sched_param)
 {
@@ -102,7 +102,7 @@ TAO_RTScheduler_Current::update_scheduling_segment (const char * name,
 }
 
 void
-TAO_RTScheduler_Current::end_scheduling_segment (const char * name)
+TAO_RTScheduler_Current::end_scheduling_segment (char const *name)
 {
   TAO_RTScheduler_Current_i * const impl = this->implementation ();
 
@@ -138,7 +138,7 @@ TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id)
 RTScheduling::DistributableThread_ptr
 TAO_RTScheduler_Current::spawn (RTScheduling::ThreadAction_ptr start,
                                 CORBA::VoidData data,
-                                const char* name,
+                                char const *name,
                                 CORBA::Policy_ptr sched_param,
                                 CORBA::Policy_ptr implicit_sched_param,
                                 CORBA::ULong stack_size,
@@ -284,7 +284,7 @@ TAO_RTScheduler_Current_i::TAO_RTScheduler_Current_i (
   TAO_ORB_Core* orb,
   DT_Hash_Map* dt_hash,
   RTScheduling::Current::IdType guid,
-  const char * name,
+  char const *name,
   CORBA::Policy_ptr sched_param,
   CORBA::Policy_ptr implicit_sched_param,
   RTScheduling::DistributableThread_ptr dt,
@@ -309,7 +309,7 @@ TAO_RTScheduler_Current_i::~TAO_RTScheduler_Current_i () = default;
 
 void
 TAO_RTScheduler_Current_i::begin_scheduling_segment(
-  const char * name,
+  char const *name,
   CORBA::Policy_ptr sched_param,
   CORBA::Policy_ptr implicit_sched_param)
 {
@@ -387,7 +387,7 @@ TAO_RTScheduler_Current_i::begin_scheduling_segment(
 }
 
 void
-TAO_RTScheduler_Current_i::update_scheduling_segment (const char * name,
+TAO_RTScheduler_Current_i::update_scheduling_segment (char const *name,
                                                       CORBA::Policy_ptr sched_param,
                                                       CORBA::Policy_ptr implicit_sched_param)
 {
@@ -410,7 +410,7 @@ TAO_RTScheduler_Current_i::update_scheduling_segment (const char * name,
 }
 
 void
-TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name)
+TAO_RTScheduler_Current_i::end_scheduling_segment (char const *name)
 {
   // Check if DT has been cancelled
   if (this->dt_->state () == RTScheduling::DistributableThread::CANCELLED)
@@ -448,7 +448,7 @@ TAO_RTScheduler_Current_i::end_scheduling_segment (const char * name)
 RTScheduling::DistributableThread_ptr
 TAO_RTScheduler_Current_i::spawn (RTScheduling::ThreadAction_ptr start,
                                   CORBA::VoidData data,
-                                  const char* name,
+                                  char const *name,
                                   CORBA::Policy_ptr sched_param,
                                   CORBA::Policy_ptr implicit_sched_param,
                                   CORBA::ULong stack_size,
@@ -559,7 +559,7 @@ DTTask::DTTask (TAO_ORB_Core *orb,
                 std::unique_ptr<TAO_RTScheduler_Current_i> new_current,
                 RTScheduling::ThreadAction_ptr start,
                 CORBA::VoidData data,
-                const char *name,
+                char const *name,
                 CORBA::Policy_ptr sched_param,
                 CORBA::Policy_ptr implicit_sched_param)
   :orb_ (orb),
@@ -644,7 +644,7 @@ TAO_RTScheduler_Current_i::current_scheduling_segment_names ()
   return name_list_owner.release ();
 }
 
-const char*
+char const *
 TAO_RTScheduler_Current_i::name ()
 {
   return this->name_.in ();
@@ -727,7 +727,7 @@ TAO_RTScheduler_Current_i::id (RTScheduling::Current::IdType guid)
 }
 
 void
-TAO_RTScheduler_Current_i::name (const char * name)
+TAO_RTScheduler_Current_i::name (char const *name)
 {
   this->name_ = CORBA::string_dup (name);
 }
@@ -890,7 +890,7 @@ TAO_RTScheduler_Current::_duplicate (TAO_RTScheduler_Current_ptr obj)
   return obj;
 }
 
-const char* TAO_RTScheduler_Current::_interface_repository_id () const
+char const *TAO_RTScheduler_Current::_interface_repository_id () const
 {
   return "IDL:TAO_RTScheduler_Current:1.0";
 }

@@ -24,7 +24,7 @@ TAO_RTScheduler_Manager::_duplicate (TAO_RTScheduler_Manager_ptr obj)
   return obj;
 }
 
-const char*
+char const *
 TAO_RTScheduler_Manager::_interface_repository_id () const
 {
   return "IDL:RTScheduler_Manager:1.0";

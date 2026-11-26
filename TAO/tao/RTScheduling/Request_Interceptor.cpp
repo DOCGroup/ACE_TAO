@@ -181,7 +181,7 @@ Client_Interceptor::receive_exception (PortableInterceptor::ClientRequestInfo_pt
                       "type = 0\n"));
           return;
         }
-      const char * id = type->id ();
+      char const *id = type->id ();
 
       if (TAO_debug_level > 0)
         {
