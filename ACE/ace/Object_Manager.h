@@ -450,8 +450,8 @@ private:
   friend class ACE_Object_Manager_Manager;
 #endif /* ACE_HAS_NONSTATIC_OBJECT_MANAGER */
 
-  ACE_Object_Manager (const ACE_Object_Manager &) = delete;
-  ACE_Object_Manager &operator= (const ACE_Object_Manager &) = delete;
+  ACE_Object_Manager (ACE_Object_Manager const &) = delete;
+  ACE_Object_Manager &operator= (ACE_Object_Manager const &) = delete;
   ACE_Object_Manager (ACE_Object_Manager &&) = delete;
   ACE_Object_Manager &operator= (ACE_Object_Manager &&) = delete;
 };

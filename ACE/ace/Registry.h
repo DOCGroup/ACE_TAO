@@ -52,13 +52,13 @@ public:
   using Name = ACE_Unbounded_Set<Name_Component>;
 
   /// Separator for components in a name
-  static const ACE_TCHAR STRING_SEPARATOR[];
+  static ACE_TCHAR const STRING_SEPARATOR[];
 
   /// Convert a @a name to a @c string
   static ACE_TString make_string (const Name &name);
 
   /// Convert a @a string to a @c name
-  static Name make_name (const ACE_TString &string);
+  static Name make_name (ACE_TString const &string);
 
   /// There are two types of bindings
   enum Binding_Type {INVALID, OBJECT, CONTEXT};
@@ -73,7 +73,7 @@ public:
              Binding_Type binding_type);
 
     /// (String version)
-    Binding (const ACE_TString &binding_name,
+    Binding (ACE_TString const &binding_name,
              Binding_Type binding_type);
 
     /// Comparison operators.
@@ -200,7 +200,7 @@ public:
      * This will fail if @a name already exists
      * (String version)
      */
-    int bind_new (const ACE_TString &name,
+    int bind_new (ACE_TString const &name,
                   const Object &object);
 
     /**
@@ -216,7 +216,7 @@ public:
      * This will not fail if @a name already exists
      * (String version)
      */
-    int bind (const ACE_TString &name,
+    int bind (ACE_TString const &name,
               const Object &object);
 
     /// Update @c object with @a name in @c this context
@@ -225,7 +225,7 @@ public:
                 const Object &object);
 
     /// Update @c object with @a name in @c this context
-    int rebind (const ACE_TString &name,
+    int rebind (ACE_TString const &name,
                 const Object &object);
 
     /// Find @c object with @a name in @c this context
@@ -234,7 +234,7 @@ public:
                  Object &object);
 
     /// Find @c object with @a name in @c this context
-    int resolve (const ACE_TString &name,
+    int resolve (ACE_TString const &name,
                  Object &object);
 
     /// Delete object with @a name in @c this context
@@ -242,7 +242,7 @@ public:
     int unbind (const Name &name);
 
     /// Delete object with @a name in @c this context
-    int unbind (const ACE_TString &name);
+    int unbind (ACE_TString const &name);
 
     /// @}
     /// @name Naming context operations
@@ -264,7 +264,7 @@ public:
 
     /// Insert @c naming_context with @a name relative to @c this context
     /// This will fail if @a name already exists
-    int bind_new_context (const ACE_TString &name,
+    int bind_new_context (ACE_TString const &name,
                           Naming_Context &naming_context,
                           u_long persistence = REG_OPTION_NON_VOLATILE,
                           u_long security_access = KEY_ALL_ACCESS,
@@ -283,7 +283,7 @@ public:
 
     /// Insert or update @c naming_context with @a name relative to @c this context
     /// This will not fail if @a name already exists
-    int bind_context (const ACE_TString &name,
+    int bind_context (ACE_TString const &name,
                       /* const */ Naming_Context &naming_context,
                       u_long persistence = REG_OPTION_NON_VOLATILE,
                       u_long security_access = KEY_ALL_ACCESS,
@@ -295,7 +295,7 @@ public:
                         /* const */ Naming_Context &naming_context);
 
     /// Rename @c naming_context to @a name
-    int rebind_context (const ACE_TString &name,
+    int rebind_context (ACE_TString const &name,
                         /* const */ Naming_Context &naming_context);
 
     /// Find @c naming_context with @a name in @c this context
@@ -305,7 +305,7 @@ public:
                          u_long security_access = KEY_ALL_ACCESS);
 
     /// Find @c naming_context with @a name in @c this context
-    int resolve_context (const ACE_TString &name,
+    int resolve_context (ACE_TString const &name,
                          Naming_Context &naming_context,
                          u_long security_access = KEY_ALL_ACCESS);
 
@@ -314,7 +314,7 @@ public:
     int unbind_context (const Name &name);
 
     /// Remove naming_context with @a name from @c this context
-    int unbind_context (const ACE_TString &name);
+    int unbind_context (ACE_TString const &name);
 
     /// Same as @c unbind_context with @c this as naming_context
     int destroy ();
@@ -379,7 +379,7 @@ public:
 
     /// Set name
     /// (String version)
-    void name (const ACE_TString &name);
+    void name (ACE_TString const &name);
 
   private:
     /// Disallow copy constructors
@@ -535,11 +535,11 @@ public:
    */
   static int connect (ACE_Registry::Naming_Context &naming_context,
                       HKEY predefined = HKEY_LOCAL_MACHINE,
-                      const ACE_TCHAR *machine_name = nullptr);
+                      ACE_TCHAR const *machine_name = nullptr);
 
 private:
   /// Check if @a machine_name is the local host
-  static bool is_local_host (const ACE_TCHAR *machine_name);
+  static bool is_local_host (ACE_TCHAR const *machine_name);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

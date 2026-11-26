@@ -58,7 +58,7 @@ ACE_Registry::Binding::Binding (const Name &name,
 
 // Binding constructor
 // (String version)
-ACE_Registry::Binding::Binding (const ACE_TString &name,
+ACE_Registry::Binding::Binding (ACE_TString const &name,
                                 Binding_Type type)
   : name_ (name),
     type_ (type)
@@ -209,7 +209,7 @@ ACE_Registry::Naming_Context::bind_new (const Name &name,
 // Insert <object> with <name> into <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::bind_new (const ACE_TString &name,
+ACE_Registry::Naming_Context::bind_new (ACE_TString const &name,
                                         const Object &object)
 {
   // temporary object
@@ -240,7 +240,7 @@ ACE_Registry::Naming_Context::bind (const Name &name,
 // Insert or update <object> with <name> into <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::bind (const ACE_TString &name,
+ACE_Registry::Naming_Context::bind (ACE_TString const &name,
                                     const Object &object)
 {
   long result = ACE_TEXT_RegSetValueEx (this->key_,
@@ -265,7 +265,7 @@ ACE_Registry::Naming_Context::rebind (const Name &name,
 // Update <object> with <name> in <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::rebind (const ACE_TString &name,
+ACE_Registry::Naming_Context::rebind (ACE_TString const &name,
                                       const Object &new_object)
 {
   Object old_object;
@@ -291,7 +291,7 @@ ACE_Registry::Naming_Context::resolve (const Name &name,
 // Find <object> with <name> in <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::resolve (const ACE_TString &name,
+ACE_Registry::Naming_Context::resolve (ACE_TString const &name,
                                        Object &object)
 {
   // Get object state
@@ -327,7 +327,7 @@ ACE_Registry::Naming_Context::unbind (const Name &name)
 // Remove object with <name> in <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::unbind (const ACE_TString &name)
+ACE_Registry::Naming_Context::unbind (ACE_TString const &name)
 {
   long result = ACE_TEXT_RegDeleteValue (this->key_,
                                          name.c_str ());
@@ -363,7 +363,7 @@ ACE_Registry::Naming_Context::bind_new_context (const Name &name,
 // Insert <naming_context> with <name> relative to <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::bind_new_context (const ACE_TString &name,
+ACE_Registry::Naming_Context::bind_new_context (ACE_TString const &name,
                                                 Naming_Context &naming_context,
                                                 u_long persistence,
                                                 u_long security_access,
@@ -426,7 +426,7 @@ ACE_Registry::Naming_Context::bind_context (const Name &name,
 // Insert or update <naming_context> with <name> relative to <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::bind_context (const ACE_TString &name,
+ACE_Registry::Naming_Context::bind_context (ACE_TString const &name,
                                             /* const */ Naming_Context &naming_context,
                                             u_long persistence,
                                             u_long security_access,
@@ -467,7 +467,7 @@ ACE_Registry::Naming_Context::rebind_context (const Name &name,
 // Rename <naming_context> to <name>
 // (String version)
 int
-ACE_Registry::Naming_Context::rebind_context (const ACE_TString &name,
+ACE_Registry::Naming_Context::rebind_context (ACE_TString const &name,
                                               /* const */ Naming_Context &new_naming_context)
 {
   Naming_Context old_naming_context;
@@ -500,7 +500,7 @@ ACE_Registry::Naming_Context::unbind_context (const Name &name)
 // Remove naming_context with <name> from <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::unbind_context (const ACE_TString &name)
+ACE_Registry::Naming_Context::unbind_context (ACE_TString const &name)
 {
   long result = ACE_TEXT_RegDeleteKey (this->key_,
                                                        name.c_str ());
@@ -523,7 +523,7 @@ ACE_Registry::Naming_Context::resolve_context (const Name &name,
 // Find <naming_context> with <name> in <this> context
 // (String version)
 int
-ACE_Registry::Naming_Context::resolve_context (const ACE_TString &name,
+ACE_Registry::Naming_Context::resolve_context (ACE_TString const &name,
                                                Naming_Context &naming_context,
                                                u_long security_access)
 {
@@ -597,7 +597,7 @@ ACE_Registry::make_string (const Name &const_name)
 
 // Convert a <string> to a <name>
 ACE_Registry::Name
-ACE_Registry::make_name (const ACE_TString &string)
+ACE_Registry::make_name (ACE_TString const &string)
 {
   ACE_TString::size_type new_position = 0;
   ACE_TString::size_type last_position = 0;
@@ -680,7 +680,7 @@ ACE_Registry::Naming_Context::name (Name &name)
 // Set name
 // (String version)
 void
-ACE_Registry::Naming_Context::name (const ACE_TString &name)
+ACE_Registry::Naming_Context::name (ACE_TString const &name)
 {
   this->name_ = name;
 }
@@ -1020,7 +1020,7 @@ ACE_Registry::Binding_Iterator::Iteration_Complete::next_n (u_long how_many,
 int
 ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_context,
                                          HKEY predefined,
-                                         const ACE_TCHAR *machine_name)
+                                         ACE_TCHAR const *machine_name)
 {
   long result = -1;
 
@@ -1057,7 +1057,7 @@ ACE_Predefined_Naming_Contexts::connect (ACE_Registry::Naming_Context &naming_co
 /// Check if @a machine_name is the local host
 /* static */
 bool
-ACE_Predefined_Naming_Contexts::is_local_host (const ACE_TCHAR *machine_name)
+ACE_Predefined_Naming_Contexts::is_local_host (ACE_TCHAR const *machine_name)
 {
   ACE_TCHAR local_host[MAXHOSTNAMELEN];
   if (ACE_OS::hostname (local_host, sizeof local_host / sizeof (ACE_TCHAR)) == 0)
