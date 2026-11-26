@@ -436,7 +436,7 @@ Test_Supplier::Test_Supplier (ECMS_Driver& driver)
 }
 
 void
-Test_Supplier::connect (const char* name,
+Test_Supplier::connect (char const *name,
                         int event_a,
                         int event_b,
                         RtecEventChannelAdmin::EventChannel_ptr ec)
