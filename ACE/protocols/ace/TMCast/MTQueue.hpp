@@ -27,17 +27,12 @@ namespace ACE_TMCast
 
     MTQueue ()
         : mutexp_ (std::make_unique<MutexType> ()),
-          mutex_ (*mutexp_),
-          queue_ (),
-          signal_ (false)
+          mutex_ (*mutexp_)
     {
     }
 
     explicit MTQueue (MutexType& mutex)
-        : mutexp_ (),
-          mutex_ (mutex),
-          queue_ (),
-          signal_ (false)
+        : mutex_ (mutex)
     {
     }
 
@@ -176,7 +171,7 @@ namespace ACE_TMCast
 
     ConditionalSet_ cond_set_;
 
-    mutable bool signal_;
+    mutable bool signal_ {false};
   };
 }
 
