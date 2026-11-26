@@ -11,11 +11,11 @@ ACE_ATM_Connector::dump () const
 
 ACE_INLINE
 ACE_ATM_Connector::ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
-                                      const ACE_ATM_Addr &remote_sap,
+                                      ACE_ATM_Addr const &remote_sap,
                                       ACE_ATM_Params params,
                                       ACE_ATM_QoS options,
                                       ACE_Time_Value *timeout,
-                                      const ACE_ATM_Addr &local_sap,
+                                      ACE_ATM_Addr const &local_sap,
                                       int reuse_addr,
                                       int flags,
                                       int perms)
@@ -59,7 +59,7 @@ ACE_ATM_Connector::complete (ACE_ATM_Stream &new_stream,
 ACE_INLINE
 int
 ACE_ATM_Connector::add_leaf (ACE_ATM_Stream &current_stream,
-                             const ACE_Addr &remote_sap,
+                             ACE_Addr const &remote_sap,
                              ACE_ATM_QoS &qos)
 {
   ACE_TRACE ("ACE_ATM_Connector::add_leaf");

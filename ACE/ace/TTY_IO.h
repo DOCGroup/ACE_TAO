@@ -61,7 +61,7 @@ public:
     /** Specifies the parity mode. POSIX supports "none", "even" and
         "odd" parity. Additionally Win32 supports "mark" and "space"
         parity modes. */
-    const char *paritymode;
+    char const *paritymode;
     /** Enable/disable input parity checking. This option is only applicable
         on systems which support the POSIX termios API */
     bool inpckenb;

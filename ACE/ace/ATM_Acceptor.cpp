@@ -85,7 +85,7 @@ ACE_ATM_Acceptor::get_local_addr (ACE_ATM_Addr &local_addr)
 }
 
 ACE_HANDLE
-ACE_ATM_Acceptor::open (const ACE_Addr &remote_sap,
+ACE_ATM_Acceptor::open (ACE_Addr const &remote_sap,
                         int backlog,
                         ACE_ATM_Params params)
 {

@@ -11,14 +11,14 @@
 
 namespace
 {
-  const char ACE_TTY_IO_NONE[]  = "none";
+  char const ACE_TTY_IO_NONE[]  = "none";
 #if defined (ACE_HAS_TERMIOS) || defined (ACE_HAS_TERMIO) || defined (ACE_WIN32)
-  const char ACE_TTY_IO_ODD[]   = "odd";
-  const char ACE_TTY_IO_EVEN[]  = "even";
+  char const ACE_TTY_IO_ODD[]   = "odd";
+  char const ACE_TTY_IO_EVEN[]  = "even";
 #endif
 #if defined (ACE_WIN32)
-  const char ACE_TTY_IO_MARK[]  = "mark";
-  const char ACE_TTY_IO_SPACE[] = "space";
+  char const ACE_TTY_IO_MARK[]  = "mark";
+  char const ACE_TTY_IO_SPACE[] = "space";
 #endif /* ACE_WIN32 */
 }
 

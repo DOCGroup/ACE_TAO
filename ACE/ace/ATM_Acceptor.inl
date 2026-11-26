@@ -10,7 +10,7 @@ ACE_ATM_Acceptor::dump () const
 }
 
 ACE_INLINE
-ACE_ATM_Acceptor::ACE_ATM_Acceptor (const ACE_Addr &remote_sap,
+ACE_ATM_Acceptor::ACE_ATM_Acceptor (ACE_Addr const &remote_sap,
                                     int backlog,
                                     ACE_ATM_Params params)
 {

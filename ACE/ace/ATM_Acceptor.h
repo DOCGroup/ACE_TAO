@@ -58,12 +58,12 @@ public:
   ~ACE_ATM_Acceptor ();
 
   /// Initiate a passive mode connection.
-  ACE_ATM_Acceptor (const ACE_Addr &remote_sap,
+  ACE_ATM_Acceptor (ACE_Addr const &remote_sap,
                     int backlog = ACE_DEFAULT_BACKLOG,
                     ACE_ATM_Params params = ACE_ATM_Params());
 
   /// Initiate a passive mode socket.
-  ACE_HANDLE open (const ACE_Addr &remote_sap,
+  ACE_HANDLE open (ACE_Addr const &remote_sap,
                    int backlog = ACE_DEFAULT_BACKLOG,
                    ACE_ATM_Params params = ACE_ATM_Params());
 

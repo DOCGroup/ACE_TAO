@@ -64,11 +64,11 @@ public:
    * then the @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   ACE_ATM_Connector (ACE_ATM_Stream &new_stream,
-                     const ACE_ATM_Addr &remote_sap,
+                     ACE_ATM_Addr const &remote_sap,
                      ACE_ATM_Params params = ACE_ATM_Params(),
                      ACE_ATM_QoS options = ACE_ATM_QoS(),
                      ACE_Time_Value *timeout = nullptr,
-                     const ACE_ATM_Addr &local_sap = ACE_ATM_Addr( "", 0 ),
+                     ACE_ATM_Addr const &local_sap = ACE_ATM_Addr( "", 0 ),
                      int reuse_addr = 0,
 #if defined (ACE_WIN32)
                      int flags = 0,
@@ -94,11 +94,11 @@ public:
    * then the @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   int connect (ACE_ATM_Stream &new_stream,
-               const ACE_ATM_Addr &remote_sap,
+               ACE_ATM_Addr const &remote_sap,
                ACE_ATM_Params params = ACE_ATM_Params(),
                ACE_ATM_QoS options = ACE_ATM_QoS(),
                ACE_Time_Value *timeout = nullptr,
-               const ACE_ATM_Addr &local_sap = ACE_ATM_Addr( "",
+               ACE_ATM_Addr const &local_sap = ACE_ATM_Addr( "",
                                                              0 ),
                int reuse_addr = 0,
 #if defined (ACE_WIN32)
@@ -124,7 +124,7 @@ public:
    * are trying to add.
    */
   int add_leaf (ACE_ATM_Stream &current_stream,
-                const ACE_Addr &remote_sap,
+                ACE_Addr const &remote_sap,
                 ACE_ATM_QoS &qos);
 
   /// Resets any event associations on this handle

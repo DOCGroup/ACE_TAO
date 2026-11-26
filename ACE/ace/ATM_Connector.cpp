@@ -23,11 +23,11 @@ ACE_ATM_Connector::ACE_ATM_Connector ()
 // <timeout> amount of time if necessary.
 int
 ACE_ATM_Connector::connect (ACE_ATM_Stream &new_stream,
-                            const ACE_ATM_Addr &remote_sap,
+                            ACE_ATM_Addr const &remote_sap,
                             ACE_ATM_Params params,
                             ACE_ATM_QoS options,
                             ACE_Time_Value *timeout,
-                            const ACE_ATM_Addr &local_sap,
+                            ACE_ATM_Addr const &local_sap,
                             int reuse_addr,
                             int flags,
                             int perms)

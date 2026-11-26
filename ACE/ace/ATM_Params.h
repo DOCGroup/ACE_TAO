@@ -61,7 +61,7 @@ public:
    * so that either mechanism can be used transparently for ATM.
    */
   ACE_ATM_Params (int rw_flag = 1,
-                  const char device[] = ACE_XTI_ATM_DEVICE,
+                  char const device[] = ACE_XTI_ATM_DEVICE,
                   Param_Info *info = nullptr,
                   Param_Udata *udata = nullptr,
                   int oflag = O_RDWR,
@@ -125,7 +125,7 @@ public:
   void set_reuse_addr (int);
 
   /// Get device.
-  const char* get_device () const;
+  char const* get_device () const;
 
   /// Get info.
   Param_Info* get_info () const;
@@ -180,7 +180,7 @@ private:
   int reuse_addr_;
 
   /// Device name for XTI/ATM connections.
-  const char *device_;
+  char const *device_;
 
   /// Info for XTI/ATM connections.
   Param_Info *info_;
