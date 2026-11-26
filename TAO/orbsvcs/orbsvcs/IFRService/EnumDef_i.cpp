@@ -37,18 +37,18 @@ TAO_EnumDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT ("id"),
                                             id);
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT ("name"),
                                             name);
 
   CORBA::EnumMemberSeq_var members = this->members_i ();
 
-  return this->repo_->tc_factory ()->create_enum_tc (id.c_str (),
-                                                     name.c_str (),
+  return this->repo_->tc_factory ()->create_enum_tc (ACE_TEXT_ALWAYS_CHAR (id.c_str ()),
+                                                     ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
                                                      members.in ());
 }
 
@@ -67,7 +67,7 @@ TAO_EnumDef_i::members_i ()
 {
   u_int count = 0;
   this->repo_->config ()->get_integer_value (this->section_key_,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
 
   CORBA::EnumMemberSeq *retval {};
@@ -80,7 +80,7 @@ TAO_EnumDef_i::members_i ()
   for (u_int i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (this->section_key_,
                                             stringified,
                                             false,
@@ -88,10 +88,10 @@ TAO_EnumDef_i::members_i ()
 
       ACE_TString member_name;
       this->repo_->config ()->get_string_value (member_key,
-                                                "name",
+                                                ACE_TEXT ("name"),
                                                 member_name);
 
-      (*retval)[i] = member_name.c_str ();
+      (*retval)[i] = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (member_name.c_str ()));
     }
 
   return retval;
@@ -111,26 +111,26 @@ void
 TAO_EnumDef_i::members_i (CORBA::EnumMemberSeq const &members)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "members",
+                                          ACE_TEXT ("members"),
                                           true);
 
   CORBA::ULong count = members.length ();
   this->repo_->config ()->set_integer_value (this->section_key_,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
 
  for (CORBA::ULong i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (this->section_key_,
                                             stringified,
                                             true,
                                             member_key);
 
-      ACE_TString member_name (members[i]);
+      ACE_TString member_name (ACE_TEXT_CHAR_TO_TCHAR (members[i]));
       this->repo_->config ()->set_string_value (member_key,
-                                                "name",
+                                                ACE_TEXT ("name"),
                                                 member_name);
     }
 }
