@@ -16,7 +16,7 @@
 #include "included.idl"
 
 /// A valuetype factory can have exceptions, so the declaration must pull in
-/// an #include of SystemException.h.
+/// an \#include of SystemException.h.
 
 valuetype MyValueType
 {

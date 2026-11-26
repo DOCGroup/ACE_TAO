@@ -15,7 +15,7 @@
 
 #include "reopen_include1.idl"
 
-/// #included by reopened modules.idl along with
+/// \#included by reopened modules.idl along with
 /// same module in reopen_include1.idl.
 module frag
 {
