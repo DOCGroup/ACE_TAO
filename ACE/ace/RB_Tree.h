@@ -345,10 +345,10 @@ public:
   /// Returns the current number of nodes in the tree.
   size_t current_size () const;
 
-  void operator= (const ACE_RB_Tree<EXT_ID,
+  void operator= (ACE_RB_Tree<EXT_ID,
                   INT_ID,
                   COMPARE_KEYS,
-                  ACE_LOCK> &rbt);
+                  ACE_LOCK> const &rbt);
 
   /**
    * Returns a reference to the underlying @c ACE_LOCK.  This makes it

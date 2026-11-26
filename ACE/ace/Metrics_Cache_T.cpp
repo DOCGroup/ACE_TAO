@@ -96,9 +96,9 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::~ACE_Metrics_Timeprobe ()
 
 template <class ACE_LOCK, class ALLOCATOR>
 bool
-ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::is_event (const ACE_Metrics_Timeprobe<ACE_LOCK,
+ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::is_event (ACE_Metrics_Timeprobe<ACE_LOCK,
                                                       ALLOCATOR>::
-                                                      ACE_METRICS_TIMEPROBE_DATA_TYPE &t,
+                                                      ACE_METRICS_TIMEPROBE_DATA_TYPE const &t,
                                                       ACE_Metrics_Timeprobe<ACE_LOCK,
                                                       ALLOCATOR>::
                                                       event_id id) const
