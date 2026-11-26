@@ -152,9 +152,9 @@ public:
   /// Method called by ACE_Dev_Poll_Reactor to obtain one notification.
   /// THIS METHOD MUST BE CALLED WITH THE REACTOR TOKEN HELD!
   ///
-  /// @return -1 on error, else 0 and @arg nb has the notify to
-  ///            dispatch. Note that the contained event handler may be
-  ///            0 if there were only wake-ups (no handlers to dispatch).
+  /// @return -1 on error, else 0 and @a nb has the notification to dispatch.
+  /// @note The contained event handler may be 0 if there were only wake-ups
+  ///       (no handlers to dispatch).
   int dequeue_one (ACE_Notification_Buffer &nb);
 
   ACE_ALLOC_HOOK_DECLARE;

@@ -64,8 +64,9 @@ public:
   /**
    * Specifies the scope of this namespace, opens and memory-maps the
    * associated file (if accessible) or contacts the dedicated name
-   * server process for NET_LOCAL namespace. Note that @a light
-   * specifies whether or not we want to use
+   * server process for NET_LOCAL namespace.
+   *
+   * @note @a light specifies whether or not we want to use
    * ACE_Lite_MMap_Memory_Pool. By default we use ACE_MMap_Memory_Pool.
    */
   ACE_Naming_Context (Context_Scope_Type scope_in, int light = 0);
@@ -73,8 +74,9 @@ public:
   /**
    * Specifies the scope of this namespace, opens and memory-maps the
    * associated file (if accessible) or contacts the dedicated name
-   * server process for NET_LOCAL namespace. Note that @a light
-   * specifies whether or not we want to use
+   * server process for NET_LOCAL namespace.
+   *
+   * @note @a light specifies whether or not we want to use
    * ACE_Lite_MMap_Memory_Pool. By default we use ACE_MMap_Memory_Pool.
    */
   int open (Context_Scope_Type scope_in = ACE_Naming_Context::PROC_LOCAL,
