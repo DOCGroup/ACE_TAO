@@ -32,7 +32,7 @@ tv_test_case (ACE_Time_Value const & tv, char const *what, time_t expect_sec, su
 
 template <class Rep, class Period>
 int
-tv_test_case (const std::chrono::duration<Rep, Period>& duration,
+tv_test_case (std::chrono::duration<Rep, Period> const & duration,
   char const *what, time_t expect_sec, suseconds_t expect_usec = 0)
 {
   return tv_test_case (ACE_Time_Value {duration}, what, expect_sec, expect_usec);

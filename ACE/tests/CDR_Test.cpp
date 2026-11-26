@@ -30,9 +30,9 @@ struct CDR_Test_Types
   ACE_CDR::Long l;
   ACE_CDR::Char const *str;
   ACE_CDR::WChar const *wstr;
-  const std::string std_str;
+  std::string const std_str;
 #if !defined(ACE_LACKS_STD_WSTRING)
-  const std::wstring std_wstr;
+  std::wstring const std_wstr;
 #endif
   ACE_CDR::Double d;
   ACE_CDR::Short reps;

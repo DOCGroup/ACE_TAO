@@ -107,7 +107,7 @@ ACE::HTBP::Inside_Squid_Filter::send_data_header (ssize_t data_len,
     {
       ACE_CString header (buffer.get ());
       header += "Content-Type: application/octet-stream\nContent-Length: ";
-      const std::string data_length = std::to_string (data_len);
+      std::string const data_length = std::to_string (data_len);
       header += data_length.c_str ();
       header += "\n\n";
       result = ch->ace_stream().send(header.c_str(),header.length());
