@@ -197,7 +197,7 @@ struct something_handler
 
 template <typename Type>
 void
-expect_equals (int &error_count, const char *name, Type actual, Type expected)
+expect_equals (int &error_count, char const *name, Type actual, Type expected)
 {
   if (actual != expected)
     {
@@ -210,7 +210,7 @@ expect_equals (int &error_count, const char *name, Type actual, Type expected)
 
 template <typename Callable>
 void
-expect_bad_param (int &error_count, const char *name, Callable callable)
+expect_bad_param (int &error_count, char const *name, Callable callable)
 {
   try
     {
@@ -604,7 +604,7 @@ test_default_initialized_union (int &error_count)
     array_union.value ()[1], 0);
 
   DefaultInitializedStringUnion string_union;
-  expect_equals<const char *> (
+  expect_equals<char const *> (
     error_count, "DefaultInitializedStringUnion::value",
     string_union.value (), nullptr);
 
@@ -1513,7 +1513,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       field.value._d (FTYPE_VARCHAR);
       CORBA::Any any1;
       any1 <<= field;
-      const Field *outfield {};
+      Field const *outfield {};
 
       if ((any1 >>= outfield) == 0)
         {
@@ -1523,7 +1523,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       "duplicate case label value\n"));
         }
 
-      const char *str = outfield->value.strValue ();
+      char const *str = outfield->value.strValue ();
 
       if (std::strcmp (str, "duplicate case label test string") != 0)
         {
@@ -1564,7 +1564,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Unexpected exception in main");
       return 1;
