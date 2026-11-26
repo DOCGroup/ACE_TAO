@@ -33,7 +33,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 
   if (info->status () == (int) JAWS_HTTP_10_Request::STATUS_QUIT)
     {
-      data->payload (0);
+      data->payload (nullptr);
       delete info;
       return -3;
     }
@@ -71,18 +71,18 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
         case JAWS_IO_Handler::WRITE_OK_A:
           if (info->status () == (int) JAWS_HTTP_10_Request::STATUS_QUIT)
             {
-              data->payload (0);
+              data->payload (nullptr);
               delete info;
               return -3;
             }
 
-          data->payload (0);
+          data->payload (nullptr);
           delete info;
           return 0;
 
         case JAWS_IO_Handler::WRITE_ERROR:
         case JAWS_IO_Handler::WRITE_ERROR_A:
-          data->payload (0);
+          data->payload (nullptr);
           delete info;
           return -1;
 
@@ -118,7 +118,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
         case JAWS_IO_Handler::TRANSMIT_OK_A:
           {
             JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, OK_A");
-            data->payload (0);
+            data->payload (nullptr);
             delete info;
             return 1;
           }
@@ -126,28 +126,28 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
         case JAWS_IO_Handler::TRANSMIT_OK:
           {
             JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, OK");
-            data->payload (0);
+            data->payload (nullptr);
             delete info;
             return 0;
           }
         case JAWS_IO_Handler::TRANSMIT_ERROR:
           {
             JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, ERROR");
-            data->payload (0);
+            data->payload (nullptr);
             delete info;
             return 0;
           }
         case JAWS_IO_Handler::TRANSMIT_ERROR_A:
           {
             JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, ERROR_A");
-            data->payload (0);
+            data->payload (nullptr);
             delete info;
             return 1;
           }
         default:
           {
             JAWS_TRACE ("JAWS_HTTP_10_Write_Task::handle_put, DEFAULT");
-            data->payload (0);
+            data->payload (nullptr);
             delete info;
             return 1;
           }
@@ -155,7 +155,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 
     }
 
-  data->payload (0);
+  data->payload (nullptr);
   delete info;
   return -1;
 }
