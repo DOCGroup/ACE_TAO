@@ -33,9 +33,9 @@ public:
 
 private:
   be_interface *op_scope_ {};
-  const char *comment_start_border_ {"/**"};
-  const char *comment_end_border_ {" */"};
-  const char *your_code_here_ {"/* Your code here. */"};
+  char const *comment_start_border_ {"/**"};
+  char const *comment_end_border_ {" */"};
+  char const *your_code_here_ {"/* Your code here. */"};
 };
 
 /// Worker class passed to traverse_inheritance_graph(),

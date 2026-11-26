@@ -46,7 +46,7 @@ private:
 private:
   TAO_OutStream &os_;
   be_decl *scope_ {};
-  const char *your_code_here_;
+  char const *your_code_here_;
   std::string class_extension_;
 };
 

@@ -31,8 +31,8 @@ public:
 
 private:
   be_decl *op_scope_ {};
-  const char *comment_start_border_ {"/**"};
-  const char *comment_end_border_ {" */"};
+  char const *comment_start_border_ {"/**"};
+  char const *comment_end_border_ {" */"};
 };
 
 #endif /* _BE_COMPONENT_FACET_EXS_H_ */
