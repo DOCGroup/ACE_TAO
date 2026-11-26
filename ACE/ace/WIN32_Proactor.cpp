@@ -26,7 +26,7 @@ class ACE_WIN32_Wakeup_Completion : public ACE_WIN32_Asynch_Result
 public:
   explicit ACE_WIN32_Wakeup_Completion (
     ACE_Handler::Proxy_Ptr &handler_proxy,
-    const void *act = nullptr,
+    void const *act = nullptr,
     ACE_HANDLE event = ACE_INVALID_HANDLE,
     int priority = 0,
     int signal_number = ACE_SIGRTMIN);
@@ -36,7 +36,7 @@ public:
   /// This method calls the @c handler's @c handle_wakeup method.
   virtual void complete (size_t bytes_transferred = 0,
                          int success = 1,
-                         const void *completion_key = nullptr,
+                         void const *completion_key = nullptr,
                          u_long error = 0);
 };
 
@@ -116,7 +116,7 @@ ACE_WIN32_Proactor::close ()
 
 int
 ACE_WIN32_Proactor::register_handle (ACE_HANDLE handle,
-                                     const void *completion_key)
+                                     void const *completion_key)
 {
   ULONG_PTR comp_key (reinterpret_cast<ULONG_PTR> (completion_key));
 
@@ -236,11 +236,11 @@ ACE_WIN32_Proactor::create_asynch_transmit_file ()
 
 ACE_Asynch_Read_Stream_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_read_stream_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -261,11 +261,11 @@ ACE_WIN32_Proactor::create_asynch_read_stream_result
 
 ACE_Asynch_Write_Stream_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_write_stream_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_write,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -286,11 +286,11 @@ ACE_WIN32_Proactor::create_asynch_write_stream_result
 
 ACE_Asynch_Read_File_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_read_file_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
-   const void* act,
+   void const * act,
    u_long offset,
    u_long offset_high,
    ACE_HANDLE event,
@@ -315,11 +315,11 @@ ACE_WIN32_Proactor::create_asynch_read_file_result
 
 ACE_Asynch_Write_File_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_write_file_result
- (const ACE_Handler::Proxy_Ptr &handler_proxy,
+ (ACE_Handler::Proxy_Ptr const &handler_proxy,
   ACE_HANDLE handle,
   ACE_Message_Block &message_block,
   size_t bytes_to_write,
-  const void* act,
+  void const * act,
   u_long offset,
   u_long offset_high,
   ACE_HANDLE event,
@@ -344,13 +344,13 @@ ACE_WIN32_Proactor::create_asynch_write_file_result
 
 ACE_Asynch_Read_Dgram_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_read_dgram_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_read,
    int flags,
    int protocol_family,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -373,12 +373,12 @@ ACE_WIN32_Proactor::create_asynch_read_dgram_result
 
 ACE_Asynch_Write_Dgram_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_write_dgram_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_read,
    int flags,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -400,12 +400,12 @@ ACE_WIN32_Proactor::create_asynch_write_dgram_result
 
 ACE_Asynch_Accept_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_accept_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE listen_handle,
    ACE_HANDLE accept_handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -427,9 +427,9 @@ ACE_WIN32_Proactor::create_asynch_accept_result
 
 ACE_Asynch_Connect_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_connect_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE connect_handle,
-   const void *act,
+   void const *act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -448,7 +448,7 @@ ACE_WIN32_Proactor::create_asynch_connect_result
 
 ACE_Asynch_Transmit_File_Result_Impl *
 ACE_WIN32_Proactor::create_asynch_transmit_file_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE socket,
    ACE_HANDLE file,
    ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -457,7 +457,7 @@ ACE_WIN32_Proactor::create_asynch_transmit_file_result
    u_long offset_high,
    size_t bytes_per_send,
    u_long flags,
-   const void *act,
+   void const *act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -482,9 +482,9 @@ ACE_WIN32_Proactor::create_asynch_transmit_file_result
 }
 
 ACE_Asynch_Result_Impl *
-ACE_WIN32_Proactor::create_asynch_timer (const ACE_Handler::Proxy_Ptr &handler_proxy,
-                                         const void *act,
-                                         const ACE_Time_Value &tv,
+ACE_WIN32_Proactor::create_asynch_timer (ACE_Handler::Proxy_Ptr const &handler_proxy,
+                                         void const *act,
+                                         ACE_Time_Value const &tv,
                                          ACE_HANDLE event,
                                          int priority,
                                          int signal_number)
@@ -650,7 +650,7 @@ ACE_WIN32_Proactor::handle_events (unsigned long milli_seconds)
 void
 ACE_WIN32_Proactor::application_specific_code (ACE_WIN32_Asynch_Result *asynch_result,
                                                size_t bytes_transferred,
-                                               const void *completion_key,
+                                               void const *completion_key,
                                                u_long error)
 {
   ACE_SEH_TRY
@@ -765,9 +765,9 @@ ACE_WIN32_Proactor::number_of_threads (size_t threads)
 }
 
 ACE_WIN32_Asynch_Timer::ACE_WIN32_Asynch_Timer
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
-   const void *act,
-   const ACE_Time_Value &tv,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
+   void const *act,
+   ACE_Time_Value const &tv,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -781,7 +781,7 @@ ACE_WIN32_Asynch_Timer::ACE_WIN32_Asynch_Timer
 void
 ACE_WIN32_Asynch_Timer::complete (size_t,
                                   int,
-                                  const void *,
+                                  void const *,
                                   u_long)
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
@@ -793,7 +793,7 @@ ACE_WIN32_Asynch_Timer::complete (size_t,
 
 ACE_WIN32_Wakeup_Completion::ACE_WIN32_Wakeup_Completion
   (ACE_Handler::Proxy_Ptr &handler_proxy,
-   const void *act,
+   void const *act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -808,7 +808,7 @@ ACE_WIN32_Wakeup_Completion::~ACE_WIN32_Wakeup_Completion () = default;
 void
 ACE_WIN32_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
                                        int          /* success */,
-                                       const void * /* completion_key */,
+                                       void const * /* completion_key */,
                                        u_long       /*  error */)
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();

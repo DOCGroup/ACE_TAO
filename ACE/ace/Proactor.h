@@ -59,30 +59,30 @@ public:
   /// This method is called when a timer is registered.
   int registration (ACE_Proactor_Timer_Queue &timer_queue,
                     ACE_Handler *handler,
-                    const void *arg);
+                    void const *arg);
 
   /// This method is called before the timer expires.
   int preinvoke (ACE_Proactor_Timer_Queue &timer_queue,
                  ACE_Handler *handler,
-                 const void *arg,
+                 void const *arg,
                  int recurring_timer,
-                 const ACE_Time_Value &cur_time,
-                 const void *&upcall_act);
+                 ACE_Time_Value const &cur_time,
+                 void const *&upcall_act);
 
   /// This method is called when the timer expires.
   int timeout (ACE_Proactor_Timer_Queue &timer_queue,
                ACE_Handler *handler,
-               const void *arg,
+               void const *arg,
                int recurring_timer,
-               const ACE_Time_Value &cur_time);
+               ACE_Time_Value const &cur_time);
 
   /// This method is called after the timer expires.
   int postinvoke (ACE_Proactor_Timer_Queue &timer_queue,
                   ACE_Handler *handler,
-                  const void *arg,
+                  void const *arg,
                   int recurring_timer,
-                  const ACE_Time_Value &cur_time,
-                  const void *upcall_act);
+                  ACE_Time_Value const &cur_time,
+                  void const *upcall_act);
 
   /// This method is called when a handler is canceled.
   int cancel_type (ACE_Proactor_Timer_Queue &timer_queue,
@@ -100,7 +100,7 @@ public:
   /// timer is still contained in it.
   int deletion (ACE_Proactor_Timer_Queue &timer_queue,
                 ACE_Handler *handler,
-                const void *arg);
+                void const *arg);
 
 protected:
   /// Set the proactor. This will fail, if one is already set!
@@ -267,7 +267,7 @@ public:
   /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems and returns 0;
   int register_handle (ACE_HANDLE handle,
-                       const void *completion_key);
+                       void const *completion_key);
   /// @}
 
   /// @name Timer management
@@ -284,12 +284,12 @@ public:
    * failure (which is guaranteed never to be a valid @c timer_id).
    */
   long schedule_timer (ACE_Handler &handler,
-                       const void *act,
-                       const ACE_Time_Value &time);
+                       void const *act,
+                       ACE_Time_Value const &time);
 
   long schedule_repeating_timer (ACE_Handler &handler,
-                                 const void *act,
-                                 const ACE_Time_Value &interval);
+                                 void const *act,
+                                 ACE_Time_Value const &interval);
 
   /// Same as above except @a interval it is used to reschedule the
   /// @a handler automatically.
@@ -297,9 +297,9 @@ public:
   /// This combines the above two methods into one. Mostly for backward
   /// compatibility.
   long schedule_timer (ACE_Handler &handler,
-                       const void *act,
-                       const ACE_Time_Value &time,
-                       const ACE_Time_Value &interval);
+                       void const *act,
+                       ACE_Time_Value const &time,
+                       ACE_Time_Value const &interval);
 
   /// Cancel all timers associated with this @a handler.  Returns number
   /// of timers cancelled.
@@ -316,7 +316,7 @@ public:
    * wasn't found.
    */
   int cancel_timer (long timer_id,
-                    const void **act = nullptr,
+                    void const **act = nullptr,
                     int dont_call_handle_close = 1);
   /// @}
 
@@ -418,7 +418,7 @@ public:
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
                                       u_long bytes_to_read,
-                                      const void* act,
+                                      void const * act,
                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
                                       int priority = 0,
                                       int signal_number = ACE_SIGRTMIN);
@@ -430,7 +430,7 @@ public:
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
                                        u_long bytes_to_write,
-                                       const void* act,
+                                       void const * act,
                                        ACE_HANDLE event = ACE_INVALID_HANDLE,
                                        int priority = 0,
                                        int signal_number = ACE_SIGRTMIN);
@@ -442,7 +442,7 @@ public:
                                     ACE_HANDLE handle,
                                     ACE_Message_Block &message_block,
                                     u_long bytes_to_read,
-                                    const void* act,
+                                    void const * act,
                                     u_long offset,
                                     u_long offset_high,
                                     ACE_HANDLE event = ACE_INVALID_HANDLE,
@@ -456,7 +456,7 @@ public:
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
                                      u_long bytes_to_write,
-                                     const void* act,
+                                     void const * act,
                                      u_long offset,
                                      u_long offset_high,
                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
@@ -472,7 +472,7 @@ public:
                                      size_t bytes_to_read,
                                      int flags,
                                      int protocol_family,
-                                     const void* act,
+                                     void const * act,
                                      ACE_HANDLE event = ACE_INVALID_HANDLE,
                                      int priority = 0,
                                      int signal_number = ACE_SIGRTMIN);
@@ -485,7 +485,7 @@ public:
                                       ACE_Message_Block *message_block,
                                       size_t bytes_to_write,
                                       int flags,
-                                      const void* act,
+                                      void const * act,
                                       ACE_HANDLE event = ACE_INVALID_HANDLE,
                                       int priority = 0,
                                       int signal_number = ACE_SIGRTMIN);
@@ -497,7 +497,7 @@ public:
                                  ACE_HANDLE accept_handle,
                                  ACE_Message_Block &message_block,
                                  u_long bytes_to_read,
-                                 const void* act,
+                                 void const * act,
                                  ACE_HANDLE event = ACE_INVALID_HANDLE,
                                  int priority = 0,
                                  int signal_number = ACE_SIGRTMIN);
@@ -506,7 +506,7 @@ public:
   ACE_Asynch_Connect_Result_Impl *
     create_asynch_connect_result (ACE_Handler::Proxy_Ptr &handler_proxy,
                                   ACE_HANDLE  connect_handle,
-                                  const void* act,
+                                  void const * act,
                                   ACE_HANDLE event = ACE_INVALID_HANDLE,
                                   int priority = 0,
                                   int signal_number = ACE_SIGRTMIN);
@@ -523,7 +523,7 @@ public:
                                         u_long offset_high,
                                         u_long bytes_per_send,
                                         u_long flags,
-                                        const void *act,
+                                        void const *act,
                                         ACE_HANDLE event = ACE_INVALID_HANDLE,
                                         int priority = 0,
                                         int signal_number = ACE_SIGRTMIN);
@@ -537,8 +537,8 @@ public:
    */
   ACE_Asynch_Result_Impl *
     create_asynch_timer (ACE_Handler::Proxy_Ptr &handler_proxy,
-                         const void *act,
-                         const ACE_Time_Value &tv,
+                         void const *act,
+                         ACE_Time_Value const &tv,
                          ACE_HANDLE event = ACE_INVALID_HANDLE,
                          int priority = 0,
                          int signal_number = ACE_SIGRTMIN);

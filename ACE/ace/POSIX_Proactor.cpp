@@ -31,8 +31,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_POSIX_Wakeup_Completion : public ACE_POSIX_Asynch_Result
 {
 public:
-  ACE_POSIX_Wakeup_Completion (const ACE_Handler::Proxy_Ptr &handler_proxy,
-                               const void *act = nullptr,
+  ACE_POSIX_Wakeup_Completion (ACE_Handler::Proxy_Ptr const &handler_proxy,
+                               void const *act = nullptr,
                                ACE_HANDLE event = ACE_INVALID_HANDLE,
                                int priority = 0,
                                int signal_number = ACE_SIGRTMIN);
@@ -42,7 +42,7 @@ public:
   /// This method calls the @c handler's @c handle_wakeup method.
   void complete (size_t bytes_transferred = 0,
                          int success = 1,
-                         const void *completion_key = nullptr,
+                         void const *completion_key = nullptr,
                          u_long error = 0) override;
 };
 
@@ -72,7 +72,7 @@ ACE_POSIX_Proactor::close ()
 
 int
 ACE_POSIX_Proactor::register_handle (ACE_HANDLE handle,
-                                     const void *completion_key)
+                                     void const *completion_key)
 {
   ACE_UNUSED_ARG (handle);
   ACE_UNUSED_ARG (completion_key);
@@ -123,11 +123,11 @@ ACE_POSIX_Proactor::create_asynch_read_stream ()
 
 ACE_Asynch_Read_Stream_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_read_stream_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -158,11 +158,11 @@ ACE_POSIX_Proactor::create_asynch_write_stream ()
 
 ACE_Asynch_Write_Stream_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_write_stream_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_write,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -193,11 +193,11 @@ ACE_POSIX_Proactor::create_asynch_read_file ()
 
 ACE_Asynch_Read_File_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_read_file_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
-   const void* act,
+   void const * act,
    u_long offset,
    u_long offset_high,
    ACE_HANDLE event,
@@ -232,11 +232,11 @@ ACE_POSIX_Proactor::create_asynch_write_file ()
 
 ACE_Asynch_Write_File_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_write_file_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_write,
-   const void* act,
+   void const * act,
    u_long offset,
    u_long offset_high,
    ACE_HANDLE event,
@@ -271,13 +271,13 @@ ACE_POSIX_Proactor::create_asynch_read_dgram ()
 
 ACE_Asynch_Read_Dgram_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_read_dgram_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_read,
    int flags,
    int protocol_family,
-   const void* act,
+   void const * act,
    ACE_HANDLE event ,
    int priority ,
    int signal_number)
@@ -312,12 +312,12 @@ ACE_POSIX_Proactor::create_asynch_write_dgram ()
 
 ACE_Asynch_Write_Dgram_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_write_dgram_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_write,
    int flags,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority ,
    int signal_number)
@@ -351,12 +351,12 @@ ACE_POSIX_Proactor::create_asynch_accept ()
 
 ACE_Asynch_Accept_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_accept_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE listen_handle,
    ACE_HANDLE accept_handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -389,9 +389,9 @@ ACE_POSIX_Proactor::create_asynch_connect ()
 
 ACE_Asynch_Connect_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_connect_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE connect_handle,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -420,7 +420,7 @@ ACE_POSIX_Proactor::create_asynch_transmit_file ()
 
 ACE_Asynch_Transmit_File_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_transmit_file_result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE socket,
    ACE_HANDLE file,
    ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -429,7 +429,7 @@ ACE_POSIX_Proactor::create_asynch_transmit_file_result
    u_long offset_high,
    size_t bytes_per_send,
    u_long flags,
-   const void *act,
+   void const *act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -455,9 +455,9 @@ ACE_POSIX_Proactor::create_asynch_transmit_file_result
 
 ACE_Asynch_Result_Impl *
 ACE_POSIX_Proactor::create_asynch_timer
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
-   const void *act,
-   const ACE_Time_Value &tv,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
+   void const *act,
+   ACE_Time_Value const &tv,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -477,7 +477,7 @@ ACE_POSIX_Proactor::create_asynch_timer
 void
 ACE_POSIX_Proactor::application_specific_code (ACE_POSIX_Asynch_Result *asynch_result,
                                                size_t bytes_transferred,
-                                               const void */* completion_key*/,
+                                               void const */* completion_key*/,
                                                u_long error)
 {
   ACE_SEH_TRY
@@ -562,7 +562,7 @@ public:
 
   /// This is the call back method when @c Asynch_Read from the pipe is
   /// complete.
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
 private:
   /// The implementation proactor class.
@@ -688,7 +688,7 @@ ACE_AIOCB_Notify_Pipe_Manager::notify ()
 
 void
 ACE_AIOCB_Notify_Pipe_Manager::handle_read_stream
-  (const ACE_Asynch_Read_Stream::Result & /*result*/)
+  (ACE_Asynch_Read_Stream::Result const & /*result*/)
 {
   // 1. Start new read to avoid pipe overflow
 
@@ -1732,9 +1732,9 @@ ACE_POSIX_SIG_Proactor::notify_completion (int sig_num)
 
 ACE_Asynch_Result_Impl *
 ACE_POSIX_SIG_Proactor::create_asynch_timer
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
-   const void *act,
-   const ACE_Time_Value &tv,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
+   void const *act,
+   ACE_Time_Value const &tv,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1874,7 +1874,7 @@ ACE_POSIX_SIG_Proactor::allocate_aio_slot (ACE_POSIX_Asynch_Result *result)
 }
 
 int
-ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
+ACE_POSIX_SIG_Proactor::handle_events_i (ACE_Time_Value const *timeout)
 {
   int result_sigwait = 0;
   siginfo_t sig_info;
@@ -1986,9 +1986,9 @@ ACE_POSIX_SIG_Proactor::handle_events_i (const ACE_Time_Value *timeout)
 // *********************************************************************
 
 ACE_POSIX_Asynch_Timer::ACE_POSIX_Asynch_Timer
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
-   const void *act,
-   const ACE_Time_Value &tv,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
+   void const *act,
+   ACE_Time_Value const &tv,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -2001,7 +2001,7 @@ ACE_POSIX_Asynch_Timer::ACE_POSIX_Asynch_Timer
 void
 ACE_POSIX_Asynch_Timer::complete (size_t       /* bytes_transferred */,
                                   int          /* success */,
-                                  const void * /* completion_key */,
+                                  void const * /* completion_key */,
                                   u_long       /* error */)
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();
@@ -2014,8 +2014,8 @@ ACE_POSIX_Asynch_Timer::complete (size_t       /* bytes_transferred */,
 // *********************************************************************
 
 ACE_POSIX_Wakeup_Completion::ACE_POSIX_Wakeup_Completion
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
-   const void *act,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
+   void const *act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -2035,7 +2035,7 @@ ACE_POSIX_Wakeup_Completion::~ACE_POSIX_Wakeup_Completion () = default;
 void
 ACE_POSIX_Wakeup_Completion::complete (size_t       /* bytes_transferred */,
                                        int          /* success */,
-                                       const void * /* completion_key */,
+                                       void const * /* completion_key */,
                                        u_long       /*  error */)
 {
   ACE_Handler *handler = this->handler_proxy_.get ()->handler ();

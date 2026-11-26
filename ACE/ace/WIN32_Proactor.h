@@ -61,7 +61,7 @@ public:
   /// This method adds the @a handle to the I/O completion port. This
   /// function is a no-op function for Unix systems.
   virtual int register_handle (ACE_HANDLE handle,
-                               const void *completion_key);
+                               void const *completion_key);
 
   /**
    * Dispatch a single set of events.  If @a wait_time elapses before
@@ -117,40 +117,40 @@ public:
   /// Methods used to create Asynch_IO_Result objects. We create the right
   /// objects here in these methods.
 
-  virtual ACE_Asynch_Read_Stream_Result_Impl *create_asynch_read_stream_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual ACE_Asynch_Read_Stream_Result_Impl *create_asynch_read_stream_result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                                                                 ACE_HANDLE handle,
                                                                                 ACE_Message_Block &message_block,
                                                                                 size_t bytes_to_read,
-                                                                                const void* act,
+                                                                                void const * act,
                                                                                 ACE_HANDLE event,
                                                                                 int priority,
                                                                                 int signal_number = 0);
 
-  virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual ACE_Asynch_Write_Stream_Result_Impl *create_asynch_write_stream_result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                                                                   ACE_HANDLE handle,
                                                                                   ACE_Message_Block &message_block,
                                                                                   size_t bytes_to_write,
-                                                                                  const void* act,
+                                                                                  void const * act,
                                                                                   ACE_HANDLE event,
                                                                                   int priority,
                                                                                   int signal_number = 0);
 
-  virtual ACE_Asynch_Read_File_Result_Impl *create_asynch_read_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual ACE_Asynch_Read_File_Result_Impl *create_asynch_read_file_result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                                                             ACE_HANDLE handle,
                                                                             ACE_Message_Block &message_block,
                                                                             size_t bytes_to_read,
-                                                                            const void* act,
+                                                                            void const * act,
                                                                             u_long offset,
                                                                             u_long offset_high,
                                                                             ACE_HANDLE event,
                                                                             int priority,
                                                                             int signal_number = 0);
 
-  virtual ACE_Asynch_Write_File_Result_Impl *create_asynch_write_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual ACE_Asynch_Write_File_Result_Impl *create_asynch_write_file_result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                                                               ACE_HANDLE handle,
                                                                               ACE_Message_Block &message_block,
                                                                               size_t bytes_to_write,
-                                                                              const void* act,
+                                                                              void const * act,
                                                                               u_long offset,
                                                                               u_long offset_high,
                                                                               ACE_HANDLE event,
@@ -158,46 +158,46 @@ public:
                                                                               int signal_number = 0);
 
   /// Create the correct implementation class for ACE_Asynch_Read_Dgram::Result.
-  virtual ACE_Asynch_Read_Dgram_Result_Impl *create_asynch_read_dgram_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual ACE_Asynch_Read_Dgram_Result_Impl *create_asynch_read_dgram_result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                                                               ACE_HANDLE handle,
                                                                               ACE_Message_Block *message_block,
                                                                               size_t bytes_to_read,
                                                                               int flags,
                                                                               int protocol_family,
-                                                                              const void* act,
+                                                                              void const * act,
                                                                               ACE_HANDLE event,
                                                                               int priority,
                                                                               int signal_number = 0);
 
   /// Create the correct implementation class for ACE_Asynch_Write_Dgram::Result.
-  virtual ACE_Asynch_Write_Dgram_Result_Impl *create_asynch_write_dgram_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual ACE_Asynch_Write_Dgram_Result_Impl *create_asynch_write_dgram_result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                                                                 ACE_HANDLE handle,
                                                                                 ACE_Message_Block *message_block,
                                                                                 size_t bytes_to_write,
                                                                                 int flags,
-                                                                                const void* act,
+                                                                                void const * act,
                                                                                 ACE_HANDLE event,
                                                                                 int priority,
                                                                                 int signal_number = 0);
 
-  virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual ACE_Asynch_Accept_Result_Impl *create_asynch_accept_result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                                                       ACE_HANDLE listen_handle,
                                                                       ACE_HANDLE accept_handle,
                                                                       ACE_Message_Block &message_block,
                                                                       size_t bytes_to_read,
-                                                                      const void* act,
+                                                                      void const * act,
                                                                       ACE_HANDLE event,
                                                                       int priority,
                                                                       int signal_number = 0);
 
-  virtual ACE_Asynch_Connect_Result_Impl *create_asynch_connect_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual ACE_Asynch_Connect_Result_Impl *create_asynch_connect_result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                                                         ACE_HANDLE connect_handle,
-                                                                        const void *act,
+                                                                        void const *act,
                                                                         ACE_HANDLE event,
                                                                         int priority,
                                                                         int signal_number = 0);
 
-  virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual ACE_Asynch_Transmit_File_Result_Impl *create_asynch_transmit_file_result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                                                                     ACE_HANDLE socket,
                                                                                     ACE_HANDLE file,
                                                                                     ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -206,16 +206,16 @@ public:
                                                                                     u_long offset_high,
                                                                                     size_t bytes_per_send,
                                                                                     u_long flags,
-                                                                                    const void *act,
+                                                                                    void const *act,
                                                                                     ACE_HANDLE event,
                                                                                     int priority,
                                                                                     int signal_number = 0);
 
   /// Create a timer result object which can be used with the Timer
   /// mechanism of the Proactor.
-  virtual ACE_Asynch_Result_Impl *create_asynch_timer (const ACE_Handler::Proxy_Ptr &handler_proxy,
-                                                       const void *act,
-                                                       const ACE_Time_Value &tv,
+  virtual ACE_Asynch_Result_Impl *create_asynch_timer (ACE_Handler::Proxy_Ptr const &handler_proxy,
+                                                       void const *act,
+                                                       ACE_Time_Value const &tv,
                                                        ACE_HANDLE event,
                                                        int priority,
                                                        int signal_number = 0);
@@ -243,7 +243,7 @@ protected:
   /// dispatching handles.
   void application_specific_code (ACE_WIN32_Asynch_Result *asynch_result,
                                   size_t bytes_transferred,
-                                  const void *completion_key,
+                                  void const *completion_key,
                                   u_long error);
 
   /**
@@ -293,9 +293,9 @@ class ACE_WIN32_Asynch_Timer : public ACE_WIN32_Asynch_Result
   friend class ACE_WIN32_Proactor;
 
 protected:
-  ACE_WIN32_Asynch_Timer (const ACE_Handler::Proxy_Ptr &handler_proxy,
-                          const void *act,
-                          const ACE_Time_Value &tv,
+  ACE_WIN32_Asynch_Timer (ACE_Handler::Proxy_Ptr const &handler_proxy,
+                          void const *act,
+                          ACE_Time_Value const &tv,
                           ACE_HANDLE event = ACE_INVALID_HANDLE,
                           int priority = 0,
                           int signal_number = 0);
@@ -303,7 +303,7 @@ protected:
   /// This method calls the @a handler's handle_timeout method.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error = 0);
 
   /// Time value requested by caller

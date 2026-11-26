@@ -185,7 +185,7 @@ ACE_Proactor_Handle_Timeout_Upcall::ACE_Proactor_Handle_Timeout_Upcall ()
 int
 ACE_Proactor_Handle_Timeout_Upcall::registration (ACE_Proactor_Timer_Queue &,
                                                   ACE_Handler * handler,
-                                                  const void *)
+                                                  void const *)
 {
   handler->proactor(proactor_);
   return 0;
@@ -194,10 +194,10 @@ ACE_Proactor_Handle_Timeout_Upcall::registration (ACE_Proactor_Timer_Queue &,
 int
 ACE_Proactor_Handle_Timeout_Upcall::preinvoke (ACE_Proactor_Timer_Queue &,
                                                ACE_Handler *,
-                                               const void *,
+                                               void const *,
                                                int,
-                                               const ACE_Time_Value &,
-                                               const void *&)
+                                               ACE_Time_Value const &,
+                                               void const *&)
 {
   return 0;
 }
@@ -205,10 +205,10 @@ ACE_Proactor_Handle_Timeout_Upcall::preinvoke (ACE_Proactor_Timer_Queue &,
 int
 ACE_Proactor_Handle_Timeout_Upcall::postinvoke (ACE_Proactor_Timer_Queue &,
                                                 ACE_Handler *,
-                                                const void *,
+                                                void const *,
                                                 int,
-                                                const ACE_Time_Value &,
-                                                const void *)
+                                                ACE_Time_Value const &,
+                                                void const *)
 {
   return 0;
 }
@@ -216,9 +216,9 @@ ACE_Proactor_Handle_Timeout_Upcall::postinvoke (ACE_Proactor_Timer_Queue &,
 int
 ACE_Proactor_Handle_Timeout_Upcall::timeout (ACE_Proactor_Timer_Queue &,
                                              ACE_Handler *handler,
-                                             const void *act,
+                                             void const *act,
                                              int,
-                                             const ACE_Time_Value &time)
+                                             ACE_Time_Value const &time)
 {
   if (this->proactor_ == nullptr)
     {
@@ -288,7 +288,7 @@ ACE_Proactor_Handle_Timeout_Upcall::cancel_timer (ACE_Proactor_Timer_Queue &,
 int
 ACE_Proactor_Handle_Timeout_Upcall::deletion (ACE_Proactor_Timer_Queue &,
                                               ACE_Handler *,
-                                              const void *)
+                                              void const *)
 {
   // Do nothing
   return 0;
@@ -674,7 +674,7 @@ ACE_Proactor::close ()
 
 int
 ACE_Proactor::register_handle (ACE_HANDLE handle,
-                               const void *completion_key)
+                               void const *completion_key)
 {
   return this->implementation ()->register_handle (handle,
                                                    completion_key);
@@ -682,8 +682,8 @@ ACE_Proactor::register_handle (ACE_HANDLE handle,
 
 long
 ACE_Proactor::schedule_timer (ACE_Handler &handler,
-                              const void *act,
-                              const ACE_Time_Value &time)
+                              void const *act,
+                              ACE_Time_Value const &time)
 {
   return this->schedule_timer (handler,
                                act,
@@ -693,8 +693,8 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
 
 long
 ACE_Proactor::schedule_repeating_timer (ACE_Handler &handler,
-                                        const void *act,
-                                        const ACE_Time_Value &interval)
+                                        void const *act,
+                                        ACE_Time_Value const &interval)
 {
   return this->schedule_timer (handler,
                                act,
@@ -704,9 +704,9 @@ ACE_Proactor::schedule_repeating_timer (ACE_Handler &handler,
 
 long
 ACE_Proactor::schedule_timer (ACE_Handler &handler,
-                              const void *act,
-                              const ACE_Time_Value &time,
-                              const ACE_Time_Value &interval)
+                              void const *act,
+                              ACE_Time_Value const &time,
+                              ACE_Time_Value const &interval)
 {
   // absolute time.
   const ACE_Time_Value absolute_time =
@@ -727,7 +727,7 @@ ACE_Proactor::schedule_timer (ACE_Handler &handler,
 
 int
 ACE_Proactor::cancel_timer (long timer_id,
-                            const void **arg,
+                            void const **arg,
                             int dont_call_handle_close)
 {
   // No need to singal timer event here. Even if the cancel timer was
@@ -899,7 +899,7 @@ ACE_Proactor::create_asynch_read_stream_result
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    u_long bytes_to_read,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -921,7 +921,7 @@ ACE_Proactor::create_asynch_write_stream_result
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    u_long bytes_to_write,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -943,7 +943,7 @@ ACE_Proactor::create_asynch_read_file_result
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    u_long bytes_to_read,
-   const void* act,
+   void const * act,
    u_long offset,
    u_long offset_high,
    ACE_HANDLE event,
@@ -969,7 +969,7 @@ ACE_Proactor::create_asynch_write_file_result
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    u_long bytes_to_write,
-   const void* act,
+   void const * act,
    u_long offset,
    u_long offset_high,
    ACE_HANDLE event,
@@ -997,7 +997,7 @@ ACE_Proactor::create_asynch_read_dgram_result
    size_t bytes_to_read,
    int flags,
    int protocol_family,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1022,7 +1022,7 @@ ACE_Proactor::create_asynch_write_dgram_result
    ACE_Message_Block *message_block,
    size_t bytes_to_write,
    int flags,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1046,7 +1046,7 @@ ACE_Proactor::create_asynch_accept_result
    ACE_HANDLE accept_handle,
    ACE_Message_Block &message_block,
    u_long bytes_to_read,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1067,7 +1067,7 @@ ACE_Asynch_Connect_Result_Impl *
 ACE_Proactor::create_asynch_connect_result
   (ACE_Handler::Proxy_Ptr &handler_proxy,
    ACE_HANDLE  connect_handle,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1092,7 +1092,7 @@ ACE_Proactor::create_asynch_transmit_file_result
    u_long offset_high,
    u_long bytes_per_send,
    u_long flags,
-   const void *act,
+   void const *act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1116,8 +1116,8 @@ ACE_Proactor::create_asynch_transmit_file_result
 ACE_Asynch_Result_Impl *
 ACE_Proactor::create_asynch_timer
   (ACE_Handler::Proxy_Ptr &handler_proxy,
-   const void *act,
-   const ACE_Time_Value &tv,
+   void const *act,
+   ACE_Time_Value const &tv,
    ACE_HANDLE event,
    int priority,
    int signal_number)
