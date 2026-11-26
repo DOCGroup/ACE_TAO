@@ -412,6 +412,51 @@ test_subkey_path (ACE_Configuration* config)
 }
 
 static int
+test_ini_whitespace ()
+{
+  ACE_Configuration_Heap config;
+  if (config.open () != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Failed to open configuration\n")), -1);
+    }
+
+  ACE_TString filename;
+#if defined (TEST_DIR)
+  filename = TEST_DIR;
+  filename += ACE_DIRECTORY_SEPARATOR_STR;
+#endif
+  filename += ACE_TEXT ("Config_Test_Whitespace.ini");
+  ACE_Ini_ImpExp importer (config);
+  if (importer.import_config (filename.c_str ()) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Failed to import whitespace test\n")), -1);
+    }
+
+  ACE_Configuration_Section_Key section;
+  if (config.open_section (config.root_section (), ACE_TEXT ("Whitespace"),
+                           false, section) != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Missing whitespace test section\n")), -1);
+    }
+
+  ACE_TCHAR const *const names[] = { ACE_TEXT ("Empty"), ACE_TEXT ("Spaces"),
+                                     ACE_TEXT ("One"), ACE_TEXT ("Trimmed") };
+  ACE_TCHAR const *const expected[] = { ACE_TEXT (""), ACE_TEXT (""),
+                                        ACE_TEXT ("x"), ACE_TEXT ("value") };
+  for (size_t i = 0; i < sizeof names / sizeof names[0]; ++i)
+    {
+      ACE_TString value;
+      if (config.get_string_value (section, names[i], value) != 0 ||
+          value != expected[i])
+        {
+          ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unexpected value for %s\n"),
+                             names[i]), -1);
+        }
+    }
+  return 0;
+}
+
+static int
 run_tests ()
 {
   int status;
@@ -1914,6 +1959,11 @@ run_main (int, ACE_TCHAR *[])
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Failed in run_tests\n")));
   }
+
+  if (test_ini_whitespace () != 0)
+    {
+      ++errors;
+    }
 
   ACE_END_TEST;
   return errors == 0 ? 0 : 1;

@@ -691,24 +691,18 @@ ACE_Ini_ImpExp::export_section (ACE_Configuration_Section_Key const & section,
 ACE_TCHAR *
 ACE_Ini_ImpExp::squish (ACE_TCHAR *src)
 {
-  ACE_TCHAR *cp {};
-
   if (src == nullptr)
     {
       return nullptr;
     }
 
-  // Start at the end and work backwards over all whitespace.
-  for (cp = src + ACE_OS::strlen (src) - 1;
-       cp != src;
-       --cp)
+  // Start at the terminator and work backwards over all whitespace.
+  ACE_TCHAR *cp = src + ACE_OS::strlen (src);
+  while (cp != src && ACE_OS::ace_isspace (cp[-1]))
     {
-      if (!ACE_OS::ace_isspace (*cp))
-        {
-          break;
-        }
+      --cp;
     }
-  cp[1] = '\0';          // Chop trailing whitespace
+  *cp = '\0';          // Chop trailing whitespace
 
   // Now start at the beginning and move over all whitespace.
   cp = src;
