@@ -205,6 +205,7 @@ public:
 
   /// @name STL-style iterator factory functions
   /// @{
+
   /// Return forward iterator.
   ITERATOR begin ();
   ITERATOR end ();
@@ -245,11 +246,13 @@ class ACE_Cache_Map_Iterator
 public:
   /// @name Traits
   /// @{
+
   /// The actual value mapped to the key in the cache. The @c attributes
   /// are used by the strategy and is transparent to the cache user.
   using value_type = ACE_Reference_Pair<KEY, VALUE>;
-  using CACHE_VALUE = std::pair <VALUE, ATTRIBUTES>;
   /// @}
+
+  using CACHE_VALUE = std::pair <VALUE, ATTRIBUTES>;
 
   /// @name Initialization and termination methods
   /// @{
@@ -260,12 +263,13 @@ public:
   virtual ~ACE_Cache_Map_Iterator () = default;
   /// @}
 
-  /// @name Iteration methods
-  /// @{
   ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION,
                           CACHING_STRATEGY, ATTRIBUTES> &operator=
       (ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
                               CACHING_STRATEGY, ATTRIBUTES> const &rhs);
+
+  /// @name Iteration methods
+  /// @{
 
   /// Comparison operators.
   bool operator== (ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs) const;
@@ -278,6 +282,7 @@ public:
 
   /// @name STL-style iteration, comparison, and reference functions
   /// @{
+
   /// Prefix advance
   ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ ();
 
@@ -321,11 +326,13 @@ class ACE_Cache_Map_Reverse_Iterator
 public:
   /// @name Traits
   /// @{
+
   /// The actual value mapped to the key in the cache. The @c attributes
   /// are used by the strategy and is transparent to the cache user.
   using value_type = ACE_Reference_Pair<KEY, VALUE>;
-  using CACHE_VALUE = std::pair <VALUE, ATTRIBUTES>;
   /// @}
+
+  using CACHE_VALUE = std::pair <VALUE, ATTRIBUTES>;
 
   /// @name Initialization and termination methods
   /// @{
@@ -336,12 +343,13 @@ public:
   ~ACE_Cache_Map_Reverse_Iterator () = default;
   /// @}
 
-  /// @name Iteration methods
-  /// @{
   ACE_Cache_Map_Reverse_Iterator <KEY, VALUE, REVERSE_IMPLEMENTATION,
                                   CACHING_STRATEGY, ATTRIBUTES> &operator=
      (ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,
                                      CACHING_STRATEGY, ATTRIBUTES> const &rhs);
+
+  /// @name Iteration methods
+  /// @{
 
   /// Comparison operators.
   bool operator== (ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs) const;
@@ -354,6 +362,7 @@ public:
 
   /// @name STL-style iteration, comparison, and reference functions
   /// @{
+
   /// Prefix advance
   ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &operator++ ();
 
