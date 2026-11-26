@@ -12,19 +12,19 @@ namespace TAO
   }
 
   template <typename TRANSPORT_TYPE> ACE_INLINE
-  Cache_IntId_T<TRANSPORT_TYPE>::Cache_IntId_T (const Cache_IntId_T &rhs)
+  Cache_IntId_T<TRANSPORT_TYPE>::Cache_IntId_T (Cache_IntId_T const &rhs)
   {
     *this = rhs;
   }
 
   template <typename TRANSPORT_TYPE> ACE_INLINE bool
-  Cache_IntId_T<TRANSPORT_TYPE>::operator== (const Cache_IntId_T &rhs) const
+  Cache_IntId_T<TRANSPORT_TYPE>::operator== (Cache_IntId_T const &rhs) const
   {
     return (this->transport_ == rhs.transport_);
   }
 
   template <typename TRANSPORT_TYPE> ACE_INLINE bool
-  Cache_IntId_T<TRANSPORT_TYPE>::operator!= (const Cache_IntId_T &rhs) const
+  Cache_IntId_T<TRANSPORT_TYPE>::operator!= (Cache_IntId_T const &rhs) const
   {
     return (this->transport_ != rhs.transport_);
   }

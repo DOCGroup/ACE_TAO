@@ -36,7 +36,7 @@ namespace TAO
   template <typename TRANSPORT_TYPE>
   Cache_IntId_T<TRANSPORT_TYPE>&
   Cache_IntId_T<TRANSPORT_TYPE>::operator= (
-    const Cache_IntId_T<TRANSPORT_TYPE> &rhs)
+    Cache_IntId_T<TRANSPORT_TYPE> const &rhs)
   {
     if (this != std::addressof (rhs))
       {

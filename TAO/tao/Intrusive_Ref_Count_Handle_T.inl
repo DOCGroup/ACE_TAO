@@ -2,12 +2,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
 ACE_INLINE
-TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle ()
-{
-}
-
-template <typename T>
-ACE_INLINE
 TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle (
   T*   p,
   bool take_ownership)
@@ -22,7 +16,7 @@ TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle (
 template <typename T>
 ACE_INLINE
 TAO_Intrusive_Ref_Count_Handle<T>::TAO_Intrusive_Ref_Count_Handle (
-  const TAO_Intrusive_Ref_Count_Handle<T>& b)
+  TAO_Intrusive_Ref_Count_Handle<T> const &b)
   : ptr_(b.ptr_)
 {
   this->claim();
@@ -48,7 +42,7 @@ template <typename T>
 ACE_INLINE
 TAO_Intrusive_Ref_Count_Handle<T>&
 TAO_Intrusive_Ref_Count_Handle<T>::operator=
-                                 (const TAO_Intrusive_Ref_Count_Handle<T>& b)
+                                 (TAO_Intrusive_Ref_Count_Handle<T> const &b)
 {
   // Strongly exception-safe assignment through the usual copy and
   // swap technique.
@@ -116,7 +110,7 @@ TAO_Intrusive_Ref_Count_Handle<T>::_retn()
 template <typename T>
 ACE_INLINE
 bool
-TAO_Intrusive_Ref_Count_Handle<T>::operator== (const TAO_Intrusive_Ref_Count_Handle& h) const
+TAO_Intrusive_Ref_Count_Handle<T>::operator== (TAO_Intrusive_Ref_Count_Handle const & h) const
 {
   return this->ptr_ == h.in();
 }

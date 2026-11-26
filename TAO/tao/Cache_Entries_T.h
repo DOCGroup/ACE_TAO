@@ -64,18 +64,18 @@ namespace TAO
 
     explicit Cache_IntId_T (transport_type *transport);
 
-    Cache_IntId_T (const Cache_IntId_T & rhs);
+    Cache_IntId_T (Cache_IntId_T const & rhs);
 
     ~Cache_IntId_T ();
 
     /// Assignment operator (does copy memory).
-    Cache_IntId_T& operator= (const Cache_IntId_T &rhs);
+    Cache_IntId_T& operator= (Cache_IntId_T const &rhs);
 
     /// Equality comparison operator (must match both id_ and kind_).
-    bool operator== (const Cache_IntId_T &rhs) const;
+    bool operator== (Cache_IntId_T const &rhs) const;
 
     /// Inequality comparison operator.
-    bool operator!= (const Cache_IntId_T &rhs) const;
+    bool operator!= (Cache_IntId_T const &rhs) const;
 
     /// Return the underlying transport
     transport_type *transport ();
