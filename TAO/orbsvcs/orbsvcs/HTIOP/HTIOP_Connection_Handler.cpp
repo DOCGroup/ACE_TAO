@@ -21,6 +21,8 @@
 #include "tao/Resume_Handle.h"
 #include "tao/Protocols_Hooks.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO::HTIOP::Connection_Handler::Connection_Handler (ACE_Thread_Manager *t)
@@ -244,7 +246,7 @@ TAO::HTIOP::Connection_Handler::add_transport_to_cache ()
                                orb_params()->use_dotted_decimal_addresses ());
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
@@ -288,7 +290,7 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
         this->orb_core()->orb_params()->use_dotted_decimal_addresses ());
 
       // Construct a property object
-      TAO_Base_Transport_Property prop (&endpoint);
+      TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
       // Mark the connection as bidirectional
       prop.set_bidir_flag (true);

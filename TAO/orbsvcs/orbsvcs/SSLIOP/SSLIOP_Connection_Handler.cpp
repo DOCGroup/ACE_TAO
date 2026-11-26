@@ -375,7 +375,7 @@ TAO::SSLIOP::Connection_Handler::add_transport_to_cache ()
   TAO_SSLIOP_Endpoint endpoint (&ssl, &tmpoint);
 
   // Construct a property object
-  TAO_Base_Transport_Property prop (&endpoint);
+  TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
   TAO::Transport_Cache_Manager &cache =
     this->orb_core ()->lane_resources ().transport_cache ();
@@ -428,7 +428,7 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
       TAO_SSLIOP_Synthetic_Endpoint endpoint (&tmpoint);
 
       // Construct a property object
-      TAO_Base_Transport_Property prop (&endpoint);
+      TAO_Base_Transport_Property prop (std::addressof (endpoint));
 
       // Mark the connection as bidirectional
       prop.set_bidir_flag (true);
