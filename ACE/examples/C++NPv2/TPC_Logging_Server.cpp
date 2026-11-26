@@ -13,7 +13,7 @@
 #include "TPCLS_export.h"
 
 int TPC_Logging_Handler::open (void *) {
-  static const ACE_TCHAR LOGFILE_SUFFIX[] = ACE_TEXT (".log");
+  static ACE_TCHAR const LOGFILE_SUFFIX[] = ACE_TEXT (".log");
   ACE_TCHAR filename[MAXHOSTNAMELEN + sizeof (LOGFILE_SUFFIX)];
   ACE_INET_Addr logging_peer_addr;
 

@@ -18,7 +18,7 @@ private:
   ACE_Time_Value time_of_last_log_record_;
 
   /// Maximum time to wait for a client log record.
-  const ACE_Time_Value max_client_timeout_;
+  ACE_Time_Value const max_client_timeout_;
 
 public:
   using PARENT = Logging_Event_Handler;
