@@ -110,7 +110,7 @@ public:
   ACE_TPQ_Entry ();
 
   ACE_TPQ_Entry (const ACE_Token_Proxy *proxy,
-                 const ACE_TCHAR *client_id);
+                 ACE_TCHAR const *client_id);
 
   ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs);
 
@@ -132,13 +132,13 @@ public:
   void nesting_level (int delta);
 
   /// Get client_id of the entry.
-  const ACE_TCHAR *client_id () const;
+  ACE_TCHAR const *client_id () const;
 
   /// Set client_id of the entry.
-  void client_id (const ACE_TCHAR *);
+  void client_id (ACE_TCHAR const *);
 
   /// Returns 1 if @a id == client id.  Does not check for @a id == 0.
-  int equal_client_id (const ACE_TCHAR *id);
+  int equal_client_id (ACE_TCHAR const *id);
 
   /// One method for arg and sleep_hook.
   void set (void (*sleep_hook)(void *));
@@ -213,7 +213,7 @@ public:
   /// These are passed to the constructor of ACE_TPQ_Entry in
   /// make_TSS_TYPE
   ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
-                     const ACE_TCHAR *client_id);
+                     ACE_TCHAR const *client_id);
 
   virtual ~ACE_TSS_TPQ_Entry () = default;
 
@@ -240,7 +240,7 @@ private:
   const ACE_Token_Proxy *proxy_;
 
   /// Client_id.
-  const ACE_TCHAR *client_id_;
+  ACE_TCHAR const *client_id_;
 };
 
 class ACE_Token_Proxy_Queue;
@@ -390,13 +390,13 @@ public:
 
   /// Returns a stack of the current owners.  Returns -1 on error, 0 on
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
-  virtual int owners (OWNER_STACK &o, const ACE_TCHAR *id) = 0;
+  virtual int owners (OWNER_STACK &o, ACE_TCHAR const *id) = 0;
 
   /// Returns true if @a id is waiting for this token.
-  virtual bool is_waiting_for (const ACE_TCHAR *id) = 0;
+  virtual bool is_waiting_for (ACE_TCHAR const *id) = 0;
 
   /// Returns true if @a id is an owner of this token.
-  virtual bool is_owner (const ACE_TCHAR *id) = 0;
+  virtual bool is_owner (ACE_TCHAR const *id) = 0;
 
   /// Return the queue of waiters.
   virtual ACE_Token_Proxy_Queue *waiters ();
@@ -406,10 +406,10 @@ public:
   virtual int no_of_waiters ();
 
   /// The current owner.
-  const ACE_TCHAR *owner_id ();
+  ACE_TCHAR const *owner_id ();
 
   /// Token name.
-  const ACE_TCHAR* name ();
+  ACE_TCHAR const * name ();
   /// @}
 
   /// @name Reference counting
@@ -485,7 +485,7 @@ class ACE_Local_Mutex;
 class ACE_Export ACE_Mutex_Token : public ACE_Tokens
 {
 public:
-  explicit ACE_Mutex_Token (const ACE_TCHAR* name);
+  explicit ACE_Mutex_Token (ACE_TCHAR const * name);
 
   virtual ~ACE_Mutex_Token ();
 
@@ -546,13 +546,13 @@ public:
 
   /// Returns a stack of the current owners.  Returns -1 on error, 0 on
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
-  int owners (OWNER_STACK &o, const ACE_TCHAR *id) override;
+  int owners (OWNER_STACK &o, ACE_TCHAR const *id) override;
 
   /// Returns true if @a id is waiting for this token.
-  bool is_waiting_for (const ACE_TCHAR *id) override;
+  bool is_waiting_for (ACE_TCHAR const *id) override;
 
   /// Returns true if @a id is an owner of this token.
-  bool is_owner (const ACE_TCHAR *id) override;
+  bool is_owner (ACE_TCHAR const *id) override;
 
 private:
   /// ACE_Mutex_Token used to lock internal data structures.
@@ -578,7 +578,7 @@ private:
 class ACE_Export ACE_RW_Token : public ACE_Tokens
 {
 public:
-  explicit ACE_RW_Token (const ACE_TCHAR* name);
+  explicit ACE_RW_Token (ACE_TCHAR const * name);
 
   virtual ~ACE_RW_Token ();
 
@@ -642,13 +642,13 @@ public:
 
   /// Returns a stack of the current owners.  Returns -1 on error, 0 on
   /// success.  If @a id is non-zero, returns 1 if id is an owner.
-  int owners (OWNER_STACK &o, const ACE_TCHAR *id) override;
+  int owners (OWNER_STACK &o, ACE_TCHAR const *id) override;
 
   /// Returns true if @a id is waiting for this token.
-  bool is_waiting_for (const ACE_TCHAR *id) override;
+  bool is_waiting_for (ACE_TCHAR const *id) override;
 
   /// Returns true if @a id is an owner of this token.
-  bool is_owner (const ACE_TCHAR *id) override;
+  bool is_owner (ACE_TCHAR const *id) override;
 
 protected:
   /// The number of waiting writers.
@@ -676,7 +676,7 @@ protected:
 class ACE_Export ACE_Token_Name
 {
 public:
-  ACE_Token_Name (const ACE_TCHAR *token_name = nullptr);
+  ACE_Token_Name (ACE_TCHAR const *token_name = nullptr);
 
   /// Copy construction.
   ACE_Token_Name (const ACE_Token_Name &rhs);
@@ -690,10 +690,10 @@ public:
   bool operator== (const ACE_Token_Name &rhs) const;
 
   /// Get the token name.
-  const ACE_TCHAR *name () const;
+  ACE_TCHAR const *name () const;
 
   /// Set the token name.
-  void name (const ACE_TCHAR *new_name);
+  void name (ACE_TCHAR const *new_name);
 
   /// Dump the state of the class.
   void dump () const;
@@ -749,7 +749,7 @@ public:
    * @param ignore_deadlock Can be 1 to disable deadlock notifications.
    * @param debug Prints debug messages.
    */
-  virtual int open (const ACE_TCHAR *name,
+  virtual int open (ACE_TCHAR const *name,
                     int ignore_deadlock = 0,
                     int debug = 0);
 
@@ -808,14 +808,14 @@ public:
   /// @{
   /// Get the client id of the proxy.  This is implemented as
   /// thread-specific data.
-  virtual const ACE_TCHAR *client_id () const;
+  virtual ACE_TCHAR const *client_id () const;
 
   /**
    * Set the client_id for the calling thread.  I strongly recommend
    * that this not be used unless you really know what you're doing.
    * I use this in the Token Server, and it caused many headaches.
    */
-  virtual void client_id (const ACE_TCHAR *client_id);
+  virtual void client_id (ACE_TCHAR const *client_id);
 
   /**
    * Return the name of the token.  This is important for use within
@@ -825,7 +825,7 @@ public:
    * So, for instance, the token within the reactor should probably be
    * called "Reactor Token."
    */
-  virtual const ACE_TCHAR *name () const;
+  virtual ACE_TCHAR const *name () const;
 
   /**
    * This should really be called @c someone_waiting.  This is called
@@ -839,7 +839,7 @@ public:
   virtual void token_acquired (ACE_TPQ_Entry *);
 
   /// The client id of the current token holder
-  virtual const ACE_TCHAR *owner_id ();
+  virtual ACE_TCHAR const *owner_id ();
 
   /// Return a dynamically allocated clone of the derived class.
   virtual ACE_Token_Proxy *clone () const = 0;
@@ -879,7 +879,7 @@ protected:
 
   /// Make the correct type of ACE_Tokens.  This is called by the Token
   /// Manager.
-  virtual ACE_Tokens *create_token (const ACE_TCHAR *name) = 0;
+  virtual ACE_Tokens *create_token (ACE_TCHAR const *name) = 0;
 };
 
 // 8..
@@ -924,7 +924,7 @@ public:
   void dump () const;
 
   /// Do not allow the Token Manager to create us.
-  ACE_Tokens *create_token (const ACE_TCHAR *) override { return nullptr; }
+  ACE_Tokens *create_token (ACE_TCHAR const *) override { return nullptr; }
 };
 
 // 9..
@@ -955,7 +955,7 @@ public:
    * @param ignore_deadlock Will allow deadlock to occur (useful for testing).
    * @param debug Prints a bunch of messages.
    */
-  ACE_Local_Mutex (const ACE_TCHAR *token_name = nullptr,
+  ACE_Local_Mutex (ACE_TCHAR const *token_name = nullptr,
                    int ignore_deadlock = 0,
                    int debug = 0);
 
@@ -969,7 +969,7 @@ public:
 
 protected:
   /// Return a new ACE_Local_Mutex.
-  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
+  ACE_Tokens *create_token (ACE_TCHAR const *name) override;
 };
 
 // *.
@@ -1006,7 +1006,7 @@ public:
    * @param ignore_deadlock Will allow deadlock to occur (useful for testing).
    * @param debug Prints a bunch of messages.
    */
-  ACE_Local_RLock (const ACE_TCHAR *token_name = nullptr,
+  ACE_Local_RLock (ACE_TCHAR const *token_name = nullptr,
                    int ignore_deadlock = 0,
                    int debug = 0);
 
@@ -1023,7 +1023,7 @@ public:
 
 protected:
   /// Return a new ACE_Local_Mutex.
-  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
+  ACE_Tokens *create_token (ACE_TCHAR const *name) override;
 };
 
 // *.
@@ -1060,7 +1060,7 @@ public:
    * @param ignore_deadlock Will allow deadlock to occur (useful for testing).
    * @param debug Prints a bunch of messages.
    */
-  ACE_Local_WLock (const ACE_TCHAR *token_name = nullptr,
+  ACE_Local_WLock (ACE_TCHAR const *token_name = nullptr,
                    int ignore_deadlock = 0,
                    int debug = 0);
 
@@ -1077,7 +1077,7 @@ public:
 
 protected:
   /// Return a new ACE_Local_Mutex.
-  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
+  ACE_Tokens *create_token (ACE_TCHAR const *name) override;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

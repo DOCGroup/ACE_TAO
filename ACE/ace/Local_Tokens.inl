@@ -29,7 +29,7 @@ ACE_TPQ_Entry::waiting (int v)
   waiting_ = v;
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_TPQ_Entry::client_id () const
 {
   ACE_TRACE ("ACE_TPQ_Entry::client_id");
@@ -113,7 +113,7 @@ ACE_Tokens::owner ()
   return const_cast<ACE_TPQ_Entry *> (this->waiters_.head ());
 }
 
-ACE_INLINE const ACE_TCHAR*
+ACE_INLINE ACE_TCHAR const *
 ACE_Tokens::owner_id ()
 {
   ACE_TRACE ("ACE_Tokens::owner_id");
@@ -127,7 +127,7 @@ ACE_Tokens::owner_id ()
     }
 }
 
-ACE_INLINE const ACE_TCHAR*
+ACE_INLINE ACE_TCHAR const *
 ACE_Tokens::name ()
 {
   ACE_TRACE ("ACE_Tokens::name");
@@ -182,7 +182,7 @@ ACE_TPQ_Entry::call_sleep_hook ()
 }
 
 ACE_INLINE int
-ACE_TPQ_Entry::equal_client_id (const ACE_TCHAR *id)
+ACE_TPQ_Entry::equal_client_id (ACE_TCHAR const *id)
 {
   ACE_TRACE ("ACE_TPQ_Entry::equal_client_id");
   return (ACE_OS::strcmp (this->client_id (), id) == 0);
@@ -191,7 +191,7 @@ ACE_TPQ_Entry::equal_client_id (const ACE_TCHAR *id)
 // ************************************************************
 
 ACE_INLINE
-ACE_Local_Mutex::ACE_Local_Mutex (const ACE_TCHAR *token_name,
+ACE_Local_Mutex::ACE_Local_Mutex (ACE_TCHAR const *token_name,
                                   int ignore_deadlock,
                                   int debug)
 {
@@ -200,7 +200,7 @@ ACE_Local_Mutex::ACE_Local_Mutex (const ACE_TCHAR *token_name,
 }
 
 ACE_INLINE void
-ACE_Token_Name::name (const ACE_TCHAR *new_name)
+ACE_Token_Name::name (ACE_TCHAR const *new_name)
 {
   ACE_TRACE ("ACE_Token_Name::name");
 
@@ -219,7 +219,7 @@ ACE_Token_Name::name (const ACE_TCHAR *new_name)
   ACE_OS::strsncpy (this->token_name_, new_name, n);
 }
 
-ACE_INLINE const ACE_TCHAR*
+ACE_INLINE ACE_TCHAR const *
 ACE_Token_Name::name () const
 {
   ACE_TRACE ("ACE_Token_Name::name");
@@ -229,7 +229,7 @@ ACE_Token_Name::name () const
 // ************************************************************
 
 ACE_INLINE
-ACE_Local_RLock::ACE_Local_RLock (const ACE_TCHAR *token_name,
+ACE_Local_RLock::ACE_Local_RLock (ACE_TCHAR const *token_name,
                                   int ignore_deadlock,
                                   int debug)
 {
@@ -240,7 +240,7 @@ ACE_Local_RLock::ACE_Local_RLock (const ACE_TCHAR *token_name,
 // ************************************************************
 
 ACE_INLINE
-ACE_Local_WLock::ACE_Local_WLock (const ACE_TCHAR *token_name,
+ACE_Local_WLock::ACE_Local_WLock (ACE_TCHAR const *token_name,
                                   int ignore_deadlock,
                                   int debug)
 {

@@ -81,7 +81,7 @@ ACE_TPQ_Entry::dump () const
 }
 
 ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
-                              const ACE_TCHAR *client_id)
+                              ACE_TCHAR const *client_id)
   : cond_var_ (lock_),
     // The proxy is logically mutable while the entry is active.
     proxy_ (const_cast<ACE_Token_Proxy *> (new_proxy))
@@ -146,7 +146,7 @@ ACE_TPQ_Entry::operator= (const ACE_TPQ_Entry& rhs)
 }
 
 void
-ACE_TPQ_Entry::client_id (const ACE_TCHAR *id)
+ACE_TPQ_Entry::client_id (ACE_TCHAR const *id)
 {
   ACE_TRACE ("ACE_TPQ_Entry::client_id");
 
@@ -176,7 +176,7 @@ ACE_TSS_TPQ_Entry::dump () const
 }
 
 ACE_TSS_TPQ_Entry::ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
-                                      const ACE_TCHAR *client_id)
+                                      ACE_TCHAR const *client_id)
 : proxy_ (proxy),
   client_id_ (client_id)
 {
@@ -435,7 +435,7 @@ ACE_Mutex_Token::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Mutex_Token::ACE_Mutex_Token (const ACE_TCHAR *name)
+ACE_Mutex_Token::ACE_Mutex_Token (ACE_TCHAR const *name)
 {
   ACE_TRACE ("ACE_Mutex_Token::ACE_Mutex_Token");
 
@@ -621,7 +621,7 @@ ACE_Mutex_Token::release (ACE_TPQ_Entry *caller)
 
 int
 ACE_Mutex_Token::owners (OWNER_STACK &stack,
-                         const ACE_TCHAR *id)
+                         ACE_TCHAR const *id)
 {
   ACE_TRACE ("ACE_Mutex_Token::owners");
   if (this->owner () != nullptr)
@@ -639,7 +639,7 @@ ACE_Mutex_Token::owners (OWNER_STACK &stack,
 }
 
 bool
-ACE_Mutex_Token::is_waiting_for (const ACE_TCHAR *id)
+ACE_Mutex_Token::is_waiting_for (ACE_TCHAR const *id)
 {
   ACE_TRACE ("ACE_Mutex_Token::is_waiting_for");
   // If there is no owner, or <id> is the owner, return false.
@@ -665,7 +665,7 @@ ACE_Mutex_Token::is_waiting_for (const ACE_TCHAR *id)
 }
 
 bool
-ACE_Mutex_Token::is_owner (const ACE_TCHAR *id)
+ACE_Mutex_Token::is_owner (ACE_TCHAR const *id)
 {
   ACE_TRACE ("ACE_Mutex_Token::is_owner");
   // If there is an owner, return whether it is <id>.
@@ -713,7 +713,7 @@ ACE_RW_Token::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_RW_Token::ACE_RW_Token (const ACE_TCHAR *name)
+ACE_RW_Token::ACE_RW_Token (ACE_TCHAR const *name)
 {
   ACE_TRACE ("ACE_RW_Token::ACE_RW_Token");
 
@@ -1000,7 +1000,7 @@ ACE_RW_Token::notify_new_owner (ACE_TPQ_Entry *old_owner)
 
 int
 ACE_RW_Token::owners (OWNER_STACK &stack,
-                      const ACE_TCHAR *id)
+                      ACE_TCHAR const *id)
 {
   ACE_TRACE ("ACE_RW_Token::owners");
 
@@ -1052,7 +1052,7 @@ ACE_RW_Token::owners (OWNER_STACK &stack,
 }
 
 bool
-ACE_RW_Token::is_waiting_for (const ACE_TCHAR *id)
+ACE_RW_Token::is_waiting_for (ACE_TCHAR const *id)
 {
   ACE_TRACE ("ACE_RW_Token::is_waiting_for");
   // If there is no owner, or <id> is the owner, return false.
@@ -1079,7 +1079,7 @@ ACE_RW_Token::is_waiting_for (const ACE_TCHAR *id)
 }
 
 bool
-ACE_RW_Token::is_owner (const ACE_TCHAR *id)
+ACE_RW_Token::is_owner (ACE_TCHAR const *id)
 {
   ACE_TRACE ("ACE_RW_Token::is_owner");
   // If there is no owner, return false.
@@ -1139,13 +1139,13 @@ ACE_Token_Proxy::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Token_Proxy::client_id () const
 {
   ACE_TRACE ("ACE_Token_Proxy::client_id");
   // Thread-specific.
   const ACE_TPQ_Entry *temp = this->waiter_.operator->();
-  const ACE_TCHAR *id = temp->client_id ();
+  ACE_TCHAR const *id = temp->client_id ();
 
   if (id == nullptr)
     {
@@ -1158,20 +1158,20 @@ ACE_Token_Proxy::client_id () const
 }
 
 void
-ACE_Token_Proxy::client_id (const ACE_TCHAR *client_id)
+ACE_Token_Proxy::client_id (ACE_TCHAR const *client_id)
 {
   ACE_TRACE ("ACE_Token_Proxy::client_id");
   this->waiter_->client_id (client_id);
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Token_Proxy::owner_id ()
 {
   ACE_TRACE ("ACE_Token_Proxy::owner_id");
   return this->token_->owner_id ();
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Token_Proxy::name () const
 {
   ACE_TRACE ("ACE_Token_Proxy::name");
@@ -1215,7 +1215,7 @@ ACE_Token_Proxy::~ACE_Token_Proxy ()
 }
 
 int
-ACE_Token_Proxy::open (const ACE_TCHAR *token_name,
+ACE_Token_Proxy::open (ACE_TCHAR const *token_name,
                        int ignore_deadlock,
                        int debug)
 {
@@ -1554,7 +1554,7 @@ ACE_Token_Proxy::tryacquire_write (void (*sleep_hook)(void *))
   return this->tryacquire (sleep_hook);
 }
 
-ACE_Token_Name::ACE_Token_Name (const ACE_TCHAR *token_name)
+ACE_Token_Name::ACE_Token_Name (ACE_TCHAR const *token_name)
 {
   ACE_TRACE ("ACE_Token_Name::ACE_Token_Name");
   this->name (token_name);
@@ -1599,7 +1599,7 @@ ACE_Local_Mutex::clone () const
 }
 
 ACE_Tokens *
-ACE_Local_Mutex::create_token (const ACE_TCHAR *name)
+ACE_Local_Mutex::create_token (ACE_TCHAR const *name)
 {
   ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
@@ -1615,7 +1615,7 @@ ACE_Local_Mutex::~ACE_Local_Mutex () = default;
 ACE_Local_RLock::~ACE_Local_RLock () = default;
 
 ACE_Tokens *
-ACE_Local_RLock::create_token (const ACE_TCHAR *name)
+ACE_Local_RLock::create_token (ACE_TCHAR const *name)
 {
   ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
@@ -1647,7 +1647,7 @@ ACE_Local_RLock::clone () const
 ACE_Local_WLock::~ACE_Local_WLock () = default;
 
 ACE_Tokens *
-ACE_Local_WLock::create_token (const ACE_TCHAR *name)
+ACE_Local_WLock::create_token (ACE_TCHAR const *name)
 {
   ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
