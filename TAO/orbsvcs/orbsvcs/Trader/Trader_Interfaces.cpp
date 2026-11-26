@@ -611,7 +611,7 @@ federated_query (const CosTrading::LinkNameSeq& links,
           for (j = 0; j < source_length; ++j)
             offers[j + target_length] = out_offers_var[j];
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           // Ah, well, this query failed, move on to the next one.
         }
@@ -720,7 +720,7 @@ forward_query (char const *next_hop,
                        limits_applied);
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       CosTrading::Policy policy;
       policy.name = TAO_Policies::POLICY_NAMES[TAO_Policies::STARTING_TRADER];
@@ -1037,7 +1037,7 @@ resolve (const CosTrading::TraderName &name)
       remote_reg =
         CosTrading::Register::_narrow (link_info->target_reg.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       throw CosTrading::Register::UnknownTraderName (name);
     }

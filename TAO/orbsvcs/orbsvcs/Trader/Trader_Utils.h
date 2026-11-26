@@ -186,7 +186,7 @@ public:
   CosTradingDynamic::DynamicProp*
   construct_dynamic_prop (char const *name,
                           CORBA::TypeCode_ptr returned_type,
-                          const CORBA::Any& extra_info);
+                          CORBA::Any const& extra_info);
 
 private:
   CosTradingDynamic::DynamicPropEval_var prop_;

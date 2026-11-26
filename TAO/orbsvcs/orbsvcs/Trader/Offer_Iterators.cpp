@@ -79,7 +79,7 @@ TAO_Offer_Iterator_Collection::~TAO_Offer_Iterator_Collection ()
 
           CORBA::release (offer_iter);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           // Don't let the exceptions propagate since we're in a
         }

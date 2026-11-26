@@ -8,7 +8,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class OPERAND_TYPE> CORBA::Boolean
-TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
+TAO_find (CORBA::Any const& sequence, const OPERAND_TYPE& element)
 {
   CORBA::Boolean return_value {};
   TAO_Element_Equal<OPERAND_TYPE> functor;
@@ -33,7 +33,7 @@ TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& element)
           dyn_seq.next( );
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return false;
     }

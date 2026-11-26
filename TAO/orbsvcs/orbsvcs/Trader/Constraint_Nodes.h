@@ -242,7 +242,7 @@ public:
   operator CORBA::LongLong () const;
   operator CORBA::Double () const;
   operator char const *() const;
-  operator const CORBA::Any* () const;
+  operator CORBA::Any const* () const;
   /// @}
 
   friend TAO_Trading_Serv_Export bool

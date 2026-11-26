@@ -305,7 +305,7 @@ TAO_Literal_Constraint (CORBA::Any const* any)
     {
       corba_type = type->kind ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // @@ Seth: Don't know what else to do.  Make sure we can tell
       // when this constructor fails.
@@ -518,7 +518,7 @@ TAO_Literal_Constraint::operator char const *() const
   return (this->type_ == TAO_STRING) ? this->op_.str_ : nullptr;
 }
 
-TAO_Literal_Constraint::operator const CORBA::Any* () const
+TAO_Literal_Constraint::operator CORBA::Any const* () const
 {
   return (this->type_ == TAO_SEQUENCE) ? this->op_.any_ : nullptr;
 }
@@ -533,7 +533,7 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
     {
       kind = type->kind ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return return_value;
     }
@@ -573,7 +573,7 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
             kind = typecode->kind ();
             ;
           }
-        catch (const CORBA::Exception&)
+        catch (CORBA::Exception const&)
           {
             return return_value;
           }

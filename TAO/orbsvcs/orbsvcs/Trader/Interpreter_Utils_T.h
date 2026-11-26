@@ -7,7 +7,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class OPERAND_TYPE>
-CORBA::Boolean TAO_find (const CORBA::Any& sequence, const OPERAND_TYPE& operand);
+CORBA::Boolean TAO_find (CORBA::Any const& sequence, const OPERAND_TYPE& operand);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

@@ -36,7 +36,7 @@ visit_property (TAO_Property_Constraint* literal)
         {
           value = this->prop_eval_.property_value (prop_index);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           return -1;
         }

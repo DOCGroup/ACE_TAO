@@ -94,7 +94,7 @@ TAO_Trader<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::~TAO_Trader ()
 
               poa->deactivate_object (id.in ());
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const&)
             {
               // Don't let exceptions propagate out of this call since
               // it's the destructor!

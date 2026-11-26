@@ -249,7 +249,7 @@ TAO_Property_Evaluator::is_dynamic_property (int index)
   if (index >= 0 && index < num_properties)
     {
       // Obtain the value of the property at index <index>.
-      const CORBA::Any& value = this->props_[index].value;
+      CORBA::Any const& value = this->props_[index].value;
       CORBA::TypeCode_var type = value.type ();
 
       // @@ Seth, this will not work on platforms using environment variable.
@@ -284,8 +284,8 @@ TAO_Property_Evaluator::property_value (int index)
     {
       // Property is defined at this point.
   CosTradingDynamic::DynamicProp const* dp_struct {};
-      const CORBA::String_var name = this->props_[index].name.in ();
-      const CORBA::Any& value = this->props_[index].value;
+      CORBA::String_var const name = this->props_[index].name.in ();
+      CORBA::Any const& value = this->props_[index].value;
 
       // Extract the DP_Struct.
       value >>= dp_struct;
@@ -303,7 +303,7 @@ TAO_Property_Evaluator::property_value (int index)
       else
         {
           CORBA::TypeCode* type = dp_struct->returned_type.in ();
-          const CORBA::Any& info = dp_struct->extra_info;
+          CORBA::Any const& info = dp_struct->extra_info;
 
           try
             {
@@ -312,7 +312,7 @@ TAO_Property_Evaluator::property_value (int index)
               this->dp_cache_[index].reset (dynamic_value);
               prop_val = dynamic_value;
             }
-          catch (const CORBA::SystemException&)
+          catch (CORBA::SystemException const&)
             {
               throw
                 (CosTradingDynamic::DPEvalFailure (name, type, info));
@@ -332,7 +332,7 @@ TAO_Property_Evaluator::property_type (int index)
   if (this->is_dynamic_property (index))
     {
       // Extract type information from the DP_Struct.
-      const CORBA::Any& value = this->props_[index].value;
+      CORBA::Any const& value = this->props_[index].value;
   CosTradingDynamic::DynamicProp const* dp_struct {};
       value >>= dp_struct;
 
@@ -461,7 +461,7 @@ CosTradingDynamic::DynamicProp*
 TAO_Dynamic_Property::
 construct_dynamic_prop (char const *name,
                         CORBA::TypeCode_ptr returned_type,
-                        const CORBA::Any& extra_info)
+                        CORBA::Any const& extra_info)
 {
   ACE_UNUSED_ARG (name);
 

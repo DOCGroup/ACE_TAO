@@ -92,7 +92,7 @@ TAO_Trading_Loader::init (int argc, ACE_TCHAR *argv[])
       CORBA::Object_var object =
         this->create_object (orb.in (), command_line.get_argc(), command_line.get_TCHAR_argv());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       //    @@ Should we log this???
       return -1;
@@ -158,7 +158,7 @@ TAO_Trading_Loader::fini ()
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Trading Service shutting down");
     }

@@ -25,7 +25,7 @@ template<>
 class TAO_Trading_Serv_Export ACE_Hash<CORBA::String_var>
 {
 public:
-  unsigned long operator () (const CORBA::String_var& string) const
+  unsigned long operator () (CORBA::String_var const& string) const
   {
     unsigned long ret = ACE::hash_pjw (string.in ());
     return ret;

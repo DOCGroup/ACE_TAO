@@ -632,8 +632,8 @@ operator== (const CosTrading::Admin::OctetSeq& left,
 {
   bool return_value {};
 
-  const CORBA::ULong left_length = left.length ();
-  const CORBA::ULong right_length = right.length ();
+  CORBA::ULong const left_length = left.length ();
+  CORBA::ULong const right_length = right.length ();
 
   if (left_length == right_length)
     {

@@ -567,7 +567,7 @@ validate_inheritance (Prop_Map &prop_map,
                   compare =
                     super_props[j].value_type->equal (prop_type);
                 }
-              catch (const CORBA::Exception&)
+              catch (CORBA::Exception const&)
                 {
                 throw CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition(
                   super_props[j].name,
