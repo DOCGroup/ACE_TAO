@@ -1181,10 +1181,10 @@ ACE_Dev_Poll_Reactor::dispatch_io_event (Token_Guard &guard)
 
   // Define bits to check for while dispatching.
 #if defined (ACE_HAS_EVENT_POLL)
-  const ACE_UINT32 out_event = EPOLLOUT;
-  const ACE_UINT32 exc_event = EPOLLPRI;
-  const ACE_UINT32 in_event  = EPOLLIN;
-  const ACE_UINT32 err_event = EPOLLHUP | EPOLLERR;
+  ACE_UINT32 const out_event = EPOLLOUT;
+  ACE_UINT32 const exc_event = EPOLLPRI;
+  ACE_UINT32 const in_event  = EPOLLIN;
+  ACE_UINT32 const err_event = EPOLLHUP | EPOLLERR;
 #else
   const short out_event = POLLOUT;
   const short exc_event = POLLPRI;

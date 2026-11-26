@@ -214,7 +214,7 @@ ACE_Log_Record::ACE_Log_Record ()
 }
 
 int
-ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
+ACE_Log_Record::format_msg (ACE_TCHAR const host_name[],
                             u_long verbose_flag,
                             ACE_TCHAR *verbose_msg, size_t verbose_msg_size)
 {
@@ -286,7 +286,7 @@ log_priority_enabled(ACE_Log_Category_TSS* category, ACE_Log_Priority priority)
 }
 
 int
-ACE_Log_Record::print (const ACE_TCHAR host_name[],
+ACE_Log_Record::print (ACE_TCHAR const host_name[],
                        u_long verbose_flag,
                        FILE *fp)
 {
@@ -399,7 +399,7 @@ operator>> (ACE_InputCDR &cdr,
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 int
-ACE_Log_Record::print (const ACE_TCHAR host_name[],
+ACE_Log_Record::print (ACE_TCHAR const host_name[],
                        u_long verbose_flag,
                        ACE_OSTREAM_TYPE &s)
 {

@@ -33,7 +33,7 @@ ACE_LSOCK::dump () const
 // This routine sends an open file descriptor to <this->handle_>.
 
 ssize_t
-ACE_LSOCK::send_handle (const ACE_HANDLE handle) const
+ACE_LSOCK::send_handle (ACE_HANDLE const handle) const
 {
   ACE_TRACE ("ACE_LSOCK::send_handle");
   u_char a[2];

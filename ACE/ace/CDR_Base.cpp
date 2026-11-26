@@ -1876,7 +1876,7 @@ bool ACE_CDR::Fixed::equal (ACE_CDR::Fixed const &rhs) const
   ACE_CDR::Fixed const &more = (lhs.scale_ > rhs.scale_) ? lhs : rhs,
     &fewer = (lhs.scale_ > rhs.scale_) ? rhs : lhs;
 
-  const ACE_CDR::Octet scale_diff = more.scale_ - fewer.scale_;
+  ACE_CDR::Octet const scale_diff = more.scale_ - fewer.scale_;
 
   ACE_CDR::Fixed::ConstIterator more_iter = more.begin (),
     more_end = more.end ();

@@ -93,10 +93,10 @@ ACE_OS::mmap (void *addr,
                                                      &sd_buffer);
 
 #  ifdef ACE_WIN64
-      const DWORD len_low = static_cast<DWORD>(len),
+      DWORD const len_low = static_cast<DWORD>(len),
         len_high = static_cast<DWORD>(len >> 32);
 #  else
-      const DWORD len_low = static_cast<DWORD>(len), len_high = 0;
+      DWORD const len_low = static_cast<DWORD>(len), len_high = 0;
 #  endif
 
       *file_mapping = ACE_TEXT_CreateFileMapping (file_handle,

@@ -69,7 +69,7 @@ ACE_NT_Service::host () const
 }
 
 ACE_INLINE void
-ACE_NT_Service::svc_handle(const SERVICE_STATUS_HANDLE new_svc_handle)
+ACE_NT_Service::svc_handle(SERVICE_STATUS_HANDLE const new_svc_handle)
 {
   this->svc_handle_ = new_svc_handle;
   return;

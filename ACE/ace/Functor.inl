@@ -167,25 +167,25 @@ ACE_Equal_To<char *>::operator () (char const *lhs, char const *rhs) const
 }
 
 ACE_INLINE int
-ACE_Equal_To<ACE_UINT16>::operator () (const ACE_UINT16 lhs, const ACE_UINT16 rhs) const
+ACE_Equal_To<ACE_UINT16>::operator () (ACE_UINT16 const lhs, ACE_UINT16 const rhs) const
 {
   return (lhs == rhs);
 }
 
 ACE_INLINE int
-ACE_Equal_To<ACE_INT16>::operator () (const ACE_INT16 lhs, const ACE_INT16 rhs) const
+ACE_Equal_To<ACE_INT16>::operator () (ACE_INT16 const lhs, ACE_INT16 const rhs) const
 {
   return (lhs == rhs);
 }
 
 ACE_INLINE int
-ACE_Equal_To<ACE_UINT32>::operator () (const ACE_UINT32 lhs, const ACE_UINT32 rhs) const
+ACE_Equal_To<ACE_UINT32>::operator () (ACE_UINT32 const lhs, ACE_UINT32 const rhs) const
 {
   return (lhs == rhs);
 }
 
 ACE_INLINE int
-ACE_Equal_To<ACE_INT32>::operator () (const ACE_INT32 lhs, const ACE_INT32 rhs) const
+ACE_Equal_To<ACE_INT32>::operator () (ACE_INT32 const lhs, ACE_INT32 const rhs) const
 {
   return (lhs == rhs);
 }

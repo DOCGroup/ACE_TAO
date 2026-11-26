@@ -208,7 +208,7 @@ ACE_OS::mkstemp (char *s)
   // a wide-char string for mkstemp_emulation(), then convert the name
   // back to narrow-char for the caller.
   ACE_Ascii_To_Wide wide_s (s);
-  const ACE_HANDLE fh = ACE_OS::mkstemp_emulation (wide_s.wchar_rep ());
+  ACE_HANDLE const fh = ACE_OS::mkstemp_emulation (wide_s.wchar_rep ());
   if (fh != ACE_INVALID_HANDLE)
     {
       ACE_Wide_To_Ascii narrow_s (wide_s.wchar_rep ());
@@ -229,7 +229,7 @@ ACE_OS::mkstemp (wchar_t *s)
   // a narrow-char string for mkstemp(), then convert the name
   // back to wide-char for the caller.
   ACE_Wide_To_Ascii narrow_s (s);
-  const ACE_HANDLE fh = ::mkstemp (narrow_s.char_rep ());
+  ACE_HANDLE const fh = ::mkstemp (narrow_s.char_rep ());
   if (fh != ACE_INVALID_HANDLE)
     {
       ACE_Ascii_To_Wide wide_s (narrow_s.char_rep ());
@@ -243,7 +243,7 @@ ACE_OS::mkstemp (wchar_t *s)
   // a narrow-char string for mkstemp_emulation(), then convert the name
   // back to wide-char for the caller.
   ACE_Wide_To_Ascii narrow_s (s);
-  const ACE_HANDLE fh = ACE_OS::mkstemp_emulation (narrow_s.char_rep ());
+  ACE_HANDLE const fh = ACE_OS::mkstemp_emulation (narrow_s.char_rep ());
   if (fh != ACE_INVALID_HANDLE)
     {
       ACE_Ascii_To_Wide wide_s (narrow_s.char_rep ());

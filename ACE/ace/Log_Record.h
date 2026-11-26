@@ -65,7 +65,7 @@ public:
 
   /// Write the contents of the logging record to the appropriate
   /// FILE if the corresponding type is enabled.
-  int print (const ACE_TCHAR host_name[],
+  int print (ACE_TCHAR const host_name[],
              u_long verbose_flag,
 #if !defined (ACE_LACKS_STDERR)
              FILE *fp = stderr);
@@ -76,12 +76,12 @@ public:
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   /// Write the contents of the logging record to the appropriate
   /// @a stream if the corresponding type is enabled.
-  int print (const ACE_TCHAR host_name[],
+  int print (ACE_TCHAR const host_name[],
              u_long verbose_flag,
              ACE_OSTREAM_TYPE &stream);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
-  int format_msg (const ACE_TCHAR host_name[],
+  int format_msg (ACE_TCHAR const host_name[],
                   u_long verbose_flag,
                   ACE_TCHAR *verbose_msg,
                   size_t verbose_msg_size);
