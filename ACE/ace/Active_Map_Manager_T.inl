@@ -68,7 +68,7 @@ ACE_Active_Map_Manager<T>::find (ACE_Active_Map_Manager_Key const &key,
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
       this->search_structure_[slot_index].ext_id_.slot_generation () != slot_generation ||
       this->search_structure_[slot_index].ext_id_.slot_index () ==
-                 (ACE_UINT32)this->free_list_id ())
+                 this->free_list_id ())
     {
       return -1;
     }
