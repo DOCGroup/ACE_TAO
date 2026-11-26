@@ -26,13 +26,13 @@ Foo_C_ClientEngine::execute()
       return false;
     }
 
-  const CORBA::Long i = this->client_id_;
+  CORBA::Long const i = this->client_id_;
 
   this->obj_->op1();
 
   this->obj_->op2(i);
 
-  const CORBA::Long value = this->obj_->op3(i);
+  CORBA::Long const value = this->obj_->op3(i);
 
   if (value != i)
     {

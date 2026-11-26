@@ -27,11 +27,11 @@ Foo_C_Custom_ClientEngine::execute()
     }
 
   bool check_validity = true;
-  const CORBA::Long i = this->client_id_;
+  CORBA::Long const i = this->client_id_;
 
   this->proxy_.op1();
   this->proxy_.op2(i);
-  const CORBA::Long value = this->proxy_.op3(i);
+  CORBA::Long const value = this->proxy_.op3(i);
 
   if (value != i)
     {

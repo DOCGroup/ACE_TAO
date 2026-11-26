@@ -37,7 +37,7 @@ Foo_B_ClientEngine::execute()
 
   this->obj_->op2(this->client_id_);
 
-  const CORBA::Long value = this->obj_->op3(this->client_id_);
+  CORBA::Long const value = this->obj_->op3(this->client_id_);
 
   if (value != static_cast<CORBA::Long>(this->client_id_))
     {
@@ -79,7 +79,7 @@ Foo_B_ClientEngine::execute()
   // Two-Way calls with "inout" and fixed size "in" arguments.
   CORBA::String_var message = CORBA::string_dup(test_str);
 
-  const CORBA::Boolean result = this->obj_->op6( t, message.inout());
+  CORBA::Boolean const result = this->obj_->op6( t, message.inout());
 
   ACE_UNUSED_ARG(result);
 
