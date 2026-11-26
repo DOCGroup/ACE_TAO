@@ -27,8 +27,8 @@
    (defined (ACE_HAS_POSIX_SEM) && defined (ACE_HAS_POSIX_SEM_TIMEOUT) && !defined (ACE_LACKS_NAMED_POSIX_SEM)))
 static int iterations = 10;
 static int child_process = 0;
-static const ACE_TCHAR *event_ping_name = ACE_TEXT ("ACE_Ping_Event");
-static const ACE_TCHAR *event_pong_name = ACE_TEXT ("ACE_Pong_Event");
+static ACE_TCHAR const *event_ping_name = ACE_TEXT ("ACE_Ping_Event");
+static ACE_TCHAR const *event_pong_name = ACE_TEXT ("ACE_Pong_Event");
 
 // Explain usage and exit.
 static void
@@ -197,11 +197,11 @@ run_main (int argc, ACE_TCHAR *argv[])
       ACE_TCHAR const * argv_0 = argc > 0 ? argv[0] : ACE_TEXT ("Process_Manual_Event_Test");
 
 #if defined (ACE_WIN32)
-      const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" -c -i %d");
+      ACE_TCHAR const *cmdline_format = ACE_TEXT("\"%s\" -c -i %d");
 #elif !defined (ACE_USES_WCHAR)
-const ACE_TCHAR *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s -c -i %d"));
+ACE_TCHAR const *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s -c -i %d"));
 #else
-const ACE_TCHAR *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls -c -i %d"));
+ACE_TCHAR const *cmdline_format = argc > 0 ? ACE_TEXT ("%s -c -i %d") : (ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls -c -i %d"));
 #endif
 
       ACE_Process_Options options;

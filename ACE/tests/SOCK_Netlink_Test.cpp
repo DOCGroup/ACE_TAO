@@ -617,7 +617,7 @@ Secondary_Ipaddr_Handler::close ()
 int
 Secondary_Ipaddr_Handler::schedule_one_sec_timer ()
 {
-  const ACE_Time_Value one_sec (1, 0);
+  ACE_Time_Value const one_sec (1, 0);
 
   if (this->reactor ()->schedule_timer (this,
                                         nullptr,
