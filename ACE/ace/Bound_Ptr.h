@@ -100,6 +100,8 @@ template <class X, class ACE_LOCK> class ACE_Weak_Bound_Ptr;
  * When the last instance of an ACE_Strong_Bound_Ptr that references a
  * particular object is destroyed or overwritten, it will invoke delete
  * on its underlying pointer.
+ * Explicit static and dynamic pointer casts share the reference count;
+ * a failed dynamic cast returns an empty pointer.
  */
 template <class X, class ACE_LOCK>
 class ACE_Strong_Bound_Ptr
@@ -131,6 +133,18 @@ public:
     ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r)
   {
     return ACE_Strong_Bound_Ptr (r, static_cast<X *> (r.ptr_));
+  }
+
+  template <class Y>
+  static ACE_Strong_Bound_Ptr dynamic_pointer_cast (
+    ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r)
+  {
+    X * const p = dynamic_cast<X *> (r.ptr_);
+    if (p != nullptr)
+      {
+        return ACE_Strong_Bound_Ptr (r, p);
+      }
+    return ACE_Strong_Bound_Ptr ();
   }
 
   ~ACE_Strong_Bound_Ptr ();

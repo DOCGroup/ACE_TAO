@@ -347,7 +347,7 @@ namespace ACE_TMCast
         Message const &msg = *m; // avoid warning for side-effects in typeid
         if (typeid (msg) == typeid (Send))
         {
-          send_ = SendPtr (m);
+          send_ = SendPtr::dynamic_pointer_cast (m);
         }
         else
         {

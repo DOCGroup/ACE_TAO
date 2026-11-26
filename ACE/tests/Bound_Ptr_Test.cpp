@@ -75,6 +75,27 @@ static_assert (std::is_assignable_v<Child_Base_Ptr &, Child_Ptr const &>);
 static_assert (!std::is_constructible_v<Child_Ptr, Child_Base_Ptr const &>);
 static_assert (!std::is_assignable_v<Child_Ptr &, Child_Base_Ptr const &>);
 
+struct Cast_Base
+{
+  virtual ~Cast_Base () = default;
+};
+
+struct Cast_Derived : virtual Cast_Base
+{
+  explicit Cast_Derived (int &destroyed) : destroyed_ (destroyed)
+  {
+  }
+  ~Cast_Derived () override
+  {
+    ++this->destroyed_;
+  }
+  int &destroyed_;
+};
+
+struct Cast_Other : virtual Cast_Base
+{
+};
+
 Child_Base::~Child_Base () = default;
 
 size_t Parent::instance_count_ = 0;
@@ -377,6 +398,21 @@ run_main (int, ACE_TCHAR *[])
     ACE_TEST_ASSERT (Child::instance_count_ == children_before);
   }
   ACE_TEST_ASSERT (Child::instance_count_ == children_before);
+  {
+    int destroyed {};
+    using Base_Ptr = ACE_Strong_Bound_Ptr<Cast_Base, ACE_Null_Mutex>;
+    using Derived_Ptr = ACE_Strong_Bound_Ptr<Cast_Derived, ACE_Null_Mutex>;
+    using Other_Ptr = ACE_Strong_Bound_Ptr<Cast_Other, ACE_Null_Mutex>;
+    Base_Ptr base (new Cast_Derived (destroyed));
+    Derived_Ptr derived = Derived_Ptr::dynamic_pointer_cast (base);
+    Other_Ptr const other = Other_Ptr::dynamic_pointer_cast (base);
+    ACE_TEST_ASSERT (derived != nullptr);
+    ACE_TEST_ASSERT (other == nullptr);
+    base.reset ();
+    ACE_TEST_ASSERT (destroyed == 0);
+    derived.reset ();
+    ACE_TEST_ASSERT (destroyed == 1);
+  }
   ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> p8;
   {
     // Must get the pointer from the parent object's weak_self_ member.
