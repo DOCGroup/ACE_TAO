@@ -66,6 +66,7 @@ public:
   Vb (Oid const &vb, SnmpSyntax const &val, SmiUINT32 status = SNMP_CLASS_SUCCESS);
 
   Vb (Vb const &vb);
+  Vb (Vb &&) = default;
 
   /**
    * destructor
@@ -79,6 +80,7 @@ public:
 
   /// assignment to another Vb object overloaded
   Vb &operator= (Vb const &vb);
+  Vb &operator= (Vb &&) = default;
 
   /// equivlence operator overloaded
   friend ASNMP_Export bool operator== (Vb const &lhs, Vb const &rhs);

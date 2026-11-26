@@ -37,6 +37,7 @@ DAMAGES.
 #include "asnmp/wpdu.h"
 #include "test_config.h"
 #include <cstring>
+#include <utility>
 
 /*
   Vb();
@@ -183,6 +184,18 @@ static void VbTest()
   ACE_TEST_ASSERT(o1 == o2);
   v11.get_value(s2);
   ACE_TEST_ASSERT(s1 == s2);
+
+  Vb move_source (o1, s1);
+  Vb move_constructed (std::move (move_source));
+  Vb move_assigned;
+  move_assigned = std::move (move_constructed);
+  OctetStr moved_value;
+  int const move_result = move_assigned.get_value (moved_value);
+  ACE_TEST_ASSERT (move_source.valid () == 0);
+  ACE_TEST_ASSERT (move_constructed.valid () == 0);
+  ACE_TEST_ASSERT (move_assigned.valid () == 1);
+  ACE_TEST_ASSERT (move_result == 0);
+  ACE_TEST_ASSERT (moved_value == s1);
 
   Pdu pdu;
   pdu += v5;
