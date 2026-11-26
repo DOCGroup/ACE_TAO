@@ -39,7 +39,7 @@ public:
                         char *addr = nullptr,
                         ACE_OFF_T pos = 0);
 
-  ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
+  ACE_Shared_Memory_MM (ACE_TCHAR const *file_name,
                         size_t length = static_cast<size_t> (-1),
                         int flags = O_RDWR | O_CREAT,
                         int mode = ACE_DEFAULT_FILE_PERMS,
@@ -56,7 +56,7 @@ public:
             ACE_OFF_T pos = 0);
 
   /// Open method.
-  int open (const ACE_TCHAR *file_name,
+  int open (ACE_TCHAR const *file_name,
             size_t length = static_cast<size_t> (-1),
             int flags = O_RDWR | O_CREAT,
             int mode = ACE_DEFAULT_FILE_PERMS,
@@ -66,7 +66,7 @@ public:
             ACE_OFF_T pos = 0);
 
   /// Return the name of file that is mapped (if any).
-  const ACE_TCHAR *filename () const;
+  ACE_TCHAR const *filename () const;
 
   /// Close down the shared memory segment.
   int close () override;

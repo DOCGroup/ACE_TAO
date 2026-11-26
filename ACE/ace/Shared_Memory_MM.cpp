@@ -32,7 +32,7 @@ ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (ACE_HANDLE handle,
   ACE_TRACE ("ACE_Shared_Memory_MM::ACE_Shared_Memory_MM");
 }
 
-ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (const ACE_TCHAR *file_name,
+ACE_Shared_Memory_MM::ACE_Shared_Memory_MM (ACE_TCHAR const *file_name,
                                             size_t len,
                                             int flags,
                                             int mode,
