@@ -16,7 +16,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Dirent_Selector::~ACE_Dirent_Selector ()
 {
   // Free up any allocated resources.
-  this->close();
+  this->close ();
 }
 
 int
@@ -24,15 +24,17 @@ ACE_Dirent_Selector::open (ACE_TCHAR const *dir,
                            ACE_SCANDIR_SELECTOR sel,
                            ACE_SCANDIR_COMPARATOR cmp)
 {
-  n_ = ACE_OS::scandir (dir, &this->namelist_, sel, cmp);
-  return n_;
+  this->close ();
+  this->n_ = ACE_OS::scandir (dir, &this->namelist_, sel, cmp);
+  return this->n_;
 }
 
 int
 ACE_Dirent_Selector::close ()
 {
-  for (--n_; n_ >= 0; --n_)
+  while (this->n_ > 0)
     {
+      --this->n_;
 #if defined (ACE_LACKS_STRUCT_DIR)
       // Only the lacking-struct-dir emulation allocates this. Native
       // scandir includes d_name in the dirent struct itself.
@@ -55,6 +57,7 @@ ACE_Dirent_Selector::close ()
   ACE_OS::free (this->namelist_);
 #endif /* ACE_HAS_ALLOC_HOOKS */
   this->namelist_ = nullptr;
+  this->n_ = 0;
   return 0;
 }
 

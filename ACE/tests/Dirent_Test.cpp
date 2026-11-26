@@ -83,6 +83,11 @@ dirent_selector_test ()
       error = 1;
     }
 
+  if (sds.open (test_dir, selector, comparator) != 1 || sds.length () != 1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not reopen selected directory\n")), -1);
+    }
+
   for (n = 0; n < sds.length (); ++n)
     {
 #if defined (ACE_HAS_TCHAR_DIRENT)
@@ -105,6 +110,11 @@ dirent_selector_test ()
                   ACE_TEXT ("after selecting, %p\n"),
                   ACE_TEXT ("close")));
       error = 1;
+    }
+
+  if (sds.close () != 0 || sds.length () != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Repeated selector close failed\n")), -1);
     }
 
   ACE_Dirent_Selector ds;
