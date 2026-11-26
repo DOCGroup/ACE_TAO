@@ -214,12 +214,12 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound)
 {
   u_int count = 0;
   this->config_->get_integer_value (this->strings_key_,
-                                    "count",
+                                    ACE_TEXT ("count"),
                                     count);
 
-  char *name = TAO_IFR_Service_Utils::int_to_string (count++);
+  ACE_TCHAR *name = TAO_IFR_Service_Utils::int_to_string (count++);
   this->config_->set_integer_value (this->strings_key_,
-                                    "count",
+                                    ACE_TEXT ("count"),
                                     count);
 
   // Make new database entry.
@@ -230,24 +230,24 @@ TAO_Repository_i::create_string_i (CORBA::ULong bound)
                                new_key);
 
   this->config_->set_integer_value (new_key,
-                                    "bound",
+                                    ACE_TEXT ("bound"),
                                     bound);
 
   this->config_->set_integer_value (new_key,
-                                    "def_kind",
+                                    ACE_TEXT ("def_kind"),
                                     CORBA::dk_String);
 
   this->config_->set_string_value (new_key,
-                                   "name",
+                                   ACE_TEXT ("name"),
                                    name);
 
   // Create the object reference.
-  ACE_TString obj_id ("strings\\");
+  ACE_TString obj_id (ACE_TEXT ("strings\\"));
   obj_id += name;
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_String,
-                                          obj_id.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (obj_id.c_str ()),
                                           this->repo_);
 
   return CORBA::StringDef::_narrow (obj.in ());
@@ -266,12 +266,12 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound)
 {
   u_int count = 0;
   this->config_->get_integer_value (this->wstrings_key_,
-                                    "count",
+                                    ACE_TEXT ("count"),
                                     count);
 
-  char *name = TAO_IFR_Service_Utils::int_to_string (count++);
+  ACE_TCHAR *name = TAO_IFR_Service_Utils::int_to_string (count++);
   this->config_->set_integer_value (this->wstrings_key_,
-                                    "count",
+                                    ACE_TEXT ("count"),
                                     count);
 
   // Make new database entry.
@@ -282,24 +282,24 @@ TAO_Repository_i::create_wstring_i (CORBA::ULong bound)
                                new_key);
 
   this->config_->set_integer_value (new_key,
-                                    "bound",
+                                    ACE_TEXT ("bound"),
                                     bound);
 
   this->config_->set_integer_value (new_key,
-                                    "def_kind",
+                                    ACE_TEXT ("def_kind"),
                                     CORBA::dk_Wstring);
 
   this->config_->set_string_value (new_key,
-                                   "name",
+                                   ACE_TEXT ("name"),
                                    name);
 
   // Create the object reference.
-  ACE_TString obj_id ("wstrings\\");
+  ACE_TString obj_id (ACE_TEXT ("wstrings\\"));
   obj_id += name;
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Wstring,
-                                               obj_id.c_str (),
+                                               ACE_TEXT_ALWAYS_CHAR (obj_id.c_str ()),
                                                this->repo_);
 
   return CORBA::WstringDef::_narrow (obj.in ());
@@ -321,12 +321,12 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
 {
   u_int count = 0;
   this->config_->get_integer_value (this->sequences_key_,
-                                    "count",
+                                    ACE_TEXT ("count"),
                                     count);
 
-  char *name = TAO_IFR_Service_Utils::int_to_string (count++);
+  ACE_TCHAR *name = TAO_IFR_Service_Utils::int_to_string (count++);
   this->config_->set_integer_value (this->sequences_key_,
-                                    "count",
+                                    ACE_TEXT ("count"),
                                     count);
 
   // Make new database entry.
@@ -338,17 +338,17 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
 
   // Set the bound attribute.
   this->config_->set_integer_value (new_key,
-                                    "bound",
+                                    ACE_TEXT ("bound"),
                                     bound);
 
   // Set the def_kind attribute.
   this->config_->set_integer_value (new_key,
-                                    "def_kind",
+                                    ACE_TEXT ("def_kind"),
                                     CORBA::dk_Sequence);
 
   // Set the "name" for destroy to use.
   this->config_->set_string_value (new_key,
-                                   "name",
+                                   ACE_TEXT ("name"),
                                    name);
 
   char *element_path =
@@ -356,16 +356,16 @@ TAO_Repository_i::create_sequence_i (CORBA::ULong bound,
 
   // To get key to element type.
   this->config_->set_string_value (new_key,
-                                   "element_path",
-                                   element_path);
+                                   ACE_TEXT ("element_path"),
+                                   ACE_TEXT_CHAR_TO_TCHAR (element_path));
 
   // Create the object reference.
-  ACE_TString obj_id ("sequences\\");
+  ACE_TString obj_id (ACE_TEXT ("sequences\\"));
   obj_id += name;
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Sequence,
-                                          obj_id.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (obj_id.c_str ()),
                                           this->repo_);
 
   return CORBA::SequenceDef::_narrow (obj.in ());
@@ -387,12 +387,12 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
 {
   u_int count = 0;
   this->config_->get_integer_value (this->arrays_key_,
-                                    "count",
+                                    ACE_TEXT ("count"),
                                     count);
 
-  char *name = TAO_IFR_Service_Utils::int_to_string (count++);
+  ACE_TCHAR *name = TAO_IFR_Service_Utils::int_to_string (count++);
   this->config_->set_integer_value (this->arrays_key_,
-                                    "count",
+                                    ACE_TEXT ("count"),
                                     count);
 
   // Make new database entry.
@@ -404,17 +404,17 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
 
   // Set the length attribute.
   this->config_->set_integer_value (new_key,
-                                    "length",
+                                    ACE_TEXT ("length"),
                                     length);
 
   // Set the def_kind attribute.
   this->config_->set_integer_value (new_key,
-                                    "def_kind",
+                                    ACE_TEXT ("def_kind"),
                                     CORBA::dk_Array);
 
   // Set the "name" for destroy to use.
   this->config_->set_string_value (new_key,
-                                   "name",
+                                   ACE_TEXT ("name"),
                                    name);
 
   char *element_path =
@@ -422,16 +422,16 @@ TAO_Repository_i::create_array_i (CORBA::ULong length,
 
   // To get key to element type.
   this->config_->set_string_value (new_key,
-                                   "element_path",
-                                   element_path);
+                                   ACE_TEXT ("element_path"),
+                                   ACE_TEXT_CHAR_TO_TCHAR (element_path));
 
   // Create the object reference.
-  ACE_TString obj_id ("arrays\\");
+  ACE_TString obj_id (ACE_TEXT ("arrays\\"));
   obj_id += name;
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Array,
-                                          obj_id.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (obj_id.c_str ()),
                                           this->repo_);
 
   return CORBA::ArrayDef::_narrow (obj.in ());
@@ -554,18 +554,18 @@ int
 TAO_Repository_i::create_sections ()
 {
   this->config_->open_section (config_->root_section (),
-                               "root",
+                               ACE_TEXT ("root"),
                                true, // Will create if IFR is not persistent.
                                this->root_key_);
 
   this->config_->open_section (this->root_key_,
-                               "repo_ids",
+                               ACE_TEXT ("repo_ids"),
                                true, // Will create if IFR is not persistent.
                                this->repo_ids_key_);
 
   int status =
     this->config_->open_section (this->root_key_,
-                                 "pkinds",
+                                 ACE_TEXT ("pkinds"),
                                  false, // Don't create
                                  this->pkinds_key_);
 
@@ -574,7 +574,7 @@ TAO_Repository_i::create_sections ()
     // Must add entries for primitive kinds.
     {
       this->config_->open_section (this->root_key_,
-                                   "pkinds",
+                                   ACE_TEXT ("pkinds"),
                                    true, // It doesn't exist so create it.
                                    this->pkinds_key_);
 
@@ -586,42 +586,42 @@ TAO_Repository_i::create_sections ()
           CORBA::PrimitiveKind pkind = static_cast<CORBA::PrimitiveKind> (i);
 
           this->config_->open_section (this->pkinds_key_,
-                                       this->pkind_to_string (pkind),
+                                       ACE_TEXT_CHAR_TO_TCHAR (this->pkind_to_string (pkind)),
                                        true,
                                        key);
 
           this->config_->set_integer_value (key,
-                                            "def_kind",
+                                            ACE_TEXT ("def_kind"),
                                             CORBA::dk_Primitive);
 
           this->config_->set_integer_value (key,
-                                            "pkind",
+                                            ACE_TEXT ("pkind"),
                                             i);
         }
     }
 
   this->config_->open_section (this->root_key_,
-                               "strings",
+                               ACE_TEXT ("strings"),
                                true,
                                this->strings_key_);
 
   this->config_->open_section (this->root_key_,
-                               "wstrings",
+                               ACE_TEXT ("wstrings"),
                                true,
                                this->wstrings_key_);
 
   this->config_->open_section (this->root_key_,
-                               "fixeds",
+                               ACE_TEXT ("fixeds"),
                                true,
                                this->fixeds_key_);
 
   this->config_->open_section (this->root_key_,
-                               "arrays",
+                               ACE_TEXT ("arrays"),
                                true,
                                this->arrays_key_);
 
   this->config_->open_section (this->root_key_,
-                               "sequences",
+                               ACE_TEXT ("sequences"),
                                true,
                                this->sequences_key_);
 
@@ -631,29 +631,29 @@ TAO_Repository_i::create_sections ()
   // the "count" fields to 0. We test just one for existence.
   status =
     this->config_->get_integer_value (this->strings_key_,
-                                      "count",
+                                      ACE_TEXT ("count"),
                                       count);
 
   if (status == -1) // Field "count" does not exist.
     {
       this->config_->set_integer_value (this->strings_key_,
-                                        "count",
+                                        ACE_TEXT ("count"),
                                         0);
 
       this->config_->set_integer_value (this->wstrings_key_,
-                                        "count",
+                                        ACE_TEXT ("count"),
                                         0);
 
       this->config_->set_integer_value (this->fixeds_key_,
-                                        "count",
+                                        ACE_TEXT ("count"),
                                         0);
 
       this->config_->set_integer_value (this->arrays_key_,
-                                        "count",
+                                        ACE_TEXT ("count"),
                                         0);
 
       this->config_->set_integer_value (this->sequences_key_,
-                                        "count",
+                                        ACE_TEXT ("count"),
                                         0);
     }
 
@@ -662,19 +662,19 @@ TAO_Repository_i::create_sections ()
   this->section_key_ = this->root_key_;
 
   this->config_->set_string_value (this->section_key_,
-                                   "absolute_name",
-                                   "");
+                                   ACE_TEXT ("absolute_name"),
+                                   ACE_TEXT (""));
 
   this->config_->set_string_value (this->section_key_,
-                                   "id",
-                                   ""); // required by spec
+                                   ACE_TEXT ("id"),
+                                   ACE_TEXT ("")); // required by spec
 
   this->config_->set_string_value (this->section_key_,
-                                   "name",
-                                   "");
+                                   ACE_TEXT ("name"),
+                                   ACE_TEXT (""));
 
   this->config_->set_integer_value (this->section_key_,
-                                    "def_kind",
+                                    ACE_TEXT ("def_kind"),
                                     CORBA::dk_Repository);
 
   return 0;
