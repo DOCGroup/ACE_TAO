@@ -92,9 +92,10 @@ class ACE_QtReactor_Export ACE_QtReactor
     Q_OBJECT
 
 public:
-    /** \brief Constructor follows @c ACE_Select_Reactor.
-        \param qapp Qt application which runs the event loop.
-    */
+    /**
+     * Construct a reactor for the Qt application @a qapp, which runs the
+     * event loop. Other arguments are forwarded to @c ACE_Select_Reactor.
+     */
     explicit ACE_QtReactor (QApplication *qapp = nullptr,
         ACE_Sig_Handler * = nullptr,
         ACE_Timer_Queue * = nullptr,
@@ -103,9 +104,10 @@ public:
         bool mask_signals = true,
         int s_queue = ACE_SELECT_TOKEN::FIFO);
 
-    /** \brief Constructor follows @c ACE_Select_Reactor.
-        \param qapp Qt application which runs the event loop.
-    */
+    /**
+     * Construct a reactor for the Qt application @a qapp, which runs the
+     * event loop. Other arguments are forwarded to @c ACE_Select_Reactor.
+     */
     explicit ACE_QtReactor (size_t size,
         QApplication *qapp = nullptr,
         bool restart = false,
