@@ -34,7 +34,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace
 {
   int
-  excep_for_type (const char *tid)
+  excep_for_type (char const *tid)
   {
     if (std::strcmp (tid, "IDL:omg.org/CORBA/TRANSIENT:1.0") == 0)
       {

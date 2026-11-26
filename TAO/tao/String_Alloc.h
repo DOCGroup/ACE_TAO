@@ -29,7 +29,7 @@ namespace CORBA
    */
   /// @{
   TAO_Export char * string_alloc (ULong len);
-  TAO_Export char * string_dup (const char *);
+  TAO_Export char * string_dup (char const *);
   TAO_Export void string_free (char *);
   /// @}
 

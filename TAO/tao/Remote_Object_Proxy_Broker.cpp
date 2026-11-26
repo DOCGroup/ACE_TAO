@@ -17,7 +17,7 @@ namespace TAO
 {
   CORBA::Boolean
   Remote_Object_Proxy_Broker::_is_a (CORBA::Object_ptr target,
-                                     const char *type_id)
+                                     char const *type_id)
   {
     TAO::Arg_Traits<ACE_InputCDR::to_boolean>::ret_val _tao_retval;
     TAO::Arg_Traits<char *>::in_arg_val _tao_id (type_id);

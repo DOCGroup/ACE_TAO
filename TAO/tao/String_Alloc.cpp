@@ -17,7 +17,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 char *
-CORBA::string_dup (const char *str)
+CORBA::string_dup (char const *str)
 {
   if (!str)
     {

@@ -32,7 +32,7 @@ namespace
   /// consumed. This could create problems if
   /// the data that follows the newline is binary.
   template<typename T>
-  void read_integer(const char * format, T & i,
+  void read_integer(char const *format, T & i,
                     TAO::Storable_Base::Storable_State & state,
                     FILE * fl)
   {
@@ -175,7 +175,7 @@ TAO::Storable_FlatFileStream::open()
 {
   // For now, three flags exist "r", "w",  and "c"
   int flags {};
-  const char *fdmode {};
+  char const *fdmode {};
   if (std::strchr (mode_.c_str (), 'r'))
     {
       if (std::strchr (mode_.c_str (), 'w'))
@@ -608,7 +608,7 @@ TAO::Storable_FlatFileStream::operator << (TAO_OutputCDR const &cdr)
   *this << length;
   for (const ACE_Message_Block *i = cdr.begin (); i != nullptr; i = i->cont ())
     {
-      const char *bytes = i->rd_ptr ();
+      char const *bytes = i->rd_ptr ();
       size_t const len = i->length ();
       this->write (len, bytes);
     }
@@ -796,7 +796,7 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
 {
   bool ret {};
 #if defined (ACE_HAS_MNTENT)
-  const char *dir = directory.c_str();
+  char const *dir = directory.c_str();
   char rpath [PATH_MAX];
   if (*dir != '/')
     {
@@ -833,7 +833,7 @@ TAO::Storable_FlatFileFactory::is_nfs (std::string const &directory)
   size_t match {};
   size_t const dirlen = std::strlen(dir);
   struct mntent *ent {};
-  const char *fname = "/etc/mtab";
+  char const *fname = "/etc/mtab";
   FILE *mt = ::setmntent(fname,"r");
   if (mt == nullptr)
     {
