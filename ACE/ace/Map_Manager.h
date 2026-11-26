@@ -508,7 +508,7 @@ class ACE_Map_Const_Iterator_Base
 public:
   /// Constructor.  If head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
-  ACE_Map_Const_Iterator_Base (const ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm);
+  ACE_Map_Const_Iterator_Base (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> const &mm);
 
   /// @name Iteration methods
   /// @{
@@ -548,7 +548,7 @@ protected:
   void dump_i () const;
 
   /// Map we are iterating over.
-  const ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> *map_man_;
+  ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> const *map_man_;
 
   /// Keeps track of how far we've advanced...
   ACE_UINT32 next_;
@@ -620,7 +620,7 @@ template <class EXT_ID, class INT_ID, class ACE_LOCK>
 class ACE_Map_Const_Iterator : public ACE_Map_Const_Iterator_Base<EXT_ID, INT_ID, ACE_LOCK>
 {
 public:
-  ACE_Map_Const_Iterator (const ACE_Map_Manager <EXT_ID, INT_ID, ACE_LOCK> &mm,
+  ACE_Map_Const_Iterator (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> const &mm,
                           int pass_end = 0);
 
   /// @name Iteration methods
