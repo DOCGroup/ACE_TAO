@@ -177,20 +177,18 @@ namespace ACE_RMCast
         {
           if (timeout)
             {
-              if (cond_.wait (std::addressof (abs_time)) != -1)
-              {
-                break;
-              }
+              if (cond_.wait (std::addressof (abs_time)) == -1)
+                {
+                  return -1; // errno is already set
+                }
             }
           else
             {
-              if (cond_.wait () != -1)
-              {
-                break;
-              }
+              if (cond_.wait () == -1)
+                {
+                  return -1; // errno is already set
+                }
             }
-
-          return -1; // errno is already set
         }
 
       Message_ptr m;
@@ -252,20 +250,18 @@ namespace ACE_RMCast
         {
           if (timeout)
             {
-              if (cond_.wait (std::addressof (abs_time)) != -1)
-              {
-                break;
-              }
+              if (cond_.wait (std::addressof (abs_time)) == -1)
+                {
+                  return -1; // errno is already set
+                }
             }
           else
             {
-              if (cond_.wait () != -1)
-              {
-                break;
-              }
+              if (cond_.wait () == -1)
+                {
+                  return -1; // errno is already set
+                }
             }
-
-          return -1; // errno is already set
         }
 
       // I can't get the head of the queue without actually dequeuing
