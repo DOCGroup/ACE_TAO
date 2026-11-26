@@ -30,9 +30,9 @@ ACEXML_NS_CONTEXT *
 ACEXML_Namespace_Context_Stack::pop ()
 {
   if (this->stack_.size() <= 0)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
   ACEXML_NS_CONTEXT *temp {};
   int const retval = this->stack_.pop (temp);
@@ -49,9 +49,9 @@ ACEXML_NamespaceSupport::popContext ()
 {
   this->effective_context_.reset (this->ns_stack_.pop ());
   if (this->effective_context_ == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
   return 0;
 }
 
@@ -61,11 +61,11 @@ ACEXML_NamespaceSupport::pushContext ()
   std::unique_ptr<ACEXML_NS_CONTEXT> new_context (
     new (std::nothrow) ACEXML_NS_CONTEXT ());
   if (new_context == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
-  // @@ Copy everything from the old context to the new one.
+  // Copy the current namespace bindings into the new context.
   ACEXML_NS_CONTEXT_ENTRY *entry {};
 
   for (ACEXML_NS_CONTEXT_ITER iter (*this->effective_context_);
@@ -76,9 +76,9 @@ ACEXML_NamespaceSupport::pushContext ()
     }
 
   if (this->ns_stack_.push (this->effective_context_.get ()) != 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   this->effective_context_.release ();
   this->effective_context_ = std::move (new_context);
@@ -90,12 +90,11 @@ ACEXML_NamespaceSupport::ACEXML_NamespaceSupport () = default;
 int
 ACEXML_NamespaceSupport::init ()
 {
-  // @@ No way to tell if the new fails.
   this->effective_context_.reset (new (std::nothrow) ACEXML_NS_CONTEXT ());
   if (this->effective_context_ == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACEXML_String const prefix (ACEXML_TABOO_NS_PREFIX, nullptr, false);
   ACEXML_String const uri (ACEXML_XMLNS_URI_name, nullptr, false);
@@ -115,16 +114,16 @@ ACEXML_NamespaceSupport::declarePrefix (ACEXML_Char const *prefix,
                                         ACEXML_Char const *uri)
 {
   if (prefix == nullptr || uri == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   // Unless predefined by w3.org(?) NS prefix can never start with
   // "xml".
   if (ACE_OS::strcmp (ACEXML_TABOO_NS_PREFIX, prefix) == 0)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACEXML_String const ns_prefix (prefix, nullptr, false);
   ACEXML_String const ns_uri (uri, nullptr, false);
@@ -153,9 +152,9 @@ ACEXML_Char const *
 ACEXML_NamespaceSupport::getPrefix (ACEXML_Char const *uri) const
 {
   if (uri == nullptr || *uri == 0)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
   ACEXML_NS_CONTEXT_ENTRY *entry {};
 
@@ -193,9 +192,9 @@ ACEXML_NamespaceSupport::getPrefixes (ACEXML_Char const *uri,
                                       ACEXML_STR_LIST &prefixes) const
 {
   if (uri == nullptr)
-  {
-    return -1;
-  }
+    {
+      return -1;
+    }
 
   ACEXML_NS_CONTEXT_ENTRY *entry {};
 
@@ -221,17 +220,17 @@ ACEXML_Char const *
 ACEXML_NamespaceSupport::getURI (ACEXML_Char const *prefix) const
 {
   if (prefix == nullptr)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
   ACEXML_NS_CONTEXT_ENTRY *entry {};
 
   if (this->effective_context_->find (ACEXML_String (prefix, nullptr, false),
                                       entry) == 0)
-  {
-    return entry->int_id_.c_str ();
-  }
+    {
+      return entry->int_id_.c_str ();
+    }
   return nullptr;
 }
 
