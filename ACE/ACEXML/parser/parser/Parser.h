@@ -530,7 +530,8 @@ protected:
   virtual ACEXML_Char peek ();
 
 private:
-  // *** Helper functions for parsing XML
+  /// @name XML parsing helpers
+  /// @{
 
   /**
    * Skip any whitespaces encountered until the first non-whitespace
@@ -666,8 +667,7 @@ private:
    *
    */
   std::unique_ptr<ACEXML_Char[]> normalize_systemid (ACEXML_Char const *systemId);
-
-  // Feature names:
+  /// @}
 
   /**
    * \addtogroup acexml_parser_features

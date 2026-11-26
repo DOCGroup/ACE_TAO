@@ -30,7 +30,8 @@ public:
   ACEXML_SAXPrint_Handler &operator= (ACEXML_SAXPrint_Handler const &) = delete;
   ACEXML_SAXPrint_Handler &operator= (ACEXML_SAXPrint_Handler &&) = delete;
 
-  // Methods inherit from ACEXML_ContentHandler.
+  /// @name ACEXML_ContentHandler operations
+  /// @{
 
   /// Receive notification of character data.
   void characters (ACEXML_Char const *ch,
@@ -75,8 +76,10 @@ public:
   /// Begin the scope of a prefix-URI Namespace mapping.
   void startPrefixMapping (ACEXML_Char const *prefix,
                            ACEXML_Char const *uri) override;
+  /// @}
 
-  // *** Methods inherit from ACEXML_DTDHandler.
+  /// @name ACEXML_DTDHandler operations
+  /// @{
 
   /// Receive notification of a notation declaration event.
   void notationDecl (ACEXML_Char const *name,
@@ -88,14 +91,14 @@ public:
                            ACEXML_Char const *publicId,
                            ACEXML_Char const *systemId,
                            ACEXML_Char const *notationName) override;
-
-  // Methods inherit from ACEXML_EnitityResolver.
+  /// @}
 
   /// Allow the application to resolve external entities.
   ACEXML_InputSource *resolveEntity (ACEXML_Char const *publicId,
                                      ACEXML_Char const *systemId) override;
 
-  // Methods inherit from ACEXML_ErrorHandler.
+  /// @name ACEXML_ErrorHandler operations
+  /// @{
 
   /// Receive notification of a recoverable error.
   void error (ACEXML_SAXParseException &exception) override;
@@ -105,6 +108,7 @@ public:
 
   /// Receive notification of a warning.
   void warning (ACEXML_SAXParseException &exception) override;
+  /// @}
 
   void inc_indent ();
   void dec_indent ();
