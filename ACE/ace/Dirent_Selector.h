@@ -42,7 +42,7 @@ public:
   int length () const;
 
   /// Return the entry at @a index.
-  ACE_DIRENT *operator[] (const int index) const;
+  ACE_DIRENT *operator[] (int const index) const;
 
   /// Free up resources.
   int close ();

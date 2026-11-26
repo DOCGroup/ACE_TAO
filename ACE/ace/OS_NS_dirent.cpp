@@ -43,7 +43,7 @@ ACE_OS::closedir_emulation (ACE_DIR *d)
 
 #if defined (ACE_LACKS_OPENDIR)
 ACE_DIR *
-ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
+ACE_OS::opendir_emulation (ACE_TCHAR const *filename)
 {
 #if defined (ACE_WIN32)
 #  if !defined (INVALID_FILE_ATTRIBUTES)
@@ -178,7 +178,7 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
 
 #if !defined (ACE_HAS_SCANDIR)
 int
-ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
+ACE_OS::scandir_emulation (ACE_TCHAR const *dirname,
                            ACE_DIRENT **namelist[],
                            ACE_SCANDIR_SELECTOR selector,
                            ACE_SCANDIR_COMPARATOR comparator)

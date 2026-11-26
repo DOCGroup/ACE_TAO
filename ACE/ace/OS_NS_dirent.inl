@@ -28,7 +28,7 @@ closedir (ACE_DIR *d)
 }
 
 ACE_INLINE ACE_DIR *
-opendir (const ACE_TCHAR *filename)
+opendir (ACE_TCHAR const *filename)
 {
 #if defined (ACE_HAS_DIRENT)
 #  if (defined (ACE_WIN32) || defined(ACE_MQX)) && defined (ACE_LACKS_OPENDIR)
@@ -82,7 +82,7 @@ rewinddir (ACE_DIR *d)
 }
 
 ACE_INLINE int
-scandir (const ACE_TCHAR *dirname,
+scandir (ACE_TCHAR const *dirname,
          struct ACE_DIRENT **namelist[],
          ACE_SCANDIR_SELECTOR selector,
          ACE_SCANDIR_COMPARATOR comparator)
@@ -104,11 +104,11 @@ scandir (const ACE_TCHAR *dirname,
 }
 
 ACE_INLINE int
-alphasort (const void *a, const void *b)
+alphasort (void const *a, void const *b)
 {
 #if defined (ACE_LACKS_ALPHASORT)
-  return ACE_OS::strcmp ((*static_cast<const struct ACE_DIRENT * const *>(a))->d_name,
-                      (*static_cast<const struct ACE_DIRENT * const *>(b))->d_name);
+  return ACE_OS::strcmp ((*static_cast<struct ACE_DIRENT const * const *>(a))->d_name,
+                      (*static_cast<struct ACE_DIRENT const * const *>(b))->d_name);
 #else
 #  if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
   return ::alphasort (const_cast<void *>(a),
@@ -116,8 +116,8 @@ alphasort (const void *a, const void *b)
 #  elif defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
   return ::alphasort (a, b);
 #  else
-  return ::alphasort ((const struct ACE_DIRENT **) const_cast<void *> (a),
-                      (const struct ACE_DIRENT **) const_cast<void *> (b));
+  return ::alphasort ((struct ACE_DIRENT const **) const_cast<void *> (a),
+                      (struct ACE_DIRENT const **) const_cast<void *> (b));
 #  endif
 #endif
 }

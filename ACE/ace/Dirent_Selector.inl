@@ -7,7 +7,7 @@ ACE_Dirent_Selector::length () const
 }
 
 ACE_INLINE ACE_DIRENT *
-ACE_Dirent_Selector::operator[] (const int n) const
+ACE_Dirent_Selector::operator[] (int const n) const
 {
   return this->namelist_[n];
 }

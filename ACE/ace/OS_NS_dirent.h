@@ -33,12 +33,12 @@
 // the ACE_SCANDIR_OS_COMPARATOR.
 extern "C" {
 #if defined (ACE_SCANDIR_CMP_USES_VOIDPTR)
-  typedef int (*ACE_SCANDIR_OS_COMPARATOR)(void *f1, void *f2);
+  using ACE_SCANDIR_OS_COMPARATOR = int (*) (void *f1, void *f2);
 #elif defined (ACE_SCANDIR_CMP_USES_CONST_VOIDPTR)
-  typedef int (*ACE_SCANDIR_OS_COMPARATOR)(const void *f1, const void *f2);
+  using ACE_SCANDIR_OS_COMPARATOR = int (*) (void const *f1, void const *f2);
 #endif /* ACE_SCANDIR_CMP_USES_VOIDPTR */
-  typedef int (*ACE_SCANDIR_COMPARATOR)(const ACE_DIRENT **f1, const ACE_DIRENT **f2);
-  typedef int (*ACE_SCANDIR_SELECTOR)(const ACE_DIRENT *filename);
+  using ACE_SCANDIR_COMPARATOR = int (*) (ACE_DIRENT const **f1, ACE_DIRENT const **f2);
+  using ACE_SCANDIR_SELECTOR = int (*) (ACE_DIRENT const *filename);
 }
 
 /*
@@ -68,7 +68,7 @@ namespace ACE_OS {
   void closedir (ACE_DIR *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_DIR *opendir (const ACE_TCHAR *filename);
+  ACE_DIR *opendir (ACE_TCHAR const *filename);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   struct ACE_DIRENT *readdir (ACE_DIR *);
@@ -77,13 +77,13 @@ namespace ACE_OS {
   void rewinddir (ACE_DIR *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int scandir (const ACE_TCHAR *dirname,
+  int scandir (ACE_TCHAR const *dirname,
                struct ACE_DIRENT **namelist[],
                ACE_SCANDIR_SELECTOR selector,
                ACE_SCANDIR_COMPARATOR comparator);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int alphasort (const void *, const void *);
+  int alphasort (void const *, void const *);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void seekdir (ACE_DIR *,
@@ -96,12 +96,12 @@ namespace ACE_OS {
   /// @{
 #if defined (ACE_LACKS_OPENDIR)
   extern ACE_Export
-  ACE_DIR *opendir_emulation (const ACE_TCHAR *filename);
+  ACE_DIR *opendir_emulation (ACE_TCHAR const *filename);
 #endif /* ACE_LACKS_OPENDIR */
 
 #if !defined (ACE_HAS_SCANDIR)
   extern ACE_Export
-  int scandir_emulation (const ACE_TCHAR *dirname,
+  int scandir_emulation (ACE_TCHAR const *dirname,
                          ACE_DIRENT **namelist[],
                          ACE_SCANDIR_SELECTOR selector,
                          ACE_SCANDIR_COMPARATOR comparator);
