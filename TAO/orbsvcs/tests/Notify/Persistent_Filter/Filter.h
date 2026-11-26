@@ -191,14 +191,14 @@ protected:
   /// @name NotifyPublish operations
   /// @{
   void offer_change (
-      const CosNotification::EventTypeSeq & added,
-      const CosNotification::EventTypeSeq & removed) override;
+      CosNotification::EventTypeSeq const & added,
+      CosNotification::EventTypeSeq const & removed) override;
   /// @}
 
   /// @name StructuredPushConsumer operations
   /// @{
   void push_structured_event (
-        const CosNotification::StructuredEvent & notification) override;
+        CosNotification::StructuredEvent const & notification) override;
 
   void disconnect_structured_push_consumer () override;
   /// @}
@@ -226,7 +226,7 @@ public:
   void disconnect ();
 
   /// Send one event.
-  virtual void send_event (const CosNotification::StructuredEvent& event);
+  virtual void send_event (CosNotification::StructuredEvent const & event);
 
 protected:
   /// @name Data members
@@ -246,8 +246,8 @@ protected:
   /// @name NotifySubscribe operations
   /// @{
   void subscription_change (
-        const CosNotification::EventTypeSeq & added,
-        const CosNotification::EventTypeSeq & removed) override;
+        CosNotification::EventTypeSeq const & added,
+        CosNotification::EventTypeSeq const & removed) override;
   /// @}
 
   /// @name StructuredPushSupplier operations

@@ -11,12 +11,12 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv [])
 
       client.run_supplier ();
     }
-  catch (const CORBA::UserException& ue)
+  catch (CORBA::UserException const & ue)
     {
       ue._tao_print_exception ("TLS_Client user error: ");
       return 1;
     }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const & se)
     {
       se._tao_print_exception ("Supplier system error: ");
       return 1;

@@ -174,7 +174,7 @@ FilterClient::wait_consumer_complete ()
         break;
       }
     }
-    catch (const CORBA::OBJECT_NOT_EXIST&)
+    catch (CORBA::OBJECT_NOT_EXIST const &)
     {
       break;
     }
@@ -640,15 +640,15 @@ Filter_StructuredPushConsumer::disconnect ()
 
 void
 Filter_StructuredPushConsumer::offer_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed*/)
+   (CosNotification::EventTypeSeq const & /*added*/,
+    CosNotification::EventTypeSeq const & /*removed*/)
 {
   // No-Op.
 }
 
 void
 Filter_StructuredPushConsumer::push_structured_event
-   (const CosNotification::StructuredEvent & notification)
+   (CosNotification::StructuredEvent const & notification)
 {
     CORBA::Long val;
 
@@ -718,15 +718,15 @@ Filter_StructuredPushSupplier::disconnect ()
 
 void
 Filter_StructuredPushSupplier::subscription_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed */)
+   (CosNotification::EventTypeSeq const & /*added*/,
+    CosNotification::EventTypeSeq const & /*removed */)
 {
   //No-Op.
 }
 
 void
 Filter_StructuredPushSupplier::send_event
-   (const CosNotification::StructuredEvent& event)
+   (CosNotification::StructuredEvent const & event)
 {
   ACE_ASSERT (!CORBA::is_nil (this->proxy_consumer_.in ()));
 

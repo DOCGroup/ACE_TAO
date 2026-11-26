@@ -12,7 +12,7 @@ Event_StructuredPushConsumer::Event_StructuredPushConsumer (Events *test_client)
 
 void
 Event_StructuredPushConsumer::push_structured_event (
-    const CosNotification::StructuredEvent & notification)
+    CosNotification::StructuredEvent const & notification)
 {
   int event_num {};
   notification.filterable_data[0].value >>= event_num;

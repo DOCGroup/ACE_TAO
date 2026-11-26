@@ -78,7 +78,7 @@ Notify_Structured_Push_Consumer::_connect (
 
 void
 Notify_Structured_Push_Consumer::push_structured_event (
-  const CosNotification::StructuredEvent&)
+  CosNotification::StructuredEvent const &)
 {
   ACE_DEBUG ((LM_DEBUG, "-"));
   static ACE_Time_Value const sleep_time (0, 2000);

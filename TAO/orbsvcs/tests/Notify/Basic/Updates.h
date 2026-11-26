@@ -70,10 +70,10 @@ public:
   void run_test ();
 
   /// print_event_types
-  void print_event_types (const CosNotification::EventTypeSeq &types);
+  void print_event_types (CosNotification::EventTypeSeq const &types);
 
   /// Invoked by Supplier and Consumer when they receive updates
-  void types_changed (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed);
+  void types_changed (CosNotification::EventTypeSeq const & added, CosNotification::EventTypeSeq const & removed);
 
   /// Wait for expected count of updates.
   void wait_for_updates (int expected_added, int expected_removed);

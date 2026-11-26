@@ -13,7 +13,7 @@ SequencePushConsumer::SequencePushConsumer (Sequence *test_client)
 
 void
 SequencePushConsumer::push_structured_events (
-    const CosNotification::EventBatch &batch)
+    CosNotification::EventBatch const &batch)
 {
   this->test_client_->events_received_.fetch_add (static_cast<int> (batch.length ()));
 

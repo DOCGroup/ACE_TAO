@@ -11,7 +11,7 @@ MultiTypes_PushConsumer::MultiTypes_PushConsumer (MultiTypes* client)
 }
 
 void
-MultiTypes_PushConsumer::push (const CORBA::Any & /*data*/)
+MultiTypes_PushConsumer::push (CORBA::Any const & /*data*/)
 {
   client_->on_received_event (this);
 }
@@ -24,7 +24,7 @@ MultiTypes_StructuredPushConsumer::MultiTypes_StructuredPushConsumer (MultiTypes
 }
 
 void
-MultiTypes_StructuredPushConsumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/)
+MultiTypes_StructuredPushConsumer::push_structured_event (CosNotification::StructuredEvent const & /*notification*/)
 {
   client_->on_received_event (this);
 }
@@ -39,7 +39,7 @@ MultiTypes_SequencePushConsumer::MultiTypes_SequencePushConsumer (MultiTypes* cl
 // TODO: if the batch contains more than one event this counts only one received event
 // Since this should *never* happen, I'm not fixing it now.
 void
-MultiTypes_SequencePushConsumer::push_structured_events (const CosNotification::EventBatch & /*notifications*/)
+MultiTypes_SequencePushConsumer::push_structured_events (CosNotification::EventBatch const & /*notifications*/)
 {
   client_->on_received_event (this);
 }

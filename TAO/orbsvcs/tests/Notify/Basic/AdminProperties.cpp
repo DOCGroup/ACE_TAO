@@ -104,7 +104,7 @@ AdminProperties_StructuredPushConsumer::AdminProperties_StructuredPushConsumer (
 }
 
 void
-AdminProperties_StructuredPushConsumer::push_structured_event (const CosNotification::StructuredEvent & /*notification*/)
+AdminProperties_StructuredPushConsumer::push_structured_event (CosNotification::StructuredEvent const & /*notification*/)
 {
   ++events_received_;
 
