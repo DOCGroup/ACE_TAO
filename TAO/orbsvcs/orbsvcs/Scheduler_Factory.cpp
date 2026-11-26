@@ -182,7 +182,7 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming)
 
 int
 ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
-                                   const char* name)
+                                   char const *name)
 {
   if (server_ != nullptr || TAO_SF_entry_count != -1)
     {
@@ -303,10 +303,10 @@ int ACE_Scheduler_Factory::dump_schedule
     const RtecScheduler::Dependency_Set& dependencies,
     const RtecScheduler::Config_Info_Set& configs,
     const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
-    const ACE_TCHAR* file_name,
-    const char* rt_info_format,
-    const char* dependency_format,
-    const char* config_info_format,
+    ACE_TCHAR const *file_name,
+    char const *rt_info_format,
+    char const *dependency_format,
+    char const *config_info_format,
     int dump_disabled_infos,
     int dump_disabled_dependencies)
 {
@@ -389,7 +389,7 @@ int ACE_Scheduler_Factory::dump_schedule
 
       ACE_OS::fprintf (file,
                        "%s\n",
-                       (const char *) anomaly.description);
+                       (char const *) anomaly.description);
     }
 
   // Print out banner indicating which infos are dumped.
@@ -426,7 +426,7 @@ int ACE_Scheduler_Factory::dump_schedule
       // Put quotes around the entry point name, exactly as it is stored.
       ACE_OS::sprintf (entry_point,
                        "\"%s\"",
-                       (const char *) info.entry_point);
+                       (char const *) info.entry_point);
 
       // @@ TODO Eventually the TimeT structure will be a 64-bit
       // unsigned int, we will have to change this dump method then.
@@ -560,7 +560,7 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
    }
 
    // Print out the actual rt_info data
-   const char* rt_info_format = "{%20s, /* entry_point */\n"
+   char const *rt_info_format = "{%20s, /* entry_point */\n"
                                  "%10d, /* handle */\n"
                                  "%10d, /* period */\n"
                                  "%10d, /* criticality */\n"
@@ -585,7 +585,7 @@ void ACE_Scheduler_Factory::log_scheduling_entry(TAO_Reconfig_Scheduler_Entry * 
                     actual_info->enabled);
 
    // Print out the current admitted tuple
-   const char* admitted_tuple_format = "             {"
+   char const *admitted_tuple_format = "             {"
                                        "%13d, /* handle */\n"
                                        "%13d, /* rate_index */\n"
                                        "%13d, /* period */\n"
@@ -632,7 +632,7 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
                       FILE* file)
 {
    TAO_RT_Info_Tuple **tuple_ptr_ptr;
-   const char* subset_tuple_format = "             {\n"
+   char const *subset_tuple_format = "             {\n"
                                      "%13d, /* handle */\n"
                                      "%13d, /* rate_index */\n"
                                      "%13d, /* period */\n"
@@ -678,7 +678,7 @@ void ACE_Scheduler_Factory::log_tuple_subset(TUPLE_SET & tuple_subset,
 int
 ACE_Scheduler_Factory::log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** entry_ptr_array,
                                               long entry_ptr_array_size,
-                                              const char* file_name)
+                                              char const *file_name)
 {
    // Open the file
    FILE* file = stdout;
@@ -708,7 +708,7 @@ void
 ACE_Scheduler_Factory::log_scheduling_tuples(
   TAO_RT_Info_Tuple ** tuple_ptr_array,
   long tuple_ptr_array_size,
-  const char* file_name)
+  char const *file_name)
 {
    // Open the file
    FILE* file = stdout;

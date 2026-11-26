@@ -38,11 +38,11 @@ public:
    * a new RT_Info.  Here, we just return its handle, or an error value if
    * it's not present.
    */
-  RtecScheduler::handle_t create (const char * entry_point) override;
+  RtecScheduler::handle_t create (char const *entry_point) override;
 
   /// Lookup a handle for an RT_Info, and return its handle, or an error
   /// value if it's not present.
-  RtecScheduler::handle_t lookup (const char * entry_point) override;
+  RtecScheduler::handle_t lookup (char const *entry_point) override;
 
   /// Return a pointer to the RT_Info corresponding to the passed handle.
   RtecScheduler::RT_Info* get (RtecScheduler::handle_t handle) override;
@@ -92,7 +92,7 @@ public:
 
   /// Returns the priority and subpriority values assigned to an RT_Info,
   /// based on its entry point name.
-  void entry_point_priority (const char * entry_point,
+  void entry_point_priority (char const *entry_point,
                                      RtecScheduler::OS_Priority& o_priority,
                                      RtecScheduler::Preemption_Subpriority_t& p_subpriority,
                                      RtecScheduler::Preemption_Priority_t& p_priority) override;

@@ -25,7 +25,7 @@ ACE_Runtime_Scheduler (int config_count,
 // it's not present.
 
 RtecScheduler::handle_t
-ACE_Runtime_Scheduler::create (const char *entry_point)
+ACE_Runtime_Scheduler::create (char const *entry_point)
 {
   // Just make sure it's there and return its handle.
   for (int i = 0; i < entry_count_; ++i)
@@ -43,7 +43,7 @@ ACE_Runtime_Scheduler::create (const char *entry_point)
 // value if it's not present.
 
 RtecScheduler::handle_t
-ACE_Runtime_Scheduler::lookup (const char * entry_point)
+ACE_Runtime_Scheduler::lookup (char const *entry_point)
 {
   return create (entry_point);
 }
@@ -120,7 +120,7 @@ ACE_Runtime_Scheduler::set (::RtecScheduler::handle_t handle,
     {
       ORBSVCS_ERROR ((LM_ERROR,
                       "invalid data for RT_Info: %s\n",
-                      (const char*)rt_info_[handle - 1].entry_point));
+                      (char const *)rt_info_[handle - 1].entry_point));
     }
   // TODO: throw something here.
 }
@@ -211,7 +211,7 @@ ACE_Runtime_Scheduler::priority (RtecScheduler::handle_t handle,
 // based on its entry point name.
 
 void
-ACE_Runtime_Scheduler::entry_point_priority (const char * entry_point,
+ACE_Runtime_Scheduler::entry_point_priority (char const *entry_point,
                                              RtecScheduler::OS_Priority& priority,
                                              RtecScheduler::Preemption_Subpriority_t& subpriority,
                                              RtecScheduler::Preemption_Priority_t& p_priority)
@@ -257,7 +257,7 @@ ACE_Runtime_Scheduler::add_dependency (RtecScheduler::handle_t handle,
         }
     }
   ORBSVCS_ERROR ((LM_ERROR, "unmatched dependency on %s\n",
-              (const char*)rt_info_[handle - 1]->entry_point));
+              (char const *)rt_info_[handle - 1]->entry_point));
 #endif
 }
 

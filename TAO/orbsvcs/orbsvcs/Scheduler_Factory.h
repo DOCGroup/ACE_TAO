@@ -51,7 +51,7 @@ public:
   /// Plain Old Data representation of RT_Info for array storage.
   struct POD_RT_Info
   {
-    const char *entry_point;
+    char const *entry_point;
     RtecScheduler::handle_t handle;
     RtecScheduler::Time worst_case_execution_time;
     RtecScheduler::Time typical_execution_time;
@@ -95,7 +95,7 @@ public:
   /// Plain Old Data representation of anomalies for runtime schedule output.
   struct POD_Scheduling_Anomaly
   {
-    const char* description;
+    char const *description;
     RtecScheduler::Anomaly_Severity severity;
   };
 
@@ -106,7 +106,7 @@ public:
   /// Setup the variables needed for a config run, using the
   /// NamingContext to locate a Scheduler.
   static int use_config (CosNaming::NamingContext_ptr naming,
-                         const char* name);
+                         char const *name);
 
   /// Disable config runs in the Factory and sets up the precomputed
   /// scheduling information.
@@ -135,10 +135,10 @@ public:
                             const RtecScheduler::Dependency_Set& dependencies,
                             const RtecScheduler::Config_Info_Set& configs,
                             const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
-                            const ACE_TCHAR* file_name = nullptr,
-                            const char* rt_info_format = nullptr,
-                            const char* dependency_format = nullptr,
-                            const char* config_info_format = nullptr,
+                            ACE_TCHAR const *file_name = nullptr,
+                            char const *rt_info_format = nullptr,
+                            char const *dependency_format = nullptr,
+                            char const *config_info_format = nullptr,
                             int dump_disabled_infos = 0,
                             int dump_disabled_dependencies = 0);
 
@@ -151,13 +151,13 @@ public:
   /// This helper function prints out the intermediate scheduling entries
   static int log_scheduling_entries(TAO_Reconfig_Scheduler_Entry ** entry_ptr_array,
                                      long entry_ptr_array_size,
-                                     const char* file_name);
+                                     char const *file_name);
 
   /// This helper function prints out the arry used to create scheduling entries
   /// sorted in topological order then priority order
   static void log_scheduling_tuples(TAO_RT_Info_Tuple ** tuple_ptr_array,
                                     long tuple_ptr_array_size,
-                                    const char* file_name);
+                                    char const *file_name);
 
   static void log_tuple_subset(TUPLE_SET & tuple_subset,
                                FILE* file);
