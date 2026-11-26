@@ -5,6 +5,7 @@
 
 #include <cstring>
 #include <memory>
+#include <thread>
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -48,6 +49,30 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (wrong_length.valid () || unterminated.valid ())
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Invalid link data was accepted\n")), 1);
+    }
+
+  ACE_Thread_Mutex mutex;
+  ACE_TMCast::MessageQueue queue (mutex);
+  {
+    ACE_TMCast::MessageQueueAutoLock lock (queue);
+    lock.unlock ();
+    queue.lock ();
+  }
+
+  int acquire_result {};
+  std::thread contender ([&mutex, &acquire_result] ()
+    {
+      acquire_result = mutex.tryacquire ();
+      if (acquire_result == 0)
+        {
+          mutex.release ();
+        }
+    });
+  contender.join ();
+  queue.unlock ();
+  if (acquire_result == 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Queue guard unlocked a lock it no longer owned\n")), 1);
     }
   return 0;
 }

@@ -43,16 +43,21 @@ namespace ACE_TMCast
     void
     unlock ()
     {
-      q_.unlock ();
+      if (locked_)
+        {
+          q_.unlock ();
+          locked_ = false;
+        }
     }
 
     ~MessageQueueAutoLock ()
     {
-      q_.unlock ();
+      this->unlock ();
     }
 
   private:
     MessageQueue& q_;
+    bool locked_ {true};
   };
 }
 
