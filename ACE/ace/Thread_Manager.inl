@@ -1,9 +1,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-ACE_At_Thread_Exit::ACE_At_Thread_Exit ()
-{
-}
+ACE_At_Thread_Exit::ACE_At_Thread_Exit () = default;
 
 ACE_INLINE bool
 ACE_At_Thread_Exit::was_applied() const

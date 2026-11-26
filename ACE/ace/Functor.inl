@@ -30,9 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 //////////////////////////////////////////////////////////////
 
 ACE_INLINE
-ACE_Command_Base::ACE_Command_Base ()
-{
-}
+ACE_Command_Base::ACE_Command_Base () = default;
 
 ////////////////////////////////////////////////////////////
 // STL-style Functor Classes and Template Specializations //
