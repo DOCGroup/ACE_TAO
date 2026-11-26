@@ -6,6 +6,7 @@
 #include "ace/RMCast/Socket.h"
 
 #include "Protocol.h"
+#include <memory>
 
 class args {};
 
@@ -36,7 +37,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
     for (; msg.sn < message_count; ++msg.sn)
     {
-      socket.send (&msg, sizeof (msg));
+      socket.send (std::addressof (msg), sizeof (msg));
     }
 
     // Keep running in case retransmissions are needed.

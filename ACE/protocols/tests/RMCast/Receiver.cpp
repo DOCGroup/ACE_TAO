@@ -1,9 +1,9 @@
 // file      : Receiver.cpp
 // author    : Boris Kolpackov <boris@kolpackov.net>
 #include "ace/Log_Msg.h"
-#include "ace/OS_NS_string.h"
-
 #include <algorithm>
+#include <cstring>
+#include <memory>
 #include <vector>
 
 #include "ace/RMCast/Socket.h"
@@ -55,19 +55,19 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
         // Receive it.
         //
-        socket.recv (&msg, sizeof (msg));
+        socket.recv (std::addressof (msg), sizeof (msg));
 
         continue;
       }
 
-      if (s != (ssize_t)sizeof (msg))
+      if (s != static_cast<ssize_t> (sizeof (msg)))
       {
         ACE_ERROR ((LM_ERROR, "unexpected message size %b, expected %B\n",
                     s, sizeof (msg)));
         continue;
       }
 
-      if (socket.recv (&msg, sizeof (msg)) != s)
+      if (socket.recv (std::addressof (msg), sizeof (msg)) != s)
       {
         ACE_ERROR ((LM_ERROR,
                     "recv() reported different size than size()\n"));
@@ -82,9 +82,9 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       {
         received[msg.sn] = 1;
 
-        if (ACE_OS::memcmp (expected_msg.payload,
-                            msg.payload,
-                            payload_size * sizeof(short)) != 0)
+        if (std::memcmp (expected_msg.payload,
+                         msg.payload,
+                         payload_size * sizeof (short)) != 0)
         {
           damaged[msg.sn] = 1;
         }
@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
     {
       // It is ok to lose some number of messages at the beginning.
       //
-      decltype (std::count (received.begin (), received.end (), 0)) count {};
+      Status_List::difference_type count {};
 
       for (unsigned char const e : received)
       {
