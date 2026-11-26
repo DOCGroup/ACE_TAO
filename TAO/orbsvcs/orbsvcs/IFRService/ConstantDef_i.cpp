@@ -54,7 +54,7 @@ TAO_ConstantDef_i::describe_i ()
   this->repo_->config ()->get_string_value (this->section_key_,
                                             ACE_TEXT("container_id"),
                                             container_id);
-  cd.defined_in = container_id.c_str ();
+  cd.defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (container_id.c_str ()));
 
   cd.version = this->version_i ();
 
@@ -133,8 +133,8 @@ TAO_ConstantDef_i::type_def_i (CORBA::IDLType_ptr type_def)
   char *type_path = TAO_IFR_Service_Utils::reference_to_path (type_def);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "type_path",
-                                            type_path);
+                                            ACE_TEXT ("type_path"),
+                                            ACE_TEXT_CHAR_TO_TCHAR (type_path));
 }
 
 CORBA::Any *
@@ -157,7 +157,7 @@ TAO_ConstantDef_i::value_i ()
 
   this->repo_->config ()->get_binary_value (
                               this->section_key_,
-                              "value",
+                              ACE_TEXT ("value"),
                               ref,
                               length
                             );
@@ -249,7 +249,7 @@ TAO_ConstantDef_i::value_i (CORBA::Any const &value)
 
   mb->crunch ();
   this->repo_->config ()->set_binary_value (this->section_key_,
-                                            "value",
+                                            ACE_TEXT ("value"),
                                             mb->base (),
                                             mb->length ());
 }
