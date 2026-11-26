@@ -1,9 +1,7 @@
 #include "Client_ORBInitializer.h"
 #include "client_interceptor.h"
 
-Client_ORBInitializer::Client_ORBInitializer ()
-{
-}
+Client_ORBInitializer::Client_ORBInitializer () = default;
 
 void
 Client_ORBInitializer::pre_init (
