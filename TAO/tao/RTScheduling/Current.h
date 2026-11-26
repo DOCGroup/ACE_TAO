@@ -39,7 +39,7 @@ class TAO_RTScheduler_Export TAO_DTId_Hash
 {
 public:
   /// Returns hash value.
-  u_long operator () (const IdType &id) const;
+  u_long operator () (IdType const &id) const;
 };
 
 using DT_Hash_Map = ACE_Hash_Map_Manager_Ex<IdType,
@@ -97,7 +97,7 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current
   void end_scheduling_segment (char const *name) override;
 
   RTScheduling::DistributableThread_ptr
-    lookup(const RTScheduling::Current::IdType & id) override;
+    lookup(RTScheduling::Current::IdType const & id) override;
 
   /// Returns a null reference if the distributable thread is not known to the
   /// local scheduler.
@@ -162,14 +162,14 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Current_var
 public:
   TAO_RTScheduler_Current_var ();
   TAO_RTScheduler_Current_var (TAO_RTScheduler_Current_ptr p) : ptr_ (p) {}
-  TAO_RTScheduler_Current_var (const TAO_RTScheduler_Current_var &);
+  TAO_RTScheduler_Current_var (TAO_RTScheduler_Current_var const &);
   ~TAO_RTScheduler_Current_var ();
 
   TAO_RTScheduler_Current_var &operator= (TAO_RTScheduler_Current_ptr);
-  TAO_RTScheduler_Current_var &operator= (const TAO_RTScheduler_Current_var &);
+  TAO_RTScheduler_Current_var &operator= (TAO_RTScheduler_Current_var const &);
   TAO_RTScheduler_Current_ptr operator-> () const;
 
-  operator const TAO_RTScheduler_Current_ptr &() const;
+  operator TAO_RTScheduler_Current_ptr const &() const;
   operator TAO_RTScheduler_Current_ptr &();
   TAO_RTScheduler_Current_ptr in () const;
   TAO_RTScheduler_Current_ptr &inout ();
@@ -187,8 +187,8 @@ public:
 
 private:
   TAO_RTScheduler_Current_ptr ptr_ {};
-  TAO_RTScheduler_Current_var (const TAO_Base_var &rhs) = delete;
-  TAO_RTScheduler_Current_var &operator= (const TAO_Base_var &rhs) = delete;
+  TAO_RTScheduler_Current_var (TAO_Base_var const &rhs) = delete;
+  TAO_RTScheduler_Current_var &operator= (TAO_Base_var const &rhs) = delete;
 };
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Current_i

@@ -17,7 +17,7 @@ std::atomic<long> TAO_RTScheduler_Current::guid_counter;
 TAO_RTScheduler_Current::~TAO_RTScheduler_Current () = default;
 
 u_long
-TAO_DTId_Hash::operator () (const IdType &id) const
+TAO_DTId_Hash::operator () (IdType const &id) const
 {
   return ACE::hash_pjw (reinterpret_cast<char const *> (id.get_buffer ()),
                         id.length ());
@@ -118,7 +118,7 @@ TAO_RTScheduler_Current::end_scheduling_segment (char const *name)
 }
 
 RTScheduling::DistributableThread_ptr
-TAO_RTScheduler_Current::lookup(const RTScheduling::Current::IdType & id)
+TAO_RTScheduler_Current::lookup(RTScheduling::Current::IdType const & id)
 {
   RTScheduling::DistributableThread_var DT;
   int const result = this->dt_hash_.find (id,
@@ -766,7 +766,7 @@ TAO_RTScheduler_Current_var::ptr () const
   return this->ptr_;
 }
 
-TAO_RTScheduler_Current_var::TAO_RTScheduler_Current_var (const ::TAO_RTScheduler_Current_var &p)
+TAO_RTScheduler_Current_var::TAO_RTScheduler_Current_var (::TAO_RTScheduler_Current_var const &p)
   : TAO_Base_var (),
     ptr_ (TAO_RTScheduler_Current::_duplicate (p.ptr ()))
 {}
@@ -785,7 +785,7 @@ TAO_RTScheduler_Current_var::operator= (TAO_RTScheduler_Current_ptr p)
 }
 
 TAO_RTScheduler_Current_var &
-TAO_RTScheduler_Current_var::operator= (const ::TAO_RTScheduler_Current_var &p)
+TAO_RTScheduler_Current_var::operator= (::TAO_RTScheduler_Current_var const &p)
 {
   if (this != std::addressof (p))
   {
@@ -795,7 +795,7 @@ TAO_RTScheduler_Current_var::operator= (const ::TAO_RTScheduler_Current_var &p)
   return *this;
 }
 
-TAO_RTScheduler_Current_var::operator const ::TAO_RTScheduler_Current_ptr &() const
+TAO_RTScheduler_Current_var::operator ::TAO_RTScheduler_Current_ptr const &() const
 {
   return this->ptr_;
 }

@@ -23,7 +23,7 @@ TAO_RTScheduler_Manager_var::ptr () const
 
 ACE_INLINE
 TAO_RTScheduler_Manager_var::TAO_RTScheduler_Manager_var (
-  const ::TAO_RTScheduler_Manager_var &p)
+  ::TAO_RTScheduler_Manager_var const &p)
   : TAO_Base_var (),
     ptr_ (TAO_RTScheduler_Manager::_duplicate (p.ptr ()))
 {}
@@ -43,7 +43,7 @@ TAO_RTScheduler_Manager_var::operator= (TAO_RTScheduler_Manager_ptr p)
 }
 
 ACE_INLINE TAO_RTScheduler_Manager_var &
-TAO_RTScheduler_Manager_var::operator= (const ::TAO_RTScheduler_Manager_var &p)
+TAO_RTScheduler_Manager_var::operator= (::TAO_RTScheduler_Manager_var const &p)
 {
   if (this != std::addressof (p))
     {
@@ -55,7 +55,7 @@ TAO_RTScheduler_Manager_var::operator= (const ::TAO_RTScheduler_Manager_var &p)
 }
 
 ACE_INLINE
-TAO_RTScheduler_Manager_var::operator const ::TAO_RTScheduler_Manager_ptr &() const
+TAO_RTScheduler_Manager_var::operator ::TAO_RTScheduler_Manager_ptr const &() const
 {
   return this->ptr_;
 }
@@ -150,19 +150,19 @@ TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (TAO_RTScheduler_Manage
 }
 
 ACE_INLINE
-TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (const ::TAO_RTScheduler_Manager_out &p)
+TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (::TAO_RTScheduler_Manager_out const &p)
   : ptr_ (const_cast<TAO_RTScheduler_Manager_out &> (p).ptr_)
 {}
 
 ACE_INLINE ::TAO_RTScheduler_Manager_out &
-TAO_RTScheduler_Manager_out::operator= (const ::TAO_RTScheduler_Manager_out &p)
+TAO_RTScheduler_Manager_out::operator= (::TAO_RTScheduler_Manager_out const &p)
 {
   this->ptr_ = const_cast<TAO_RTScheduler_Manager_out&> (p).ptr_;
   return *this;
 }
 
 ACE_INLINE TAO_RTScheduler_Manager_out &
-TAO_RTScheduler_Manager_out::operator= (const ::TAO_RTScheduler_Manager_var &p)
+TAO_RTScheduler_Manager_out::operator= (::TAO_RTScheduler_Manager_var const &p)
 {
   this->ptr_ = ::TAO_RTScheduler_Manager::_duplicate (p.ptr ());
   return *this;

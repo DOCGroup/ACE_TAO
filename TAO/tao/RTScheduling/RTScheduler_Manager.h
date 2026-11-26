@@ -70,14 +70,14 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager_var
 public:
   TAO_RTScheduler_Manager_var ();
   TAO_RTScheduler_Manager_var (TAO_RTScheduler_Manager_ptr);
-  TAO_RTScheduler_Manager_var (const TAO_RTScheduler_Manager_var &);
+  TAO_RTScheduler_Manager_var (TAO_RTScheduler_Manager_var const &);
   ~TAO_RTScheduler_Manager_var ();
 
   TAO_RTScheduler_Manager_var &operator= (TAO_RTScheduler_Manager_ptr);
-  TAO_RTScheduler_Manager_var &operator= (const TAO_RTScheduler_Manager_var &);
+  TAO_RTScheduler_Manager_var &operator= (TAO_RTScheduler_Manager_var const &);
   TAO_RTScheduler_Manager_ptr operator-> () const;
 
-  operator const TAO_RTScheduler_Manager_ptr &() const;
+  operator TAO_RTScheduler_Manager_ptr const &() const;
   operator TAO_RTScheduler_Manager_ptr &();
   TAO_RTScheduler_Manager_ptr in () const;
   TAO_RTScheduler_Manager_ptr &inout ();
@@ -95,8 +95,8 @@ public:
 
 private:
   TAO_RTScheduler_Manager_ptr ptr_;
-  TAO_RTScheduler_Manager_var (const TAO_Base_var &rhs) = delete;
-  TAO_RTScheduler_Manager_var &operator= (const TAO_Base_var &rhs) = delete;
+  TAO_RTScheduler_Manager_var (TAO_Base_var const &rhs) = delete;
+  TAO_RTScheduler_Manager_var &operator= (TAO_Base_var const &rhs) = delete;
 };
 
 class TAO_RTScheduler_Export TAO_RTScheduler_Manager_out
@@ -104,9 +104,9 @@ class TAO_RTScheduler_Export TAO_RTScheduler_Manager_out
 public:
   TAO_RTScheduler_Manager_out (TAO_RTScheduler_Manager_ptr &);
   TAO_RTScheduler_Manager_out (TAO_RTScheduler_Manager_var &);
-  TAO_RTScheduler_Manager_out (const TAO_RTScheduler_Manager_out &);
-  TAO_RTScheduler_Manager_out &operator= (const TAO_RTScheduler_Manager_out &);
-  TAO_RTScheduler_Manager_out &operator= (const TAO_RTScheduler_Manager_var &);
+  TAO_RTScheduler_Manager_out (TAO_RTScheduler_Manager_out const &);
+  TAO_RTScheduler_Manager_out &operator= (TAO_RTScheduler_Manager_out const &);
+  TAO_RTScheduler_Manager_out &operator= (TAO_RTScheduler_Manager_var const &);
   TAO_RTScheduler_Manager_out &operator= (TAO_RTScheduler_Manager_ptr);
   operator TAO_RTScheduler_Manager_ptr &();
   TAO_RTScheduler_Manager_ptr &ptr ();
