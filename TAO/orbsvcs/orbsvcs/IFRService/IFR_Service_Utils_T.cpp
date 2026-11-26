@@ -53,7 +53,7 @@ TAO_IFR_Generic_Utils<T>::destroy_special (ACE_TCHAR const *section_name,
 template<typename T>
 void
 TAO_IFR_Generic_Utils<T>::set_initializers (
-    const T &initializers,
+    T const &initializers,
     ACE_Configuration *config,
     ACE_Configuration_Section_Key &key)
 {
