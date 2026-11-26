@@ -78,12 +78,12 @@ class ACE_Handle_Set;
  * @class ACE_Wakeup_All_Threads_Handler
  *
  * @brief This is a helper class whose sole purpose is to handle events
- * on <ACE_WFMO_Reactor->wakeup_all_threads_>
+ * on @c ACE_WFMO_Reactor::wakeup_all_threads_.
  */
 class ACE_Export ACE_Wakeup_All_Threads_Handler : public ACE_Event_Handler
 {
 public:
-  /// Called when the <ACE_WFMO_Reactor->wakeup_all_threads_>
+  /// Called when ACE_WFMO_Reactor::wakeup_all_threads_ is signaled.
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
 };
 
@@ -316,7 +316,7 @@ public:
                 ACE_Reactor_Mask mask,
                 bool &changes_required);
 
-  /// Remove all bindings of <ACE_HANDLE, ACE_Event_Handler> tuples.
+  /// Remove all bindings of ACE_HANDLE and ACE_Event_Handler tuples.
   void unbind_all ();
 
   /// @}

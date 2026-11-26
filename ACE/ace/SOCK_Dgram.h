@@ -83,14 +83,14 @@ public:
 
   /// @name Data transfer
   /// @{
-  /// Send an @a n byte @a buf to the datagram socket (uses <sendto(3)>).
+  /// Send an @a n byte @a buf to the datagram socket (uses @c sendto()).
   ssize_t send (void const *buf,
                 size_t n,
                 ACE_Addr const &addr,
                 int flags = 0) const;
 
   /// Receive an @a n byte @a buf from the datagram socket (uses
-  /// <recvfrom(3)>).
+  /// @c recvfrom()).
   ssize_t recv (void *buf,
                 size_t n,
                 ACE_Addr &addr,
@@ -110,15 +110,15 @@ public:
                 ACE_Time_Value const *timeout = nullptr) const;
 
   /// Send an @c iovec of size @a n to the datagram socket (uses
-  /// <sendmsg(3)>).
+  /// @c sendmsg()).
   ssize_t send (const iovec iov[],
                 int n,
                 ACE_Addr const &addr,
                 int flags = 0) const;
 
   /// Recv an @c iovec of size @a n to the datagram socket (uses
-  /// <recvmsg(3)>).  The IP destination address will be placed in @a
-  /// *to_addr if it is not null and set_option has been called with
+  /// @c recvmsg()). The IP destination address will be placed in the object
+  /// pointed to by @a to_addr if it is not null and set_option has been called with
   /// 1) level IPPROTO_IP, option ACE_RECVPKTINFO, and value 1 for
   /// IPV4 addresses or 2) IPPROTO_IPV6, option ACE_RECVPKTINFO6, and
   /// value 1 for IPV6 addresses.

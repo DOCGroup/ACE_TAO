@@ -231,7 +231,7 @@ private:
     /// Length of entire reply.
     ACE_UINT32 length_;
 
-    /// Indicates why error occurred if <this->type_> == @c FAILURE.
+    /// Indicates why an error occurred if @c this->type_ == @c FAILURE.
     /// Typical reasons include:
     ///   @c EWOULDBLOCK (if client requested a non-blocking check for the token).
     ///   @c ETIME (if the client timed out after waiting for the token).

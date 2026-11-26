@@ -112,7 +112,7 @@ public:
   /// dumps their state.
   void dump_objects ();
 
-  /// Add the tuple <dumper, this_> to the list of registered ACE objects.
+  /// Add the tuple (@a dumper, @c this_) to the list of registered ACE objects.
   void register_object (ACE_Dumpable const *dumper);
 
   /// Use @c this_ to locate and remove the associated @c dumper from the

@@ -338,7 +338,7 @@ public:
   int unbind (ACE_HANDLE,
               ACE_Reactor_Mask mask);
 
-  /// Remove all the <ACE_HANDLE, ACE_Event_Handler> tuples.
+  /// Remove all ACE_HANDLE and ACE_Event_Handler tuples.
   int unbind_all ();
 
   /// @}
