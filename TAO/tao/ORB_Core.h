@@ -798,12 +798,12 @@ public:
   /// Register a client request interceptor with policies.
   void add_interceptor (
     PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies);
+    CORBA::PolicyList const &policies);
 
   /// Register a server request interceptor with policies.
   void add_interceptor (
     PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-    const CORBA::PolicyList& policies);
+    CORBA::PolicyList const &policies);
 
   /// Get the Client Request Interceptor adapter.
   /// Will not create a new one if not available yet.

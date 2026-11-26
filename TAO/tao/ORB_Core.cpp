@@ -3501,7 +3501,7 @@ TAO_ORB_Core::add_interceptor (
 void
 TAO_ORB_Core::add_interceptor (
    PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-   const CORBA::PolicyList& policies)
+   CORBA::PolicyList const &policies)
 {
   if (this->clientrequestinterceptor_adapter_i ())
     {
@@ -3524,7 +3524,7 @@ TAO_ORB_Core::add_interceptor (
 void
 TAO_ORB_Core::add_interceptor (
    PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-   const CORBA::PolicyList& policies)
+   CORBA::PolicyList const &policies)
 {
   if (this->serverrequestinterceptor_adapter_i ())
     {

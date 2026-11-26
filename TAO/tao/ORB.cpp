@@ -58,7 +58,7 @@ CORBA::ORB::InvalidName::InvalidName ()
 // Destructor - all members are of self managing types.
 CORBA::ORB::InvalidName::~InvalidName () = default;
 
-CORBA::ORB::InvalidName::InvalidName (const CORBA::ORB::InvalidName &exc)
+CORBA::ORB::InvalidName::InvalidName (CORBA::ORB::InvalidName const &exc)
   : CORBA::UserException (exc._rep_id (),
                           exc._name ())
 {
@@ -360,7 +360,7 @@ CORBA::ORB::get_default_context (CORBA::Context_ptr &)
 }
 
 void
-CORBA::ORB::send_multiple_requests_oneway (const CORBA::RequestSeq &)
+CORBA::ORB::send_multiple_requests_oneway (CORBA::RequestSeq const &)
 {
   throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
@@ -370,7 +370,7 @@ CORBA::ORB::send_multiple_requests_oneway (const CORBA::RequestSeq &)
 }
 
 void
-CORBA::ORB::send_multiple_requests_deferred (const CORBA::RequestSeq &)
+CORBA::ORB::send_multiple_requests_deferred (CORBA::RequestSeq const &)
 {
   throw ::CORBA::NO_IMPLEMENT (
                CORBA::SystemException::_tao_minor_code (
@@ -405,7 +405,7 @@ CORBA::TypeCode_ptr
 CORBA::ORB::create_struct_tc (
     char const *id,
     char const *name,
-    const CORBA::StructMemberSeq & members)
+    CORBA::StructMemberSeq const &members)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -424,7 +424,7 @@ CORBA::ORB::create_union_tc (
     char const *id,
     char const *name,
     CORBA::TypeCode_ptr discriminator_type,
-    const CORBA::UnionMemberSeq & members)
+    CORBA::UnionMemberSeq const &members)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -445,7 +445,7 @@ CORBA::TypeCode_ptr
 CORBA::ORB::create_enum_tc (
     char const *id,
     char const *name,
-    const CORBA::EnumMemberSeq & members)
+    CORBA::EnumMemberSeq const &members)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -481,7 +481,7 @@ CORBA::TypeCode_ptr
 CORBA::ORB::create_exception_tc (
     char const *id,
     char const *name,
-    const CORBA::StructMemberSeq & members)
+    CORBA::StructMemberSeq const &members)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -601,7 +601,7 @@ CORBA::ORB::create_value_tc (
     char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA::ValueMemberSeq & members)
+    CORBA::ValueMemberSeq const &members)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -732,7 +732,7 @@ CORBA::ORB::create_event_tc (
     char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
-    const CORBA::ValueMemberSeq &members)
+    CORBA::ValueMemberSeq const &members)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -1628,7 +1628,7 @@ CORBA::ORB::id ()
 
 #if !defined(CORBA_E_MICRO)
 CORBA::Policy_ptr
-CORBA::ORB::create_policy (CORBA::PolicyType type, const CORBA::Any& val)
+CORBA::ORB::create_policy (CORBA::PolicyType type, CORBA::Any const &val)
 {
   this->check_shutdown ();
 

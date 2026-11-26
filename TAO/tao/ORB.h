@@ -251,9 +251,9 @@ namespace CORBA
       CORBA::ServiceType service_type,
       CORBA::ServiceInformation_out service_information);
 
-    void send_multiple_requests_oneway (const CORBA::RequestSeq &req);
+    void send_multiple_requests_oneway (CORBA::RequestSeq const &req);
 
-    void send_multiple_requests_deferred (const CORBA::RequestSeq &req);
+    void send_multiple_requests_deferred (CORBA::RequestSeq const &req);
 
     void get_next_response (CORBA::Request_ptr &req);
 
@@ -264,18 +264,18 @@ namespace CORBA
     CORBA::TypeCode_ptr create_struct_tc (
         char const *id,
         char const *name,
-        const CORBA::StructMemberSeq &members);
+        CORBA::StructMemberSeq const &members);
 
     CORBA::TypeCode_ptr create_union_tc (
         char const *id,
         char const *name,
         CORBA::TypeCode_ptr discriminator_type,
-        const CORBA::UnionMemberSeq &members);
+        CORBA::UnionMemberSeq const &members);
 
     CORBA::TypeCode_ptr create_enum_tc (
         char const *id,
         char const *name,
-        const CORBA::EnumMemberSeq &members);
+        CORBA::EnumMemberSeq const &members);
 
     CORBA::TypeCode_ptr create_alias_tc (
         char const *id,
@@ -285,7 +285,7 @@ namespace CORBA
     CORBA::TypeCode_ptr create_exception_tc (
         char const *id,
         char const *name,
-        const CORBA::StructMemberSeq &members);
+        CORBA::StructMemberSeq const &members);
 
     CORBA::TypeCode_ptr create_interface_tc (char const *id, char const *name);
 
@@ -310,7 +310,7 @@ namespace CORBA
         char const *name,
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
-        const CORBA::ValueMemberSeq &members);
+        CORBA::ValueMemberSeq const &members);
 
     CORBA::TypeCode_ptr create_value_box_tc (
         char const *id,
@@ -342,7 +342,7 @@ namespace CORBA
         char const *name,
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
-        const CORBA::ValueMemberSeq &members);
+        CORBA::ValueMemberSeq const &members);
 
 #endif /* TAO_HAS_MINIMUM_CORBA */
 
@@ -467,7 +467,7 @@ namespace CORBA
 
 #if !defined(CORBA_E_MICRO)
     CORBA::Policy_ptr create_policy (CORBA::PolicyType type,
-                                     const CORBA::Any& val);
+                                     CORBA::Any const &val);
 #endif
 
 #if !defined(CORBA_E_MICRO)
