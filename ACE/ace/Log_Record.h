@@ -91,10 +91,10 @@ public:
    * ACE_Log_Priority parameter.  This is used for the verbose
    * printing format.
    */
-  static const ACE_TCHAR *priority_name (ACE_Log_Priority p);
+  static ACE_TCHAR const *priority_name (ACE_Log_Priority p);
 
-  /// IMPORTANT: @a name must be a statically allocated const ACE_TCHAR*
-  static void priority_name (ACE_Log_Priority p, const ACE_TCHAR *name);
+  /// IMPORTANT: @a name must be a statically allocated ACE_TCHAR const *
+  static void priority_name (ACE_Log_Priority p, ACE_TCHAR const *name);
 
   /// Get the type of the Log_Record.
   ACE_UINT32 type () const;
@@ -139,12 +139,12 @@ public:
   void pid (long);
 
   /// Get the message data of the Log_Record.
-  const ACE_TCHAR *msg_data () const;
+  ACE_TCHAR const *msg_data () const;
 
   /// Set the message data of the record. If @a data is longer than the
   /// current msg_data_ buffer, a new msg_data_ buffer is allocated to
   /// fit. If such a reallocation fails, this method returns -1, else 0.
-  int msg_data (const ACE_TCHAR *data);
+  int msg_data (ACE_TCHAR const *data);
 
   /// Get the size of the message data of the Log_Record, including
   /// a byte for the NUL.

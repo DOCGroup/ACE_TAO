@@ -251,7 +251,7 @@ public:
   static int exists ();
 
   /// Returns the current program name used for logging.
-  static const ACE_TCHAR * program_name ();
+  static ACE_TCHAR const * program_name ();
 
   /// Clears the flag from the default priority mask used to
   /// initialize ACE_Log_Msg instances.
@@ -286,9 +286,9 @@ public:
    *                       event log (Windows). In the SYSLOG case, if
    *                       @a logger_key is 0, @a prog_name is used.
    */
-  int open (const ACE_TCHAR *prog_name,
+  int open (ACE_TCHAR const *prog_name,
             u_long options_flags = ACE_DEFAULT_LOG_FLAGS,
-            const ACE_TCHAR *logger_key = nullptr);
+            ACE_TCHAR const *logger_key = nullptr);
 
   /// @name Options flag accessors
   /// @{
@@ -326,7 +326,7 @@ public:
 
   /// Call after doing a @c fork() to resynchronize the process id and
   /// @c program_name_ variables.
-  void sync (const ACE_TCHAR *program_name);
+  void sync (ACE_TCHAR const *program_name);
 
   /// @name Thread-specific accessors
   /// These accessors are non-static and thread-specific.
@@ -355,16 +355,16 @@ public:
   int linenum () const;
 
   /// Set the file name where an error occurred.
-  void file (const char *);
+  void file (char const *);
 
   /// Get the file name where an error occurred.
-  const char *file ();
+  char const *file ();
 
   /// Set the message that describes what type of error occurred.
-  void msg (const ACE_TCHAR *);
+  void msg (ACE_TCHAR const *);
 
   /// Get the message that describes what type of error occurred.
-  const ACE_TCHAR *msg ();
+  ACE_TCHAR const *msg ();
 
   /// Set the field that indicates whether interrupted calls should be
   /// restarted.
@@ -466,7 +466,7 @@ public:
 #ifndef ACE_LACKS_VA_FUNCTIONS
   /// Return true if the requested priority is enabled.
   int log_priority_enabled (ACE_Log_Priority log_priority,
-                            const char *,
+                            char const *,
                             ...);
 #endif
 
@@ -487,17 +487,17 @@ public:
   pid_t getpid () const;
 
   /// Get the name of the local host.
-  const ACE_TCHAR *local_host () const;
+  ACE_TCHAR const *local_host () const;
 
   /// Set the name of the local host.
-  void local_host (const ACE_TCHAR *);
+  void local_host (ACE_TCHAR const *);
 
   /**
    * Set the line number, file name, operational status, error number,
    * restart flag, ostream, and the callback object.  This combines
    * all the other set methods into a single method.
    */
-  void set (const char *file,
+  void set (char const *file,
             int line,
             int op_status = -1,
             int errnum = 0,
@@ -507,7 +507,7 @@ public:
 
   /// These values are only actually set if the requested priority is
   /// enabled.
-  void conditional_set (const char *file,
+  void conditional_set (char const *file,
                         int line,
                         int op_status,
                         int errnum);
@@ -567,7 +567,7 @@ public:
    *  - '%': print out a single percent sign, '%'
    *  - '?': print out stack trace (see Stack_Trace.h header comments)
    */
-  ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
+  ssize_t log (ACE_Log_Priority priority, ACE_TCHAR const *format, ...);
 
 #if defined (ACE_HAS_WCHAR)
   ssize_t log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *format, ...);
@@ -585,7 +585,7 @@ public:
    * integrate variable argument lists from other logging mechanisms
    * into the ACE mechanism.
    */
-  ssize_t log (const ACE_TCHAR *format,
+  ssize_t log (ACE_TCHAR const *format,
                ACE_Log_Priority priority,
                va_list argp,
                ACE_Log_Category_TSS* category=nullptr);
@@ -601,9 +601,9 @@ public:
    * printable.
    */
   int log_hexdump (ACE_Log_Priority log_priority,
-                   const char *buffer,
+                   char const *buffer,
                    size_t size,
-                   const ACE_TCHAR *text = nullptr,
+                   ACE_TCHAR const *text = nullptr,
                    ACE_Log_Category_TSS* category=nullptr);
 
   /**
@@ -713,10 +713,10 @@ private:
   static u_long process_priority_mask_;
 
   /// Records the program name.
-  static const ACE_TCHAR *program_name_;
+  static ACE_TCHAR const *program_name_;
 
   /// Name of the local host (used when printing messages).
-  static const ACE_TCHAR *local_host_;
+  static ACE_TCHAR const *local_host_;
 
   /// Options flags used to hold the logger flag options, e.g.,
   /// STDERR, LOGGER, OSTREAM, MSG_CALLBACK, etc.
@@ -743,7 +743,7 @@ private:
   struct
   {
     bool is_set_;
-    const char *file_;
+    char const *file_;
     int line_;
     int op_status_;
     int errnum_;
@@ -757,7 +757,7 @@ private:
   static void close ();
 
   /// Decouple the OS layer from the ACE_Log_Msg layer.
-  static void sync_hook (const ACE_TCHAR *prg_name);
+  static void sync_hook (ACE_TCHAR const *prg_name);
 
   /// Return the TSS singleton thread descriptor
   static ACE_OS_Thread_Descriptor *thr_desc_hook ();
@@ -779,13 +779,13 @@ class ACE_Time_Value;
 /// logger->log((LM_FOO, "fmt_str", arg1, arg2)).  Due to the extra set of
 /// parens, the various overloaded comma operators below take the place of the
 /// varargs function.  The first operator called is the non-member
-/// operator,(ACE_Log_Priority, const char*) which returns an ACE_Log_Formatter
+/// operator,(ACE_Log_Priority, char const *) which returns an ACE_Log_Formatter
 /// object.  The subsequent comma operators (for the actual variable args) are
 /// members of the ACE_Log_Formatter class.
 class ACE_Export ACE_Log_Formatter
 {
 public:
-  ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt);
+  ACE_Log_Formatter (ACE_Log_Priority prio, char const *fmt);
 
   /// @note
   /// - ACE_OS::snprintf() is assumed to work.  The fallback to ACE_OS::sprintf()
@@ -811,7 +811,7 @@ public:
 
   ACE_Log_Formatter &operator, (char pct_c);
 
-  ACE_Log_Formatter &operator, (const char *pct_Cps);
+  ACE_Log_Formatter &operator, (char const *pct_Cps);
 
   ACE_Log_Formatter &operator, (ACE_INT64 pct_q);
 
@@ -853,7 +853,7 @@ private:
 
   /// Copy up to 'limit' characters of 'str' to the resulting buffer (bp_).
   /// Returns the number of characters copied.
-  int copy_trunc (const char *str, int limit);
+  int copy_trunc (char const *str, int limit);
 
   /// Insert one argument into the formatted buffer.
   /// arg is not a pointer (pointers use the overload below).
@@ -881,7 +881,7 @@ private:
   const ACE_Log_Priority priority_;
 
   /// Remaining format string (from user) that's left to process.
-  const char *format_;
+  char const *format_;
 
   /// The ACE_Log_Msg object that this formatter works with.
   ACE_Log_Msg *const logger_;
@@ -915,7 +915,7 @@ private:
 };
 
 ACE_Export
-ACE_Log_Formatter operator, (ACE_Log_Priority prio, const char *fmt);
+ACE_Log_Formatter operator, (ACE_Log_Priority prio, char const *fmt);
 
 #endif /* ACE_LACKS_VA_FUNCTIONS */
 

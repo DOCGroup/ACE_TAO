@@ -64,7 +64,7 @@ namespace
     };
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Log_Record::priority_name (ACE_Log_Priority p)
 {
   return ace_priority_names[ACE::log2 (p)];
@@ -72,7 +72,7 @@ ACE_Log_Record::priority_name (ACE_Log_Priority p)
 
 void
 ACE_Log_Record::priority_name (ACE_Log_Priority p,
-                               const ACE_TCHAR *name)
+                               ACE_TCHAR const *name)
 {
   // Name must be a statically allocated string
   ace_priority_names[ACE::log2 (p)] = name;
@@ -123,7 +123,7 @@ ACE_Log_Record::dump () const
 }
 
 int
-ACE_Log_Record::msg_data (const ACE_TCHAR *data)
+ACE_Log_Record::msg_data (ACE_TCHAR const *data)
 {
   // ACE_TRACE ("ACE_Log_Record::msg_data");
   size_t const newlen = ACE_OS::strlen (data) + 1;  // Will need room for '\0'
@@ -244,7 +244,7 @@ ACE_Log_Record::format_msg (const ACE_TCHAR host_name[],
   if (ACE_BIT_ENABLED (verbose_flag,
                        ACE_Log_Msg::VERBOSE))
     {
-      const ACE_TCHAR *lhost_name = ((host_name == nullptr)
+      ACE_TCHAR const *lhost_name = ((host_name == nullptr)
                                       ? ACE_TEXT ("<local_host>")
                                       : host_name);
       ACE_OS::snprintf (verbose_msg, verbose_msg_size,

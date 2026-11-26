@@ -453,17 +453,17 @@ ACE_Log_Msg::disable_debug_messages (ACE_Log_Priority priority)
   i->priority_mask (i->priority_mask () & ~priority);
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Log_Msg::program_name ()
 {
   return ACE_Log_Msg::program_name_;
 }
 
 /// Name of the local host.
-const ACE_TCHAR *ACE_Log_Msg::local_host_ {};
+ACE_TCHAR const *ACE_Log_Msg::local_host_ {};
 
 /// Records the program name.
-const ACE_TCHAR *ACE_Log_Msg::program_name_ {};
+ACE_TCHAR const *ACE_Log_Msg::program_name_ {};
 
 /// Default is to use stderr.
 u_long ACE_Log_Msg::flags_ = ACE_DEFAULT_LOG_FLAGS;
@@ -553,7 +553,7 @@ ACE_Log_Msg::close ()
 }
 
 void
-ACE_Log_Msg::sync_hook (const ACE_TCHAR *prg_name)
+ACE_Log_Msg::sync_hook (ACE_TCHAR const *prg_name)
 {
   ACE_LOG_MSG->sync (prg_name);
 }
@@ -567,7 +567,7 @@ ACE_Log_Msg::thr_desc_hook ()
 // Call after a fork to resynchronize the PID and PROGRAM_NAME
 // variables.
 void
-ACE_Log_Msg::sync (const ACE_TCHAR *prog_name)
+ACE_Log_Msg::sync (ACE_TCHAR const *prog_name)
 {
   ACE_TRACE ("ACE_Log_Msg::sync");
 
@@ -799,9 +799,9 @@ ACE_Log_Msg::cleanup_ostream ()
 
 // Open the sender-side of the message queue.
 int
-ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
+ACE_Log_Msg::open (ACE_TCHAR const *prog_name,
                    u_long flags,
-                   const ACE_TCHAR *logger_key)
+                   ACE_TCHAR const *logger_key)
 {
   ACE_TRACE ("ACE_Log_Msg::open");
   ACE_MT (ACE_GUARD_RETURN (ACE_Recursive_Thread_Mutex, ace_mon,
@@ -994,7 +994,7 @@ ACE_Log_Msg::open (const ACE_TCHAR *prog_name,
  */
 ssize_t
 ACE_Log_Msg::log (ACE_Log_Priority log_priority,
-                  const ACE_TCHAR *format_str, ...)
+                  ACE_TCHAR const *format_str, ...)
 {
   ACE_TRACE ("ACE_Log_Msg::log");
   // Start of variable args section.
@@ -1042,7 +1042,7 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
 #endif
 
 ssize_t
-ACE_Log_Msg::log (const ACE_TCHAR *format_str,
+ACE_Log_Msg::log (ACE_TCHAR const *format_str,
                   ACE_Log_Priority log_priority,
                   va_list argp,
                   ACE_Log_Category_TSS* category)
@@ -1126,7 +1126,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
       // Prepend the program name onto this message
       if (ACE_Log_Msg::program_name_ != nullptr)
         {
-          for (const ACE_TCHAR *s = ACE_Log_Msg::program_name_;
+          for (ACE_TCHAR const *s = ACE_Log_Msg::program_name_;
                bspace > 1 && (*bp = *s) != '\0';
                ++s, --bspace)
             {
@@ -1141,7 +1141,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
   if (timestamp_ > 0)
     {
       ACE_TCHAR day_and_time[27];
-      const ACE_TCHAR *s {};
+      ACE_TCHAR const *s {};
       if (timestamp_ == 1)
         {
           // Print just the time
@@ -1196,8 +1196,8 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
           // equivalent sprintf specifier, and run the new format spec
           // through sprintf, adding it to the bp string.
 
-          const ACE_TCHAR *abort_str = ACE_TEXT ("Aborting...");
-          const ACE_TCHAR *start_format = format_str;
+          ACE_TCHAR const *abort_str = ACE_TEXT ("Aborting...");
+          ACE_TCHAR const *start_format = format_str;
           size_t fspace = 128;
           ACE_TCHAR format[128]; // Converted format string
           ACE_OS::memset (format, '\0', 128); // Set this string to known values.
@@ -1445,7 +1445,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         ACE_TCHAR *str = va_arg (argp, ACE_TCHAR *);
                         if (lpMsgBuf == 0)
                           {
-                            const ACE_TCHAR *message =
+                            ACE_TCHAR const *message =
                               ACE::sock_error (errno);
                             ACE_OS::strcpy (fp, ACE_TEXT ("s: %s"));
                             if (can_check)
@@ -1663,7 +1663,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                         // our purposes.
                         if (lpMsgBuf == 0)
                           {
-                            const ACE_TCHAR *message =
+                            ACE_TCHAR const *message =
                               ACE::sock_error (errno);
                             ACE_OS::strcpy (fp, ACE_TEXT ("s"));
                             if (can_check)
@@ -2202,7 +2202,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'Q':
                   {
-                    const ACE_TCHAR *fmt = ACE_UINT64_FORMAT_SPECIFIER;
+                    ACE_TCHAR const *fmt = ACE_UINT64_FORMAT_SPECIFIER;
                     ACE_OS::strcpy (fp, fmt + 1);    // Skip leading %
                     if (can_check)
                       {
@@ -2222,7 +2222,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'q':
                    {
-                     const ACE_TCHAR *fmt = ACE_INT64_FORMAT_SPECIFIER;
+                     ACE_TCHAR const *fmt = ACE_INT64_FORMAT_SPECIFIER;
                      ACE_OS::strcpy (fp, fmt + 1);    // Skip leading %
                      if (can_check)
                        {
@@ -2242,7 +2242,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'b':
                   {
-                    const ACE_TCHAR *fmt = ACE_SSIZE_T_FORMAT_SPECIFIER;
+                    ACE_TCHAR const *fmt = ACE_SSIZE_T_FORMAT_SPECIFIER;
                     ACE_OS::strcpy (fp, fmt + 1);    // Skip leading %
                   }
                   if (can_check)
@@ -2262,7 +2262,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 
                 case 'B':
                   {
-                    const ACE_TCHAR *fmt = ACE_SIZE_T_FORMAT_SPECIFIER;
+                    ACE_TCHAR const *fmt = ACE_SIZE_T_FORMAT_SPECIFIER;
                     ACE_OS::strcpy (fp, fmt + 1);    // Skip leading %
                   }
                   if (can_check)
@@ -2304,7 +2304,7 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
                 case ':':
                   {
                     // Assume a 32 bit time_t and change if needed.
-                    const ACE_TCHAR *fmt = ACE_TEXT ("%d");
+                    ACE_TCHAR const *fmt = ACE_TEXT ("%d");
                     if (sizeof (time_t) == 8)
                       {
                         fmt = ACE_INT64_FORMAT_SPECIFIER;
@@ -2438,12 +2438,12 @@ ACE_Log_Msg::log (const ACE_TCHAR *format_str,
 }
 
 #ifdef ACE_LACKS_VA_FUNCTIONS
-ACE_Log_Formatter operator, (ACE_Log_Priority prio, const char *fmt)
+ACE_Log_Formatter operator, (ACE_Log_Priority prio, char const *fmt)
 {
   return ACE_Log_Formatter (prio, fmt);
 }
 
-ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt)
+ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, char const *fmt)
   : saved_errno_ (errno)
   , priority_ (prio)
   , format_ (fmt)
@@ -2491,7 +2491,7 @@ ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt)
     {
       ACE_TCHAR day_and_time[27];
       const bool time_only = this->logger_->timestamp_ == 1;
-      const ACE_TCHAR *const time =
+      ACE_TCHAR const *const time =
         ACE::timestamp (day_and_time,
                         sizeof day_and_time / sizeof (ACE_TCHAR),
                         time_only);
@@ -2502,7 +2502,7 @@ ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, const char *fmt)
     }
 }
 
-int ACE_Log_Formatter::copy_trunc (const char *str, int limit)
+int ACE_Log_Formatter::copy_trunc (char const *str, int limit)
 {
   const int n = (std::min) (static_cast<int> (this->bspace_), limit);
   std::memcpy (this->bp_, str, n);
@@ -2530,10 +2530,10 @@ void ACE_Log_Formatter::prepare_format ()
 #ifdef ACE_LOG_MSG_USE_STRERROR_R
         char strerror_buf[128]; // always narrow chars
         std::strcpy (strerror_buf, "strerror_r failed");
-        const char *const msg = ACE_OS::strerror_r (mapped, strerror_buf,
+        char const *const msg = ACE_OS::strerror_r (mapped, strerror_buf,
                                                     sizeof strerror_buf);
 #else
-        const char *const msg = ACE_OS::strerror (mapped);
+        char const *const msg = ACE_OS::strerror (mapped);
 #endif
         this->copy_trunc (": ", 2);
         this->copy_trunc (msg, std::strlen (msg));
@@ -2554,7 +2554,7 @@ void ACE_Log_Formatter::prepare_format ()
 
   *this->fmt_out_ = 0;
 
-  while (const char *const pct = std::strchr (this->format_, '%'))
+  while (char const *const pct = std::strchr (this->format_, '%'))
     {
       const bool escaped = pct[1] == '%';
       this->format_ += 1 + this->copy_trunc (this->format_,
@@ -2601,7 +2601,7 @@ bool ACE_Log_Formatter::process_conversion ()
   this->fp_ += n;
   *this->fp_ = 0;
   this->in_prog_ = this->format_[n];
-  const char *const format_start = this->format_;
+  char const *const format_start = this->format_;
   this->format_ += n + (this->in_prog_ ? 1 : 0);
   int len;
 
@@ -2640,10 +2640,10 @@ bool ACE_Log_Formatter::process_conversion ()
 #ifdef ACE_LOG_MSG_USE_STRERROR_R
         char strerror_buf[128]; // always narrow chars
         ACE_OS::strcpy (strerror_buf, "strerror_r failed");
-        const char *const msg = ACE_OS::strerror_r (mapped, strerror_buf,
+        char const *const msg = ACE_OS::strerror_r (mapped, strerror_buf,
                                                     sizeof strerror_buf);
 #else
-        const char *const msg = ACE_OS::strerror (mapped);
+        char const *const msg = ACE_OS::strerror (mapped);
 #endif
         ACE_OS::strcpy (this->fp_, "s");
         len = ACE_OS::snprintf (this->bp_, this->bspace_, this->fmt_out_, msg);
@@ -2654,7 +2654,7 @@ bool ACE_Log_Formatter::process_conversion ()
 
     case 'M':
       {
-        const char *const pri = ACE_Log_Record::priority_name (this->priority_);
+        char const *const pri = ACE_Log_Record::priority_name (this->priority_);
 
         // special case for %.1M: unique 1-char abbreviation for log priority
         if (this->fp_ == this->fmt_out_ + 3 &&
@@ -2720,7 +2720,7 @@ bool ACE_Log_Formatter::process_conversion ()
         }
       {
         char day_and_time[27];
-        const char *const time =
+        char const *const time =
           ACE::timestamp (day_and_time, sizeof day_and_time, true);
         len = ACE_OS::snprintf (this->bp_, this->bspace_, this->fmt_out_,
                                 this->in_prog_ == 'T' ? time : day_and_time);
@@ -2833,7 +2833,7 @@ bool ACE_Log_Formatter::process_conversion ()
 
     case 'd': case 'i': case 'o': case 'u': case 'x': case 'X': // <- ints
     case 'e': case 'E': case 'f': case 'F': case 'g': case 'G': // <- doubles
-    case 'c': case 's': // <- char / const char*
+    case 'c': case 's': // <- char / char const *
       *this->fp_++ = this->in_prog_;
       *this->fp_ = 0;
       return false;
@@ -2950,7 +2950,7 @@ ACE_Log_Formatter &ACE_Log_Formatter::operator, (char pct_c)
   return *this;
 }
 
-ACE_Log_Formatter &ACE_Log_Formatter::operator, (const char *pct_Cps)
+ACE_Log_Formatter &ACE_Log_Formatter::operator, (char const *pct_Cps)
 {
   this->insert_arg (pct_Cps ? pct_Cps : "(null)");
   return *this;
@@ -3006,7 +3006,7 @@ ACE_Log_Formatter &ACE_Log_Formatter::operator, (const ACE_Time_Value *pct_DT)
   this->prepare_format ();
 
   char day_and_time[27];
-  const char *const time =
+  char const *const time =
     ACE::timestamp (*pct_DT, day_and_time, sizeof day_and_time, true);
   const int len =
     ACE_OS::snprintf (this->bp_, this->bspace_, this->fmt_out_,
@@ -3229,9 +3229,9 @@ ACE_Log_Msg::log (ACE_Log_Record &log_record,
 
 int
 ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
-                          const char *buffer,
+                          char const *buffer,
                           size_t size,
-                          const ACE_TCHAR *text,
+                          ACE_TCHAR const *text,
                           ACE_Log_Category_TSS* category)
 {
   // Only print the message if <priority_mask_> hasn't been reset to
@@ -3307,7 +3307,7 @@ ACE_Log_Msg::log_hexdump (ACE_Log_Priority log_priority,
 }
 
 void
-ACE_Log_Msg::set (const char *file,
+ACE_Log_Msg::set (char const *file,
                   int line,
                   int op_status,
                   int errnum,
@@ -3326,7 +3326,7 @@ ACE_Log_Msg::set (const char *file,
 }
 
 void
-ACE_Log_Msg::conditional_set (const char *filename,
+ACE_Log_Msg::conditional_set (char const *filename,
                               int line,
                               int status,
                               int err)
@@ -3474,7 +3474,7 @@ ACE_Log_Msg::msg_ostream (ACE_OSTREAM_TYPE *m, bool delete_ostream)
 }
 
 void
-ACE_Log_Msg::local_host (const ACE_TCHAR *s)
+ACE_Log_Msg::local_host (ACE_TCHAR const *s)
 {
   if (s)
     {
@@ -3491,7 +3491,7 @@ ACE_Log_Msg::local_host (const ACE_TCHAR *s)
 #ifndef ACE_LACKS_VA_FUNCTIONS
 int
 ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
-                                   const char *,
+                                   char const *,
                                    ...)
 {
   return this->log_priority_enabled (log_priority);
