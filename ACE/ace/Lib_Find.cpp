@@ -21,7 +21,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-ACE::ldfind (const ACE_TCHAR* filename,
+ACE::ldfind (ACE_TCHAR const * filename,
              ACE_TCHAR pathname[],
              size_t maxpathnamelen)
 {
@@ -90,7 +90,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
   // platform.
   ACE_TCHAR *s = ACE_OS::strrchr (searchfilename, '.');
 
-  const ACE_TCHAR *dll_suffix = ACE_DLL_SUFFIX;
+  ACE_TCHAR const *dll_suffix = ACE_DLL_SUFFIX;
 
   if (s != nullptr)
     {
@@ -260,7 +260,7 @@ ACE::ldfind (const ACE_TCHAR* filename,
               // Look at each dynamic lib directory in the search path.
 
               ACE_TCHAR *nextholder {};
-              const ACE_TCHAR *path_entry =
+              ACE_TCHAR const *path_entry =
                 ACE::strsplit_r (ld_path,
                                  ACE_LD_SEARCH_PATH_SEPARATOR_STR,
                                  nextholder);
@@ -348,8 +348,8 @@ ACE::ldfind (const ACE_TCHAR* filename,
 }
 
 FILE *
-ACE::ldopen (const ACE_TCHAR *filename,
-             const ACE_TCHAR *type)
+ACE::ldopen (ACE_TCHAR const *filename,
+             ACE_TCHAR const *type)
 {
   ACE_TRACE ("ACE::ldopen");
 
@@ -365,7 +365,7 @@ ACE::ldopen (const ACE_TCHAR *filename,
 }
 
 ACE_TCHAR *
-ACE::ldname (const ACE_TCHAR *entry_point)
+ACE::ldname (ACE_TCHAR const *entry_point)
 {
   ACE_TRACE ("ACE::ldname");
 
@@ -428,7 +428,7 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 
   // On non-win32 platforms, check to see what the TMPDIR environment
   // variable is defined to be.  If it doesn't exist, just use /tmp
-  const char *tmpdir = ACE_OS::getenv ("TMPDIR");
+  char const *tmpdir = ACE_OS::getenv ("TMPDIR");
 
   if (tmpdir == nullptr)
     {
@@ -462,7 +462,7 @@ ACE::get_temp_dir (ACE_TCHAR *buffer, size_t buffer_len)
 }
 
 ACE_HANDLE
-ACE::open_temp_file (const ACE_TCHAR *name, int mode, int perm)
+ACE::open_temp_file (ACE_TCHAR const *name, int mode, int perm)
 {
 #if defined (ACE_WIN32)
   ACE_UNUSED_ARG (perm);
@@ -517,7 +517,7 @@ ACE::strrepl (char *s, char search, char replace)
 
 char *
 ACE::strsplit_r (char *str,
-                 const char *token,
+                 char const *token,
                  char *&next_start)
 {
   char *result {};

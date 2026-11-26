@@ -31,7 +31,7 @@ namespace ACE
    */
   extern ACE_Export ACE_HANDLE handle_timed_open (
     ACE_Time_Value *timeout,
-    const ACE_TCHAR *name,
+    ACE_TCHAR const *name,
     int flags,
     int perms,
     LPSECURITY_ATTRIBUTES sa = 0);

@@ -8,7 +8,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_HANDLE
 ACE::handle_timed_open (ACE_Time_Value *timeout,
-                        const ACE_TCHAR *name,
+                        ACE_TCHAR const *name,
                         int flags,
                         int perms,
                         LPSECURITY_ATTRIBUTES sa)
