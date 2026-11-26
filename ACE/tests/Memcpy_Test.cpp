@@ -13,7 +13,7 @@
 #include "test_config.h"
 
 void *
-smemcpy (void *dest, const void *src, const size_t n)
+smemcpy (void *dest, void const *src, size_t const n)
 {
   unsigned char *to = static_cast<unsigned char*> (dest);
   const unsigned char *from = static_cast<const unsigned char*> (src);

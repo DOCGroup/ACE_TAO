@@ -118,7 +118,7 @@ static int dont_cleanup_added_ip = 0;
 // The function returns index of an interface by its name
 //
 int
-get_if_index (const char*const interface,
+get_if_index (char const *const interface,
               int &if_index)
 {
   if_index = -1;
@@ -127,7 +127,7 @@ get_if_index (const char*const interface,
   ACE_OS::memset (std::addressof (if_req), 0, sizeof (struct ifreq));
 
   ACE_OS::strsncpy (if_req.ifr_name,
-                    static_cast<const char*> (interface),
+                    static_cast<char const *> (interface),
                     sizeof if_req.ifr_name / sizeof *if_req.ifr_name);
 
   ACE_HANDLE const s = ACE_OS::socket (AF_INET,SOCK_DGRAM,0);
@@ -203,7 +203,7 @@ public:
   ///FUZZ: enable check_for_lack_ACE_OS
   int open (ACE_Reactor *const reactor,
             char* const ip_slash_mask,
-            const char *const if_name);
+            char const *const if_name);
 
   // Returns reference to netlink socket. Necessary for reactor.
   ACE_HANDLE get_handle () const override;
@@ -225,12 +225,12 @@ public:
   // Sends to kernel a request to add secondary ip/mask to an
   // interface.
   int add_ip (char* const ip_slash_mask,
-              const char *const if_name);
+              char const *const if_name);
 
   // Sends to kernel a request to delete secondary ip/mask
   // from an interface.
   int delete_ip (char* const ip_slash_mask,
-                 const char *const if_name);
+                 char const *const if_name);
 
   /*
    * 1. We are trying to delete the ip-address, if exists.
@@ -266,7 +266,7 @@ private:
 
   // A workhorse for add_ip () and delete_ip ()
   int dispatch_ip_operation (char* const ip_slash_mask,
-                             const char *const if_name,
+                             char const *const if_name,
                              bool action);
 
   /**
@@ -274,13 +274,13 @@ private:
    *  deleting (action = false) of a secondary ip-address/mask.
    */
   int init_netlink_request (char* const ip_slash_mask,
-                            const char *const if_name,
+                            char const *const if_name,
                             Netlink_Request& net_req,
                             bool action);
 
   // Fills data part of Netlink_Request
   int fill_inet_prefix (Inet_Prefix &inet_prefix,
-                        const char*const ip_slash_netmask);
+                        char const *const ip_slash_netmask);
 
   /**
    * Fills routing request (operations with ip-addresses are
@@ -351,7 +351,7 @@ Secondary_Ipaddr_Handler::~Secondary_Ipaddr_Handler ()
 int
 Secondary_Ipaddr_Handler::open (ACE_Reactor *const reactor,
                                 char* const ip_slash_mask,
-                                const char *const if_name)
+                                char const *const if_name)
 {
   if (!reactor ||
       !ip_slash_mask || !ACE_OS::strlen (ip_slash_mask) ||
@@ -640,7 +640,7 @@ Secondary_Ipaddr_Handler::socket ()
 int
 Secondary_Ipaddr_Handler::fill_inet_prefix (
                                             Inet_Prefix &inet_prefix,
-                                            const char*const ip_slash_netmask)
+                                            char const *const ip_slash_netmask)
 {
   ACE_OS::memset (std::addressof (inet_prefix), 0, sizeof inet_prefix);
   char* slash =  const_cast <char *> (ACE_OS::strchr (ip_slash_netmask,  '/'));
@@ -726,7 +726,7 @@ Secondary_Ipaddr_Handler::fill_rtnetlink_request (
 int
 Secondary_Ipaddr_Handler::dispatch_ip_operation (
                                                  char* const ip_slash_mask,
-                                                 const char *const if_name,
+                                                 char const *const if_name,
                                                  bool action)
 {
   if (this->init_netlink_request (ip_slash_mask,
@@ -768,7 +768,7 @@ Secondary_Ipaddr_Handler::dispatch_ip_operation (
 int
 Secondary_Ipaddr_Handler::delete_ip (
                                      char* const ip_slash_mask,
-                                     const char *const if_name)
+                                     char const *const if_name)
 {
   if (this->dispatch_ip_operation (
                                    ip_slash_mask,
@@ -786,7 +786,7 @@ Secondary_Ipaddr_Handler::delete_ip (
 int
 Secondary_Ipaddr_Handler::add_ip (
                                   char* const ip_slash_mask,
-                                  const char *const if_name)
+                                  char const *const if_name)
 {
   if (this->dispatch_ip_operation (ip_slash_mask,
                                    if_name,
@@ -803,7 +803,7 @@ Secondary_Ipaddr_Handler::add_ip (
 int
 Secondary_Ipaddr_Handler::init_netlink_request (
                                                 char* const ip_slash_netmask,
-                                                const char *const if_name,
+                                                char const *const if_name,
                                                 Netlink_Request& net_req,
                                                 bool action)
 {
@@ -846,7 +846,7 @@ Secondary_Ipaddr_Handler::init_netlink_request (
 }
 
 static int run_test (char*const ip_slash_netmask,
-                     const char*const if_name)
+                     char const *const if_name)
 {
   Secondary_Ipaddr_Handler sec_ip_handler;
 
@@ -893,7 +893,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
         {
         case 'a':     // ip_slash_netmask_bits
           ACE_OS::strcpy (ip_slash_mask,
-                          reinterpret_cast <const char*> (get_opt.opt_arg ()));
+                          reinterpret_cast <char const *> (get_opt.opt_arg ()));
 
           if (! (ip_len = ACE_OS::strlen (ip_slash_mask)))
             {
@@ -911,7 +911,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 
         case 'i':     // name of the interface
           ACE_OS::strcpy (net_dev_name,
-                          reinterpret_cast <const char*> (get_opt.opt_arg ()));
+                          reinterpret_cast <char const *> (get_opt.opt_arg ()));
           if (! (if_len = ACE_OS::strlen (net_dev_name)))
             {
               ACE_ERROR ((LM_ERROR,

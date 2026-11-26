@@ -22,7 +22,7 @@
 
 #include <cstring>
 
-static const char *message =
+static char const *message =
 "Hello there! Hope you get this message";
 
 class Watchdog : public ACE_Task_Base
