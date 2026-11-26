@@ -44,7 +44,7 @@ size_t const Test3_Send_Size = 4*1024;
 size_t const Test3_Loops = 10;
 size_t const Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 unsigned port = 8088;
-const ACE_TCHAR *notifier_file {};
+ACE_TCHAR const *notifier_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

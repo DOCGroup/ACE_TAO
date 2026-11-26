@@ -33,8 +33,8 @@ size_t const Test3_Send_Size = 4*1024;
 size_t const Test3_Loops = 10;
 size_t const Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 
-const ACE_TCHAR * remote_host {};
-const ACE_TCHAR * config_file {};
+ACE_TCHAR const *remote_host {};
+ACE_TCHAR const *config_file {};
 unsigned remote_port = 8088;
 
 int
@@ -226,7 +226,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       if (buffer2[i] != buffer[i])
         {
           ACE_ERROR ((LM_ERROR,
-                      ACE_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
+                      ACE_TEXT ("(%P|%t) Test 2, rcvd byte %B is %d, not %d\n"),
                       i, buffer2[i], buffer[i]));
           Test_Result = 1;
         }
