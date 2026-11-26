@@ -153,7 +153,7 @@ namespace ACE_RMCast
 
       m->add (Profile_ptr (new Data (buf, s)));
 
-      // Qualification is for VC6 and VxWorks.
+      // Qualification is required for VxWorks.
       //
       Element::send (m);
     }

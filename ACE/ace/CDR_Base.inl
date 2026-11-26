@@ -10,52 +10,9 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-//
-// The ACE_CDR::swap_X and ACE_CDR::swap_X_array routines are broken
-// in 5 cases for optimization:
-//
-// * MSVC++ 7.1 or better
-//   => Compiler intrinsics
-//
-// * AMD64 CPU + gnu g++
-//   => gcc amd64 inline assembly.
-//
-// * x86 Pentium CPU + gnu g++
-//   (ACE_HAS_PENTIUM && __GNUG__)
-//   => gcc x86 inline assembly.
-//
-// * x86 Pentium CPU and (_MSC_VER) or BORLAND C++)
-//   (ACE_HAS_PENTIUM && ( _MSC_VER || __BORLANDC__ )
-//   => MSC x86 inline assembly.
-//
-// * 64 bit architecture
-//   (ACE_SIZEOF_LONG == 8)
-//   => shift/masks using 64bit words.
-//
-// * default
-//   (none of the above)
-//   => shift/masks using 32bit words.
-//
-// Some things you could find useful to know if you intend to mess
-// with this optimizations for swaps:
-//
-//      * MSVC++ don't assume register values are conserved between
-//        statements. So you can clobber any register you want,
-//        whenever you want (well not *anyone* really, see manual).
-//        The MSVC++ optimizer will try to pick different registers
-//        for the C++ statements sorrounding your asm block, and if
-//        it's not possible will use the stack.
-//
-//      * If you clobber registers with asm statements in gcc, you
-//        better do it in an asm-only function, or save/restore them
-//        before/after in the stack. If not, sorrounding C statements
-//        could end using the same registers and big-badda-bum (been
-//        there, done that...). The big-badda-bum could happen *even
-//        if you specify the clobbered register in your asm's*.
-//        Even better, use gcc asm syntax for detecting the register
-//        asigned to a certain variable so you don't have to clobber any
-//        register directly.
-//
+// The byte-swap routines select compiler intrinsics, platform functions,
+// inline assembly, or shift-and-mask implementations according to the
+// available platform features.
 
 ACE_INLINE void
 ACE_CDR::swap_2 (char const *orig, char* target)

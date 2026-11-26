@@ -214,9 +214,7 @@ int be_visitor_args_vardecl_ss::visit_predefined_type (
         case AST_Argument::dir_IN:
           break;
 
-        // @@@ (JP) This is a hack for VC7, which gets an internal
-        // compiler error if these not initialized.
-        // (02-12-09)
+        // Initialize generated inout and out scalar arguments.
         case AST_Argument::dir_INOUT:
         case AST_Argument::dir_OUT:
           switch (pt)
