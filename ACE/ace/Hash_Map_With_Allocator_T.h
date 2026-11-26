@@ -46,6 +46,13 @@ class ACE_Hash_Map_With_Allocator :
   public ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, ACE_Hash<EXT_ID>, ACE_Equal_To<EXT_ID>, ACE_Null_Mutex>
 {
 public:
+  ACE_Hash_Map_With_Allocator () = delete;
+  ACE_Hash_Map_With_Allocator (ACE_Hash_Map_With_Allocator const &) = delete;
+  ACE_Hash_Map_With_Allocator (ACE_Hash_Map_With_Allocator &&) = delete;
+  ACE_Hash_Map_With_Allocator &operator= (ACE_Hash_Map_With_Allocator const &) = delete;
+  ACE_Hash_Map_With_Allocator &operator= (ACE_Hash_Map_With_Allocator &&) = delete;
+  ~ACE_Hash_Map_With_Allocator () = default;
+
   explicit ACE_Hash_Map_With_Allocator (ACE_Allocator *alloc);
 
   /// Constructor that specifies hash table size.
