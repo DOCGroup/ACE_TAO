@@ -151,7 +151,7 @@ namespace ACE_TMCast
           {
             if (n < header_size)
               {
-                throw false;
+                continue;
               }
 
             MessageQueueAutoLock lock (out_);
