@@ -76,7 +76,7 @@ ACE_Read_Buffer::dump () const
   ACE_TRACE ("ACE_Read_Buffer::dump");
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("size_ = %B"), this->size_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\noccurrences_ = %d"), this->occurrences_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\noccurrences_ = %B"), this->occurrences_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nstream_ = %@"), this->stream_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nallocator_ = %@"), this->allocator_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
