@@ -133,6 +133,22 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       return 1;
     }
 
+  std::array<ACEXML_UTF16, 5> const supplementary {{'A', 0xd83d, 0xde00, 'B', 0}};
+  std::array<ACEXML_UTF8, 7> supplementary_utf8 {};
+  std::array<ACEXML_UTF16, 5> supplementary_roundtrip {};
+  if (ACEXML_Transcoder::utf16s2utf8s (supplementary.data (), supplementary_utf8.data (),
+                                        supplementary_utf8.size ()) != 7 ||
+      ACEXML_Transcoder::utf8s2utf16s (supplementary_utf8.data (), supplementary_roundtrip.data (),
+                                        supplementary_roundtrip.size ()) != 5 ||
+      supplementary_roundtrip != supplementary ||
+      ACEXML_Transcoder::utf16s2utf8s (supplementary.data (), supplementary_utf8.data (), 5) !=
+        ACEXML_Transcoder::ACEXML_DESTINATION_TOO_SHORT ||
+      ACEXML_Transcoder::utf8s2utf16s ("A\xf0\x9f\x98\x80" "B", supplementary_roundtrip.data (), 2) !=
+        ACEXML_Transcoder::ACEXML_DESTINATION_TOO_SHORT)
+    {
+      return 1;
+    }
+
   ACE_DEBUG ((LM_DEBUG, "Restored UTF16 string:\n"));
   dump_utf16 (after.data (), x);
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
