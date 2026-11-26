@@ -644,6 +644,7 @@ public:
 
   /// @name High-level event handler scheduling operations
   /// @{
+
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
   /// @note this call does not cause the Reactor to re-examine
@@ -826,6 +827,7 @@ public:
 
   /// @name Low-level wait_set mask manipulation methods
   /// @{
+
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// @a event_handler and @a mask.
   int mask_ops (ACE_Event_Handler *event_handler,
@@ -842,6 +844,7 @@ public:
 
   /// @name Low-level ready_set mask manipulation methods
   /// @{
+
   /// GET/SET/ADD/CLR the ready "bit" bound with the @a event_handler
   /// and @a mask.
   int ready_ops (ACE_Event_Handler *event_handler,

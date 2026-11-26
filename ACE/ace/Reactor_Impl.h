@@ -221,6 +221,7 @@ public:
 
   /// @name Register and remove handlers
   /// @{
+
   /// Register @a event_handler with @a mask.  The I/O handle will always
   /// come from get_handle() on the @a event_handler.
   virtual int register_handler (ACE_Event_Handler *event_handler,
@@ -327,6 +328,7 @@ public:
 
   /// @name Suspend and resume handlers
   /// @{
+
   /// Suspend @a event_handler temporarily.  Uses
   /// ACE_Event_Handler::get_handle() to get the handle.
   virtual int suspend_handler (ACE_Event_Handler *event_handler) = 0;
@@ -422,6 +424,7 @@ public:
 
   /// @name High-level event handler scheduling operations
   /// @{
+
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
   virtual int schedule_wakeup (ACE_Event_Handler *event_handler,
@@ -545,6 +548,7 @@ public:
 
   /// @name Low-level wait_set mask manipulation methods
   /// @{
+
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// @a event_handler and @a mask.
   virtual int mask_ops (ACE_Event_Handler *event_handler,
@@ -561,6 +565,7 @@ public:
 
   /// @name Low-level ready_set mask manipulation methods
   /// @{
+
   /// GET/SET/ADD/CLR the ready "bit" bound with the @a event_handler
   /// and @a mask.
   virtual int ready_ops (ACE_Event_Handler *event_handler,

@@ -213,6 +213,7 @@ private:
 private slots:
     /// @name Qt signal callbacks
     /// @{
+
     /// Dispatch a Read Event
     void read_event (ACE_QT_HANDLE_TYPE p_handle);
 
