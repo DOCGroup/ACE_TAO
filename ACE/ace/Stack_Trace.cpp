@@ -42,7 +42,7 @@ ACE_Stack_Trace::ACE_Stack_Trace (ssize_t starting_frame_offset, size_t num_fram
   this->generate_trace (starting_frame_offset, num_frames);
 }
 
-const char*
+char const *
 ACE_Stack_Trace::c_str () const
 {
   return this->buf_;
@@ -281,7 +281,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
           //Hopefully a future version of VxWorks will have a system call
           //for an RTP to query its own symbols, but this is not possible now.
           //An enhancement request has been filed under WIND00123307.
-          const char *fnName = "(no symbols)";
+          char const *fnName = "(no symbols)";
 
           static constexpr int N_ARGS = 12;
           ACE_VX_USR_ARG_T buf[N_ARGS];

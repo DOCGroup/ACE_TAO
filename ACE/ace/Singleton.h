@@ -293,9 +293,9 @@ public:
   /// Dump the state of the object.
   static void dump ();
 
-  const ACE_TCHAR *dll_name ();
+  ACE_TCHAR const *dll_name ();
 
-  const ACE_TCHAR *name ();
+  ACE_TCHAR const *name ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -324,7 +324,7 @@ template <class TYPE>
 class ACE_DLL_Singleton_Adapter_T : public TYPE
 {
 public:
-  const ACE_TCHAR *dll_name ();
+  ACE_TCHAR const *dll_name ();
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;

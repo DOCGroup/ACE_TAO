@@ -84,7 +84,7 @@ public:
    * @return C-style string with string representation of stack trace.
    * @note Lifecycle of string follows lifecycle of ACE_Stack_Trace instance.
    */
-  const char* c_str() const;
+  char const * c_str() const;
 
   static constexpr size_t SYMBUFSIZ = ACE_STACK_TRACE_SYMBUFSIZ;
 

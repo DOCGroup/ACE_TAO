@@ -523,13 +523,13 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close_singleton ()
   ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::close ();
 }
 
-template <class TYPE, class ACE_LOCK> const ACE_TCHAR *
+template <class TYPE, class ACE_LOCK> ACE_TCHAR const *
 ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::dll_name ()
 {
   return this->instance ()->dll_name ();
 }
 
-template <class TYPE, class ACE_LOCK> const ACE_TCHAR *
+template <class TYPE, class ACE_LOCK> ACE_TCHAR const *
 ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::name ()
 {
   return this->instance ()->name ();
@@ -537,7 +537,7 @@ ACE_DLL_Singleton_T<TYPE, ACE_LOCK>::name ()
 
 /**********************************************************************/
 
-template <class TYPE> const ACE_TCHAR*
+template <class TYPE> ACE_TCHAR const *
 ACE_DLL_Singleton_Adapter_T<TYPE>::dll_name ()
 {
   // @todo make this a constant somewhere (or it there already is one
