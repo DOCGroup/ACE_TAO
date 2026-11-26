@@ -62,7 +62,7 @@ CEC_Counting_Consumer::dump_results (int expected_count, int tolerance)
 }
 
 void
-CEC_Counting_Consumer::push (const CORBA::Any&)
+CEC_Counting_Consumer::push (CORBA::Any const &)
 {
   ++this->event_count;
 #if 0
@@ -202,7 +202,7 @@ CEC_Counting_Consumer_Task::svc ()
     {
       this->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }

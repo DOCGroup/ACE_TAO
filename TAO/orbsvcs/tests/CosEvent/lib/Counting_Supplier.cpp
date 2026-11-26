@@ -36,7 +36,7 @@ CEC_Counting_Supplier::disconnect ()
 }
 
 void
-CEC_Counting_Supplier::push (const CORBA::Any&)
+CEC_Counting_Supplier::push (CORBA::Any const &)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
   {
@@ -75,7 +75,7 @@ CEC_Counting_Supplier_Task::svc ()
     {
       this->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
