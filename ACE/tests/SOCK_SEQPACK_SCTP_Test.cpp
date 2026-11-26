@@ -272,7 +272,7 @@ spawn_test(bool ipv6_test)
 
   ACE_SOCK_SEQPACK_Acceptor AcceptorSocket;
 
-  const ACE_TCHAR *addrstr =
+  ACE_TCHAR const *addrstr =
 #ifdef ACE_HAS_IPV6
     ipv6_test ? ACE_IPV6_LOCALHOST : ACE_LOCALHOST;
 #else

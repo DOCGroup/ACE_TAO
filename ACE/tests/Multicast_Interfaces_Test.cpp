@@ -191,7 +191,7 @@ get_valid_ipv6_interface_names (nameset &names)
 #endif /* ACE_HAS_IPV6 */
 
 int
-create_socket_and_join_multicast (const ACE_INET_Addr &mc_addr, const ACE_TString &if_name)
+create_socket_and_join_multicast (ACE_INET_Addr const &mc_addr, ACE_TString const &if_name)
 {
   int result = 0;
   ACE_SOCK_Dgram_Mcast sock;

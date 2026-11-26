@@ -36,13 +36,13 @@ static int entrycount = 0;
 
 extern "C" {
 static int
-selector (const ACE_DIRENT *d)
+selector (ACE_DIRENT const *d)
 {
   return ACE_OS::strcmp (d->d_name, TEST_ENTRY) == 0;
 }
 
 static int
-comparator (const ACE_DIRENT **d1, const ACE_DIRENT **d2)
+comparator (ACE_DIRENT const **d1, ACE_DIRENT const **d2)
 {
   return ACE_OS::alphasort (d1, d2);
 }
@@ -54,7 +54,7 @@ dirent_selector_test ()
 {
   int n;
   int error = 0;
-  const ACE_TCHAR *test_dir = TestDir.c_str ();
+  ACE_TCHAR const *test_dir = TestDir.c_str ();
   ACE_Dirent_Selector sds;
 
   // Pass in functions that'll specify the selection criteria.
@@ -201,7 +201,7 @@ dirent_test ()
 }
 
 static int
-dirent_count (const ACE_TCHAR *dir_path,
+dirent_count (ACE_TCHAR const *dir_path,
               int &dir_count,
               int &file_count,
               int recursion_level)
@@ -336,7 +336,7 @@ dirent_recurse_test ()
 {
   int total_dirs = 0;
   int total_files = 0;
-  const ACE_TCHAR *test_dir = TestDir.c_str ();
+  ACE_TCHAR const *test_dir = TestDir.c_str ();
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Starting directory recursion test for %s\n"),
@@ -373,7 +373,7 @@ run_main (int, ACE_TCHAR *[])
 #if defined (TEST_DIR)
   TestDir = TEST_DIR;
 #else
-  const char *root = ACE_OS::getenv ("top_srcdir");
+  char const *root = ACE_OS::getenv ("top_srcdir");
   if (root == nullptr)
   {
     root = ACE_OS::getenv ("ACE_ROOT");
