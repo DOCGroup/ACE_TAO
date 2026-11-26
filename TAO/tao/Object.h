@@ -96,6 +96,7 @@ namespace CORBA
      * CORBA spec in a form specified by the C++ mapping.
      */
     /// @{
+
     /// Increment the ref count.
     static CORBA::Object_ptr _duplicate (CORBA::Object_ptr obj);
 
@@ -208,6 +209,7 @@ namespace CORBA
      * methods.
      */
     /// @{
+
     /// Increment the reference count.
     virtual void _add_ref ();
 

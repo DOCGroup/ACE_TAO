@@ -269,6 +269,7 @@ public:
    * Repository.
    */
   /// @{
+
   /// Returns pointer to the resource factory.
   TAO_Resource_Factory *resource_factory ();
 
@@ -1110,6 +1111,7 @@ protected:
    * @name Service Level Hooks
    */
   /// @{
+
   /// Fault Tolerant service hook.
   TAO_Fault_Tolerance_Service ft_service_;
 
