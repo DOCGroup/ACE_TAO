@@ -274,7 +274,7 @@ TAO_ValueDef_i::initializers_i ()
   ACE_Configuration_Section_Key initializers_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "initializers",
+                                          ACE_TEXT ("initializers"),
                                           false,
                                           initializers_key);
 
@@ -286,10 +286,10 @@ TAO_ValueDef_i::initializers_i ()
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (initializers_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
   iseq->length (count);
-  char *stringified {};
+  ACE_TCHAR *stringified {};
   ACE_Configuration_Section_Key initializer_key, params_key, arg_key;
   ACE_TString holder;
   CORBA::ULong arg_count = 0;
@@ -302,12 +302,12 @@ TAO_ValueDef_i::initializers_i ()
                                             false,
                                             initializer_key);
       this->repo_->config ()->get_string_value (initializer_key,
-                                                "name",
+                                                ACE_TEXT ("name"),
                                                 holder);
-      retval[i].name = holder.fast_rep ();
+      retval[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
       status =
         this->repo_->config ()->open_section (initializer_key,
-                                              "params",
+                                              ACE_TEXT ("params"),
                                               false,
                                               params_key);
 
@@ -318,7 +318,7 @@ TAO_ValueDef_i::initializers_i ()
         }
 
       this->repo_->config ()->get_integer_value (params_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  arg_count);
       retval[i].members.length (arg_count);
       CORBA::Object_var obj;
@@ -331,11 +331,11 @@ TAO_ValueDef_i::initializers_i ()
                                                 false,
                                                 arg_key);
           this->repo_->config ()->get_string_value (arg_key,
-                                                    "arg_name",
+                                                    ACE_TEXT ("arg_name"),
                                                     holder);
-          retval[i].members[j].name = holder.fast_rep ();
+          retval[i].members[j].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (arg_key,
-                                                    "arg_path",
+                                                    ACE_TEXT ("arg_path"),
                                                     holder);
           TAO_IDLType_i *impl =
             TAO_IFR_Service_Utils::path_to_idltype (holder,
@@ -369,7 +369,7 @@ void
 TAO_ValueDef_i::initializers_i (CORBA::InitializerSeq const &initializers)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "initializers",
+                                          ACE_TEXT ("initializers"),
                                           true);
   TAO_IFR_Generic_Utils<CORBA::InitializerSeq>::set_initializers (
       initializers,
@@ -394,7 +394,7 @@ TAO_ValueDef_i::base_value_i ()
   ACE_TString base_path;
   int status =
     this->repo_->config ()->get_string_value (this->section_key_,
-                                              "base_value",
+                                              ACE_TEXT ("base_value"),
                                               base_path);
 
   if (status != 0)
@@ -425,7 +425,7 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
   if (CORBA::is_nil (base_value))
     {
       this->repo_->config ()->remove_value (this->section_key_,
-                                            "base_value");
+                                            ACE_TEXT ("base_value"));
       return;
     }
 
@@ -437,7 +437,7 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
   // no other way to know about a specific key.
   this->repo_->config ()->expand_path (
                               this->repo_->root_key (),
-                              base_path,
+                              ACE_TEXT_CHAR_TO_TCHAR (base_path),
                               TAO_IFR_Service_Utils::tmp_key_,
                               false
                             );
@@ -448,8 +448,8 @@ TAO_ValueDef_i::base_value_i (CORBA::ValueDef_ptr base_value)
 
   this->repo_->config ()->set_string_value (
                               this->section_key_,
-                              "base_value",
-                              base_path
+                              ACE_TEXT ("base_value"),
+                              ACE_TEXT_CHAR_TO_TCHAR (base_path)
                             );
 }
 
@@ -475,7 +475,7 @@ TAO_ValueDef_i::abstract_base_values_i ()
   ACE_Configuration_Section_Key bases_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "abstract_bases",
+                                          ACE_TEXT ("abstract_bases"),
                                           false,
                                           bases_key);
 
@@ -487,10 +487,10 @@ TAO_ValueDef_i::abstract_base_values_i ()
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (bases_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
   vd_seq->length (count);
-  char *stringified {};
+  ACE_TCHAR *stringified {};
   ACE_TString holder;
   CORBA::Object_var obj;
 
@@ -528,7 +528,7 @@ TAO_ValueDef_i::abstract_base_values_i (
     CORBA::ValueDefSeq const &abstract_base_values)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "abstract_bases",
+                                          ACE_TEXT ("abstract_bases"),
                                           false);
   CORBA::ULong count = abstract_base_values.length ();
 
@@ -539,11 +539,11 @@ TAO_ValueDef_i::abstract_base_values_i (
 
   ACE_Configuration_Section_Key bases_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "abstract_bases",
+                                        ACE_TEXT ("abstract_bases"),
                                         false,
                                         bases_key);
   this->repo_->config ()->set_integer_value (bases_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
   for (CORBA::ULong i {}; i < count; ++i)
     {
@@ -557,7 +557,7 @@ TAO_ValueDef_i::abstract_base_values_i (
       // no other way to know about a specific key.
       this->repo_->config ()->expand_path (
                                   this->repo_->root_key (),
-                                  base_path,
+                                  ACE_TEXT_CHAR_TO_TCHAR (base_path),
                                   TAO_IFR_Service_Utils::tmp_key_,
                                   false
                                 );
@@ -568,10 +568,10 @@ TAO_ValueDef_i::abstract_base_values_i (
 
       char const * const base_id =
         abstract_base_values[i]->_interface_repository_id ();
-      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (bases_key,
                                                 stringified,
-                                                base_id);
+                                                ACE_TEXT_CHAR_TO_TCHAR (base_id));
     }
 }
 
