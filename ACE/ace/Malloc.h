@@ -292,7 +292,7 @@ public:
   class ACE_Export ACE_Name_Node
   {
   public:
-    ACE_Name_Node (const char *name,
+    ACE_Name_Node (char const *name,
                    char *name_ptr,
                    char *pointer,
                    ACE_Name_Node *head);
@@ -312,7 +312,7 @@ public:
                           void *base_addr);
 
     /// Return a pointer to the name of this node.
-    const char *name () const;
+    char const *name () const;
 
     /// Name of the Node.
     char *name_ {};

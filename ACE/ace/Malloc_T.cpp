@@ -240,7 +240,7 @@ ACE_Allocator_Adapter<MALLOC>::remove ()
 }
 
 template <class MALLOC> int
-ACE_Allocator_Adapter<MALLOC>::trybind (const char *name,
+ACE_Allocator_Adapter<MALLOC>::trybind (char const *name,
                                         void *&pointer)
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::trybind");
@@ -248,7 +248,7 @@ ACE_Allocator_Adapter<MALLOC>::trybind (const char *name,
 }
 
 template <class MALLOC> int
-ACE_Allocator_Adapter<MALLOC>::bind (const char *name,
+ACE_Allocator_Adapter<MALLOC>::bind (char const *name,
                                      void *pointer,
                                      int duplicates)
 {
@@ -257,7 +257,7 @@ ACE_Allocator_Adapter<MALLOC>::bind (const char *name,
 }
 
 template <class MALLOC> int
-ACE_Allocator_Adapter<MALLOC>::find (const char *name,
+ACE_Allocator_Adapter<MALLOC>::find (char const *name,
                                      void *&pointer)
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::find");
@@ -265,21 +265,21 @@ ACE_Allocator_Adapter<MALLOC>::find (const char *name,
 }
 
 template <class MALLOC> int
-ACE_Allocator_Adapter<MALLOC>::find (const char *name)
+ACE_Allocator_Adapter<MALLOC>::find (char const *name)
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::find");
   return this->allocator_.find (name);
 }
 
 template <class MALLOC> int
-ACE_Allocator_Adapter<MALLOC>::unbind (const char *name, void *&pointer)
+ACE_Allocator_Adapter<MALLOC>::unbind (char const *name, void *&pointer)
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::unbind");
   return this->allocator_.unbind (name, pointer);
 }
 
 template <class MALLOC> int
-ACE_Allocator_Adapter<MALLOC>::unbind (const char *name)
+ACE_Allocator_Adapter<MALLOC>::unbind (char const *name)
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::unbind");
   return this->allocator_.unbind (name);
@@ -314,7 +314,7 @@ ACE_Allocator_Adapter<MALLOC>::protect (void *addr, size_t len, int flags)
 }
 
 template <class MALLOC>
-ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const char *pool_name)
+ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (char const *pool_name)
   : allocator_ (ACE_TEXT_CHAR_TO_TCHAR (pool_name))
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
@@ -322,8 +322,8 @@ ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const char *pool_name)
 
 template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (
-  const char *pool_name,
-  const char *lock_name,
+  char const *pool_name,
+  char const *lock_name,
   MEMORY_POOL_OPTIONS options)
     : allocator_ (ACE_TEXT_CHAR_TO_TCHAR (pool_name),
                   ACE_TEXT_CHAR_TO_TCHAR (lock_name),
@@ -519,7 +519,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::open ()
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (ACE_TCHAR const *pool_name)
   : memory_pool_ (pool_name)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
@@ -540,14 +540,14 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
-                                                              const ACE_TCHAR *lock_name,
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (ACE_TCHAR const *pool_name,
+                                                              ACE_TCHAR const *lock_name,
                                                               const ACE_MEM_POOL_OPTIONS *options)
   : memory_pool_ (pool_name, options)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
   // Use pool_name for lock_name if lock_name not passed.
-  const ACE_TCHAR *name = lock_name ? lock_name : pool_name;
+  ACE_TCHAR const *name = lock_name ? lock_name : pool_name;
   this->lock_ = ACE_Malloc_Lock_Adapter_T<ACE_LOCK> ()(name);
   if (this->lock_ != nullptr)
     {
@@ -564,7 +564,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *p
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (const ACE_TCHAR *pool_name,
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (ACE_TCHAR const *pool_name,
                                                               const ACE_MEM_POOL_OPTIONS *options,
                                                               ACE_LOCK *lock)
   : memory_pool_ (pool_name, options),
@@ -869,7 +869,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_free (void *ap)
 // No locks held here, caller must acquire/release lock.
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> void*
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find (const char *name)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find (char const *name)
 {
 #if !defined (ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS)
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find");
@@ -899,7 +899,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_find (const char *name)
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_bind (const char *name,
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_bind (char const *name,
                                                              void *pointer)
 {
   if (!this->cb_ptr_)
@@ -929,7 +929,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::shared_bind (const char *name,
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::trybind (const char *name,
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::trybind (char const *name,
                                                          void *&pointer)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::trybind");
@@ -949,7 +949,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::trybind (const char *name,
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::bind (const char *name,
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::bind (char const *name,
                                                       void *pointer,
                                                       int duplicates)
 {
@@ -969,7 +969,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::bind (const char *name,
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (const char *name,
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (char const *name,
                                                     void *&pointer)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find");
@@ -1028,7 +1028,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::avail_chunks (size_t size) const
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (const char *name)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (char const *name)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find");
   ACE_READ_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -1037,7 +1037,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::find (const char *name)
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *&pointer)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (char const *name, void *&pointer)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind");
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, *this->lock_, -1);
@@ -1084,7 +1084,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name, void *
 }
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
-ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name)
+ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (char const *name)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind");
   void *temp {};
@@ -1094,7 +1094,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::unbind (const char *name)
 /*****************************************************************************/
 
 template <class ACE_LOCK> ACE_LOCK *
-ACE_Malloc_Lock_Adapter_T<ACE_LOCK>::operator () (const ACE_TCHAR *name)
+ACE_Malloc_Lock_Adapter_T<ACE_LOCK>::operator () (ACE_TCHAR const *name)
 {
   ACE_LOCK *p {};
   if (name == nullptr)
@@ -1128,7 +1128,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump () const
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_LIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
-                                                                                      const char *name)
+                                                                                      char const *name)
   : malloc_ (malloc),
     curr_ (0),
     guard_ (*malloc_.lock_),
@@ -1152,7 +1152,7 @@ ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_LIFO_I
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::next (void *&next_entry,
-                                                                    const char *&name)
+                                                                    char const *&name)
 {
   ACE_TRACE ("ACE_Malloc_LIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::next");
 
@@ -1229,7 +1229,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::dump () const
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_FIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
-                                                                                      const char *name)
+                                                                                      char const *name)
   : malloc_ (malloc),
     curr_ (0),
     guard_ (*malloc_.lock_),
@@ -1255,7 +1255,7 @@ ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::~ACE_Malloc_FIFO_I
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB> int
 ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::next (void *&next_entry,
-                                                                    const char *&name)
+                                                                    char const *&name)
 {
   ACE_TRACE ("ACE_Malloc_FIFO_Iterator_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::next");
 

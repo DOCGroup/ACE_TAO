@@ -59,12 +59,12 @@ public:
   /// @name Unsupported operations
   /// @{
   int remove () override;
-  int bind (const char *name, void *pointer, int duplicates = 0) override;
-  int trybind (const char *name, void *&pointer) override;
-  int find (const char *name, void *&pointer) override;
-  int find (const char *name) override;
-  int unbind (const char *name) override;
-  int unbind (const char *name, void *&pointer) override;
+  int bind (char const *name, void *pointer, int duplicates = 0) override;
+  int trybind (char const *name, void *&pointer) override;
+  int find (char const *name, void *&pointer) override;
+  int find (char const *name) override;
+  int unbind (char const *name) override;
+  int unbind (char const *name, void *&pointer) override;
   int sync (ssize_t len = -1, int flags = MS_SYNC) override;
   int sync (void *addr, size_t len, int flags = MS_SYNC) override;
   int protect (ssize_t len = -1, int prot = PROT_RDWR) override;
@@ -104,12 +104,12 @@ public:
   void *calloc (size_t n_elem, size_t elem_size, char initial_value = '\0') override;
   void free (void *ptr) override;
   int remove () override;
-  int bind (const char *name, void *pointer, int duplicates = 0) override;
-  int trybind (const char *name, void *&pointer) override;
-  int find (const char *name, void *&pointer) override;
-  int find (const char *name) override;
-  int unbind (const char *name) override;
-  int unbind (const char *name, void *&pointer) override;
+  int bind (char const *name, void *pointer, int duplicates = 0) override;
+  int trybind (char const *name, void *&pointer) override;
+  int find (char const *name, void *&pointer) override;
+  int find (char const *name) override;
+  int unbind (char const *name) override;
+  int unbind (char const *name, void *&pointer) override;
   int sync (ssize_t len = -1, int flags = MS_SYNC) override;
   int sync (void *addr, size_t len, int flags = MS_SYNC) override;
   int protect (ssize_t len = -1, int prot = PROT_RDWR) override;

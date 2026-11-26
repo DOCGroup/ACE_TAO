@@ -97,7 +97,7 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node ()
   ACE_TRACE ("ACE_Control_Block::ACE_Name_Node::ACE_Name_Node");
 }
 
-ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
+ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (char const *name,
                                                  char *name_ptr,
                                                  char *pointer,
                                                  ACE_Name_Node *next)
@@ -114,7 +114,7 @@ ACE_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
   }
 }
 
-const char *
+char const *
 ACE_Control_Block::ACE_Name_Node::name () const
 {
   return this->name_;

@@ -86,7 +86,7 @@ public:
    * bind a previously bound @a name and @a duplicates == 0, else
    * returns -1 if a resource failure occurs.
    */
-  virtual int bind (const char *name, void *pointer, int duplicates = 0) = 0;
+  virtual int bind (char const *name, void *pointer, int duplicates = 0) = 0;
 
   /**
    * Associate @a name with @a pointer.  Does not allow duplicate
@@ -98,22 +98,22 @@ public:
    * to use @a pointer (e.g., to free it) a copy must be maintained by
    * the caller.
    */
-  virtual int trybind (const char *name, void *&pointer) = 0;
+  virtual int trybind (char const *name, void *&pointer) = 0;
 
   /// Locate @a name and pass out parameter via pointer.  If found,
   /// return 0, returns -1 if failure occurs.
-  virtual int find (const char *name, void *&pointer) = 0;
+  virtual int find (char const *name, void *&pointer) = 0;
 
   /// Returns 0 if the name is in the mapping. -1, otherwise.
-  virtual int find (const char *name) = 0;
+  virtual int find (char const *name) = 0;
 
   /// Unbind (remove) the name from the map.  Don't return the pointer
   /// to the caller
-  virtual int unbind (const char *name) = 0;
+  virtual int unbind (char const *name) = 0;
 
   /// Break any association of name.  Returns the value of pointer in
   /// case the caller needs to deallocate memory.
-  virtual int unbind (const char *name, void *&pointer) = 0;
+  virtual int unbind (char const *name, void *&pointer) = 0;
   /// @}
 
   /** @name Memory protection and synchronization

@@ -219,15 +219,15 @@ public:
    * @note @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. */
-  ACE_Allocator_Adapter (const char *pool_name = nullptr);
+  ACE_Allocator_Adapter (char const *pool_name = nullptr);
 
   /**
    * @note @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
-  ACE_Allocator_Adapter (const char *pool_name,
-                         const char *lock_name,
+  ACE_Allocator_Adapter (char const *pool_name,
+                         char const *lock_name,
                          MEMORY_POOL_OPTIONS options = 0);
 
 #if defined (ACE_HAS_WCHAR)
@@ -284,7 +284,7 @@ public:
    * bind a previously bound @a name and @a duplicates == 0, else
    * returns -1 if a resource failure occurs.
    */
-  int bind (const char *name, void *pointer, int duplicates = 0) override;
+  int bind (char const *name, void *pointer, int duplicates = 0) override;
 
   /**
    * Associate @a name with @a pointer.  Does not allow duplicate
@@ -296,22 +296,22 @@ public:
    * to use @a pointer (e.g., to free it) a copy must be maintained by
    * the caller.
    */
-  int trybind (const char *name, void *&pointer) override;
+  int trybind (char const *name, void *&pointer) override;
 
   /// Locate @a name and pass out parameter via pointer.  If found,
   /// return 0, returns -1 if @a name isn't found.
-  int find (const char *name, void *&pointer) override;
+  int find (char const *name, void *&pointer) override;
 
   /// Returns 0 if the name is in the mapping and -1 if not.
-  int find (const char *name) override;
+  int find (char const *name) override;
 
   /// Unbind (remove) the name from the map.  Don't return the pointer
   /// to the caller
-  int unbind (const char *name) override;
+  int unbind (char const *name) override;
 
   /// Break any association of name.  Returns the value of pointer in
   /// case the caller needs to deallocate memory.
-  int unbind (const char *name, void *&pointer) override;
+  int unbind (char const *name, void *&pointer) override;
   /// @}
 
   /// @name Memory protection and synchronization
@@ -415,8 +415,8 @@ class ACE_Malloc_FIFO_Iterator_T;
  *   - ACE_Sbrk_Memory_Pool
  *
  * The MEMORY_POOL class must provide the following methods:
- *   - constructor (const ACE_TCHAR *pool_name)
- *   - constructor (const ACE_TCHAR *pool_name, const MEMORY_POOL_OPTIONS *options)
+ *   - constructor (ACE_TCHAR const *pool_name)
+ *   - constructor (ACE_TCHAR const *pool_name, const MEMORY_POOL_OPTIONS *options)
  *   - void dump () const (needed if ACE is built with ACE_HAS_DUMP defined)
  *   - void *init_acquire (size_t nbytes, size_t &rounded_bytes, int &first_time);
  *   - int release ()
@@ -455,7 +455,7 @@ public:
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
-  ACE_Malloc_T (const ACE_TCHAR *pool_name = nullptr);
+  ACE_Malloc_T (ACE_TCHAR const *pool_name = nullptr);
 
   /**
    * Initialize ACE_Malloc.  This constructor passes @a pool_name to
@@ -468,8 +468,8 @@ public:
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
-  ACE_Malloc_T (const ACE_TCHAR *pool_name,
-                const ACE_TCHAR *lock_name,
+  ACE_Malloc_T (ACE_TCHAR const *pool_name,
+                ACE_TCHAR const *lock_name,
                 const ACE_MEM_POOL_OPTIONS *options = nullptr);
 
   /**
@@ -478,7 +478,7 @@ public:
    * the memory pool. @a lock is used as the pool lock, and must be
    * properly set up and ready for use before being passed to this method.
    */
-  ACE_Malloc_T (const ACE_TCHAR *pool_name,
+  ACE_Malloc_T (ACE_TCHAR const *pool_name,
                 const ACE_MEM_POOL_OPTIONS *options,
                 ACE_LOCK *lock);
 
@@ -531,7 +531,7 @@ public:
    * bind a previously bound @a name and @a duplicates == 0, else
    * returns -1 if a resource failure occurs.
    */
-  int bind (const char *name, void *pointer, int duplicates = 0);
+  int bind (char const *name, void *pointer, int duplicates = 0);
 
   /**
    * Associate @a name with @a pointer.  Does not allow duplicate
@@ -543,21 +543,21 @@ public:
    * to use @a pointer (e.g., to free it) a copy must be maintained by
    * the caller.
    */
-  int trybind (const char *name, void *&pointer);
+  int trybind (char const *name, void *&pointer);
 
   /// Locate @a name and pass out parameter via @a pointer.  If found,
   /// return 0, returns -1 if failure occurs.
-  int find (const char *name, void *&pointer);
+  int find (char const *name, void *&pointer);
 
   /// Returns 0 if @a name is in the mapping. -1, otherwise.
-  int find (const char *name);
+  int find (char const *name);
 
   /**
    * Unbind (remove) the name from the map.  Don't return the pointer
    * to the caller.  If you want to remove all occurrences of @a name
    * you'll need to call this method multiple times until it fails...
    */
-  int unbind (const char *name);
+  int unbind (char const *name);
 
   /**
    * Unbind (remove) one association of @a name to @a pointer.  Returns
@@ -565,7 +565,7 @@ public:
    * memory.  If you want to remove all occurrences of @a name you'll
    * need to call this method multiple times until it fails...
    */
-  int unbind (const char *name, void *&pointer);
+  int unbind (char const *name, void *&pointer);
   /// @}
 
   /// @name Memory protection and synchronization
@@ -640,7 +640,7 @@ private:
 
   /// Associate @a name with @a pointer.  Assumes that locks are held by
   /// callers.
-  int shared_bind (const char *name,
+  int shared_bind (char const *name,
                    void *pointer);
 
   /**
@@ -649,7 +649,7 @@ private:
    * Assumes that locks are held by callers.  Remember to cast the
    * return value to ACE_CB::ACE_Name_Node*.
    */
-  void *shared_find (const char *name);
+  void *shared_find (char const *name);
 
   /// Allocate memory.  Assumes that locks are held by callers.
   void *shared_malloc (size_t nbytes);
@@ -711,7 +711,7 @@ public:
   /// If @a name = 0 it will iterate through everything else only
   /// through those entries whose @a name match.
   ACE_Malloc_LIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
-                              const char *name = nullptr);
+                              char const *name = nullptr);
 
   ~ACE_Malloc_LIFO_Iterator_T ();
 
@@ -730,7 +730,7 @@ public:
    * the set that hasn't yet been visited.  Returns 0 when all items
    * have been seen, else 1.
    */
-  int next (void *&next_entry, const char *&name);
+  int next (void *&next_entry, char const *&name);
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
@@ -756,7 +756,7 @@ private:
 // FUZZ: enable check_for_ACE_Guard
 
   /// Name that we are searching for.
-  const char *name_;
+  char const *name_;
 };
 
 /**
@@ -780,7 +780,7 @@ public:
   /// If @a name = 0 it will iterate through everything else only
   /// through those entries whose @a name match.
   ACE_Malloc_FIFO_Iterator_T (ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB> &malloc,
-                              const char *name = nullptr);
+                              char const *name = nullptr);
 
   ~ACE_Malloc_FIFO_Iterator_T ();
 
@@ -799,7 +799,7 @@ public:
    * the set that hasn't yet been visited.  Returns 0 when all items
    * have been seen, else 1.
    */
-  int next (void *&next_entry, const char *&name);
+  int next (void *&next_entry, char const *&name);
 
   /// Move forward by one element in the set.  Returns 0 when all the
   /// items in the set have been seen, else 1.
@@ -829,7 +829,7 @@ private:
 // FUZZ: enable check_for_ACE_Guard
 
   /// Name that we are searching for.
-  const char *name_;
+  char const *name_;
 };
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
@@ -844,7 +844,7 @@ public:
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
-  ACE_Malloc (const ACE_TCHAR *pool_name = nullptr);
+  ACE_Malloc (ACE_TCHAR const *pool_name = nullptr);
 
   /**
    * Initialize ACE_Malloc.  This constructor passes @a pool_name to
@@ -856,8 +856,8 @@ public:
    * and protection so that all processes that need to access it can
    * do so.
    */
-  ACE_Malloc (const ACE_TCHAR *pool_name,
-              const ACE_TCHAR *lock_name,
+  ACE_Malloc (ACE_TCHAR const *pool_name,
+              ACE_TCHAR const *lock_name,
               const ACE_MEM_POOL_OPTIONS *options = nullptr);
 };
 
@@ -868,7 +868,7 @@ public:
   /// If @a name = 0 it will iterate through everything else only
   /// through those entries whose @a name match.
   ACE_Malloc_LIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
-                            const char *name = nullptr);
+                            char const *name = nullptr);
 };
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
@@ -878,14 +878,14 @@ public:
   /// If @a name = 0 it will iterate through everything else only
   /// through those entries whose @a name match.
   ACE_Malloc_FIFO_Iterator (ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK> &malloc,
-                            const char *name = nullptr);
+                            char const *name = nullptr);
 };
 
 template <class ACE_LOCK>
 class ACE_Malloc_Lock_Adapter_T
 {
 public:
-  ACE_LOCK * operator () (const ACE_TCHAR *myname);
+  ACE_LOCK * operator () (ACE_TCHAR const *myname);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

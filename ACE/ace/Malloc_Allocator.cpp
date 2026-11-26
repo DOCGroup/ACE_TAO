@@ -138,37 +138,37 @@ ACE_New_Allocator::remove ()
 }
 
 int
-ACE_New_Allocator::bind (const char *, void *, int)
+ACE_New_Allocator::bind (char const *, void *, int)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_New_Allocator::trybind (const char *, void *&)
+ACE_New_Allocator::trybind (char const *, void *&)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_New_Allocator::find (const char *, void *&)
+ACE_New_Allocator::find (char const *, void *&)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_New_Allocator::find (const char *)
+ACE_New_Allocator::find (char const *)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_New_Allocator::unbind (const char *)
+ACE_New_Allocator::unbind (char const *)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_New_Allocator::unbind (const char *, void *&)
+ACE_New_Allocator::unbind (char const *, void *&)
 {
   ACE_NOTSUP_RETURN (-1);
 }
@@ -264,37 +264,37 @@ ACE_Static_Allocator_Base::remove ()
 }
 
 int
-ACE_Static_Allocator_Base::bind (const char *, void *, int)
+ACE_Static_Allocator_Base::bind (char const *, void *, int)
 {
   return -1;
 }
 
 int
-ACE_Static_Allocator_Base::trybind (const char *, void *&)
+ACE_Static_Allocator_Base::trybind (char const *, void *&)
 {
   return -1;
 }
 
 int
-ACE_Static_Allocator_Base::find (const char *, void *&)
+ACE_Static_Allocator_Base::find (char const *, void *&)
 {
   return -1;
 }
 
 int
-ACE_Static_Allocator_Base::find (const char *)
+ACE_Static_Allocator_Base::find (char const *)
 {
   return -1;
 }
 
 int
-ACE_Static_Allocator_Base::unbind (const char *)
+ACE_Static_Allocator_Base::unbind (char const *)
 {
   return -1;
 }
 
 int
-ACE_Static_Allocator_Base::unbind (const char *, void *&)
+ACE_Static_Allocator_Base::unbind (char const *, void *&)
 {
   return -1;
 }
