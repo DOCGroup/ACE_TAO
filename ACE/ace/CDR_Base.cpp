@@ -614,11 +614,11 @@ ACE_CDR::LongDouble::assign (ACE_CDR::LongDouble::NativeImpl const & rhs)
       static constexpr size_t byte_zero = 1;
       static constexpr size_t byte_one = 0;
       char rhs_ptr[16];
-      ACE_CDR::swap_8 (reinterpret_cast<char const *> (&rhs), rhs_ptr);
+      ACE_CDR::swap_8 (reinterpret_cast<char const *> (std::addressof (rhs)), rhs_ptr);
 #else
       static constexpr size_t byte_zero = 0;
       static constexpr size_t byte_one = 1;
-      char const *rhs_ptr = reinterpret_cast<char const *> (&rhs);
+      char const *rhs_ptr = reinterpret_cast<char const *> (std::addressof (rhs));
 #endif
       ACE_INT16 sign  = static_cast<ACE_INT16> (
                           static_cast<signed char> (rhs_ptr[0])) & 0x8000;
@@ -668,7 +668,7 @@ ACE_CDR::LongDouble::assign (ACE_CDR::LongDouble::NativeImpl const & rhs)
     }
   else
     {
-      std::memcpy (this->ld, reinterpret_cast<char const *> (&rhs), sizeof (rhs));
+      std::memcpy (this->ld, reinterpret_cast<char const *> (std::addressof (rhs)), sizeof (rhs));
     }
   return *this;
 }
