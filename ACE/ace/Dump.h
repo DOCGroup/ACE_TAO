@@ -64,7 +64,7 @@ public:
   friend class ACE_ODB;
   friend class ACE_Dumpable_Ptr;
 
-  ACE_Dumpable (const void *);
+  ACE_Dumpable (void const *);
 
   /// This pure virtual method must be filled in by a subclass.
   virtual void dump () const = 0;
@@ -74,7 +74,7 @@ protected:
 
 private:
   /// Pointer to the object that is being stored.
-  const void *this_;
+  void const *this_;
 };
 
 /**
@@ -86,14 +86,14 @@ private:
 class ACE_Export ACE_Dumpable_Ptr
 {
 public:
-  ACE_Dumpable_Ptr (const ACE_Dumpable *dumper = nullptr);
-  const ACE_Dumpable *operator->() const;
-  void operator= (const ACE_Dumpable *dumper) const;
+  ACE_Dumpable_Ptr (ACE_Dumpable const *dumper = nullptr);
+  ACE_Dumpable const *operator->() const;
+  void operator= (ACE_Dumpable const *dumper) const;
 
 private:
   /// "Real" pointer to the underlying abstract base class
   /// pointer that does the real work.
-  const ACE_Dumpable *dumper_;
+  ACE_Dumpable const *dumper_;
 };
 
 /**
@@ -113,11 +113,11 @@ public:
   void dump_objects ();
 
   /// Add the tuple <dumper, this_> to the list of registered ACE objects.
-  void register_object (const ACE_Dumpable *dumper);
+  void register_object (ACE_Dumpable const *dumper);
 
   /// Use @c this_ to locate and remove the associated @c dumper from the
   /// list of registered ACE objects.
-  void remove_object (const void *this_);
+  void remove_object (void const *this_);
 
   /// Interface to the Singleton instance of the object database.
   static ACE_ODB *instance ();
@@ -131,7 +131,7 @@ private:
   struct Tuple
   {
     /// Pointer to the object that is registered.
-    const void *this_ {};
+    void const *this_ {};
 
     /// Smart pointer to the ACE_Dumpable object associated with this_.
     /// This uses an ACE_Dumpable_Ptr, instead of a bare pointer, to

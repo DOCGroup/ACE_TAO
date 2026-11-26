@@ -17,19 +17,19 @@ ACE_Dumpable::~ACE_Dumpable ()
   ACE_TRACE ("ACE_Dumpable::~ACE_Dumpable");
 }
 
-ACE_Dumpable::ACE_Dumpable (const void *this_ptr)
+ACE_Dumpable::ACE_Dumpable (void const *this_ptr)
   : this_ (this_ptr)
 {
   ACE_TRACE ("ACE_Dumpable::ACE_Dumpable");
 }
 
-ACE_Dumpable_Ptr::ACE_Dumpable_Ptr (const ACE_Dumpable *dumper)
+ACE_Dumpable_Ptr::ACE_Dumpable_Ptr (ACE_Dumpable const *dumper)
   : dumper_ (dumper)
 {
   ACE_TRACE ("ACE_Dumpable_Ptr::ACE_Dumpable_Ptr");
 }
 
-const ACE_Dumpable *
+ACE_Dumpable const *
 ACE_Dumpable_Ptr::operator->() const
 {
   ACE_TRACE ("ACE_Dumpable_Ptr::operator->");
@@ -37,7 +37,7 @@ ACE_Dumpable_Ptr::operator->() const
 }
 
 void
-ACE_Dumpable_Ptr::operator= (const ACE_Dumpable *dumper) const
+ACE_Dumpable_Ptr::operator= (ACE_Dumpable const *dumper) const
 {
   ACE_TRACE ("ACE_Dumpable_Ptr::operator=");
   if (this->dumper_ != dumper)
@@ -95,7 +95,7 @@ ACE_ODB::dump_objects ()
 // duplicates and simply overwrites them.
 
 void
-ACE_ODB::register_object (const ACE_Dumpable *dumper)
+ACE_ODB::register_object (ACE_Dumpable const *dumper)
 {
   ACE_TRACE ("ACE_ODB::register_object");
   int i;
@@ -124,7 +124,7 @@ ACE_ODB::register_object (const ACE_Dumpable *dumper)
 }
 
 void
-ACE_ODB::remove_object (const void *this_ptr)
+ACE_ODB::remove_object (void const *this_ptr)
 {
   ACE_TRACE ("ACE_ODB::remove_object");
   int i;
