@@ -4,9 +4,7 @@
 #endif /* ACE_HAS_INLINED_OSCALLS */
 
 ACE_INLINE
-HTTP_Request::HTTP_Request ()
-{
-}
+HTTP_Request::HTTP_Request () = default;
 
 ACE_INLINE
 HTTP_Request::~HTTP_Request () = default;

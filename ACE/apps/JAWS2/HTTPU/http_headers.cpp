@@ -104,9 +104,7 @@ HTTP_HCodes::HTTP_HCodes ()
 {
 }
 
-HTTP_Headers::HTTP_Headers ()
-{
-}
+HTTP_Headers::HTTP_Headers () = default;
 
 char const *
 HTTP_Headers::header (int name) const
