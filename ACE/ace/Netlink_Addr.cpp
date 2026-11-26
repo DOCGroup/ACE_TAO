@@ -35,13 +35,13 @@ ACE_Netlink_Addr::ACE_Netlink_Addr (ACE_Netlink_Addr const &sa)
   this->set (sa);
 }
 
-int ACE_Netlink_Addr::set (const sockaddr_nl *un, int len)
+int ACE_Netlink_Addr::set (sockaddr_nl const *un, int len)
 {
   (void) std::memcpy (&this->nl_, un, len);
   return 0;
 }
 
-ACE_Netlink_Addr::ACE_Netlink_Addr (const sockaddr_nl *un, int len)
+ACE_Netlink_Addr::ACE_Netlink_Addr (sockaddr_nl const *un, int len)
 {
   this->set (un, len);
 }

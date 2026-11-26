@@ -38,7 +38,7 @@ public:
   ACE_Netlink_Addr (ACE_Netlink_Addr const &);
 
   /// Creates an ACE_INET_Addr from a sockaddr_in structure.
-  ACE_Netlink_Addr (const sockaddr_nl *, int len);
+  ACE_Netlink_Addr (sockaddr_nl const *, int len);
 
   ~ACE_Netlink_Addr () override = default;
 
@@ -53,7 +53,7 @@ public:
   /**
    * set nl_ to nl_  @see nl_
    */
-  int set (const sockaddr_nl *, int len);
+  int set (sockaddr_nl const *, int len);
   /**
    * @return pid
    */

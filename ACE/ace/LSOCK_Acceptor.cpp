@@ -46,7 +46,7 @@ ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor ()
 }
 
 int
-ACE_LSOCK_Acceptor::open (const ACE_Addr &remote_sap,
+ACE_LSOCK_Acceptor::open (ACE_Addr const &remote_sap,
                           int reuse_addr,
                           int protocol_family,
                           int backlog,
@@ -60,7 +60,7 @@ ACE_LSOCK_Acceptor::open (const ACE_Addr &remote_sap,
 
 // General purpose routine for performing server ACE_SOCK creation.
 
-ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (const ACE_Addr &remote_sap,
+ACE_LSOCK_Acceptor::ACE_LSOCK_Acceptor (ACE_Addr const &remote_sap,
                                         int reuse_addr,
                                         int protocol_family,
                                         int backlog,

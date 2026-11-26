@@ -143,7 +143,7 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (ACE_UNIX_Addr const &sa)
 }
 
 int
-ACE_UNIX_Addr::set (const sockaddr_un *un, int len)
+ACE_UNIX_Addr::set (sockaddr_un const *un, int len)
 {
   (void) std::memset (&this->unix_addr_, 0,
                       sizeof this->unix_addr_);
@@ -171,7 +171,7 @@ ACE_UNIX_Addr::set (const sockaddr_un *un, int len)
   return 0;
 }
 
-ACE_UNIX_Addr::ACE_UNIX_Addr (const sockaddr_un *un, int len)
+ACE_UNIX_Addr::ACE_UNIX_Addr (sockaddr_un const *un, int len)
 {
   this->set (un, len);
 }

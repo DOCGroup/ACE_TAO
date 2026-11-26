@@ -37,7 +37,7 @@ ACE_LSOCK_Dgram::ACE_LSOCK_Dgram ()
 // Here's the general-purpose open routine.
 
 int
-ACE_LSOCK_Dgram::open (const ACE_Addr &local,
+ACE_LSOCK_Dgram::open (ACE_Addr const &local,
                        int protocol_family,
                        int protocol)
 {
@@ -54,7 +54,7 @@ ACE_LSOCK_Dgram::open (const ACE_Addr &local,
 
 // Create a local ACE_SOCK datagram.
 
-ACE_LSOCK_Dgram::ACE_LSOCK_Dgram (const ACE_Addr &local,
+ACE_LSOCK_Dgram::ACE_LSOCK_Dgram (ACE_Addr const &local,
                                   int protocol_family,
                                   int protocol)
 {

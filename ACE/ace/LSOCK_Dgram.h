@@ -32,12 +32,12 @@ public:
   ACE_LSOCK_Dgram ();
 
   /// Initiate a local dgram.
-  ACE_LSOCK_Dgram (const ACE_Addr &local,
+  ACE_LSOCK_Dgram (ACE_Addr const &local,
                    int protocol_family = PF_UNIX,
                    int protocol = 0);
 
   /// Initiate a local dgram.
-  int open (const ACE_Addr &local,
+  int open (ACE_Addr const &local,
             int protocol_family = PF_UNIX,
             int protocol = 0);
 

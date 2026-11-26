@@ -63,8 +63,8 @@ public:
    *
    * @sa ACE_UNIX_Addr
    */
-  ACE_LSOCK_CODgram (const ACE_Addr &remote_sap,
-                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+  ACE_LSOCK_CODgram (ACE_Addr const &remote_sap,
+                     ACE_Addr const &local_sap = ACE_Addr::sap_any,
                      int protocol_family = PF_UNIX,
                      int protocol = 0);
 
@@ -74,8 +74,8 @@ public:
    * @retval 0 if no error.
    * @retval -1 on error; check errno for an error reason.
    */
-  int open (const ACE_Addr &remote_sap,
-            const ACE_Addr &local_sap = ACE_Addr::sap_any,
+  int open (ACE_Addr const &remote_sap,
+            ACE_Addr const &local_sap = ACE_Addr::sap_any,
             int protocol_family = PF_UNIX,
             int protocol = 0);
   /// @}

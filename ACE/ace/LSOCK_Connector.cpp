@@ -33,9 +33,9 @@ ACE_LSOCK_Connector::ACE_LSOCK_Connector ()
 
 // Establish a connection.
 ACE_LSOCK_Connector::ACE_LSOCK_Connector (ACE_LSOCK_Stream &new_stream,
-                                          const ACE_UNIX_Addr &remote_sap,
+                                          ACE_UNIX_Addr const &remote_sap,
                                           ACE_Time_Value *timeout,
-                                          const ACE_Addr &local_sap,
+                                          ACE_Addr const &local_sap,
                                           int reuse_addr,
                                           int flags,
                                           int perms)

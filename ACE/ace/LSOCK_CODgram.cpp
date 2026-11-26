@@ -30,8 +30,8 @@ ACE_LSOCK_CODgram::dump () const
 /* Here's the general-purpose open routine. */
 
 int
-ACE_LSOCK_CODgram::open (const ACE_Addr &remote,
-                         const ACE_Addr &local,
+ACE_LSOCK_CODgram::open (ACE_Addr const &remote,
+                         ACE_Addr const &local,
                          int protocol_family,
                          int protocol)
 {
@@ -47,8 +47,8 @@ ACE_LSOCK_CODgram::open (const ACE_Addr &remote,
 
 /* Create a local ACE_SOCK datagram. */
 
-ACE_LSOCK_CODgram::ACE_LSOCK_CODgram (const ACE_Addr &remote,
-                                      const ACE_Addr &local,
+ACE_LSOCK_CODgram::ACE_LSOCK_CODgram (ACE_Addr const &remote,
+                                      ACE_Addr const &local,
                                       int protocol_family,
                                       int protocol)
 {

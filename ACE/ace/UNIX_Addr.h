@@ -42,7 +42,7 @@ public:
   ACE_UNIX_Addr (char const rendezvous_point[]);
 
   /// Creates an ACE_INET_Addr from a sockaddr_un structure.
-  ACE_UNIX_Addr (const sockaddr_un *, int len);
+  ACE_UNIX_Addr (sockaddr_un const *, int len);
 
   /// Creates an ACE_UNIX_Addr from another ACE_UNIX_Addr.
   int set (ACE_UNIX_Addr const &sa);
@@ -51,7 +51,7 @@ public:
   int set (char const rendezvous_point[]);
 
   /// Creates an ACE_UNIX_Addr from a sockaddr_un structure.
-  int set (const sockaddr_un *, int len);
+  int set (sockaddr_un const *, int len);
 
   /// Return a pointer to the underlying network address.
   void *get_addr () const override;
