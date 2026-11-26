@@ -36,7 +36,7 @@ static u_int process_id = 0;
 class Exit_Handler : public ACE_Event_Handler
 {
 public:
-  Exit_Handler (const char *msg): msg_ (msg) { }
+  Exit_Handler (char const *msg): msg_ (msg) { }
 
   ~Exit_Handler () override = default;
 
@@ -56,11 +56,11 @@ public:
     return 0;
   }
 private:
-  const char *msg_;
+  char const *msg_;
 };
 
 static void
-usage (const ACE_TCHAR *argv0)
+usage (ACE_TCHAR const *argv0)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("usage: %s [-d] [sleep-seconds]\n"),
@@ -69,17 +69,17 @@ usage (const ACE_TCHAR *argv0)
 }
 
 static pid_t
-spawn_child (const ACE_TCHAR *argv0,
+spawn_child (ACE_TCHAR const *argv0,
              ACE_Process_Manager &mgr,
              int sleep_time,
              int my_process_id)
 {
 #if defined (ACE_WIN32)
-const ACE_TCHAR *cmdline_format = ACE_TEXT("\"%s\" %s %d");
+ACE_TCHAR const *cmdline_format = ACE_TEXT("\"%s\" %s %d");
 #elif !defined (ACE_USES_WCHAR)
-const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s %s %d");
+ACE_TCHAR const *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%s %s %d");
 #else
-const ACE_TCHAR *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls %ls %d");
+ACE_TCHAR const *cmdline_format = ACE_TEXT (".") ACE_DIRECTORY_SEPARATOR_STR ACE_TEXT("%ls %ls %d");
 #endif
   ACE_Process_Options opts;
 
@@ -171,7 +171,7 @@ ACE_Atomic_Op<ACE_SYNCH_MUTEX, int> running_tasks {0};
 class Process_Task : public ACE_Task<ACE_SYNCH>
 {
 public:
-  Process_Task (const ACE_TCHAR *argv0,
+  Process_Task (ACE_TCHAR const *argv0,
                 ACE_Process_Manager &mgr,
                 int sleep_time)
     : argv0_ (argv0),
@@ -230,7 +230,7 @@ public:
   }
 
 private:
-  const ACE_TCHAR *argv0_;
+  ACE_TCHAR const *argv0_;
   ACE_Process_Manager &mgr_;
   int sleep_time_;
 };
@@ -242,7 +242,7 @@ command_line_test ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Testing for last character of command line\n")));
   int result = 0;
-  const ACE_TCHAR *command = ACE_TEXT ("test Hello");
+  ACE_TCHAR const *command = ACE_TEXT ("test Hello");
   const size_t command_len = ACE_OS::strlen (command);
   ACE_Process_Options options (true, command_len + 1);
 

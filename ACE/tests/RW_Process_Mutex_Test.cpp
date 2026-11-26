@@ -34,9 +34,9 @@ class Time_Range
 public:
   Time_Range () : start_ (0), stop_ (0) {}
 
-  void set (const Time_Range &range);
-  void set (const ACE_Time_Value &start, const ACE_Time_Value &stop);
-  bool overlaps (const Time_Range &other) const;
+  void set (Time_Range const &range);
+  void set (ACE_Time_Value const &start, ACE_Time_Value const &stop);
+  bool overlaps (Time_Range const &other) const;
 
 private:
   ACE_Time_Value start_;
@@ -51,21 +51,21 @@ struct Range_Report
 };
 
 void
-Time_Range::set (const Time_Range &range)
+Time_Range::set (Time_Range const &range)
 {
   this->start_ = range.start_;
   this->stop_ = range.stop_;
 }
 
 void
-Time_Range::set (const ACE_Time_Value &start, const ACE_Time_Value &stop)
+Time_Range::set (ACE_Time_Value const &start, ACE_Time_Value const &stop)
 {
   this->start_ = start;
   this->stop_ = stop;
 }
 
 bool
-Time_Range::overlaps (const Time_Range &other) const
+Time_Range::overlaps (Time_Range const &other) const
 {
   // Be careful because timestamps can appear to be the same when a
   // process unlocks and a waiter immediately locks.
@@ -81,8 +81,8 @@ class Child : public ACE_Process
 {
 public:
   Child () : range_count_ (0) {}
-  void add_range (const Time_Range &range);
-  bool any_overlaps (const Child &other) const;
+  void add_range (Time_Range const &range);
+  bool any_overlaps (Child const &other) const;
 
 private:
   enum { Max_Ranges = 5 };
@@ -91,7 +91,7 @@ private:
 };
 
 void
-Child::add_range (const Time_Range &range)
+Child::add_range (Time_Range const &range)
 {
   if (this->range_count_ == Max_Ranges)
     {
@@ -105,7 +105,7 @@ Child::add_range (const Time_Range &range)
 }
 
 bool
-Child::any_overlaps (const Child &other) const
+Child::any_overlaps (Child const &other) const
 {
   bool overlap = false;
   for (int i = 0; i < this->range_count_ && !overlap; ++i)

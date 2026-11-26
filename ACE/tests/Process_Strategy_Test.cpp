@@ -120,7 +120,7 @@ Options::concurrency_strategy ()
   return this->concurrency_strategy_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Options::filename ()
 {
   return this->filename_;
@@ -513,7 +513,7 @@ client (void *arg)
   ACE_SOCK_Connector connector;
 
   char buf[BUFSIZ];
-  const char *command {};
+  char const *command {};
   size_t command_len;
   size_t i;
 
@@ -691,7 +691,7 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   // Bind acceptor to any port and then find out what the port was.
   // Note that this implicitly creates the Reactor singleton.
-  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
+  if (acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &),
                      ACE_Reactor::instance(),
            nullptr,
                      nullptr,

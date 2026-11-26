@@ -111,7 +111,7 @@ public:
   ACE_File_Lock &file_lock ();
 
   /// Returns the filename that we're using as the lock.
-  const ACE_TCHAR *filename ();
+  ACE_TCHAR const *filename ();
 
   /// Returns the concurrency strategy.
   ACE_Concurrency_Strategy <Counting_Service> *concurrency_strategy ();
