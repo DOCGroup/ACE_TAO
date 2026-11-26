@@ -24,7 +24,7 @@
 class Foo
 {
 private:
-  Foo(const Foo &)
+  Foo(Foo const &)
   {
   }
 public:

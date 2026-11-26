@@ -23,7 +23,7 @@
 ACE_Atomic_Op<ACE_SYNCH_MUTEX, unsigned int> Printer::current_instance_ (0);
 ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> Printer::instance_count_ (0);
 
-Printer::Printer (const char *message)
+Printer::Printer (char const *message)
   : message_ (message)
 {
   this->which_ = ++Printer::current_instance_;
@@ -275,8 +275,8 @@ static int n_loops = 10;
 
 using Printer_Ptr = ACE_Refcounted_Auto_Ptr<Printer, ACE_Null_Mutex>;
 
-static bool expect (const ACE_TCHAR *name,
-                    const Printer_Ptr &ptr,
+static bool expect (ACE_TCHAR const *name,
+                    Printer_Ptr const &ptr,
                     bool expect_null,
                     unsigned int expect_which,
                     int expect_count)

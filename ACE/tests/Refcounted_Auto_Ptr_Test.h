@@ -15,12 +15,12 @@
 
 struct Printer
 {
-  Printer (const char *message);
+  Printer (char const *message);
   ~Printer ();
 
   void print ();
 
-  const char *message_;
+  char const *message_;
   unsigned int which_;
   static ACE_Atomic_Op<ACE_SYNCH_MUTEX, unsigned int> current_instance_;
   static ACE_Atomic_Op<ACE_SYNCH_MUTEX, long> instance_count_;

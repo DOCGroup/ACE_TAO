@@ -16,12 +16,12 @@
 
 struct Printer
 {
-  explicit Printer (const char *message);
+  explicit Printer (char const *message);
   ~Printer () ;
 
   void print ();
 
-  const char *message_;
+  char const *message_;
   static size_t instance_count_;
 };
 

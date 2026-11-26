@@ -149,7 +149,7 @@ void Child::do_something ()
 
 size_t Printer::instance_count_ = 0;
 
-Printer::Printer (const char *message)
+Printer::Printer (char const *message)
   : message_ (message)
 {
   ACE_DEBUG ((LM_DEBUG,
