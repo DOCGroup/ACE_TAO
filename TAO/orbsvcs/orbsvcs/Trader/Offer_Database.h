@@ -95,7 +95,8 @@ public:
     LOCK_TYPE lock_;
   };
 
-  // The database explicitly manages the lifetime of each map entry.
+  /// The database explicitly manages the lifetime of each map entry.
+  /// Entries are stored by pointer because they contain noncopyable locks.
   using Offer_Database = ACE_Hash_Map_Manager_Ex<CORBA::String_var,
                                                   Offer_Map_Entry*,
                                                   ACE_Hash<CORBA::String_var>,
@@ -103,9 +104,6 @@ public:
                                                   ACE_Null_Mutex>;
 
 private:
-  // The map stores entries by pointer because entries contain lock types
-  // that are not copyable.
-
   /// Lookup an offer whose type is @a type and ID is @a id. Return 0 on
   /// failure.
   CosTrading::Offer* lookup_offer (char const *type,
