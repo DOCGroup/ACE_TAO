@@ -63,7 +63,6 @@
 // throw an exception
 #define ACE_NOEXCEPT_FALSE noexcept(false)
 
-
 // FUZZ: disable check_for_ACE_Guard
 
 /* Convenient macro for testing for deadlock, as well as for detecting
@@ -180,7 +179,6 @@
 #endif /* !ACE_READ_GUARD_RETURN */
 // FUZZ: enable check_for_ACE_Guard
 
-
 #if defined(ACE_UNEXPECTED_RETURNS)
 
 /* Using ACE_UNEXPECTED_RETURNS is ill-advised because, in many cases,
@@ -209,7 +207,6 @@
   } while (0)
 
 #endif
-
 
 # define ACE_DES_NOFREE(POINTER,CLASS) \
    do { \

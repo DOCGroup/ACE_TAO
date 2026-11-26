@@ -34,7 +34,6 @@ private:
   // const char *comment_end_border_;
 };
 
-
 /// Worker class passed to traverse_inheritance_graph(),
 /// generates code to declare attribute members in
 /// the executor impl class.

@@ -31,7 +31,6 @@
 #include "ace/Map_T.h"
 #include <memory>
 
-
 #if defined(_MSC_VER)
 #pragma warning(push)
 #pragma warning(disable:4250)

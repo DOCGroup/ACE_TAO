@@ -248,7 +248,6 @@ private:
   } shutdown_handler_;
 };
 
-
 class SyncListener : public LiveListener
 {
  public:

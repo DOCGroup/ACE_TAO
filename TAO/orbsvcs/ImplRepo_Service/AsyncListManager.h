@@ -77,7 +77,6 @@ class AsyncListManager
 
 using AsyncListManager_ptr = TAO_Intrusive_Ref_Count_Handle<AsyncListManager>;
 
-
 class ListLiveListener : public LiveListener
 {
  public:

@@ -33,7 +33,6 @@ public:
   int visit_interface (be_interface *node) override;
 };
 
-
 class be_facet_op_attr_defn_helper
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {

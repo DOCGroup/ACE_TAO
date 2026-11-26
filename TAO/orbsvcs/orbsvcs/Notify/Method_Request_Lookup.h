@@ -20,7 +20,6 @@
 #include "orbsvcs/Notify/Consumer_Map.h"
 #include "orbsvcs/Notify/Delivery_Request.h"
 
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Notify_Method_Request_Lookup_Queueable;

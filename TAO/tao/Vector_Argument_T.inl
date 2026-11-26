@@ -24,7 +24,6 @@ TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::In_Vector_Clonable_Argument
   : In_Vector_Argument_T<S,Insert_Policy> (x)
 {}
 
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -42,7 +41,6 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::arg ()
   return this->x_;
 }
 
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -59,7 +57,6 @@ TAO::Out_Vector_Argument_T<S,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
 
 template<typename S,
          template <typename> class Insert_Policy>

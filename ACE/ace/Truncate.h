@@ -105,7 +105,6 @@ namespace ACE_Utils
     unsigned_type operator() (unsigned_type x) { return x; }
   };
 
-
   template<>
   struct To_Unsigned<signed char>
   {
@@ -170,7 +169,6 @@ namespace ACE_Utils
       return static_cast<unsigned_type> (x);
     }
   };
-
 
   /**
    * @struct Safe_Comparator
@@ -249,7 +247,6 @@ namespace ACE_Utils
     }
   };
 
-
   /**
    * @struct Fast_Comparator
    *
@@ -304,7 +301,6 @@ namespace ACE_Utils
 
   };
 
-
   /**
    * @struct Comparator
    *
@@ -336,7 +332,6 @@ namespace ACE_Utils
   {
     using comp_type = typename ACE::If_Then_Else<Fast_Comparator<LEFT, RIGHT>::USABLE, Fast_Comparator<LEFT, RIGHT>, Safe_Comparator<LEFT, RIGHT, Sign_Check<LEFT>::is_signed, Sign_Check<RIGHT>::is_signed>>::result_type;
   };
-
 
   /**
    * @struct Truncator

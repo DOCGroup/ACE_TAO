@@ -38,7 +38,6 @@ private:
   const char *your_code_here_ {"/* Your code here. */"};
 };
 
-
 /// Worker class passed to traverse_inheritance_graph(),
 /// generates code to initialize attribute members in
 /// the executor impl constructor.

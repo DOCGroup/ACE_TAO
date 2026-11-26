@@ -141,7 +141,6 @@ private:
   PortableServer::POA_var poa_;
 };
 
-
 class AccessLiveListener : public LiveListener
 {
  public:

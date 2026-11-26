@@ -27,7 +27,6 @@ TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::In_UB_String_Clonabl
 {
 }
 
-
 template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -45,7 +44,6 @@ TAO::Inout_UB_String_Argument_T<S_var,Insert_Policy>::arg ()
   return this->x_;
 }
 
-
 template<typename S_var,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -62,7 +60,6 @@ TAO::Out_UB_String_Argument_T<S_var,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
 
 template<typename S_var,
          template <typename> class Insert_Policy>

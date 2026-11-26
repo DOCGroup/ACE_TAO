@@ -44,7 +44,6 @@ protected:
   std::string base_class_name_;
 };
 
-
 /// Worker class passed to traverse_inheritance_graph(),
 /// collects operations and attributes.
 class Exec_ReplyHandler_Op_Attr_Generator

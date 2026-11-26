@@ -166,7 +166,6 @@ ACE_String_Base<ACE_CHAR_T>::end () const
   return const_iterator (*this, 1);
 }
 
-
 template <class ACE_CHAR_T> ACE_INLINE
 ACE_String_Base_Iterator <ACE_CHAR_T>::
 ACE_String_Base_Iterator (ACE_String_Base <ACE_CHAR_T> & str, int end)
@@ -309,7 +308,6 @@ operator <= (const ACE_String_Base_Iterator <ACE_CHAR_T> & rhs) const
   return this->index_ <= rhs.index_;
 }
 
-
 template <class ACE_CHAR_T> ACE_INLINE
 ACE_String_Base_Const_Iterator <ACE_CHAR_T>::
 ACE_String_Base_Const_Iterator (const ACE_String_Base <ACE_CHAR_T> & str, int end)
@@ -451,7 +449,6 @@ operator <= (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & rhs) const
 {
   return this->index_ <= rhs.index_;
 }
-
 
 template <class ACE_CHAR_T> ACE_INLINE bool
 operator== (const ACE_CHAR_T *s, const ACE_String_Base<ACE_CHAR_T> &t)

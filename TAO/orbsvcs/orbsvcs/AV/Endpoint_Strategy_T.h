@@ -128,7 +128,6 @@ public:
                 AVStreams::VDev_ptr &vdev) override;
 };
 
-
 /**
  * @class TAO_AV_Child_Process
  *
@@ -245,7 +244,6 @@ public:
   TAO_AV_Child_Process_A (TAO_AV_Child_Process_A &&) = delete;
   TAO_AV_Child_Process_A &operator= (TAO_AV_Child_Process_A &&) = delete;
 };
-
 
 /**
  * @class TAO_AV_Child_Process_B

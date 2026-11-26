@@ -29,7 +29,6 @@ public:
   int visit_component (be_component *node) override;
 };
 
-
 /// Worker class passed to traverse_inheritance_graph(),
 /// collects supported operations and attributes. Not used
 /// by this visitor but by 2 visitors spawned from this one,

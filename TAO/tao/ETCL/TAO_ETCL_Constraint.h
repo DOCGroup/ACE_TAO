@@ -48,7 +48,6 @@ public:
   TAO_ETCL_Literal_Constraint (TAO_ETCL_Literal_Constraint const &lit);
   explicit TAO_ETCL_Literal_Constraint (ETCL_Literal_Constraint const *lit);
 
-
   ~TAO_ETCL_Literal_Constraint () override;
 
   void operator= (TAO_ETCL_Literal_Constraint const &co);

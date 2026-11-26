@@ -49,7 +49,6 @@ private:
   bool sync_ {};
 };
 
-
 /// Worker class passed to traverse_inheritance_graph(),
 /// collects all operations and attributes.
 class Facet_AMI_Exec_Op_Attr_Generator

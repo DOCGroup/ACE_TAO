@@ -14,7 +14,6 @@ ACE_Dev_Poll_Reactor::Event_Tuple::Event_Tuple (ACE_Event_Handler *eh,
 {
 }
 
-
 ACE_INLINE size_t
 ACE_Dev_Poll_Reactor::Handler_Repository::size () const
 {
@@ -30,7 +29,6 @@ ACE_Dev_Poll_Reactor::Handler_Repository::max_size () const
 
   return this->max_size_;
 }
-
 
 ACE_INLINE
 ACE_Dev_Poll_Handler_Guard::ACE_Dev_Poll_Handler_Guard
@@ -67,7 +65,6 @@ ACE_Dev_Poll_Handler_Guard::release ()
 {
   this->eh_ = nullptr;
 }
-
 
 ACE_INLINE int
 ACE_Dev_Poll_Reactor::upcall (ACE_Event_Handler *event_handler,

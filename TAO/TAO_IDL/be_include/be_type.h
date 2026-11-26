@@ -16,7 +16,6 @@
 #include "be_decl.h"
 #include "ast_type.h"
 
-
 #include "ace/SString.h"
 
 class TAO_OutStream;

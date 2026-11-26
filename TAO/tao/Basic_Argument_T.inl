@@ -23,7 +23,6 @@ TAO::In_Basic_Clonable_Argument_T<S,Insert_Policy>::In_Basic_Clonable_Argument_T
   : In_Basic_Argument_T<S,Insert_Policy> (x)
 {}
 
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -40,7 +39,6 @@ TAO::Inout_Basic_Argument_T<S, Insert_Policy>::arg ()
   return this->x_;
 }
 
-
 template<typename S,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -56,7 +54,6 @@ TAO::Out_Basic_Argument_T<S, Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
 
 template<typename S,
          template <typename> class Insert_Policy>

@@ -23,7 +23,6 @@ TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::In_Object_Clonable_Argu
   : In_Object_Argument_T<S_ptr,Insert_Policy> (x)
 {}
 
-
 template<typename S_ptr,
          typename S_traits,
          template <typename> class Insert_Policy>
@@ -44,7 +43,6 @@ TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::arg ()
   return this->x_;
 }
 
-
 template<typename S_ptr,
          typename S_out,
          template <typename> class Insert_Policy>
@@ -62,7 +60,6 @@ TAO::Out_Object_Argument_T<S_ptr,S_out,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
 
 template<typename S_ptr,
          typename S_var,

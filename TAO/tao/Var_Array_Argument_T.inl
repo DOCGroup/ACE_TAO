@@ -26,7 +26,6 @@ In_Var_Array_Clonable_Argument_T (typename S_forany::_slice_type const * x)
   : In_Var_Array_Argument_T<S_forany,Insert_Policy> (x)
 {}
 
-
 template<typename S_forany,
          template <typename> class Insert_Policy>
 ACE_INLINE
@@ -44,7 +43,6 @@ TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::arg ()
 {
   return this->x_.inout ();
 }
-
 
 template<typename S_out,
          typename S_forany,
@@ -65,7 +63,6 @@ TAO::Out_Var_Array_Argument_T<S_out,S_forany,Insert_Policy>::arg ()
 {
   return this->x_;
 }
-
 
 template<typename S_var,
          typename S_forany,
