@@ -32,6 +32,7 @@ template<>
 class ACE_Export ACE_Condition<ACE_Recursive_Thread_Mutex>
 {
 public:
+  ACE_Condition () = delete;
   ACE_Condition (ACE_Condition const &) = delete;
   ACE_Condition (ACE_Condition &&) = delete;
   ACE_Condition &operator= (ACE_Condition const &) = delete;

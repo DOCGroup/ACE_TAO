@@ -46,6 +46,7 @@ template <class MUTEX>
 class ACE_Condition
 {
 public:
+  ACE_Condition () = delete;
   ACE_Condition (ACE_Condition const &) = delete;
   ACE_Condition (ACE_Condition &&) = delete;
   ACE_Condition &operator= (ACE_Condition const &) = delete;
@@ -141,6 +142,13 @@ template <class MUTEX>
 class ACE_Thread_Condition : public ACE_Condition<MUTEX>
 {
 public:
+  ACE_Thread_Condition () = delete;
+  ACE_Thread_Condition (ACE_Thread_Condition const &) = delete;
+  ACE_Thread_Condition (ACE_Thread_Condition &&) = delete;
+  ACE_Thread_Condition &operator= (ACE_Thread_Condition const &) = delete;
+  ACE_Thread_Condition &operator= (ACE_Thread_Condition &&) = delete;
+  ~ACE_Thread_Condition () = default;
+
   explicit ACE_Thread_Condition (MUTEX &m, ACE_TCHAR const *name = nullptr, void *arg = nullptr);
 
   /// Dump the state of an object.

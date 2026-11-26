@@ -32,6 +32,7 @@ template <>
 class ACE_Condition<ACE_Null_Mutex>
 {
 public:
+  ACE_Condition () = delete;
   ACE_Condition (ACE_Null_Mutex const &m,
                  ACE_TCHAR const * = nullptr,
                  void * = nullptr)
