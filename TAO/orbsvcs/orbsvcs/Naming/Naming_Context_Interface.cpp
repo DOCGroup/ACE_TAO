@@ -360,7 +360,7 @@ TAO_Naming_Context::to_url_validate_and_compute_size (
     char const *addr,
     char const *sn)
 {
-  const size_t addr_len = std::strlen (addr);
+  size_t const addr_len = std::strlen (addr);
 
   // Check for invalid address
   if (addr_len == 0)

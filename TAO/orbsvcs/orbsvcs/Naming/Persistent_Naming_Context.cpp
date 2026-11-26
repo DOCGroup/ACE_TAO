@@ -155,10 +155,10 @@ TAO_Persistent_Bindings_Map::shared_bind (char const *id,
 
   // Calculate and allocate the memory we need to store this name to
   // object binding.
-  const size_t id_len = std::strlen (id) + 1;
-  const size_t kind_len = std::strlen (kind) + 1;
-  const size_t ref_len = std::strlen (ref.in ()) + 1;
-  const size_t total_len = id_len + kind_len + ref_len;
+  size_t const id_len = std::strlen (id) + 1;
+  size_t const kind_len = std::strlen (kind) + 1;
+  size_t const ref_len = std::strlen (ref.in ()) + 1;
+  size_t const total_len = id_len + kind_len + ref_len;
   char *ptr = static_cast<char *> (this->allocator_->malloc (total_len));
 
   // Allocation failed - bail out.

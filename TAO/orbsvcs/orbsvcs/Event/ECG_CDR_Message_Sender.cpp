@@ -230,7 +230,7 @@ TAO_ECG_CDR_Message_Sender::send_fragment (ACE_INET_Addr const &addr,
   iov[0].iov_base = cdr.begin ()->rd_ptr ();
   iov[0].iov_len  = cdr.begin ()->length ();
 
-  const ssize_t n = this->dgram ().send (iov,
+  ssize_t const n = this->dgram ().send (iov,
                                    iovcnt,
                                    addr);
   size_t expected_n = 0;
