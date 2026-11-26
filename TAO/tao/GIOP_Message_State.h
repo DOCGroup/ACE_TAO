@@ -39,10 +39,9 @@ public:
 
   /// Parse the message header.
   ///
-  /// \return -1 There was some error parsing the GIOP header
-  /// \return 0  The GIOP header was parsed correctly
-  /// \return 1  There was not enough data in the message block to
-  ///            parse the header
+  /// @retval -1 There was an error parsing the GIOP header.
+  /// @retval 0 The GIOP header was parsed correctly.
+  /// @retval 1 The message block did not contain enough data to parse the header.
   int parse_message_header (ACE_Message_Block &incoming);
 
   /// Return the message size
