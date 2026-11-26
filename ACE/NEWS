@@ -1,6 +1,11 @@
 USER VISIBLE CHANGES BETWEEN ACE-8.0.8 and ACE-8.0.9
 ====================================================
 
+. ACE_SSL_SOCK_Stream::close() now resets TLS state for reuse after closing
+  and closes nonblocking sockets even when sending the TLS close notification
+  would block. Applications using inline ACE code must be recompiled to pick
+  up the updated close implementation.
+
 USER VISIBLE CHANGES BETWEEN ACE-8.0.7 and ACE-8.0.8
 ====================================================
 

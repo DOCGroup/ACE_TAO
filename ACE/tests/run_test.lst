@@ -290,5 +290,6 @@ Wild_Match_Test
 XML_Utils_Test: !NOXERCES
 SSL/Bug_2912_Regression_Test: SSL !ACE_FOR_TAO !BAD_AIO
 SSL/SSL_Asynch_Stream_Test: SSL !ACE_FOR_TAO !BAD_AIO !FIXED_BUGS_ONLY
+SSL/SSL_SOCK_Stream_Close_Test: SSL !ACE_FOR_TAO
 SSL/Thread_Pool_Reactor_SSL_Test: SSL
 UNIX_Addr_Test: !ACE_FOR_TAO

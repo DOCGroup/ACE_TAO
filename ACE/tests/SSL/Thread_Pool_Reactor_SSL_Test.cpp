@@ -33,14 +33,17 @@
 //=============================================================================
 
 #include "../test_config.h"
-#include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 #include "ace/Acceptor.h"
 #include "ace/Thread_Manager.h"
 #include "ace/TP_Reactor.h"
+#include "ace/Signal.h"
 #include "ace/SSL/SSL_SOCK_Connector.h"
 #include "ace/SSL/SSL_SOCK_Acceptor.h"
+
+#include <cstring>
+#include <memory>
 
 #if defined (ACE_HAS_THREADS)
 
@@ -121,28 +124,40 @@ Request_Handler::Request_Handler (ACE_Thread_Manager *thr_mgr)
 int
 Request_Handler::handle_input (ACE_HANDLE fd)
 {
-  ACE_TCHAR buffer[BUFSIZ];
-  ACE_TCHAR len = 0;
-  ssize_t result = this->peer ().recv (&len, sizeof (ACE_TCHAR));
+  char buffer[BUFSIZ];
+  unsigned char len {};
+  ssize_t const result = this->peer ().recv (std::addressof (len), sizeof (len));
 
-  if (result > 0
-      && this->peer ().recv_n (buffer, len * sizeof (ACE_TCHAR))
-          == static_cast<ssize_t> (len * sizeof (ACE_TCHAR)))
+  if (result > 0 && len > 0
+      && this->peer ().recv_n (buffer, len) == static_cast<ssize_t> (len)
+      && buffer[len - 1] == '\0')
     {
       ++this->nr_msgs_rcvd_;
+      if (std::strcmp (buffer, "shutdown") == 0)
+        {
+          ACE_Reactor::end_event_loop ();
+          return 0;
+        }
+      if (this->nr_msgs_rcvd_ == cli_req_no)
+        {
+          char const acknowledged = 1;
+          if (this->peer ().send_n (std::addressof (acknowledged), 1) != 1)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to acknowledge requests: %m\n")));
+              return -1;
+            }
+        }
 
       ACE_DEBUG ((LM_DEBUG,
-                  "(%t) svr input; fd: 0x%x; input: %s\n",
+                  ACE_TEXT ("(%t) svr input; fd: %H; input: %C\n"),
                   fd,
                   buffer));
-      if (ACE_OS::strcmp (buffer, ACE_TEXT ("shutdown")) == 0)
-          ACE_Reactor::end_event_loop ();
       return 0;
     }
   else
     ACE_DEBUG ((LM_DEBUG,
-                "(%t) Request_Handler: 0x%x peer closed (0x%x)\n",
-                this, fd));
+                ACE_TEXT ("(%t) Request_Handler: %@ peer closed (%H)\n"),
+                static_cast<void *> (this), fd));
   return -1;
 }
 
@@ -150,13 +165,13 @@ int
 Request_Handler::handle_close (ACE_HANDLE fd, ACE_Reactor_Mask)
 {
   ACE_DEBUG ((LM_DEBUG,
-              "(%t) svr close; fd: 0x%x, rcvd %d msgs\n",
+              ACE_TEXT ("(%t) svr close; fd: %H, rcvd %B msgs\n"),
               fd,
               this->nr_msgs_rcvd_));
   if (this->nr_msgs_rcvd_ != cli_req_no)
     ACE_ERROR((LM_ERROR,
-               "(%t) Handler 0x%x: Expected %d messages; got %d\n",
-               this,
+               ACE_TEXT ("(%t) Handler %@: Expected %B messages; got %B\n"),
+               static_cast<void *> (this),
                cli_req_no,
                this->nr_msgs_rcvd_));
   this->destroy ();
@@ -199,7 +214,7 @@ cli_worker (void *arg)
   ACE_SSL_SOCK_Stream stream;
   ACE_SSL_SOCK_Connector connect;
   ACE_Time_Value delay (0, req_delay);
-  size_t len = * reinterpret_cast<ACE_TCHAR *> (arg);
+  size_t const len = static_cast<unsigned char> (*static_cast<char const *> (arg));
 
   for (size_t i = 0 ; i < cli_conn_no; i++)
     {
@@ -214,11 +229,10 @@ cli_worker (void *arg)
       for (size_t j = 0; j < cli_req_no; j++)
         {
           ACE_DEBUG ((LM_DEBUG,
-                      "(%t) conn_worker handle 0x%x, req %d\n",
+                      ACE_TEXT ("(%t) conn_worker handle %H, req %B\n"),
                       stream.get_handle (),
                       j+1));
-          if (stream.send_n (arg,
-                             (len + 1) * sizeof (ACE_TCHAR)) == -1)
+          if (stream.send_n (arg, len + 1) == -1)
             {
               ACE_ERROR ((LM_ERROR,
                           "(%t) %p\n",
@@ -228,6 +242,17 @@ cli_worker (void *arg)
           ACE_OS::sleep (delay);
         }
 
+      if (cli_req_no != 0)
+        {
+          // Wait until the server has processed all requests before disconnecting.
+          ACE_Time_Value const timeout (5);
+          char acknowledged {};
+          if (stream.recv_n (std::addressof (acknowledged), 1, std::addressof (timeout)) != 1
+              || acknowledged != 1)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unable to receive acknowledgement: %m\n")));
+            }
+        }
       stream.close ();
     }
 
@@ -238,10 +263,10 @@ static ACE_THR_FUNC_RETURN
 worker (void *)
 {
   ACE_OS::sleep (3);
-  const ACE_TCHAR *msg = ACE_TEXT ("Message from Connection worker");
-  ACE_TCHAR buf [BUFSIZ];
-  buf[0] = ACE_OS::strlen (msg) + 1;
-  ACE_OS::strcpy (&buf[1], msg);
+  char const msg[] = "Message from Connection worker";
+  char buf[sizeof (msg) + 1];
+  buf[0] = static_cast<char> (sizeof (msg));
+  std::memcpy (buf + 1, msg, sizeof (msg));
 
   ACE_INET_Addr addr (rendezvous);
 
@@ -265,13 +290,13 @@ worker (void *)
                 "(%t) %p Error while connecting\n",
                 "connect"));
 
-  const ACE_TCHAR *sbuf = ACE_TEXT ("\011shutdown");
+  char const sbuf[] = "\011shutdown";
 
   ACE_DEBUG ((LM_DEBUG,
-              "shutdown stream handle = %x\n",
+              ACE_TEXT ("shutdown stream handle = %H\n"),
               stream.get_handle ()));
 
-  if (stream.send_n (sbuf, (ACE_OS::strlen (sbuf) + 1) * sizeof (ACE_TCHAR)) == -1)
+  if (stream.send_n (sbuf, sizeof (sbuf)) == -1)
     ACE_ERROR ((LM_ERROR,
                 "(%t) %p\n",
                 "send_n"));
@@ -303,6 +328,12 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
 
   parse_arg (argc, argv);
+
+#if defined (SIGPIPE)
+  ACE_Sig_Action no_sigpipe (reinterpret_cast<ACE_SignalHandler> (SIG_IGN));
+  ACE_Sig_Action original_sigpipe;
+  no_sigpipe.register_action (SIGPIPE, std::addressof (original_sigpipe));
+#endif
 
   // Changed the default
   ACE_TP_Reactor sr;

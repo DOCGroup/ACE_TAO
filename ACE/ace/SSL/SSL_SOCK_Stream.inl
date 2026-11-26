@@ -56,7 +56,10 @@ ACE_SSL_SOCK_Stream::send_i (const void *buf,
     case SSL_ERROR_ZERO_RETURN:
       // The peer has notified us that it is shutting down via the SSL
       // "close_notify" message so we need to shutdown, too.
-      (void) ::SSL_shutdown (this->ssl_.get ());
+      if (::SSL_shutdown (this->ssl_.get ()) < 0)
+        {
+          ::ERR_clear_error ();
+        }
 
       return bytes_sent;
 
@@ -189,7 +192,10 @@ ACE_SSL_SOCK_Stream::recv_i (void *buf,
 
           // The peer has notified us that it is shutting down via the SSL
           // "close_notify" message so we need to shutdown, too.
-          (void) ::SSL_shutdown (this->ssl_.get ());
+          if (::SSL_shutdown (this->ssl_.get ()) < 0)
+            {
+              ::ERR_clear_error ();
+            }
 
           break;
 
@@ -328,37 +334,55 @@ ACE_SSL_SOCK_Stream::close ()
       return 0;  // SSL_SOCK_Stream was never opened.
     }
 
-  // SSL_shutdown() returns 1 on successful shutdown of the SSL
-  // connection, not 0.
+  // Zero means our close notification was sent; one means both peers
+  // completed shutdown. Neither requires another call before closing.
   int const status = ::SSL_shutdown (this->ssl_.get ());
+  int ssl_error = status >= 0 ? SSL_ERROR_NONE : ::SSL_get_error (this->ssl_.get (), status);
 
-  switch (::SSL_get_error (this->ssl_.get (), status))
+  if (ssl_error == SSL_ERROR_SYSCALL
+      && ACE_BIT_ENABLED (::SSL_get_shutdown (this->ssl_.get ()), SSL_RECEIVED_SHUTDOWN))
+    {
+      int const socket_error = ACE_OS::set_errno_to_wsa_last_error ();
+      if (socket_error == EPIPE || socket_error == ECONNRESET
+          || socket_error == ECONNABORTED)
+        {
+          ::ERR_clear_error ();
+          ssl_error = SSL_ERROR_NONE;
+        }
+    }
+
+  switch (ssl_error)
     {
     case SSL_ERROR_NONE:
+    case SSL_ERROR_WANT_READ:
+    case SSL_ERROR_WANT_WRITE:
       // Reset the SSL object to allow another connection to be made
       // using this ACE_SSL_SOCK_Stream instance.  This prevents the
       // previous SSL session state from being associated with the new
       // SSL session/connection.
-      ::SSL_clear (this->ssl_.get ());
-      this->set_handle (ACE_INVALID_HANDLE);
-      return this->stream_.close ();
-
-    case SSL_ERROR_WANT_READ:
-    case SSL_ERROR_WANT_WRITE:
-      errno = EWOULDBLOCK;
+      if (::SSL_clear (this->ssl_.get ()) == 1)
+        {
+          this->set_handle (ACE_INVALID_HANDLE);
+          return this->stream_.close ();
+        }
+      ACE_SSL_Context::report_error ();
+      errno = EIO;
       break;
 
     case SSL_ERROR_SSL:
     case SSL_ERROR_SYSCALL:
     default:
       ACE_SSL_Context::report_error ();
-
-      this->set_handle (ACE_INVALID_HANDLE);
-      ACE_Errno_Guard error (errno);   // Save/restore errno
-      this->stream_.close ();
+      {
+        ACE_Errno_Guard error (errno);
+        ::SSL_clear (this->ssl_.get ());
+      }
       break;
     }
 
+  ACE_Errno_Guard error (errno);
+  this->set_handle (ACE_INVALID_HANDLE);
+  this->stream_.close ();
   return -1;
 }
 
