@@ -95,7 +95,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           error ("Expected a NotifyMonitoringExt::"
                  "NameAlreadyUsed exception");
         }
-      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+      catch (NotifyMonitoringExt::NameAlreadyUsed const &)
         {
           // This is expected.
         }
@@ -184,7 +184,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           error ("Expected a SupplierAdmin "
                  "NotifyMonitoringExt::NameAlreadyUsed exception");
         }
-      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+      catch (NotifyMonitoringExt::NameAlreadyUsed const &)
         {
           // This is expected.
         };
@@ -220,7 +220,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           error ("Expected a ProxyConsumer "
                  "NotifyMonitoringExt::NameAlreadyUsed exception");
         }
-      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+      catch (NotifyMonitoringExt::NameAlreadyUsed const &)
         {
           // This is expected.
         }
@@ -261,7 +261,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
               pid,
               "supplier");
         }
-      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+      catch (NotifyMonitoringExt::NameAlreadyUsed const &)
         {
           error ("Unexpected ProxyConsumer "
                  "NotifyMonitoringExt::NameAlreadyUsed exception");
@@ -282,7 +282,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           error ("Expected a ConsumerAdmin "
                  "NotifyMonitoringExt::NameAlreadyUsed exception");
         }
-      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+      catch (NotifyMonitoringExt::NameAlreadyUsed const &)
         {
           // This is expected.
         };
@@ -319,7 +319,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
           error ("Expected a ProxySupplier "
                  "NotifyMonitoringExt::NameAlreadyUsed exception");
         }
-      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+      catch (NotifyMonitoringExt::NameAlreadyUsed const &)
         {
           // This is expected.
         }
@@ -360,7 +360,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
               pid,
               "consumer");
         }
-      catch (const NotifyMonitoringExt::NameAlreadyUsed&)
+      catch (NotifyMonitoringExt::NameAlreadyUsed const &)
         {
           error ("Unexpected ProxySupplier "
                  "NotifyMonitoringExt::NameAlreadyUsed exception");
@@ -369,7 +369,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       TAO_MonitorManager::shutdown ();
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("MonitorControlExt: ");
     }

@@ -12,7 +12,7 @@ static ACE_CString command;
 class ControlTest : public TAO_NS_Control
 {
 public:
-  ControlTest (const ACE_CString& name)
+  ControlTest (ACE_CString const & name)
     : TAO_NS_Control (name.c_str ())
   {
   }
@@ -63,7 +63,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
           error ("The TAO_NS_Control callback does not work");
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Control: ");
       error ("Caught a CORBA exception");

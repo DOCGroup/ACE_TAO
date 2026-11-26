@@ -150,7 +150,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
 
       TAO_Singleton_Manager::instance ()->fini ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("NotificationServiceMonitor: ");
       return 1;

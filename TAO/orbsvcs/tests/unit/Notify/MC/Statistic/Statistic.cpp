@@ -127,7 +127,7 @@ ACE_TMAIN (int, ACE_TCHAR*[])
       list.clear ();
       list.receive (l);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Statistic: ");
       error ("Caught a CORBA exception");
