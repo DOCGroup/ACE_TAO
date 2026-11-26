@@ -8,6 +8,7 @@
 #include "ace/OS_Errno.h"
 
 #include <cstring>
+#include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -21,7 +22,9 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, wchar_t** argv)
   this->initialize ();
 
   for (int i {}; i < argc; ++i)
-    this->char_argv_[i] = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (argv[i]));
+    {
+      this->char_argv_[i] = ACE_OS::strdup (ACE_TEXT_ALWAYS_CHAR (argv[i]));
+    }
 }
 #endif  // ACE_USES_WCHAR
 
@@ -35,7 +38,9 @@ ACE_Argv_Type_Converter::ACE_Argv_Type_Converter (int &argc, char **argv)
   this->initialize();
 
   for (int i {}; i < argc; ++i)
-    this->wchar_argv_[i] = ACE_OS::strdup (ACE_TEXT_ANTI_TO_TCHAR (argv[i]));
+    {
+      this->wchar_argv_[i] = ACE_OS::strdup (ACE_TEXT_ANTI_TO_TCHAR (argv[i]));
+    }
 }
 #else
 {
@@ -120,9 +125,7 @@ ACE_Argv_Type_Converter::align_char_with_wchar ()
                                ACE_TEXT_ALWAYS_CHAR (match_argv)) == 0)
                 {
                   // swap the pointers in the char argv list
-                  char *temp = this->char_argv_[wchar_argv_index];
-                  this->char_argv_[wchar_argv_index] = this->char_argv_[i];
-                  this->char_argv_[i] = temp;
+                  std::swap (this->char_argv_[wchar_argv_index], this->char_argv_[i]);
                   break;
                 }
             }
@@ -149,19 +152,18 @@ ACE_Argv_Type_Converter::align_wchar_with_char ()
           for (int i = char_argv_index + 1; i < this->before_pass_argc_; ++i)
             {
               if (std::strcmp (
-                    ACE_TEXT_ALWAYS_CHAR(this->wchar_argv_[i]),
-                    match_argv) == 0) {
-                // swap the pointers in the char argv list
-                wchar_t* temp = this->wchar_argv_[char_argv_index];
-                this->wchar_argv_[char_argv_index] = this->wchar_argv_[i];
-                this->wchar_argv_[i] = temp;
-                break;
-              }
+                    ACE_TEXT_ALWAYS_CHAR (this->wchar_argv_[i]),
+                    match_argv) == 0)
+                {
+                  // swap the pointers in the wchar argv list
+                  std::swap (this->wchar_argv_[char_argv_index], this->wchar_argv_[i]);
+                  break;
+                }
             }
         }
     }
 
-  this->cleanup();
+  this->cleanup ();
 }
 
 void
