@@ -11,9 +11,7 @@ TAO_Notify_Tests_SequencePushConsumer_Traits::TAO_Notify_Tests_SequencePushConsu
 
 /*******************************************************************/
 
-TAO_Notify_Tests_SequencePushConsumer::TAO_Notify_Tests_SequencePushConsumer ()
-{
-}
+TAO_Notify_Tests_SequencePushConsumer::TAO_Notify_Tests_SequencePushConsumer () = default;
 
 TAO_Notify_Tests_SequencePushConsumer::~TAO_Notify_Tests_SequencePushConsumer () = default;
 

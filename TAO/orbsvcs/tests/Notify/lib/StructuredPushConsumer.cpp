@@ -11,9 +11,7 @@ TAO_Notify_Tests_StructuredPushConsumer_Traits::TAO_Notify_Tests_StructuredPushC
 
 /*******************************************************************/
 
-TAO_Notify_Tests_StructuredPushConsumer::TAO_Notify_Tests_StructuredPushConsumer ()
-{
-}
+TAO_Notify_Tests_StructuredPushConsumer::TAO_Notify_Tests_StructuredPushConsumer () = default;
 
 TAO_Notify_Tests_StructuredPushConsumer::~TAO_Notify_Tests_StructuredPushConsumer () = default;
 

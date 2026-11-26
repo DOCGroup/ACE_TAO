@@ -4,9 +4,7 @@
 #include "LookupManager.h"
 #include "Name.h"
 
-TAO_Notify_Tests_Filter_Command::TAO_Notify_Tests_Filter_Command ()
-{
-}
+TAO_Notify_Tests_Filter_Command::TAO_Notify_Tests_Filter_Command () = default;
 
 TAO_Notify_Tests_Filter_Command::~TAO_Notify_Tests_Filter_Command () = default;
 

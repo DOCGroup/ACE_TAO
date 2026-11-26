@@ -11,9 +11,7 @@ TAO_Notify_Tests_PushSupplier_Traits::TAO_Notify_Tests_PushSupplier_Traits ()
 
 /*******************************************************************/
 
-TAO_Notify_Tests_PushSupplier::TAO_Notify_Tests_PushSupplier ()
-{
-}
+TAO_Notify_Tests_PushSupplier::TAO_Notify_Tests_PushSupplier () = default;
 
 TAO_Notify_Tests_PushSupplier::~TAO_Notify_Tests_PushSupplier () = default;
 

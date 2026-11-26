@@ -11,9 +11,7 @@ TAO_Notify_Tests_PushConsumer_Traits::TAO_Notify_Tests_PushConsumer_Traits ()
 
 /*******************************************************************/
 
-TAO_Notify_Tests_PushConsumer::TAO_Notify_Tests_PushConsumer ()
-{
-}
+TAO_Notify_Tests_PushConsumer::TAO_Notify_Tests_PushConsumer () = default;
 
 TAO_Notify_Tests_PushConsumer::~TAO_Notify_Tests_PushConsumer () = default;
 

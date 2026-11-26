@@ -1,7 +1,5 @@
 #include "Command_Factory.h"
 
-TAO_Notify_Tests_Command_Factory::TAO_Notify_Tests_Command_Factory ()
-{
-}
+TAO_Notify_Tests_Command_Factory::TAO_Notify_Tests_Command_Factory () = default;
 
 TAO_Notify_Tests_Command_Factory::~TAO_Notify_Tests_Command_Factory () = default;

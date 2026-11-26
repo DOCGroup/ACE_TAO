@@ -2,9 +2,7 @@
 
 #include "LookupManager.h"
 
-TAO_Notify_Tests_Direct_Consumer::TAO_Notify_Tests_Direct_Consumer ()
-{
-}
+TAO_Notify_Tests_Direct_Consumer::TAO_Notify_Tests_Direct_Consumer () = default;
 
 TAO_Notify_Tests_Direct_Consumer::~TAO_Notify_Tests_Direct_Consumer () = default;
 

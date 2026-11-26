@@ -11,9 +11,7 @@ TAO_Notify_Tests_SequencePushSupplier_Traits::TAO_Notify_Tests_SequencePushSuppl
 
 /*******************************************************************/
 
-TAO_Notify_Tests_SequencePushSupplier::TAO_Notify_Tests_SequencePushSupplier ()
-{
-}
+TAO_Notify_Tests_SequencePushSupplier::TAO_Notify_Tests_SequencePushSupplier () = default;
 
 TAO_Notify_Tests_SequencePushSupplier::~TAO_Notify_Tests_SequencePushSupplier () = default;
 

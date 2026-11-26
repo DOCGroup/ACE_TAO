@@ -60,9 +60,7 @@ check_supported_priorities (CORBA::ORB_ptr orb)
 }
 
 /*****************************************************************/
-TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker ()
-{
-}
+TAO_Notify_Tests_Worker::TAO_Notify_Tests_Worker () = default;
 
 void
 TAO_Notify_Tests_Worker::command_builder (TAO_Notify_Tests_Command_Builder* cmd_builder)
@@ -104,9 +102,7 @@ TAO_Notify_Tests_Worker::svc ()
 
 /*****************************************************************/
 
-TAO_Notify_Tests_ORB_Run_Worker::TAO_Notify_Tests_ORB_Run_Worker ()
-{
-}
+TAO_Notify_Tests_ORB_Run_Worker::TAO_Notify_Tests_ORB_Run_Worker () = default;
 
 void
 TAO_Notify_Tests_ORB_Run_Worker::orb (CORBA::ORB_ptr orb)

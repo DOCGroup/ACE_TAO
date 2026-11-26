@@ -8,9 +8,7 @@
 #include <utility>
 #include <memory>
 
-TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder ()
-{
-}
+TAO_Notify_Tests_Command_Builder::TAO_Notify_Tests_Command_Builder () = default;
 
 TAO_Notify_Tests_Command_Builder::~TAO_Notify_Tests_Command_Builder ()
 = default;

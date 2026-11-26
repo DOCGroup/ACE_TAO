@@ -3,9 +3,7 @@
 
 #include <cstring>
 
-TAO_Notify_Tests_LookupManager::TAO_Notify_Tests_LookupManager ()
-{
-}
+TAO_Notify_Tests_LookupManager::TAO_Notify_Tests_LookupManager () = default;
 
 TAO_Notify_Tests_LookupManager::~TAO_Notify_Tests_LookupManager () = default;
 
