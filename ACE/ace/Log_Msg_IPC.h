@@ -50,7 +50,7 @@ public:
   ~ACE_Log_Msg_IPC () override;
 
   /// Open a new connection
-  int open (const ACE_TCHAR *logger_key) override;
+  int open (ACE_TCHAR const *logger_key) override;
 
   /**
    * Reset the backend.  When changing the logging destination the

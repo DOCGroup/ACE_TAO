@@ -28,7 +28,7 @@ ACE_Log_Msg_UNIX_Syslog::~ACE_Log_Msg_UNIX_Syslog ()
 }
 
 int
-ACE_Log_Msg_UNIX_Syslog::open (const ACE_TCHAR * logger_key)
+ACE_Log_Msg_UNIX_Syslog::open (ACE_TCHAR const * logger_key)
 {
   if (logger_key == nullptr)
     {
@@ -116,7 +116,7 @@ ACE_Log_Msg_UNIX_Syslog::log (ACE_Log_Record &log_record)
             {
               ACE_OS::strcpy (date_and_time, ACE_TEXT ("<time error>"));
             }
-          const ACE_TCHAR *prio_name =
+          ACE_TCHAR const *prio_name =
             ACE_Log_Record::priority_name(ACE_Log_Priority(log_record.type()));
           syslog (syslog_priority,
                   "%s: %s: %s",

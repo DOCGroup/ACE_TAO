@@ -13,7 +13,7 @@ ACE_Log_Msg_IPC::~ACE_Log_Msg_IPC ()
 ACE_ALLOC_HOOK_DEFINE(ACE_Log_Msg_IPC)
 
 int
-ACE_Log_Msg_IPC::open (const ACE_TCHAR *logger_key)
+ACE_Log_Msg_IPC::open (ACE_TCHAR const *logger_key)
 {
   ACE_LOG_MSG_IPC_CONNECTOR con;
   return con.connect (this->message_queue_,

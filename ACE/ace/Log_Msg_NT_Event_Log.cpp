@@ -16,7 +16,7 @@ ACE_Log_Msg_NT_Event_Log::~ACE_Log_Msg_NT_Event_Log ()
 }
 
 int
-ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
+ACE_Log_Msg_NT_Event_Log::open (ACE_TCHAR const *logger_key)
 {
   // ACE's "resource module" contains the message resource required
   // for event logging.
@@ -31,7 +31,7 @@ ACE_Log_Msg_NT_Event_Log::open (const ACE_TCHAR *logger_key)
 
   // If a logger_key has been supplied then we use that as the event
   // source name, otherwise we default to the program name.
-  const ACE_TCHAR *event_source_name = logger_key ? logger_key : ACE_Log_Msg::program_name ();
+  ACE_TCHAR const *event_source_name = logger_key ? logger_key : ACE_Log_Msg::program_name ();
 
   // Information is stored in the registry at a location based on the
   // program name.
@@ -99,7 +99,7 @@ ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
   // CR-LF. Newline characters on their own do not appear correctly in
   // the event viewer. We allow for a doubling in the size of the msg
   // data for the worst case of all newlines.
-  const ACE_TCHAR *src_msg_data = log_record.msg_data ();
+  ACE_TCHAR const *src_msg_data = log_record.msg_data ();
   ACE_TCHAR msg_data [(ACE_Log_Record::MAXLOGMSGLEN * 2) + 1];
 
   size_t maxlen = ACE_Log_Record::MAXLOGMSGLEN;
@@ -152,7 +152,7 @@ ACE_Log_Msg_NT_Event_Log::log (ACE_Log_Record &log_record)
   }
 
   // Send the log message to the system event log.
-  const ACE_TCHAR* msgs [1];
+  ACE_TCHAR const * msgs [1];
   msgs[0] = msg_data;
 
   if (ACE_TEXT_ReportEvent (this->evlog_handle_,

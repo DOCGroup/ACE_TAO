@@ -41,7 +41,7 @@ public:
    *                   it is 0 (no name), the application name as
    *                   returned from ACE_Log_Msg::program_name() is used.
    */
-  int open (const ACE_TCHAR *logger_key) override;
+  int open (ACE_TCHAR const *logger_key) override;
 
   /// Reset the backend.
   int reset () override;
