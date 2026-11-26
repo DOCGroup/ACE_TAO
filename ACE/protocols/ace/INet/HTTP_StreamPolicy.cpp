@@ -154,7 +154,7 @@ namespace ACE
         this->chunk_ << this->chunk_.widen ('\r') << this->chunk_.widen ('\n');
         this->chunk_.write (buf, length);
         this->chunk_ << this->chunk_.widen ('\r') << this->chunk_.widen ('\n');
-        const typename buffer_type::string_type& str = this->chunk_.str ();
+        typename buffer_type::string_type const& str = this->chunk_.str ();
         return this->write_to_stream_i (str.c_str (), str.length ());
       }
   }

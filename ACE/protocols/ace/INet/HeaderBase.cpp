@@ -35,7 +35,7 @@ namespace ACE
           }
         else
           {
-            const std::string length_string = std::to_string (length);
+            std::string const length_string = std::to_string (length);
             this->set (CONTENT_LENGTH, length_string.c_str ());
           }
       }

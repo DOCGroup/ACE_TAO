@@ -64,7 +64,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    const typename Sock_IOSBase<ACE_SYNCH_USE>::stream_type&
+    typename Sock_IOSBase<ACE_SYNCH_USE>::stream_type const&
     Sock_IOSBase<ACE_SYNCH_USE>::stream () const
       {
         return this->streambuf_.stream ();

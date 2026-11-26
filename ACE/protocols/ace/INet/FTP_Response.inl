@@ -33,7 +33,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_Array<ACE_CString>& Response::response () const
+    ACE_Array<ACE_CString> const& Response::response () const
       {
         return this->response_;
       }

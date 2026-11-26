@@ -78,7 +78,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    const typename String_StreamBufferBase<ACE_CHAR_T, TR>::string_type&
+    typename String_StreamBufferBase<ACE_CHAR_T, TR>::string_type const&
     String_StreamBufferBase<ACE_CHAR_T, TR>::str () const
       {
         const_cast<String_StreamBufferBase<ACE_CHAR_T, TR>*> (this)->sync ();
@@ -164,7 +164,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    const typename String_IOSBase<ACE_CHAR_T, TR>::buffer_type&
+    typename String_IOSBase<ACE_CHAR_T, TR>::buffer_type const&
     String_IOSBase<ACE_CHAR_T, TR>::stream () const
       {
         return this->streambuf_;
@@ -188,7 +188,7 @@ namespace ACE
     String_OStreamBase<ACE_CHAR_T, TR>::~String_OStreamBase() = default;
 
     template <class ACE_CHAR_T, class TR>
-    const typename String_OStreamBase<ACE_CHAR_T, TR>::string_type&
+    typename String_OStreamBase<ACE_CHAR_T, TR>::string_type const&
     String_OStreamBase<ACE_CHAR_T, TR>::str () const
       {
         return this->stream ().str ();

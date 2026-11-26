@@ -59,7 +59,7 @@ namespace ACE
       {
         ACE_CString val(host);
         val += ':';
-        const std::string port_string = std::to_string (port);
+        std::string const port_string = std::to_string (port);
         val += port_string.c_str ();
         this->set (HOST, val);
       }

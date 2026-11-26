@@ -49,7 +49,7 @@ namespace ACE
               void status (int status);
 
               /// retrieves the current response line(s)
-              const ACE_Array<ACE_CString>& response () const;
+              ACE_Array<ACE_CString> const& response () const;
 
               /// adds a response line
               Response& operator <<(ACE_CString const& line);

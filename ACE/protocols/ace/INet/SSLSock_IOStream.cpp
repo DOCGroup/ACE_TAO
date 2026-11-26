@@ -64,7 +64,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    const typename SSLSock_IOSBase<ACE_SYNCH_USE>::stream_type&
+    typename SSLSock_IOSBase<ACE_SYNCH_USE>::stream_type const&
     SSLSock_IOSBase<ACE_SYNCH_USE>::stream () const
       {
         return this->streambuf_.stream ();
