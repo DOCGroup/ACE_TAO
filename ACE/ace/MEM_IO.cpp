@@ -16,7 +16,7 @@ ACE_ALLOC_HOOK_DEFINE(ACE_MEM_IO)
 
 int
 ACE_Reactive_MEM_IO::init (ACE_HANDLE handle,
-                           const ACE_TCHAR *name,
+                           ACE_TCHAR const *name,
                            MALLOC_OPTIONS *options)
 {
   ACE_TRACE ("ACE_Reactive_MEM_IO::init");
@@ -80,7 +80,7 @@ ACE_Reactive_MEM_IO::send_buf (ACE_MEM_SAP_Node *buf,
 
   // Send the offset value over the socket.
   if (ACE::send (this->handle_,
-                 (const char *) &offset,
+                 (char const *) &offset,
                  sizeof (offset),
                  flags,
                  timeout) != static_cast <ssize_t> (sizeof (offset)))
@@ -155,7 +155,7 @@ ACE_MT_MEM_IO::Simple_Queue::read ()
 
 int
 ACE_MT_MEM_IO::init (ACE_HANDLE handle,
-                     const ACE_TCHAR *name,
+                     ACE_TCHAR const *name,
                      MALLOC_OPTIONS *options)
 {
   ACE_TRACE ("ACE_MT_MEM_IO::init");
@@ -175,7 +175,7 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
   ACE_TCHAR client_sema [MAXPATHLEN];
   ACE_TCHAR server_lock [MAXPATHLEN];
   ACE_TCHAR client_lock [MAXPATHLEN];
-  const ACE_TCHAR *basename = ACE::basename (name);
+  ACE_TCHAR const *basename = ACE::basename (name);
   size_t const basename_len = ACE_OS::strlen (basename);
   size_t const suffix_len = ACE_OS::strlen (ACE_TEXT ("_sema_to_server"));
   if (basename_len >= MAXPATHLEN - suffix_len)
@@ -366,7 +366,7 @@ ACE_MEM_IO::dump () const
 }
 
 int
-ACE_MEM_IO::init (const ACE_TCHAR *name,
+ACE_MEM_IO::init (ACE_TCHAR const *name,
                   ACE_MEM_IO::Signal_Strategy type,
                   ACE_MEM_SAP::MALLOC_OPTIONS *options)
 {

@@ -84,7 +84,7 @@ public:
    * Initialize the MEM_SAP object.
    */
   virtual int init (ACE_HANDLE handle,
-                    const ACE_TCHAR *name,
+                    ACE_TCHAR const *name,
                     MALLOC_OPTIONS *options) = 0;
 
   /**
@@ -134,7 +134,7 @@ protected:
    * class that wants to create a new memory pool for inter process
    * communication.
    */
-  int create_shm_malloc (const ACE_TCHAR *name,
+  int create_shm_malloc (ACE_TCHAR const *name,
                          MALLOC_OPTIONS *options);
 
   /// Close down the share memory pool.  Clean up the

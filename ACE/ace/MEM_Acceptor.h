@@ -89,8 +89,8 @@ public:
    * within the same host can located the mmap file.  Example:
    * /tmp/mmapfile.
    */
-  const ACE_TCHAR *mmap_prefix () const;
-  void mmap_prefix (const ACE_TCHAR *prefix);
+  ACE_TCHAR const *mmap_prefix () const;
+  void mmap_prefix (ACE_TCHAR const *prefix);
 
   /**
    * Change the initial MMAP buffer size (in bytes) of the MEM_Stream

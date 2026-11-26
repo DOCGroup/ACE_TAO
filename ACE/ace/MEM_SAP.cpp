@@ -46,7 +46,7 @@ ACE_MEM_SAP::fini ()
 }
 
 int
-ACE_MEM_SAP::create_shm_malloc (const ACE_TCHAR *name,
+ACE_MEM_SAP::create_shm_malloc (ACE_TCHAR const *name,
                                 MALLOC_OPTIONS *options)
 {
   ACE_TRACE ("ACE_MEM_SAP::create_shm_malloc");

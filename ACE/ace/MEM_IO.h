@@ -43,7 +43,7 @@ public:
    * underlying ACE_MMAP.
    */
   int init (ACE_HANDLE handle,
-            const ACE_TCHAR *name,
+            ACE_TCHAR const *name,
             MALLOC_OPTIONS *options) override;
 
   /**
@@ -117,7 +117,7 @@ public:
    * Initialize the MEM_SAP object.
    */
   int init (ACE_HANDLE handle,
-            const ACE_TCHAR *name,
+            ACE_TCHAR const *name,
             MALLOC_OPTIONS *options) override;
 
   int fini () override;
@@ -190,7 +190,7 @@ public:
   /**
    * Initialize the MEM_SAP object.
    */
-  int init (const ACE_TCHAR *name,
+  int init (ACE_TCHAR const *name,
             ACE_MEM_IO::Signal_Strategy type = ACE_MEM_IO::Reactive,
             ACE_MEM_SAP::MALLOC_OPTIONS *options = nullptr);
 
