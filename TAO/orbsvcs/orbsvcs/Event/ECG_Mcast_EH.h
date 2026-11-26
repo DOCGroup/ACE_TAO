@@ -123,14 +123,13 @@ private:
         RtecEventChannelAdmin::ConsumerQOS const &sub) override;
     void update_supplier (
         RtecEventChannelAdmin::SupplierQOS const &pub) override;
+    /// @}
 
   private:
     /// Handler we notify of subscriptions changes.
-    /*
-     * Observer can keep a raw pointer to mcast handler, because the handler
-     * guarantees to notify the observer (by calling shutdown ())
-     * before going away.
-     */
+    /// Observer can keep a raw pointer to mcast handler, because the handler
+    /// guarantees to notify the observer (by calling shutdown ())
+    /// before going away.
     TAO_ECG_Mcast_EH *eh_;
   };
 
@@ -226,35 +225,31 @@ private:
   using Subscriptions = std::vector<Subscription>;
 
   /// List of multicast addresses we subscribe to and dgrams we use.
-  /*
-   * We use a dedicated socket for each multicast subscription.  The
-   * reason: we assume the underlying software, i.e., ACE, binds each
-   * socket used to receive multicast to the multicast group (mcast addr
-   * + port) to avoid receiving promiscuous traffic, in which case it is
-   * not possible to subscribe to more than one mcast address on the same
-   * socket.
-   *
-   * Performance.  We use a vector to store subscriptions (mcast addr / dgram
-   * pairs).  If performance is not adequate, we should look into
-   * using a hash map, keyed on file descriptors, instead.  When there
-   * are many subscriptions, handle_input() is likely to be more
-   * efficient with a hash lookup than an array iteration for locating a
-   * target dgram.  Difference in costs of subscripton changes between
-   * hash map and array would need to be looked at as well, although
-   * it is probably highly dependent on the pattern of changes.
-   */
+  /// We use a dedicated socket for each multicast subscription.  The
+  /// reason: we assume the underlying software, i.e., ACE, binds each
+  /// socket used to receive multicast to the multicast group (mcast addr
+  /// + port) to avoid receiving promiscuous traffic, in which case it is
+  /// not possible to subscribe to more than one mcast address on the same
+  /// socket.
+  ///
+  /// Performance.  We use a vector to store subscriptions (mcast addr / dgram
+  /// pairs).  If performance is not adequate, we should look into
+  /// using a hash map, keyed on file descriptors, instead.  When there
+  /// are many subscriptions, handle_input() is likely to be more
+  /// efficient with a hash lookup than an array iteration for locating a
+  /// target dgram.  Difference in costs of subscripton changes between
+  /// hash map and array would need to be looked at as well, although
+  /// it is probably highly dependent on the pattern of changes.
   Subscriptions subscriptions_;
 
   /// We callback to this object when a message arrives.
-  /*
-   * We can keep a raw pointer to the receiver (even though it may
-   * be a refcounted object) because receiver guarantees
-   * to notify us (by calling shutdown ()) before going away.
-   *
-   * We have to use raw pointer instead of a refcounting mechanism
-   * here to avoid a circular refcounting dependency between
-   * receiver and handler.
-   */
+  /// We can keep a raw pointer to the receiver (even though it may
+  /// be a refcounted object) because receiver guarantees
+  /// to notify us (by calling shutdown ()) before going away.
+  ///
+  /// We have to use raw pointer instead of a refcounting mechanism
+  /// here to avoid a circular refcounting dependency between
+  /// receiver and handler.
   TAO_ECG_Dgram_Handler * receiver_;
 
   /// SOCKbuf size

@@ -38,10 +38,8 @@ public:
   /// Initialization and termination methods.
   /// @{
   /// Messages received by this EH will be forwarded to @a recv.
-  /*
-   * See comments for @c receiver_ data member on why raw pointer is
-   * used for the @a recv argument.
-   */
+  /// See comments for @c receiver_ data member on why raw pointer is
+  /// used for the @a recv argument.
   explicit TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv);
 
   ~TAO_ECG_Simple_Mcast_EH () override = default;
@@ -68,15 +66,13 @@ private:
   ACE_SOCK_Dgram_Mcast dgram_;
 
   /// We callback to this object when a message arrives.
-  /*
-   * We can keep a raw pointer to the receiver (even though it may
-   * be a refcounted object) because receiver guarantees
-   * to notify us (by calling shutdown ()) before going away.
-   *
-   * We have to use raw pointer instead of a refcounting mechanism
-   * here to avoid a circular refcounting dependency between
-   * receiver and handler.
-   */
+  /// We can keep a raw pointer to the receiver (even though it may
+  /// be a refcounted object) because receiver guarantees
+  /// to notify us (by calling shutdown ()) before going away.
+  ///
+  /// We have to use raw pointer instead of a refcounting mechanism
+  /// here to avoid a circular refcounting dependency between
+  /// receiver and handler.
   TAO_ECG_Dgram_Handler* receiver_;
 };
 
