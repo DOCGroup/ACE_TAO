@@ -124,7 +124,7 @@ Stock_StockBrokerHome_i::~Stock_StockBrokerHome_i () = default;
 
 ::Stock::StockBroker_ptr
 Stock_StockBrokerHome_i::create (Stock::StockDistributor_ptr dist,
-                                 const char *stock_name)
+                                 char const *stock_name)
 {
   if (CORBA::is_nil (this->broker_.in ()))
     {

@@ -125,7 +125,7 @@ public:
    * @return The StockBroker object created by the Constructor.
    */
   ::Stock::StockBroker_ptr create (Stock::StockDistributor_ptr dist,
-                                   const char *stock_name) override;
+                                   char const *stock_name) override;
 
   int handle_signal (int signum,
                      siginfo_t * = nullptr,

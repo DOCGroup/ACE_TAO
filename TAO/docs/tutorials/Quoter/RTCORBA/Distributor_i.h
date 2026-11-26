@@ -155,7 +155,7 @@ public:
    * @param stock_name The name of the stock whose detailed info is needed.
    * @throw ::Stock::Invalid_Stock
    */
-  ::Stock::StockInfo *get_stock_info (const char *stock_name) override;
+  ::Stock::StockInfo *get_stock_info (char const *stock_name) override;
 };
 
 /**

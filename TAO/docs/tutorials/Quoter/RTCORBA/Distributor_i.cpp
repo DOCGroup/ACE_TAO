@@ -226,7 +226,7 @@ StockDistributor_i::operator () (std::vector <std::string> &stocks)
 }
 
 ::Stock::StockInfo *
-StockQuoter_i::get_stock_info (const char * stock_name)
+StockQuoter_i::get_stock_info (char const * stock_name)
 {
   // Obtain the stock information from the database.
   ACE_DEBUG ((LM_DEBUG, "*** message: requesting stock_info from the database\n"));
