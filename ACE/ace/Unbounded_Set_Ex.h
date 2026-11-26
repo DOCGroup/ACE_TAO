@@ -296,14 +296,14 @@ public:
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   /// Insert @a item at the tail of the set (doesn't check for
   /// duplicates).
   /**
    * Constant time insert at the end of the set.
    */
-  int insert_tail (const T &item);
+  int insert_tail (T const &item);
 
   /// Linear remove operation.
   /**
@@ -311,14 +311,14 @@ public:
    * it removes the item, -1 if it can't find the item, and -1 if a
    * failure occurs.
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   /// Finds if @a item occurs in the set.  Returns 0 if find succeeds,
   /// else -1.
   /**
    * Performs a linear find operation.
    */
-  int find (const T &item) const;
+  int find (T const &item) const;
 
   /// Size of the set.
   /**

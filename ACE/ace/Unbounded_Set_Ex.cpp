@@ -26,7 +26,7 @@ ACE_Unbounded_Set_Ex<T, C>::size () const
 }
 
 template <class T, class C> int
-ACE_Unbounded_Set_Ex<T, C>::insert_tail (const T &item)
+ACE_Unbounded_Set_Ex<T, C>::insert_tail (T const &item)
 {
   // ACE_TRACE ("ACE_Unbounded_Set_Ex<T, C>::insert_tail");
   NODE *temp {};

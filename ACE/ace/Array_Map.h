@@ -92,11 +92,11 @@ public:
   using value_type = std::pair<key_type, mapped_type>;
   using allocator_type = Alloc;
   using reference = value_type &;
-  using const_reference = const value_type &;
+  using const_reference = value_type const &;
   using pointer = value_type *;
-  using const_pointer = const value_type *;
+  using const_pointer = value_type const *;
   using iterator = value_type *;
-  using const_iterator = const value_type *;
+  using const_iterator = value_type const *;
   using difference_type = ptrdiff_t;
   using size_type = size_t;
   using reverse_iterator = std::reverse_iterator<iterator>;

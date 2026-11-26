@@ -42,9 +42,9 @@ public:
   ACE_Future_Set (
     ACE_Message_Queue<ACE_SYNCH> *future_notification_queue_ = nullptr);
 
-  ACE_Future_Set (const ACE_Future_Set &) = delete;
+  ACE_Future_Set (ACE_Future_Set const &) = delete;
   ACE_Future_Set (ACE_Future_Set &&) = delete;
-  ACE_Future_Set &operator= (const ACE_Future_Set &) = delete;
+  ACE_Future_Set &operator= (ACE_Future_Set const &) = delete;
   ACE_Future_Set &operator= (ACE_Future_Set &&) = delete;
 
   ~ACE_Future_Set ();

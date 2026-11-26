@@ -90,7 +90,7 @@ ACE_Array_Base<T>::operator[] (typename ACE_Array_Base<T>::size_type index)
   return this->array_[index];
 }
 
-template <class T> ACE_INLINE const T &
+template <class T> ACE_INLINE T const &
 ACE_Array_Base<T>::operator[] (typename ACE_Array_Base<T>::size_type index) const
 {
   return this->array_[index];
