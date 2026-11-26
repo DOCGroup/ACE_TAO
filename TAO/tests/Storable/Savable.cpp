@@ -23,7 +23,7 @@ public:
 
   bool is_loaded_from_stream () override;
 
-  TAO::Storable_Base * create_stream (const char * mode) override;
+  TAO::Storable_Base * create_stream (char const *mode) override;
 
 private:
   Savable & savable_;
@@ -84,7 +84,7 @@ Savable_File_Guard::is_loaded_from_stream ()
 }
 
 TAO::Storable_Base *
-Savable_File_Guard::create_stream (const char * mode)
+Savable_File_Guard::create_stream (char const *mode)
 {
   return savable_.storable_factory_.create_stream ("test.dat", mode);
 }

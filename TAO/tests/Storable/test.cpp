@@ -20,7 +20,7 @@
 
 #include <iostream>
 
-const ACE_TCHAR *persistence_file = ACE_TEXT("test.dat");
+ACE_TCHAR const *persistence_file = ACE_TEXT("test.dat");
 
 int num_loops = 1;
 int sleep_msecs = 100;
