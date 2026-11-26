@@ -81,27 +81,27 @@ public:
    * bound successfully, returns 1 if an attempt is made to bind an
    * existing entry, and returns -1 if failures occur.
    */
-  int bind (const KEY &key,
-            const VALUE &value);
+  int bind (KEY const &key,
+            VALUE const &value);
 
   /**
    * Same as a normal bind, except the cache entry is also passed back
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int bind (const KEY &key,
-            const VALUE &value,
+  int bind (KEY const &key,
+            VALUE const &value,
             CACHE_ENTRY *&entry);
 
   /// Loopkup entry<key,value> in the cache.
-  int find (const KEY &key,
+  int find (KEY const &key,
             VALUE &value);
 
   /// Is @a key in the cache?
-  int find (const KEY &key);
+  int find (KEY const &key);
 
   /// Obtain the entry when the find succeeds.
-  int find (const KEY &key,
+  int find (KEY const &key,
             CACHE_ENTRY *&entry);
 
   /**
@@ -109,8 +109,8 @@ public:
    * in the cache then returns 1, on a new bind returns 0 and returns
    * -1 in case of any failures.
    */
-  int rebind (const KEY &key,
-              const VALUE &value);
+  int rebind (KEY const &key,
+              VALUE const &value);
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -119,8 +119,8 @@ public:
    * However, for caches that allow user specified keys, if the key is
    * not in the cache, a new @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               VALUE &old_value);
 
   /**
@@ -131,8 +131,8 @@ public:
    * specified keys, if the key is not in the cache, a new @a key / @a value
    * association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               KEY &old_key,
               VALUE &old_value);
 
@@ -141,8 +141,8 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               CACHE_ENTRY *&entry);
 
   /**
@@ -153,7 +153,7 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  int trybind (const KEY &key,
+  int trybind (KEY const &key,
                VALUE &value);
 
   /**
@@ -161,16 +161,16 @@ public:
    * back to the caller.  The entry in this case will either be the
    * newly created entry, or the existing one.
    */
-  int trybind (const KEY &key,
+  int trybind (KEY const &key,
                VALUE &value,
                CACHE_ENTRY *&entry);
 
   /// Remove @a key from the cache.
-  int unbind (const KEY &key);
+  int unbind (KEY const &key);
 
   /// Remove @a key from the cache, and return the @a value associated with
   /// @a key.
-  int unbind (const KEY &key,
+  int unbind (KEY const &key,
               VALUE &value);
 
   /// Remove entry from map.

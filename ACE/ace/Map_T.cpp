@@ -112,15 +112,15 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::clo
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind (const KEY &key,
-                                                                                   const VALUE &value)
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind (KEY const &key,
+                                                                                   VALUE const &value)
 {
   return this->implementation_.bind (key,
                                      value);
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind_modify_key (const VALUE &value,
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind_modify_key (VALUE const &value,
                                                                                               KEY &key)
 {
   return this->implementation_.bind_modify_key (value,
@@ -134,7 +134,7 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::cre
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind_create_key (const VALUE &value,
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind_create_key (VALUE const &value,
                                                                                               KEY &key)
 {
   return this->implementation_.bind_create_key (value,
@@ -142,13 +142,13 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bin
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind_create_key (const VALUE &value)
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::bind_create_key (VALUE const &value)
 {
   return this->implementation_.bind_create_key (value);
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::recover_key (const KEY &modified_key,
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::recover_key (KEY const &modified_key,
                                                                                           KEY &original_key)
 {
   return this->implementation_.recover_key (modified_key,
@@ -156,16 +156,16 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rec
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rebind (const KEY &key,
-                                                                                     const VALUE &value)
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rebind (KEY const &key,
+                                                                                     VALUE const &value)
 {
   return this->implementation_.rebind (key,
                                        value);
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rebind (const KEY &key,
-                                                                                     const VALUE &value,
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rebind (KEY const &key,
+                                                                                     VALUE const &value,
                                                                                      VALUE &old_value)
 {
   return this->implementation_.rebind (key,
@@ -174,8 +174,8 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::reb
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rebind (const KEY &key,
-                                                                                     const VALUE &value,
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::rebind (KEY const &key,
+                                                                                     VALUE const &value,
                                                                                      KEY &old_key,
                                                                                      VALUE &old_value)
 {
@@ -186,7 +186,7 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::reb
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::trybind (const KEY &key,
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::trybind (KEY const &key,
                                                                                       VALUE &value)
 {
   return this->implementation_.trybind (key,
@@ -194,7 +194,7 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::try
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::find (const KEY &key,
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::find (KEY const &key,
                                                                                    VALUE &value)
 {
   return this->implementation_.find (key,
@@ -202,19 +202,19 @@ ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::fin
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::find (const KEY &key)
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::find (KEY const &key)
 {
   return this->implementation_.find (key);
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::unbind (const KEY &key)
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::unbind (KEY const &key)
 {
   return this->implementation_.unbind (key);
 }
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class ITERATOR, class REVERSE_ITERATOR, class ENTRY> int
-ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::unbind (const KEY &key,
+ACE_Map_Impl<KEY, VALUE, IMPLEMENTATION, ITERATOR, REVERSE_ITERATOR, ENTRY>::unbind (KEY const &key,
                                                                                      VALUE &value)
 {
   return this->implementation_.unbind (key,
@@ -379,14 +379,14 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::close ()
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind (const KEY &,
-                                                               const VALUE &)
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind (KEY const &,
+                                                               VALUE const &)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_modify_key (const VALUE &value,
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_modify_key (VALUE const &value,
                                                                           KEY &key)
 {
   // Reserve a slot and create an active key.
@@ -425,7 +425,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::create_key (KEY &)
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_create_key (const VALUE &value,
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_create_key (VALUE const &value,
                                                                           KEY &key)
 {
   // Reserve a slot and create an active key.
@@ -457,7 +457,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_create_key (const 
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_create_key (const VALUE &value)
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_create_key (VALUE const &value)
 {
   // Reserve a slot and create an active key.
   expanded_value *internal_value {};
@@ -486,7 +486,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::bind_create_key (const 
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::recover_key (const KEY &modified_key,
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::recover_key (KEY const &modified_key,
                                                                       KEY &original_key)
 {
   // Ask the <key_adapter_> to help out with recovering the original
@@ -496,7 +496,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::recover_key (const KEY 
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key,
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (KEY const &key,
                                                                expanded_value *&internal_value)
 {
   // Ask the <key_adapter_> to recover the active key.
@@ -514,7 +514,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key,
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (KEY const &key,
                                                                VALUE &value)
 {
   expanded_value *internal_value {};
@@ -531,7 +531,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key)
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (KEY const &key)
 {
   expanded_value *internal_value {};
   return this->find (key,
@@ -539,8 +539,8 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::find (const KEY &key)
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
-                                                                 const VALUE &value)
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (KEY const &key,
+                                                                 VALUE const &value)
 {
   expanded_value *internal_value {};
   int result = this->find (key,
@@ -556,8 +556,8 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
-                                                                 const VALUE &value,
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (KEY const &key,
+                                                                 VALUE const &value,
                                                                  VALUE &old_value)
 {
   expanded_value *internal_value {};
@@ -577,8 +577,8 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
-                                                                 const VALUE &value,
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (KEY const &key,
+                                                                 VALUE const &value,
                                                                  KEY &old_key,
                                                                  VALUE &old_value)
 {
@@ -600,14 +600,14 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::rebind (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::trybind (const KEY &,
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::trybind (KEY const &,
                                                                   VALUE &)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key,
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (KEY const &key,
                                                                  expanded_value *&internal_value)
 {
   // Ask the <key_adapter_> to recover the active key.
@@ -625,7 +625,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key)
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (KEY const &key)
 {
   expanded_value *internal_value {};
   return this->unbind (key,
@@ -633,7 +633,7 @@ ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key)
 }
 
 template <class KEY, class VALUE, class KEY_ADAPTER> int
-ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (const KEY &key,
+ACE_Active_Map_Manager_Adapter<KEY, VALUE, KEY_ADAPTER>::unbind (KEY const &key,
                                                                  VALUE &value)
 {
   expanded_value *internal_value {};
@@ -812,15 +812,15 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind (const KEY &key,
-                                                                                          const VALUE &value)
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind (KEY const &key,
+                                                                                          VALUE const &value)
 {
   return this->implementation_.bind (key,
                                      value);
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind_modify_key (const VALUE &value,
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind_modify_key (VALUE const &value,
                                                                                                      KEY &key)
 {
   return this->implementation_.bind (key,
@@ -835,7 +835,7 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind_create_key (const VALUE &value,
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind_create_key (VALUE const &value,
                                                                                                      KEY &key)
 {
   // Invoke the user specified key generation functor.
@@ -852,7 +852,7 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind_create_key (const VALUE &value)
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::bind_create_key (VALUE const &value)
 {
   KEY key;
   return this->bind_create_key (value,
@@ -860,7 +860,7 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::recover_key (const KEY &modified_key,
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::recover_key (KEY const &modified_key,
                                                                                                  KEY &original_key)
 {
   original_key = modified_key;
@@ -868,16 +868,16 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rebind (const KEY &key,
-                                                                                            const VALUE &value)
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rebind (KEY const &key,
+                                                                                            VALUE const &value)
 {
   return this->implementation_.rebind (key,
                                        value);
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rebind (const KEY &key,
-                                                                                            const VALUE &value,
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rebind (KEY const &key,
+                                                                                            VALUE const &value,
                                                                                             VALUE &old_value)
 {
   return this->implementation_.rebind (key,
@@ -886,8 +886,8 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rebind (const KEY &key,
-                                                                                            const VALUE &value,
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::rebind (KEY const &key,
+                                                                                            VALUE const &value,
                                                                                             KEY &old_key,
                                                                                             VALUE &old_value)
 {
@@ -898,7 +898,7 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::trybind (const KEY &key,
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::trybind (KEY const &key,
                                                                                              VALUE &value)
 {
   return this->implementation_.trybind (key,
@@ -906,7 +906,7 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::find (const KEY &key,
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::find (KEY const &key,
                                                                                           VALUE &value)
 {
   return this->implementation_.find (key,
@@ -914,19 +914,19 @@ ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATO
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::find (const KEY &key)
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::find (KEY const &key)
 {
   return this->implementation_.find (key);
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::unbind (const KEY &key)
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::unbind (KEY const &key)
 {
   return this->implementation_.unbind (key);
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class KEY_GENERATOR> int
-ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::unbind (const KEY &key,
+ACE_Hash_Map_Manager_Ex_Adapter<KEY, VALUE, HASH_KEY, COMPARE_KEYS, KEY_GENERATOR>::unbind (KEY const &key,
                                                                                             VALUE &value)
 {
   return this->implementation_.unbind (key,
@@ -1093,15 +1093,15 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::close ()
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind (const KEY &key,
-                                                          const VALUE &value)
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind (KEY const &key,
+                                                          VALUE const &value)
 {
   return this->implementation_.bind (key,
                                      value);
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_modify_key (const VALUE &value,
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_modify_key (VALUE const &value,
                                                                      KEY &key)
 {
   return this->implementation_.bind (key,
@@ -1116,7 +1116,7 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::create_key (KEY &key)
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_create_key (const VALUE &value,
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_create_key (VALUE const &value,
                                                                      KEY &key)
 {
   // Invoke the user specified key generation functor.
@@ -1133,7 +1133,7 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_create_key (const VALUE
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_create_key (const VALUE &value)
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_create_key (VALUE const &value)
 {
   KEY key;
   return this->bind_create_key (value,
@@ -1141,7 +1141,7 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::bind_create_key (const VALUE
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::recover_key (const KEY &modified_key,
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::recover_key (KEY const &modified_key,
                                                                  KEY &original_key)
 {
   original_key = modified_key;
@@ -1149,16 +1149,16 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::recover_key (const KEY &modi
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (const KEY &key,
-                                                            const VALUE &value)
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (KEY const &key,
+                                                            VALUE const &value)
 {
   return this->implementation_.rebind (key,
                                        value);
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (const KEY &key,
-                                                            const VALUE &value,
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (KEY const &key,
+                                                            VALUE const &value,
                                                             VALUE &old_value)
 {
   return this->implementation_.rebind (key,
@@ -1167,8 +1167,8 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (const KEY &key,
-                                                            const VALUE &value,
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (KEY const &key,
+                                                            VALUE const &value,
                                                             KEY &old_key,
                                                             VALUE &old_value)
 {
@@ -1179,7 +1179,7 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::rebind (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::trybind (const KEY &key,
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::trybind (KEY const &key,
                                                              VALUE &value)
 {
   return this->implementation_.trybind (key,
@@ -1187,7 +1187,7 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::trybind (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::find (const KEY &key,
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::find (KEY const &key,
                                                           VALUE &value)
 {
   return this->implementation_.find (key,
@@ -1195,19 +1195,19 @@ ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::find (const KEY &key,
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::find (const KEY &key)
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::find (KEY const &key)
 {
   return this->implementation_.find (key);
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::unbind (const KEY &key)
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::unbind (KEY const &key)
 {
   return this->implementation_.unbind (key);
 }
 
 template <class KEY, class VALUE, class KEY_GENERATOR> int
-ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::unbind (const KEY &key,
+ACE_Map_Manager_Adapter<KEY, VALUE, KEY_GENERATOR>::unbind (KEY const &key,
                                                             VALUE &value)
 {
   return this->implementation_.unbind (key,

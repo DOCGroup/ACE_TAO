@@ -13,7 +13,7 @@ ACE_Incremental_Key_Generator<T>::operator() (T &t)
   return 0;
 }
 
-template <class T> ACE_INLINE const T &
+template <class T> ACE_INLINE T const &
 ACE_Incremental_Key_Generator<T>::current_value () const
 {
   return this->t_;
@@ -204,7 +204,7 @@ ACE_Map<KEY, VALUE>::rend ()
 }
 
 template <class T, class IMPLEMENTATION, class ENTRY> ACE_INLINE
-ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl)
+ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::ACE_Map_Impl_Iterator_Adapter (IMPLEMENTATION const &impl)
   : implementation_ (impl)
 {
 }
@@ -216,7 +216,7 @@ ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::impl ()
 }
 
 template <class T, class IMPLEMENTATION, class ENTRY> ACE_INLINE
-ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl)
+ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::ACE_Map_Impl_Reverse_Iterator_Adapter (IMPLEMENTATION const &impl)
   : implementation_ (impl)
 {
 }

@@ -55,7 +55,7 @@ public:
   int operator () (T &t);
 
   /// Returns the current value.
-  const T& current_value () const;
+  T const & current_value () const;
 
 protected:
   /// Current value.
@@ -267,8 +267,8 @@ public:
    * successful addition.  This function fails for maps that do not
    * allow user specified keys. @a key is an "in" parameter.
    */
-  virtual int bind (const KEY &key,
-                    const VALUE &value) = 0;
+  virtual int bind (KEY const &key,
+                    VALUE const &value) = 0;
 
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
@@ -276,7 +276,7 @@ public:
    * information.  To recover original key, call the @c recover_key
    * method.
    */
-  virtual int bind_modify_key (const VALUE &value,
+  virtual int bind_modify_key (VALUE const &value,
                                KEY &key) = 0;
 
   /**
@@ -298,7 +298,7 @@ public:
    * scheme by using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value,
+  virtual int bind_create_key (VALUE const &value,
                                KEY &key) = 0;
 
   /**
@@ -310,11 +310,11 @@ public:
    * using user specified keys with keys produced by the key
    * generator.
    */
-  virtual int bind_create_key (const VALUE &value) = 0;
+  virtual int bind_create_key (VALUE const &value) = 0;
 
   /// Recovers the original key potentially modified by the map during
   /// @c bind_modify_key.
-  virtual int recover_key (const KEY &modified_key,
+  virtual int recover_key (KEY const &modified_key,
                            KEY &original_key) = 0;
 
   /**
@@ -323,8 +323,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value) = 0;
+  virtual int rebind (KEY const &key,
+                      VALUE const &value) = 0;
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -333,8 +333,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
+  virtual int rebind (KEY const &key,
+                      VALUE const &value,
                       VALUE &old_value) = 0;
 
   /**
@@ -345,8 +345,8 @@ public:
    * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
-  virtual int rebind (const KEY &key,
-                      const VALUE &value,
+  virtual int rebind (KEY const &key,
+                      VALUE const &value,
                       KEY &old_key,
                       VALUE &old_value) = 0;
 
@@ -358,22 +358,22 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  virtual int trybind (const KEY &key,
+  virtual int trybind (KEY const &key,
                        VALUE &value) = 0;
 
   /// Locate @a value associated with @a key.
-  virtual int find (const KEY &key,
+  virtual int find (KEY const &key,
                     VALUE &value) = 0;
 
   /// Is @a key in the map?
-  virtual int find (const KEY &key) = 0;
+  virtual int find (KEY const &key) = 0;
 
   /// Remove @a key from the map.
-  virtual int unbind (const KEY &key) = 0;
+  virtual int unbind (KEY const &key) = 0;
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  virtual int unbind (const KEY &key,
+  virtual int unbind (KEY const &key,
                       VALUE &value) = 0;
 
   /// Return the current size of the map.
@@ -423,7 +423,7 @@ public:
   /// Type aliases.
   using implementation = IMPLEMENTATION;
 
-  ACE_Map_Impl_Iterator_Adapter (const IMPLEMENTATION &impl);
+  ACE_Map_Impl_Iterator_Adapter (IMPLEMENTATION const &impl);
 
   virtual ~ACE_Map_Impl_Iterator_Adapter () = default;
 
@@ -464,7 +464,7 @@ public:
   /// Type aliases.
   using implementation = IMPLEMENTATION;
 
-  ACE_Map_Impl_Reverse_Iterator_Adapter (const IMPLEMENTATION &impl);
+  ACE_Map_Impl_Reverse_Iterator_Adapter (IMPLEMENTATION const &impl);
 
   virtual ~ACE_Map_Impl_Reverse_Iterator_Adapter ();
 
@@ -537,8 +537,8 @@ public:
    * successful addition.  This function fails for maps that do not
    * allow user specified keys. @a key is an "in" parameter.
    */
-  int bind (const KEY &key,
-            const VALUE &value) override;
+  int bind (KEY const &key,
+            VALUE const &value) override;
 
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
@@ -546,7 +546,7 @@ public:
    * information.  To recover original key, call the @c recover_key
    * method.
    */
-  int bind_modify_key (const VALUE &value,
+  int bind_modify_key (VALUE const &value,
                        KEY &key) override;
 
   /**
@@ -568,7 +568,7 @@ public:
    * scheme by using user specified keys with keys produced by the key
    * generator.
    */
-  int bind_create_key (const VALUE &value,
+  int bind_create_key (VALUE const &value,
                        KEY &key) override;
 
   /**
@@ -580,11 +580,11 @@ public:
    * using user specified keys with keys produced by the key
    * generator.
    */
-  int bind_create_key (const VALUE &value) override;
+  int bind_create_key (VALUE const &value) override;
 
   /// Recovers the original key potentially modified by the map during
   /// @c bind_modify_key.
-  int recover_key (const KEY &modified_key,
+  int recover_key (KEY const &modified_key,
                    KEY &original_key) override;
 
   /**
@@ -593,8 +593,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value) override;
+  int rebind (KEY const &key,
+              VALUE const &value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -603,8 +603,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               VALUE &old_value) override;
 
   /**
@@ -615,8 +615,8 @@ public:
    * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               KEY &old_key,
               VALUE &old_value) override;
 
@@ -628,22 +628,22 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  int trybind (const KEY &key,
+  int trybind (KEY const &key,
                VALUE &value) override;
 
   /// Locate @a value associated with @a key.
-  int find (const KEY &key,
+  int find (KEY const &key,
             VALUE &value) override;
 
   /// Is @a key in the map?
-  int find (const KEY &key) override;
+  int find (KEY const &key) override;
 
   /// Remove @a key from the map.
-  int unbind (const KEY &key) override;
+  int unbind (KEY const &key) override;
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  int unbind (const KEY &key,
+  int unbind (KEY const &key,
               VALUE &value) override;
 
   /// Return the current size of the map.
@@ -803,8 +803,8 @@ public:
    * successful addition.  This function fails for maps that do not
    * allow user specified keys. @a key is an "in" parameter.
    */
-  int bind (const KEY &key,
-            const VALUE &value) override;
+  int bind (KEY const &key,
+            VALUE const &value) override;
 
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
@@ -812,7 +812,7 @@ public:
    * information.  To recover original key, call the recover_key()
    * method.
    */
-  int bind_modify_key (const VALUE &value, KEY &key) override;
+  int bind_modify_key (VALUE const &value, KEY &key) override;
 
   /**
    * Produce a key and return it through @a key which is an "out"
@@ -833,7 +833,7 @@ public:
    * scheme by using user specified keys with keys produced by the key
    * generator.
    */
-  int bind_create_key (const VALUE &value,
+  int bind_create_key (VALUE const &value,
                        KEY &key) override;
 
   /**
@@ -845,11 +845,11 @@ public:
    * using user specified keys with keys produced by the key
    * generator.
    */
-  int bind_create_key (const VALUE &value) override;
+  int bind_create_key (VALUE const &value) override;
 
   /// Recovers the original key potentially modified by the map during
   /// bind_modify_key().
-  int recover_key (const KEY &modified_key,
+  int recover_key (KEY const &modified_key,
                    KEY &original_key) override;
 
   /**
@@ -858,8 +858,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value) override;
+  int rebind (KEY const &key,
+              VALUE const &value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -868,8 +868,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               VALUE &old_value) override;
 
   /**
@@ -880,8 +880,8 @@ public:
    * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               KEY &old_key,
               VALUE &old_value) override;
 
@@ -893,22 +893,22 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  int trybind (const KEY &key,
+  int trybind (KEY const &key,
                VALUE &value) override;
 
   /// Locate @a value associated with @a key.
-  int find (const KEY &key,
+  int find (KEY const &key,
             VALUE &value) override;
 
   /// Is @a key in the map?
-  int find (const KEY &key) override;
+  int find (KEY const &key) override;
 
   /// Remove @a key from the map.
-  int unbind (const KEY &key) override;
+  int unbind (KEY const &key) override;
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  int unbind (const KEY &key,
+  int unbind (KEY const &key,
               VALUE &value) override;
 
   /// Return the current size of the map.
@@ -928,11 +928,11 @@ public:
 
 protected:
   /// Find helper.
-  virtual int find (const KEY &key,
+  virtual int find (KEY const &key,
                     expanded_value *&internal_value);
 
   /// Unbind helper.
-  virtual int unbind (const KEY &key,
+  virtual int unbind (KEY const &key,
                       expanded_value *&internal_value);
 
   /// All implementation details are forwarded to this class.
@@ -1081,8 +1081,8 @@ public:
    * successful addition.  This function fails for maps that do not
    * allow user specified keys. @a key is an "in" parameter.
    */
-  int bind (const KEY &key,
-            const VALUE &value) override;
+  int bind (KEY const &key,
+            VALUE const &value) override;
 
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
@@ -1090,7 +1090,7 @@ public:
    * information.  To recover original key, call the @c recover_key
    * method.
    */
-  int bind_modify_key (const VALUE &value,
+  int bind_modify_key (VALUE const &value,
                        KEY &key) override;
 
   /**
@@ -1112,7 +1112,7 @@ public:
    * scheme by using user specified keys with keys produced by the key
    * generator.
    */
-  int bind_create_key (const VALUE &value,
+  int bind_create_key (VALUE const &value,
                        KEY &key) override;
 
   /**
@@ -1124,11 +1124,11 @@ public:
    * using user specified keys with keys produced by the key
    * generator.
    */
-  int bind_create_key (const VALUE &value) override;
+  int bind_create_key (VALUE const &value) override;
 
   /// Recovers the original key potentially modified by the map during
   /// bind_modify_key().
-  int recover_key (const KEY &modified_key,
+  int recover_key (KEY const &modified_key,
                    KEY &original_key) override;
 
   /**
@@ -1137,8 +1137,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value) override;
+  int rebind (KEY const &key,
+              VALUE const &value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -1147,8 +1147,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               VALUE &old_value) override;
 
   /**
@@ -1159,8 +1159,8 @@ public:
    * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               KEY &old_key,
               VALUE &old_value) override;
 
@@ -1172,22 +1172,22 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  int trybind (const KEY &key,
+  int trybind (KEY const &key,
                VALUE &value) override;
 
   /// Locate @a value associated with @a key.
-  int find (const KEY &key,
+  int find (KEY const &key,
             VALUE &value) override;
 
   /// Is @a key in the map?
-  int find (const KEY &key) override;
+  int find (KEY const &key) override;
 
   /// Remove @a key from the map.
-  int unbind (const KEY &key) override;
+  int unbind (KEY const &key) override;
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  int unbind (const KEY &key,
+  int unbind (KEY const &key,
               VALUE &value) override;
 
   /// Return the current size of the map.
@@ -1352,8 +1352,8 @@ public:
    * successful addition.  This function fails for maps that do not
    * allow user specified keys. @a key is an "in" parameter.
    */
-  int bind (const KEY &key,
-            const VALUE &value) override;
+  int bind (KEY const &key,
+            VALUE const &value) override;
 
   /**
    * Add @a key / @a value pair to the map.  @a key is an "inout" parameter
@@ -1361,7 +1361,7 @@ public:
    * information.  To recover original key, call the @c recover_key
    * method.
    */
-  int bind_modify_key (const VALUE &value,
+  int bind_modify_key (VALUE const &value,
                        KEY &key) override;
 
   /**
@@ -1383,7 +1383,7 @@ public:
    * scheme by using user specified keys with keys produced by the key
    * generator.
    */
-  int bind_create_key (const VALUE &value,
+  int bind_create_key (VALUE const &value,
                        KEY &key) override;
 
   /**
@@ -1395,11 +1395,11 @@ public:
    * using user specified keys with keys produced by the key
    * generator.
    */
-  int bind_create_key (const VALUE &value) override;
+  int bind_create_key (VALUE const &value) override;
 
   /// Recovers the original key potentially modified by the map during
   /// @c bind_modify_key.
-  int recover_key (const KEY &modified_key,
+  int recover_key (KEY const &modified_key,
                    KEY &original_key) override;
 
   /**
@@ -1408,8 +1408,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value) override;
+  int rebind (KEY const &key,
+              VALUE const &value) override;
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -1418,8 +1418,8 @@ public:
    * However, for maps that allow user specified keys, if the key is
    * not in the map, a new @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               VALUE &old_value) override;
 
   /**
@@ -1430,8 +1430,8 @@ public:
    * specified keys, if the key is not in the map, a new @a key / @a value
    * association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               KEY &old_key,
               VALUE &old_value) override;
 
@@ -1443,22 +1443,22 @@ public:
    * attempt is made to bind an existing entry.  This function fails
    * for maps that do not allow user specified keys.
    */
-  int trybind (const KEY &key,
+  int trybind (KEY const &key,
                VALUE &value) override;
 
   /// Locate @a value associated with @a key.
-  int find (const KEY &key,
+  int find (KEY const &key,
             VALUE &value) override;
 
   /// Is @a key in the map?
-  int find (const KEY &key) override;
+  int find (KEY const &key) override;
 
   /// Remove @a key from the map.
-  int unbind (const KEY &key) override;
+  int unbind (KEY const &key) override;
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  int unbind (const KEY &key,
+  int unbind (KEY const &key,
               VALUE &value) override;
 
   /// Return the current size of the map.

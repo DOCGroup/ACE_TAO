@@ -26,8 +26,8 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::bind (const KEY &key,
-                                          const VALUE &value,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::bind (KEY const &key,
+                                          VALUE const &value,
                                           CACHE_ENTRY *&entry)
 {
   // Insert a entry which has the <key> and the <cache_value> which is
@@ -59,8 +59,8 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::rebind (const KEY &key,
-                                         const VALUE &value,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::rebind (KEY const &key,
+                                         VALUE const &value,
                                          CACHE_ENTRY *&entry)
 {
   CACHE_VALUE cache_value (value,
@@ -96,7 +96,7 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::trybind (const KEY &key,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::trybind (KEY const &key,
                                           VALUE &value,
                                           CACHE_ENTRY *&entry)
 {
@@ -139,7 +139,7 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (KEY const &key,
                                        CACHE_ENTRY *&entry)
 {
   // Lookup the key and populate the <value>.
@@ -167,7 +167,7 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key,
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (KEY const &key,
                                        VALUE &value)
 {
   CACHE_ENTRY *entry {};
@@ -184,7 +184,7 @@ ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY
 }
 
 template <class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS, class CACHING_STRATEGY, class ATTRIBUTES> int
-ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (const KEY &key)
+ACE_Hash_Cache_Map_Manager<KEY, VALUE,  HASH_KEY, COMPARE_KEYS, CACHING_STRATEGY, ATTRIBUTES>::find (KEY const &key)
 {
   CACHE_ENTRY *entry {};
 
