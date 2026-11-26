@@ -148,6 +148,20 @@ using HASH_REVERSE_ITERATOR = ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, TYPE, HASH_
 using HASH_ENTRY = ACE_Hash_Map_Entry<TYPE, TYPE>;
 using ACTIVE_MAP_MANAGER = ACE_Active_Map_Manager<TYPE>;
 
+static int
+test_active_map_invalid_key ()
+{
+  ACTIVE_MAP_MANAGER map (4);
+  ACTIVE_KEY const boundary (4, 0);
+  ACTIVE_KEY const beyond (5, 0);
+  TYPE *value {};
+  if (map.find (boundary, value) != -1 || map.find (beyond, value) != -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Active map accepted an out-of-range key\n")), -1);
+    }
+  return 0;
+}
+
 using CACHE_MAP_IMPL = ACE_Hash_Map_Manager_Ex<TYPE, std::pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>;
 using CACHE_ITER_IMPL = ACE_Hash_Map_Iterator_Ex<TYPE, std::pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>;
 using CACHE_REV_ITER_IMPL = ACE_Hash_Map_Reverse_Iterator_Ex<TYPE, std::pair<TYPE, int>, HASH_KEY, COMPARE_KEYS, MUTEX>;
@@ -1012,6 +1026,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
   int result = 0;
   result += test_resize_exceptions ();
+  result += test_active_map_invalid_key ();
   size_t table_size = ACE_MAX_ITERATIONS / 2;
   size_t iterations = ACE_MAX_ITERATIONS;
   int test_iterators = 1;

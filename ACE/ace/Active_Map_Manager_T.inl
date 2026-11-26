@@ -62,7 +62,7 @@ ACE_Active_Map_Manager<T>::find (ACE_Active_Map_Manager_Key const &key,
   ACE_UINT32 slot_index = key.slot_index ();
   ACE_UINT32 slot_generation = key.slot_generation ();
 
-  if (slot_index > this->total_size_ ||
+  if (slot_index >= this->total_size_ ||
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
       this->search_structure_[slot_index].free_ ||
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
