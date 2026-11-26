@@ -676,7 +676,7 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm,
-      const TAO::unbounded_value_sequence <CORBA::IDLv4::UInt8, CORBA::IDLv4::UInt8_tag> & source) {
+      TAO::unbounded_value_sequence <CORBA::IDLv4::UInt8, CORBA::IDLv4::UInt8_tag> const &source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length))
       {
@@ -687,7 +687,7 @@ namespace TAO {
 
   template <typename stream>
   bool marshal_sequence(stream & strm,
-      const TAO::unbounded_value_sequence <CORBA::IDLv4::Int8, CORBA::IDLv4::Int8_tag> & source) {
+      TAO::unbounded_value_sequence <CORBA::IDLv4::Int8, CORBA::IDLv4::Int8_tag> const &source) {
     ::CORBA::ULong const length = source.length ();
     if (!(strm << length))
       {

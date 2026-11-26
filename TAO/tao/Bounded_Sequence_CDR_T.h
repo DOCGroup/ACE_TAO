@@ -621,7 +621,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm,
-      const TAO::bounded_value_sequence <CORBA::IDLv4::UInt8, MAX, CORBA::IDLv4::UInt8_tag> & source) {
+      TAO::bounded_value_sequence <CORBA::IDLv4::UInt8, MAX, CORBA::IDLv4::UInt8_tag> const &source) {
     ::CORBA::ULong const length = source.length ();
     if (length > source.maximum () || !(strm << length))
       {
@@ -632,7 +632,7 @@ namespace TAO {
 
   template <typename stream, CORBA::ULong MAX>
   bool marshal_sequence(stream & strm,
-      const TAO::bounded_value_sequence <CORBA::IDLv4::Int8, MAX, CORBA::IDLv4::Int8_tag> & source) {
+      TAO::bounded_value_sequence <CORBA::IDLv4::Int8, MAX, CORBA::IDLv4::Int8_tag> const &source) {
     ::CORBA::ULong const length = source.length ();
     if (length > source.maximum () || !(strm << length))
       {
