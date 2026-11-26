@@ -164,7 +164,7 @@ test_argv_buf ()
 
   // We're going to create a new process that runs this program again,
   // so we need to indicate that it's the child.
-  const ACE_TCHAR *t = ACE_TEXT (".")
+  ACE_TCHAR const *t = ACE_TEXT (".")
                        ACE_DIRECTORY_SEPARATOR_STR
                        ACE_TEXT ("Signal_Test")
                        ACE_PLATFORM_EXE_SUFFIX
@@ -184,7 +184,7 @@ test_argv_buf ()
 static int
 test_argv_quotes ()
 {
-  const ACE_TCHAR *argv_const[] = { ACE_TEXT ("first without quotes"),
+  ACE_TCHAR const *argv_const[] = { ACE_TEXT ("first without quotes"),
                                     ACE_TEXT ("'second in single quotes'"),
                                     ACE_TEXT ("\"third in double quotes\""),
                                     nullptr

@@ -18,8 +18,8 @@ int run_main (int, ACE_TCHAR *[])
   int errors = 0;
   // For this test, the length of the ACE_Obstack must be larger than
   // both of these strings, but less than their sum.
-  const ACE_TCHAR str1[] = ACE_TEXT ("Mary had a little lamb.");
-  const ACE_TCHAR str2[] = ACE_TEXT ("It's fleece was white as snow; but....");
+  ACE_TCHAR const str1[] = ACE_TEXT ("Mary had a little lamb.");
+  ACE_TCHAR const str2[] = ACE_TEXT ("It's fleece was white as snow; but....");
   ACE_Obstack_T<ACE_TCHAR> stack (sizeof (str1) + 1);
 
   for (size_t i = 0; i < ACE_OS::strlen (str1); ++i)
