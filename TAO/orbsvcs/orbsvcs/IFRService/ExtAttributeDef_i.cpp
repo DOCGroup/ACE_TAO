@@ -138,9 +138,9 @@ TAO_ExtAttributeDef_i::fill_description (
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT ("container_id"),
                                             holder);
-  desc.defined_in = holder.fast_rep ();
+  desc.defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   desc.id = this->id_i ();
 
@@ -162,7 +162,7 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
   ACE_Configuration_Section_Key excepts_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          sub_section,
+                                          ACE_TEXT_CHAR_TO_TCHAR (sub_section),
                                           false,
                                           excepts_key);
 
@@ -174,7 +174,7 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (excepts_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
   exceptions.length (count);
   ACE_TString holder;
@@ -182,7 +182,7 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (excepts_key,
                                                 stringified,
                                                 holder);
@@ -191,26 +191,26 @@ TAO_ExtAttributeDef_i::fill_exceptions (CORBA::ExcDescriptionSeq &exceptions,
                                            except_key,
                                            false);
       this->repo_->config ()->get_string_value (except_key,
-                                                "name",
+                                                ACE_TEXT ("name"),
                                                 holder);
-      exceptions[i].name = holder.fast_rep ();
+      exceptions[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
       this->repo_->config ()->get_string_value (except_key,
-                                                "id",
+                                                ACE_TEXT ("id"),
                                                 holder);
-      exceptions[i].id = holder.fast_rep ();
+      exceptions[i].id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
       TAO_ExceptionDef_i impl (this->repo_);
       impl.section_key (except_key);
       exceptions[i].type = impl.type_i ();
 
       this->repo_->config ()->get_string_value (except_key,
-                                                "container_id",
+                                                ACE_TEXT ("container_id"),
                                                 holder);
-      exceptions[i].defined_in = holder.fast_rep ();
+      exceptions[i].defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
       this->repo_->config ()->get_string_value (except_key,
-                                                "version",
+                                                ACE_TEXT ("version"),
                                                 holder);
-      exceptions[i].version = holder.fast_rep ();
+      exceptions[i].version = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
     }
 }
 
@@ -219,24 +219,24 @@ TAO_ExtAttributeDef_i::exceptions (char const *sub_section,
                                    CORBA::ExcDescriptionSeq const &exceptions)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          sub_section,
+                                          ACE_TEXT_CHAR_TO_TCHAR (sub_section),
                                           false);
   ACE_Configuration_Section_Key new_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        sub_section,
+                                        ACE_TEXT_CHAR_TO_TCHAR (sub_section),
                                         true,
                                         new_key);
   CORBA::ULong count = exceptions.length ();
   this->repo_->config ()->set_integer_value (new_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
-  char *stringified {};
+  ACE_TCHAR *stringified {};
   ACE_TString path;
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
       this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
-                                                exceptions[i].id.in (),
+                                                ACE_TEXT_CHAR_TO_TCHAR (exceptions[i].id.in ()),
                                                 path);
       stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->set_string_value (new_key,
