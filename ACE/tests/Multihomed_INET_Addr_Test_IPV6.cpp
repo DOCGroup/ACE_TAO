@@ -42,7 +42,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
   u_short const port = 80;
 
   // ... and as you can see, there are 5 of them
-  const size_t num_secondaries = 5;
+  size_t const num_secondaries = 5;
 
   // Test subject
   ACE_Multihomed_INET_Addr addr;
@@ -56,7 +56,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   // Array of sockaddrs that will repeatedly be passed into the
   // get_addresses accessor of Multihomed_INET_Addr
-  const size_t num_sockaddrs = 6;
+  size_t const num_sockaddrs = 6;
   sockaddr_in6 in_out_sockaddr6[num_sockaddrs];
 
   for (i = 0; i <= num_secondaries; ++i) {

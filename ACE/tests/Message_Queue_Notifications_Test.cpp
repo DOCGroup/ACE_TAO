@@ -90,9 +90,9 @@ public:
   void print_producer_debug_message ();
 
 private:
-  const size_t len_;
-  const size_t hwm_;
-  const size_t lwm_;
+  size_t const len_;
+  size_t const hwm_;
+  size_t const lwm_;
   ACE_Atomic_Op <ACE_SYNCH_MUTEX, int> role_;
 #if defined (ACE_HAS_THREADS)
   ACE_Barrier mq_full_;

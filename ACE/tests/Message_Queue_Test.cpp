@@ -422,8 +422,8 @@ chained_block_test ()
 {
   QUEUE q;
   char const * s = "123456789";      // Will be length 10 when copied to block
-  const size_t slen = 10;
-  const size_t num_blks = 10;
+  size_t const slen = 10;
+  size_t const num_blks = 10;
   ACE_Message_Block b[num_blks];
   size_t i;
   int status = 0;

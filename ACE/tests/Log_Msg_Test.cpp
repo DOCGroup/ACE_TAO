@@ -255,7 +255,7 @@ test_log_msg_features (ACE_TCHAR const *program)
   ACE_TCHAR big[ACE_Log_Record::MAXLOGMSGLEN + 1];
   size_t i = 0;
   static ACE_TCHAR const alphabet[] = ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
-  const size_t j = ACE_OS::strlen (alphabet);
+  size_t const j = ACE_OS::strlen (alphabet);
   while (i < ACE_Log_Record::MAXLOGMSGLEN)
     {
       size_t const index = i++;

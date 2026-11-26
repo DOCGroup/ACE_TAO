@@ -42,7 +42,7 @@ int run_main (int, ACE_TCHAR *[])
   };
 
   // ... and as you can see, there are 5 of them
-  const size_t num_secondaries = 5;
+  size_t const num_secondaries = 5;
 
   // We also need the primary address and the secondary addresses
   // in ACE_UINT32 format in host byte order
@@ -85,7 +85,7 @@ int run_main (int, ACE_TCHAR *[])
 
   // Array of sockaddrs that will repeatedly be passed into the
   // get_addresses accessor of Multihomed_INET_Addr
-  const size_t num_sockaddrs = 6;
+  size_t const num_sockaddrs = 6;
   sockaddr_in in_out_sockaddr[num_sockaddrs];
 
   // Run the test with a varying number of secondary addresses

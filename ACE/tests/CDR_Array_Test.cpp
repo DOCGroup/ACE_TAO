@@ -180,7 +180,7 @@ CDR_Test<T, H>::CDR_Test (int total, int niter, int use_array)
       return;
     }
 
-  const size_t stotal =
+  size_t const stotal =
     (total + 10) * H::size () + sizeof(ACE_UINT32) + ACE_CDR::MAX_ALIGNMENT;
   std::unique_ptr<char[]> const srcbuf (new (std::nothrow) char[stotal]);
   if (!srcbuf)
