@@ -742,9 +742,9 @@ public:
   /// Initialize the object using calls to ACE_OS::thr_self().
   ACE_Thread_ID ();
 
-  ACE_Thread_ID (const ACE_Thread_ID &id);
+  ACE_Thread_ID (ACE_Thread_ID const &id);
 
-  ACE_Thread_ID& operator= (const ACE_Thread_ID &id);
+  ACE_Thread_ID& operator= (ACE_Thread_ID const &id);
 
   /// Get the thread id.
   ACE_thread_t id () const;
@@ -769,10 +769,10 @@ public:
   }
 
   /// Equality operator.
-  bool operator== (const ACE_Thread_ID &) const;
+  bool operator== (ACE_Thread_ID const &) const;
 
   /// Inequality operator.
-  bool operator!= (const ACE_Thread_ID &) const;
+  bool operator!= (ACE_Thread_ID const &) const;
 
 private:
   /// Identify the thread.
@@ -954,10 +954,10 @@ public:
   ACE_TSS_Ref ();
 
   /// Check for equality.
-  bool operator== (const ACE_TSS_Ref &) const;
+  bool operator== (ACE_TSS_Ref const &) const;
 
   /// Check for inequality.
-  bool operator!= (const ACE_TSS_Ref &) const;
+  bool operator!= (ACE_TSS_Ref const &) const;
 
 // private:
   /// ID of thread using a specific key.
@@ -990,10 +990,10 @@ public:
   void key_in_use (int flag) { thread_count_ = flag == 0  ?  -1  :  1; }
 
   /// Check for equality.
-  bool operator== (const ACE_TSS_Info &) const;
+  bool operator== (ACE_TSS_Info const &) const;
 
   /// Check for inequality.
-  bool operator!= (const ACE_TSS_Info &) const;
+  bool operator!= (ACE_TSS_Info const &) const;
 
   /// Dump the state.
   void dump ();
@@ -1149,7 +1149,7 @@ namespace ACE_OS {
   extern ACE_Export
   int cond_init (ACE_cond_t *cv,
                  short type = ACE_DEFAULT_SYNCH_TYPE,
-                 const char *name = nullptr,
+                 char const *name = nullptr,
                  void *arg = nullptr);
 
 #if defined (ACE_LACKS_COND_T)
@@ -1159,7 +1159,7 @@ namespace ACE_OS {
 #endif /* ACE_LACKS_COND_T */
   int cond_init (ACE_cond_t *cv,
                  ACE_condattr_t &attributes,
-                 const char *name = nullptr,
+                 char const *name = nullptr,
                  void *arg = nullptr);
 
 # if defined (ACE_HAS_WCHAR)
@@ -1170,7 +1170,7 @@ namespace ACE_OS {
 #   endif /* ACE_LACKS_COND_T */
   int cond_init (ACE_cond_t *cv,
                  short type,
-                 const wchar_t *name,
+                 wchar_t const *name,
                  void *arg = nullptr);
 
 #   if defined (ACE_LACKS_COND_T)
@@ -1180,7 +1180,7 @@ namespace ACE_OS {
 #   endif /* ACE_LACKS_COND_T */
   int cond_init (ACE_cond_t *cv,
                  ACE_condattr_t &attributes,
-                 const wchar_t *name,
+                 wchar_t const *name,
                  void *arg = nullptr);
 # endif /* ACE_HAS_WCHAR */
 
@@ -1230,7 +1230,7 @@ namespace ACE_OS {
                   int manual_reset = 0,
                   int initial_state = 0,
                   int type = ACE_DEFAULT_SYNCH_TYPE,
-                  const char *name = nullptr,
+                  char const *name = nullptr,
                   void *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -1240,7 +1240,7 @@ namespace ACE_OS {
                   ACE_condattr_t *attributes,
                   int manual_reset = 0,
                   int initial_state = 0,
-                  const char *name = nullptr,
+                  char const *name = nullptr,
                   void *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -1250,7 +1250,7 @@ namespace ACE_OS {
                   int manual_reset,
                   int initial_state,
                   int type,
-                  const wchar_t *name,
+                  wchar_t const *name,
                   void *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -1260,7 +1260,7 @@ namespace ACE_OS {
                   ACE_condattr_t *attributes,
                   int manual_reset,
                   int initial_state,
-                  const wchar_t *name,
+                  wchar_t const *name,
                   void *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0);
 # endif /* ACE_HAS_WCHAR */
@@ -1288,7 +1288,7 @@ namespace ACE_OS {
   int lwp_getparams (ACE_Sched_Params &);
 
   extern ACE_Export
-  int lwp_setparams (const ACE_Sched_Params &);
+  int lwp_setparams (ACE_Sched_Params const &);
 
   /// @name A set of wrappers for mutex locks.
   /// @{
@@ -1299,7 +1299,7 @@ namespace ACE_OS {
   extern ACE_Export
   int mutex_init (ACE_mutex_t *m,
                   int lock_scope = ACE_DEFAULT_SYNCH_TYPE,
-                  const char *name = nullptr,
+                  char const *name = nullptr,
                   ACE_mutexattr_t *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0,
                   int lock_type = 0);
@@ -1308,7 +1308,7 @@ namespace ACE_OS {
   extern ACE_Export
   int mutex_init (ACE_mutex_t *m,
                   int lock_scope,
-                  const wchar_t *name,
+                  wchar_t const *name,
                   ACE_mutexattr_t *arg = nullptr,
                   LPSECURITY_ATTRIBUTES sa = 0,
                   int lock_type = 0);
@@ -1339,7 +1339,7 @@ namespace ACE_OS {
    */
   extern ACE_Export
   int mutex_lock (ACE_mutex_t *m,
-                  const ACE_Time_Value &timeout);
+                  ACE_Time_Value const &timeout);
 
   /**
    * If @a timeout == 0, calls <ACE_OS::mutex_lock(m)>.  Otherwise,
@@ -1354,7 +1354,7 @@ namespace ACE_OS {
    */
   ACE_NAMESPACE_INLINE_FUNCTION
   int mutex_lock (ACE_mutex_t *m,
-                  const ACE_Time_Value *timeout);
+                  ACE_Time_Value const *timeout);
 
   /// Handle asynchronous thread cancellation cleanup.
   extern ACE_Export
@@ -1399,7 +1399,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
-                            const ACE_TCHAR *name = nullptr,
+                            ACE_TCHAR const *name = nullptr,
                             ACE_mutexattr_t *arg = nullptr,
                             LPSECURITY_ATTRIBUTES sa = 0);
 
@@ -1408,11 +1408,11 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
-                            const ACE_Time_Value &timeout);
+                            ACE_Time_Value const &timeout);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
-                            const ACE_Time_Value *timeout);
+                            ACE_Time_Value const *timeout);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int recursive_mutex_trylock (ACE_recursive_thread_mutex_t *m);
@@ -1449,7 +1449,7 @@ namespace ACE_OS {
   extern ACE_Export
   int rwlock_init (ACE_rwlock_t *rw,
                    int type = ACE_DEFAULT_SYNCH_TYPE,
-                   const ACE_TCHAR *name = nullptr,
+                   ACE_TCHAR const *name = nullptr,
                    void *arg = nullptr);
 
   /// @}
@@ -1459,12 +1459,12 @@ namespace ACE_OS {
   /// Set scheduling parameters.  An id of ACE_SELF indicates, e.g.,
   /// set the parameters on the calling thread.
   extern ACE_Export
-  int sched_params (const ACE_Sched_Params &, ACE_id_t id = ACE_SELF);
+  int sched_params (ACE_Sched_Params const &, ACE_id_t id = ACE_SELF);
   /// @}
 
   /// Find the scheduling class ID that corresponds to the class name.
   extern ACE_Export
-  int scheduling_class (const char *class_name, ACE_id_t &);
+  int scheduling_class (char const *class_name, ACE_id_t &);
 
   /// @name A set of wrappers for semaphores.
   /// @{
@@ -1476,7 +1476,7 @@ namespace ACE_OS {
   int sema_init (ACE_sema_t *s,
                  u_int count,
                  int type = ACE_DEFAULT_SYNCH_TYPE,
-                 const char *name = nullptr,
+                 char const *name = nullptr,
                  void *arg = nullptr,
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
@@ -1486,7 +1486,7 @@ namespace ACE_OS {
                  u_int count,
                  int type,
                  ACE_condattr_t *attributes,
-                 const char *name = nullptr,
+                 char const *name = nullptr,
                  void *arg = nullptr,
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
@@ -1496,7 +1496,7 @@ namespace ACE_OS {
   int sema_init (ACE_sema_t *s,
                  u_int count,
                  int type,
-                 const wchar_t *name,
+                 wchar_t const *name,
                  void *arg = nullptr,
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
@@ -1506,7 +1506,7 @@ namespace ACE_OS {
                  u_int count,
                  int type,
                  ACE_condattr_t *attributes,
-                 const wchar_t *name,
+                 wchar_t const *name,
                  void *arg = nullptr,
                  int max = 0x7fffffff,
                  LPSECURITY_ATTRIBUTES sa = 0);
@@ -1516,7 +1516,7 @@ namespace ACE_OS {
   void sema_avoid_unlink (ACE_sema_t *s, bool avoid_unlink);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int sema_unlink (const char *name);
+  int sema_unlink (char const *name);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sema_post (ACE_sema_t *s);
@@ -1561,20 +1561,20 @@ namespace ACE_OS {
 
   /// Friendly interface to @c priocntl(2).
   extern ACE_Export
-  int set_scheduling_params (const ACE_Sched_Params &,
+  int set_scheduling_params (ACE_Sched_Params const &,
                              ACE_id_t id = ACE_SELF);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int sigtimedwait (const sigset_t *set,
+  int sigtimedwait (sigset_t const *set,
                     siginfo_t *info,
-                    const ACE_Time_Value *timeout);
+                    ACE_Time_Value const *timeout);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sigwait (sigset_t *set,
                int *sig = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int sigwaitinfo (const sigset_t *set,
+  int sigwaitinfo (sigset_t const *set,
                    siginfo_t *info);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -1633,7 +1633,7 @@ namespace ACE_OS {
                   void *stack = nullptr,
                   size_t stacksize = ACE_DEFAULT_THREAD_STACKSIZE,
                   ACE_Base_Thread_Adapter *thread_adapter = nullptr,
-                  const char **thr_name = nullptr);
+                  char const **thr_name = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   bool thr_equal (ACE_thread_t t1, ACE_thread_t t2);
@@ -1708,7 +1708,7 @@ namespace ACE_OS {
   extern ACE_Export
   int thr_set_affinity (ACE_hthread_t thr_id,
                         size_t cpu_set_size,
-                        const cpu_set_t * cpu_mask);
+                        cpu_set_t const * cpu_mask);
 
   extern ACE_Export
   int thr_key_detach (ACE_thread_key_t key);
@@ -1761,7 +1761,7 @@ namespace ACE_OS {
   void thr_self (ACE_hthread_t &);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  const char* thr_name ();
+  char const * thr_name ();
 
   /// Stores a string version of the current thread id into buffer and
   /// returns the size of this thread id in bytes.
@@ -1816,7 +1816,7 @@ namespace ACE_OS {
   int thr_setspecific (ACE_thread_key_t key, void *data);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int thr_sigsetmask (int how, const sigset_t *nsm, sigset_t *osm);
+  int thr_sigsetmask (int how, sigset_t const *nsm, sigset_t *osm);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thr_suspend (ACE_hthread_t target_thread);
@@ -1836,14 +1836,14 @@ namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_init (ACE_thread_mutex_t *m,
                          int lock_type = 0,
-                         const char *name = nullptr,
+                         char const *name = nullptr,
                          ACE_mutexattr_t *arg = nullptr);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_init (ACE_thread_mutex_t *m,
                          int lock_type,
-                         const wchar_t *name,
+                         wchar_t const *name,
                          ACE_mutexattr_t *arg = nullptr);
 #endif /* ACE_HAS_WCHAR */
 
@@ -1852,11 +1852,11 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_lock (ACE_thread_mutex_t *m,
-                         const ACE_Time_Value &timeout);
+                         ACE_Time_Value const &timeout);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_lock (ACE_thread_mutex_t *m,
-                         const ACE_Time_Value *timeout);
+                         ACE_Time_Value const *timeout);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int thread_mutex_trylock (ACE_thread_mutex_t *m);
@@ -1875,12 +1875,12 @@ namespace ACE_OS {
    * valid for the life of @a object.
    */
   extern ACE_Export
-  void unique_name (const void *object,
+  void unique_name (void const *object,
                     char *name,
                     size_t length);
 #if defined (ACE_USES_WCHAR)
   extern ACE_Export
-  void unique_name (const void *object,
+  void unique_name (void const *object,
                     wchar_t *name,
                     size_t length);
 #endif /* ACE_USES_WCHAR */
@@ -1953,10 +1953,10 @@ struct ACE_eventdata_t
  */
 class ACE_Export ACE_event_t
 {
-  friend int ACE_OS::event_init (ACE_event_t *, int, int, int, const char *,
+  friend int ACE_OS::event_init (ACE_event_t *, int, int, int, char const *,
                                  void *, int);
   friend int ACE_OS::event_init (ACE_event_t *, int, ACE_condattr_t *, int,
-                                 int, const char *, void *, int);
+                                 int, char const *, void *, int);
   friend int ACE_OS::event_destroy (ACE_event_t *);
   friend int ACE_OS::event_wait (ACE_event_t *);
   friend int ACE_OS::event_timedwait (ACE_event_t *, ACE_Time_Value *, int);

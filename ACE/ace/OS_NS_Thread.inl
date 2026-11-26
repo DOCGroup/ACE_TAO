@@ -286,7 +286,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 ACE_INLINE int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
-                   const char *name,
+                   char const *name,
                    void *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::cond_init");
@@ -333,7 +333,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 ACE_INLINE int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
-                   const wchar_t *name,
+                   wchar_t const *name,
                    void *arg)
 {
   return ACE_OS::cond_init (cv, attributes, ACE_Wide_To_Ascii (name).char_rep (), arg);
@@ -342,7 +342,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv, short type, wchar_t const *name, void *arg)
 {
   return ACE_OS::cond_init (cv, type, ACE_Wide_To_Ascii (name).char_rep (), arg);
 }
@@ -456,7 +456,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 
 ACE_INLINE int
 ACE_OS::mutex_lock (ACE_mutex_t *m,
-                    const ACE_Time_Value *timeout)
+                    ACE_Time_Value const *timeout)
 {
   return timeout == nullptr ? ACE_OS::mutex_lock (m) : ACE_OS::mutex_lock (m, *timeout);
 }
@@ -472,7 +472,7 @@ ACE_OS::event_init (ACE_event_t *event,
                     int manual_reset,
                     int initial_state,
                     int type,
-                    const char *name,
+                    char const *name,
                     void *arg,
                     LPSECURITY_ATTRIBUTES sa)
 {
@@ -486,7 +486,7 @@ ACE_OS::event_init (ACE_event_t *event,
                     int manual_reset,
                     int initial_state,
                     int type,
-                    const wchar_t *name,
+                    wchar_t const *name,
                     void *arg,
                     LPSECURITY_ATTRIBUTES sa)
 {
@@ -525,7 +525,7 @@ ACE_OS::event_init (ACE_event_t *event,
                     ACE_condattr_t *attributes,
                     int manual_reset,
                     int initial_state,
-                    const wchar_t *name,
+                    wchar_t const *name,
                     void *arg,
                     LPSECURITY_ATTRIBUTES sa)
 {
@@ -740,7 +740,7 @@ ACE_OS::recursive_mutex_destroy (ACE_recursive_thread_mutex_t *m)
 
 ACE_INLINE int
 ACE_OS::recursive_mutex_init (ACE_recursive_thread_mutex_t *m,
-                              const ACE_TCHAR *name,
+                              ACE_TCHAR const *name,
                               ACE_mutexattr_t *arg,
                               LPSECURITY_ATTRIBUTES sa)
 {
@@ -836,7 +836,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m)
 
 ACE_INLINE int
 ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
-                              const ACE_Time_Value &timeout)
+                              ACE_Time_Value const &timeout)
 {
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_RECURSIVE_MUTEXES)
@@ -906,7 +906,7 @@ ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
 
 ACE_INLINE int
 ACE_OS::recursive_mutex_lock (ACE_recursive_thread_mutex_t *m,
-                              const ACE_Time_Value *timeout)
+                              ACE_Time_Value const *timeout)
 {
   return timeout == nullptr
     ? ACE_OS::recursive_mutex_lock (m)
@@ -1397,7 +1397,7 @@ ACE_OS::rwlock_destroy (ACE_rwlock_t *rw)
 ACE_INLINE int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      int type,
-                     const ACE_TCHAR *name,
+                     ACE_TCHAR const *name,
                      void *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::rwlock_init");
@@ -1527,7 +1527,7 @@ ACE_INLINE int
 ACE_OS::sema_init (ACE_sema_t *s,
                    u_int count,
                    int type,
-                   const char *name,
+                   char const *name,
                    void *arg,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
@@ -1541,7 +1541,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    u_int count,
                    int type,
                    ACE_condattr_t *attributes,
-                   const char *name,
+                   char const *name,
                    void *arg,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
@@ -1699,7 +1699,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
   if (type == USYNC_THREAD)
     {
       // Create systemwide unique name for semaphore
-      ACE_OS::unique_name ((const void *) s,
+      ACE_OS::unique_name ((void const *) s,
                             uname,
                             ACE_UNIQUE_NAME_LEN);
       name = uname;
@@ -1878,7 +1878,7 @@ ACE_INLINE int
 ACE_OS::sema_init (ACE_sema_t *s,
                    u_int count,
                    int type,
-                   const wchar_t *name,
+                   wchar_t const *name,
                    void *arg,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
@@ -1892,7 +1892,7 @@ ACE_OS::sema_init (ACE_sema_t *s,
                    u_int count,
                    int type,
                    ACE_condattr_t *attributes,
-                   const wchar_t *name,
+                   wchar_t const *name,
                    void *arg,
                    int max,
                    LPSECURITY_ATTRIBUTES sa)
@@ -1941,7 +1941,7 @@ ACE_OS::sema_avoid_unlink (ACE_sema_t *s, bool avoid_unlink)
 }
 
 ACE_INLINE int
-ACE_OS::sema_unlink (const char *name)
+ACE_OS::sema_unlink (char const *name)
 {
 #if defined (ACE_HAS_POSIX_SEM) && !defined (ACE_LACKS_SEM_UNLINK)
   return ::sem_unlink (name);
@@ -2508,9 +2508,9 @@ ACE_OS::semop (int int_id, struct sembuf *sops, size_t nsops)
 }
 
 ACE_INLINE int
-ACE_OS::sigtimedwait (const sigset_t *sset,
+ACE_OS::sigtimedwait (sigset_t const *sset,
                       siginfo_t *info,
-                      const ACE_Time_Value *timeout)
+                      ACE_Time_Value const *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::sigtimedwait");
 #if defined (ACE_HAS_SIGTIMEDWAIT)
@@ -2571,7 +2571,7 @@ ACE_OS::sigwait (sigset_t *sset, int *sig)
 }
 
 ACE_INLINE int
-ACE_OS::sigwaitinfo (const sigset_t *sset,
+ACE_OS::sigwaitinfo (sigset_t const *sset,
                      siginfo_t *info)
 {
   ACE_OS_TRACE ("ACE_OS::sigwaitinfo");
@@ -2827,7 +2827,7 @@ ACE_OS::thr_join (ACE_hthread_t thr_handle,
   // direct access to the needed info (GetThreadId) was added at Vista.
   // Win Server 2003 is 5.2; Vista is 6.0
 #   if defined (_WIN32_WINNT) && (_WIN32_WINNT >= 0x0502)
-  const ACE_TEXT_OSVERSIONINFO &info = ACE_OS::get_win32_versioninfo ();
+  ACE_TEXT_OSVERSIONINFO const &info = ACE_OS::get_win32_versioninfo ();
   if (info.dwMajorVersion >= 6 ||
       (info.dwMajorVersion == 5 && info.dwMinorVersion == 2))
     {
@@ -3039,7 +3039,7 @@ ACE_OS::thr_self ()
 #endif /* ACE_HAS_THREADS */
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 ACE_OS::thr_name ()
 {
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_VXTHREADS)
@@ -3246,7 +3246,7 @@ ACE_OS::thr_setprio (ACE_hthread_t ht_id, int priority, int policy)
 
 ACE_INLINE int
 ACE_OS::thr_sigsetmask (int how,
-                        const sigset_t *nsm,
+                        sigset_t const *nsm,
                         sigset_t *osm)
 {
   ACE_OS_TRACE ("ACE_OS::thr_sigsetmask");
@@ -3419,7 +3419,7 @@ ACE_OS::thread_mutex_destroy (ACE_thread_mutex_t *m)
 ACE_INLINE int
 ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
                            int lock_type,
-                           const char *name,
+                           char const *name,
                            ACE_mutexattr_t *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::thread_mutex_init");
@@ -3465,7 +3465,7 @@ ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
 ACE_INLINE int
 ACE_OS::thread_mutex_init (ACE_thread_mutex_t *m,
                            int lock_type,
-                           const wchar_t *name,
+                           wchar_t const *name,
                            ACE_mutexattr_t *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::thread_mutex_init");
@@ -3527,7 +3527,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m)
 
 ACE_INLINE int
 ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
-                           const ACE_Time_Value &timeout)
+                           ACE_Time_Value const &timeout)
 {
   // ACE_OS_TRACE ("ACE_OS::thread_mutex_lock");
 
@@ -3550,7 +3550,7 @@ ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
 
 ACE_INLINE int
 ACE_OS::thread_mutex_lock (ACE_thread_mutex_t *m,
-                           const ACE_Time_Value *timeout)
+                           ACE_Time_Value const *timeout)
 {
   return timeout == nullptr
     ? ACE_OS::thread_mutex_lock (m)
@@ -3703,7 +3703,7 @@ ACE_Thread_ID::ACE_Thread_ID (ACE_thread_t thread_id,
 }
 
 ACE_INLINE
-ACE_Thread_ID::ACE_Thread_ID (const ACE_Thread_ID &id)
+ACE_Thread_ID::ACE_Thread_ID (ACE_Thread_ID const &id)
   : thread_id_ (id.thread_id_),
     thread_handle_ (id.thread_handle_)
 {
@@ -3711,7 +3711,7 @@ ACE_Thread_ID::ACE_Thread_ID (const ACE_Thread_ID &id)
 
 ACE_INLINE
 ACE_Thread_ID&
-ACE_Thread_ID::operator= (const ACE_Thread_ID &id)
+ACE_Thread_ID::operator= (ACE_Thread_ID const &id)
 {
   if (this != std::addressof (id))
     {
@@ -3754,7 +3754,7 @@ ACE_Thread_ID::handle (ACE_hthread_t thread_handle)
 }
 
 ACE_INLINE bool
-ACE_Thread_ID::operator== (const ACE_Thread_ID &rhs) const
+ACE_Thread_ID::operator== (ACE_Thread_ID const &rhs) const
 {
   return
     ACE_OS::thr_cmp (this->thread_handle_, rhs.thread_handle_)
@@ -3762,7 +3762,7 @@ ACE_Thread_ID::operator== (const ACE_Thread_ID &rhs) const
 }
 
 ACE_INLINE bool
-ACE_Thread_ID::operator!= (const ACE_Thread_ID &rhs) const
+ACE_Thread_ID::operator!= (ACE_Thread_ID const &rhs) const
 {
   return !(*this == rhs);
 }

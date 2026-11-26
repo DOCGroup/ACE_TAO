@@ -361,7 +361,7 @@ ACE_TSS_Ref::ACE_TSS_Ref ()
 
 // Check for equality.
 bool
-ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
+ACE_TSS_Ref::operator== (ACE_TSS_Ref const &info) const
 {
   ACE_OS_TRACE ("ACE_TSS_Ref::operator==");
 
@@ -374,7 +374,7 @@ ACE_TSS_Ref::operator== (const ACE_TSS_Ref &info) const
 
 // Check for inequality.
 bool
-ACE_TSS_Ref::operator != (const ACE_TSS_Ref &tss_ref) const
+ACE_TSS_Ref::operator != (ACE_TSS_Ref const &tss_ref) const
 {
   ACE_OS_TRACE ("ACE_TSS_Ref::operator !=");
 
@@ -404,7 +404,7 @@ ACE_TSS_Info::ACE_TSS_Info ()
 
 // Check for equality.
 bool
-ACE_TSS_Info::operator== (const ACE_TSS_Info &info) const
+ACE_TSS_Info::operator== (ACE_TSS_Info const &info) const
 {
   ACE_OS_TRACE ("ACE_TSS_Info::operator==");
 
@@ -413,7 +413,7 @@ ACE_TSS_Info::operator== (const ACE_TSS_Info &info) const
 
 // Check for inequality.
 bool
-ACE_TSS_Info::operator != (const ACE_TSS_Info &info) const
+ACE_TSS_Info::operator != (ACE_TSS_Info const &info) const
 {
   ACE_OS_TRACE ("ACE_TSS_Info::operator !=");
 
@@ -1210,7 +1210,7 @@ ACE_OS::cond_destroy (ACE_cond_t *cv)
 int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
-                   const char *name, void *arg)
+                   char const *name, void *arg)
 {
   return
     ACE_OS::cond_init (cv, static_cast<short> (attributes.type), name, arg);
@@ -1220,7 +1220,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 int
 ACE_OS::cond_init (ACE_cond_t *cv,
                    ACE_condattr_t &attributes,
-                   const wchar_t *name, void *arg)
+                   wchar_t const *name, void *arg)
 {
   return
     ACE_OS::cond_init (cv, static_cast<short> (attributes.type), name, arg);
@@ -1228,7 +1228,7 @@ ACE_OS::cond_init (ACE_cond_t *cv,
 # endif /* ACE_HAS_WCHAR */
 
 int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv, short type, char const *name, void *arg)
 {
   ACE_OS_TRACE ("ACE_OS::cond_init");
 # if defined (ACE_HAS_THREADS)
@@ -1264,7 +1264,7 @@ ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
 
 # if defined (ACE_HAS_WCHAR)
 int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, const wchar_t *name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv, short type, wchar_t const *name, void *arg)
 {
   ACE_OS_TRACE ("ACE_OS::cond_init");
 #   if defined (ACE_HAS_THREADS)
@@ -1664,7 +1664,7 @@ ACE_OS::cond_timedwait (ACE_cond_t *cv,
 }
 #else
 int
-ACE_OS::cond_init (ACE_cond_t *cv, short type, const char *name, void *arg)
+ACE_OS::cond_init (ACE_cond_t *cv, short type, char const *name, void *arg)
 {
   ACE_condattr_t attributes;
   if (ACE_OS::condattr_init (attributes, type) == 0
@@ -1918,7 +1918,7 @@ ACE_OS::cond_wait (ACE_cond_t *cv,
 int
 ACE_OS::mutex_init (ACE_mutex_t *m,
                     int lock_scope,
-                    const char *name,
+                    char const *name,
                     ACE_mutexattr_t *attributes,
                     LPSECURITY_ATTRIBUTES sa,
                     int lock_type)
@@ -2113,7 +2113,7 @@ ACE_OS::mutex_destroy (ACE_mutex_t *m)
 int
 ACE_OS::mutex_init (ACE_mutex_t *m,
                     int lock_scope,
-                    const wchar_t *name,
+                    wchar_t const *name,
                     ACE_mutexattr_t *attributes,
                     LPSECURITY_ATTRIBUTES sa,
                     int lock_type)
@@ -2247,7 +2247,7 @@ ACE_OS::mutex_lock (ACE_mutex_t *m,
 
 int
 ACE_OS::mutex_lock (ACE_mutex_t *m,
-                    const ACE_Time_Value &timeout)
+                    ACE_Time_Value const &timeout)
 {
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_MUTEX_TIMEOUTS)
 
@@ -2682,7 +2682,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_eventdata_t)
 namespace {
   int eventdata_init (ACE_eventdata_t *evtdata, int type, int manual_reset,
                       int initial_state, ACE_condattr_t *attributes,
-                      const char *name, void *arg, int init_condition = 1,
+                      char const *name, void *arg, int init_condition = 1,
                       int init_mutex = 1)
   {
     evtdata->type_ = type;
@@ -2711,7 +2711,7 @@ namespace {
   }
 
   template <size_t N, size_t M>
-  void format_name (char (&str)[N], const char *name, const char (&suffix)[M])
+  void format_name (char (&str)[N], char const *name, const char (&suffix)[M])
   {
     ACE_OS::strsncpy (str, name, N - M + 1);
     ACE_OS::strcat (str, suffix);
@@ -2725,7 +2725,7 @@ ACE_OS::event_init (ACE_event_t *event,
                     ACE_condattr_t *attributes,
                     int manual_reset,
                     int initial_state,
-                    const char *name,
+                    char const *name,
                     void *arg,
                     LPSECURITY_ATTRIBUTES sa)
 {
@@ -2757,7 +2757,7 @@ ACE_OS::event_init (ACE_event_t *event,
 
   if (type == USYNC_PROCESS)
     {
-      const char *name_p = name;
+      char const *name_p = name;
       bool owner = false;
       // Let's see if the shared memory entity already exists.
       ACE_HANDLE fd = ACE_OS::shm_open (ACE_TEXT_CHAR_TO_TCHAR (name_p),
@@ -3239,7 +3239,7 @@ ACE_OS::lwp_getparams (ACE_Sched_Params &sched_params)
 }
 
 int
-ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
+ACE_OS::lwp_setparams (ACE_Sched_Params const &sched_params)
 {
   ACE_UNUSED_ARG (sched_params);
   ACE_NOTSUP_RETURN (-1);
@@ -3248,7 +3248,7 @@ ACE_OS::lwp_setparams (const ACE_Sched_Params &sched_params)
 #if defined ACE_HAS_THREADS && defined ACE_LACKS_RWLOCK_T
 namespace {
 struct UniqueName {
-  UniqueName (int type, const void *addr)
+  UniqueName (int type, void const *addr)
   {
 #ifdef ACE_WIN32
     if (type == USYNC_THREAD)
@@ -3263,7 +3263,7 @@ struct UniqueName {
     ACE_OS::unique_name (addr, &this->buffer_[0], ACE_UNIQUE_NAME_LEN);
   }
 
-  operator const ACE_TCHAR * () const
+  operator ACE_TCHAR const * () const
   {
 #ifdef ACE_WIN32
     if (!this->named_)
@@ -3319,7 +3319,7 @@ struct RWLockCleaner {
 int
 ACE_OS::rwlock_init (ACE_rwlock_t *rw,
                      int type,
-                     const ACE_TCHAR *,
+                     ACE_TCHAR const *,
                      void *arg)
 {
   // ACE_OS_TRACE ("ACE_OS::rwlock_init");
@@ -3378,7 +3378,7 @@ ACE_OS::rwlock_init (ACE_rwlock_t *rw,
 #endif /* ! ACE_HAS_THREADS || ACE_LACKS_RWLOCK_T */
 
 int
-ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
+ACE_OS::sched_params (ACE_Sched_Params const &sched_params,
                       ACE_id_t id)
 {
   ACE_OS_TRACE ("ACE_OS::sched_params");
@@ -3512,13 +3512,13 @@ ACE_OS::sched_params (const ACE_Sched_Params &sched_params,
 }
 
 int
-ACE_OS::scheduling_class (const char */*class_name*/, ACE_id_t &/*id*/)
+ACE_OS::scheduling_class (char const */*class_name*/, ACE_id_t &/*id*/)
 {
   ACE_NOTSUP_RETURN (-1);
 }
 
 int
-ACE_OS::set_scheduling_params (const ACE_Sched_Params &/*sched_params*/, ACE_id_t /*id*/)
+ACE_OS::set_scheduling_params (ACE_Sched_Params const &/*sched_params*/, ACE_id_t /*id*/)
 {
   ACE_NOTSUP_RETURN (-1);
 }
@@ -3677,7 +3677,7 @@ ACE_OS::thr_create (ACE_THR_FUNC func,
                     void *stack,
                     size_t stacksize,
                     ACE_Base_Thread_Adapter *thread_adapter,
-                    const char **thr_name)
+                    char const **thr_name)
 {
   ACE_OS_TRACE ("ACE_OS::thr_create");
 
@@ -4715,7 +4715,7 @@ ACE_OS::thr_get_affinity (ACE_hthread_t thr_id,
 int
 ACE_OS::thr_set_affinity (ACE_hthread_t thr_id,
                           size_t cpu_set_size,
-                          const cpu_set_t * cpu_mask)
+                          cpu_set_t const * cpu_mask)
 {
 #if defined (ACE_HAS_PTHREAD_SETAFFINITY_NP)
   if (::pthread_setaffinity_np (thr_id, cpu_set_size, cpu_mask) != 0)
@@ -5057,7 +5057,7 @@ ACE_OS::thr_setspecific (ACE_thread_key_t key, void *data)
 }
 
 void
-ACE_OS::unique_name (const void *object,
+ACE_OS::unique_name (void const *object,
                      char *name,
                      size_t length)
 {
@@ -5072,7 +5072,7 @@ ACE_OS::unique_name (const void *object,
 
 #if defined (ACE_USES_WCHAR)
 void
-ACE_OS::unique_name (const void *object,
+ACE_OS::unique_name (void const *object,
                      wchar_t *name,
                      size_t length)
 {
