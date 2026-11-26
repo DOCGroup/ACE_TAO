@@ -19,7 +19,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class ACE_Auto_Event
+ * @class ACE_Auto_Event_T
  *
  * @brief Auto Events.
  *

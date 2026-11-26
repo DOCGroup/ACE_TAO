@@ -58,9 +58,9 @@ namespace ACE_Utils
   };
 
   /**
-   * @class ACE_UUID
+   * @class ACE_Utils::UUID
    *
-   * ACE_UUID represents a Universally Unique IDentifier (UUID) as
+   * UUID represents a Universally Unique IDentifier as
    * described in (the expired) INTERNET-DRAFT specification entitled
    * UUIDs and GUIDs. All instances of UUID are of the time-based
    * variety. That is, the version number part of the timeHiAndVersion
@@ -185,7 +185,7 @@ namespace ACE_Utils
   };
 
   /**
-   * @class ACE_UUID_Generator
+   * @class ACE_Utils::UUID_Generator
    *
    * Singleton class that generates UUIDs.
    *
