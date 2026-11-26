@@ -660,8 +660,8 @@ TAO_AV_UDP_Connector::connect (TAO_FlowSpec_Entry *entry,
           // assume the ports will be OK
           get_new_port = false;
 
-          ACE_Addr *addr;
-          if ((addr = entry->get_peer_addr ()) != nullptr)
+          ACE_Addr * const addr = entry->get_peer_addr ();
+          if (addr != nullptr)
             {
               local_addr = dynamic_cast<ACE_INET_Addr*> (addr);
               ACE_TCHAR buf [BUFSIZ];

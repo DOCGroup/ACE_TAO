@@ -202,10 +202,10 @@ lookup_offer (char const* offer_id,
               char const*& type_name)
 {
   CORBA::ULong index;
-  CosTrading::Offer* offer {};
   this->parse_offer_id (offer_id, type_name, index);
 
-  if ((offer = this->lookup_offer (type_name, index)) == nullptr)
+  CosTrading::Offer* const offer = this->lookup_offer (type_name, index);
+  if (offer == nullptr)
     {
       throw CosTrading::UnknownOfferId (offer_id);
     }
@@ -219,11 +219,10 @@ lookup_offer (char const* offer_id)
 {
   char const* type_name;
   CORBA::ULong index;
-  CosTrading::Offer* offer {};
-
   this->parse_offer_id (offer_id, type_name, index);
 
-  if ((offer = this->lookup_offer (type_name, index)) == nullptr)
+  CosTrading::Offer* const offer = this->lookup_offer (type_name, index);
+  if (offer == nullptr)
     {
       throw CosTrading::UnknownOfferId (offer_id);
     }

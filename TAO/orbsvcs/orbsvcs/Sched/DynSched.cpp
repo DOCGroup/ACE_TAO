@@ -1278,8 +1278,8 @@ ACE_DynScheduler::relate_task_entries ()
 
   for (u_int i {}; i < tasks (); ++i)
   {
-    if ((status = relate_task_entries_recurse (time, task_entries_[i]))
-        != SUCCEEDED)
+    status = relate_task_entries_recurse (time, task_entries_[i]);
+    if (status != SUCCEEDED)
     {
       break;
     }
