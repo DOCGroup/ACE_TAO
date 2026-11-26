@@ -714,7 +714,7 @@ run_tests ()
                         -1);
     }
   {
-    int const result = test_subkey_path (std::addressof(heap_config));
+    int const result = test_subkey_path (std::addressof (heap_config));
     if (result)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -725,7 +725,7 @@ run_tests ()
   }
 
   {
-    int const result = test (std::addressof(heap_config));
+    int const result = test (std::addressof (heap_config));
     if (result)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
@@ -777,7 +777,7 @@ run_tests ()
     }
 
   {
-    int const result = test (std::addressof(pers_config));
+    int const result = test (std::addressof (pers_config));
     if (result)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

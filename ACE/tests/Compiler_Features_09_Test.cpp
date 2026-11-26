@@ -78,7 +78,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
   std::unique_ptr<Base> z;
-  z = std::move(x);
+  z = std::move (x);
   if (Base::destructors != 1)
     {
       status = 1;

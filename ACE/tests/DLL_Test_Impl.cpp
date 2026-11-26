@@ -120,7 +120,7 @@ Child::test ()
   Data f(d);
   Data g;
   g = d;
-  g = std::move(d);
+  g = std::move (d);
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing base exception\n")));
 

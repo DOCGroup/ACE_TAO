@@ -62,10 +62,10 @@ test_duplicates (size_t count)
   ACE_Handle_Set copy_set (handle_set);
   ACE_TEST_ASSERT (copy_set.num_set () + duplicates == sets);
 
-  ACE_Handle_Set const move_set (std::move(handle_set));
+  ACE_Handle_Set const move_set (std::move (handle_set));
   ACE_TEST_ASSERT (move_set.num_set () + duplicates == sets);
 
-  ACE_Handle_Set const move_assign = std::move(copy_set);
+  ACE_Handle_Set const move_assign = std::move (copy_set);
   ACE_TEST_ASSERT (move_assign.num_set () + duplicates == sets);
 }
 
