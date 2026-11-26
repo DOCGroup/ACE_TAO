@@ -652,7 +652,7 @@ ACE_TP_Reactor::resumable_handler ()
 int
 ACE_TP_Reactor::handle_events (ACE_Time_Value &max_wait_time)
 {
-  return this->handle_events (&max_wait_time);
+  return this->handle_events (std::addressof (max_wait_time));
 }
 
 void

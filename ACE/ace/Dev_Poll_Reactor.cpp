@@ -1440,7 +1440,7 @@ ACE_Dev_Poll_Reactor::handle_events (ACE_Time_Value &max_wait_time)
 {
   ACE_TRACE ("ACE_Dev_Poll_Reactor::handle_events");
 
-  return this->handle_events (&max_wait_time);
+  return this->handle_events (std::addressof (max_wait_time));
 }
 
 int

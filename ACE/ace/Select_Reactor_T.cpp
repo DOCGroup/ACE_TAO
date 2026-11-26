@@ -813,7 +813,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handle_events
 {
   ACE_TRACE ("ACE_Select_Reactor_T::handle_events");
 
-  return this->handle_events (&max_wait_time);
+  return this->handle_events (std::addressof (max_wait_time));
 }
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
