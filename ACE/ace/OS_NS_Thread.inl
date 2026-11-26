@@ -68,14 +68,14 @@ ACE_TSS_Emulation::tss_base ()
 
 ACE_INLINE
 ACE_TSS_Emulation::ACE_TSS_DESTRUCTOR
-ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key)
+ACE_TSS_Emulation::tss_destructor (ACE_thread_key_t const key)
 {
   return tss_destructor_ [key];
 }
 
 ACE_INLINE
 void
-ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key,
+ACE_TSS_Emulation::tss_destructor (ACE_thread_key_t const key,
                                    ACE_TSS_DESTRUCTOR destructor)
 {
   tss_destructor_ [key] = destructor;
@@ -83,7 +83,7 @@ ACE_TSS_Emulation::tss_destructor (const ACE_thread_key_t key,
 
 ACE_INLINE
 void *&
-ACE_TSS_Emulation::ts_object (const ACE_thread_key_t key)
+ACE_TSS_Emulation::ts_object (ACE_thread_key_t const key)
 {
 #    if defined (ACE_HAS_VXTHREADS)
     /* If someone wants tss_base make sure they get one.  This

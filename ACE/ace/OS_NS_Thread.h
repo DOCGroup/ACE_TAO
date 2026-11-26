@@ -856,16 +856,16 @@ public:
 
   /// Returns the exit hook associated with the key.  Does _not_ check
   /// for a valid key.
-  static ACE_TSS_DESTRUCTOR tss_destructor (const ACE_thread_key_t key);
+  static ACE_TSS_DESTRUCTOR tss_destructor (ACE_thread_key_t const key);
 
   /// Associates the TSS destructor with the key.  Does _not_ check
   /// for a valid key.
-  static void tss_destructor (const ACE_thread_key_t key,
+  static void tss_destructor (ACE_thread_key_t const key,
                               ACE_TSS_DESTRUCTOR destructor);
 
   /// Accesses the object referenced by key in the current thread's TSS array.
   /// Does _not_ check for a valid key.
-  static void *&ts_object (const ACE_thread_key_t key);
+  static void *&ts_object (ACE_thread_key_t const key);
 
   /**
    * Setup an array to be used for local TSS.  Returns the array
@@ -1033,14 +1033,14 @@ public:
 
   /// Mark the specified key as being in use, if it was not already so marked.
   /// Returns 1 if the had already been marked, 0 if not.
-  int test_and_set (const ACE_thread_key_t key);
+  int test_and_set (ACE_thread_key_t const key);
 
   /// Mark the specified key as not being in use, if it was not already so
   /// cleared.  Returns 1 if the key had already been cleared, 0 if not.
-  int test_and_clear (const ACE_thread_key_t key);
+  int test_and_clear (ACE_thread_key_t const key);
 
   /// Return whether the specific key is marked as in use.
-  bool is_set (const ACE_thread_key_t key) const;
+  bool is_set (ACE_thread_key_t const key) const;
 
 private:
   /// For a given key, find the word and bit number that represent it.
@@ -1804,7 +1804,7 @@ namespace ACE_OS {
   int thr_setprio (ACE_hthread_t ht_id, int priority, int policy = -1);
 
   extern ACE_Export
-  int thr_setprio (const ACE_Sched_Priority prio);
+  int thr_setprio (ACE_Sched_Priority const prio);
 
 # if defined (ACE_HAS_THREAD_SPECIFIC_STORAGE)
   /// @internal Applications should call thr_setspecific

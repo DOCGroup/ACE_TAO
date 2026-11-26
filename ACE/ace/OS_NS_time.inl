@@ -248,7 +248,7 @@ ACE_OS::difftime (time_t t1, time_t t0)
 }
 
 ACE_INLINE ACE_hrtime_t
-ACE_OS::gethrtime (const ACE_HRTimer_Op op)
+ACE_OS::gethrtime (ACE_HRTimer_Op const op)
 {
   ACE_OS_TRACE ("ACE_OS::gethrtime");
 #if defined (ACE_HAS_HI_RES_TIMER)

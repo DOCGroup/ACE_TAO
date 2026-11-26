@@ -454,7 +454,7 @@ ACE_TSS_Keys::find (const u_int key, u_int &word, u_int &bit)
 }
 
 int
-ACE_TSS_Keys::test_and_set (const ACE_thread_key_t key)
+ACE_TSS_Keys::test_and_set (ACE_thread_key_t const key)
 {
   u_int word, bit;
   find (key, word, bit);
@@ -471,7 +471,7 @@ ACE_TSS_Keys::test_and_set (const ACE_thread_key_t key)
 }
 
 int
-ACE_TSS_Keys::test_and_clear (const ACE_thread_key_t key)
+ACE_TSS_Keys::test_and_clear (ACE_thread_key_t const key)
 {
   u_int word, bit;
   find (key, word, bit);
@@ -488,7 +488,7 @@ ACE_TSS_Keys::test_and_clear (const ACE_thread_key_t key)
 }
 
 bool
-ACE_TSS_Keys::is_set (const ACE_thread_key_t key) const
+ACE_TSS_Keys::is_set (ACE_thread_key_t const key) const
 {
   u_int word, bit;
   find (key, word, bit);
@@ -3630,7 +3630,7 @@ static ACE_Int178_Stack_Manager int178_stack_manager;
 
 extern "C" void integrity_task_adapter ()
 {
-  const ACE_hthread_t curr_task = CurrentTask ();
+  ACE_hthread_t const curr_task = CurrentTask ();
 
   ACE_Base_Thread_Adapter *thr_arg {};
   {
@@ -4487,7 +4487,7 @@ ACE_OS::thr_exit (ACE_THR_FUNC_RETURN status)
 # elif defined (ACE_INTEGRITY)
   ACE_UNUSED_ARG (status);
 
-  const ACE_hthread_t curr_task = CurrentTask ();
+  ACE_hthread_t const curr_task = CurrentTask ();
   ACE_INTEGRITY_TSS_Impl* const obj = static_cast<ACE_INTEGRITY_TSS_Impl*> (ACE_Object_Manager::preallocated_object[ACE_Object_Manager::ACE_INTEGRITY_TSS_IMPL]);
   obj->erase (curr_task);
 
@@ -4954,7 +4954,7 @@ ACE_OS::thr_keyfree (ACE_thread_key_t key)
 }
 
 int
-ACE_OS::thr_setprio (const ACE_Sched_Priority prio)
+ACE_OS::thr_setprio (ACE_Sched_Priority const prio)
 {
   // Set the thread priority on the current thread.
   ACE_hthread_t my_thread_id;

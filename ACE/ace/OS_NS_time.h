@@ -186,7 +186,7 @@ namespace ACE_OS
                    time_t t0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_hrtime_t gethrtime (const ACE_HRTimer_Op = ACE_HRTIMER_GETTIME);
+  ACE_hrtime_t gethrtime (ACE_HRTimer_Op const = ACE_HRTIMER_GETTIME);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   struct tm *gmtime (const time_t *clock);
