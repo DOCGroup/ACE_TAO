@@ -21,7 +21,7 @@ class Echo_Client_Request_Interceptor
     public virtual ::CORBA::LocalObject
 {
 public:
-  explicit Echo_Client_Request_Interceptor (const char *orb_id);
+  explicit Echo_Client_Request_Interceptor (char const *orb_id);
   ~Echo_Client_Request_Interceptor () override;
 
   /// Canonical name of the interceptor.
@@ -40,7 +40,7 @@ public:
   void receive_exception (PortableInterceptor::ClientRequestInfo_ptr ri) override;
 
 private:
-  const char *myname_;
+  char const *myname_;
 
   /// The ID of the ORB where this interceptor was created, usually
   /// obtained from the ORBInitInfo.

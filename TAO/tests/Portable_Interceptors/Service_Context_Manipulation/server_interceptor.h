@@ -42,7 +42,7 @@ public:
   void send_other (PortableInterceptor::ServerRequestInfo_ptr) override;
 
 private:
-  const char *myname_;
+  char const *myname_;
 };
 
 #if defined(_MSC_VER)

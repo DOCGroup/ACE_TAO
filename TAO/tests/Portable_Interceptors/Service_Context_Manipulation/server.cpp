@@ -7,7 +7,7 @@
 
 #include <memory>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

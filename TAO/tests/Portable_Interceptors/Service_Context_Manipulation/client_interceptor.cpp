@@ -6,11 +6,11 @@
 #include <cstring>
 
 const IOP::ServiceId service_id = 0xdeadbeef;
-const char *request_msg = "The Echo_Request_Interceptor request message";
-const char *reply_msg = "The Echo_Request_Interceptor reply message";
+char const *request_msg = "The Echo_Request_Interceptor request message";
+char const *reply_msg = "The Echo_Request_Interceptor reply message";
 
 Echo_Client_Request_Interceptor::
-Echo_Client_Request_Interceptor (const char *id)
+Echo_Client_Request_Interceptor (char const *id)
   : myname_ ("Echo_Client_Interceptor"),
     orb_id_ (CORBA::string_dup (id))
 {

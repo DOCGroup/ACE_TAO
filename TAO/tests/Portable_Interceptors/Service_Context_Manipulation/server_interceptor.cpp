@@ -6,8 +6,8 @@
 #include <cstring>
 
 const IOP::ServiceId service_id = 0xdeadbeef;
-const char *request_msg = "The Echo_Request_Interceptor request message";
-const char *reply_msg = "The Echo_Request_Interceptor reply message";
+char const *request_msg = "The Echo_Request_Interceptor request message";
+char const *reply_msg = "The Echo_Request_Interceptor reply message";
 
 Echo_Server_Request_Interceptor::Echo_Server_Request_Interceptor ()
   : myname_ ("Echo_Server_Interceptor")
