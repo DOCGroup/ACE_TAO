@@ -40,14 +40,15 @@ ACE_Naming_Context::info (ACE_TCHAR **strp,
                     ACE_TEXT ("ACE_Naming_Context"),
                     ACE_TEXT ("Proxy for making calls to a Name Server"));
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
     {
-      return -1;
+      *strp = ACE_OS::strdup (buf);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
     }
-  else
-  {
-    ACE_OS::strsncpy (*strp, buf, length);
-  }
+  ACE_OS::strsncpy (*strp, buf, length);
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 

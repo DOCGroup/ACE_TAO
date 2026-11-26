@@ -844,14 +844,15 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::info (ACE_TCHAR **strp, size_t lengt
                     ACE_TEXT ("ACE_Connector"),
                     ACE_TEXT ("# connector factory\n"));
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
     {
-      return -1;
+      *strp = ACE_OS::strdup (buf);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
     }
-  else
-    {
-      ACE_OS::strsncpy (*strp, buf, length);
-    }
+  ACE_OS::strsncpy (*strp, buf, length);
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 

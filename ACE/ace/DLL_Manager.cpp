@@ -369,7 +369,8 @@ ACE_DLL_Handle::get_dll_names (ACE_TCHAR const *dll_name,
 
   // 2. Locate the file suffix, if there is one. Move the '.' and the
   // suffix to base_suffix.
-  if ((pos = base_file.rfind (ACE_TEXT ('.'))) != ACE_TString::npos)
+  pos = base_file.rfind (ACE_TEXT ('.'));
+  if (pos != ACE_TString::npos)
     {
       base_suffix = base_file.substr (pos);
       base_file = base_file.substr (0, pos);

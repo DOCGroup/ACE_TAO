@@ -165,7 +165,8 @@ ACE_Asynch_Read_Stream::open (ACE_Handler &handler,
   proactor = this->get_proactor (proactor, handler);
 
   // Now let us get the implementation initialized.
-  if ((this->implementation_ = proactor->create_asynch_read_stream ()) == nullptr)
+  this->implementation_ = proactor->create_asynch_read_stream ();
+  if (this->implementation_ == nullptr)
     {
       return -1;
     }
@@ -283,7 +284,8 @@ ACE_Asynch_Write_Stream::open (ACE_Handler &handler,
   proactor = this->get_proactor (proactor, handler);
 
   // Now let us get the implementation initialized.
-  if ((this->implementation_ = proactor->create_asynch_write_stream ()) == nullptr)
+  this->implementation_ = proactor->create_asynch_write_stream ();
+  if (this->implementation_ == nullptr)
     {
       return -1;
     }
@@ -401,7 +403,8 @@ ACE_Asynch_Read_File::open (ACE_Handler &handler,
   proactor = this->get_proactor (proactor, handler);
 
   // Now let us get the implementation initialized.
-  if ((this->implementation_ = proactor->create_asynch_read_file ()) == nullptr)
+  this->implementation_ = proactor->create_asynch_read_file ();
+  if (this->implementation_ == nullptr)
     {
       return -1;
     }
@@ -509,7 +512,8 @@ ACE_Asynch_Write_File::open (ACE_Handler &handler,
   proactor = this->get_proactor (proactor, handler);
 
   // Now let us get the implementation initialized.
-  if ((this->implementation_ = proactor->create_asynch_write_file ()) == nullptr)
+  this->implementation_ = proactor->create_asynch_write_file ();
+  if (this->implementation_ == nullptr)
     {
       return -1;
     }
@@ -617,7 +621,8 @@ ACE_Asynch_Accept::open (ACE_Handler &handler,
   proactor = this->get_proactor (proactor, handler);
 
   // Now let us get the implementation initialized.
-  if ((this->implementation_ = proactor->create_asynch_accept ()) == nullptr)
+  this->implementation_ = proactor->create_asynch_accept ();
+  if (this->implementation_ == nullptr)
     {
       return -1;
     }
@@ -724,7 +729,8 @@ ACE_Asynch_Connect::open (ACE_Handler &handler,
   proactor = this->get_proactor (proactor, handler);
 
   // Now let us get the implementation initialized.
-  if ((this->implementation_ = proactor->create_asynch_connect ()) == nullptr)
+  this->implementation_ = proactor->create_asynch_connect ();
+  if (this->implementation_ == nullptr)
     {
       return -1;
     }
@@ -813,7 +819,8 @@ ACE_Asynch_Transmit_File::open (ACE_Handler &handler,
   proactor = this->get_proactor (proactor, handler);
 
   // Now let us get the implementation initialized.
-  if ((this->implementation_ = proactor->create_asynch_transmit_file ()) == nullptr)
+  this->implementation_ = proactor->create_asynch_transmit_file ();
+  if (this->implementation_ == nullptr)
     {
       return -1;
     }
@@ -1196,7 +1203,8 @@ ACE_Asynch_Read_Dgram::open (ACE_Handler &handler,
   proactor = this->get_proactor (proactor, handler);
 
   // Now let us get the implementation initialized.
-  if ((this->implementation_ = proactor->create_asynch_read_dgram ()) == nullptr)
+  this->implementation_ = proactor->create_asynch_read_dgram ();
+  if (this->implementation_ == nullptr)
     {
       return -1;
     }
@@ -1305,7 +1313,8 @@ ACE_Asynch_Write_Dgram::open (ACE_Handler &handler,
   proactor = this->get_proactor (proactor, handler);
 
   // Now let us get the implementation initialized.
-  if ((this->implementation_ = proactor->create_asynch_write_dgram ()) == nullptr)
+  this->implementation_ = proactor->create_asynch_write_dgram ();
+  if (this->implementation_ == nullptr)
     {
       return -1;
     }
