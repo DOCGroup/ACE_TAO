@@ -10,6 +10,8 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Event_T)
@@ -24,9 +26,9 @@ ACE_Event_T<TIME_POLICY>::ACE_Event_T (int manual_reset,
   : ACE_Event_Base ()
 {
   ACE_Condition_Attributes_T<TIME_POLICY> cond_attr (type);
-  if (ACE_OS::event_init (&this->handle_,
+  if (ACE_OS::event_init (std::addressof (this->handle_),
                           type,
-                          &const_cast<ACE_condattr_t &> (cond_attr.attributes ()),
+                          std::addressof (const_cast<ACE_condattr_t &> (cond_attr.attributes ())),
                           manual_reset,
                           initial_state,
                           name,

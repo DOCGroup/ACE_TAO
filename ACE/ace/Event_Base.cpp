@@ -9,6 +9,8 @@
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Event_Base)
@@ -27,7 +29,7 @@ ACE_Event_Base::remove ()
   if (!this->removed_)
     {
       this->removed_ = true;
-      result = ACE_OS::event_destroy (&this->handle_);
+      result = ACE_OS::event_destroy (std::addressof (this->handle_));
     }
   return result;
 }
@@ -35,13 +37,13 @@ ACE_Event_Base::remove ()
 int
 ACE_Event_Base::wait ()
 {
-  return ACE_OS::event_wait (&this->handle_);
+  return ACE_OS::event_wait (std::addressof (this->handle_));
 }
 
 int
 ACE_Event_Base::wait (ACE_Time_Value const *abstime, int use_absolute_time)
 {
-  return ACE_OS::event_timedwait (&this->handle_,
+  return ACE_OS::event_timedwait (std::addressof (this->handle_),
                                   const_cast <ACE_Time_Value *> (abstime),
                                   use_absolute_time);
 }
@@ -49,19 +51,19 @@ ACE_Event_Base::wait (ACE_Time_Value const *abstime, int use_absolute_time)
 int
 ACE_Event_Base::signal ()
 {
-  return ACE_OS::event_signal (&this->handle_);
+  return ACE_OS::event_signal (std::addressof (this->handle_));
 }
 
 int
 ACE_Event_Base::pulse ()
 {
-  return ACE_OS::event_pulse (&this->handle_);
+  return ACE_OS::event_pulse (std::addressof (this->handle_));
 }
 
 int
 ACE_Event_Base::reset ()
 {
-  return ACE_OS::event_reset (&this->handle_);
+  return ACE_OS::event_reset (std::addressof (this->handle_));
 }
 
 void
