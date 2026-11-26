@@ -23,7 +23,7 @@ TAO_COIOP_Profile::object_key_delimiter () const
   return TAO_COIOP_Profile::object_key_delimiter_;
 }
 
-TAO_COIOP_Profile::TAO_COIOP_Profile (const ACE_Utils::UUID& uuid,
+TAO_COIOP_Profile::TAO_COIOP_Profile (ACE_Utils::UUID const& uuid,
                                       TAO::ObjectKey const &object_key,
                                       TAO_GIOP_Message_Version const &version,
                                       TAO_ORB_Core *orb_core)
@@ -257,7 +257,7 @@ TAO_COIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   encap.write_octet (this->version_.minor);
 
   // STRING hostname from profile
-  const ACE_CString * uuid_str = this->endpoint_.uuid_.to_string();
+  ACE_CString const * uuid_str = this->endpoint_.uuid_.to_string();
   encap.write_string (uuid_str->c_str ());
 
   // OCTET SEQUENCE for object key
@@ -297,7 +297,7 @@ TAO_COIOP_Profile::encode_endpoints ()
        i < this->count_;
        ++i)
     {
-      const ACE_CString* uuidstr = endpoint->uuid_.to_string();
+      ACE_CString const* uuidstr = endpoint->uuid_.to_string();
       CORBA::String_var uuid (uuidstr->c_str());
       endpoints[i].uuid = uuid;
       endpoints[i].priority = endpoint->priority ();

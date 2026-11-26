@@ -512,7 +512,7 @@ TAO_UIOP_Acceptor::parse_options (char const *str)
                                 -1);
             }
 
-          const ACE_CString name (opt.substring (0, slot));
+          ACE_CString const name (opt.substring (0, slot));
           ACE_CString const value = opt.substring (slot + 1);
 
           begin = end + 1;

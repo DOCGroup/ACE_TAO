@@ -133,7 +133,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
   ACE_Event_Handler_var svc_handler_auto_ptr (svc_handler);
 
   u_short const port {};
-  const ACE_UINT32 ia_any = INADDR_ANY;
+  ACE_UINT32 const ia_any = INADDR_ANY;
   ACE_INET_Addr local_addr (port, ia_any);
 
 #if defined (ACE_HAS_IPV6)

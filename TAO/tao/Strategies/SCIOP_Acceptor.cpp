@@ -523,7 +523,7 @@ TAO_SCIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_SCIOP_Acceptor::open_i (const ACE_Multihomed_INET_Addr& addr,
+TAO_SCIOP_Acceptor::open_i (ACE_Multihomed_INET_Addr const& addr,
                            ACE_Reactor *reactor)
 {
   TAO_SCIOP_CREATION_STRATEGY *creation_strategy {};

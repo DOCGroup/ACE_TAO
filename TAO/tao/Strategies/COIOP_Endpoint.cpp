@@ -18,7 +18,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_COIOP_Endpoint::TAO_COIOP_Endpoint (const ACE_Utils::UUID& uuid)
+TAO_COIOP_Endpoint::TAO_COIOP_Endpoint (ACE_Utils::UUID const& uuid)
   : TAO_Endpoint (TAO_TAG_COIOP_PROFILE)
     , uuid_ (uuid)
 {
@@ -97,7 +97,7 @@ TAO_COIOP_Endpoint::hash ()
         return this->hash_val_;
       }
 
-    const ACE_CString *stringval = this->uuid_.to_string ();
+    ACE_CString const *stringval = this->uuid_.to_string ();
     this->hash_val_ =
       stringval->hash ();
   }
