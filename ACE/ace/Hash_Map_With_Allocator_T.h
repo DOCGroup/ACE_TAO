@@ -58,29 +58,29 @@ public:
   /// one specified by the invoking entity, then calls the corresponding
   /// method in ACE_Hash_Map_Manager to do the actual work.
   /// @{
-  int bind (const EXT_ID &,
-            const INT_ID &,
+  int bind (EXT_ID const &,
+            INT_ID const &,
             ACE_Allocator *alloc);
 
-  int unbind (const EXT_ID &,
+  int unbind (EXT_ID const &,
               INT_ID &,
               ACE_Allocator *alloc);
 
-  int unbind (const EXT_ID &,
+  int unbind (EXT_ID const &,
               ACE_Allocator *alloc);
 
-  int rebind (const EXT_ID &,
-              const INT_ID &,
+  int rebind (EXT_ID const &,
+              INT_ID const &,
               EXT_ID &,
               INT_ID &,
               ACE_Allocator *alloc);
 
-  int find (const EXT_ID &,
+  int find (EXT_ID const &,
             INT_ID &,
             ACE_Allocator *alloc);
 
   /// Returns 0 if the @a ext_id is in the mapping, otherwise -1.
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             ACE_Allocator *alloc);
 
   int close (ACE_Allocator *alloc);
