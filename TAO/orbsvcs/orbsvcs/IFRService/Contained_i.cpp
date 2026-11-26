@@ -49,10 +49,10 @@ TAO_Contained_i::destroy_i ()
   ACE_Configuration_Section_Key parent_key;
 
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT ("container_id"),
                                             container_id);
 
-  if (container_id == "")
+  if (container_id.empty ())
     {
       parent_key = this->repo_->root_key ();
     }
@@ -71,7 +71,7 @@ TAO_Contained_i::destroy_i ()
 
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (parent_key,
-                                        "defns",
+                                        ACE_TEXT ("defns"),
                                         false,
                                         defns_key);
 
@@ -99,7 +99,7 @@ TAO_Contained_i::id_i ()
                                             ACE_TEXT("id"),
                                             retval);
 
-  return CORBA::string_dup (retval.c_str ());
+  return CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (retval.c_str ()));
 }
 
 void
@@ -118,7 +118,7 @@ TAO_Contained_i::id_i (char const *id)
   ACE_TString tmp;
   if (this->repo_->config ()->get_string_value (
                                   this->repo_->repo_ids_key (),
-                                  id,
+                                  ACE_TEXT_CHAR_TO_TCHAR (id),
                                   tmp) == 0)
     {
       // Repository id already exists.
@@ -144,13 +144,13 @@ TAO_Contained_i::id_i (char const *id)
 
   // Save our path under the new id.
   this->repo_->config ()->set_string_value (this->repo_->repo_ids_key (),
-                                            id,
+                                            ACE_TEXT_CHAR_TO_TCHAR (id),
                                             path);
 
   // Store the new id locally as well.
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "id",
-                                            id);
+                                            ACE_TEXT ("id"),
+                                            ACE_TEXT_CHAR_TO_TCHAR (id));
 }
 
 char *
@@ -171,7 +171,7 @@ TAO_Contained_i::name_i ()
                                             ACE_TEXT("name"),
                                             retval);
 
-  return CORBA::string_dup (retval.c_str ());
+  return CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (retval.c_str ()));
 }
 
 char *
@@ -192,7 +192,7 @@ TAO_Contained_i::version_i ()
                                             ACE_TEXT("version"),
                                             retval);
 
-  return CORBA::string_dup (retval.c_str ());
+  return CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (retval.c_str ()));
 }
 
 void
@@ -218,8 +218,8 @@ TAO_Contained_i::name_i (char const *name)
 
   // Reset the local name.
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "name",
-                                            name);
+                                            ACE_TEXT ("name"),
+                                            ACE_TEXT_CHAR_TO_TCHAR (name));
 
   // Update the absolute name.
   ACE_TString absolute_name;
@@ -228,10 +228,10 @@ TAO_Contained_i::name_i (char const *name)
                                             absolute_name);
 
   absolute_name = absolute_name.substr (0, absolute_name.rfind (':') + 1);
-  absolute_name += name;
+  absolute_name += ACE_TEXT_CHAR_TO_TCHAR (name);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "absolute_name",
+                                            ACE_TEXT ("absolute_name"),
                                             absolute_name);
 
   this->contents_name_update (absolute_name,
@@ -252,8 +252,8 @@ void
 TAO_Contained_i::version_i (char const *version)
 {
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "version",
-                                            version);
+                                            ACE_TEXT ("version"),
+                                            ACE_TEXT_CHAR_TO_TCHAR (version));
 }
 
 CORBA::Container_ptr
@@ -274,7 +274,7 @@ TAO_Contained_i::defined_in_i ()
                                             ACE_TEXT("container_id"),
                                             container_id);
 
-  if (container_id == "")
+  if (container_id.empty ())
     {
       // The repository itself is our container.
       return this->repo_->repo_objref ();
@@ -312,7 +312,7 @@ TAO_Contained_i::absolute_name_i ()
                                             ACE_TEXT("absolute_name"),
                                             absolute_name);
 
-  return CORBA::string_dup (absolute_name.c_str ());
+  return CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (absolute_name.c_str ()));
 }
 
 CORBA::Repository_ptr
