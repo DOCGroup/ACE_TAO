@@ -37,12 +37,12 @@ namespace ACE_OS {
   ACE_TCHAR *dlerror ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_SHLIB_HANDLE dlopen (const ACE_TCHAR *filename,
+  ACE_SHLIB_HANDLE dlopen (ACE_TCHAR const *filename,
                            int mode = ACE_DEFAULT_SHLIB_MODE);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void *dlsym (ACE_SHLIB_HANDLE handle,
-               const ACE_TCHAR *symbol);
+               ACE_TCHAR const *symbol);
   /// @}
 
 } /* namespace ACE_OS */

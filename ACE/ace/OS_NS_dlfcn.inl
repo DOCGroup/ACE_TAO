@@ -50,8 +50,8 @@ ACE_OS::dlerror ()
 {
   ACE_OS_TRACE ("ACE_OS::dlerror");
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)
-  const char *err {};
-  ACE_OSCALL (::dlerror (), const char *, err);
+  char const *err {};
+  ACE_OSCALL (::dlerror (), char const *, err);
   if (err == nullptr)
     {
       return nullptr;
@@ -84,7 +84,7 @@ ACE_OS::dlerror ()
 }
 
 ACE_INLINE ACE_SHLIB_HANDLE
-ACE_OS::dlopen (const ACE_TCHAR *fname,
+ACE_OS::dlopen (ACE_TCHAR const *fname,
                 int mode)
 {
   ACE_OS_TRACE ("ACE_OS::dlopen");
@@ -154,7 +154,7 @@ ACE_OS::dlopen (const ACE_TCHAR *fname,
 
 ACE_INLINE void *
 ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
-               const ACE_TCHAR *sname)
+               ACE_TCHAR const *sname)
 {
   ACE_OS_TRACE ("ACE_OS::dlsym");
 
@@ -171,7 +171,7 @@ ACE_OS::dlsym (ACE_SHLIB_HANDLE handle,
 #elif defined (ACE_VXWORKS)
   char *symbolname = const_cast<char *> (sname);
 #else
-  const char *symbolname = sname;
+  char const *symbolname = sname;
 #endif /* ACE_USES_WCHAR */
 
 # if defined (ACE_HAS_SVR4_DYNAMIC_LINKING)

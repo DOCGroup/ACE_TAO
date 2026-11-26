@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE int
 ACE_OS::poll (struct pollfd *pollfds,
               unsigned long len,
-              const ACE_Time_Value *timeout)
+              ACE_Time_Value const *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::poll");
 #if defined (ACE_HAS_POLL)
@@ -24,7 +24,7 @@ ACE_OS::poll (struct pollfd *pollfds,
 ACE_INLINE int
 ACE_OS::poll (struct pollfd *pollfds,
               unsigned long len,
-              const ACE_Time_Value &timeout)
+              ACE_Time_Value const &timeout)
 {
   ACE_OS_TRACE ("ACE_OS::poll");
 #if defined (ACE_HAS_POLL)
