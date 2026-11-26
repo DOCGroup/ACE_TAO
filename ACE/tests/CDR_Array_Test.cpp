@@ -138,7 +138,7 @@ public:
                        int src_offset = 0, int dst_offset = 0);
   ~CDR_Test ();
 
-  static void ttoh (const T& t, char* s);
+  static void ttoh (T const & t, char* s);
   static T checkval(int i);
 
 private:
@@ -269,7 +269,7 @@ CDR_Test<T, H>::checkval (int i)
 //       s = "ddccbbaa" for little endian machines.
 //
 template<class T, class H> void
-CDR_Test<T, H>::ttoh (const T& t, char* s)
+CDR_Test<T, H>::ttoh (T const & t, char* s)
 {
   const unsigned char *const p =
     reinterpret_cast<const unsigned char*> (&t);
@@ -316,7 +316,7 @@ check_seal (char* pos)
 // returns the alignment of ptr, wrt ACE_CDR::MAX_ALIGNMENT.
 //
 int
-tellalign (const char* const ptr)
+tellalign (char const * const ptr)
 {
   int align = ACE_CDR::MAX_ALIGNMENT;
   while (ptr != ACE_ptr_align_binary(ptr, align))
@@ -586,7 +586,7 @@ CDR_Test<T, H>::do_test (int total, int niter, int use_array,
       {
         T rv;
 
-        const char* src = reinterpret_cast<const char*> ((idata + i));
+        char const * src = reinterpret_cast<char const *> ((idata + i));
         char* dst = reinterpret_cast<char*> ((&rv));
 
         H::swap(src, dst);
@@ -644,7 +644,7 @@ CDR_Test<T, N>::~CDR_Test () = default;
 
 struct DoubleHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::Double");
     }
@@ -664,7 +664,7 @@ struct DoubleHelper
     {
       os.write_double_array (x, n);
     }
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       ACE_CDR::swap_8 (src, dst);
     }
@@ -676,7 +676,7 @@ struct DoubleHelper
 
 struct FloatHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::Float");
     }
@@ -696,7 +696,7 @@ struct FloatHelper
     {
       os.write_float_array (x, n);
     }
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       ACE_CDR::swap_4 (src, dst);
     }
@@ -708,7 +708,7 @@ struct FloatHelper
 
 struct ShortHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::Short");
     }
@@ -728,7 +728,7 @@ struct ShortHelper
     {
       os.write_short_array (x, n);
     }
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       ACE_CDR::swap_2 (src, dst);
     }
@@ -740,7 +740,7 @@ struct ShortHelper
 
 struct LongHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::Long");
     }
@@ -760,7 +760,7 @@ struct LongHelper
     {
       os.write_long_array (x, n);
     }
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       ACE_CDR::swap_4 (src, dst);
     }
@@ -772,7 +772,7 @@ struct LongHelper
 
 struct LongLongHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::LongLong");
     }
@@ -793,7 +793,7 @@ struct LongLongHelper
       os.write_longlong_array (x, n);
     }
 
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       ACE_CDR::swap_8 (src, dst);
     }
@@ -805,7 +805,7 @@ struct LongLongHelper
 
 struct CharHelper
 {
-  static const ACE_TCHAR* name ()
+  static ACE_TCHAR const * name ()
     {
       return ACE_TEXT ("CDR::Char");
     }
@@ -825,7 +825,7 @@ struct CharHelper
     {
       os.write_char_array (x, n);
     }
-  static void swap (const char *src, char *dst)
+  static void swap (char const *src, char *dst)
     {
       *dst = *src;
     }
@@ -835,7 +835,7 @@ struct CharHelper
     }
 };
 
-void usage (const ACE_TCHAR* cmd)
+void usage (ACE_TCHAR const * cmd)
 {
   ACE_ERROR((LM_ERROR,
              ACE_TEXT ("Usage: %s ")

@@ -66,8 +66,8 @@ create_test_file (ACE_TCHAR *filename, int line_length, int num_lines)
       errno = ENOMEM;
       return -1;
     }
-  const char *c = ACE_ALPHABET;
-  const char *d = c;
+  char const *c = ACE_ALPHABET;
+  char const *d = c;
 #if defined (__QNXNTO__) || (defined (ACE_VXWORKS) && (ACE_VXWORKS <= 0x670))
   // For NTO has to applied to open the file, as Mem_Map can map only shared memory
   ACE_Mem_Map mmap_4_open;
