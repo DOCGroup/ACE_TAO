@@ -55,12 +55,13 @@ public:
 
   ~TAO_Constraint_Interpreter ();
 
+  /// @name Constraint evaluation
+  /// Determine whether an offer fits the constraints used to construct the tree.
+  /// @note The original documentation expects these methods to be thread safe.
+  /// @{
   CORBA::Boolean evaluate (CosTrading::Offer* offer);
-
   CORBA::Boolean evaluate (TAO_Constraint_Evaluator& evaluator);
-
-  // Determine whether an offer fits the constraints with which the
-  // tree was constructed. This method is thread safe (hopefully).
+  /// @}
 };
 
 /**
