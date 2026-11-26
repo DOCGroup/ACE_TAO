@@ -1451,7 +1451,7 @@ private:
 };
 
 /**
- * @class ACE_Message_Queue_Ex_Iterator
+ * @class ACE_Message_Queue_Ex_Reverse_Iterator
  *
  * @brief Reverse iterator for the ACE_Message_Queue_Ex.
  */

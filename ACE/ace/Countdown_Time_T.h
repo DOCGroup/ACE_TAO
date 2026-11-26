@@ -21,7 +21,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class ACE_Countdown_Time
+ * @class ACE_Countdown_Time_T
  *
  * @brief Keeps track of the amount of elapsed time.
  *

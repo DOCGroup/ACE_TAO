@@ -53,7 +53,7 @@ public:
 };
 
 /**
- * @class ACE_FPointer_Timer_Policy
+ * @class ACE_FPointer_Time_Policy
  *
  * @brief Implement a time policy based on a function pointer.
  *
@@ -127,7 +127,7 @@ private:
 };
 
 /**
- * @class ACE_Dynamic_Time_Policy_base
+ * @class ACE_Dynamic_Time_Policy_Base
  *
  * @brief Abstract base class for dynamically loaded and/or shared
  *        time policies.

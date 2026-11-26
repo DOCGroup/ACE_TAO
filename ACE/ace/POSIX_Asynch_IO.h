@@ -1034,10 +1034,10 @@ protected:
 };
 
 /**
- * @class ACE_POSIX__Asynch_Write_Dgram_Result
+ * @class ACE_POSIX_Asynch_Write_Dgram_Result
  *
- * @brief This is class provides concrete implementation for
- *        ACE_Asynch_Write_Dgram::Result class.
+ * @brief Provides the concrete implementation for
+ *        ACE_Asynch_Write_Dgram::Result.
  */
 class ACE_Export ACE_POSIX_Asynch_Write_Dgram_Result : public virtual ACE_Asynch_Write_Dgram_Result_Impl,
                                                        public ACE_POSIX_Asynch_Result
