@@ -231,7 +231,7 @@ public:
    * or socket option processing.
    */
   int open (const ACE_INET_Addr &mcast_addr,
-            const ACE_TCHAR *net_if = nullptr,
+            ACE_TCHAR const *net_if = nullptr,
             int reuse_addr = 1);
 
   /// @name Multicast group subscriptions
@@ -268,7 +268,7 @@ public:
    */
   int join (const ACE_INET_Addr &mcast_addr,
             int reuse_addr = 1,               // (see above)
-            const ACE_TCHAR *net_if = nullptr);
+            ACE_TCHAR const *net_if = nullptr);
 
   /// Leave a multicast group on a given interface (or all interfaces, if
   /// supported).
@@ -288,7 +288,7 @@ public:
    * protocol_family, and protocol which we always pass as 0 anyway.
    */
   int leave (const ACE_INET_Addr &mcast_addr,
-             const ACE_TCHAR *net_if = nullptr);
+             ACE_TCHAR const *net_if = nullptr);
   /// @}
 
   /// @name Data transfer
@@ -347,29 +347,29 @@ private:
   /// Subscribe to a multicast address on one or more network interface(s).
   /// (No QoS support.)
   int subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                     const ACE_TCHAR *net_if,
+                     ACE_TCHAR const *net_if,
                      int reuse_addr);
 
   /// Do subscription processing w/out updating the subscription list.
   /// (Layered method for subscribe() processing).
   int subscribe_i (const ACE_INET_Addr &mcast_addr,
                    int reuse_addr = 1,
-                   const ACE_TCHAR *net_if = nullptr);
+                   ACE_TCHAR const *net_if = nullptr);
 
   /// Unsubscribe from a multicast address on one or more network interface(s).
   int unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                       const ACE_TCHAR *net_if = nullptr);
+                       ACE_TCHAR const *net_if = nullptr);
 
   /// Do unsubscription processing w/out udpating subscription list.
   ///  (Layered method for @c unsubscribe processing).
   int unsubscribe_i (const ACE_INET_Addr &mcast_addr,
-                     const ACE_TCHAR *net_if = nullptr);
+                     ACE_TCHAR const *net_if = nullptr);
 
 protected:
   /// Contains common open functionality so that inheriting classes can
   /// reuse it.
   int open_i (const ACE_INET_Addr &mcast_addr,        // Bound & sendto address.
-              const ACE_TCHAR *net_if = nullptr,      // Net interface for sends.
+              ACE_TCHAR const *net_if = nullptr,      // Net interface for sends.
               int reuse_addr = 1);
 
   /// Empty the dynamic subscription list.

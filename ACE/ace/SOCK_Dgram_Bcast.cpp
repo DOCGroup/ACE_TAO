@@ -75,7 +75,7 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
                                             int protocol_family,
                                             int protocol,
                                             int reuse_addr,
-                                            const ACE_TCHAR *host_name)
+                                            ACE_TCHAR const *host_name)
   : ACE_SOCK_Dgram (local, protocol_family, protocol, reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast");
@@ -95,7 +95,7 @@ ACE_SOCK_Dgram_Bcast::open (const ACE_Addr &local,
                             int protocol_family,
                             int protocol,
                             int reuse_addr,
-                            const ACE_TCHAR *host_name)
+                            ACE_TCHAR const *host_name)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::open");
 
@@ -111,7 +111,7 @@ ACE_SOCK_Dgram_Bcast::open (const ACE_Addr &local,
 // Make broadcast available for Datagram socket.
 
 int
-ACE_SOCK_Dgram_Bcast::mk_broadcast (const ACE_TCHAR *host_name)
+ACE_SOCK_Dgram_Bcast::mk_broadcast (ACE_TCHAR const *host_name)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::mk_broadcast");
 

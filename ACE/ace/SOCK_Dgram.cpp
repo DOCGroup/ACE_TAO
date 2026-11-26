@@ -379,14 +379,14 @@ ACE_SOCK_Dgram::recv (iovec iov[],
       for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
 #if defined (IP_RECVDSTADDR)
         if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_RECVDSTADDR) {
-          to_addr->set_address ((const char *) (ACE_CMSG_DATA (ptr)),
+          to_addr->set_address ((char const *) (ACE_CMSG_DATA (ptr)),
                                 sizeof (struct in_addr),
                                 0);
           break;
         }
 #else
         if (ptr->cmsg_level == IPPROTO_IP && ptr->cmsg_type == IP_PKTINFO) {
-          to_addr->set_address ((const char *) &(((in_pktinfo *) (ACE_CMSG_DATA (ptr)))->ipi_addr),
+          to_addr->set_address ((char const *) &(((in_pktinfo *) (ACE_CMSG_DATA (ptr)))->ipi_addr),
                                 sizeof (struct in_addr),
                                 0);
           break;
@@ -399,7 +399,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
     else if (to_addr->get_type() == AF_INET6) {
       for (cmsghdr *ptr = ACE_CMSG_FIRSTHDR (&recv_msg); ptr; ptr = ACE_CMSG_NXTHDR (&recv_msg, ptr)) {
         if (ptr->cmsg_level == IPPROTO_IPV6 && ptr->cmsg_type == IPV6_PKTINFO) {
-          to_addr->set_address ((const char *) &(((in6_pktinfo *)(ACE_CMSG_DATA (ptr)))->ipi6_addr),
+          to_addr->set_address ((char const *) &(((in6_pktinfo *)(ACE_CMSG_DATA (ptr)))->ipi6_addr),
                                 sizeof (struct in6_addr),
                                 0);
 
@@ -590,7 +590,7 @@ ACE_SOCK_Dgram::send (const void *buf,
 }
 
 int
-ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
+ACE_SOCK_Dgram::set_nic (ACE_TCHAR const *net_if,
                          int addr_family)
 {
 #if defined (IP_MULTICAST_IF) && (IP_MULTICAST_IF != 0)
@@ -694,7 +694,7 @@ ACE_SOCK_Dgram::set_nic (const ACE_TCHAR *net_if,
 int
 ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
                                        const ACE_INET_Addr &mcast_addr,
-                                       const ACE_TCHAR *net_if)
+                                       ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::make_multicast_ifaddr");
   ip_mreq  lmreq;       // Scratch copy.
@@ -736,7 +736,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
                   if (sa->sa_family == AF_INET)
                     {
                       const void *addr = &(((sockaddr_in *)sa)->sin_addr);
-                      set_result = interface_addr.set_address ((const char*) addr, 4, 0);
+                      set_result = interface_addr.set_address ((char const *) addr, 4, 0);
                     }
                 }
               pAddrs = pAddrs->Next;
@@ -816,7 +816,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
 int
 ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
                                         const ACE_INET_Addr &mcast_addr,
-                                        const ACE_TCHAR *net_if)
+                                        ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::make_multicast_ifaddr6");
   ipv6_mreq  lmreq;       // Scratch copy.

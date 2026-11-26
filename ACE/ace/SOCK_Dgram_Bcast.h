@@ -56,7 +56,7 @@ public:
                         int protocol_family = PF_INET,
                         int protocol = 0,
                         int reuse_addr = 0,
-                        const ACE_TCHAR *host_name = nullptr);
+                        ACE_TCHAR const *host_name = nullptr);
 
   ~ACE_SOCK_Dgram_Bcast ();
 
@@ -67,7 +67,7 @@ public:
             int protocol_family = PF_INET,
             int protocol = 0,
             int reuse_addr = 0,
-            const ACE_TCHAR *host_name = nullptr);
+            ACE_TCHAR const *host_name = nullptr);
 
   /// Close up and release dynamically allocated resources.
   int close ();
@@ -111,7 +111,7 @@ public:
 
 private:
   /// Make broadcast available for Datagram socket.
-  int mk_broadcast (const ACE_TCHAR *host_name);
+  int mk_broadcast (ACE_TCHAR const *host_name);
 
   /// Points to the head of the list of broadcast interfaces.
   ACE_Bcast_Node *if_list_ {};

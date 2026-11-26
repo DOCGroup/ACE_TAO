@@ -164,7 +164,7 @@ ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast ()
 
 int
 ACE_SOCK_Dgram_Mcast::open (const ACE_INET_Addr &mcast_addr,
-                            const ACE_TCHAR *net_if,
+                            ACE_TCHAR const *net_if,
                             int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::open");
@@ -192,7 +192,7 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_INET_Addr &mcast_addr,
 
 int
 ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
-                              const ACE_TCHAR *net_if,
+                              ACE_TCHAR const *net_if,
                               int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::open_i");
@@ -283,7 +283,7 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
 
 int
 ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                                     const ACE_TCHAR *net_if,
+                                     ACE_TCHAR const *net_if,
                                      int reuse_addr)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe_ifs");
@@ -512,7 +512,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 int
 ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
                             int reuse_addr,
-                            const ACE_TCHAR *net_if)
+                            ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::join");
   ACE_INET_Addr subscribe_addr = mcast_addr;
@@ -595,7 +595,7 @@ ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
 int
 ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
                                    int reuse_addr,
-                                   const ACE_TCHAR *net_if)
+                                   ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::subscribe_i");
   ip_mreq  mreq;
@@ -661,7 +661,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
 
 int
 ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
-                                       const ACE_TCHAR *net_if)
+                                       ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe_ifs");
 
@@ -863,7 +863,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 
 int
 ACE_SOCK_Dgram_Mcast::leave (const ACE_INET_Addr &mcast_addr,
-                             const ACE_TCHAR *net_if)
+                             ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::leave");
   // Unsubscribe.
@@ -900,7 +900,7 @@ ACE_SOCK_Dgram_Mcast::leave (const ACE_INET_Addr &mcast_addr,
 // Attempt unsubscribe and return status.
 int
 ACE_SOCK_Dgram_Mcast::unsubscribe_i (const ACE_INET_Addr &mcast_addr,
-                                     const ACE_TCHAR *net_if)
+                                     ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe_i");
 

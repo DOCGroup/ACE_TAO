@@ -21,7 +21,7 @@ ACE_SOCK_Dgram_Bcast::send (const void *buf,
 
   sockaddr *saddr = (sockaddr *) addr.get_addr ();
   int len = addr.get_size ();
-  return ACE_OS::sendto (this->get_handle (), (const char *) buf, n, flags,
+  return ACE_OS::sendto (this->get_handle (), (char const *) buf, n, flags,
                          (struct sockaddr *) saddr, len);
 }
 
