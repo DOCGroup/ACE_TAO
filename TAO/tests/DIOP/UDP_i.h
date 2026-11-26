@@ -49,8 +49,8 @@ private:
 
   ACE_Hash_Map_Manager_Ex < CORBA::String_var,
                             CORBA::Long,
-                            ACE_Hash < const char * >,
-                            ACE_Equal_To < const char * >,
+                            ACE_Hash<char const *>,
+                            ACE_Equal_To<char const *>,
                             ACE_Null_Mutex > request_id_table_;
 };
 

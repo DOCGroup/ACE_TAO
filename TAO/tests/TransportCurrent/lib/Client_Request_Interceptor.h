@@ -84,7 +84,7 @@ namespace Test
   private:
     /// Implementation method, every interception point will have to
     /// call it, supplying a name.
-    void test_transport_current (const ACE_TCHAR* amethod);
+    void test_transport_current (ACE_TCHAR const *amethod);
 
   private:
     ///The ID of the ORB this interceptor is registered with.

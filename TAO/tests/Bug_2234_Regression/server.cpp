@@ -550,7 +550,7 @@ public:
     const CORBA::Any           *holding {};
     const Test::MyVarStruct    *vS {};
     const Test::MyNonVarStruct *fS {};
-    const char                 *pString {};
+    char const *pString {};
     CORBA::Long                theLong {};
     const Test::MyVarUnion     *vU {};
     const Test::MyNonVarUnion  *fU {};
