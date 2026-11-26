@@ -1,10 +1,10 @@
 /**
  *  @file   Notify_PushConsumer.h
  *
- * This is a utility class is to be used by clients of the Notification
+ * This utility class is used by clients of the Notification
  * Service to implement the servant for CosNotifyComm::PushConsumer
  *
- * = HOW-TO
+ * @par Usage
  * 1. Derive from Notify_ProxyConsumer and implement @c push().
  * 2. Create the servant on the heap.(refcounted servant).
  * 3. Initialize the object, provide a POA.

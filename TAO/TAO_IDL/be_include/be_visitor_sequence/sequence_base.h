@@ -2,7 +2,7 @@
  *  @file    sequence_base.h
  *
  *  Concrete visitor for the Sequence class
- *  This one provides code generation for the base typ of the Sequence node.
+ *  This one provides code generation for the base type of the Sequence node.
  *
  *  @author Aniruddha Gokhale
  */
@@ -17,7 +17,7 @@
  *
  * This is a concrete visitor to generate the template parameters
  * for a TAO_*_Sequence instantiation.
- * = BUGS
+ * @par Known issues
  * The class name is misleading, eventually this class could be
  * used to generate code in other files, not only the client
  * header.
