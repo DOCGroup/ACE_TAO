@@ -941,7 +941,7 @@ ACE_Dev_Poll_Reactor::work_pending (ACE_Time_Value const & max_wait_time)
   ACE_MT (ACE_Countdown_Time countdown (std::addressof (mwt)));
 
   Token_Guard guard (this->token_);
-  int const result = guard.acquire_quietly (&mwt);
+  int const result = guard.acquire_quietly (std::addressof (mwt));
 
   // If the guard is NOT the owner just return the retval
   if (!guard.is_owner ())
@@ -952,7 +952,7 @@ ACE_Dev_Poll_Reactor::work_pending (ACE_Time_Value const & max_wait_time)
   // Update the countdown to reflect time waiting for the mutex.
   ACE_MT (countdown.update ());
 
-  return this->work_pending_i (&mwt);
+  return this->work_pending_i (std::addressof (mwt));
 }
 
 int

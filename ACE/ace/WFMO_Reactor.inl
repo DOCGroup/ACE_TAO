@@ -6,6 +6,8 @@
 
 #if defined (ACE_WIN32)
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /************************************************************/
@@ -879,13 +881,13 @@ ACE_WFMO_Reactor::uses_event_associations ()
 ACE_INLINE int
 ACE_WFMO_Reactor::handle_events (ACE_Time_Value &how_long)
 {
-  return this->event_handling (&how_long, FALSE);
+  return this->event_handling (std::addressof (how_long), FALSE);
 }
 
 ACE_INLINE int
 ACE_WFMO_Reactor::alertable_handle_events (ACE_Time_Value &how_long)
 {
-  return this->event_handling (&how_long, TRUE);
+  return this->event_handling (std::addressof (how_long), TRUE);
 }
 
 ACE_INLINE int
