@@ -64,7 +64,7 @@ public:
   ACE_Sched_Params (const Policy policy,
                     const ACE_Sched_Priority priority,
                     const int scope = ACE_SCOPE_THREAD,
-                    const ACE_Time_Value &quantum = ACE_Time_Value::zero);
+                    ACE_Time_Value const &quantum = ACE_Time_Value::zero);
 
   /// Termination.
   ~ACE_Sched_Params ();
@@ -89,8 +89,8 @@ public:
 
   /// @name Quantum accessors
   /// @{
-  const ACE_Time_Value &quantum () const;
-  void quantum (const ACE_Time_Value &);
+  ACE_Time_Value const &quantum () const;
+  void quantum (ACE_Time_Value const &);
   /// @}
 
   /// @name Accessors for OS-specific priorities

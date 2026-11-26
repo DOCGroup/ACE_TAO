@@ -11,7 +11,7 @@ ACE_Sched_Params::ACE_Sched_Params (
       const Policy policy,
       const ACE_Sched_Priority priority,
       const int scope,
-      const ACE_Time_Value &quantum)
+      ACE_Time_Value const &quantum)
   : policy_ (policy),
     priority_ (priority),
     scope_ (scope),
@@ -57,14 +57,14 @@ ACE_Sched_Params::scope (const int scope)
   this->scope_ = scope;
 }
 
-ACE_INLINE const ACE_Time_Value &
+ACE_INLINE ACE_Time_Value const &
 ACE_Sched_Params::quantum () const
 {
   return this->quantum_;
 }
 
 ACE_INLINE void
-ACE_Sched_Params::quantum (const ACE_Time_Value &quant)
+ACE_Sched_Params::quantum (ACE_Time_Value const &quant)
 {
   this->quantum_ = quant;
 }

@@ -155,7 +155,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int sigaction (int signum,
-                 const ACE_SIGACTION *nsa,
+                 ACE_SIGACTION const *nsa,
                  ACE_SIGACTION *osa);
 
   ACE_NAMESPACE_INLINE_FUNCTION
