@@ -85,7 +85,7 @@ public:
   ///@}
 
 #define NUM_TYPES 5
-  static const char* INTERFACE_NAMES[];
+  static char const *INTERFACE_NAMES[];
 
   ///@name Remote I/O property descriptions
   ///@{
@@ -100,8 +100,8 @@ public:
     MISCELLANEOUS
   };
 
-  static const char* REMOTE_IO_NAME;
-  static const char* REMOTE_IO_PROPERTY_NAMES[];
+  static char const *REMOTE_IO_NAME;
+  static char const *REMOTE_IO_PROPERTY_NAMES[];
   ///@}
 
   ///@name Plotter property descriptions
@@ -117,8 +117,8 @@ public:
     PLOTTER_FILE_SIZES_PENDING
   };
 
-  static const char* PLOTTER_NAME;
-  static const char* PLOTTER_PROPERTY_NAMES[];
+  static char const *PLOTTER_NAME;
+  static char const *PLOTTER_PROPERTY_NAMES[];
   ///@}
 
   ///@name Printer property descriptions
@@ -135,8 +135,8 @@ public:
     PRINTER_FILE_SIZES_PENDING
   };
 
-  static const char* PRINTER_NAME;
-  static const char* PRINTER_PROPERTY_NAMES[];
+  static char const *PRINTER_NAME;
+  static char const *PRINTER_PROPERTY_NAMES[];
   ///@}
 
   ///@name File system property descriptions
@@ -149,8 +149,8 @@ public:
     PERMISSION_LEVEL
   };
 
-  static const char* FILESYSTEM_NAME;
-  static const char* FILESYSTEM_PROPERTY_NAMES[];
+  static char const *FILESYSTEM_NAME;
+  static char const *FILESYSTEM_PROPERTY_NAMES[];
   ///@}
 
   ///@name PostScript printer property descriptions
@@ -161,24 +161,24 @@ public:
     VERSION
   };
 
-  static const char* PS_PRINTER_NAME;
-  static const char* PS_PRINTER_PROPERTY_NAMES[];
+  static char const *PS_PRINTER_NAME;
+  static char const *PS_PRINTER_PROPERTY_NAMES[];
   ///@}
 
   ///@name Offer information
   ///@{
 
 #define NUM_OFFERS 15
-  static const char* LOCATIONS[];
-  static const char* USERS[];
-  static const char* MODEL_NUMBERS[];
+  static char const *LOCATIONS[];
+  static char const *USERS[];
+  static char const *MODEL_NUMBERS[];
   ///@}
 
   ///@name Query information
   ///@{
 
   static const int NUM_QUERIES;
-  static const char* QUERIES[][4];
+  static char const *QUERIES[][4];
   ///@}
 };
 

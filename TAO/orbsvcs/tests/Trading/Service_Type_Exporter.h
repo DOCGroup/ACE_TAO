@@ -40,7 +40,7 @@ private:
 
   /// Dump a service type description to standard output.
   void
-  dump_typestruct (const char* type_name,
+  dump_typestruct (char const *type_name,
                    const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct) const;
 
   /// Whether the user requested verbose output.

@@ -5,7 +5,7 @@
 
 #include <cstdio>
 
-const char* TT_Info::INTERFACE_NAMES[] =
+char const *TT_Info::INTERFACE_NAMES[] =
 {
   "TAO_Trader_Test::Remote_IO",
   "TAO_Trader_Test::Plotter",
@@ -14,9 +14,9 @@ const char* TT_Info::INTERFACE_NAMES[] =
   "TAO_Trader_Test::PostScript_Printer"
 };
 
-const char* TT_Info::REMOTE_IO_NAME = "Remote_IO";
+char const *TT_Info::REMOTE_IO_NAME = "Remote_IO";
 
-const char* TT_Info::REMOTE_IO_PROPERTY_NAMES[] =
+char const *TT_Info::REMOTE_IO_PROPERTY_NAMES[] =
 {
   "Name",
   "Location",
@@ -26,9 +26,9 @@ const char* TT_Info::REMOTE_IO_PROPERTY_NAMES[] =
   "Miscellaneous"
 };
 
-const char* TT_Info::PLOTTER_NAME = "Plotter";
+char const *TT_Info::PLOTTER_NAME = "Plotter";
 
-const char* TT_Info::PLOTTER_PROPERTY_NAMES[] =
+char const *TT_Info::PLOTTER_PROPERTY_NAMES[] =
 {
   "Num_Colors",
   "Auto_Loading",
@@ -38,9 +38,9 @@ const char* TT_Info::PLOTTER_PROPERTY_NAMES[] =
   "File_Sizes_Pending"
 };
 
-const char* TT_Info::PRINTER_NAME = "Printer";
+char const *TT_Info::PRINTER_NAME = "Printer";
 
-const char* TT_Info::PRINTER_PROPERTY_NAMES[] =
+char const *TT_Info::PRINTER_PROPERTY_NAMES[] =
 {
   "Color",
   "Double_Sided",
@@ -51,23 +51,23 @@ const char* TT_Info::PRINTER_PROPERTY_NAMES[] =
   "File_Sizes_Pending"
 };
 
-const char* TT_Info::FILESYSTEM_NAME = "File_System";
+char const *TT_Info::FILESYSTEM_NAME = "File_System";
 
-const char* TT_Info::FILESYSTEM_PROPERTY_NAMES[] =
+char const *TT_Info::FILESYSTEM_PROPERTY_NAMES[] =
 {
   "Disk_Space",
   "Space_Remaining",
   "Permission_Level"
 };
 
-const char* TT_Info::PS_PRINTER_PROPERTY_NAMES[] =
+char const *TT_Info::PS_PRINTER_PROPERTY_NAMES[] =
 {
   "Version"
 };
 
-const char* TT_Info::PS_PRINTER_NAME = "PostScript_Printer";
+char const *TT_Info::PS_PRINTER_NAME = "PostScript_Printer";
 
-const char* TT_Info::LOCATIONS[] =
+char const *TT_Info::LOCATIONS[] =
 {
   "Bryan 509",
   "Bryan 503",
@@ -86,7 +86,7 @@ const char* TT_Info::LOCATIONS[] =
   "McMillan 123"
 };
 
-const char* TT_Info::USERS[] =
+char const *TT_Info::USERS[] =
 {
   "sbw1",
   "schmidt",
@@ -106,7 +106,7 @@ const char* TT_Info::USERS[] =
   "brunsch"
 };
 
-const char* TT_Info::MODEL_NUMBERS[] =
+char const *TT_Info::MODEL_NUMBERS[] =
 {
   "HP238293892bn2398",
   "PK92839nkse092309",
@@ -126,7 +126,7 @@ const char* TT_Info::MODEL_NUMBERS[] =
 };
 
 const int TT_Info::NUM_QUERIES = 9;
-const char* TT_Info::QUERIES[][4] =
+char const *TT_Info::QUERIES[][4] =
 {
   {INTERFACE_NAMES[REMOTE_IO], "", "", "45"},
   {INTERFACE_NAMES[REMOTE_IO], "'Cupples' ~ Location", "", "6"},

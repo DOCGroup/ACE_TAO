@@ -88,12 +88,12 @@ TAO_Service_Type_Exporter::add_all_types_to_all ()
       try
         {
           ACE_DEBUG ((LM_DEBUG, "Getting link information for %C\n",
-                      static_cast<const char*> (link_name_seq[i])));
+                      static_cast<char const *> (link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
             link_if->describe_link (link_name_seq[i]);
 
           ACE_DEBUG ((LM_DEBUG, "Adding service types to %C\n",
-                      static_cast<const char*> (link_name_seq[i])));
+                      static_cast<char const *> (link_name_seq[i])));
 
           CosTrading::TypeRepository_var remote_repos =
             link_info->target->type_repos ();
@@ -194,7 +194,7 @@ TAO_Service_Type_Exporter::list_all_types ()
             if (this->verbose_)
               {
                 ACE_DEBUG ((LM_DEBUG, "type name: %C\n",
-                            static_cast<const char *> (type_names[index])));
+                            static_cast<char const *> (type_names[index])));
               }
           }
       }
@@ -267,10 +267,10 @@ TAO_Service_Type_Exporter::fully_describe_all_types ()
 
 void
 TAO_Service_Type_Exporter::
-dump_typestruct (const char* type_name,
+dump_typestruct (char const *type_name,
                  const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct) const
 {
-  const char* mode_str[] =
+  char const *mode_str[] =
     {
       "Normal",
       "Read only",

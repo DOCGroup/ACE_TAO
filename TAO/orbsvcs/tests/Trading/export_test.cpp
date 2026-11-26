@@ -8,7 +8,7 @@
 
 #include <memory>
 
-const ACE_TCHAR *done_file = ACE_TEXT("export_test_ready");
+ACE_TCHAR const *done_file = ACE_TEXT("export_test_ready");
 
 int
 parse_args_spec (int argc, ACE_TCHAR *argv[], bool help)
