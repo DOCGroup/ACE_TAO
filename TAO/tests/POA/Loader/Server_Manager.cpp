@@ -296,7 +296,7 @@ Server_i::create_locator (PortableServer::POA_var const &second_poa)
         second_poa->create_reference_with_id (second_test_oid.in (),
                                               "IDL:test:1.0");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Server_i:create_locator ()");
       return 1;

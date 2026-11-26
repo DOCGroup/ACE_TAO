@@ -179,14 +179,14 @@ set_nil_servant_manager (PortableServer::POA_ptr poa)
       // minor code 4
       poa->set_servant_manager (PortableServer::ServantManager::_nil());
     }
-  catch (const CORBA::OBJ_ADAPTER& ex)
+  catch (CORBA::OBJ_ADAPTER const& ex)
     {
       if ((ex.minor() & 0xFFFU) == 4)
         {
           succeed = true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
@@ -211,14 +211,14 @@ overwrite_servant_manager (PortableServer::POA_ptr poa)
       // obj_adapter with minor code 6
       poa->set_servant_manager (&servant_locator);
     }
-  catch (const CORBA::BAD_INV_ORDER& ex)
+  catch (CORBA::BAD_INV_ORDER const& ex)
     {
       if ((ex.minor() & 0xFFFU) == 6)
         {
           succeed = true;
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
@@ -316,7 +316,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   "%s successful\n",
                   argv[0]));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught");
       retval = -1;
