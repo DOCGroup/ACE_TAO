@@ -42,9 +42,9 @@ public:
   OctetStr (char const *string = "", long size = -1);
 
   OctetStr (OctetStr const &octet);
+  OctetStr (OctetStr &&octet) noexcept;
 
   ~OctetStr ();
-
 
   /// syntax type
   SmiUINT32 get_syntax() override;
@@ -57,6 +57,7 @@ public:
 
   /// assignment to another oid object overloaded
   OctetStr &operator= (OctetStr const &octet);
+  OctetStr &operator= (OctetStr &&octet) noexcept;
 
   /// equivlence operator overloaded
   friend ASNMP_Export bool operator== (OctetStr const &lhs, OctetStr const &rhs);

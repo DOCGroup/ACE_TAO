@@ -151,6 +151,14 @@ OctetStr::OctetStr (OctetStr const &octet)
                   reinterpret_cast<char const *> (octet.smival.value.string.ptr), validity);
 }
 
+OctetStr::OctetStr (OctetStr &&octet) noexcept
+  : SnmpSyntax (octet),
+    output_buffer (std::move (octet.output_buffer)),
+    validity (std::exchange (octet.validity, 0))
+{
+  init_octet_smi (octet.smival);
+}
+
 OctetStr::~OctetStr ()
 {
   reset_octet_smi (smival);
@@ -175,6 +183,19 @@ OctetStr &OctetStr::operator= (char const *string)
    // get memory needed
    copy_octet_smi (smival, static_cast<SmiUINT32> (nz), string, validity);
    return *this;
+}
+
+OctetStr &OctetStr::operator= (OctetStr &&octet) noexcept
+{
+  if (this != std::addressof (octet))
+    {
+      reset_octet_smi (this->smival);
+      this->smival = octet.smival;
+      this->output_buffer = std::move (octet.output_buffer);
+      this->validity = std::exchange (octet.validity, 0);
+      init_octet_smi (octet.smival);
+    }
+  return *this;
 }
 
 OctetStr &OctetStr::operator= (OctetStr const &octet)

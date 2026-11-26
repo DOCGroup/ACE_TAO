@@ -30,6 +30,7 @@ DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 #include <cstring>
+#include <utility>
 #include "ace/OS_main.h"
 #include "asnmp/octet.h"
 #include "test_config.h"
@@ -91,6 +92,21 @@ static void TestOctet()
   ACE_TEST_ASSERT(o2.data() != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Octet:o2(\"str\") [%s]\n",
     o2.to_string()));
+
+  OctetStr move_source (str);
+  SmiBYTE * const original_data = move_source.data ();
+  move_source.to_string ();
+  OctetStr move_constructed (std::move (move_source));
+  OctetStr move_assigned ("previous");
+  move_assigned = std::move (move_constructed);
+  OctetStr * const self_octet = std::addressof (move_assigned);
+  move_assigned = std::move (*self_octet);
+  ACE_TEST_ASSERT (move_source.valid () == 0);
+  ACE_TEST_ASSERT (move_constructed.valid () == 0);
+  ACE_TEST_ASSERT (move_assigned.data () == original_data);
+  ACE_TEST_ASSERT (move_assigned == str);
+  move_source = "reused";
+  ACE_TEST_ASSERT (move_source == "reused");
 
   OctetStr o3(str, 4);  // test setting less than full string length
   ACE_TEST_ASSERT(o3.valid() == 1);
