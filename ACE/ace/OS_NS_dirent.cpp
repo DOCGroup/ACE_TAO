@@ -10,6 +10,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include <algorithm>
 #include <cstddef>
+#include <memory>
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
@@ -93,6 +94,7 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
     }
 
   ACE_NEW_RETURN (dir, ACE_DIR, nullptr);
+  std::unique_ptr<ACE_DIR> dir_owner (dir);
   ACE_NEW_RETURN (dir->directory_name_,
                   ACE_TCHAR[lastchar + ACE_OS::strlen (extra) + 1],
                   nullptr);
@@ -104,7 +106,7 @@ ACE_OS::opendir_emulation (const ACE_TCHAR *filename)
   dir->current_handle_ = INVALID_HANDLE_VALUE;
   dir->started_reading_ = 0;
   dir->dirent_ = nullptr;
-  return dir;
+  return dir_owner.release ();
 #else /* WIN32 */
   ACE_UNUSED_ARG (filename);
   ACE_NOTSUP_RETURN (nullptr);
@@ -151,6 +153,12 @@ ACE_OS::readdir_emulation (ACE_DIR *d)
           d->dirent_->d_name = (ACE_TCHAR*)
             ACE_OS::malloc ((ACE_OS::strlen (d->fdata_.cFileName) + 1)
                             * sizeof (ACE_TCHAR));
+          if (d->dirent_->d_name == nullptr)
+            {
+              ACE_OS::free (d->dirent_);
+              d->dirent_ = nullptr;
+              return nullptr;
+            }
           ACE_OS::strcpy (d->dirent_->d_name, d->fdata_.cFileName);
           d->dirent_->d_reclen = sizeof (ACE_DIRENT);
         }
