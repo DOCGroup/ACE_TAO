@@ -9,6 +9,7 @@ project(*Lib) : acelib, avoids_ace_for_tao {
     Handle_L_Pipe.cpp
     Handle_L_SPIPE.cpp
     Handle_L_Stream.cpp
+    Handle_R_Dgram.cpp
     Handle_R_Stream.cpp
     Handle_Thr_Stream.cpp
     Handle_Timeout.cpp
