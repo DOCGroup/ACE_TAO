@@ -25,7 +25,7 @@
 
 #include <memory>
 
-const ACE_Time_Value MAX_CLIENT_TIMEOUT(30);  // 30 secs
+ACE_Time_Value const MAX_CLIENT_TIMEOUT (30);  // 30 secs
 
 // The number of clients we'll run. When the ClientsLeft gets back to 0 (it's
 // decremented when a ClientSvcHandler is deleted) the event loop can stop.

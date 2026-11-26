@@ -222,7 +222,7 @@ namespace {
 
     ssize_t send (char send_char, ACE_TCHAR const * const send_desc);
 
-    const ACE_Time_Value DEFAULT_TIME_VALUE;
+    ACE_Time_Value const DEFAULT_TIME_VALUE;
   };
 } // namespace ""
 
@@ -1032,7 +1032,7 @@ server (void *arg)
   ACCEPTOR *acceptor = static_cast<ACCEPTOR *> (arg);
   ACE_INET_Addr cli_addr;
   ACE_TCHAR peer_host[MAXHOSTNAMELEN];
-  const ACE_Time_Value tv (ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value const tv (ACE_DEFAULT_TIMEOUT);
   ACE_Synch_Options options (ACE_Synch_Options::USE_TIMEOUT, tv);
 
   Svc_Handler *svc_handler {};

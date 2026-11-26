@@ -170,7 +170,7 @@ server (void *arg)
   // calls...
   ACE_SOCK_Stream new_stream;
   ACE_INET_Addr cli_addr;
-  const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value const def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
 
   // We want some of the clients to get connection failures, but on

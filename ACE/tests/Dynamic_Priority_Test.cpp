@@ -92,8 +92,8 @@ static const char laxity_receipt_order [] = "hfgedbcapnomljki";
 // Fast and slow execution time values (sec, usec), kept very small to
 // allow comparison of deadline, laxity, and static strategies across
 // a very wide range of message counts.
-static const ACE_Time_Value fast_execution (0, 1);
-static const ACE_Time_Value slow_execution (0, 2);
+static ACE_Time_Value const fast_execution (0, 1);
+static ACE_Time_Value const slow_execution (0, 2);
 
 // Make the queue be capable of being *very* large.
 static const long max_queue = LONG_MAX;
@@ -113,9 +113,9 @@ static int LOAD_STEP = 20;
 // Time offsets for a minute in the past (for the best case test) and
 // two seconds in the future (for the worst case and randomized
 // tests).
-static const ACE_Time_Value far_past_offset (-60, 0);
-static const ACE_Time_Value near_future_offset (2, 0);
-static const ACE_Time_Value offset_step (0, 5);
+static ACE_Time_Value const far_past_offset (-60, 0);
+static ACE_Time_Value const near_future_offset (2, 0);
+static ACE_Time_Value const offset_step (0, 5);
 
 // The order consumer dequeues a message from the passed
 // Message_Queue, and checks its data character against the passed
