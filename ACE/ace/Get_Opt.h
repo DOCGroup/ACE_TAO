@@ -14,7 +14,7 @@
 
 #if defined (ACE_USES_WCHAR) && defined (__ACE_INLINE__)
 # include "ace/SString.h"
-#endif
+#endif /* ACE_USES_WCHAR && __ACE_INLINE__ */
 
 #include <memory>
 
@@ -86,6 +86,12 @@ public:
     /// option character in @a optstring.
     ARG_OPTIONAL = 2
   };
+
+#if defined (ACE_USES_WCHAR)
+private:
+  void ACE_Get_Opt_Init (ACE_TCHAR const *optstring);
+public:
+#endif /* ACE_USES_WCHAR */
 
   /**
    * Constructor initializes the command line to be parsed. All information
@@ -178,9 +184,6 @@ public:
                int long_only = 0);
 
 #else
-private:
-  void ACE_Get_Opt_Init (ACE_TCHAR const *optstring);
-public:
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,
                ACE_TCHAR const *optstring = ACE_TEXT (""),

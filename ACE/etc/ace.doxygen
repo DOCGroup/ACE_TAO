@@ -2312,6 +2312,7 @@ PREDEFINED             = __ACE_INLINE__= \
                          ACE_WIN32= \
                          ACE_HAS_WIN32_OVERLAPPED_IO= \
                          ACE_HAS_ATM= \
+                         ACE_HAS_XTI_ATM=1 \
                          ACE_HAS_IPV6= \
                          ACE_HAS_ATM= \
                          ACE_HAS_DEV_POLL= \
@@ -2320,6 +2321,7 @@ PREDEFINED             = __ACE_INLINE__= \
                          ACE_HAS_WCHAR= \
                          ACE_HAS_LOG_MSG_NT_EVENT_LOG= \
                          ACE_HAS_TLI= \
+                         ACE_COMPILE_TIMEPROBES=1 \
                          ACE_HAS_POSITION_INDEPENDENT_POINTERS=1 \
                          ACE_HAS_MONITOR_FRAMEWORK=1
 
