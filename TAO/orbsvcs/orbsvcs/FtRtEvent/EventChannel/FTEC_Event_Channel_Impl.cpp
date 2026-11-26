@@ -179,7 +179,7 @@ Set_update_fun const update_table[] = {
 };
 
 TAO_FTEC_Event_Channel_Impl::TAO_FTEC_Event_Channel_Impl(
-  const TAO_EC_Event_Channel_Attributes& attributes)
+  TAO_EC_Event_Channel_Attributes const& attributes)
   : TAO_EC_Event_Channel_Base(attributes, new TAO_FTEC_Basic_Factory, false)
 {
   this->scheduler_ =

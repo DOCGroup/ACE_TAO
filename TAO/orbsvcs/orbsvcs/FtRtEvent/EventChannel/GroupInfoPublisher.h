@@ -43,7 +43,7 @@ public:
 
   FtRtecEventChannelAdmin::EventChannel_var successor() const;
 
-  const BackupList& backups() const;
+  BackupList const& backups() const;
 
   Info* setup_info(FTRT::ManagerInfoList const & info_list,
               int my_position,
