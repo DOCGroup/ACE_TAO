@@ -20,7 +20,7 @@ ACE_Throughput_Stats::sample (ACE_UINT64 throughput,
 }
 
 void
-ACE_Throughput_Stats::accumulate (const ACE_Throughput_Stats &rhs)
+ACE_Throughput_Stats::accumulate (ACE_Throughput_Stats const &rhs)
 {
   if (rhs.samples_count () == 0u)
   {

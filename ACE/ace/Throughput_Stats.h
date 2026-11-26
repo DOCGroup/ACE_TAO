@@ -44,7 +44,7 @@ public:
   void sample (ACE_UINT64 throughput, ACE_UINT64 latency);
 
   /// Update the values to reflect the stats in @a throughput
-  void accumulate (const ACE_Throughput_Stats &throughput);
+  void accumulate (ACE_Throughput_Stats const &throughput);
 
   /// Print down the stats
   void dump_results (ACE_TCHAR const *msg, scale_factor_type scale_factor);

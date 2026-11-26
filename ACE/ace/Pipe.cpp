@@ -220,7 +220,7 @@ ACE_Pipe::open (int buffer_size)
   if (ACE_OS::setsockopt (this->handles_[0],
                           SOL_SOCKET,
                           SO_RCVBUF,
-                          reinterpret_cast <const char *> (&buffer_size),
+                          reinterpret_cast <char const *> (&buffer_size),
                           sizeof (buffer_size)) == -1
       && errno != ENOTSUP)
     {
@@ -232,7 +232,7 @@ ACE_Pipe::open (int buffer_size)
   if (ACE_OS::setsockopt (this->handles_[1],
                           SOL_SOCKET,
                           SO_SNDBUF,
-                          reinterpret_cast <const char *> (&buffer_size),
+                          reinterpret_cast <char const *> (&buffer_size),
                           sizeof (buffer_size)) == -1
       && errno != ENOTSUP)
     {
