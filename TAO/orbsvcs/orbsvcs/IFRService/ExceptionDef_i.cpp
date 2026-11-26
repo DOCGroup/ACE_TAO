@@ -74,10 +74,10 @@ TAO_ExceptionDef_i::describe_i ()
   ACE_TString container_id;
 
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT ("container_id"),
                                             container_id);
 
-  ed.defined_in = container_id.c_str ();
+  ed.defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (container_id.c_str ()));
 
   ed.version = this->version_i ();
 
@@ -103,20 +103,20 @@ TAO_ExceptionDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT ("id"),
                                             id);
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT ("name"),
                                             name);
 
   CORBA::StructMemberSeq_var members =
     this->members_i ();
 
   return this->repo_->tc_factory ()->create_exception_tc (
-                                         id.c_str (),
-                                         name.c_str (),
+                                         ACE_TEXT_ALWAYS_CHAR (id.c_str ()),
+                                         ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
                                          members.in ()
                                        );
 }
@@ -140,19 +140,19 @@ TAO_ExceptionDef_i::members_i ()
 
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "refs",
+                                        ACE_TEXT ("refs"),
                                         false,
                                         refs_key);
 
   u_int count = 0;
   this->repo_->config ()->get_integer_value (refs_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
 
   for (u_int i {}; i < count; ++i)
     {
       ACE_Configuration_Section_Key member_key;
-      char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (refs_key,
                                             stringified,
                                             false,
@@ -160,7 +160,7 @@ TAO_ExceptionDef_i::members_i ()
 
       ACE_TString path;
       this->repo_->config ()->get_string_value (member_key,
-                                                "path",
+                                                ACE_TEXT ("path"),
                                                 path);
 
       ACE_Configuration_Section_Key entry_key;
@@ -177,14 +177,14 @@ TAO_ExceptionDef_i::members_i ()
 
           ACE_TString name;
           this->repo_->config ()->get_string_value (member_key,
-                                                    "name",
+                                                    ACE_TEXT ("name"),
                                                     name);
 
           name_queue.push_back (name);
 
           u_int kind = 0;
           this->repo_->config ()->get_integer_value (entry_key,
-                                                     "def_kind",
+                                                     ACE_TEXT ("def_kind"),
                                                      kind);
 
           CORBA::DefinitionKind def_kind =
@@ -219,7 +219,7 @@ TAO_ExceptionDef_i::members_i ()
     {
       name = name_queue.front ();
       name_queue.pop_front ();
-      retval[k].name = name.c_str ();
+      retval[k].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
 
       kind = kind_queue.front ();
       kind_queue.pop_front ();
@@ -228,7 +228,7 @@ TAO_ExceptionDef_i::members_i ()
 
       obj =
         TAO_IFR_Service_Utils::create_objref (kind,
-                                              path.c_str (),
+                                              ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                               this->repo_);
 
       retval[k].type_def = CORBA::IDLType::_narrow (obj.in ());
@@ -277,7 +277,7 @@ TAO_ExceptionDef_i::members_i (CORBA::StructMemberSeq const &members)
       ACE_Configuration_Section_Key refs_key;
 
       this->repo_->config ()->open_section (this->section_key_,
-                                            "refs",
+                                            ACE_TEXT ("refs"),
                                             true,
                                             refs_key);
       // Create a section for each new member. We just store the
@@ -285,15 +285,15 @@ TAO_ExceptionDef_i::members_i (CORBA::StructMemberSeq const &members)
       for (CORBA::ULong i {}; i < count; ++i)
         {
           ACE_Configuration_Section_Key member_key;
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (refs_key,
                                                 stringified,
                                                 true,
                                                 member_key);
 
-          ACE_TString name (members[i].name);
+          ACE_TString name (ACE_TEXT_CHAR_TO_TCHAR (members[i].name.in ()));
           this->repo_->config ()->set_string_value (member_key,
-                                                    "name",
+                                                    ACE_TEXT ("name"),
                                                     name);
 
           char * const path =
@@ -302,12 +302,12 @@ TAO_ExceptionDef_i::members_i (CORBA::StructMemberSeq const &members)
               );
 
           this->repo_->config ()->set_string_value (member_key,
-                                                    "path",
-                                                    path);
+                                                    ACE_TEXT ("path"),
+                                                    ACE_TEXT_CHAR_TO_TCHAR (path));
         }
 
       this->repo_->config ()->set_integer_value (refs_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
     }
 }
