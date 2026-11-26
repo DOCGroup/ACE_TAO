@@ -70,7 +70,7 @@ namespace TAO_Notify
       ACE_UINT64& next_serial_number,
       ACE_UINT32& next_block_number);
 
-    // return block pointer info for the
+    /// Allocate the next record and return its serial and block numbers.
     void get_preallocated_pointer(
       ACE_UINT64& next_serial_number,
       ACE_UINT32& next_block_number);
