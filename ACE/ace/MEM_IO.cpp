@@ -415,7 +415,7 @@ ACE_MEM_IO::fini ()
 // returns the number of bytes read.
 
 ssize_t
-ACE_MEM_IO::send (const ACE_Message_Block *message_block,
+ACE_MEM_IO::send (ACE_Message_Block const *message_block,
                   ACE_Time_Value const *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::send");

@@ -1,7 +1,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_MEM_Acceptor::open (const ACE_Addr &local_sap,
+ACE_MEM_Acceptor::open (ACE_Addr const &local_sap,
                         ACE_Protocol_Info *protocolinfo,
                         ACE_SOCK_GROUP g,
                         u_long flags,

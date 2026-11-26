@@ -66,7 +66,7 @@ public:
   /// @{
   /// Send n bytes, keep trying until n are sent.
   /// Recv n bytes, keep trying until n are received.
-  ssize_t send_n (const void *buf, size_t n);
+  ssize_t send_n (void const *buf, size_t n);
   ssize_t recv_n (void *buf, size_t n);
   /// @}
 
@@ -74,7 +74,7 @@ public:
   /// @{
   /// Send n bytes, keep trying until n are sent.
   /// Recv n bytes, keep trying until n are received.
-  ssize_t send_n (const void *buf, size_t n, int flags);
+  ssize_t send_n (void const *buf, size_t n, int flags);
   ssize_t recv_n (void *buf, size_t n, int flags);
   /// @}
 

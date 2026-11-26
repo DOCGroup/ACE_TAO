@@ -68,7 +68,7 @@ public:
    * Return the size of valid information containing in the @a buf,
    * -1 if @c shm_malloc_ is not initialized.
    */
-  ssize_t get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf);
+  ssize_t get_buf_len (ACE_OFF_T const off, ACE_MEM_SAP_Node *&buf);
 };
 
 #if defined (ACE_WIN32) || !defined (_ACE_USE_SV_SEM)
@@ -202,7 +202,7 @@ public:
 
   /// Send an @a n byte buffer to the other process using shm_malloc_
   /// connected thru the socket.
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 int flags) ;
 
@@ -213,7 +213,7 @@ public:
 
   /// Send an @a n byte buffer to the other process using shm_malloc_
   /// connected thru the socket.
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n) ;
 
   /// Recv an @a n byte buffer from the shm_malloc_ thru connected socket.
@@ -226,7 +226,7 @@ public:
    * a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes sent is returned.
    */
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 ACE_Time_Value const *timeout);
 
@@ -236,7 +236,7 @@ public:
    * a -1 is returned with @c errno == ETIME.  If it succeeds the
    * number of bytes sent is returned.
    */
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 int flags,
                 ACE_Time_Value const *timeout);
@@ -246,7 +246,7 @@ public:
    * If @c send times out a -1 is returned with @c errno == ETIME.  If
    * it succeeds the number of bytes sent is returned.
    */
-  ssize_t send (const ACE_Message_Block *message_block,
+  ssize_t send (ACE_Message_Block const *message_block,
                 ACE_Time_Value const *timeout);
 
   /**

@@ -45,7 +45,7 @@ ACE_MEM_Acceptor::~ACE_MEM_Acceptor ()
 
 // General purpose routine for performing server ACE_SOCK creation.
 
-ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
+ACE_MEM_Acceptor::ACE_MEM_Acceptor (ACE_MEM_Addr const &remote_sap,
                                     int reuse_addr,
                                     int backlog,
                                     int protocol)
@@ -64,7 +64,7 @@ ACE_MEM_Acceptor::ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
 }
 
 int
-ACE_MEM_Acceptor::open (const ACE_MEM_Addr &remote_sap,
+ACE_MEM_Acceptor::open (ACE_MEM_Addr const &remote_sap,
                         int reuse_addr,
                         int back_log,
                         int protocol)
@@ -259,7 +259,7 @@ ACE_MEM_Acceptor::accept (ACE_MEM_Stream &new_stream,
 }
 
 int
-ACE_MEM_Acceptor::shared_accept_finish (const ACE_MEM_Stream &new_stream,
+ACE_MEM_Acceptor::shared_accept_finish (ACE_MEM_Stream const &new_stream,
                                         int in_blocking_mode,
                                         bool reset_new_handle) const
 {

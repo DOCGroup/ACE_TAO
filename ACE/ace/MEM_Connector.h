@@ -71,9 +71,9 @@ public:
    * @param perms       Ignored.
    */
   ACE_MEM_Connector (ACE_MEM_Stream &new_stream,
-                     const ACE_INET_Addr &remote_sap,
+                     ACE_INET_Addr const &remote_sap,
                      ACE_Time_Value const *timeout = nullptr,
-                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                     ACE_Addr const &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = 0,
                      int perms = 0);
@@ -120,9 +120,9 @@ public:
    *                    code.
    */
   int connect (ACE_MEM_Stream &new_stream,
-               const ACE_INET_Addr &remote_sap,
+               ACE_INET_Addr const &remote_sap,
                ACE_Time_Value const *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0);

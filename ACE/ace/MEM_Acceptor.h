@@ -50,7 +50,7 @@ public:
   ~ACE_MEM_Acceptor ();
 
   /// Initiate a passive mode socket.
-  ACE_MEM_Acceptor (const ACE_MEM_Addr &remote_sap,
+  ACE_MEM_Acceptor (ACE_MEM_Addr const &remote_sap,
                     int reuse_addr = 0,
                     int backlog = ACE_DEFAULT_BACKLOG,
                     int protocol = 0);
@@ -62,7 +62,7 @@ public:
    * @c SO_REUSEADDR to reuse this address.  Returns 0 on success and
    * -1 on failure.
    */
-  int open (const ACE_MEM_Addr &local_sap,
+  int open (ACE_MEM_Addr const &local_sap,
             int reuse_addr = 0,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
@@ -76,7 +76,7 @@ public:
 
   /// Perform operations that must occur after @c ACE_OS::accept is
   /// called.
-  int shared_accept_finish (const ACE_MEM_Stream &new_stream,
+  int shared_accept_finish (ACE_MEM_Stream const &new_stream,
                             int in_blocking_mode,
                             bool reset_new_handle) const;
 
@@ -126,13 +126,13 @@ protected:
    * support their semantics.
    */
   /// @{
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_INET,
             int backlog = ACE_DEFAULT_BACKLOG,
             int protocol = 0);
 
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g,
             u_long flags,

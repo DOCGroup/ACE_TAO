@@ -53,7 +53,7 @@ ACE_MEM_Stream::close_writer ()
 }
 
 ACE_INLINE ssize_t
-ACE_MEM_Stream::send_n (const void *buf, size_t n)
+ACE_MEM_Stream::send_n (void const *buf, size_t n)
 {
   return this->send (buf, n);
 }
@@ -65,7 +65,7 @@ ACE_MEM_Stream::recv_n (void *buf, size_t n)
 }
 
 ACE_INLINE ssize_t
-ACE_MEM_Stream::send_n (const void *buf, size_t n, int flags)
+ACE_MEM_Stream::send_n (void const *buf, size_t n, int flags)
 {
   return this->send (buf, n, flags);
 }
