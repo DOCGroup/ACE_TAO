@@ -26,7 +26,7 @@ ACE_UNIX_Addr::set_addr (void const *addr, int len)
   ACE_TRACE ("ACE_UNIX_Addr::set_addr");
 
   this->ACE_Addr::base_set (AF_UNIX, len);
-  std::memcpy (&this->unix_addr_, addr, len);
+  std::memcpy (std::addressof (this->unix_addr_), addr, len);
 }
 
 // Return a pointer to the underlying address.
@@ -108,7 +108,7 @@ ACE_UNIX_Addr::ACE_UNIX_Addr ()
   : ACE_Addr (AF_UNIX,
               sizeof this->unix_addr_ - sizeof (this->unix_addr_.sun_path))
 {
-  (void) std::memset (&this->unix_addr_,
+  (void) std::memset (std::addressof (this->unix_addr_),
                       0,
                       sizeof this->unix_addr_);
 
@@ -120,7 +120,7 @@ ACE_UNIX_Addr::set (ACE_UNIX_Addr const &sa)
 {
   if (sa.get_type () == AF_ANY)
     {
-      (void) std::memset (&this->unix_addr_,
+      (void) std::memset (std::addressof (this->unix_addr_),
                           0,
                           sizeof this->unix_addr_);
     }
@@ -145,7 +145,7 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (ACE_UNIX_Addr const &sa)
 int
 ACE_UNIX_Addr::set (sockaddr_un const *un, int len)
 {
-  (void) std::memset (&this->unix_addr_, 0,
+  (void) std::memset (std::addressof (this->unix_addr_), 0,
                       sizeof this->unix_addr_);
   this->unix_addr_.sun_family = AF_UNIX;
 #if defined (ACE_LINUX)
@@ -179,7 +179,7 @@ ACE_UNIX_Addr::ACE_UNIX_Addr (sockaddr_un const *un, int len)
 int
 ACE_UNIX_Addr::set (char const rendezvous_point[])
 {
-  (void) std::memset (&this->unix_addr_,
+  (void) std::memset (std::addressof (this->unix_addr_),
                       0,
                       sizeof this->unix_addr_);
   this->unix_addr_.sun_family = AF_UNIX;
