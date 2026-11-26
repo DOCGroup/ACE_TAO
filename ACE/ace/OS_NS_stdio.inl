@@ -1140,7 +1140,7 @@ ACE_OS::vsnprintf (wchar_t *buffer, size_t maxlen, const wchar_t *format, va_lis
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
 #if defined (ACE_WIN32)
-ACE_INLINE const ACE_TEXT_OSVERSIONINFO &
+ACE_INLINE ACE_TEXT_OSVERSIONINFO const &
 ACE_OS::get_win32_versioninfo ()
 {
   return ACE_OS::win32_versioninfo_;

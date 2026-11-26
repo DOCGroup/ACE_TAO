@@ -333,7 +333,7 @@ namespace ACE_OS {
 
   /// Return the win32 OSVERSIONINFO structure.
   ACE_NAMESPACE_INLINE_FUNCTION
-  const ACE_TEXT_OSVERSIONINFO &get_win32_versioninfo ();
+  ACE_TEXT_OSVERSIONINFO const &get_win32_versioninfo ();
 
   /// Return the handle of the module containing ACE's resources. By
   /// default, for a DLL build of ACE this is a handle to the ACE DLL
