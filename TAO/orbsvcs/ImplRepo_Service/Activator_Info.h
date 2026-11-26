@@ -18,9 +18,9 @@ struct Activator_Info
   Activator_Info ();
   Activator_Info (const Activator_Info& other);
 
-  Activator_Info (const ACE_CString& aname,
+  Activator_Info (ACE_CString const& aname,
     CORBA::Long atoken,
-    const ACE_CString& aior,
+    ACE_CString const& aior,
     ImplementationRepository::Activator_ptr act =
     ImplementationRepository::Activator::_nil ());
 

@@ -91,15 +91,15 @@ Activator_NT_Service::svc ()
             return 0;
           }
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception (IMR_ACTIVATOR_DISPLAY_NAME);
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const& userex)
     {
       userex._tao_print_exception (IMR_ACTIVATOR_DISPLAY_NAME);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (IMR_ACTIVATOR_DISPLAY_NAME);
     }

@@ -674,7 +674,7 @@ Options::debug () const
   return this->debug_;
 }
 
-const ACE_TString&
+ACE_TString const&
 Options::ior_filename () const
 {
   return this->ior_output_file_;
@@ -697,7 +697,7 @@ Options::cmdline() const {
   return this->cmdline_.c_str ();
 }
 
-const ACE_TString&
+ACE_TString const&
 Options::persist_file_name() const {
   return this->persist_file_name_;
 }
@@ -780,7 +780,7 @@ Options::imr_type () const
   return this->imr_type_;
 }
 
-const ACE_CString &
+ACE_CString const &
 Options::ft_endpoint () const
 {
   return this->ft_endpoint_;

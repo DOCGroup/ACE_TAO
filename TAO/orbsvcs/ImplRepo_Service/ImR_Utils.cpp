@@ -23,7 +23,7 @@ ImR_Utils::activationModeToString (ImplementationRepository::ActivationMode mode
 }
 
 ImplementationRepository::ActivationMode
-ImR_Utils::stringToActivationMode (const ACE_CString& s)
+ImR_Utils::stringToActivationMode (ACE_CString const& s)
   {
     if (s == "NORMAL")
     {
@@ -62,12 +62,12 @@ ImR_Utils::envListToString(const ImplementationRepository::EnvironmentList& lst)
 }
 
 void
-ImR_Utils::stringToEnvList(const ACE_CString& s,
+ImR_Utils::stringToEnvList(ACE_CString const& s,
                            ImplementationRepository::EnvironmentList& ret)
 {
-  const ACE_CString NAMETAG = "name=\"";
-  const ACE_CString VALTAG = "value=\"";
-  const ACE_CString ENDTAG = "\"";
+  ACE_CString const NAMETAG = "name=\"";
+  ACE_CString const VALTAG = "value=\"";
+  ACE_CString const ENDTAG = "\"";
 
   size_t pos = 0;
 
@@ -118,7 +118,7 @@ ImR_Utils::stringToEnvList(const ACE_CString& s,
 }
 
 char const *
-ImR_Utils::peerListToString (const CORBA::StringSeq& lst)
+ImR_Utils::peerListToString (CORBA::StringSeq const& lst)
 {
   static ACE_CString ret;
   ret = "";
@@ -132,10 +132,10 @@ ImR_Utils::peerListToString (const CORBA::StringSeq& lst)
 }
 
 void
-ImR_Utils::stringToPeerList (const ACE_CString& s, CORBA::StringSeq& ret)
+ImR_Utils::stringToPeerList (ACE_CString const& s, CORBA::StringSeq& ret)
 {
-  const ACE_CString NAMETAG = "name=\"";
-  const ACE_CString ENDTAG = "\"";
+  ACE_CString const NAMETAG = "name=\"";
+  ACE_CString const ENDTAG = "\"";
 
   size_t pos = 0;
 

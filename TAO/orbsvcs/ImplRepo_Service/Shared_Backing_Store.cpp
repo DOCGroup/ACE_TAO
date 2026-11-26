@@ -38,7 +38,7 @@ namespace {
     {
     }
 
-    Lockable_File (const ACE_TString& file,
+    Lockable_File (ACE_TString const& file,
                    const int flags,
                    bool unlink_in_destructor = false)
       : file_lock_ (),
@@ -93,7 +93,7 @@ namespace {
       return this->file_;
     }
 
-    FILE* get_file (const ACE_TString& file,
+    FILE* get_file (ACE_TString const& file,
                     const int flags,
                     bool unlink_in_destructor = false)
     {
@@ -102,7 +102,7 @@ namespace {
     }
 
   private:
-    void init_fl (const ACE_TString& file,
+    void init_fl (ACE_TString const& file,
                   const int flags,
                   bool unlink_in_destructor = false)
     {
@@ -242,8 +242,8 @@ namespace {
   }
 
   void write_listing_item (FILE* list,
-                           const ACE_TString& fname,
-                           const ACE_CString& name,
+                           ACE_TString const& fname,
+                           ACE_CString const& name,
                            ACE_TCHAR const *tag)
   {
     ACE_OS::fprintf (list, "\t<%s", ACE_TEXT_ALWAYS_CHAR (tag));
@@ -296,7 +296,7 @@ Shared_Backing_Store::shutdown ()
 }
 
 void
-Shared_Backing_Store::bind_unique_id (const ACE_CString& key,
+Shared_Backing_Store::bind_unique_id (ACE_CString const& key,
                                       UniqueIdMap& unique_ids,
                                       const UniqueId& uid)
 {
@@ -304,7 +304,7 @@ Shared_Backing_Store::bind_unique_id (const ACE_CString& key,
 }
 
 void
-Shared_Backing_Store::find_unique_id (const ACE_CString& key,
+Shared_Backing_Store::find_unique_id (ACE_CString const& key,
                                       UniqueIdMap &unique_ids,
                                       UniqueId &uid)
 {
@@ -317,7 +317,7 @@ Shared_Backing_Store::find_unique_id (const ACE_CString& key,
 }
 
 void
-Shared_Backing_Store::update_unique_id (const ACE_CString &key,
+Shared_Backing_Store::update_unique_id (ACE_CString const &key,
                                         UniqueIdMap& unique_ids,
                                         Options::ImrType& entry_repo_type,
                                         unsigned int& entry_repo_id,
@@ -359,7 +359,7 @@ Shared_Backing_Store::update_unique_id (const ACE_CString &key,
 }
 
 void
-Shared_Backing_Store::verify_unique_id (const ACE_CString& key,
+Shared_Backing_Store::verify_unique_id (ACE_CString const& key,
                                         const XML_Backing_Store::NameValues& extra_params,
                                         UniqueIdMap& unique_ids)
   {
@@ -404,7 +404,7 @@ Shared_Backing_Store::verify_unique_id (const ACE_CString& key,
   }
 
 int
-Shared_Backing_Store::persistent_remove (const ACE_CString& name,
+Shared_Backing_Store::persistent_remove (ACE_CString const& name,
                                          bool activator)
 {
   Lockable_File listing_lf;
@@ -425,7 +425,7 @@ Shared_Backing_Store::persistent_remove (const ACE_CString& name,
       return err;
       }
 
-  const ACE_TString fname = this->filename_ + uid.unique_filename;
+  ACE_TString const fname = this->filename_ + uid.unique_filename;
   {
     // Hold the file lock while removing the file on platforms that support it.
     Lockable_File file (fname, O_WRONLY);
@@ -475,14 +475,14 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
   UniqueId uid;
   this->find_unique_id (info->key_name_, this->server_uids_, uid);
 
-  const ACE_TString fname = this->filename_ + uid.unique_filename;
+  ACE_TString const fname = this->filename_ + uid.unique_filename;
   if (this->opts_.debug() > 9)
     {
       ORBSVCS_DEBUG((LM_INFO, ACE_TEXT ("(%P|%t) Persisting server to %s(%C)\n"),
         fname.c_str(), info->key_name_.c_str()));
     }
   Lockable_File server_file (fname, O_WRONLY);
-  const ACE_TString bfname = fname + ACE_TEXT (".bak");
+  ACE_TString const bfname = fname + ACE_TEXT (".bak");
   FILE* fp = server_file.get_file();
   if (fp == nullptr)
     {
@@ -557,7 +557,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
   UniqueId uid;
   this->find_unique_id (name, this->activator_uids_,uid);
 
-  const ACE_TString fname = this->filename_ + uid.unique_filename;
+  ACE_TString const fname = this->filename_ + uid.unique_filename;
   if (this->opts_.debug() > 9)
     {
       ORBSVCS_DEBUG ((LM_INFO,
@@ -565,7 +565,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
                       fname.c_str(), info->name.c_str()));
     }
   Lockable_File activator_file (fname, O_WRONLY);
-  const ACE_TString bfname = fname + ACE_TEXT (".bak");
+  ACE_TString const bfname = fname + ACE_TEXT (".bak");
   FILE* fp = activator_file.get_file();
   if (fp == nullptr)
     {
@@ -705,7 +705,7 @@ Shared_Backing_Store::init_repo(PortableServer::POA_ptr)
         }
       else
         {
-          const ACE_Vector<ACE_TString>& filenames = listings->filenames();
+          ACE_Vector<ACE_TString> const& filenames = listings->filenames();
           size_t const sz = filenames.size ();
           for (CORBA::ULong i {}; i < sz; ++i)
             {
@@ -754,7 +754,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
       listings->remove_unmatched (*this);
     }
 
-  const ACE_Vector<ACE_TString>& filenames = listings->filenames ();
+  ACE_Vector<ACE_TString> const& filenames = listings->filenames ();
   size_t const sz = filenames.size ();
   if (this->opts_.debug() > 9)
     {
@@ -762,7 +762,7 @@ Shared_Backing_Store::persistent_load (bool only_changes)
     }
   for (CORBA::ULong i {}; i < sz; ++i)
     {
-      const ACE_TString& fname = filenames[i];
+      ACE_TString const& fname = filenames[i];
       Lockable_File file(fname, O_RDONLY);
 
       if (this->load_file (fname, file.get_file()) != 0)
@@ -890,7 +890,7 @@ Shared_Backing_Store::write_listing (FILE* list)
   Locator_Repository::AIMap::CONST_ITERATOR aiit (this->activators ());
   for (; aiit.next (aientry); aiit.advance ())
     {
-      const ACE_CString& aname = aientry->ext_id_;
+      ACE_CString const& aname = aientry->ext_id_;
       this->find_unique_id (aname, this->activator_uids_, uid);
       ::write_listing_item (list, uid.unique_filename, aname,
                           Locator_XMLHandler::ACTIVATOR_INFO_TAG);
@@ -921,7 +921,7 @@ Shared_Backing_Store::persist_listings (Lockable_File& listing_lf)
                              this->listing_file_.c_str ()), -1);
     }
 
-  const ACE_TString bfname = this->listing_file_ + ACE_TEXT (".bak");
+  ACE_TString const bfname = this->listing_file_ + ACE_TEXT (".bak");
 
   // Write backup file
   std::unique_ptr<FILE, int (*) (FILE *)> baklist (
@@ -994,13 +994,13 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
 char*
 Shared_Backing_Store::locator_service_ior (char const *peer_ior) const
 {
-  const CORBA::Object_ptr this_obj =
+  CORBA::Object_ptr const this_obj =
     this->orb_->string_to_object(this->non_ft_imr_ior_.in ());
-  const CORBA::Object_ptr peer_obj =
+  CORBA::Object_ptr const peer_obj =
     this->orb_->string_to_object(peer_ior);
-  const CORBA::Object_ptr& obj1 =
+  CORBA::Object_ptr const& obj1 =
     (this->imr_type_ == Options::PRIMARY_IMR) ? this_obj : peer_obj;
-  const CORBA::Object_ptr& obj2 =
+  CORBA::Object_ptr const& obj2 =
     (this->imr_type_ != Options::PRIMARY_IMR) ? this_obj : peer_obj;
 
   CORBA::Object_var IORM =
@@ -1079,9 +1079,9 @@ Shared_Backing_Store::load_server (Server_Info *info,
 }
 
 void
-Shared_Backing_Store::load_activator (const ACE_CString& activator_name,
+Shared_Backing_Store::load_activator (ACE_CString const& activator_name,
                                       long token,
-                                      const ACE_CString& ior,
+                                      ACE_CString const& ior,
                                       const NameValues& extra_params)
 {
   // use this to make sure an unique id entry is created
@@ -1188,7 +1188,7 @@ Shared_Backing_Store::process_updates ()
                 continue;
               }
             this->sync_needed_ = INC_SYNC;
-            const ACE_CString name = entity.name.in ();
+            ACE_CString const name = entity.name.in ();
             Options::ImrType repo_type = (Options::ImrType)entity.action.info().repo.repo_type;
             unsigned int repo_id = entity.action.info().repo.repo_id;
             UniqueId uid;
@@ -1197,13 +1197,13 @@ Shared_Backing_Store::process_updates ()
                               this->activator_uids_ :
                               this->server_uids_,
                               repo_type, repo_id, uid);
-            const ACE_TString fname = this->filename_ + uid.unique_filename;
+            ACE_TString const fname = this->filename_ + uid.unique_filename;
             this->sync_files_.insert (fname);
             break;
           }
         case ImplementationRepository::repo_remove:
           {
-            const ACE_CString name = entity.name.in ();
+            ACE_CString const name = entity.name.in ();
             if (entity.action.kind() == ImplementationRepository::repo_activator)
               {
                 this->activators().unbind (name);
@@ -1302,14 +1302,14 @@ Shared_Backing_Store::replica_ior_filename(bool peer_ior_file) const
 }
 
 Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(
-  const ACE_TString& dir)
+  ACE_TString const& dir)
 : dir_(dir),
   only_changes_(false)
 {
 }
 
 Shared_Backing_Store::LocatorListings_XMLHandler::LocatorListings_XMLHandler(
-  const ACE_TString& dir,
+  ACE_TString const& dir,
   const Locator_Repository::SIMap& servers,
   const Locator_Repository::AIMap& activators)
 : dir_(dir),
@@ -1411,7 +1411,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::remove_unmatched(
     }
 }
 
-const ACE_Vector<ACE_TString>&
+ACE_Vector<ACE_TString> const&
 Shared_Backing_Store::LocatorListings_XMLHandler::filenames() const
 {
   return this->filenames_;

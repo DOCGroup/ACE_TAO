@@ -108,7 +108,7 @@ public:
   /// Cleans up any state created by init*.
   int fini ();
 
-  int handle_timeout (const ACE_Time_Value &, const void *tok) override;
+  int handle_timeout (ACE_Time_Value const &, void const *tok) override;
 
   /// Runs the orb.
   int run ();

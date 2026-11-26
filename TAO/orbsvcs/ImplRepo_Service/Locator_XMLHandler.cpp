@@ -125,7 +125,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
                 }
               else
                 {
-                  const ACE_CString name_cstr (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
+                  ACE_CString const name_cstr (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
                   this->extra_params_.emplace_back (name_cstr, value);
                 }
             }
@@ -136,11 +136,11 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
     if (attrs != 0 && attrs->getLength () >= 3)
       {
         size_t index = 0;
-        const ACE_CString aname =
+        ACE_CString const aname =
           ACE_TEXT_ALWAYS_CHAR(attrs->getValue (index++));
-        const ACE_TString token_str = attrs->getValue (index++);
+        ACE_TString const token_str = attrs->getValue (index++);
         long token = ACE_OS::atoi (token_str.c_str ());
-        const ACE_CString ior =
+        ACE_CString const ior =
           ACE_TEXT_ALWAYS_CHAR(attrs->getValue (index++));
         NameValues extra_params;
         for ( ; index < attrs->getLength(); ++index)

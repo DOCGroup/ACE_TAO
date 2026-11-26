@@ -165,7 +165,7 @@ Locator_Repository::recover_ior ()
     }
 
   // Load the IOR from the specified file if it is available.
-  const ACE_TString& combined_ior_file = this->opts_.ior_filename ();
+  ACE_TString const& combined_ior_file = this->opts_.ior_filename ();
 
   // Check if the file exists. If not, then return 1 indicating
   // we cannot recover our state.
@@ -187,7 +187,7 @@ Locator_Repository::recover_ior ()
         this->imr_ior_ = this->orb_->object_to_string (combined_obj.in ());
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("ImR: Attempting to read combined_ior for ImR_Locator\n");
       return -1;
@@ -295,7 +295,7 @@ Locator_Repository::multicast() const
 }
 
 ACE_CString
-Locator_Repository::lcase (const ACE_CString& s)
+Locator_Repository::lcase (ACE_CString const& s)
 {
   ACE_CString ret(s);
   for (size_t i {}; i < ret.length (); ++i)
@@ -306,7 +306,7 @@ Locator_Repository::lcase (const ACE_CString& s)
 }
 
 int
-Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
+Locator_Repository::unregister_if_address_reused (ACE_CString const& fqname,
                                                   char const *partial_ior,
                                                   ImR_Locator_i* imr_locator)
 
@@ -378,7 +378,7 @@ Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
 
 int
 Locator_Repository::add_server
-  (const ACE_CString& fqname,
+  (ACE_CString const& fqname,
    const ImplementationRepository::StartupOptions & options)
 {
   Server_Info *si {};
@@ -396,9 +396,9 @@ Locator_Repository::add_server
 
 int
 Locator_Repository::add_server
-  (const ACE_CString& fqname,
-   const ACE_CString& partial_ior,
-   const ACE_CString& ior,
+  (ACE_CString const& fqname,
+   ACE_CString const& partial_ior,
+   ACE_CString const& ior,
    ImplementationRepository::ServerObject_ptr srvobj)
 {
   Server_Info *si {};
@@ -434,9 +434,9 @@ Locator_Repository::add_server_i (Server_Info *si)
 }
 
 int
-Locator_Repository::add_activator (const ACE_CString& name,
-                        const CORBA::Long token,
-                        const ACE_CString& ior,
+Locator_Repository::add_activator (ACE_CString const& name,
+                        CORBA::Long const token,
+                        ACE_CString const& ior,
                         ImplementationRepository::Activator_ptr act)
 {
   int err = sync_load ();
@@ -478,7 +478,7 @@ Locator_Repository::notify_remote_access (char const *,
 }
 
 Server_Info_Ptr
-Locator_Repository::find_by_poa (const ACE_CString & name)
+Locator_Repository::find_by_poa (ACE_CString const & name)
 {
   Locator_Repository::SIMap::ENTRY* sientry {};
   Locator_Repository::SIMap::ITERATOR siit (servers ());
@@ -494,7 +494,7 @@ Locator_Repository::find_by_poa (const ACE_CString & name)
 }
 
 Server_Info_Ptr
-Locator_Repository::get_active_server (const ACE_CString& name, int pid)
+Locator_Repository::get_active_server (ACE_CString const& name, int pid)
 {
   sync_load ();
   ACE_CString key;
@@ -554,7 +554,7 @@ Locator_Repository::get_active_server (const ACE_CString& name, int pid)
 }
 
 int
-Locator_Repository::remove_server (const ACE_CString& name,
+Locator_Repository::remove_server (ACE_CString const& name,
                                    ImR_Locator_i* imr_locator)
 {
   int const err = sync_load ();
@@ -608,7 +608,7 @@ Locator_Repository::remove_server (const ACE_CString& name,
 
 int
 Locator_Repository::link_peers (Server_Info_Ptr base,
-                                const CORBA::StringSeq p)
+                                CORBA::StringSeq const p)
 {
   sync_load ();
   CORBA::ULong const len = base->peers.length();
@@ -634,7 +634,7 @@ Locator_Repository::link_peers (Server_Info_Ptr base,
 }
 
 Activator_Info_Ptr
-Locator_Repository::get_activator (const ACE_CString& name)
+Locator_Repository::get_activator (ACE_CString const& name)
 {
   sync_load ();
 
@@ -644,14 +644,14 @@ Locator_Repository::get_activator (const ACE_CString& name)
 }
 
 bool
-Locator_Repository::has_activator (const ACE_CString& name)
+Locator_Repository::has_activator (ACE_CString const& name)
 {
   Activator_Info_Ptr activator (nullptr);
   return activators().find (lcase (name), activator) == 0;
 }
 
 int
-Locator_Repository::remove_activator (const ACE_CString& name)
+Locator_Repository::remove_activator (ACE_CString const& name)
 {
   int const err = sync_load ();
   if (err != 0)
@@ -753,7 +753,7 @@ No_Backing_Store::persistent_update (const Activator_Info_Ptr& , bool )
 }
 
 int
-No_Backing_Store::persistent_remove (const ACE_CString& , bool )
+No_Backing_Store::persistent_remove (ACE_CString const& , bool )
 {
   // nothing more to do for no backing store remove
   return 0;

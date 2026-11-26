@@ -67,7 +67,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
       exception_message = "While set_servant";
       child->set_servant (this->default_servant_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   "IMR_Adapter_Activator::unknown_adapter - %C\n",

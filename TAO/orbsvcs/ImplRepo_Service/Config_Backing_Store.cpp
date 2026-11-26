@@ -25,7 +25,7 @@ static ACE_TCHAR const *POA = ACE_TEXT("POA");
 static ACE_TCHAR const *PEERS = ACE_TEXT("Peers");
 static ACE_TCHAR const *CONFIG_PID = ACE_TEXT("Pid");
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
-static const ACE_TCHAR WIN32_REG_KEY[] = ACE_TEXT ("Software\\TAO\\ImplementationRepository");
+static ACE_TCHAR const WIN32_REG_KEY[] = ACE_TEXT ("Software\\TAO\\ImplementationRepository");
 #endif
 
 Config_Backing_Store::Config_Backing_Store (const Options& opts,
@@ -41,7 +41,7 @@ Config_Backing_Store::~Config_Backing_Store () = default;
 
 namespace {
   int get_cstring_value (ACE_Configuration &config,
-                         const ACE_Configuration_Section_Key &key,
+                         ACE_Configuration_Section_Key const &key,
                          ACE_TCHAR const *name,
                          ACE_CString &value)
   {
@@ -55,9 +55,9 @@ namespace {
   }
 
   int set_cstring_value (ACE_Configuration &config,
-                         const ACE_Configuration_Section_Key &key,
+                         ACE_Configuration_Section_Key const &key,
                          ACE_TCHAR const *name,
-                         const ACE_CString &value)
+                         ACE_CString const &value)
   {
     return config.set_string_value (key, name, ACE_TEXT_CHAR_TO_TCHAR (value.c_str ()));
   }
@@ -85,7 +85,7 @@ void Config_Backing_Store::loadActivators ()
           get_cstring_value (this->config_, key, IOR, ior);
           config_.get_integer_value (key, TOKEN, token);
 
-          const ACE_CString name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
+          ACE_CString const name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
 
           Activator_Info* ai {};
           ACE_NEW (ai, Activator_Info (name_cstr, token, ior));
@@ -115,7 +115,7 @@ Config_Backing_Store::loadServers ()
 
       while (config_.enumerate_sections (root, index, name) == 0)
         {
-          const ACE_CString name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
+          ACE_CString const name_cstr = ACE_TEXT_ALWAYS_CHAR (name.c_str ());
           Server_Info_Ptr info;
           if (this->servers ().find (name_cstr, info) != 0)
             {
@@ -177,7 +177,7 @@ Config_Backing_Store::loadServers ()
 }
 
 int
-Config_Backing_Store::persistent_remove (const ACE_CString& name,
+Config_Backing_Store::persistent_remove (ACE_CString const& name,
                                          bool activator)
 {
   ACE_TCHAR const *const key =
@@ -186,7 +186,7 @@ Config_Backing_Store::persistent_remove (const ACE_CString& name,
 }
 
 int
-Config_Backing_Store::remove (const ACE_CString& name, ACE_TCHAR const *key)
+Config_Backing_Store::remove (ACE_CString const& name, ACE_TCHAR const *key)
 {
   ACE_Configuration_Section_Key root;
   int err = config_.open_section (config_.root_section (), key, false, root);
@@ -202,7 +202,7 @@ Config_Backing_Store::remove (const ACE_CString& name, ACE_TCHAR const *key)
   return config_.remove_section (root, ACE_TEXT_CHAR_TO_TCHAR (name.c_str ()), true);
 }
 
-static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
+static int get_key (ACE_Configuration& cfg, ACE_CString const& name,
                     ACE_TCHAR const *const sub_section,
                     ACE_Configuration_Section_Key& key)
 {

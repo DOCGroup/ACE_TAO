@@ -13,15 +13,15 @@ class ImR_Utils
 {
 public:
   static char const *activationModeToString (ImplementationRepository::ActivationMode mode);
-  static ImplementationRepository::ActivationMode stringToActivationMode (const ACE_CString& s);
+  static ImplementationRepository::ActivationMode stringToActivationMode (ACE_CString const& s);
 
   static char const *envListToString (const ImplementationRepository::EnvironmentList& lst);
-  static void stringToEnvList (const ACE_CString& s,
+  static void stringToEnvList (ACE_CString const& s,
                                ImplementationRepository::EnvironmentList& ret);
 
-  static char const *peerListToString (const CORBA::StringSeq& lst);
+  static char const *peerListToString (CORBA::StringSeq const& lst);
 
-  static void stringToPeerList (const ACE_CString& s,
+  static void stringToPeerList (ACE_CString const& s,
                                 CORBA::StringSeq& ret);
 };
 

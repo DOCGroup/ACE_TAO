@@ -29,7 +29,7 @@ XML_Backing_Store::XML_Backing_Store(const Options& opts,
 XML_Backing_Store::~XML_Backing_Store() = default;
 
 int
-XML_Backing_Store::persistent_remove (const ACE_CString& , bool )
+XML_Backing_Store::persistent_remove (ACE_CString const& , bool )
 {
   // one big XML file, need to persist everything
   return persist();
@@ -96,7 +96,7 @@ XML_Backing_Store::persist ()
 }
 
 namespace {
-  ACE_CString ACEXML_escape_cstring (const ACE_CString &str)
+  ACE_CString ACEXML_escape_cstring (ACE_CString const &str)
   {
     return ACE_TEXT_ALWAYS_CHAR (ACEXML_escape_string (
       ACE_TEXT_CHAR_TO_TCHAR (str.c_str ())).c_str ());
@@ -213,7 +213,7 @@ XML_Backing_Store::init_repo (PortableServer::POA_ptr )
 }
 
 int
-XML_Backing_Store::load_file (const ACE_TString& filename, FILE* open_file)
+XML_Backing_Store::load_file (ACE_TString const& filename, FILE* open_file)
 {
   Locator_XMLHandler xml_handler (*this);
   return XML_Backing_Store::load_file (filename, xml_handler,
@@ -222,7 +222,7 @@ XML_Backing_Store::load_file (const ACE_TString& filename, FILE* open_file)
 
 /* static */
 int
-XML_Backing_Store::load_file (const ACE_TString& filename,
+XML_Backing_Store::load_file (ACE_TString const& filename,
                               ACEXML_DefaultHandler& xml_handler,
                               unsigned int debug,
                               FILE* open_file)
@@ -322,9 +322,9 @@ XML_Backing_Store::create_server (bool server_started,
 }
 
 void
-XML_Backing_Store::load_activator (const ACE_CString& activator_name,
+XML_Backing_Store::load_activator (ACE_CString const& activator_name,
                                    long token,
-                                   const ACE_CString& ior,
+                                   ACE_CString const& ior,
                                    const NameValues& )
 {
   Activator_Info *ai {};

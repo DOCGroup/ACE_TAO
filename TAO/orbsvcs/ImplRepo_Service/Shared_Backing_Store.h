@@ -89,9 +89,9 @@ public:
   /// @param ior the Activator_Info ior
   /// @param extra_params extra name value pairs that
   ///        were reported for the activator
-  void load_activator (const ACE_CString& activator_name,
+  void load_activator (ACE_CString const& activator_name,
                        long token,
-                       const ACE_CString& ior,
+                       ACE_CString const& ior,
                        const NameValues& extra_params) override;
 
   void notify_remote_access (char const *id,
@@ -122,7 +122,7 @@ protected:
   int persistent_update(const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove
-  int persistent_remove(const ACE_CString& name, bool activator) override;
+  int persistent_remove(ACE_CString const& name, bool activator) override;
 
   /// perform sync of repo with backing store
   /// uses sync_needed_ and sync_files_ to determine what to update
@@ -136,21 +136,21 @@ protected:
 
 private:
   /// map management helper functions
-  void bind_unique_id (const ACE_CString& key,
+  void bind_unique_id (ACE_CString const& key,
                        UniqueIdMap& unique_ids,
                        const UniqueId& id);
 
-  void find_unique_id (const ACE_CString &key,
+  void find_unique_id (ACE_CString const &key,
                        UniqueIdMap &unique_ids,
                        UniqueId &uid);
 
-  void update_unique_id (const ACE_CString &key,
+  void update_unique_id (ACE_CString const &key,
                          UniqueIdMap& unique_ids,
                          Options::ImrType& entry_repo_type,
                          unsigned int& entry_repo_id,
                          UniqueId& uid);
 
-  void verify_unique_id (const ACE_CString& key,
+  void verify_unique_id (ACE_CString const& key,
                          const XML_Backing_Store::NameValues& extra_params,
                          UniqueIdMap& unique_ids);
 
@@ -163,7 +163,7 @@ private:
   public:
     /// @param dir the directory path to add to the server or activator
     ///        filename
-    explicit LocatorListings_XMLHandler(const ACE_TString& dir);
+    explicit LocatorListings_XMLHandler(ACE_TString const& dir);
 
     /// constructor for tracking only changes to what servers and activators
     /// are currently in the repo
@@ -171,7 +171,7 @@ private:
     ///        filename
     /// @param servers a map of servers currently in the repo
     /// @param activators a map of activators currently in the repo
-    LocatorListings_XMLHandler(const ACE_TString& dir,
+    LocatorListings_XMLHandler(ACE_TString const& dir,
                                const Locator_Repository::SIMap& servers,
                                const Locator_Repository::AIMap& activators);
 
@@ -193,11 +193,11 @@ private:
 
     /// the filenames identified in the listings file, if tracking changes
     /// only then only the filenames of the new servers and activators
-    const ACE_Vector<ACE_TString>& filenames() const;
+    ACE_Vector<ACE_TString> const& filenames() const;
 
   private:
     /// the directory to add to the listings file relative filenames
-    const ACE_TString& dir_;
+    ACE_TString const& dir_;
     /// the filenames identified in the listings file (or the new filenames)
     ACE_Vector<ACE_TString> filenames_;
     /// the existing servers in the repo that were not present in the
@@ -245,7 +245,7 @@ private:
   int connect_replicas(Replica_ptr this_replica);
 
   /// the path and filename for the listings file
-  const ACE_TString listing_file_;
+  ACE_TString const listing_file_;
   /// the imr type of this Shared_Backing_Store
   const Options::ImrType imr_type_;
   /// the current type of sync needed by the repo

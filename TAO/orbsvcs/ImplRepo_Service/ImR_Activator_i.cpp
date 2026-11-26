@@ -174,7 +174,7 @@ ImR_Activator_i::register_with_imr (ImplementationRepository::Activator_ptr acti
           ORBSVCS_DEBUG((LM_DEBUG, "(%P|%t) ImR Activator: ImplRepoService not found\n"));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (debug_ > 1)
         {
@@ -271,7 +271,7 @@ ImR_Activator_i::init_with_orb (CORBA::ORB_ptr orb, const Activator_Options& opt
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("ImR_Activator_i::init_with_orb");
       throw;
@@ -325,7 +325,7 @@ ImR_Activator_i::fini ()
                                                 this->registration_token_);
         }
     }
-  catch (const CORBA::COMM_FAILURE&)
+  catch (CORBA::COMM_FAILURE const&)
     {
       if (debug_ > 1)
         {
@@ -333,7 +333,7 @@ ImR_Activator_i::fini ()
                           ACE_TEXT ("(%P|%t) ImR Activator: COMM_FAILURE, unable to unregister from ImR\n")));
         }
     }
-  catch (const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const&)
     {
       if (debug_ > 1)
         {
@@ -341,7 +341,7 @@ ImR_Activator_i::fini ()
                           ACE_TEXT ("(%P|%t) ImR Activator: TRANSIENT, unable to unregister from ImR\n")));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("ImR Activator: fini");
       throw;
@@ -356,7 +356,7 @@ ImR_Activator_i::fini ()
         ORBSVCS_DEBUG ((LM_DEBUG, "(%P|%t) ImR Activator: Shut down successfully\n"));
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("ImR Activator: fini 2");
       throw;
@@ -385,7 +385,7 @@ ImR_Activator_i::in_upcall ()
       PortableServer::POA_var poa = current_->get_POA ();
       return !CORBA::is_nil (poa.in ());
     }
-  catch (const CORBA::Exception& )
+  catch (CORBA::Exception const& )
     {
       // no-op
     }
@@ -410,7 +410,7 @@ ImR_Activator_i::shutdown (bool signaled)
           this->locator_->unregister_activator (name_.c_str(),
                                                 this->registration_token_);
         }
-      catch (const CORBA::Exception& )
+      catch (CORBA::Exception const& )
         {
           // the locator may have already shutdown
         }
@@ -649,7 +649,7 @@ ImR_Activator_i::start_server(char const *name,
                 {
                   this->locator_->spawn_pid (name, pid);
                 }
-              catch (const CORBA::Exception &ex)
+              catch (CORBA::Exception const &ex)
                 {
                   if (debug_ > 1)
                     {
@@ -702,7 +702,7 @@ ImR_Activator_i::handle_exit_i (pid_t pid)
         {
           this->locator_->child_death_pid (name.c_str(), pid);
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const &ex)
         {
           if (debug_ > 1)
             {
@@ -755,7 +755,7 @@ ImR_Activator_i::handle_exit (ACE_Process * process)
 }
 
 int
-ImR_Activator_i::handle_timeout (const ACE_Time_Value &, const void * tok)
+ImR_Activator_i::handle_timeout (ACE_Time_Value const &, void const * tok)
 {
   Act_token_type token = reinterpret_cast<Act_token_type>(tok);
   this->handle_exit_i (static_cast<pid_t>(token));

@@ -50,7 +50,7 @@ public:
   unsigned int debug () const;
 
   /// Returns the file where the IOR should be stored.
-  const ACE_TString& ior_filename () const;
+  ACE_TString const& ior_filename () const;
 
   /// Will we listen for multicast location requests?
   bool multicast () const;
@@ -64,7 +64,7 @@ public:
 
   /// File that contains the activator related information
   /// that the persistent locator has to save.
-  const ACE_TString& persist_file_name() const;
+  ACE_TString const& persist_file_name() const;
 
   /// Do we allow modifications to the servers?
   bool readonly () const;
@@ -117,7 +117,7 @@ public:
   enum ImrType { BACKUP_IMR, PRIMARY_IMR, STANDALONE_IMR };
   ImrType imr_type() const;
 
-  const ACE_CString &ft_endpoint () const;
+  ACE_CString const &ft_endpoint () const;
 
   ACE_Time_Value ft_update_delay () const;
 
@@ -129,7 +129,7 @@ private:
   void print_usage () const;
 
   /// Run a service command.
-  int run_service_command (const ACE_TString& cmdline);
+  int run_service_command (ACE_TString const& cmdline);
 
   int load_registry_options();
 

@@ -25,7 +25,7 @@ public:
   /// @param name the name of the server to retrieve
   /// @param pid an optional process id to further discriminate the server
   UpdateableServerInfo(const Repository_Ptr& repo,
-                       const ACE_CString& name,
+                       ACE_CString const& name,
                        int pid = 0);
 
   /// @param repo the repo to report updates to

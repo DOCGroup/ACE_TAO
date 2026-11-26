@@ -26,7 +26,7 @@ ImR_Locator_Shutdown::operator () (int /*sig*/)
     {
       this->imr_.signal_shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("ImR: ");
     }
@@ -63,15 +63,15 @@ run_standalone (Options& opts)
         }
       return 0;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception ("System Exception");
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const& userex)
     {
       userex._tao_print_exception ("User Exception");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Unknown Exception");
     }

@@ -61,9 +61,9 @@ public:
   /// @param ior the Activator_Info ior
   /// @param extra_params extra name value pairs that
   ///        were reported for the activator
-  virtual void load_activator (const ACE_CString& activator_name,
+  virtual void load_activator (ACE_CString const& activator_name,
                                long token,
-                               const ACE_CString& ior,
+                               ACE_CString const& ior,
                                const NameValues& extra_params);
 protected:
   /// perform XML backing store specific initialization
@@ -77,13 +77,13 @@ protected:
   int persistent_update (const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove
-  int persistent_remove (const ACE_CString& name, bool activator) override;
+  int persistent_remove (ACE_CString const& name, bool activator) override;
 
   /// load the contents of a file into the repo using a Locator_XMLHandler
   /// @param filename the filename to read the contents from
   /// @param open_file the already open FILE stream for the
   ///        filename
-  int load_file (const ACE_TString& filename, FILE* open_file = nullptr);
+  int load_file (ACE_TString const& filename, FILE* open_file = nullptr);
 
   /// load the contents of a file into the repo using the provided
   /// ACEXML_DefaultHandler
@@ -93,7 +93,7 @@ protected:
   /// @param debug the current debug level
   /// @param open_file the already open FILE stream for the
   ///        filename
-  static int load_file (const ACE_TString& filename,
+  static int load_file (ACE_TString const& filename,
                         ACEXML_DefaultHandler& xml_handler,
                         unsigned int debug,
                         FILE* open_file = nullptr);
@@ -128,7 +128,7 @@ protected:
 
 protected:
   /// the filename indicated in the Options for the backing store
-  const ACE_TString filename_;
+  ACE_TString const filename_;
 
 private:
   /// persist all servers and activators

@@ -47,7 +47,7 @@ ImR_DSI_Forwarder::init (CORBA::ORB_ptr orb)
       this->poa_current_var_ =
         PortableServer::Current::_narrow (tmp.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
   ACE_ASSERT (!CORBA::is_nil (this->poa_current_var_.in ()));
@@ -84,7 +84,7 @@ ImR_DSI_Forwarder::_dispatch (TAO_ServerRequest &request,
       // Delegate to user.
       this->invoke (dsi_request, rh.in());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       // Only if the client is waiting.
       if (request.response_expected () && !request.sync_with_server ())

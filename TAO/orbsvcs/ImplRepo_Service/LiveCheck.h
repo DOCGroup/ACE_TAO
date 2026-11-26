@@ -127,7 +127,7 @@ class Locator_Export LiveEntry
   void update_listeners ();
   bool validate_ping (bool &want_reping, ACE_Time_Value &next);
   void do_ping (PortableServer::POA_ptr poa);
-  const ACE_Time_Value &next_check () const;
+  ACE_Time_Value const &next_check () const;
   static void set_reping_limit (int max);
   bool reping_available () const;
   int next_reping ();
@@ -245,10 +245,10 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   ~LiveCheck () override;
 
   void init (CORBA::ORB_ptr orb,
-             const ACE_Time_Value &interval);
+             ACE_Time_Value const &interval);
   void shutdown ();
-  int handle_timeout (const ACE_Time_Value &current_time,
-                      const void *act = nullptr) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                      void const *act = nullptr) override;
   bool has_server (char const *server);
   void add_server (char const *server,
                    bool may_ping,
@@ -264,7 +264,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   void remove_listener (LiveListener *listener);
   bool schedule_ping (LiveEntry *entry);
   LiveStatus is_alive (char const *server);
-  const ACE_Time_Value &ping_interval () const;
+  ACE_Time_Value const &ping_interval () const;
 
  private:
   void enter_handle_timeout ();

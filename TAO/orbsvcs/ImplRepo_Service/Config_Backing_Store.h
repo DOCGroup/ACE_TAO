@@ -48,10 +48,10 @@ protected:
   int persistent_update(const Activator_Info_Ptr& info, bool add) override;
 
   /// perform persistent remove
-  int persistent_remove(const ACE_CString& name, bool activator) override;
+  int persistent_remove(ACE_CString const& name, bool activator) override;
 
   /// remove the section with the given name from the key section
-  int remove(const ACE_CString& name, ACE_TCHAR const *key);
+  int remove(ACE_CString const& name, ACE_TCHAR const *key);
 
   /// the ACE_Configuration backing store
   ACE_Configuration& config_;
@@ -84,7 +84,7 @@ public:
 
 private:
   /// the Heap filename
-  const ACE_TString filename_;
+  ACE_TString const filename_;
   /// the Heap used for the actual backing store
   ACE_Configuration_Heap heap_;
 };

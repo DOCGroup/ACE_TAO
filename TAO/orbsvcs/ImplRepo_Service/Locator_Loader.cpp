@@ -45,7 +45,7 @@ ImR_Locator_Loader::init (int argc, ACE_TCHAR *argv[])
       this->runner_ = std::make_unique<ImR_Locator_ORB_Runner> (*this);
       this->runner_->activate ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return -1;
     }
@@ -64,7 +64,7 @@ ImR_Locator_Loader::fini ()
       this->runner_.reset ();
       return ret;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
   return -1;

@@ -27,7 +27,7 @@ ImR_Activator_Shutdown::operator() (int /*which_signal*/)
   {
     this->act_.shutdown (true);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     ex._tao_print_exception ("ImR Activator: ");
   }
@@ -64,15 +64,15 @@ run_standalone (Activator_Options& opts)
         }
       return 0;
     }
-  catch (const CORBA::SystemException& sysex)
+  catch (CORBA::SystemException const& sysex)
     {
       sysex._tao_print_exception ("System Exception");
     }
-  catch (const CORBA::UserException& userex)
+  catch (CORBA::UserException const& userex)
     {
       userex._tao_print_exception ("User Exception");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Unknown Exception");
     }

@@ -82,7 +82,7 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
 
       this->op_->set_imr (this->imr_.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ORBSVCS_ERROR ((LM_ERROR, "TAO_IMR_i::init - %C\n", exception_message));
       ex._tao_print_exception ("Exception");
@@ -947,7 +947,7 @@ TAO_IMR_Op_Activate::run ()
     {
       throw;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (!this->quiet_)
         {
@@ -983,14 +983,14 @@ TAO_IMR_Op_Autostart::run ()
             {
               this->imr_->activate_server (server_list[i].server.in ());
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const& ex)
             {
               ex._tao_print_exception (server_list[i].server.in ());
               // Ignore exception
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("autostart");
       return TAO_IMR_Op::UNKNOWN;
@@ -1024,7 +1024,7 @@ TAO_IMR_Op_IOR::run ()
 
       // Search for "corbaloc:" alone, without the protocol.  This code
       // should be protocol neutral.
-      const char corbaloc[] = "corbaloc:";
+      char const corbaloc[] = "corbaloc:";
       char *pos = std::strstr (imr_str.inout (), corbaloc);
 
       if (pos == 0)
@@ -1049,7 +1049,7 @@ TAO_IMR_Op_IOR::run ()
       ACE_CString ior (imr_str.in ());
 
       // Add the key
-      const char jacorb[] = "JACORB:";
+      char const jacorb[] = "JACORB:";
       char const *posjacorb = std::strstr (server_name_.c_str (), jacorb);
       if (posjacorb)
       {
@@ -1084,7 +1084,7 @@ TAO_IMR_Op_IOR::run ()
           }
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("IOR");
       return TAO_IMR_Op::UNKNOWN;
@@ -1133,7 +1133,7 @@ TAO_IMR_Op_Kill::run ()
         }
       return TAO_IMR_Op::CANNOT_COMPLETE;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Kill");
       return TAO_IMR_Op::UNKNOWN;
@@ -1176,7 +1176,7 @@ TAO_IMR_Op_Link::run ()
                       ex.reason.in ()));
       return TAO_IMR_Op::CANNOT_COMPLETE;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Kill");
       return TAO_IMR_Op::UNKNOWN;
@@ -1252,7 +1252,7 @@ TAO_IMR_Op_List::run ()
                       this->server_name_.c_str ()));
       return TAO_IMR_Op::NOT_FOUND;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("List");
       return TAO_IMR_Op::UNKNOWN;
@@ -1295,7 +1295,7 @@ TAO_IMR_Op_Remove::run ()
                       this->server_name_.c_str (), cc.reason.in() ));
       return TAO_IMR_Op::CANNOT_COMPLETE;
     }
-  catch (const CORBA::NO_PERMISSION& np)
+  catch (CORBA::NO_PERMISSION const& np)
     {
       if ((np.minor () & 0x7FU) == 0xFU) //TAO_EBUSY_MINOR_CODE)
         {
@@ -1306,7 +1306,7 @@ TAO_IMR_Op_Remove::run ()
       ORBSVCS_ERROR ((LM_ERROR, "No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Removing Server");
       return TAO_IMR_Op::UNKNOWN;
@@ -1341,7 +1341,7 @@ TAO_IMR_Op_Shutdown::run ()
         }
       return TAO_IMR_Op::NOT_FOUND;
     }
-  catch (const CORBA::TIMEOUT&)
+  catch (CORBA::TIMEOUT const&)
     {
       if (!this->quiet_)
         {
@@ -1350,7 +1350,7 @@ TAO_IMR_Op_Shutdown::run ()
                           this->server_name_.c_str ()));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Shutting Down Server");
       return TAO_IMR_Op::UNKNOWN;
@@ -1371,11 +1371,11 @@ TAO_IMR_Op_ShutdownRepo::run ()
 
       ORBSVCS_DEBUG ((LM_DEBUG, "ImR shutdown initiated.\n"));
     }
-  catch (const CORBA::TIMEOUT&)
+  catch (CORBA::TIMEOUT const&)
     {
       ORBSVCS_DEBUG ((LM_DEBUG, "Timeout waiting for ImR shutdown.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Shutting Down ImR");
       return TAO_IMR_Op::UNKNOWN;
@@ -1482,12 +1482,12 @@ TAO_IMR_Op_Register::run ()
                          this->server_name_.c_str ()));
         }
     }
-  catch (const CORBA::NO_PERMISSION&)
+  catch (CORBA::NO_PERMISSION const&)
     {
       ORBSVCS_ERROR ((LM_ERROR, "(%P|%t) ImR: No Permission: ImplRepo is in Locked mode\n"));
       return TAO_IMR_Op::NO_PERMISSION;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Updating server");
       return TAO_IMR_Op::UNKNOWN;

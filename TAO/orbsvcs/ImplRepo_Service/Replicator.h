@@ -84,7 +84,7 @@ public:
 
   void init_orb ();
 
-  bool init_peer (const ACE_CString &filename );
+  bool init_peer (ACE_CString const &filename );
   int send_registration (char *&ior );
 
   bool peer_available ();

@@ -150,7 +150,7 @@ Replicator::svc ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::SystemException &ex)
+  catch (CORBA::SystemException const &ex)
     {
       if (this->debug_ > 0)
         {
@@ -202,7 +202,7 @@ Replicator::handle_exception (ACE_HANDLE )
       mon.release ();
       this->peer_->notify_update (seq, payload);
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       this->prev_update_.unbind_all ();
       this->peer_ =
@@ -359,7 +359,7 @@ Replicator::send_registration (char *&imr_ior)
 }
 
 bool
-Replicator::init_peer (const ACE_CString &replica_ior_file)
+Replicator::init_peer (ACE_CString const &replica_ior_file)
 {
   if (this->debug_ > 1)
     {
@@ -388,7 +388,7 @@ Replicator::init_peer (const ACE_CString &replica_ior_file)
             UpdatePushNotification::_narrow (obj.in());
           non_exist = (this->peer_->_non_existent() == 1);
         }
-      catch (const CORBA::Exception& )
+      catch (CORBA::Exception const& )
         {
         }
 

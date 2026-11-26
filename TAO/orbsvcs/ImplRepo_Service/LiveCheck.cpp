@@ -300,7 +300,7 @@ LiveEntry::status (LiveStatus l)
     }
 }
 
-const ACE_Time_Value &
+ACE_Time_Value const &
 LiveEntry::next_check () const
 {
   return this->next_check_;
@@ -466,7 +466,7 @@ LiveEntry::do_ping (PortableServer::POA_ptr poa)
                           this->server_.c_str()));
         }
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       if (ImR_Locator_i::debug () > 3)
         {
@@ -509,7 +509,7 @@ PingReceiver::cancel ()
       PortableServer::ObjectId_var oid = this->poa_->servant_to_id (this);
       poa_->deactivate_object (oid.in());
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       if (ImR_Locator_i::debug () > 4)
         {
@@ -541,7 +541,7 @@ PingReceiver::ping ()
 void
 PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
 {
-  const CORBA::ULong TAO_MINOR_MASK = 0x00000f80;
+  CORBA::ULong const TAO_MINOR_MASK = 0x00000f80;
   try
     {
       if (ImR_Locator_i::debug () > 5)
@@ -552,7 +552,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
         }
       excep_holder->raise_exception ();
     }
-  catch (const CORBA::TRANSIENT &ex)
+  catch (CORBA::TRANSIENT const &ex)
     {
       switch (ex.minor () & TAO_MINOR_MASK)
         {
@@ -576,7 +576,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
           }
         }
     }
-  catch (const CORBA::TIMEOUT &ex)
+  catch (CORBA::TIMEOUT const &ex)
     {
       if (this->entry_ != nullptr)
         {
@@ -591,7 +591,7 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
             }
         }
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
       if (this->entry_ != nullptr)
         {
@@ -726,7 +726,7 @@ LiveCheck::in_handle_timeout ()
 
 void
 LiveCheck::init (CORBA::ORB_ptr orb,
-                 const ACE_Time_Value &pi)
+                 ACE_Time_Value const &pi)
 {
   this->ping_interval_ = pi;
   ACE_Reactor *r = orb->orb_core()->reactor();
@@ -743,15 +743,15 @@ LiveCheck::shutdown ()
   this->reactor()->cancel_timer (this);
 }
 
-const ACE_Time_Value &
+ACE_Time_Value const &
 LiveCheck::ping_interval () const
 {
   return this->ping_interval_;
 }
 
 int
-LiveCheck::handle_timeout (const ACE_Time_Value &,
-                           const void * tok)
+LiveCheck::handle_timeout (ACE_Time_Value const &,
+                           void const * tok)
 {
   LC_token_type token = reinterpret_cast<LC_token_type>(tok);
   if (ImR_Locator_i::debug () > 2)

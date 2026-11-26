@@ -301,7 +301,7 @@ AsyncAccessManager::notify_waiter (ImR_ResponseHandler *rh)
               }
             }
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const &ex)
         {
           rh->send_exception (ex._tao_duplicate());
         }
@@ -330,7 +330,7 @@ AsyncAccessManager::notify_waiters ()
             this->notify_waiter (rh);
           }
       }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
       {
         if (ImR_Locator_i::debug () > 1)
           {
@@ -879,7 +879,7 @@ ActivatorReceiver::start_server_excep (Messaging::ExceptionHolder *holder)
           this->aam_->activator_replied_start_running (false, 0);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (ImR_Locator_i::debug () > 1)
         {

@@ -97,7 +97,7 @@ public:
   void link_servers
     (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
      char const *name,
-     const CORBA::StringSeq & peers) override;
+     CORBA::StringSeq const & peers) override;
 
   void kill_server
     (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
@@ -161,10 +161,10 @@ public:
 
   LiveCheck &pinger ();
   PortableServer::POA_ptr root_poa ();
-  Activator_Info_Ptr get_activator (const ACE_CString& name);
+  Activator_Info_Ptr get_activator (ACE_CString const& name);
 
   void remove_server_i (const Server_Info_Ptr &si);
-  void destroy_poa (const ACE_CString &poa_name);
+  void destroy_poa (ACE_CString const &poa_name);
   void remove_aam (AsyncAccessManager_ptr &aam);
   void remove_aam (char const *name);
   AsyncAccessManager *find_aam (char const *name, bool active = true);
@@ -176,7 +176,7 @@ public:
                              ImplementationRepository::AAM_Status state);
 
   CORBA::Object_ptr set_timeout_policy(CORBA::Object_ptr obj,
-                                       const ACE_Time_Value& to);
+                                       ACE_Time_Value const& to);
 
 private:
   bool get_info_for_name (char const *name, Server_Info_Ptr &si);
