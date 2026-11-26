@@ -50,6 +50,7 @@ ACE_DLL::operator= (ACE_DLL const &rhs)
              tmp.close_handle_on_destruction_);
   std::swap (this->dll_handle_, tmp.dll_handle_);
   std::swap (this->error_, tmp.error_);
+  std::swap (this->errmsg_, tmp.errmsg_);
 
   return *this;
 }

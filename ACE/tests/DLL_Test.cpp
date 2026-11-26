@@ -161,6 +161,23 @@ run_main (int, ACE_TCHAR *[])
 
   retval += handle_test (dll);
 
+  ACE_DLL missing;
+  if (missing.open (ACE_TEXT ("ace_nonexistent_dll_assignment_test")) == 0)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Unexpectedly opened missing test library\n")));
+      ++retval;
+    }
+  else
+    {
+      ACE_DLL assigned;
+      assigned = missing;
+      if (assigned.error () == nullptr || assigned.error ()[0] == ACE_TEXT ('\0'))
+        {
+          ACE_ERROR ((LM_ERROR, ACE_TEXT ("DLL assignment lost the load error\n")));
+          ++retval;
+        }
+    }
+
   // Call close here so that any errors make it into the log.
   dll.close ();
 
