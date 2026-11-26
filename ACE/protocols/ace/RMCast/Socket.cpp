@@ -177,7 +177,7 @@ namespace ACE_RMCast
         {
           if (timeout)
             {
-              if (cond_.wait (&abs_time) != -1)
+              if (cond_.wait (std::addressof (abs_time)) != -1)
               {
                 break;
               }
@@ -208,7 +208,7 @@ namespace ACE_RMCast
             {
               char c;
 
-              if (signal_pipe_.recv (&c, 1) != 1)
+              if (signal_pipe_.recv (std::addressof (c), 1) != 1)
                 {
                   ACE_OS::perror ("read: ");
                   ACE_OS::abort ();
@@ -252,7 +252,7 @@ namespace ACE_RMCast
         {
           if (timeout)
             {
-              if (cond_.wait (&abs_time) != -1)
+              if (cond_.wait (std::addressof (abs_time)) != -1)
               {
                 break;
               }
@@ -338,9 +338,9 @@ namespace ACE_RMCast
               // Also write to the pipe.
               if (signal_pipe_.write_handle () != ACE_INVALID_HANDLE)
                 {
-                  char c;
+                  char c {};
 
-                  if (signal_pipe_.send (&c, 1) != 1)
+                  if (signal_pipe_.send (std::addressof (c), 1) != 1)
                     {
                       // perror ("write: ");
                       ACE_OS::abort ();
@@ -376,7 +376,7 @@ namespace ACE_RMCast
 
   ssize_t Socket::recv (void* buf, size_t s, ACE_INET_Addr& from)
     {
-      return impl_->recv_ (buf, s, nullptr, &from);
+      return impl_->recv_ (buf, s, nullptr, std::addressof (from));
     }
 
   ssize_t Socket::recv (void* buf, size_t s, ACE_Time_Value const& timeout)
