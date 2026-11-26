@@ -33,7 +33,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS
 {
   ACE_NAMESPACE_INLINE_FUNCTION
-  int access (const char *path, int amode);
+  int access (char const *path, int amode);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -61,7 +61,7 @@ namespace ACE_OS
                       bool quote_args = false);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int chdir (const char *path);
+  int chdir (char const *path);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -69,7 +69,7 @@ namespace ACE_OS
 #endif /* ACE_HAS_WCHAR */
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int rmdir (const char *path);
+  int rmdir (char const *path);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -90,28 +90,28 @@ namespace ACE_OS
             ACE_HANDLE newfd);
 
   extern ACE_Export
-  int execl (const char *path,
-             const char *arg0, ...);
+  int execl (char const *path,
+             char const *arg0, ...);
 
   extern ACE_Export
-  int execle (const char *path,
-              const char *arg0, ...);
+  int execle (char const *path,
+              char const *arg0, ...);
 
   extern ACE_Export
-  int execlp (const char *file,
-              const char *arg0, ...);
+  int execlp (char const *file,
+              char const *arg0, ...);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int execv (const char *path,
+  int execv (char const *path,
              char *const argv[]);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int execve (const char *path,
+  int execve (char const *path,
               char *const argv[],
               char *const envp[]);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int execvp (const char *file,
+  int execvp (char const *file,
               char *const argv[]);
 
   /// @{
@@ -122,7 +122,7 @@ namespace ACE_OS
 
   /// Not in SUSv3.
   extern ACE_Export
-  pid_t fork (const ACE_TCHAR *program_name);
+  pid_t fork (ACE_TCHAR const *program_name);
 
   extern ACE_Export
   pid_t fork_exec (ACE_TCHAR *argv[]);
@@ -151,7 +151,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   int getopt (int argc,
               char *const *argv,
-              const char *optstring);
+              char const *optstring);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   long getpagesize ();
@@ -221,7 +221,7 @@ namespace ACE_OS
 
   extern ACE_Export
   ssize_t pwrite (ACE_HANDLE handle,
-                  const void *buf,
+                  void const *buf,
                   size_t nbyte,
                   ACE_OFF_T offset);
 
@@ -251,7 +251,7 @@ namespace ACE_OS
                   size_t *bytes_transferred = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ssize_t readlink (const char *path,
+  ssize_t readlink (char const *path,
                     char *buf,
                     size_t bufsiz);
 
@@ -296,7 +296,7 @@ namespace ACE_OS
                       bool substitute_env_args = true);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void swab (const void *src, void *dest, ssize_t n);
+  void swab (void const *src, void *dest, ssize_t n);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   long sysconf (int);
@@ -308,7 +308,7 @@ namespace ACE_OS
                 long count);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int truncate (const ACE_TCHAR *filename, ACE_OFF_T length);
+  int truncate (ACE_TCHAR const *filename, ACE_OFF_T length);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   useconds_t ualarm (useconds_t usecs,
@@ -319,7 +319,7 @@ namespace ACE_OS
                      const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int unlink (const char *path);
+  int unlink (char const *path);
 
 #if defined (ACE_HAS_WCHAR)
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -328,12 +328,12 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t write (ACE_HANDLE handle,
-                 const void *buf,
+                 void const *buf,
                  size_t nbyte);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t write (ACE_HANDLE handle,
-                 const void *buf,
+                 void const *buf,
                  size_t nbyte,
                  ACE_OVERLAPPED *);
 
@@ -346,7 +346,7 @@ namespace ACE_OS
    */
   extern ACE_Export
   ssize_t write_n (ACE_HANDLE handle,
-                   const void *buf,
+                   void const *buf,
                    size_t len,
                    size_t *bytes_transferred = nullptr);
 } /* namespace ACE_OS */

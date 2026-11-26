@@ -32,7 +32,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_OS::access (const char *path, int amode)
+ACE_OS::access (char const *path, int amode)
 {
   ACE_OS_TRACE ("ACE_OS::access");
 #if defined (ACE_LACKS_ACCESS)
@@ -106,7 +106,7 @@ ACE_OS::allocation_granularity ()
 }
 
 ACE_INLINE int
-ACE_OS::chdir (const char *path)
+ACE_OS::chdir (char const *path)
 {
   ACE_OS_TRACE ("ACE_OS::chdir");
 #if defined (ACE_LACKS_CHDIR)
@@ -132,7 +132,7 @@ ACE_OS::chdir (const wchar_t *path)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::rmdir (const char *path)
+ACE_OS::rmdir (char const *path)
 {
 #if defined (ACE_LACKS_RMDIR)
   ACE_UNUSED_ARG (path);
@@ -256,7 +256,7 @@ ACE_OS::dup2 (ACE_HANDLE oldhandle, ACE_HANDLE newhandle)
 }
 
 ACE_INLINE int
-ACE_OS::execv (const char *path,
+ACE_OS::execv (char const *path,
                char *const argv[])
 {
   ACE_OS_TRACE ("ACE_OS::execv");
@@ -275,7 +275,7 @@ ACE_OS::execv (const char *path,
   // Windows defines this as returning an intptr_t rather than a simple int,
   // and the conversion triggers compile warnings. So just return -1 if
   // the call returns.
-  ::_execv (path, (const char *const *) argv);
+  ::_execv (path, (char const *const *) argv);
   return -1;
 # endif /* __BORLANDC__ */
 #else
@@ -284,7 +284,7 @@ ACE_OS::execv (const char *path,
 }
 
 ACE_INLINE int
-ACE_OS::execve (const char *path,
+ACE_OS::execve (char const *path,
                 char *const argv[],
                 char *const envp[])
 {
@@ -305,7 +305,7 @@ ACE_OS::execve (const char *path,
   // Windows defines this as returning an intptr_t rather than a simple int,
   // and the conversion triggers compile warnings. So just return -1 if
   // the call returns.
-  ::_execve (path, (const char *const *) argv, (const char *const *) envp);
+  ::_execve (path, (char const *const *) argv, (char const *const *) envp);
   return -1;
 # endif /* __BORLANDC__ */
 #else
@@ -314,7 +314,7 @@ ACE_OS::execve (const char *path,
 }
 
 ACE_INLINE int
-ACE_OS::execvp (const char *file,
+ACE_OS::execvp (char const *file,
                 char *const argv[])
 {
   ACE_OS_TRACE ("ACE_OS::execvp");
@@ -333,7 +333,7 @@ ACE_OS::execvp (const char *file,
   // Windows defines this as returning an intptr_t rather than a simple int,
   // and the conversion triggers compile warnings. So just return -1 if
   // the call returns.
-  ::_execvp (file, (const char *const *) argv);
+  ::_execvp (file, (char const *const *) argv);
   return -1;
 # endif /* __BORLANDC__ */
 #else
@@ -450,7 +450,7 @@ ACE_OS::getegid ()
 }
 
 ACE_INLINE int
-ACE_OS::getopt (int argc, char *const *argv, const char *optstring)
+ACE_OS::getopt (int argc, char *const *argv, char const *optstring)
 {
   ACE_OS_TRACE ("ACE_OS::getopt");
 #if defined (ACE_LACKS_GETOPT)
@@ -796,7 +796,7 @@ ACE_OS::read (ACE_HANDLE handle, void *buf, size_t len,
 }
 
 ACE_INLINE ssize_t
-ACE_OS::readlink (const char *path, char *buf, size_t bufsiz)
+ACE_OS::readlink (char const *path, char *buf, size_t bufsiz)
 {
   ACE_OS_TRACE ("ACE_OS::readlink");
 # if defined (ACE_LACKS_READLINK)
@@ -1000,7 +1000,7 @@ ACE_OS::sleep (const ACE_Time_Value &tv)
 }
 
 ACE_INLINE void
-ACE_OS::swab (const void *src,
+ACE_OS::swab (void const *src,
               void *dest,
               ssize_t length)
 {
@@ -1023,7 +1023,7 @@ ACE_OS::swab (const void *src,
     the express permission of Red Hat, Inc.
   */
 
-  const char *from = static_cast<const char*> (src);
+  char const *from = static_cast<char const*> (src);
   char *to = static_cast<char *> (dest);
   ssize_t ptr = 0;
   for (ptr = 1; ptr < length; ptr += 2)
@@ -1038,7 +1038,7 @@ ACE_OS::swab (const void *src,
       to[ptr-1] = 0;   /* then pad with a NUL. */
     }
 #elif defined (ACE_HAS_NONCONST_SWAB)
-  const char *tmp = static_cast<const char*> (src);
+  char const *tmp = static_cast<char const*> (src);
   char *from = const_cast<char *> (tmp);
   char *to = static_cast<char *> (dest);
 #  if defined (ACE_HAS_INT_SWAB)
@@ -1083,7 +1083,7 @@ ACE_OS::sysinfo (int /*cmd*/, char * /*buf*/, long /*count*/)
 }
 
 ACE_INLINE int
-ACE_OS::truncate (const ACE_TCHAR *filename,
+ACE_OS::truncate (ACE_TCHAR const *filename,
                   ACE_OFF_T offset)
 {
   ACE_OS_TRACE ("ACE_OS::truncate");
@@ -1165,7 +1165,7 @@ ACE_OS::ualarm (const ACE_Time_Value &tv,
 }
 
 ACE_INLINE int
-ACE_OS::unlink (const char *path)
+ACE_OS::unlink (char const *path)
 {
   ACE_OS_TRACE ("ACE_OS::unlink");
 #if defined (ACE_LACKS_UNLINK)
@@ -1193,7 +1193,7 @@ ACE_OS::unlink (const wchar_t *path)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE ssize_t
-ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
+ACE_OS::write (ACE_HANDLE handle, void const *buf, size_t nbyte)
 {
   ACE_OS_TRACE ("ACE_OS::write");
 #if defined (ACE_WIN32)
@@ -1228,7 +1228,7 @@ ACE_OS::write (ACE_HANDLE handle, const void *buf, size_t nbyte)
 
 ACE_INLINE ssize_t
 ACE_OS::write (ACE_HANDLE handle,
-               const void *buf,
+               void const *buf,
                size_t nbyte,
                ACE_OVERLAPPED *overlapped)
 {

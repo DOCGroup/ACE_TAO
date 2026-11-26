@@ -250,7 +250,7 @@ ACE_OS::argv_to_string (int argc,
 }
 
 int
-ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
+ACE_OS::execl (char const * /* path */, char const * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execl");
   ACE_NOTSUP_RETURN (-1);
@@ -259,7 +259,7 @@ ACE_OS::execl (const char * /* path */, const char * /* arg0 */, ...)
 }
 
 int
-ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
+ACE_OS::execle (char const * /* path */, char const * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execle");
   ACE_NOTSUP_RETURN (-1);
@@ -268,7 +268,7 @@ ACE_OS::execle (const char * /* path */, const char * /* arg0 */, ...)
 }
 
 int
-ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
+ACE_OS::execlp (char const * /* file */, char const * /* arg0 */, ...)
 {
   ACE_OS_TRACE ("ACE_OS::execlp");
   ACE_NOTSUP_RETURN (-1);
@@ -277,7 +277,7 @@ ACE_OS::execlp (const char * /* file */, const char * /* arg0 */, ...)
 }
 
 pid_t
-ACE_OS::fork (const ACE_TCHAR *program_name)
+ACE_OS::fork (ACE_TCHAR const *program_name)
 {
   ACE_OS_TRACE ("ACE_OS::fork");
 # if defined (ACE_LACKS_FORK)
@@ -669,7 +669,7 @@ ACE_OS::pread (ACE_HANDLE handle,
 
 ssize_t
 ACE_OS::pwrite (ACE_HANDLE handle,
-                const void *buf,
+                void const *buf,
                 size_t nbytes,
                 ACE_OFF_T offset)
 {
@@ -1006,7 +1006,7 @@ ACE_OS::string_to_argv (ACE_TCHAR *buf,
 
 ssize_t
 ACE_OS::write_n (ACE_HANDLE handle,
-                 const void *buf,
+                 void const *buf,
                  size_t len,
                  size_t *bt)
 {
