@@ -32,6 +32,12 @@ template <class Concrete>
 class ACE_Framework_Component_T : public ACE_Framework_Component
 {
 public:
+  ACE_Framework_Component_T () = delete;
+  ACE_Framework_Component_T (ACE_Framework_Component_T const &) = delete;
+  ACE_Framework_Component_T (ACE_Framework_Component_T &&) = delete;
+  ACE_Framework_Component_T &operator= (ACE_Framework_Component_T const &) = delete;
+  ACE_Framework_Component_T &operator= (ACE_Framework_Component_T &&) = delete;
+
   explicit ACE_Framework_Component_T (Concrete *concrete);
 
   ~ACE_Framework_Component_T () override;

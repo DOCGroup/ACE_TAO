@@ -57,6 +57,7 @@ class ACE_Export ACE_Framework_Component
 public:
   friend class ACE_Framework_Repository;
 
+  ACE_Framework_Component () = delete;
   ACE_Framework_Component (void *_this,
                            ACE_TCHAR const *dll_name = nullptr,
                            ACE_TCHAR const *name = nullptr);
@@ -74,7 +75,7 @@ protected:
 
 private:
   /// Pointer to the actual component.
-  const void *this_;
+  void const *this_;
 
   /// Library associated with this component
   ACE_TCHAR const *dll_name_;
