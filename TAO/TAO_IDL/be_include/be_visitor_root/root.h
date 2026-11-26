@@ -24,9 +24,9 @@ public:
 
   ~be_visitor_root () override;
 
-  be_visitor_root (const be_visitor_root &) = delete;
+  be_visitor_root (be_visitor_root const &) = delete;
   be_visitor_root (be_visitor_root &&) = delete;
-  be_visitor_root &operator= (const be_visitor_root &) = delete;
+  be_visitor_root &operator= (be_visitor_root const &) = delete;
   be_visitor_root &operator= (be_visitor_root &&) = delete;
 
   /// This is the only method that differs from that of the

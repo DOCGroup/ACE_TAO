@@ -23,9 +23,9 @@ public:
   explicit be_visitor_field_cdr_op_cs (be_visitor_context *ctx);
   ~be_visitor_field_cdr_op_cs () override;
 
-  be_visitor_field_cdr_op_cs (const be_visitor_field_cdr_op_cs &) = delete;
+  be_visitor_field_cdr_op_cs (be_visitor_field_cdr_op_cs const &) = delete;
   be_visitor_field_cdr_op_cs (be_visitor_field_cdr_op_cs &&) = delete;
-  be_visitor_field_cdr_op_cs &operator= (const be_visitor_field_cdr_op_cs &) = delete;
+  be_visitor_field_cdr_op_cs &operator= (be_visitor_field_cdr_op_cs const &) = delete;
   be_visitor_field_cdr_op_cs &operator= (be_visitor_field_cdr_op_cs &&) = delete;
 
   /// visit the field node
@@ -77,9 +77,9 @@ class be_visitor_cdr_op_field_decl : public be_visitor_scope
 public:
   explicit be_visitor_cdr_op_field_decl (be_visitor_context *ctx);
 
-  be_visitor_cdr_op_field_decl (const be_visitor_cdr_op_field_decl &) = delete;
+  be_visitor_cdr_op_field_decl (be_visitor_cdr_op_field_decl const &) = delete;
   be_visitor_cdr_op_field_decl (be_visitor_cdr_op_field_decl &&) = delete;
-  be_visitor_cdr_op_field_decl &operator= (const be_visitor_cdr_op_field_decl &) = delete;
+  be_visitor_cdr_op_field_decl &operator= (be_visitor_cdr_op_field_decl const &) = delete;
   be_visitor_cdr_op_field_decl &operator= (be_visitor_cdr_op_field_decl &&) = delete;
 
   /// visit the field node

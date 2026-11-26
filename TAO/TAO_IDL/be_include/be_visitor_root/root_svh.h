@@ -26,9 +26,9 @@ public:
 
   ~be_visitor_root_svh () override;
 
-  be_visitor_root_svh (const be_visitor_root_svh &) = delete;
+  be_visitor_root_svh (be_visitor_root_svh const &) = delete;
   be_visitor_root_svh (be_visitor_root_svh &&) = delete;
-  be_visitor_root_svh &operator= (const be_visitor_root_svh &) = delete;
+  be_visitor_root_svh &operator= (be_visitor_root_svh const &) = delete;
   be_visitor_root_svh &operator= (be_visitor_root_svh &&) = delete;
 
   int visit_root (be_root *node) override;

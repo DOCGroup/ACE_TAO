@@ -26,9 +26,9 @@ public:
   /// destructureor
   ~be_visitor_structure_ci () override  = default;
 
-  be_visitor_structure_ci (const be_visitor_structure_ci &) = delete;
+  be_visitor_structure_ci (be_visitor_structure_ci const &) = delete;
   be_visitor_structure_ci (be_visitor_structure_ci &&) = delete;
-  be_visitor_structure_ci &operator= (const be_visitor_structure_ci &) = delete;
+  be_visitor_structure_ci &operator= (be_visitor_structure_ci const &) = delete;
   be_visitor_structure_ci &operator= (be_visitor_structure_ci &&) = delete;
 
   /// visit structure. We provide code for this method in the derived class

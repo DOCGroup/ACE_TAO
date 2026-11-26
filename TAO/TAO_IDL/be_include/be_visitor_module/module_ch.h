@@ -24,9 +24,9 @@ public:
 
   ~be_visitor_module_ch () override;
 
-  be_visitor_module_ch (const be_visitor_module_ch &) = delete;
+  be_visitor_module_ch (be_visitor_module_ch const &) = delete;
   be_visitor_module_ch (be_visitor_module_ch &&) = delete;
-  be_visitor_module_ch &operator= (const be_visitor_module_ch &) = delete;
+  be_visitor_module_ch &operator= (be_visitor_module_ch const &) = delete;
   be_visitor_module_ch &operator= (be_visitor_module_ch &&) = delete;
 
   /// visit module. We provide code for this method in the derived class

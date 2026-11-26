@@ -24,9 +24,9 @@ public:
 
   ~be_visitor_module () override;
 
-  be_visitor_module (const be_visitor_module &) = delete;
+  be_visitor_module (be_visitor_module const &) = delete;
   be_visitor_module (be_visitor_module &&) = delete;
-  be_visitor_module &operator= (const be_visitor_module &) = delete;
+  be_visitor_module &operator= (be_visitor_module const &) = delete;
   be_visitor_module &operator= (be_visitor_module &&) = delete;
 
   int visit_constant (be_constant *node) override;
