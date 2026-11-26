@@ -30,7 +30,7 @@ public:
   ACE_Typed_SV_Message (long type = 0,
                         int length = sizeof (T),
                         int max_size = sizeof (T));
-  ACE_Typed_SV_Message (const T &data,
+  ACE_Typed_SV_Message (T const &data,
                         long type = 0,
                         int length = sizeof (T),
                         int max_size = sizeof (T));
@@ -58,7 +58,7 @@ public:
   T &data ();
 
   /// Set a pointer to the data in the message.
-  void data (const T &data);
+  void data (T const &data);
 
   /// Dump the state of an object.
   void dump () const;

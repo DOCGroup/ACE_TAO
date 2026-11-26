@@ -105,7 +105,7 @@ private:
    * This function only has an effect the first time it is called for
    * the object. Subsequent calls return 0 (success) but have no effect.
    */
-  int set (const T &r,
+  int set (T const &r,
            ACE_Future<T> &caller);
 
   /// Wait up to @a tv time to get the @a value.  Note that @a tv must be
@@ -236,7 +236,7 @@ public:
 
   /// Constructor that initialises an ACE_Future to point to the
   /// result @a r immediately.
-  ACE_Future (const T &r);
+  ACE_Future (T const &r);
 
   ~ACE_Future ();
 
@@ -246,7 +246,7 @@ public:
 
   /// Cancel an ACE_Future and assign the value @a r.  It is used if a
   /// client does not want to wait for the value to be produced.
-  int cancel (const T &r);
+  int cancel (T const &r);
 
   /**
    * Cancel an ACE_Future.  Put the future into its initial
@@ -276,7 +276,7 @@ public:
    * value assigned to it). Subsequent calls return 0 (success) but have no
    * effect.
    */
-  int set (const T &r);
+  int set (T const &r);
 
   /**
    * Wait to get the object's value.

@@ -16,7 +16,7 @@ ACE_Member_Function_Command<RECEIVER>::execute (void *)
 }
 
 template <class TYPE> ACE_INLINE unsigned long
-ACE_Hash<TYPE>::operator () (const TYPE &t) const
+ACE_Hash<TYPE>::operator () (TYPE const &t) const
 {
   return t.hash ();
 }
@@ -37,15 +37,15 @@ ACE_Pointer_Hash<TYPE>::operator () (TYPE t) const
 }
 
 template <class TYPE> ACE_INLINE bool
-ACE_Equal_To<TYPE>::operator () (const TYPE &lhs,
-                                 const TYPE &rhs) const
+ACE_Equal_To<TYPE>::operator () (TYPE const &lhs,
+                                 TYPE const &rhs) const
 {
   return lhs == rhs;
 }
 
 template <class TYPE> ACE_INLINE bool
-ACE_Less_Than<TYPE>::operator () (const TYPE &lhs,
-                                  const TYPE &rhs) const
+ACE_Less_Than<TYPE>::operator () (TYPE const &lhs,
+                                  TYPE const &rhs) const
 {
   return lhs < rhs;
 }

@@ -117,7 +117,7 @@ class ACE_Hash
 {
 public:
   /// Simply calls t.hash ()
-  unsigned long operator () (const TYPE &t) const;
+  unsigned long operator () (TYPE const &t) const;
 };
 
 /**
@@ -146,8 +146,8 @@ class ACE_Equal_To
 {
 public:
   /// Simply calls operator==
-  bool operator () (const TYPE &lhs,
-                    const TYPE &rhs) const;
+  bool operator () (TYPE const &lhs,
+                    TYPE const &rhs) const;
 };
 
 /**
@@ -163,8 +163,8 @@ class ACE_Less_Than
 {
 public:
   /// Simply calls operator<
-  bool operator () (const TYPE &lhs,
-                    const TYPE &rhs) const;
+  bool operator () (TYPE const &lhs,
+                    TYPE const &rhs) const;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

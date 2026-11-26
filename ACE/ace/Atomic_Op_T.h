@@ -19,7 +19,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename TYPE>
 struct ACE_Type_Traits
 {
-  using parameter_type = const TYPE &;
+  using parameter_type = TYPE const &;
 };
 
 template<>

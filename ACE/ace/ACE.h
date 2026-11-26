@@ -672,7 +672,7 @@ namespace ACE
   /// Helper to avoid comparing floating point values with ==
   /// (uses < and > operators).
   template <typename T>
-  bool is_equal (const T& a, const T& b)
+  bool is_equal (T const& a, T const& b)
   {
     return !((a < b) || (a > b));
   }
@@ -680,7 +680,7 @@ namespace ACE
   /// Helper to avoid comparing floating point values with !=
   /// (uses < and > operators).
   template <typename T>
-  bool is_inequal (const T& a, const T& b)
+  bool is_inequal (T const& a, T const& b)
   {
     return !is_equal (a, b);
   }

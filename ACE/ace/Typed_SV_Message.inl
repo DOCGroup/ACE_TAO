@@ -15,7 +15,7 @@ ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message (long t,
 }
 
 template <class T> ACE_INLINE
-ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message (const T &d,
+ACE_Typed_SV_Message<T>::ACE_Typed_SV_Message (T const &d,
                                                long t,
                                                int l,
                                                int m)
@@ -83,7 +83,7 @@ ACE_Typed_SV_Message<T>::data ()
 }
 
 template <class T> void
-ACE_Typed_SV_Message<T>::data (const T &d)
+ACE_Typed_SV_Message<T>::data (T const &d)
 {
   ACE_TRACE ("ACE_Typed_SV_Message<T>::data");
   this->data_ = d;

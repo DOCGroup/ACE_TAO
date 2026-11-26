@@ -143,7 +143,7 @@ ACE_Future_Rep<T>::ready () const
 }
 
 template <class T> int
-ACE_Future_Rep<T>::set (const T &r,
+ACE_Future_Rep<T>::set (T const &r,
                         ACE_Future<T> &caller)
 {
   // If the value is already produced, ignore it...
@@ -290,7 +290,7 @@ ACE_Future<T>::ACE_Future (ACE_Future<T> const &r)
 }
 
 template <class T>
-ACE_Future<T>::ACE_Future (const T &r)
+ACE_Future<T>::ACE_Future (T const &r)
   : future_rep_ (FUTURE_REP::create ())
 {
   this->future_rep_->set (r, *this);
@@ -315,7 +315,7 @@ ACE_Future<T>::operator!= (ACE_Future<T> const &r) const
 }
 
 template <class T> int
-ACE_Future<T>::cancel (const T &r)
+ACE_Future<T>::cancel (T const &r)
 {
   this->cancel ();
   return this->future_rep_->set (r, *this);
@@ -332,7 +332,7 @@ ACE_Future<T>::cancel ()
 }
 
 template <class T> int
-ACE_Future<T>::set (const T &r)
+ACE_Future<T>::set (T const &r)
 {
   // Give the pointer to the result to the ACE_Future_Rep.
   return this->future_rep_->set (r, *this);
