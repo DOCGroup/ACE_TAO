@@ -7,9 +7,7 @@ namespace ACE_RMCast
   //
 
   Out_Element::
-  ~Out_Element ()
-  {
-  }
+  ~Out_Element () = default;
 
   Out_Element::
   Out_Element () = default;
@@ -38,9 +36,7 @@ namespace ACE_RMCast
   //
 
   In_Element::
-  ~In_Element ()
-  {
-  }
+  ~In_Element () = default;
 
   In_Element::
   In_Element () = default;

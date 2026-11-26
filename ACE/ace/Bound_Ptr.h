@@ -125,6 +125,14 @@ public:
     COUNTER::attach_strong (this->counter_);
   }
 
+  /// Cast with static_cast while sharing the source's reference count.
+  template <class Y>
+  static ACE_Strong_Bound_Ptr static_pointer_cast (
+    ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r)
+  {
+    return ACE_Strong_Bound_Ptr (r, static_cast<X *> (r.ptr_));
+  }
+
   ~ACE_Strong_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.
@@ -212,6 +220,13 @@ private:
 
   /// The ACE_Bound_Ptr_Counter type.
   using COUNTER = ACE_Bound_Ptr_Counter<ACE_LOCK>;
+
+  template <class Y>
+  ACE_Strong_Bound_Ptr (ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r, X *p)
+    : counter_ (r.counter_), ptr_ (p)
+  {
+    COUNTER::attach_strong (this->counter_);
+  }
 
   /// The reference counter.
   COUNTER *counter_;

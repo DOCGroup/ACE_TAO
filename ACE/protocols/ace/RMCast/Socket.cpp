@@ -356,9 +356,7 @@ namespace ACE_RMCast
   //
   //
   Socket::
-    ~Socket ()
-    {
-    }
+    ~Socket () = default;
 
   Socket::
     Socket (Address const& a, bool loop, Parameters const& params)

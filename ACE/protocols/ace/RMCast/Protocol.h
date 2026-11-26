@@ -380,7 +380,7 @@ namespace ACE_RMCast
 
   struct From : Profile
   {
-    static u16 const id;
+    static constexpr u16 id {0x0001};
 
   public:
     From (Header const& h, istream& is)
@@ -397,7 +397,7 @@ namespace ACE_RMCast
     From_ptr
     clone ()
     {
-      return From_ptr (clone_ ());
+      return From_ptr::static_pointer_cast (clone_ ());
     }
 
   protected:
@@ -452,7 +452,7 @@ namespace ACE_RMCast
 
   struct To : Profile
   {
-    static u16 const id;
+    static constexpr u16 id {0x0002};
 
   public:
     To (Header const& h, istream& is)
@@ -469,7 +469,7 @@ namespace ACE_RMCast
     To_ptr
     clone ()
     {
-      return To_ptr (clone_ ());
+      return To_ptr::static_pointer_cast (clone_ ());
     }
 
   protected:
@@ -534,7 +534,7 @@ namespace ACE_RMCast
 
     using Buffer_Ptr = std::unique_ptr<char, Buffer_Deleter>;
 
-    static u16 const id;
+    static constexpr u16 id {0x0003};
 
   public:
     ~Data () override = default;
@@ -574,7 +574,7 @@ namespace ACE_RMCast
     Data_ptr
     clone ()
     {
-      return Data_ptr (clone_ ());
+      return Data_ptr::static_pointer_cast (clone_ ());
     }
 
   protected:
@@ -663,7 +663,7 @@ namespace ACE_RMCast
 
   struct SN : Profile
   {
-    static u16 const id;
+    static constexpr u16 id {0x0004};
 
   public:
     SN (Header const& h, istream& is)
@@ -681,7 +681,7 @@ namespace ACE_RMCast
     SN_ptr
     clone ()
     {
-      return SN_ptr (clone_ ());
+      return SN_ptr::static_pointer_cast (clone_ ());
     }
 
   protected:
@@ -729,7 +729,7 @@ namespace ACE_RMCast
   class NAK : public Profile
   {
   public:
-    static u16 const id;
+    static constexpr u16 id {0x0005};
 
     using SerialNumbers = ACE_Vector<u64, ACE_VECTOR_DEFAULT_SIZE>;
     using iterator = SerialNumbers::Iterator;
@@ -776,7 +776,7 @@ namespace ACE_RMCast
     NAK_ptr
     clone ()
     {
-      return NAK_ptr (clone_ ());
+      return NAK_ptr::static_pointer_cast (clone_ ());
     }
 
   protected:
@@ -920,7 +920,7 @@ namespace ACE_RMCast
 
   struct NRTM : Profile
   {
-    static u16 const id;
+    static constexpr u16 id {0x0006};
 
   public:
     NRTM (Header const& h, istream& is)
@@ -959,7 +959,7 @@ namespace ACE_RMCast
     NRTM_ptr
     clone ()
     {
-      return NRTM_ptr (clone_ ());
+      return NRTM_ptr::static_pointer_cast (clone_ ());
     }
 
   protected:
@@ -1092,7 +1092,7 @@ namespace ACE_RMCast
 
   struct NoData : Profile
   {
-    static u16 const id;
+    static constexpr u16 id {0x0007};
 
   public:
     NoData (Header const& h, istream&)
@@ -1109,7 +1109,7 @@ namespace ACE_RMCast
     NoData_ptr
     clone ()
     {
-      return NoData_ptr (clone_ ());
+      return NoData_ptr::static_pointer_cast (clone_ ());
     }
 
   protected:
@@ -1143,7 +1143,7 @@ namespace ACE_RMCast
 
   struct Part : Profile
   {
-    static u16 const id;
+    static constexpr u16 id {0x0008};
 
   public:
     Part (Header const& h, istream& is)
@@ -1166,7 +1166,7 @@ namespace ACE_RMCast
     Part_ptr
     clone ()
     {
-      return Part_ptr (clone_ ());
+      return Part_ptr::static_pointer_cast (clone_ ());
     }
 
   protected:

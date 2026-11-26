@@ -10,3 +10,9 @@ project(*Receiver) : aceexe, rmcast {
     Receiver.cpp
   }
 }
+project(*Clone_Test) : aceexe, rmcast {
+  exename = clone_test
+  Source_Files {
+    Clone_Test.cpp
+  }
+}

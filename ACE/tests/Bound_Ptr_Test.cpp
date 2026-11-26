@@ -356,6 +356,9 @@ run_main (int, ACE_TCHAR *[])
   size_t const children_before = Child::instance_count_;
   {
     ACE_Strong_Bound_Ptr<Child_Base, ACE_Null_Mutex> base;
+    Child_Ptr const empty_downcast = Child_Ptr::static_pointer_cast (base);
+    ACE_TEST_ASSERT (empty_downcast == nullptr);
+    Child_Ptr downcast;
     {
       ACE_Strong_Bound_Ptr<Child, ACE_Null_Mutex> const derived (
         new Child (parent1->weak_self_));
@@ -364,8 +367,14 @@ run_main (int, ACE_TCHAR *[])
       ACE_TEST_ASSERT (std::addressof (result) == std::addressof (base));
       ACE_TEST_ASSERT (base.get () == derived.get ());
       ACE_TEST_ASSERT (converted.get () == derived.get ());
+      downcast = Child_Ptr::static_pointer_cast (base);
+      ACE_TEST_ASSERT (downcast.get () == derived.get ());
     }
     ACE_TEST_ASSERT (Child::instance_count_ == children_before + 1);
+    base.reset ();
+    ACE_TEST_ASSERT (Child::instance_count_ == children_before + 1);
+    downcast.reset ();
+    ACE_TEST_ASSERT (Child::instance_count_ == children_before);
   }
   ACE_TEST_ASSERT (Child::instance_count_ == children_before);
   ACE_Weak_Bound_Ptr<Parent, ACE_Null_Mutex> p8;
