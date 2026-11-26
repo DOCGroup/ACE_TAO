@@ -57,7 +57,7 @@ ClientTask::svc()
 
   try
   {
-    const bool exec_ret = engine->execute();
+    bool const exec_ret = engine->execute();
     if (!exec_ret)
       {
         ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, guard, this->lock_, 0);

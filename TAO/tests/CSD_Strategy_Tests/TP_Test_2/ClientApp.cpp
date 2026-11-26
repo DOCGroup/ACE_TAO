@@ -56,7 +56,7 @@ ClientApp::client_setup()
 int
 ClientApp::run_engine()
 {
-  const bool result = this->engine_->execute();
+  bool const result = this->engine_->execute();
   return result ? 0 : -1;
 }
 

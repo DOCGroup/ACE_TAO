@@ -495,15 +495,15 @@ Annotation_Test::print_idl_with_line_numbers ()
   const long last_error_line = idl_global->err ()->last_error_lineno;
   const long marked_line = last_error_line != -1 ?
     last_error_line : idl_global->err ()->last_warning_lineno;
-  const size_t char_count = idl_.length ();
+  size_t const char_count = idl_.length ();
 
   long line_number = 0;
   for (size_t start = 0; start < char_count;)
     {
       ++line_number;
-      const size_t end = idl_.find ('\n', start);
+      size_t const end = idl_.find ('\n', start);
       std::string const line = idl_.substr (start, end - start);
-      const bool mark_line = line_number == marked_line;
+      bool const mark_line = line_number == marked_line;
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("%C%4q: %C%C\n"),
         mark_line ? start_marker : " ",
