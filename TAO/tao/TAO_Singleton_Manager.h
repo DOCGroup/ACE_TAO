@@ -120,8 +120,8 @@ protected:
   /// @}
 
 private:
-  TAO_Singleton_Manager (const TAO_Singleton_Manager &) = delete;
-  TAO_Singleton_Manager &operator= (const TAO_Singleton_Manager &) = delete;
+  TAO_Singleton_Manager (TAO_Singleton_Manager const &) = delete;
+  TAO_Singleton_Manager &operator= (TAO_Singleton_Manager const &) = delete;
   TAO_Singleton_Manager (TAO_Singleton_Manager &&) = delete;
   TAO_Singleton_Manager &operator= (TAO_Singleton_Manager &&) = delete;
 

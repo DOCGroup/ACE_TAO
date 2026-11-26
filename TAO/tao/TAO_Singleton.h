@@ -90,9 +90,9 @@ public:
 protected:
   TAO_TSS_Singleton ();
 
-  TAO_TSS_Singleton (const TAO_TSS_Singleton &) = delete;
+  TAO_TSS_Singleton (TAO_TSS_Singleton const &) = delete;
   TAO_TSS_Singleton (TAO_TSS_Singleton &&) = delete;
-  TAO_TSS_Singleton &operator= (const TAO_TSS_Singleton &) = delete;
+  TAO_TSS_Singleton &operator= (TAO_TSS_Singleton const &) = delete;
   TAO_TSS_Singleton &operator= (TAO_TSS_Singleton &&) = delete;
 
   /// Contained instance.

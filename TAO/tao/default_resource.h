@@ -74,8 +74,8 @@ public:
   void apply_to (TAO_Codeset_Descriptor_Base *csd);
 
 private:
-  TAO_Codeset_Parameters (const TAO_Codeset_Parameters &) = delete;
-  TAO_Codeset_Parameters &operator= (const TAO_Codeset_Parameters &) = delete;
+  TAO_Codeset_Parameters (TAO_Codeset_Parameters const &) = delete;
+  TAO_Codeset_Parameters &operator= (TAO_Codeset_Parameters const &) = delete;
   TAO_Codeset_Parameters (TAO_Codeset_Parameters &&) = delete;
   TAO_Codeset_Parameters &operator= (TAO_Codeset_Parameters &&) = delete;
 
