@@ -56,7 +56,7 @@ public:
   /// reach the recycler when necessary.
   virtual int assign_recycler (SVC_HANDLER *svc_handler,
                                ACE_Connection_Recycling_Strategy *recycler,
-                               const void *recycling_act);
+                               void const *recycling_act);
 
   /// This allows us to prepare the svc_handler for recycling.
   virtual int prepare_for_recycling (SVC_HANDLER *svc_handler);
@@ -180,17 +180,17 @@ public:
 
   /// Initialize the DLL strategy based upon the service's DLL
   /// information contained in the @c svc_dll_info string.
-  ACE_DLL_Strategy (const ACE_TCHAR dll_name[],
-                    const ACE_TCHAR factory_function[],
-                    const ACE_TCHAR svc_name[],
+  ACE_DLL_Strategy (ACE_TCHAR const dll_name[],
+                    ACE_TCHAR const factory_function[],
+                    ACE_TCHAR const svc_name[],
                     ACE_Service_Repository *,
                     ACE_Thread_Manager * = nullptr);
 
   /// Initialize the DLL strategy based upon the service's DLL
   /// information contained in the @c svc_dll_info string.
-  int open (const ACE_TCHAR dll_name[],
-            const ACE_TCHAR factory_function[],
-            const ACE_TCHAR svc_name[],
+  int open (ACE_TCHAR const dll_name[],
+            ACE_TCHAR const factory_function[],
+            ACE_TCHAR const svc_name[],
             ACE_Service_Repository *,
             ACE_Thread_Manager * = nullptr);
 
@@ -479,13 +479,13 @@ public:
   ACE_Accept_Strategy (ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Initialize the @c peer_acceptor_ with @a local_addr.
-  ACE_Accept_Strategy (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+  ACE_Accept_Strategy (ACE_PEER_ACCEPTOR_ADDR const &local_addr,
                        bool restart = false,
                        ACE_Reactor *reactor = ACE_Reactor::instance ());
 
   /// Initialize the @c peer_acceptor_ with @a local_addr, indicating
   /// whether to @a reuse_addr if it's already in use.
-  virtual int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+  virtual int open (ACE_PEER_ACCEPTOR_ADDR const &local_addr,
                     bool reuse_addr = false);
 
   /// Return the underlying ACE_HANDLE of the @c peer_acceptor_.
@@ -549,9 +549,9 @@ public:
   /// The default behavior delegates to the @c connect method of the
   /// @c PEER_CONNECTOR::connect.
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
-                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   ACE_PEER_CONNECTOR_ADDR const &remote_addr,
                                    ACE_Time_Value *timeout,
-                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   ACE_PEER_CONNECTOR_ADDR const &local_addr,
                                    bool reuse_addr,
                                    int flags,
                                    int perms);
@@ -563,9 +563,9 @@ public:
    */
   virtual int connect_svc_handler (SVC_HANDLER *&sh,
                                    SVC_HANDLER *&sh_copy,
-                                   const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                   ACE_PEER_CONNECTOR_ADDR const &remote_addr,
                                    ACE_Time_Value *timeout,
-                                   const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                   ACE_PEER_CONNECTOR_ADDR const &local_addr,
                                    bool reuse_addr,
                                    int flags,
                                    int perms);
@@ -828,7 +828,7 @@ public:
   /// svc_handler.
   virtual int assign_recycler (SVC_HANDLER *svc_handler,
                                ACE_Connection_Recycling_Strategy *recycler,
-                               const void *recycling_act);
+                               void const *recycling_act);
 
   /// Template method for preparing the svc_handler for recycling.
   virtual int prepare_for_recycling (SVC_HANDLER *svc_handler);
@@ -849,44 +849,44 @@ public:
    * re-use of the cache.
    */
   int connect_svc_handler (SVC_HANDLER *&sh,
-                           const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                           ACE_PEER_CONNECTOR_ADDR const &remote_addr,
                            ACE_Time_Value *timeout,
-                           const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                           ACE_PEER_CONNECTOR_ADDR const &local_addr,
                            bool reuse_addr,
                            int flags,
                            int perms) override;
   int connect_svc_handler (SVC_HANDLER *&sh,
                            SVC_HANDLER *&sh_copy,
-                           const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                           ACE_PEER_CONNECTOR_ADDR const &remote_addr,
                            ACE_Time_Value *timeout,
-                           const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                           ACE_PEER_CONNECTOR_ADDR const &local_addr,
                            bool reuse_addr,
                            int flags,
                            int perms) override;
 
   /// Remove from cache.
-  int purge (const void *recycling_act) override;
+  int purge (void const *recycling_act) override;
 
   /// Add to cache.
-  int cache (const void *recycling_act) override;
+  int cache (void const *recycling_act) override;
 
   /// Get/Set @c recycle_state.
-  int recycle_state (const void *recycling_act,
+  int recycle_state (void const *recycling_act,
                              ACE_Recyclable_State new_state) override;
-  ACE_Recyclable_State recycle_state (const void *recycling_act) const override;
+  ACE_Recyclable_State recycle_state (void const *recycling_act) const override;
 
   /// Mark as closed.
-  int mark_as_closed (const void *recycling_act) override;
+  int mark_as_closed (void const *recycling_act) override;
 
   /**
    * Mark as closed (non-locking version). This method needs to be public
    * as it is used in the cleanup of handlers where teh locked version causes
    * a deadlock.
    */
-  int mark_as_closed_i (const void *recycling_act) override;
+  int mark_as_closed_i (void const *recycling_act) override;
 
   /// Cleanup hint and reset <*act_holder> to nullptr if <act_holder != nullptr>.
-  int cleanup_hint (const void *recycling_act,
+  int cleanup_hint (void const *recycling_act,
                             void **act_holder = nullptr) override;
 
   /// @name Connection cache types
@@ -939,9 +939,9 @@ protected:
 
   /// Creates a new connection.
   virtual int new_connection (SVC_HANDLER *&sh,
-                              const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                              ACE_PEER_CONNECTOR_ADDR const &remote_addr,
                               ACE_Time_Value *timeout,
-                              const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                              ACE_PEER_CONNECTOR_ADDR const &local_addr,
                               bool reuse_addr,
                               int flags,
                               int perms);
@@ -951,29 +951,29 @@ protected:
             CONNECTION_MAP_ENTRY *&entry);
 
   /// Remove from cache (non-locking version).
-  virtual int purge_i (const void *recycling_act);
+  virtual int purge_i (void const *recycling_act);
 
   /// Add to cache (non-locking version).
-  virtual int cache_i (const void *recycling_act);
+  virtual int cache_i (void const *recycling_act);
 
   /// Set @c recycle_state (non-locking version).
-  virtual int recycle_state_i (const void *recycling_act,
+  virtual int recycle_state_i (void const *recycling_act,
                                ACE_Recyclable_State new_state);
 
   /// Get @c recycle_state (non-locking version).
-  virtual ACE_Recyclable_State recycle_state_i (const void *recycling_act) const;
+  virtual ACE_Recyclable_State recycle_state_i (void const *recycling_act) const;
 
   /// Cleanup hint and reset <*act_holder> to nullptr if <act_holder != nullptr>.
-  virtual int cleanup_hint_i (const void *recycling_act,
+  virtual int cleanup_hint_i (void const *recycling_act,
                               void **act_holder);
 
   /// @name Internal cache operations
   /// @{
 
   int check_hint_i (SVC_HANDLER *&sh,
-                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                    ACE_PEER_CONNECTOR_ADDR const &remote_addr,
                     ACE_Time_Value *timeout,
-                    const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                    ACE_PEER_CONNECTOR_ADDR const &local_addr,
                     bool reuse_addr,
                     int flags,
                     int perms,
@@ -981,9 +981,9 @@ protected:
                     int &found);
 
   int find_or_create_svc_handler_i (SVC_HANDLER *&sh,
-                                    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                    ACE_PEER_CONNECTOR_ADDR const &remote_addr,
                                     ACE_Time_Value *timeout,
-                                    const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                    ACE_PEER_CONNECTOR_ADDR const &local_addr,
                                     bool reuse_addr,
                                     int flags,
                                     int perms,
@@ -992,9 +992,9 @@ protected:
 
   virtual int connect_svc_handler_i (
     SVC_HANDLER *&sh,
-    const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+    ACE_PEER_CONNECTOR_ADDR const &remote_addr,
     ACE_Time_Value *timeout,
-    const ACE_PEER_CONNECTOR_ADDR &local_addr,
+    ACE_PEER_CONNECTOR_ADDR const &local_addr,
     bool reuse_addr,
     int flags,
     int perms,

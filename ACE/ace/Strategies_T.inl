@@ -39,9 +39,9 @@ ACE_Creation_Strategy<SVC_HANDLER>::ACE_Creation_Strategy (ACE_Thread_Manager *t
 }
 
 template <class SVC_HANDLER> ACE_INLINE
-ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (const ACE_TCHAR dll_name[],
-                                                 const ACE_TCHAR factory_function[],
-                                                 const ACE_TCHAR svc_name[],
+ACE_DLL_Strategy<SVC_HANDLER>::ACE_DLL_Strategy (ACE_TCHAR const dll_name[],
+                                                 ACE_TCHAR const factory_function[],
+                                                 ACE_TCHAR const svc_name[],
                                                  ACE_Service_Repository *svc_rep,
                                                  ACE_Thread_Manager *thr_mgr)
 {
