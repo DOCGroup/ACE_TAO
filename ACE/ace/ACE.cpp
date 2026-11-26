@@ -111,7 +111,7 @@ ACE::micro_version ()
   return ACE_MICRO_VERSION;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE::compiler_name ()
 {
 #ifdef ACE_CC_NAME
@@ -162,7 +162,7 @@ bool
 ACE::debug ()
 {
   //FUZZ: disable check_for_ace_log_categories
-  static const char *debug = ACE_OS::getenv ("ACE_DEBUG");
+  static char const *debug = ACE_OS::getenv ("ACE_DEBUG");
   //FUZZ: enable check_for_ace_log_categories
   return (ACE::debug_) ? ACE::debug_ : (debug != nullptr ? (*debug != '0') : false);
 }
@@ -296,11 +296,11 @@ ACE::process_active (pid_t pid)
 #endif /* !ACE_WIN32 */
 }
 
-const ACE_TCHAR *
-ACE::execname (const ACE_TCHAR *old_name)
+ACE_TCHAR const *
+ACE::execname (ACE_TCHAR const *old_name)
 {
 #if defined (ACE_WIN32)
-  const ACE_TCHAR *suffix = ACE_OS::strrchr (old_name, ACE_TEXT ('.'));
+  ACE_TCHAR const *suffix = ACE_OS::strrchr (old_name, ACE_TEXT ('.'));
   if (suffix == nullptr || ACE_OS::strcasecmp (suffix, ACE_TEXT (".exe")) != 0)
     {
       ACE_TCHAR *new_name {};
@@ -328,7 +328,7 @@ ACE::execname (const ACE_TCHAR *old_name)
 }
 
 u_long
-ACE::hash_pjw (const char *str, size_t len)
+ACE::hash_pjw (char const *str, size_t len)
 {
   u_long hash = 0;
 
@@ -350,7 +350,7 @@ ACE::hash_pjw (const char *str, size_t len)
 }
 
 u_long
-ACE::hash_pjw (const char *str)
+ACE::hash_pjw (char const *str)
 {
   return ACE::hash_pjw (str, std::strlen (str));
 }
@@ -388,7 +388,7 @@ ACE::hash_pjw (const wchar_t *str)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_TCHAR *
-ACE::strenvdup (const ACE_TCHAR *str)
+ACE::strenvdup (ACE_TCHAR const *str)
 {
   ACE_TRACE ("ACE::strenvdup");
 
@@ -413,11 +413,11 @@ netsvc.so            netsvc.so + warning   libnetsvc.so
 
 */
 
-const ACE_TCHAR *
-ACE::basename (const ACE_TCHAR *pathname, ACE_TCHAR delim)
+ACE_TCHAR const *
+ACE::basename (ACE_TCHAR const *pathname, ACE_TCHAR delim)
 {
   ACE_TRACE ("ACE::basename");
-  const ACE_TCHAR *temp = ACE_OS::strrchr (pathname, delim);
+  ACE_TCHAR const *temp = ACE_OS::strrchr (pathname, delim);
 
   if (temp == nullptr)
     {
@@ -429,13 +429,13 @@ ACE::basename (const ACE_TCHAR *pathname, ACE_TCHAR delim)
     }
 }
 
-const ACE_TCHAR *
-ACE::dirname (const ACE_TCHAR *pathname, ACE_TCHAR delim)
+ACE_TCHAR const *
+ACE::dirname (ACE_TCHAR const *pathname, ACE_TCHAR delim)
 {
   ACE_TRACE ("ACE::dirname");
   static ACE_TCHAR return_dirname[MAXPATHLEN + 1];
 
-  const ACE_TCHAR *temp = ACE_OS::strrchr (pathname, delim);
+  ACE_TCHAR const *temp = ACE_OS::strrchr (pathname, delim);
 
   if (temp == nullptr)
     {
@@ -1397,7 +1397,7 @@ ACE::sendmsg (ACE_HANDLE handle,
 
 ssize_t
 ACE::sendto (ACE_HANDLE handle,
-             const char *buf,
+             char const *buf,
              int len,
              int flags,
              const struct sockaddr *addr,
@@ -2433,7 +2433,7 @@ ACE::restore_non_blocking_mode (ACE_HANDLE handle, int val)
 /// Portions taken from mdump by J.P. Knight (J.P.Knight@lut.ac.uk)
 /// Modifications by Todd Montgomery.
 size_t
-ACE::format_hexdump (const char *buffer,
+ACE::format_hexdump (char const *buffer,
                      size_t size,
                      ACE_TCHAR *obuf,
                      size_t obuf_sz)
@@ -2449,7 +2449,7 @@ ACE::format_hexdump (const char *buffer,
 
   // Format up to bytes_per_line input bytes per output line.
   size_t const max_input_bytes = (obuf_sz / output_chars_per_line) * bytes_per_line;
-  const ACE_TCHAR *const obuf_start = obuf;
+  ACE_TCHAR const *const obuf_start = obuf;
 
   if (size > max_input_bytes)
     {
@@ -2951,7 +2951,7 @@ ACE::daemonize (const ACE_TCHAR pathname[],
 }
 
 pid_t
-ACE::fork (const ACE_TCHAR *program_name,
+ACE::fork (ACE_TCHAR const *program_name,
            int avoid_zombies)
 {
   if (avoid_zombies == 0)
@@ -3192,7 +3192,7 @@ ACE::is_prime (const u_long n,
   return 0;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE::sock_error (int error)
 {
 #if defined (ACE_WIN32)
@@ -3406,9 +3406,9 @@ ACE::is_sock_error (int error)
 }
 
 char *
-ACE::strndup (const char *str, size_t n)
+ACE::strndup (char const *str, size_t n)
 {
-  const char *t = str;
+  char const *t = str;
   size_t len;
 
   // Figure out how long this string is (remember, it might not be
@@ -3468,9 +3468,9 @@ ACE::strndup (const wchar_t *str, size_t n)
 #endif /* ACE_HAS_WCHAR */
 
 char *
-ACE::strnnew (const char *str, size_t n)
+ACE::strnnew (char const *str, size_t n)
 {
-  const char *t = str;
+  char const *t = str;
   size_t len;
 
   // Figure out how long this string is (remember, it might not be
@@ -3523,8 +3523,8 @@ ACE::strnnew (const wchar_t *str, size_t n)
 }
 #endif /* ACE_HAS_WCHAR */
 
-const char *
-ACE::strend (const char *s)
+char const *
+ACE::strend (char const *s)
 {
   while (*s++ != '\0')
     {
@@ -3548,7 +3548,7 @@ ACE::strend (const wchar_t *s)
 #endif
 
 char *
-ACE::strnew (const char *s)
+ACE::strnew (char const *s)
 {
   if (s == nullptr)
     {
@@ -3607,7 +3607,7 @@ namespace
 
   // precond:  *p == '[' start of char class
   // postcond: *p == ']' end of the char class
-  inline bool equal_class (char s, const char *&p, bool case_sensitive)
+  inline bool equal_class (char s, char const *&p, bool case_sensitive)
   {
     ++p;
     bool negate = false;
@@ -3651,7 +3651,7 @@ namespace
 }
 
 bool
-ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
+ACE::wild_match(char const *str, char const *pat, bool case_sensitive,
                 bool character_classes)
 {
   if (str == pat)
@@ -3664,8 +3664,8 @@ ACE::wild_match(const char *str, const char *pat, bool case_sensitive,
     }
 
   bool star = false, escape = false;
-  const char *s = str;
-  const char *p = pat;
+  char const *s = str;
+  char const *p = pat;
   while (*s != '\0')
     {
       if (!escape && *p == '\\')

@@ -72,7 +72,7 @@ namespace ACE
   /// @{
 
   /// E.g., the "SunPro C++" in SunPro C++ 4.32.0
-  extern ACE_Export const ACE_TCHAR * compiler_name ();
+  extern ACE_Export ACE_TCHAR const * compiler_name ();
 
   /// E.g., the "4" in SunPro C++ 4.32.0
   extern ACE_Export u_int compiler_major_version ();
@@ -95,7 +95,7 @@ namespace ACE
   /// expression" features are not implemented: collating symbols, equivalence
   /// class expressions, and character class expressions.  The POSIX locale is
   /// assumed.
-  extern ACE_Export bool wild_match(const char* s, const char* pattern,
+  extern ACE_Export bool wild_match(char const * s, char const * pattern,
     bool case_sensitive = true, bool character_classes = false);
 
   /**
@@ -266,7 +266,7 @@ namespace ACE
                                      const ACE_Time_Value *timeout = nullptr);
 
   extern ACE_Export ssize_t sendto (ACE_HANDLE handle,
-                                    const char *buf,
+                                    char const *buf,
                                     int len,
                                     int flags,
                                     const struct sockaddr *addr,
@@ -404,30 +404,30 @@ namespace ACE
    * the pointer is allocated with @c ACE_OS::malloc and must be freed
    * by @c ACE_OS::free.
    */
-  extern ACE_Export ACE_TCHAR *strenvdup (const ACE_TCHAR *str);
+  extern ACE_Export ACE_TCHAR *strenvdup (ACE_TCHAR const *str);
 
   /// Returns a pointer to the "end" of the string, i.e., the character
   /// past the '\0'.
-  extern ACE_Export const char *strend (const char *s);
+  extern ACE_Export char const *strend (char const *s);
 
   /// This method is just like @c strdup, except that it uses
   /// @c operator @c new rather than @c malloc.  If @a s is NULL
   /// returns NULL rather than segfaulting.
-  extern ACE_Export char *strnew (const char *s);
+  extern ACE_Export char *strnew (char const *s);
 
   /// Delete the memory allocated by @c strnew.
   ACE_NAMESPACE_INLINE_FUNCTION void strdelete (char *s);
 
   /// Create a fresh new copy of @a str, up to @a n chars long.  Uses
   /// @c ACE_OS::malloc to allocate the new string.
-  extern ACE_Export char *strndup (const char *str, size_t n);
+  extern ACE_Export char *strndup (char const *str, size_t n);
 
   /// Create a fresh new copy of @a str, up to @a n chars long.  Uses
   /// @c ACE_OS::malloc to allocate the new string.
-  extern ACE_Export char *strnnew (const char *str, size_t n);
+  extern ACE_Export char *strnnew (char const *str, size_t n);
 
   /// Determine if a specified pathname is "dot dir" (ie. "." or "..").
-  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (const char *s);
+  ACE_NAMESPACE_INLINE_FUNCTION bool isdotdir (char const *s);
 
 #if defined (ACE_HAS_WCHAR)
   extern ACE_Export const wchar_t *strend (const wchar_t *s);
@@ -461,14 +461,14 @@ namespace ACE
    *         a ".exe" suffix. The caller is responsible for freeing the
    *         memory using delete [].
    */
-  extern ACE_Export const ACE_TCHAR *execname (const ACE_TCHAR *pathname);
+  extern ACE_Export ACE_TCHAR const *execname (ACE_TCHAR const *pathname);
 
   /**
    * Returns the "basename" of a @a pathname separated by @a delim.
    * For instance, the basename of "/tmp/foo.cpp" is "foo.cpp" when
    * @a delim is @a '/'.
    */
-  extern ACE_Export const ACE_TCHAR *basename (const ACE_TCHAR *pathname,
+  extern ACE_Export ACE_TCHAR const *basename (ACE_TCHAR const *pathname,
                                                ACE_TCHAR delim =
                                                ACE_DIRECTORY_SEPARATOR_CHAR);
 
@@ -478,7 +478,7 @@ namespace ACE
    * @a pathname has no @a delim ".\0" is returned.  This method does
    * not modify @a pathname and is not reentrant.
    */
-  extern ACE_Export const ACE_TCHAR *dirname (const ACE_TCHAR *pathname,
+  extern ACE_Export ACE_TCHAR const *dirname (ACE_TCHAR const *pathname,
                                               ACE_TCHAR delim =
                                               ACE_DIRECTORY_SEPARATOR_CHAR);
 
@@ -537,7 +537,7 @@ namespace ACE
    * needs to be fixed).
    */
   extern ACE_Export pid_t fork (
-    const ACE_TCHAR *program_name = ACE_TEXT ("<unknown>"),
+    ACE_TCHAR const *program_name = ACE_TEXT ("<unknown>"),
     int avoid_zombies = 0);
 
   /**
@@ -563,14 +563,14 @@ namespace ACE
   // @@ UNICODE what about buffer?
   /// Format buffer into printable format.  This is useful for
   /// debugging.
-  extern ACE_Export size_t format_hexdump (const char *buffer, size_t size,
+  extern ACE_Export size_t format_hexdump (char const *buffer, size_t size,
                                            ACE_TCHAR *obuf, size_t obuf_sz);
 
   /// Computes the hash value of {str} using the "Hash PJW" routine.
-  extern ACE_Export u_long hash_pjw (const char *str);
+  extern ACE_Export u_long hash_pjw (char const *str);
 
   /// Computes the hash value of {str} using the "Hash PJW" routine.
-  extern ACE_Export u_long hash_pjw (const char *str, size_t len);
+  extern ACE_Export u_long hash_pjw (char const *str, size_t len);
 
 #if defined (ACE_HAS_WCHAR)
   /// Computes the hash value of {str} using the "Hash PJW" routine.
@@ -581,7 +581,7 @@ namespace ACE
 #endif /* ACE_HAS_WCHAR */
 
   /// Computes CRC-CCITT for the string.
-  extern ACE_Export ACE_UINT16 crc_ccitt(const char *str);
+  extern ACE_Export ACE_UINT16 crc_ccitt(char const *str);
 
   /// Computes CRC-CCITT for the buffer.
   extern ACE_Export ACE_UINT16 crc_ccitt(const void *buf, size_t len,
@@ -592,7 +592,7 @@ namespace ACE
            ACE_UINT16 crc = 0);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the string.
-  extern ACE_Export ACE_UINT32 crc32 (const char *str);
+  extern ACE_Export ACE_UINT32 crc32 (char const *str);
 
   /// Computes the ISO 8802-3 standard 32 bits CRC for the buffer.
   extern ACE_Export ACE_UINT32 crc32 (const void *buf, size_t len,
@@ -628,7 +628,7 @@ namespace ACE
   /// Returns a string containing the error message corresponding to a
   /// WinSock error.  This works around an omission in the Win32 API.
   /// @internal
-  extern ACE_Export const ACE_TCHAR * sock_error (int error);
+  extern ACE_Export ACE_TCHAR const * sock_error (int error);
 
   /// Determins whether the given error code corresponds to to a
   /// WinSock error. If so returns true, false otherwise.
