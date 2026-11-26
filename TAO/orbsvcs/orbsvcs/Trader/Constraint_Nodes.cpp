@@ -700,7 +700,7 @@ operator== (CORBA::Double left, TAO_Literal_Constraint const& right)
 }
 
 bool
-operator== (const TAO::String_Manager& left,
+operator== (TAO::String_Manager const& left,
             TAO_Literal_Constraint const& right)
 {
   bool result {};

@@ -274,7 +274,7 @@ public:
                 TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export bool
-    operator== (const TAO::String_Manager& left,
+    operator== (TAO::String_Manager const& left,
                 TAO_Literal_Constraint const& right);
 
   friend TAO_Trading_Serv_Export TAO_Literal_Constraint

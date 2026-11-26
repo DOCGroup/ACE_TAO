@@ -1456,7 +1456,7 @@ TAO_Offer_Filter::limits_applied ()
 }
 
 TAO_Property_Filter::
-TAO_Property_Filter (const SPECIFIED_PROPS& desired_props)
+TAO_Property_Filter (SPECIFIED_PROPS const& desired_props)
   : policy_  (desired_props._d ())
 {
   if (this->policy_ == CosTrading::Lookup::some)

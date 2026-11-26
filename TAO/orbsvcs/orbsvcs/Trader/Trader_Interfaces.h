@@ -229,7 +229,7 @@ private:
   CORBA::Boolean seen_request_id (TAO_Policies& policies,
                                   CosTrading::Admin::OctetSeq const*& seq);
 
-  const unsigned int IDS_SAVED;
+  unsigned int const IDS_SAVED;
 
   /// A reference to the trader for obtaining offer maps.
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;
