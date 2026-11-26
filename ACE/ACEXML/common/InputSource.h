@@ -50,9 +50,9 @@ class ACEXML_Export ACEXML_InputSource
 public:
   ACEXML_InputSource ();
 
-  ACEXML_InputSource (const ACEXML_InputSource &) = delete;
+  ACEXML_InputSource (ACEXML_InputSource const &) = delete;
   ACEXML_InputSource (ACEXML_InputSource &&) = delete;
-  ACEXML_InputSource &operator= (const ACEXML_InputSource &) = delete;
+  ACEXML_InputSource &operator= (ACEXML_InputSource const &) = delete;
   ACEXML_InputSource &operator= (ACEXML_InputSource &&) = delete;
 
   /**

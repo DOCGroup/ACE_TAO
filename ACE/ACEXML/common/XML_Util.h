@@ -19,8 +19,8 @@
 
 #include "ACEXML/common/XML_Types.h"
 
-ACEXML_Export ACEXML_String ACEXML_escape_string(const ACEXML_String& str);
-ACEXML_Export void ACEXML_escape_string(const ACEXML_String& in, ACEXML_String& out);
+ACEXML_Export ACEXML_String ACEXML_escape_string(ACEXML_String const& str);
+ACEXML_Export void ACEXML_escape_string(ACEXML_String const& in, ACEXML_String& out);
 
 #include /**/ "ace/post.h"
 

@@ -26,14 +26,14 @@ ACEXML_SAXException::ACEXML_SAXException (ACEXML_Char const *msg)
 {
 }
 
-ACEXML_SAXException::ACEXML_SAXException (const ACEXML_SAXException &ex)
+ACEXML_SAXException::ACEXML_SAXException (ACEXML_SAXException const &ex)
   : ACEXML_Exception (ex),
     message_ (ACE::strnew (ex.message_.get ()))
 {
 }
 
 ACEXML_SAXException&
-ACEXML_SAXException::operator= (const ACEXML_SAXException& src)
+ACEXML_SAXException::operator= (ACEXML_SAXException const& src)
 {
   if (this != std::addressof (src))
     {
@@ -77,7 +77,7 @@ ACEXML_SAXException::print () const
 ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException ()
 = default;
 
-ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_SAXNotSupportedException &ex)
+ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (ACEXML_SAXNotSupportedException const &ex)
   : ACEXML_SAXException (ex)
 {
 }
@@ -135,13 +135,13 @@ ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (ACEXML_Char 
 {
 }
 
-ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (const ACEXML_SAXNotRecognizedException &ex)
+ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (ACEXML_SAXNotRecognizedException const &ex)
   : ACEXML_SAXException (ex)
 {
 }
 
 ACEXML_SAXNotRecognizedException&
-ACEXML_SAXNotRecognizedException::operator= (const ACEXML_SAXNotRecognizedException &ex)
+ACEXML_SAXNotRecognizedException::operator= (ACEXML_SAXNotRecognizedException const &ex)
 {
   this->ACEXML_SAXException::operator= (ex);
   return *this;
@@ -187,13 +187,13 @@ ACEXML_SAXParseException::ACEXML_SAXParseException (ACEXML_Char const *msg)
 {
 }
 
-ACEXML_SAXParseException::ACEXML_SAXParseException (const ACEXML_SAXParseException &ex)
+ACEXML_SAXParseException::ACEXML_SAXParseException (ACEXML_SAXParseException const &ex)
   : ACEXML_SAXException (ex)
 {
 }
 
 ACEXML_SAXParseException&
-ACEXML_SAXParseException::operator= (const ACEXML_SAXParseException &ex)
+ACEXML_SAXParseException::operator= (ACEXML_SAXParseException const &ex)
 {
   this->ACEXML_SAXException::operator= (ex);
   return *this;

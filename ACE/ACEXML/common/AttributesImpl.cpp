@@ -41,7 +41,7 @@ ACEXML_AttributesImpl::addAttribute (ACEXML_Char const *uri,
 }
 
 int
-ACEXML_AttributesImpl::addAttribute (const ACEXML_Attribute &att)
+ACEXML_AttributesImpl::addAttribute (ACEXML_Attribute const &att)
 {
   if (this->isDuplicate (att.uri(), att.localName(), att.qName()))
   {

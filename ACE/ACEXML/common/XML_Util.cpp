@@ -8,14 +8,14 @@ constexpr ACEXML_Char ESCAPED_QUOTE[] = ACE_TEXT("&quot;");
 
 #define CSTRLEN(x) ((sizeof(x) / sizeof(ACEXML_Char)) - 1)
 
-ACEXML_String ACEXML_escape_string(const ACEXML_String& str)
+ACEXML_String ACEXML_escape_string(ACEXML_String const& str)
 {
   ACEXML_String ret(str.length ());
   ACEXML_escape_string(str, ret);
   return ret;
 }
 
-void ACEXML_escape_string(const ACEXML_String& in, ACEXML_String& out)
+void ACEXML_escape_string(ACEXML_String const& in, ACEXML_String& out)
 {
   size_t const len = in.length ();
   out.clear();

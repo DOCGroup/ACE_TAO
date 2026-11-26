@@ -73,9 +73,9 @@ public:
    */
   ACEXML_LocatorImpl (ACEXML_Locator const& locator);
 
-  ACEXML_LocatorImpl (const ACEXML_LocatorImpl &) = delete;
+  ACEXML_LocatorImpl (ACEXML_LocatorImpl const &) = delete;
   ACEXML_LocatorImpl (ACEXML_LocatorImpl &&) = delete;
-  ACEXML_LocatorImpl &operator= (const ACEXML_LocatorImpl &) = delete;
+  ACEXML_LocatorImpl &operator= (ACEXML_LocatorImpl const &) = delete;
   ACEXML_LocatorImpl &operator= (ACEXML_LocatorImpl &&) = delete;
 
   ~ACEXML_LocatorImpl () override;

@@ -152,7 +152,7 @@ public:
                             ACEXML_Char const *qName,
                             ACEXML_Char const *type,
                             ACEXML_Char const *value);
-  virtual int addAttribute (const ACEXML_Attribute &att);
+  virtual int addAttribute (ACEXML_Attribute const &att);
 
   /**
    *  Check for duplicate attributes.
