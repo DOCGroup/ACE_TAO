@@ -39,7 +39,7 @@ public:
    *
    * @param input Binary data in ACEXML_Char stream.
    * @param output_len Length of the encoded Base64 ACEXML_Char stream.
-   * @return Encoded Base64 data in ACEXML_Char stream or NULL if input data
+   * @return Encoded Base64 data in ACEXML_Char stream or nullptr if input data
    *         cannot be encoded.
    */
 
@@ -50,8 +50,8 @@ public:
    *
    * @param input Encoded Base64 data in ACEXML_Char stream.
    * @param output_len Length of the binary ACEXML_Char stream.
-   * @return Binary data in ACEXML_Char stream or NULL if input data cannot
-   *         be encoded.
+   * @return Binary data in ACEXML_Char stream or nullptr if input data cannot
+   *         be decoded.
    */
   static ACEXML_Char* decode (ACEXML_Char const * input,
                               size_t* output_len);
