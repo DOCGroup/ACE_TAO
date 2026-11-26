@@ -117,8 +117,8 @@ public:
    * dispatching and @a act is the asynchronous completion token that
    * was passed in when @c schedule_timer was invoked.
    */
-  virtual int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act = nullptr);
+  virtual int handle_timeout (ACE_Time_Value const &current_time,
+                              void const *act = nullptr);
 
   /// Called when a process exits.
   virtual int handle_exit (ACE_Process *);
@@ -317,7 +317,7 @@ public:
   /// Construct with a handler.
   ACE_Event_Handler_var (ACE_Event_Handler *p);
 
-  ACE_Event_Handler_var (const ACE_Event_Handler_var &b);
+  ACE_Event_Handler_var (ACE_Event_Handler_var const &b);
 
   ~ACE_Event_Handler_var ();
 
@@ -325,7 +325,7 @@ public:
   ACE_Event_Handler_var &operator= (ACE_Event_Handler *p);
 
   /// Assignment to a ACE_Event_Handler_var.
-  ACE_Event_Handler_var &operator= (const ACE_Event_Handler_var &b);
+  ACE_Event_Handler_var &operator= (ACE_Event_Handler_var const &b);
 
   /// Overloaded "->".
   ACE_Event_Handler *operator-> () const;

@@ -87,7 +87,7 @@ ACE_Event_Handler::handle_exception (ACE_HANDLE)
 
 // Called when timer expires, TV stores the current time.
 int
-ACE_Event_Handler::handle_timeout (const ACE_Time_Value &, const void *)
+ACE_Event_Handler::handle_timeout (ACE_Time_Value const &, void const *)
 {
   ACE_TRACE ("ACE_Event_Handler::handle_timeout");
   return -1;
@@ -283,7 +283,7 @@ ACE_Event_Handler_var::ACE_Event_Handler_var (ACE_Event_Handler *p)
 {
 }
 
-ACE_Event_Handler_var::ACE_Event_Handler_var (const ACE_Event_Handler_var &b)
+ACE_Event_Handler_var::ACE_Event_Handler_var (ACE_Event_Handler_var const &b)
   : ptr_ (b.ptr_)
 {
   if (this->ptr_ != nullptr)
@@ -314,7 +314,7 @@ ACE_Event_Handler_var::operator= (ACE_Event_Handler *p)
 }
 
 ACE_Event_Handler_var &
-ACE_Event_Handler_var::operator= (const ACE_Event_Handler_var &b)
+ACE_Event_Handler_var::operator= (ACE_Event_Handler_var const &b)
 {
   ACE_Event_Handler_var tmp (b);
   std::swap (this->ptr_, tmp.ptr_);

@@ -68,7 +68,7 @@ public:
   using IO_HANDLER = int (T::*)(ACE_HANDLE);
 
   /// Handle timeout events.
-  using TO_HANDLER = int (T::*)(const ACE_Time_Value &, const void *);
+  using TO_HANDLER = int (T::*)(ACE_Time_Value const &, void const *);
 
   /// Handle close events.
   using CL_HANDLER = int (T::*)(ACE_HANDLE, ACE_Reactor_Mask);
@@ -103,7 +103,7 @@ public:
   int handle_input (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
   int handle_output (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
   int handle_exception (ACE_HANDLE fd = ACE_INVALID_HANDLE) override;
-  int handle_timeout (const ACE_Time_Value &tv, const void *arg = nullptr) override;
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg = nullptr) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask close_mask) override;
   int handle_signal (int signum, siginfo_t * = nullptr, ucontext_t * = nullptr) override;
   /// @}

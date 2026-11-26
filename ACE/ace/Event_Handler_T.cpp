@@ -92,7 +92,7 @@ ACE_Event_Handler_T<T>::handle_exception (ACE_HANDLE fd)
 }
 
 template<class T> int
-ACE_Event_Handler_T<T>::handle_timeout (const ACE_Time_Value &tv, const void *arg)
+ACE_Event_Handler_T<T>::handle_timeout (ACE_Time_Value const &tv, void const *arg)
 {
   ACE_TRACE ("ACE_Event_Handler_T<T>::handle_timeout");
   return this->to_handler_ == nullptr ? 0 : ((*this->op_handler_).*to_handler_) (tv, arg);
