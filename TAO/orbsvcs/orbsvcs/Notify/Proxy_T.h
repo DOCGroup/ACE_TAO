@@ -34,7 +34,7 @@ public:
 
   ~TAO_Notify_Proxy_T () override;
 
-  /// Implements TAO_Notify_Object::servant method.
+  /// Return this proxy as a servant.
   virtual PortableServer::Servant servant ();
 
   /// ServantBase refcount methods.
