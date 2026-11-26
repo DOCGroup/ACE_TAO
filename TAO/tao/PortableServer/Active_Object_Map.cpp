@@ -315,12 +315,12 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
 
   // Finally everything is fine.  Make sure to take ownership away
   // from the unique pointer.
-  this->id_uniqueness_strategy_ = std::move(new_id_uniqueness_strategy);
-  this->lifespan_strategy_ =  std::move(new_lifespan_strategy);
-  this->id_assignment_strategy_ = std::move(new_id_assignment_strategy);
-  this->id_hint_strategy_ = std::move(new_id_hint_strategy);
-  this->servant_map_ = std::move(new_servant_map);
-  this->user_id_map_ = std::move(new_user_id_map);
+  this->id_uniqueness_strategy_ = std::move (new_id_uniqueness_strategy);
+  this->lifespan_strategy_ = std::move (new_lifespan_strategy);
+  this->id_assignment_strategy_ = std::move (new_id_assignment_strategy);
+  this->id_hint_strategy_ = std::move (new_id_hint_strategy);
+  this->servant_map_ = std::move (new_servant_map);
+  this->user_id_map_ = std::move (new_user_id_map);
 
 #if defined (TAO_HAS_MONITOR_POINTS) && (TAO_HAS_MONITOR_POINTS == 1)
   ACE::Monitor_Control::Size_Monitor *monitor {};

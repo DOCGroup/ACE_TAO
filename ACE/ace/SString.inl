@@ -256,7 +256,7 @@ ACE_Auto_String_Free::reset (char* p)
 ACE_INLINE ACE_Auto_String_Free&
 ACE_Auto_String_Free::operator= (ACE_Auto_String_Free& rhs)
 {
-  if (this != std::addressof(rhs))
+  if (this != std::addressof (rhs))
     {
       this->reset (rhs.p_);
       rhs.p_ = nullptr;

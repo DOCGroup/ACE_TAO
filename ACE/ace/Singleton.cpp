@@ -75,7 +75,7 @@ ACE_Singleton<TYPE, ACE_LOCK>::instance ()
           // instantiation.
 #if defined(ACE_FACE_SAFETY_BASE)
           static ACE_LOCK the_lock;
-          static ACE_LOCK *lock = std::addressof(the_lock);
+          static ACE_LOCK *lock = std::addressof (the_lock);
 #else /* ACE_FACE_SAFETY_BASE */
           static ACE_LOCK *lock {};
 #endif /* ACE_FACE_SAFETY_BASE */

@@ -21,7 +21,7 @@ ACE_OS::select (int width,
   if (timeout != nullptr)
     {
       copy = *timeout;
-      timep = std::addressof(copy);
+      timep = std::addressof (copy);
     }
 #else
   const timeval *timep = (timeout == 0 ? (const timeval *)0 : *timeout);

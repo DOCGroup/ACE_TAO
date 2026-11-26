@@ -326,7 +326,7 @@ ACE_SString::operator= (ACE_SString const &s)
   ACE_TRACE ("ACE_SString::operator=");
   // Check for identify.
 
-  if (this != std::addressof(s))
+  if (this != std::addressof (s))
     {
       // Only reallocate if we don't have enough space...
       if (this->len_ < s.len_)

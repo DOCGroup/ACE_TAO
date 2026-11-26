@@ -285,7 +285,7 @@ ACE_OS_Object_Manager::init ()
 #     pragma clang diagnostic ignored "-Wdeprecated-declarations"
 #   endif /* __clang__ */
       ACE_OS::win32_versioninfo_.dwOSVersionInfoSize = sizeof (ACE_TEXT_OSVERSIONINFO);
-      ACE_TEXT_GetVersionEx (std::addressof(ACE_OS::win32_versioninfo_));
+      ACE_TEXT_GetVersionEx (std::addressof (ACE_OS::win32_versioninfo_));
 #   if defined(__clang__)
 #     pragma clang diagnostic pop
 #   endif /* __clang__ */

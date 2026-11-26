@@ -637,55 +637,55 @@ CORBA::Any::operator>>= (CORBA::Any::to_value obj) const
 CORBA::Boolean
 operator>>= (CORBA::Any const &any, CORBA::Short &s)
 {
-  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_short, std::addressof(s));
+  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_short, std::addressof (s));
 }
 
 CORBA::Boolean
 operator>>= (CORBA::Any const &any, CORBA::UShort &us)
 {
-  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_ushort, std::addressof(us));
+  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_ushort, std::addressof (us));
 }
 
 CORBA::Boolean
 operator>>= (CORBA::Any const &any, CORBA::Long &l)
 {
-  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_long, std::addressof(l));
+  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_long, std::addressof (l));
 }
 
 CORBA::Boolean
 operator>>= (CORBA::Any const &any, CORBA::ULong &ul)
 {
-  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_ulong, std::addressof(ul));
+  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_ulong, std::addressof (ul));
 }
 
 CORBA::Boolean
 operator>>= (CORBA::Any const &any, CORBA::LongLong &ll)
 {
-  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_longlong, std::addressof(ll));
+  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_longlong, std::addressof (ll));
 }
 
 CORBA::Boolean
 operator>>= (CORBA::Any const &any, CORBA::ULongLong &ull)
 {
-  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_ulonglong, std::addressof(ull));
+  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_ulonglong, std::addressof (ull));
 }
 
 CORBA::Boolean
 operator>>= (CORBA::Any const &any, CORBA::Float &f)
 {
-  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_float, std::addressof(f));
+  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_float, std::addressof (f));
 }
 
 CORBA::Boolean
 operator>>= (CORBA::Any const &any, CORBA::Double &d)
 {
-  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_double, std::addressof(d));
+  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_double, std::addressof (d));
 }
 
 CORBA::Boolean
 operator>>= (CORBA::Any const &any, CORBA::LongDouble &ld)
 {
-  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_longdouble, std::addressof(ld));
+  return TAO::Any_Basic_Impl::extract (any, CORBA::_tc_longdouble, std::addressof (ld));
 }
 
 CORBA::Boolean
