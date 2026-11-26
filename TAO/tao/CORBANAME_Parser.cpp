@@ -18,7 +18,7 @@ static const char corbaname_prefix[] = "corbaname:";
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-TAO_CORBANAME_Parser::match_prefix (const char *ior_string) const
+TAO_CORBANAME_Parser::match_prefix (char const *ior_string) const
 {
   return (std::strncmp (ior_string,
                         corbaname_prefix,
@@ -52,11 +52,11 @@ parse_string_dynamic_request_helper (CORBA::Object_ptr naming_context,
 }
 
 CORBA::Object_ptr
-TAO_CORBANAME_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
+TAO_CORBANAME_Parser::parse_string (char const *ior, CORBA::ORB_ptr orb)
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
-  const char *corbaname =
+  char const *corbaname =
     ior + sizeof corbaname_prefix - 1;
 
   CORBA::Object_ptr obj = CORBA::Object::_nil ();

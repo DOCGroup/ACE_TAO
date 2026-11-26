@@ -45,10 +45,10 @@ public:
 
   /// @name IOR_Parser methods
   /// @{
-  bool match_prefix (const char *ior_string) const override;
+  bool match_prefix (char const *ior_string) const override;
 
   /// Parse the ior-string that is passed.
-  CORBA::Object_ptr parse_string (const char *ior,
+  CORBA::Object_ptr parse_string (char const *ior,
                                   CORBA::ORB_ptr orb) override;
   /// @}
 
@@ -62,10 +62,10 @@ private:
                                              TAO_MProfile &mprofile);
 
   /// Gets the pointer to the key_string when the protocol used is RIR
-  CORBA::Object_ptr parse_string_rir_helper (const char *corbaloc_name,
+  CORBA::Object_ptr parse_string_rir_helper (char const *corbaloc_name,
                                              CORBA::ORB_ptr orb);
 
-  void make_canonical (const char *ior,
+  void make_canonical (char const *ior,
                        size_t ior_len,
                        ACE_CString &canonical_endpoint);
 

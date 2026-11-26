@@ -46,14 +46,14 @@ public:
 
   /// Return true if @a ior_string starts with a prefix known to this IOR
   /// parser
-  virtual bool match_prefix (const char *ior_string) const = 0;
+  virtual bool match_prefix (char const *ior_string) const = 0;
 
   /**
    * Parse the @a ior argument and return an object reference.
    * The call may raise the standard system exceptions (NO_MEMORY,
    * INV_OBJREF, etc.)
    */
-  virtual CORBA::Object_ptr parse_string (const char *ior, CORBA::ORB_ptr orb) = 0;
+  virtual CORBA::Object_ptr parse_string (char const *ior, CORBA::ORB_ptr orb) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -17,7 +17,7 @@ static const char dll_prefix[] = "DLL:";
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-TAO_DLL_Parser::match_prefix (const char *ior_string) const
+TAO_DLL_Parser::match_prefix (char const *ior_string) const
 {
   return (std::strncmp (ior_string,
                         ::dll_prefix,
@@ -25,12 +25,12 @@ TAO_DLL_Parser::match_prefix (const char *ior_string) const
 }
 
 CORBA::Object_ptr
-TAO_DLL_Parser::parse_string (const char *ior,
+TAO_DLL_Parser::parse_string (char const *ior,
                               CORBA::ORB_ptr orb)
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
-  const char *name =
+  char const *name =
     ior + sizeof (::dll_prefix) - 1;
 
   TAO_ORB_Core *oc = orb->orb_core ();

@@ -15,7 +15,7 @@ static const char file_prefix[] = "file:";
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-TAO_FILE_Parser::match_prefix (const char *ior_string) const
+TAO_FILE_Parser::match_prefix (char const *ior_string) const
 {
   return (std::strncmp (ior_string,
                         ::file_prefix,
@@ -23,11 +23,11 @@ TAO_FILE_Parser::match_prefix (const char *ior_string) const
 }
 
 CORBA::Object_ptr
-TAO_FILE_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
+TAO_FILE_Parser::parse_string (char const *ior, CORBA::ORB_ptr orb)
 {
   // Skip the prefix, we know it is there because this method in only
   // called if <match_prefix> returns 1.
-  const char *filename =
+  char const *filename =
     ior + sizeof (::file_prefix)+1;
 
   FILE* file = ACE_OS::fopen (ACE_TEXT_CHAR_TO_TCHAR (filename),

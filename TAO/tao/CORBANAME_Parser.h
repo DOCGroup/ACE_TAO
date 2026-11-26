@@ -37,8 +37,8 @@ public:
   TAO_CORBANAME_Parser () = default;
   ~TAO_CORBANAME_Parser () override = default;
 
-  bool match_prefix (const char *ior_string) const override;
-  CORBA::Object_ptr parse_string (const char *ior,
+  bool match_prefix (char const *ior_string) const override;
+  CORBA::Object_ptr parse_string (char const *ior,
                                   CORBA::ORB_ptr orb) override;
 
  private:

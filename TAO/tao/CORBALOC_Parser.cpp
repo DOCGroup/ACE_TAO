@@ -32,7 +32,7 @@ static constexpr char iiop_token_len = sizeof iiop_token - 1;
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 bool
-TAO_CORBALOC_Parser::match_prefix (const char *ior_string) const
+TAO_CORBALOC_Parser::match_prefix (char const *ior_string) const
 {
   // Check if the prefix is 'corbaloc:' and return the result.
   return (std::strncmp (ior_string,
@@ -66,12 +66,12 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
 }
 
 CORBA::Object_ptr
-TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
+TAO_CORBALOC_Parser::parse_string_rir_helper (char const *ior,
                                               CORBA::ORB_ptr orb)
 {
   // Pass the key string as an argument to resolve_initial_references.
   // NameService is the default if an empty key string is supplied.
-  const char *objkey = ior + rir_token_len;
+  char const *objkey = ior + rir_token_len;
   if (*objkey == '/') // there is an explicit object key, which may
                       // validly be null.
     {
@@ -85,7 +85,7 @@ TAO_CORBALOC_Parser::parse_string_rir_helper (const char * ior,
 }
 
 CORBA::Object_ptr
-TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
+TAO_CORBALOC_Parser::parse_string (char const *ior, CORBA::ORB_ptr orb)
 {
   // The decomposition of a corbaloc string is in Section 13.6.10.
   //
@@ -120,7 +120,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
   // most likely commas will separate endpoints, although they could be
   // part of an endpoint address for some protocols.
   size_t max_endpoint_count = 1;
-  for (const char *comma = std::strchr (ior,',');
+  for (char const *comma = std::strchr (ior,',');
        comma;
        comma = std::strchr (comma+1,','))
     {
@@ -208,7 +208,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
     } // end of while
 
   // At this point, ior points at the start of the object key
-  ACE_CString const obj_key (*ior ? ior : (const char *)"NameService");
+  ACE_CString const obj_key (*ior ? ior : "NameService");
 
   // now take the collection of endpoints along with the decoded key and
   // mix them together to get the mprofile.
@@ -219,7 +219,7 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
       ACE_CString const full_ep = endpoints[i].prot_addr_ +
         endpoints[i].obj_key_sep_ +
         obj_key;
-      const char * str = full_ep.c_str();
+      char const *str = full_ep.c_str();
       endpoints[i].profile_->parse_string (str);
       int const share = orb->orb_core()->orb_params()->shared_profile();
       if (mprofile.give_profile(endpoints[i].profile_, share) != -1)
@@ -249,11 +249,11 @@ TAO_CORBALOC_Parser::parse_string (const char * ior, CORBA::ORB_ptr orb)
 }
 
 void
-TAO_CORBALOC_Parser::make_canonical (const char *ior,
+TAO_CORBALOC_Parser::make_canonical (char const *ior,
                                      size_t prot_addr_len,
                                      ACE_CString &canonical_endpoint)
 {
-  const char *separator = std::strchr (ior, ':');
+  char const *separator = std::strchr (ior, ':');
 
   // A special case for handling iiop
   if (ior[0] != ':' && std::strncmp (ior, iiop_token, iiop_token_len) != 0)
@@ -263,8 +263,8 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
       return;
     }
 
-  const char *addr_base = separator+1;
-  const char *addr_tail = ior + prot_addr_len;
+  char const *addr_base = separator+1;
+  char const *addr_tail = ior + prot_addr_len;
   // skip past version, if any
   separator = std::strchr (addr_base,'@');
   if (separator != nullptr && separator < addr_tail)
@@ -288,7 +288,7 @@ TAO_CORBALOC_Parser::make_canonical (const char *ior,
     {
       // In this case we have to find the end of the numeric address and
       // start looking for the port separator from there.
-      const char *cp_pos = std::strchr(addr_base, ']');
+      char const *cp_pos = std::strchr(addr_base, ']');
       if (cp_pos == nullptr || cp_pos >= addr_tail)
         {
           // No valid IPv6 address specified but that will come out later.
