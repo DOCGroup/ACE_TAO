@@ -20,7 +20,7 @@ Test_Bounded_String::Test_Bounded_String ()
 {
 }
 
-const char *
+char const *
 Test_Bounded_String::opname () const
 {
   return this->opname_;

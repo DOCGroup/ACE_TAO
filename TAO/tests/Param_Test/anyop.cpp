@@ -210,7 +210,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
             const char i[] = "123";
             any <<= i;
 
-            const char *o {};
+            char const *o {};
 
             if (!(any >>= o)
                 || std::strcmp (i, o) != 0)

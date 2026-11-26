@@ -19,7 +19,7 @@ Test_Unbounded_WString::Test_Unbounded_WString ()
 {
 }
 
-const char *
+char const *
 Test_Unbounded_WString::opname () const
 {
   return this->opname_;

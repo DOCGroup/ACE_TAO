@@ -20,7 +20,7 @@ Test_ObjRef::Test_ObjRef ()
 {
 }
 
-const char *
+char const *
 Test_ObjRef::opname () const
 {
   return this->opname_;
@@ -52,7 +52,7 @@ Test_ObjRef::dii_req_invoke (CORBA::Request *req)
   this->out_ = Coffee::_duplicate (tmp);
 }
 
-static const char *Coffee_Flavor [] = {
+static char const *Coffee_Flavor [] = {
   "Italian Roast",
   "Irish Creme",
   "Costa Rican",
@@ -163,21 +163,21 @@ Test_ObjRef::check_validity ()
       Coffee::Desc_var in_desc =
         this->in_->description ();
 
-      const char *in = in_desc->name.in ();
+      char const *in = in_desc->name.in ();
 
       Coffee::Desc_var inout_desc =
         this->inout_->description ();
 
-      const char *inout = inout_desc->name.in ();
+      char const *inout = inout_desc->name.in ();
 
       Coffee::Desc_var out_desc =
         this->out_->description ();
 
-      const char *out = out_desc->name.in ();
+      char const *out = out_desc->name.in ();
 
       Coffee::Desc_var ret_desc = this->out_->description ();
 
-      const char* ret = ret_desc->name.in ();
+      char const *ret = ret_desc->name.in ();
 
       // now compare them
       if (!std::strcmp (in, inout) &&

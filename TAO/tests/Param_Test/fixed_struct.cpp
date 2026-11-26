@@ -18,7 +18,7 @@ Test_Fixed_Struct::Test_Fixed_Struct ()
 {
 }
 
-const char *
+char const *
 Test_Fixed_Struct::opname () const
 {
   return this->opname_;

@@ -23,7 +23,7 @@ Test_Nested_Struct::Test_Nested_Struct ()
 {
 }
 
-const char *
+char const *
 Test_Nested_Struct::opname () const
 {
   return this->opname_;
@@ -169,12 +169,12 @@ Test_Nested_Struct::print_values ()
                   "ret (len = %u): %C\n",
                   i,
                   this->in_.vs.seq.length (),
-                  (this->in_.vs.seq.length ()? (const char *)this->in_.vs.seq[i]:"<nul>"),
+                  (this->in_.vs.seq.length ()? (char const *)this->in_.vs.seq[i]:"<nul>"),
                   this->inout_->vs.seq.length (),
-                  (this->inout_->vs.seq.length ()? (const char *)this->inout_->vs.seq[i]:"<nul>"),
+                  (this->inout_->vs.seq.length ()? (char const *)this->inout_->vs.seq[i]:"<nul>"),
                   this->out_->vs.seq.length (),
-                  (this->out_->vs.seq.length ()? (const char *)this->out_->vs.seq[i]:"<nul>"),
+                  (this->out_->vs.seq.length ()? (char const *)this->out_->vs.seq[i]:"<nul>"),
                   this->ret_->vs.seq.length (),
-                  (this->ret_->vs.seq.length ()? (const char *)this->ret_->vs.seq[i]:"<nul>")));
+                  (this->ret_->vs.seq.length ()? (char const *)this->ret_->vs.seq[i]:"<nul>")));
     }
 }

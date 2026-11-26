@@ -22,7 +22,7 @@ Test_Exception::Test_Exception ()
 {
 }
 
-const char *
+char const *
 Test_Exception::opname () const
 {
   return this->opname_;
@@ -63,7 +63,7 @@ Test_Exception::dii_req_invoke (CORBA::Request_ptr req)
 
       if (user_ex.exception () >>= oops)
         {
-          const char *reason = oops->reason.in ();
+          char const *reason = oops->reason.in ();
           CORBA::ULong const mod_value = oops->input;
 
           if (TAO_debug_level > 0)
@@ -240,7 +240,7 @@ Test_Exception::run_sii_test (Param_Test_ptr objref)
     }
   catch (const Param_Test::Ooops& ex)
     {
-      const char *reason = ex.reason.in ();
+      char const *reason = ex.reason.in ();
 
       if (reason == nullptr)
         {

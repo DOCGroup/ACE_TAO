@@ -22,7 +22,7 @@ Test_Long_Sequence::Test_Long_Sequence ()
 {
 }
 
-const char *
+char const *
 Test_Long_Sequence::opname () const
 {
   return this->opname_;

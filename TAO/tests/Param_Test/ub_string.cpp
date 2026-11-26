@@ -20,7 +20,7 @@ Test_Unbounded_String::Test_Unbounded_String ()
 {
 }
 
-const char *
+char const *
 Test_Unbounded_String::opname () const
 {
   return this->opname_;
@@ -40,7 +40,7 @@ Test_Unbounded_String::dii_req_invoke (CORBA::Request *req)
 
   req->invoke ();
 
-  const char *tmp;
+  char const *tmp;
   req->return_value () >>= tmp;
   this->ret_ = CORBA::string_dup (tmp);
 

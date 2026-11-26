@@ -22,7 +22,7 @@ Test_Multdim_Array::Test_Multdim_Array ()
 {
 }
 
-const char *
+char const *
 Test_Multdim_Array::opname () const
 {
   return this->opname_;

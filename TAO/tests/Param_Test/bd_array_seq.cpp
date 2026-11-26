@@ -23,7 +23,7 @@ Test_Bounded_Array_Sequence::Test_Bounded_Array_Sequence ()
 {
 }
 
-const char *
+char const *
 Test_Bounded_Array_Sequence::opname () const
 {
   return this->opname_;

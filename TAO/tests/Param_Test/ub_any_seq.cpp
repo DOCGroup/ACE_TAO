@@ -28,7 +28,7 @@ Test_AnySeq::Test_AnySeq ()
 {
 }
 
-const char *
+char const *
 Test_AnySeq::opname () const
 {
   return this->opname_;
@@ -205,10 +205,10 @@ CORBA::Boolean
 Test_AnySeq::check_validity ()
 {
   CORBA::Short short_in, short_inout, short_out, short_ret;
-  const char *str_in;
-  const char *str_inout;
-  const char *str_out;
-  const char *str_ret;
+  char const *str_in;
+  char const *str_inout;
+  char const *str_out;
+  char const *str_ret;
   Coffee_ptr obj_in, obj_inout, obj_out, obj_ret;
 
   for (CORBA::ULong i=0; i < this->in_->length (); ++i)

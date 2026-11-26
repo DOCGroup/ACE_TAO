@@ -14,7 +14,7 @@
 
 // ********* class Coffee_i ****************
 
-Coffee_i::Coffee_i (const char *name)
+Coffee_i::Coffee_i (char const *name)
   : name_ (name)
 {
 }
@@ -40,7 +40,7 @@ Coffee_i::description (Coffee::Desc const & description
 
 // ********* class Param_Test_i ****************
 
-Param_Test_i::Param_Test_i (const char *coffee_name,
+Param_Test_i::Param_Test_i (char const *coffee_name,
                             CORBA::ORB_ptr orb)
   : orb_ (CORBA::ORB::_duplicate (orb)),
     obj_ (coffee_name)
@@ -81,7 +81,7 @@ Param_Test_i::test_ulonglong (CORBA::ULongLong s1,
 // the in string. For the inout, we append the same string to itself and send
 // it back
 char *
-Param_Test_i::test_unbounded_string (const char *s1,
+Param_Test_i::test_unbounded_string (char const *s1,
                                      char *&s2,
                                      CORBA::String_out s3)
 {
@@ -99,7 +99,7 @@ Param_Test_i::test_unbounded_string (const char *s1,
 // the in string. For the inout, we append the same string to itself and send
 // it back
 char *
-Param_Test_i::test_bounded_string (const char *s1,
+Param_Test_i::test_bounded_string (char const *s1,
                                    char *&s2,
                                    CORBA::String_out s3)
 {
@@ -260,7 +260,7 @@ Param_Test_i::test_strseq (const CORBA::StringSeq &s1,
                       "Element #%u\n"
                       "in : %C\n",
                       i,
-                      (s2[i]? (const char *)s2[i]:"<nul>")));
+                      (s2[i]? (char const *)s2[i]:"<nul>")));
         }
       if (s2.length () == 0)
       {
@@ -687,7 +687,7 @@ Param_Test_i::test_any (const CORBA::Any &a1,
 {
   CORBA::Any *ret;
   CORBA::Short short_in;
-  const char *str_in;
+  char const *str_in;
   Coffee_ptr coffee;
   Param_Test::Fixed_Array_forany array;
   const CORBA::ShortSeq *ub_short_sequence;

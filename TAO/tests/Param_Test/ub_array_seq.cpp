@@ -21,7 +21,7 @@ Test_Array_Sequence::Test_Array_Sequence ()
 {
 }
 
-const char *
+char const *
 Test_Array_Sequence::opname () const
 {
   return this->opname_;

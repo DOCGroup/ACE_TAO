@@ -22,7 +22,7 @@ Test_Bounded_Long_Sequence::Test_Bounded_Long_Sequence ()
 {
 }
 
-const char *
+char const *
 Test_Bounded_Long_Sequence::opname () const
 {
   return this->opname_;

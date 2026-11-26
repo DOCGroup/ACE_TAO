@@ -23,7 +23,7 @@ Test_WString_Sequence::Test_WString_Sequence ()
 {
 }
 
-const char *
+char const *
 Test_WString_Sequence::opname () const
 {
   return this->opname_;

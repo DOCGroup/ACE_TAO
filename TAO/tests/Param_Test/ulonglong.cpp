@@ -14,7 +14,7 @@ Test_ULongLong::Test_ULongLong ()
 {
 }
 
-const char *
+char const *
 Test_ULongLong::opname () const
 {
   return this->opname_;

@@ -15,7 +15,7 @@
 //               Test_ObjRef_Sequence
 // ************************************************************************
 
-static const char *Coffee_Flavor [] = {
+static char const *Coffee_Flavor [] = {
   "Italian Roast",
   "Irish Creme",
   "Costa Rican",
@@ -32,7 +32,7 @@ Test_ObjRef_Sequence::Test_ObjRef_Sequence ()
 {
 }
 
-const char *
+char const *
 Test_ObjRef_Sequence::opname () const
 {
   return this->opname_;

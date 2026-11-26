@@ -22,7 +22,7 @@ Test_Big_Union::Test_Big_Union ()
 {
 }
 
-const char *
+char const *
 Test_Big_Union::opname () const
 {
   return this->opname_;
@@ -335,10 +335,10 @@ Test_Big_Union::check_validity ()
       break;
     case 4:
       {
-        const char* in    = this->in_.the_string ();
-        const char* inout = this->inout_.the_string ();
-        const char* out   = this->out_->the_string ();
-        const char* ret   = this->ret_->the_string ();
+        char const *in    = this->in_.the_string ();
+        char const *inout = this->inout_.the_string ();
+        char const *out   = this->out_->the_string ();
+        char const *ret   = this->ret_->the_string ();
 
         if (std::strcmp (in,out)
             || std::strcmp (in,inout)

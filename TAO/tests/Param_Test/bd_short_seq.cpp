@@ -22,7 +22,7 @@ Test_Bounded_Short_Sequence::Test_Bounded_Short_Sequence ()
 {
 }
 
-const char *
+char const *
 Test_Bounded_Short_Sequence::opname () const
 {
   return this->opname_;

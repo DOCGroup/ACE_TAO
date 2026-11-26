@@ -23,7 +23,7 @@ Test_Var_Struct::Test_Var_Struct ()
 {
 }
 
-const char *
+char const *
 Test_Var_Struct::opname () const
 {
   return this->opname_;
@@ -204,7 +204,7 @@ Test_Var_Struct::print_values ()
                   "Element #%d\n"
                   "in.seq : %C\n",
                   i,
-                  (this->in_.seq[i]? (const char *)this->in_.seq[i]:"<nul>")));
+                  (this->in_.seq[i]? (char const *)this->in_.seq[i]:"<nul>")));
     }
   ACE_DEBUG ((LM_DEBUG, "\n*=*=*=*=*=*=*=*=*=*=\n"));
   for (i=0; this->inout_.ptr () && (i < this->inout_->seq.length ()); ++i)
@@ -213,7 +213,7 @@ Test_Var_Struct::print_values ()
                   "Element #%d\n"
                   "inout : %C\n",
                   i,
-                  (this->inout_->seq[i]? (const char *)this->inout_->seq[i]:"<nul>")));
+                  (this->inout_->seq[i]? (char const *)this->inout_->seq[i]:"<nul>")));
     }
   if (!this->inout_.ptr ())
   {
@@ -226,7 +226,7 @@ Test_Var_Struct::print_values ()
                   "Element #%d\n"
                   "in : %C\n",
                   i,
-                  (this->out_->seq[i]? (const char *)this->out_->seq[i]:"<nul>")));
+                  (this->out_->seq[i]? (char const *)this->out_->seq[i]:"<nul>")));
     }
   if (!this->out_.ptr ())
   {
@@ -239,7 +239,7 @@ Test_Var_Struct::print_values ()
                   "Element #%d\n"
                   "in : %C\n",
                   i,
-                  (this->ret_->seq[i]? (const char *)this->ret_->seq[i]:"<nul>")));
+                  (this->ret_->seq[i]? (char const *)this->ret_->seq[i]:"<nul>")));
     }
   if (!this->ret_.ptr ())
   {

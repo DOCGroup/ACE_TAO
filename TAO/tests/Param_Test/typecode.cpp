@@ -18,7 +18,7 @@ Test_TypeCode::Test_TypeCode ()
 {
 }
 
-const char *
+char const *
 Test_TypeCode::opname () const
 {
   return this->opname_;

@@ -21,7 +21,7 @@ Test_Recursive_Struct::Test_Recursive_Struct ()
 {
 }
 
-const char *
+char const *
 Test_Recursive_Struct::opname () const
 {
   return this->opname_;

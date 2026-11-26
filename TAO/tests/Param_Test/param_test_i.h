@@ -13,7 +13,7 @@
 class Coffee_i : public POA_Coffee
 {
 public:
-  explicit Coffee_i (const char *name);
+  explicit Coffee_i (char const *name);
   Coffee_i (Coffee_i const &) = delete;
   Coffee_i (Coffee_i &&) = delete;
   Coffee_i & operator= (Coffee_i const &) = delete;
@@ -44,7 +44,7 @@ private:
 class Param_Test_i : public POA_Param_Test
 {
 public:
-  Param_Test_i (const char *coffee_name,
+  Param_Test_i (char const *coffee_name,
                 CORBA::ORB_ptr orb);
   Param_Test_i (Param_Test_i const &) = delete;
   Param_Test_i (Param_Test_i &&) = delete;
@@ -64,12 +64,12 @@ public:
                                    CORBA::ULongLong_out s3) override;
 
   /// test for unbounded strings
-  char *test_unbounded_string (const char *s1,
+  char *test_unbounded_string (char const *s1,
                                char *&s2,
                                CORBA::String_out s3) override;
 
   /// test for bounded strings
-  char *test_bounded_string (const char *s1,
+  char *test_bounded_string (char const *s1,
                              char *&s2,
                              CORBA::String_out s3) override;
 

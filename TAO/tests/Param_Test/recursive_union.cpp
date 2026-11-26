@@ -20,7 +20,7 @@ Test_Recursive_Union::Test_Recursive_Union ()
 {
 }
 
-const char *
+char const *
 Test_Recursive_Union::opname () const
 {
   return this->opname_;

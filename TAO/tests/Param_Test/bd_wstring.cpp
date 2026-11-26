@@ -19,7 +19,7 @@ Test_Bounded_WString::Test_Bounded_WString ()
 {
 }
 
-const char *
+char const *
 Test_Bounded_WString::opname () const
 {
   return this->opname_;

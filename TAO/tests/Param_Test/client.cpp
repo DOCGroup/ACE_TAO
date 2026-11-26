@@ -30,7 +30,7 @@ Param_Test_Client<T>::run_sii_test ()
 {
   CORBA::ULong i = 0;  // loop index
   Options *opt = OPTIONS::instance (); // get the options
-  const char *opname = this->test_object_->opname (); // operation
+  char const *opname = this->test_object_->opname (); // operation
 
   if (opt->debug ())
     ACE_DEBUG ((LM_DEBUG,
@@ -133,7 +133,7 @@ Param_Test_Client<T>::run_sii_test ()
 template <class T> int
 Param_Test_Client<T>::run_dii_test ()
 {
-  const char *opname = this->test_object_->opname ();
+  char const *opname = this->test_object_->opname ();
   Options *opt = OPTIONS::instance ();
 
   if (opt->debug ())

@@ -22,7 +22,7 @@ Test_Var_Array::Test_Var_Array ()
 {
 }
 
-const char *
+char const *
 Test_Var_Array::opname () const
 {
   return this->opname_;

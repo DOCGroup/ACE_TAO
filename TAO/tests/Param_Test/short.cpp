@@ -18,7 +18,7 @@ Test_Short::Test_Short ()
 {
 }
 
-const char *
+char const *
 Test_Short::opname () const
 {
   return this->opname_;

@@ -24,7 +24,7 @@ Test_String_Sequence::Test_String_Sequence ()
 {
 }
 
-const char *
+char const *
 Test_String_Sequence::opname () const
 {
   return this->opname_;
@@ -59,7 +59,7 @@ Test_String_Sequence::dii_req_invoke (CORBA::Request *req)
 int
 Test_String_Sequence::init_parameters (Param_Test_ptr)
 {
-  const char *choiceList[] =
+  char const *choiceList[] =
   {
     "one",
     "two",
@@ -150,7 +150,7 @@ Test_String_Sequence::print_values ()
                   "Element #%d\n"
                   "in : %C\n",
                   i,
-                  this->in_[i]? (const char *)this->in_[i]:"<nul>"));
+                  this->in_[i]? (char const *)this->in_[i]:"<nul>"));
     }
   if (!this->in_.ptr ())
   {
@@ -163,7 +163,7 @@ Test_String_Sequence::print_values ()
                   "Element #%d\n"
                   "in : %C\n",
                   i,
-                  (this->inout_[i]? (const char *)this->inout_[i]:"<nul>")));
+                  (this->inout_[i]? (char const *)this->inout_[i]:"<nul>")));
     }
   if (!this->inout_.ptr ())
   {
@@ -176,7 +176,7 @@ Test_String_Sequence::print_values ()
                   "Element #%d\n"
                   "in : %C\n",
                   i,
-                  (this->out_[i]? (const char *)this->out_[i]:"<nul>")));
+                  (this->out_[i]? (char const *)this->out_[i]:"<nul>")));
     }
   if (!this->out_.ptr ())
   {
@@ -189,7 +189,7 @@ Test_String_Sequence::print_values ()
                   "Element #%d\n"
                   "in : %C\n",
                   i,
-                  (this->ret_[i]? (const char *)this->ret_[i]:"<nul>")));
+                  (this->ret_[i]? (char const *)this->ret_[i]:"<nul>")));
     }
   if (!this->ret_.ptr ())
   {

@@ -23,7 +23,7 @@ Test_Bounded_WString_Sequence::Test_Bounded_WString_Sequence ()
 {
 }
 
-const char *
+char const *
 Test_Bounded_WString_Sequence::opname () const
 {
   return this->opname_;

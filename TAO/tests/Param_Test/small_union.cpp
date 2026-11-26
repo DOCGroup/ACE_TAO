@@ -20,7 +20,7 @@ Test_Small_Union::Test_Small_Union ()
 {
 }
 
-const char *
+char const *
 Test_Small_Union::opname () const
 {
   return this->opname_;

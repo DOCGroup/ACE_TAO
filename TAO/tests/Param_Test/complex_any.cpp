@@ -32,7 +32,7 @@ Test_Complex_Any::Test_Complex_Any ()
 {
 }
 
-const char *
+char const *
 Test_Complex_Any::opname () const
 {
   return this->opname_;

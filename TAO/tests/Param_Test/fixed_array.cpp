@@ -19,7 +19,7 @@ Test_Fixed_Array::Test_Fixed_Array ()
 {
 }
 
-const char *
+char const *
 Test_Fixed_Array::opname () const
 {
   return this->opname_;

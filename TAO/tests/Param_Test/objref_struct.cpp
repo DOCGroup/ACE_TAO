@@ -23,7 +23,7 @@ Test_Objref_Struct::Test_Objref_Struct ()
 {
 }
 
-const char *
+char const *
 Test_Objref_Struct::opname () const
 {
   return this->opname_;
