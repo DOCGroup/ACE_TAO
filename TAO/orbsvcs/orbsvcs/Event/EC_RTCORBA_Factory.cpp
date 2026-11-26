@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_RTCORBA_Factory::
     TAO_EC_RTCORBA_Factory (TAO_EC_Factory *body,
-                            const RTCORBA::ThreadpoolLanes &lanes)
+                            RTCORBA::ThreadpoolLanes const &lanes)
   : body_ (body)
   , lanes_ (lanes)
 {

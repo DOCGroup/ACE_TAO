@@ -246,7 +246,7 @@ TAO_ECG_Mcast_Gateway::init (char const *address_server_arg,
 
 int
 TAO_ECG_Mcast_Gateway::init (
-    const RtecEventChannelAdmin::ConsumerQOS & consumer_qos,
+    RtecEventChannelAdmin::ConsumerQOS const & consumer_qos,
     char const *address_server_arg,
     const Attributes & attributes)
 {

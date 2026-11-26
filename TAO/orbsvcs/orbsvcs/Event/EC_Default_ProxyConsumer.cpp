@@ -17,7 +17,7 @@ TAO_EC_Default_ProxyPushConsumer::
 void
 TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
       RtecEventComm::PushSupplier_ptr push_supplier,
-      const RtecEventChannelAdmin::SupplierQOS& qos)
+      RtecEventChannelAdmin::SupplierQOS const& qos)
 {
   {
     ACE_GUARD_THROW_EX (

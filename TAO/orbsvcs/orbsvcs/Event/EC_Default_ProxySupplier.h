@@ -42,7 +42,7 @@ public:
   /// IDL methods.
   void connect_push_consumer (
     RtecEventComm::PushConsumer_ptr push_consumer,
-    const RtecEventChannelAdmin::ConsumerQOS &qos) override;
+    RtecEventChannelAdmin::ConsumerQOS const &qos) override;
   void disconnect_push_supplier () override;
   void suspend_connection () override;
   void resume_connection () override;

@@ -388,7 +388,7 @@ TAO_EC_Reactive_ObserverStrategy::observer_not_exists (Observer_Entry& observer)
 void
 TAO_EC_Accumulate_Supplier_Headers::work (TAO_EC_ProxyPushSupplier *supplier)
 {
-  const RtecEventChannelAdmin::ConsumerQOS& sub =
+  RtecEventChannelAdmin::ConsumerQOS const& sub =
     supplier->subscriptions ();
   if (sub.is_gateway)
   {
@@ -413,7 +413,7 @@ TAO_EC_Accumulate_Supplier_Headers::work (TAO_EC_ProxyPushSupplier *supplier)
 void
 TAO_EC_Accumulate_Consumer_Headers::work (TAO_EC_ProxyPushConsumer *consumer)
 {
-  const RtecEventChannelAdmin::SupplierQOS& pub =
+  RtecEventChannelAdmin::SupplierQOS const& pub =
     consumer->publications ();
   if (pub.is_gateway)
   {

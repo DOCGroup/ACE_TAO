@@ -45,7 +45,7 @@ TAO_EC_TPC_ProxyPushSupplier::tpc_dispatching ()
 void
 TAO_EC_TPC_ProxyPushSupplier::connect_push_consumer (
       RtecEventComm::PushConsumer_ptr push_consumer,
-      const RtecEventChannelAdmin::ConsumerQOS& qos)
+      RtecEventChannelAdmin::ConsumerQOS const& qos)
 {
   BASECLASS::connect_push_consumer (push_consumer, qos);
 

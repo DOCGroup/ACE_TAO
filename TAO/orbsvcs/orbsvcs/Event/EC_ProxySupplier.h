@@ -85,7 +85,7 @@ public:
   RtecEventComm::PushConsumer_ptr consumer () const;
 
   /// The QoS (subscription) used to connect to the EC.
-  const RtecEventChannelAdmin::ConsumerQOS& subscriptions () const;
+  RtecEventChannelAdmin::ConsumerQOS const& subscriptions () const;
 
   /// Concrete implementations can use this methods to keep track of
   /// the suppliers that publish its events.

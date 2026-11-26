@@ -15,7 +15,7 @@ TAO_EC_Kokyu_Scheduling::add_proxy_supplier_dependencies (
       TAO_EC_ProxyPushSupplier *supplier,
       TAO_EC_ProxyPushConsumer *consumer)
 {
-  const RtecEventChannelAdmin::SupplierQOS& qos =
+  RtecEventChannelAdmin::SupplierQOS const& qos =
     consumer->publications ();
 
   for (CORBA::ULong i {}; i < qos.publications.length (); ++i)

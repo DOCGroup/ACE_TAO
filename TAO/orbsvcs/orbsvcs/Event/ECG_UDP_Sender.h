@@ -134,7 +134,7 @@ public:
    * necessary, the EC must have reconnects enabled in order for this
    * method to succeed.
    */
-  void connect (const RtecEventChannelAdmin::ConsumerQOS &sub);
+  void connect (RtecEventChannelAdmin::ConsumerQOS const &sub);
 
   /// Deactivate from POA and disconnect from EC, if necessary.  Shut
   /// down all sender components.

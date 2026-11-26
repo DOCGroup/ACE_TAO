@@ -37,7 +37,7 @@ public:
    * @param lanes The RTCORBA thread pool lanes used for dispatching.
    */
   TAO_EC_RTCORBA_Factory (TAO_EC_Factory *body,
-                          const RTCORBA::ThreadpoolLanes &lanes);
+                          RTCORBA::ThreadpoolLanes const &lanes);
 
   ~TAO_EC_RTCORBA_Factory () override = default;
 

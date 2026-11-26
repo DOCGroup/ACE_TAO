@@ -18,7 +18,7 @@ TAO_EC_Priority_Scheduling::add_proxy_supplier_dependencies (
 {
   ORBSVCS_DEBUG ((LM_DEBUG, "add_proxy_supplier_dependencies - %@ %@\n",
               supplier, consumer));
-  const RtecEventChannelAdmin::SupplierQOS& qos =
+  RtecEventChannelAdmin::SupplierQOS const& qos =
     consumer->publications ();
   for (CORBA::ULong i {}; i < qos.publications.length (); ++i)
     {

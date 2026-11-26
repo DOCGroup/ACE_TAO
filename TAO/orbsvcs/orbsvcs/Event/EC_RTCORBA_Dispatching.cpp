@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_RTCORBA_Dispatching::
-  TAO_EC_RTCORBA_Dispatching (const RTCORBA::ThreadpoolLanes &lanes,
+  TAO_EC_RTCORBA_Dispatching (RTCORBA::ThreadpoolLanes const &lanes,
                               RTCORBA::PriorityMapping *mapping,
                               RTCORBA::Current_ptr current)
     :  lanes_ (lanes)

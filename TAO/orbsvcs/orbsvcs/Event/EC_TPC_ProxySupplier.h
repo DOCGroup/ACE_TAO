@@ -34,7 +34,7 @@ public:
   /// @{
   void connect_push_consumer (
     RtecEventComm::PushConsumer_ptr push_consumer,
-    const RtecEventChannelAdmin::ConsumerQOS &qos) override;
+    RtecEventChannelAdmin::ConsumerQOS const &qos) override;
 
   void disconnect_push_supplier () override;
 

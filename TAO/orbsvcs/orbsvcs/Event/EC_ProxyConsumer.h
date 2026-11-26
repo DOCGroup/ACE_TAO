@@ -79,7 +79,7 @@ public:
   RtecEventComm::PushSupplier_ptr supplier () const;
 
   /// The QoS (subscription) used to connect to the EC.
-  const RtecEventChannelAdmin::SupplierQOS& publications () const;
+  RtecEventChannelAdmin::SupplierQOS const& publications () const;
 
   /**
    * Invoke the _non_existent() pseudo-operation on the supplier. If
@@ -105,7 +105,7 @@ public:
 
   /// The QoS (subscription) used to connect to the EC, assumes the
   /// locks are held, use with care!
-  const RtecEventChannelAdmin::SupplierQOS& publications_i () const;
+  RtecEventChannelAdmin::SupplierQOS const& publications_i () const;
 
   /// Increment and decrement the reference count.
   CORBA::ULong _incr_refcnt ();

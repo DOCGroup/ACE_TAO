@@ -205,7 +205,7 @@ public:
    * specify a more restrictive qos, hence limiting which EC traffic
    * gets multicasted.
    */
-  int init (const RtecEventChannelAdmin::ConsumerQOS & consumer_qos,
+  int init (RtecEventChannelAdmin::ConsumerQOS const & consumer_qos,
             char const *address_server_arg,
             const Attributes & attributes = Attributes());
 

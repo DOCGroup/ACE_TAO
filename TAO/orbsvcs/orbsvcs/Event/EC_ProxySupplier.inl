@@ -77,7 +77,7 @@ TAO_EC_ProxyPushSupplier::consumer (RtecEventComm::PushConsumer_ptr consumer)
   this->consumer_i (consumer);
 }
 
-ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS&
+ACE_INLINE RtecEventChannelAdmin::ConsumerQOS const&
 TAO_EC_ProxyPushSupplier::subscriptions () const
 {
   // @@ TODO There should be a better way to signal errors here.
