@@ -25,7 +25,7 @@ public:
 
   /// Initialize the barrier to synchronize @c count threads.
   ACE_Null_Barrier (unsigned int,
-                    const char * = nullptr,
+                    char const * = nullptr,
                     void * = nullptr) {}
 
   ~ACE_Null_Barrier () = default;
