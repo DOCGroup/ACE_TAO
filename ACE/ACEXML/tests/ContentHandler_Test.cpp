@@ -14,6 +14,18 @@
 #include <memory>
 #include <string>
 
+template <typename Exception>
+bool check_exception_copy ()
+{
+  Exception original (ACE_TEXT ("original"));
+  Exception const copied (original);
+  Exception assigned;
+  assigned = original;
+  original = Exception (ACE_TEXT ("changed"));
+  return std::basic_string<ACEXML_Char> (copied.message ()) == ACE_TEXT ("original") &&
+         std::basic_string<ACEXML_Char> (assigned.message ()) == ACE_TEXT ("original");
+}
+
 class Basic_Content_Tester : public ACEXML_DefaultHandler
 {
 public:
@@ -72,6 +84,14 @@ Basic_Content_Tester::characters (ACEXML_Char const *ch,
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
+  if (!check_exception_copy<ACEXML_SAXNotSupportedException> () ||
+      !check_exception_copy<ACEXML_SAXNotRecognizedException> () ||
+      !check_exception_copy<ACEXML_SAXParseException> ())
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Exception copy failed\n")));
+      return 1;
+    }
+
   int status {};
   ACEXML_InputSource input_source;
   input_source.setEncoding (ACE_TEXT ("encoding"));
