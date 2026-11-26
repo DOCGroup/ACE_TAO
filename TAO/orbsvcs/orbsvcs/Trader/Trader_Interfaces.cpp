@@ -35,9 +35,9 @@ TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Lookup ()
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE> void
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-query (const char *type,
-       const char *constraint,
-       const char *preferences,
+query (char const *type,
+       char const *constraint,
+       char const *preferences,
        const CosTrading::PolicySeq &in_policies,
        const CosTrading::Lookup::SpecifiedProps &desired_props,
        CORBA::ULong how_many,
@@ -74,7 +74,7 @@ query (const char *type,
     {
       CosTrading::PolicySeq policies_to_forward;
       policies.copy_to_forward (policies_to_forward, *trader_name);
-      const char* next_hop = (*trader_name)[0];
+      char const *next_hop = (*trader_name)[0];
       this->forward_query (next_hop,
                            type,
                            constraint,
@@ -193,7 +193,7 @@ query (const char *type,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-lookup_one_type (const char* type,
+lookup_one_type (char const *type,
                  TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database,
                  TAO_Constraint_Interpreter& constr_inter,
                  TAO_Preference_Interpreter& pref_inter,
@@ -245,7 +245,7 @@ lookup_one_type (const char* type,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-lookup_all_subtypes (const char* type,
+lookup_all_subtypes (char const *type,
                      CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
                      TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database,
                      CosTradingRepos::ServiceTypeRepository_ptr rep,
@@ -311,7 +311,7 @@ lookup_all_subtypes (const char* type,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 int
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-fill_receptacles (const char* /* type */,
+fill_receptacles (char const */* type */,
                   CORBA::ULong how_many,
                   const CosTrading::Lookup::SpecifiedProps& desired_props,
                   TAO_Policies& policies,
@@ -518,9 +518,9 @@ federated_query (const CosTrading::LinkNameSeq& links,
                  const TAO_Policies& policies,
                  const CosTrading::Admin::OctetSeq& request_id,
                  TAO_Preference_Interpreter& pref_inter,
-                 const char *type,
-                 const char *constr,
-                 const char *pref,
+                 char const *type,
+                 char const *constr,
+                 char const *pref,
                  const CosTrading::Lookup::SpecifiedProps& desired_props,
                  CORBA::ULong how_many,
                  CosTrading::OfferSeq& offers,
@@ -666,10 +666,10 @@ order_merged_sequence (TAO_Preference_Interpreter& pref_inter,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-forward_query (const char* next_hop,
-               const char *type,
-               const char *constr,
-               const char *pref,
+forward_query (char const *next_hop,
+               char const *type,
+               char const *constr,
+               char const *pref,
                const CosTrading::PolicySeq& policy_seq,
                const CosTrading::Lookup::SpecifiedProps& desired_props,
                CORBA::ULong how_many,
@@ -803,7 +803,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::OfferId
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 _cxx_export (CORBA::Object_ptr reference,
-             const char *type,
+             char const *type,
              const CosTrading::PropertySeq &properties)
 {
   // For robustness purposes --
@@ -860,7 +860,7 @@ _cxx_export (CORBA::Object_ptr reference,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-withdraw (const char *id)
+withdraw (char const *id)
 {
   // Get service type map.
   TAO_Offer_Database<MAP_LOCK_TYPE> &offer_database = this->trader_.offer_database ();
@@ -870,7 +870,7 @@ withdraw (const char *id)
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Register::OfferInfo *
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-describe (const char *id)
+describe (char const *id)
 {
   // Get service type map.
   char const* type {};
@@ -897,7 +897,7 @@ describe (const char *id)
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-modify (const char *id,
+modify (char const *id,
         const CosTrading::PropertyNameSeq& del_list,
         const CosTrading::PropertySeq& modify_list)
 {
@@ -942,8 +942,8 @@ modify (const char *id,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-withdraw_using_constraint (const char *type,
-                           const char *constr)
+withdraw_using_constraint (char const *type,
+                           char const *constr)
 {
   TAO_Support_Attributes_i&
     support_attrs = this->trader_.support_attributes ();
@@ -1066,7 +1066,7 @@ resolve (const CosTrading::TraderName &name)
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-validate_properties (const char* type,
+validate_properties (char const *type,
                      const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
                      const CosTrading::PropertySeq& properties)
 {
@@ -1080,7 +1080,7 @@ validate_properties (const char* type,
     {
       const CosTradingRepos::ServiceTypeRepository::PropStruct&
         prop_struct = prop_types[i];
-      const char* prop_name  = prop_struct.name;
+      char const *prop_name  = prop_struct.name;
 
       // Obtain the type of the exported property.
       CORBA::TypeCode_var prop_type = prop_eval.property_type (prop_name);
@@ -1453,7 +1453,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::~TAO_Link () = default;
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Link<TRADER_LOCK_TYPE, MAP_LOCK_TYPE>::
-add_link (const char *name,
+add_link (char const *name,
           CosTrading::Lookup_ptr target,
           CosTrading::FollowOption def_pass_on_follow_rule,
           CosTrading::FollowOption limiting_follow_rule)
@@ -1508,7 +1508,7 @@ add_link (const char *name,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-remove_link (const char *name)
+remove_link (char const *name)
 {
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_link_name (name))
@@ -1529,7 +1529,7 @@ remove_link (const char *name)
 
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Link::LinkInfo *
-TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (const char *name)
+TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::describe_link (char const *name)
 {
   // Ensure the link name is valid.
   if (! TAO_Trader_Base::is_valid_link_name (name))
@@ -1591,7 +1591,7 @@ TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::list_links ()
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Link<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-modify_link (const char *name,
+modify_link (char const *name,
              CosTrading::FollowOption def_pass_on_follow_rule,
              CosTrading::FollowOption limiting_follow_rule)
 {
@@ -1648,10 +1648,10 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::OfferId
 TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 export_proxy (CosTrading::Lookup_ptr,
-              const char *,
+              char const *,
               const CosTrading::PropertySeq&,
               CORBA::Boolean,
-              const char *,
+              char const *,
               const CosTrading::PolicySeq&)
 {
   throw CORBA::UNKNOWN ();
@@ -1662,7 +1662,7 @@ export_proxy (CosTrading::Lookup_ptr,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-withdraw_proxy (const char *)
+withdraw_proxy (char const *)
 {
   throw CORBA::UNKNOWN ();
 }
@@ -1670,7 +1670,7 @@ withdraw_proxy (const char *)
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Proxy::ProxyInfo *
 TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-describe_proxy (const char *)
+describe_proxy (char const *)
 {
   throw CORBA::UNKNOWN ();
 

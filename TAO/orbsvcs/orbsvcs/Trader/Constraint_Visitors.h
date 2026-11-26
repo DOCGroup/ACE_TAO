@@ -442,13 +442,13 @@ public:
 };
 
 template<>
-class TAO_Element_Equal<const char*>
+class TAO_Element_Equal<char const *>
 {
 public:
   /// Calls the correct method on dyn_seq to extract the element type,
   /// then uses the appropriate form of equals comparison.
   int operator () (TAO_DynSequence_i& dyn_any,
-                   const char* element) const;
+                   char const *element) const;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

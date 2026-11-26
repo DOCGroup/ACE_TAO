@@ -275,7 +275,7 @@ TAO_Property_Constraint::expr_type () const
   return TAO_IDENT;
 }
 
-const char*
+char const *
 TAO_Property_Constraint::name () const
 {
   return name_;
@@ -373,7 +373,7 @@ TAO_Literal_Constraint (CORBA::Any const* any)
     break;
     case TAO_STRING:
       {
-        const char* s;
+        char const *s;
         any_ref >>= s;
         this->op_.str_ = CORBA::string_dup (s);
       }
@@ -513,7 +513,7 @@ TAO_Literal_Constraint::operator CORBA::Double () const
   return return_value;
 }
 
-TAO_Literal_Constraint::operator const char* () const
+TAO_Literal_Constraint::operator char const *() const
 {
   return (this->type_ == TAO_STRING) ? this->op_.str_ : nullptr;
 }

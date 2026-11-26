@@ -389,7 +389,7 @@ TAO_Property_Evaluator_By_Name(CosTrading::Offer& offer,
 
 bool
 TAO_Property_Evaluator_By_Name::
-is_dynamic_property(const char* property_name)
+is_dynamic_property(char const *property_name)
 {
   bool predicate {};
   int index {};
@@ -406,7 +406,7 @@ is_dynamic_property(const char* property_name)
 }
 
 CORBA::Any const*
-TAO_Property_Evaluator_By_Name::property_value (const char* property_name)
+TAO_Property_Evaluator_By_Name::property_value (char const *property_name)
 {
   int index {};
   CORBA::Any const* prop_value {};
@@ -424,7 +424,7 @@ TAO_Property_Evaluator_By_Name::property_value (const char* property_name)
 }
 
 CORBA::TypeCode_ptr
-TAO_Property_Evaluator_By_Name::property_type (const char* property_name)
+TAO_Property_Evaluator_By_Name::property_type (char const *property_name)
 {
   int index {};
   CORBA::String_var prop_name (property_name);
@@ -459,7 +459,7 @@ TAO_Dynamic_Property::~TAO_Dynamic_Property () = default;
 
 CosTradingDynamic::DynamicProp*
 TAO_Dynamic_Property::
-construct_dynamic_prop (const char* name,
+construct_dynamic_prop (char const *name,
                         CORBA::TypeCode_ptr returned_type,
                         const CORBA::Any& extra_info)
 {
@@ -505,7 +505,7 @@ TAO_Dynamic_Property::destroy ()
     }
 }
 
-const char* TAO_Policies::POLICY_NAMES[] =
+char const *TAO_Policies::POLICY_NAMES[] =
 {
   "starting_trader",
   "exact_type_match",
@@ -1052,7 +1052,7 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
 }
 
 TAO_Offer_Modifier::
-TAO_Offer_Modifier (const char* type_name,
+TAO_Offer_Modifier (char const *type_name,
                     const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
                     CosTrading::Offer* offer)
   : type_ (type_name),
@@ -1077,7 +1077,7 @@ TAO_Offer_Modifier (const char* type_name,
   // Separate the type defined properties into mandatory and readonly
   for (i = 0; i < pstructs_length; ++i)
     {
-      const char* pname = pstructs[i].name;
+      char const *pname = pstructs[i].name;
 
       if (pstructs[i].mode ==
           CosTradingRepos::ServiceTypeRepository::PROP_MANDATORY)
@@ -1168,7 +1168,7 @@ merge_properties (const CosTrading::PropertySeq& modifies)
   TAO_Property_Evaluator prop_eval (modifies);
   for (i = 0, length = modifies.length (); i < length; ++i)
     {
-      const char* mname = modifies[i].name;
+      char const *mname = modifies[i].name;
       if (TAO_Trader_Base::is_valid_property_name (mname))
         {
           CORBA::String_var prop_name (mname);
@@ -1264,7 +1264,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
   for (i = 0; i < original_length; ++i)
     {
       CosTrading::Property const* prop_value {};
-      const char* name = this->offer_->properties[i].name;
+      char const *name = this->offer_->properties[i].name;
       CORBA::String_var prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
       {
@@ -1275,7 +1275,7 @@ TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
   for (i = 0; i < merge_length; ++i)
     {
       CosTrading::Property const* prop_value {};
-      const char* name = modifies[i].name;
+      char const *name = modifies[i].name;
       CORBA::String_var prop_name (name);
       if (this->props_.unbind (prop_name, prop_value) == 0)
       {
@@ -1467,7 +1467,7 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props)
 
       for (int i {}; i < length; ++i)
         {
-          const char* pname = prop_seq[i];
+          char const *pname = prop_seq[i];
 
           // Check for errors or duplicates
           if (TAO_Trader_Base::is_valid_property_name (pname))
@@ -1514,7 +1514,7 @@ TAO_Property_Filter::filter_offer (CosTrading::Offer const* source,
             }
           else
             {
-              const char* p_name = s_props[i].name;
+              char const *p_name = s_props[i].name;
               CORBA::String_var prop_name (p_name);
 
               // Save those property that match.

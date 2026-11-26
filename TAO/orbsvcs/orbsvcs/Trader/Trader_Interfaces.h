@@ -150,7 +150,7 @@ private:
 
   /// Traverse the type hierarchy to pull the matching offers from all
   /// subtypes of the root type.
-  void lookup_all_subtypes (const char* type,
+  void lookup_all_subtypes (char const *type,
                             CosTradingRepos::ServiceTypeRepository::IncarnationNumber& inc_num,
                             TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database,
                             CosTradingRepos::ServiceTypeRepository_ptr rep,
@@ -160,7 +160,7 @@ private:
 
   /// Check if offers of a type fit the constraints and order them
   /// according to the preferences submitted.
-  void lookup_one_type (const char* type,
+  void lookup_one_type (char const *type,
                         TAO_Offer_Database<MAP_LOCK_TYPE>& offer_database,
                         TAO_Constraint_Interpreter& constr_inter,
                         TAO_Preference_Interpreter& pref_inter,
@@ -173,7 +173,7 @@ private:
    * TAO_Property_Filter to ensure the returned offers contain the
    * properties specified in the desired_props in parameter.
    */
-  int fill_receptacles (const char *,
+  int fill_receptacles (char const *,
                         CORBA::ULong how_many,
                         const CosTrading::Lookup::SpecifiedProps& desired_props,
                         TAO_Policies& policies,
@@ -183,10 +183,10 @@ private:
 
   /// If a starting_trader policy was specfied, foward the query to the
   /// next link in the sequence.
-  void forward_query (const char* next_hop,
-                      const char *type,
-                      const char *constr,
-                      const char *pref,
+  void forward_query (char const *next_hop,
+                      char const *type,
+                      char const *constr,
+                      char const *pref,
                       const CosTrading::PolicySeq& policy_seq,
                       const CosTrading::Lookup::SpecifiedProps& desired_props,
                       CORBA::ULong how_many,
@@ -213,9 +213,9 @@ private:
                         TAO_Policies const& policies,
                         const CosTrading::Admin::OctetSeq& request_id,
                         TAO_Preference_Interpreter& pref_inter,
-                        const char *type,
-                        const char *constr,
-                        const char *pref,
+                        char const *type,
+                        char const *constr,
+                        char const *pref,
                         const CosTrading::Lookup::SpecifiedProps& desired_props,
                         CORBA::ULong how_many,
                         CosTrading::OfferSeq& offers,
@@ -438,7 +438,7 @@ public:
     resolve (CosTrading::TraderName const& name) override;
 
  protected:
-  void validate_properties (const char* type,
+  void validate_properties (char const *type,
                             const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
                             const CosTrading::PropertySeq& properties);
 

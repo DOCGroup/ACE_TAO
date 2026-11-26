@@ -51,8 +51,8 @@ TAO_Service_Type_Repository::incarnation ()
 
 CosTradingRepos::ServiceTypeRepository::IncarnationNumber
 TAO_Service_Type_Repository::
-add_type (const char *name,
-          const char *if_name,
+add_type (char const *name,
+          char const *if_name,
           const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
           const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
 {
@@ -127,7 +127,7 @@ add_type (const char *name,
 }
 
 void
-TAO_Service_Type_Repository::remove_type (const char *name)
+TAO_Service_Type_Repository::remove_type (char const *name)
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
   {
@@ -185,7 +185,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
        ++itr)
     {
       Type_Info* type_info = (*itr).int_id_;
-      const char* type_name = (*itr).ext_id_.in ();
+      char const *type_name = (*itr).ext_id_.in ();
 
       if (all
           || num < type_info->type_struct_.incarnation)
@@ -201,7 +201,7 @@ list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes 
 
 CosTradingRepos::ServiceTypeRepository::TypeStruct *
 TAO_Service_Type_Repository::
-describe_type (const char * name)
+describe_type (char const *name)
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
     {
@@ -247,7 +247,7 @@ describe_type (const char * name)
 
 CosTradingRepos::ServiceTypeRepository::TypeStruct *
 TAO_Service_Type_Repository::
-fully_describe_type (const char *name)
+fully_describe_type (char const *name)
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
   {
@@ -290,7 +290,7 @@ fully_describe_type (const char *name)
 
 void
 TAO_Service_Type_Repository::
-mask_type (const char *name)
+mask_type (char const *name)
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
   {
@@ -323,7 +323,7 @@ mask_type (const char *name)
 }
 
 void
-TAO_Service_Type_Repository::unmask_type (const char *name)
+TAO_Service_Type_Repository::unmask_type (char const *name)
 {
   if (! TAO_Trader_Base::is_valid_identifier_name (name))
   {
@@ -436,7 +436,7 @@ collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::Typ
           CosTradingRepos::ServiceTypeRepository::TypeStruct &next_type_struct =
             next_type_entry->int_id_->type_struct_;
 
-          const char *type_name =
+          char const *type_name =
             type_struct.super_types[i];
           target.emplace_back (type_name);
 
@@ -455,7 +455,7 @@ validate_properties (Prop_Map &prop_map,
        i < props.length ();
        ++i)
     {
-      const char *n = props[i].name;
+      char const *n = props[i].name;
       if (! TAO_Trader_Base::is_valid_property_name (n))
         {
           throw CosTrading::IllegalPropertyName (n);
@@ -481,7 +481,7 @@ validate_supertypes (Service_Type_Map &super_map,
        i < super_types.length ();
        ++i)
     {
-      const char *type =
+      char const *type =
         super_types[i];
 
       if (! TAO_Trader_Base::is_valid_identifier_name (type))
@@ -592,8 +592,8 @@ validate_inheritance (Prop_Map &prop_map,
 
 void
 TAO_Service_Type_Repository::
-update_type_map (const char *name,
-                 const char *if_name,
+update_type_map (char const *name,
+                 char const *if_name,
                  const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
                  const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types,
                  Prop_Map &,

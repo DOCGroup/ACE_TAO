@@ -441,20 +441,20 @@ public:
    *
    * IDL identifier scoping and escaping rules apply.
    */
-  static CORBA::Boolean is_valid_identifier_name (const char* ident);
+  static CORBA::Boolean is_valid_identifier_name (char const *ident);
 
   /**
    * Determine whether the identifier is a valid one (i.e., if the
    * first character is a letter, and the subsequent ones letter,
    * numbers, or underscores.)
    */
-  static CORBA::Boolean is_valid_property_name (const char* ident);
+  static CORBA::Boolean is_valid_property_name (char const *ident);
 
   /**
    * Determine whether the link name is a valid one
    * currently defined the same as property name.
    */
-  static CORBA::Boolean is_valid_link_name (const char* ident)
+  static CORBA::Boolean is_valid_link_name (char const *ident)
   {
     return is_valid_property_name (ident);
   }

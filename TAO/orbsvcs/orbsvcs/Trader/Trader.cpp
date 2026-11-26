@@ -72,7 +72,7 @@ TAO_Trader_Base::trading_components () const
 }
 
 CORBA::Boolean
-TAO_Trader_Base::is_valid_property_name (const char* ident)
+TAO_Trader_Base::is_valid_property_name (char const *ident)
 {
   bool return_value {};
 
@@ -99,7 +99,7 @@ TAO_Trader_Base::is_valid_property_name (const char* ident)
 }
 
 CORBA::Boolean
-TAO_Trader_Base::is_valid_identifier_name (const char* ident)
+TAO_Trader_Base::is_valid_identifier_name (char const *ident)
 {
   static char const * const double_colon = "::";
 
@@ -741,7 +741,7 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR* current_arg = arg_shifter.get_current ();
+      ACE_TCHAR const *current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg, ACE_TEXT("-TSthreadsafe")) == 0)
         {
@@ -753,7 +753,7 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* conformance_str = arg_shifter.get_current ();
+              ACE_TCHAR const *conformance_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (conformance_str, ACE_TEXT("Linked")) == 0)
                 {
@@ -780,7 +780,7 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* arg_str = arg_shifter.get_current ();
+              ACE_TCHAR const *arg_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("true")) == 0)
                 {
@@ -800,7 +800,7 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* arg_str = arg_shifter.get_current ();
+              ACE_TCHAR const *arg_str = arg_shifter.get_current ();
 
               if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("true")) == 0)
                 {
@@ -882,7 +882,7 @@ TAO_Trader_Factory::parse_args (int& argc, ACE_TCHAR** argv)
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR* arg_str = arg_shifter.get_current ();
+              ACE_TCHAR const *arg_str = arg_shifter.get_current ();
               CosTrading::FollowOption follow_option;
 
               if (ACE_OS::strcasecmp (arg_str, ACE_TEXT("always")) == 0)

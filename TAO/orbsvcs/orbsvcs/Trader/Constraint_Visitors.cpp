@@ -602,7 +602,7 @@ sequence_does_contain (CORBA::Any const* sequence,
       break;
     case CORBA::tk_string:
       {
-        const char* value = element;
+        char const *value = element;
         return_value = ::TAO_find (*sequence, value);
       }
       break;
@@ -764,9 +764,9 @@ operator () (TAO_DynSequence_i& dyn_any,
 }
 
 int
-TAO_Element_Equal<const char*>::
+TAO_Element_Equal<char const *>::
 operator () (TAO_DynSequence_i& dyn_any,
-             const char* element) const
+             char const *element) const
 {
   int return_value {};
   try

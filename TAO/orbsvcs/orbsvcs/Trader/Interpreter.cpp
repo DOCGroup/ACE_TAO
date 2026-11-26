@@ -11,7 +11,7 @@ TAO_Interpreter::TAO_Interpreter () = default;
 TAO_Interpreter::~TAO_Interpreter () = default;
 
 int
-TAO_Interpreter::build_tree (const char* constraints)
+TAO_Interpreter::build_tree (char const *constraints)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -39,7 +39,7 @@ TAO_Interpreter::build_tree (const char* constraints)
 }
 
 bool
-TAO_Interpreter::is_empty_string (const char* str)
+TAO_Interpreter::is_empty_string (char const *str)
 {
   bool return_value {};
 

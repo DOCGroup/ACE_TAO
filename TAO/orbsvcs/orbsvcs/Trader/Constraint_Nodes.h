@@ -198,7 +198,7 @@ public:
   TAO_Expression_Type expr_type () const override;
 
   /// Returns the name of the property.
-  const char* name () const;
+  char const *name () const;
 
 private:
   /// The name of the property.
@@ -241,7 +241,7 @@ public:
   operator CORBA::ULongLong () const;
   operator CORBA::LongLong () const;
   operator CORBA::Double () const;
-  operator const char* () const;
+  operator char const *() const;
   operator const CORBA::Any* () const;
   /// @}
 

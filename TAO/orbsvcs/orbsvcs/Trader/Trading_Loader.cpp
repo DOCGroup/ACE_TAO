@@ -132,7 +132,7 @@ TAO_Trading_Loader::fini ()
 
               ORBSVCS_DEBUG ((LM_DEBUG,
                           "*** Removing link to %C.\n",
-                          static_cast<const char *> (link_name_seq[i])));
+                          static_cast<char const *> (link_name_seq[i])));
               our_link->remove_link (link_name_seq[i]);
 
               CosTrading::Lookup_ptr remote_lookup;
@@ -330,12 +330,12 @@ TAO_Trading_Loader::bootstrap_to_federation ()
        --i)
     {
       // Avoid linking to ourselves.
-      if (std::strcmp (static_cast<const char *> (link_name_seq[i]),
+      if (std::strcmp (static_cast<char const *> (link_name_seq[i]),
                           this->name_.in ()) != 0)
         {
           ORBSVCS_DEBUG ((LM_DEBUG,
                       "*** Getting info for link %s.\n",
-                      static_cast<const char *> (link_name_seq[i])));
+                      static_cast<char const *> (link_name_seq[i])));
           CosTrading::Link::LinkInfo_var link_info =
             link_if->describe_link (link_name_seq[i]);
 
@@ -384,7 +384,7 @@ TAO_Trading_Loader::init_multicast_server ()
 
   if (port == 0)
     {
-      const char *port_number =
+      char const *port_number =
         ACE_OS::getenv ("TradingServicePort");
 
       if (port_number != nullptr)
@@ -447,7 +447,7 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+      ACE_TCHAR const *current_arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (current_arg,
                           ACE_TEXT("-TSfederate")) == 0)
@@ -461,7 +461,7 @@ TAO_Trading_Loader::parse_args (int &argc, ACE_TCHAR *argv [])
           arg_shifter.consume_arg ();
           if (arg_shifter.is_parameter_next ())
             {
-              const ACE_TCHAR *file_name =
+              ACE_TCHAR const *file_name =
                 arg_shifter.get_current ();
               this->ior_output_file_.reset ();
               this->ior_output_file_.get_deleter () = ACE_OS::fclose;

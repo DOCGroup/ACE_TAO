@@ -61,7 +61,7 @@ public:
 
   /// Take ownership of an offer of type @ type and generate a CosTrading::OfferId
   /// for it. Returns 0 on failure.
-  CosTrading::OfferId insert_offer (const char* type,
+  CosTrading::OfferId insert_offer (char const *type,
                                     CosTrading::Offer* offer);
 
   int remove_offer (char const* offer_id);
@@ -108,7 +108,7 @@ private:
 
   /// Lookup an offer whose type is @a type and ID is @a id. Return 0 on
   /// failure.
-  CosTrading::Offer* lookup_offer (const char* type,
+  CosTrading::Offer* lookup_offer (char const *type,
                                    CORBA::ULong id);
 
   /**
@@ -116,7 +116,7 @@ private:
    * on failure, and throws a CosTrading::IllegalOfferId if it can't
    * parse the CosTrading::OfferId.
    */
-  int remove_offer (const char* type, CORBA::ULong id);
+  int remove_offer (char const *type, CORBA::ULong id);
 
   /// Take in a service type name for the offer the current value of
   /// of the counter and generate an offer id.
@@ -154,7 +154,7 @@ public:
 
   using Offer_Database = TAO_Offer_Database<LOCK_TYPE>;
 
-  TAO_Service_Offer_Iterator (const char* type,
+  TAO_Service_Offer_Iterator (char const *type,
                               TAO_Offer_Database<LOCK_TYPE>& offer_database);
 
   /// Release all the locks acquired.
@@ -183,7 +183,7 @@ public:
   std::unique_ptr<TAO_Offer_Map::iterator> offer_iter_;
 
   /// The name of the type. Used for constructing offer ids.
-  const char* type_;
+  char const *type_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

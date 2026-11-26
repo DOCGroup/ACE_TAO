@@ -41,9 +41,9 @@ protected:
 
   /// Using the Yacc generated parser, construct an expression tree
   /// representing @c constraints from the tokens returned by it.
-  int build_tree (const char* preferences);
+  int build_tree (char const *preferences);
 
-  static bool is_empty_string (const char* str);
+  static bool is_empty_string (char const *str);
 
   /// The root of the expression tree, not equal to null if build_tree
   /// successfully builds a tree from the constraints.

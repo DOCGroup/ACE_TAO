@@ -239,8 +239,8 @@ private:
 
   /// Update the type map with the information contained in the
   /// TypeStruct, prop_map, and super_map.
-  void update_type_map (const char *name,
-                        const char  *if_name,
+  void update_type_map (char const *name,
+                        char const *if_name,
                         const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
                         const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types,
                         Prop_Map &prop_map,

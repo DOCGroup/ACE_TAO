@@ -138,21 +138,21 @@ public:
    * defined and dynamic. If the property is undefined, this method
    * will throw a Property_Undefined exception with impunity.
    */
-  bool is_dynamic_property(const char* property_name);
+  bool is_dynamic_property(char const *property_name);
 
   /**
     * This method is identical to its counterpart in
     * TAO_Property_Evaluator, except property_value first discovers the
     * index through a string matching lookup.
     */
-  CORBA::Any const* property_value(const char* property_name);
+  CORBA::Any const* property_value(char const *property_name);
 
   /**
    * This method is identical to its counterpart in
    * TAO_Property_Evaluator, exception property_type first discovers
    * the index through a string matching lookup.
    */
-  CORBA::TypeCode_ptr property_type(const char* property_name);
+  CORBA::TypeCode_ptr property_type(char const *property_name);
 
   CosTrading::Property const* get_property (char const* property_name);
 
@@ -184,7 +184,7 @@ public:
   /// Method to construct a dynamic property structure suitable for
   /// exporting in a CosTrading::PropertyStruct to the Trading Service.
   CosTradingDynamic::DynamicProp*
-  construct_dynamic_prop (const char* name,
+  construct_dynamic_prop (char const *name,
                           CORBA::TypeCode_ptr returned_type,
                           const CORBA::Any& extra_info);
 
@@ -235,7 +235,7 @@ public:
     REQUEST_ID
   };
 
-  static const char * POLICY_NAMES[];
+  static char const *POLICY_NAMES[];
 
   /// The "policies" parameter allows the importer to specify how the
   /// search should be performed as opposed to what sort of services
@@ -513,7 +513,7 @@ public:
 
   /// Modify an @a offer of type @a type, whose properties are described
   /// by @a type_struct
-  TAO_Offer_Modifier (const char* type,
+  TAO_Offer_Modifier (char const *type,
                       const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
                       CosTrading::Offer* offer);
 

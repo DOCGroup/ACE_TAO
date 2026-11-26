@@ -6,7 +6,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
     const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
-    const char* constraints
+    char const *constraints
   )
   : TAO_Interpreter ()
 {
@@ -39,7 +39,7 @@ TAO_Constraint_Interpreter::TAO_Constraint_Interpreter (
 
 TAO_Constraint_Interpreter::
 TAO_Constraint_Interpreter (TAO_Constraint_Validator& validator,
-                           const char* constraints)
+                           char const *constraints)
 {
   if (TAO_Interpreter::is_empty_string (constraints))
     {
@@ -80,7 +80,7 @@ TAO_Constraint_Interpreter::evaluate (TAO_Constraint_Evaluator& evaluator)
 
 TAO_Preference_Interpreter::TAO_Preference_Interpreter (
     const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
-    const char* preference)
+    char const *preference)
     : TAO_Interpreter ()
 {
   TAO_Trader_Constraint_Validator type_checker (ts);
@@ -109,7 +109,7 @@ TAO_Preference_Interpreter::TAO_Preference_Interpreter (
 
 TAO_Preference_Interpreter::
 TAO_Preference_Interpreter (TAO_Constraint_Validator& validator,
-                           const char* preference)
+                           char const *preference)
     : TAO_Interpreter ()
 {
   if (TAO_Interpreter::is_empty_string (preference))
