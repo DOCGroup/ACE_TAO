@@ -18,7 +18,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class ACE_Time_Value
+ * @class ACE_Time_Value_T
  *
  * @brief Operations on "timeval" structures, which express time in
  * seconds (secs) and microseconds (usecs).
@@ -40,6 +40,7 @@ public:
 
   /// @name Time format conversions
   /// @{
+
   /// Construct the ACE_Time_Value from a timeval.
   explicit ACE_Time_Value_T (const struct timeval &t)
     : ACE_Time_Value (t) {}
@@ -70,13 +71,13 @@ public:
   /// Add @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator += (time_t tv);
 
-  /// Assign @ tv to this
+  /// Assign @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator = (ACE_Time_Value_T<TIME_POLICY> const &tv);
 
-  /// Assign @ tv to this
+  /// Assign @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator = (ACE_Time_Value const &tv);
 
-  /// Assign @ tv to this
+  /// Assign @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator = (time_t tv);
 
   /// Subtract @a tv to this.

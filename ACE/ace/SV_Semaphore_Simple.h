@@ -138,6 +138,7 @@ public:
 
   /// @name Semaphore operations
   /// @{
+
   /// General ACE_SV_Semaphore operation. Increment or decrement by a
   /// specific amount (positive or negative; amount can`t be zero).
   int op (short val, u_short semnum = 0, short flags = SEM_UNDO) const;
