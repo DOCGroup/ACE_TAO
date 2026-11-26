@@ -384,7 +384,7 @@ TAO::HTIOP::Connector::check_prefix (char const *endpoint)
 
   size_t slot = std::strchr (endpoint, ':') - endpoint;
 
-  const size_t len0 = std::strlen (protocol[0]);
+  size_t const len0 = std::strlen (protocol[0]);
 
   // Check for the proper prefix in the IOR.  If the proper prefix
   // isn't in the IOR then it is not an IOR we can use.
