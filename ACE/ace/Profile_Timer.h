@@ -56,6 +56,7 @@ public:
 
   /// @name Timer operations
   /// @{
+
   /// Activate the timer.
   int start ();
 
@@ -65,6 +66,7 @@ public:
 
   /// @name Resource utilization
   /// @{
+
   /// Compute the time elapsed between calls to @c start() and @c stop().
   int elapsed_time (ACE_Elapsed_Time &et);
 

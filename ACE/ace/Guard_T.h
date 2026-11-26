@@ -97,6 +97,7 @@ public:
 
   /// @name Utility operations
   /// @{
+
   /// true if locked, false if couldn't acquire the lock
   /// (errno will contain the reason for this).
   bool locked () const;
@@ -273,6 +274,7 @@ public:
 
   /// @name Utility operations
   /// @{
+
   /// Explicitly release the thread-specific lock.
   int remove ();
 
@@ -374,6 +376,7 @@ public:
 
   /// @name Lock operations
   /// @{
+
   /// Explicitly acquire the thread-specific read lock.
   int acquire_read ();
 
@@ -392,6 +395,7 @@ public:
 
   /// @name Utility operations
   /// @{
+
   /// Dump the state of an object.
   void dump () const;
 
