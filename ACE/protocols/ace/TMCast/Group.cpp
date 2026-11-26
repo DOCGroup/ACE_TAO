@@ -197,7 +197,8 @@ namespace ACE_TMCast
 
                   // Filter out loopback.
                   //
-                  if (std::strcmp (data->header().member_id.id, id_) != 0)
+                  if (data->valid ()
+                      && std::strcmp (data->header().member_id.id, id_) != 0)
                   {
                     insync ();
                     transaction_list ();

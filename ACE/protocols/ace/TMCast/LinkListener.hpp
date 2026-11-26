@@ -48,6 +48,13 @@ namespace ACE_TMCast
       return size_;
     }
 
+    bool
+    valid () const
+    {
+      return header_.length == sizeof header_ + size_
+        && std::memchr (header_.member_id.id, '\0', sizeof header_.member_id.id) != nullptr;
+    }
+
   private:
     Protocol::MessageHeader header_;
     char payload_[Protocol::MAX_MESSAGE_SIZE];

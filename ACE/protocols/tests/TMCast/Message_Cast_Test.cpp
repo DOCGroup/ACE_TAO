@@ -31,12 +31,23 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   alignas (ACE_TMCast::Protocol::MessageHeader) char unaligned[sizeof header + 1];
   std::memcpy (unaligned + 1, std::addressof (header), sizeof header);
   ACE_TMCast::LinkData const data (unaligned + 1, payload, sizeof payload);
-  if (data.header ().length != header.length
+  if (!data.valid ()
+      || data.header ().length != header.length
       || data.header ().current.id != header.current.id
       || data.size () != sizeof payload
       || std::memcmp (data.payload (), payload, sizeof payload) != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Link data did not preserve the packet\n")), 1);
+    }
+
+  header.length = sizeof header;
+  ACE_TMCast::LinkData const wrong_length (std::addressof (header), payload, sizeof payload);
+  std::memset (header.member_id.id, 'x', sizeof header.member_id.id);
+  header.length = sizeof header + sizeof payload;
+  ACE_TMCast::LinkData const unterminated (std::addressof (header), payload, sizeof payload);
+  if (wrong_length.valid () || unterminated.valid ())
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Invalid link data was accepted\n")), 1);
     }
   return 0;
 }
