@@ -30,8 +30,8 @@ public:
   long get_total_r   () { return this->total_r_; }
 
   /// This is called to pass the new connection's addresses.
-  void addresses (const ACE_INET_Addr& peer,
-                  const ACE_INET_Addr& local) override;
+  void addresses (ACE_INET_Addr const & peer,
+                  ACE_INET_Addr const & local) override;
 
   /// This is called after the new connection has been accepted.
   void open (ACE_HANDLE handle,
@@ -46,11 +46,11 @@ protected:
    *
    * These methods are called by the framework
    */
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
   /// This is called when an asynchronous @c write to the socket
   /// completes.
-  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
 private:
   int initiate_read_stream ();
@@ -99,14 +99,14 @@ public:
   int    get_total_r   () { return this->total_r_; }
 
   /// This is called to pass the new connection's addresses.
-  void addresses (const ACE_INET_Addr& peer,
-                  const ACE_INET_Addr& local) override;
+  void addresses (ACE_INET_Addr const & peer,
+                  ACE_INET_Addr const & local) override;
 
   /// This is called when asynchronous reads from the socket complete
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
   /// This is called when asynchronous writes from the socket complete
-  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
   void cancel ();
 

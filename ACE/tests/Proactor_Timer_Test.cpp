@@ -34,7 +34,7 @@ public:
   Time_Handler ();
 
   /// Handle the timeout.
-  void handle_time_out (const ACE_Time_Value &tv, const void *arg) override;
+  void handle_time_out (ACE_Time_Value const &tv, void const *arg) override;
 
   /// Return our timer id.
   long timer_id () const;
@@ -69,7 +69,7 @@ public:
   ~Repeat_Timer_Handler () override;
 
   // Handle the timeout.
-  void handle_time_out (const ACE_Time_Value &tv, const void *arg) override;
+  void handle_time_out (ACE_Time_Value const &tv, void const *arg) override;
 
 private:
   int repeat_secs_;
@@ -83,9 +83,9 @@ Time_Handler::Time_Handler ()
 }
 
 void
-Time_Handler::handle_time_out (const ACE_Time_Value &, const void *arg)
+Time_Handler::handle_time_out (ACE_Time_Value const &, void const *arg)
 {
-  const size_t current_counter = *(reinterpret_cast<const size_t *> (arg));
+  size_t const current_counter = *(reinterpret_cast<size_t const *> (arg));
   if (current_counter != counter)
     {
       ACE_ERROR ((LM_ERROR,
@@ -141,7 +141,7 @@ Repeat_Timer_Handler::~Repeat_Timer_Handler ()
 }
 
 void
-Repeat_Timer_Handler::handle_time_out (const ACE_Time_Value &, const void *)
+Repeat_Timer_Handler::handle_time_out (ACE_Time_Value const &, void const *)
 {
   // Let the first one go.
   if (++this->expirations_ == 1)

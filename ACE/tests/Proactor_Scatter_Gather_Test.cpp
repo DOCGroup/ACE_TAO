@@ -51,13 +51,13 @@ static constexpr int RECEIVERS = 2;
 // Port that we're receiving connections on.
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
-static const ACE_TCHAR *host = ACE_LOCALHOST;
+static ACE_TCHAR const *host = ACE_LOCALHOST;
 
 // File that we're sending.
-static const ACE_TCHAR *input_file = ACE_TEXT("Proactor_Scatter_Gather_Test.cpp");
+static ACE_TCHAR const *input_file = ACE_TEXT("Proactor_Scatter_Gather_Test.cpp");
 
 // Name of the output file.
-static const ACE_TCHAR *output_file = ACE_TEXT("output");
+static ACE_TCHAR const *output_file = ACE_TEXT("output");
 
 static int client_only = 0;
 static int server_only = 0;
@@ -116,7 +116,7 @@ static int allocate_chunks_chain (ACE_Message_Block *&head_mb,
 static void
 free_chunks_chain (ACE_Message_Block *&mb)
 {
-  for (const ACE_Message_Block* msg = mb;
+  for (ACE_Message_Block const * msg = mb;
        msg != 0;
        msg = msg->cont ())
     {
@@ -304,7 +304,7 @@ public:
 protected:
   /// This is called by the framework when asynchronous read operation from the
   /// socket completes.
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  virtual void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result);
 
 private:
   int initiate_read_stream ();
@@ -353,7 +353,7 @@ public:
 protected:
   /// This is called by the framework when an asynchronous write to the file
   /// completes.
-  virtual void handle_write_file (const ACE_Asynch_Write_File::Result &result);
+  virtual void handle_write_file (ACE_Asynch_Write_File::Result const &result);
 
 private:
   int initiate_write_file ();
@@ -520,7 +520,7 @@ Receiver::initiate_read_stream ()
 }
 
 void
-Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Receiver::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   ACE_Message_Block *mb = &result.message_block ();
 
@@ -901,7 +901,7 @@ Writer::initiate_write_file ()
 }
 
 void
-Writer::handle_write_file (const ACE_Asynch_Write_File::Result &result)
+Writer::handle_write_file (ACE_Asynch_Write_File::Result const &result)
 {
   ACE_Message_Block *mb = &result.message_block ();
 
@@ -959,8 +959,8 @@ public:
   virtual ~Connector ();
 
   // Address to pass to Sender for secondary connect.
-  void set_address (const ACE_INET_Addr &addr);
-  const ACE_INET_Addr &get_address ();
+  void set_address (ACE_INET_Addr const &addr);
+  ACE_INET_Addr const &get_address ();
 
   void stop ();
 
@@ -992,11 +992,11 @@ public:
 
   // This is called by the framework when asynchronous reads from the
   // file complete.
-  virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
+  virtual void handle_read_file (ACE_Asynch_Read_File::Result const &result);
 
   // This is called by the framework when asynchronous writes from the
   // socket complete.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  virtual void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result);
 
 private:
   void check_destroy ();
@@ -1039,12 +1039,12 @@ Connector::~Connector ()
 
 // Address to pass to Sender for secondary connect.
 void
-Connector::set_address (const ACE_INET_Addr &addr)
+Connector::set_address (ACE_INET_Addr const &addr)
 {
   this->addr_ = addr;
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 Connector::get_address ()
 {
   return this->addr_;
@@ -1340,7 +1340,7 @@ Sender::initiate_write_stream (ACE_Message_Block &mb)
 }
 
 void
-Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
+Sender::handle_read_file (ACE_Asynch_Read_File::Result const &result)
 {
   ACE_Message_Block *mb = &result.message_block ();
 
@@ -1375,7 +1375,7 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
 }
 
 void
-Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+Sender::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   ACE_Message_Block *mb = &result.message_block ();
 

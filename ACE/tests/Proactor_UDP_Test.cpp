@@ -64,7 +64,7 @@ static size_t max_aio_operations = 0;
 static int both = 0;
 
 // Host that we're connecting to.
-static const ACE_TCHAR *host {};
+static ACE_TCHAR const *host {};
 
 // number of Client instances
 static int clients = 1;
@@ -386,7 +386,7 @@ public:
   long get_total_r   () { return this->total_r_; }
 
   /// This is called after the new session has been established.
-  void go (ACE_HANDLE handle, const ACE_INET_Addr &client);
+  void go (ACE_HANDLE handle, ACE_INET_Addr const &client);
 
   void cancel ();
 
@@ -398,11 +398,11 @@ protected:
    */
   /// This is called when asynchronous read operation from the
   /// socket completes.
-  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
+  void handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result) override;
 
   /// This is called when an asynchronous write to the socket
   /// completes.
-  void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result) override;
+  void handle_write_dgram (ACE_Asynch_Write_Dgram::Result const &result) override;
 
 private:
   int initiate_read ();
@@ -436,7 +436,7 @@ public:
   Client (TestData *tester, int id);
   ~Client () override;
 
-  void go (ACE_HANDLE h, const ACE_INET_Addr &server);
+  void go (ACE_HANDLE h, ACE_INET_Addr const &server);
   int id () { return this->id_; }
   size_t get_total_snd () { return this->total_snd_; }
   size_t get_total_rcv () { return this->total_rcv_; }
@@ -444,10 +444,10 @@ public:
   int    get_total_r   () { return this->total_r_; }
 
   // This is called when asynchronous reads from the socket complete
-  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
+  void handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result) override;
 
   // This is called when asynchronous writes from the socket complete
-  void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result) override;
+  void handle_write_dgram (ACE_Asynch_Write_Dgram::Result const &result) override;
 
   void cancel ();
 
@@ -782,11 +782,11 @@ struct Session_Data
 class Master : public ACE_Handler
 {
 public:
-  Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected);
+  Master (TestData *tester, ACE_INET_Addr const &recv_addr, int expected);
   ~Master () override;
 
   // Called when dgram receive operation completes.
-  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
+  void handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result) override;
 
 private:
   void start_recv ();
@@ -801,7 +801,7 @@ private:
 };
 
 // *************************************************************
-Master::Master (TestData *tester, const ACE_INET_Addr &recv_addr, int expected)
+Master::Master (TestData *tester, ACE_INET_Addr const &recv_addr, int expected)
   : tester_ (tester),
     recv_addr_ (recv_addr),
     mb_ (nullptr),
@@ -841,7 +841,7 @@ Master::~Master ()
 }
 
 void
-Master::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
+Master::handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result)
 {
   // We should only receive Start datagrams with valid addresses to reply to.
   if (result.success ())
@@ -1067,7 +1067,7 @@ Server::cancel ()
 }
 
 void
-Server::go (ACE_HANDLE handle, const ACE_INET_Addr &client)
+Server::go (ACE_HANDLE handle, ACE_INET_Addr const &client)
 {
   this->handle (handle);
   this->client_addr_.set (client);
@@ -1167,7 +1167,7 @@ Server::initiate_write (ACE_Message_Block *mb, size_t nbytes)
 }
 
 void
-Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
+Server::handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_ );
@@ -1290,7 +1290,7 @@ Server::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
 }
 
 void
-Server::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
+Server::handle_write_dgram (ACE_Asynch_Write_Dgram::Result const &result)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
@@ -1407,7 +1407,7 @@ class Connector
 public:
   Connector (TestData *tester);
 
-  int  start (const ACE_INET_Addr &addr, int num);
+  int  start (ACE_INET_Addr const &addr, int num);
 
 private:
   TestData *tester_;
@@ -1421,7 +1421,7 @@ Connector::Connector (TestData *tester)
 }
 
 int
-Connector::start (const ACE_INET_Addr& addr, int num)
+Connector::start (ACE_INET_Addr const & addr, int num)
 {
   ACE_OS::sleep(3);  // Let Master get going
   if (num > MAX_CLIENTS)
@@ -1594,7 +1594,7 @@ Client::close ()
 }
 
 void
-Client::go (ACE_HANDLE handle, const ACE_INET_Addr &server)
+Client::go (ACE_HANDLE handle, ACE_INET_Addr const &server)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
@@ -1838,7 +1838,7 @@ Client::initiate_read ()
 }
 
 void
-Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
+Client::handle_write_dgram (ACE_Asynch_Write_Dgram::Result const &result)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
@@ -1994,7 +1994,7 @@ Client::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
 }
 
 void
-Client::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
+Client::handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
@@ -2168,7 +2168,7 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
 }
 
 static int
-set_proactor_type (const ACE_TCHAR *ptype)
+set_proactor_type (ACE_TCHAR const *ptype)
 {
   if (!ptype)
   {

@@ -51,16 +51,16 @@ public:
   // This method will be called when an asynchronous read
   // completes on a file.
   void
-  handle_read_file(const ACE_Asynch_Read_File::Result &result) override;
+  handle_read_file(ACE_Asynch_Read_File::Result const &result) override;
 
   // This method will be called when an asynchronous write
   // completes on a file.
   void
-  handle_write_file(const ACE_Asynch_Write_File::Result &result) override;
+  handle_write_file(ACE_Asynch_Write_File::Result const &result) override;
 
   // Callback hook invoked by the Proactor's Timer_Queue.
   void
-  handle_time_out(const ACE_Time_Value &tv, const void *arg) override;
+  handle_time_out(ACE_Time_Value const &tv, void const *arg) override;
 
   // Our I/O objects; they're public so others can access them
   ACE_Asynch_Read_File reader_;
@@ -187,7 +187,7 @@ int FileIOHandler::Connect()
 /// Handles completion of an asynchronous file read.
 /// @param result The read result containing the message block.
 void
-FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
+FileIOHandler::handle_read_file(ACE_Asynch_Read_File::Result const &result)
 {
   ACE_Message_Block &mb = result.message_block();
   // If the read failed, queue up another one using the same message block
@@ -250,7 +250,7 @@ FileIOHandler::handle_read_file(const ACE_Asynch_Read_File::Result &result)
 /// Handles completion of an asynchronous file write.
 /// @param result The write result containing the message block.
 void
-FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
+FileIOHandler::handle_write_file(ACE_Asynch_Write_File::Result const &result)
 {
   ACE_DEBUG((LM_INFO, ACE_TEXT("Finished write\n")));
   // When the write completes, we get the message block. It's been sent,
@@ -283,7 +283,7 @@ FileIOHandler::handle_write_file(const ACE_Asynch_Write_File::Result &result)
 /// @param tv The time value associated with the timer.
 /// @param act The completion token associated with the timer.
 void
-FileIOHandler::handle_time_out(const ACE_Time_Value & /*tv*/, const void * /*act*/)
+FileIOHandler::handle_time_out(ACE_Time_Value const & /*tv*/, void const * /*act*/)
 {
   // do not schedule more than 16 writes
   if (this->block_count_ < 16)

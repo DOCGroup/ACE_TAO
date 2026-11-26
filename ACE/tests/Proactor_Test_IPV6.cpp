@@ -68,7 +68,7 @@ static size_t max_aio_operations = 0;
 static int both = 0;
 
 // Host that we're connecting to.
-static const ACE_TCHAR *host {};
+static ACE_TCHAR const *host {};
 
 // number of Client instances
 static int clients = 1;
@@ -763,7 +763,7 @@ Server::cancel ()
 }
 
 void
-Server::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr&)
+Server::addresses (ACE_INET_Addr const & peer, ACE_INET_Addr const &)
 {
   ACE_TCHAR str[256];
   if (0 == peer.addr_to_string (str, sizeof (str) / sizeof (ACE_TCHAR)))
@@ -908,7 +908,7 @@ Server::initiate_write_stream (ACE_Message_Block &mb, size_t nbytes)
 }
 
 void
-Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Server::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_ );
@@ -1020,7 +1020,7 @@ Server::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 }
 
 void
-Server::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+Server::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
@@ -1135,7 +1135,7 @@ public:
   Connector (TestData *tester);
   ~Connector () override;
 
-  int  start (const ACE_INET_Addr &addr, int num);
+  int  start (ACE_INET_Addr const &addr, int num);
 
   // Virtual from ACE_Asynch_Connector
   Client *make_handler () override;
@@ -1163,7 +1163,7 @@ Connector::make_handler ()
 }
 
 int
-Connector::start (const ACE_INET_Addr& addr, int num)
+Connector::start (ACE_INET_Addr const & addr, int num)
 {
   if (num > MAX_CLIENTS)
   {
@@ -1308,7 +1308,7 @@ Client::close ()
 }
 
 void
-Client::addresses (const ACE_INET_Addr& peer, const ACE_INET_Addr& local)
+Client::addresses (ACE_INET_Addr const & peer, ACE_INET_Addr const & local)
 {
   char my_name[256];
   char peer_name[256];
@@ -1603,7 +1603,7 @@ Client::initiate_read_stream ()
 }
 
 void
-Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+Client::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
@@ -1758,7 +1758,7 @@ Client::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 }
 
 void
-Client::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Client::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   {
     ACE_GUARD (ACE_SYNCH_MUTEX, monitor, this->lock_);
@@ -1922,7 +1922,7 @@ print_usage (int /* argc */, ACE_TCHAR *argv[])
 }
 
 static int
-set_proactor_type (const ACE_TCHAR *ptype)
+set_proactor_type (ACE_TCHAR const *ptype)
 {
   if (!ptype)
   {
