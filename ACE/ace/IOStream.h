@@ -42,19 +42,19 @@ class ACE_Export ACE_Quoted_String : public ACE_IOStream_String
 {
 public:
   inline ACE_Quoted_String () { *this = ""; }
-  inline ACE_Quoted_String (const char *c) { *this = ACE_IOStream_String (c); }
-  inline ACE_Quoted_String (const ACE_IOStream_String &s) { *this = s; }
-  inline ACE_Quoted_String &operator= (const ACE_IOStream_String& s)
+  inline ACE_Quoted_String (char const *c) { *this = ACE_IOStream_String (c); }
+  inline ACE_Quoted_String (ACE_IOStream_String const &s) { *this = s; }
+  inline ACE_Quoted_String &operator= (ACE_IOStream_String const& s)
   {
     return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (s));
   }
-  inline ACE_Quoted_String &operator = (const char c) {
+  inline ACE_Quoted_String &operator = (char const c) {
     return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (c));
   }
-  inline ACE_Quoted_String &operator = (const char *c) {
+  inline ACE_Quoted_String &operator = (char const *c) {
     return static_cast<ACE_Quoted_String &> (ACE_IOStream_String::operator= (c));
   }
-  inline bool operator < (const ACE_Quoted_String &s) const {
+  inline bool operator < (ACE_Quoted_String const &s) const {
     return static_cast<ACE_IOStream_String const &> (*this)
       < static_cast<ACE_IOStream_String const &> (s);
   }
@@ -394,7 +394,7 @@ using __omanip_ = ostream& (*)(ostream&);
         PUT_PROT(MT,double,CODE) \
         PUT_PROT(MT,char,CODE) \
         PUT_PROT(MT,u_char,CODE) \
-        PUT_PROT(MT,const char *,CODE) \
+        PUT_PROT(MT,char const *,CODE) \
         PUT_PROT(MT,u_char *,CODE) \
         PUT_PROT(MT,void *,CODE) \
         inline virtual MT& operator<<(__omanip_ func) CODE2 \
