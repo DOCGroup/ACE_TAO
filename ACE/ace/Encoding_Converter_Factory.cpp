@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Encoding_Converter*
 ACE_Encoding_Converter_Factory::create (
-                       const ACE_Byte* source,
+                       ACE_Byte const * source,
                        size_t source_size,
                        ACE_Encoding_Converter_Factory::Encoding_Hint hint)
 {

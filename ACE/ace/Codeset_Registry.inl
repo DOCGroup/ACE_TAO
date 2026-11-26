@@ -12,7 +12,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 int
-ACE_Codeset_Registry::locale_to_registry(const ACE_CString &locale,
+ACE_Codeset_Registry::locale_to_registry(ACE_CString const &locale,
                                          ACE_CDR::ULong &codeset_id,
                                          ACE_CDR::UShort *num_sets,
                                          ACE_CDR::UShort **char_sets)

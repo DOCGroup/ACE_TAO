@@ -35,7 +35,7 @@ class ACE_Export ACE_Codeset_Registry
 public:
   /// Based on a locale string, find the registry value and optional codeset
   /// collection. This wraps the dce_cs_loc_to_rgy function, or emulates it.
-  static int locale_to_registry (const ACE_CString &locale,
+  static int locale_to_registry (ACE_CString const &locale,
                                  ACE_CDR::ULong &codeset_id,
                                  ACE_CDR::UShort * = nullptr,
                                  ACE_CDR::UShort ** = nullptr);
@@ -59,8 +59,8 @@ public:
   static constexpr int max_charsets_ = 5;
 protected:
   using registry_entry = struct {
-    const char *     desc_;
-    const char *     loc_name_;
+    char const *     desc_;
+    char const *     loc_name_;
     ACE_CDR::ULong   codeset_id_;
     ACE_CDR::UShort  num_sets_;
     ACE_CDR::UShort  char_sets_[max_charsets_];
@@ -71,7 +71,7 @@ private:
   static size_t const num_registry_entries_;
   static registry_entry const registry_db_[];
 
-  static int locale_to_registry_i (const ACE_CString &locale,
+  static int locale_to_registry_i (ACE_CString const &locale,
                                    ACE_CDR::ULong &codeset_id,
                                    ACE_CDR::UShort * = nullptr,
                                    ACE_CDR::UShort ** = nullptr);
