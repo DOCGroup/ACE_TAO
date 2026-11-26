@@ -7,6 +7,8 @@
 #include "ace/OS_NS_dirent.h"
 #include "ace/OS_NS_stdlib.h"
 
+#include <memory>
+
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -25,7 +27,7 @@ ACE_Dirent_Selector::open (ACE_TCHAR const *dir,
                            ACE_SCANDIR_COMPARATOR cmp)
 {
   this->close ();
-  this->n_ = ACE_OS::scandir (dir, &this->namelist_, sel, cmp);
+  this->n_ = ACE_OS::scandir (dir, std::addressof (this->namelist_), sel, cmp);
   return this->n_;
 }
 
