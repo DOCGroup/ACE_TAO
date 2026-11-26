@@ -30,7 +30,7 @@ class ACE_Time_Value;
 class ACE_Export ACE_Null_Mutex
 {
 public:
-  ACE_Null_Mutex (ACE_TCHAR const *= nullptr)
+  ACE_Null_Mutex (ACE_TCHAR const * = nullptr)
   {
   }
   ~ACE_Null_Mutex () = default;
