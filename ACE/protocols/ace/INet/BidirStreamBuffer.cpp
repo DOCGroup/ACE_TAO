@@ -2,8 +2,10 @@
 #define ACE_IOS_BIDIR_STREAM_BUFFER_CPP
 
 #include "ace/INet/BidirStreamBuffer.h"
+#include "ace/OS_Errno.h"
 
 #include <cstring>
+#include <stdexcept>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -17,12 +19,16 @@ namespace ACE
         std::streamsize bufsz,
         openmode mode)
       : bufsize_ (bufsz),
-        read_buffer_ (std::make_unique<char_type[]> (bufsz)),
-        write_buffer_ (std::make_unique<char_type[]> (bufsz)),
         mode_ (mode),
         stream_ (sh),
         interceptor_ (nullptr)
       {
+        if (bufsz < 5)
+          {
+            throw std::invalid_argument ("INet stream buffer must hold at least five characters");
+          }
+        this->read_buffer_ = std::make_unique<char_type[]> (bufsz);
+        this->write_buffer_ = std::make_unique<char_type[]> (bufsz);
         this->stream_->add_reference ();
 
         this->reset_buffers ();

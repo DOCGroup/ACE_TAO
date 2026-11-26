@@ -4,6 +4,7 @@
 #include "ace/INet/BufferedStreamBuffer.h"
 
 #include <cstring>
+#include <stdexcept>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -16,10 +17,14 @@ namespace ACE
         std::streamsize bufsz,
         typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode)
       : bufsize_ (bufsz),
-        buffer_ (std::make_unique<char_type[]> (bufsz)),
         mode_ (mode),
         interceptor_ (nullptr)
       {
+        if (bufsz < 5)
+          {
+            throw std::invalid_argument ("INet stream buffer must hold at least five characters");
+          }
+        this->buffer_ = std::make_unique<char_type[]> (bufsz);
         this->setg (this->buffer_.get () + 4,
                     this->buffer_.get () + 4,
                     this->buffer_.get () + 4);

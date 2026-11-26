@@ -14,6 +14,7 @@ protocols/tests/RMCast/run_test.pl: RMCAST !ST !NO_MCAST !LynxOS !ACE_FOR_TAO !V
 protocols/tests/RMCast/run_clone_test.pl: RMCAST !ST !LynxOS !ACE_FOR_TAO !VxWorks !LabVIEW_RT
 protocols/tests/TMCast/run_test.pl: !ST !ACE_FOR_TAO !FACE_SAFETY !VxWorks !LabVIEW_RT !ANDROID
 protocols/tests/INet/Basic_Authentication/run_test.pl: !ACE_FOR_TAO !FACE_SAFETY !VxWorks !LabVIEW_RT !ANDROID
+protocols/tests/INet/Stream_Buffer/run_test.pl: !ACE_FOR_TAO !FACE_SAFETY !VxWorks !LabVIEW_RT !ANDROID
 protocols/tests/HTBP/ping/run_test.pl: !NO_UUID !LynxOS !ACE_FOR_TAO !VxWorks !LabVIEW_RT !FACE_SAFETY
 protocols/tests/HTBP/Send_Recv_Tests/run_test.pl: !NO_UUID !LynxOS !ACE_FOR_TAO !VxWorks !LabVIEW_RT !FACE_SAFETY
 protocols/tests/HTBP/Send_Large_Msg/run_test.pl: !NO_UUID !LynxOS !ACE_FOR_TAO !VxWorks !LabVIEW_RT !FACE_SAFETY
