@@ -109,7 +109,7 @@ namespace TAO
     }
 
     ACE_INLINE void
-    Cached_Policies::implicit_activation (PortableServer::ImplicitActivationPolicyValue value)
+    Cached_Policies::implicit_activation (::PortableServer::ImplicitActivationPolicyValue value)
     {
       this->implicit_activation_ = value;
     }
