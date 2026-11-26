@@ -1405,7 +1405,7 @@ TAO_Notify_Constraint_Visitor::any_does_contain (
   CORBA::Any const *result {};
   *any >>= result;
 
-  TAO_ETCL_Literal_Constraint element (const_cast<CORBA::Any *>(result));
+  TAO_ETCL_Literal_Constraint element (result);
   return item == element;
 }
 

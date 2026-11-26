@@ -24,7 +24,7 @@ TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (
   this->copy (lit);
 }
 
-TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any *any)
+TAO_ETCL_Literal_Constraint::TAO_ETCL_Literal_Constraint (CORBA::Any const *any)
 {
   CORBA::Any const &any_ref = *any;
   CORBA::TypeCode_var const type = any_ref.type ();

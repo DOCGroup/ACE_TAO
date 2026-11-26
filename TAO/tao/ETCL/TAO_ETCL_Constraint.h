@@ -43,7 +43,7 @@ public:
   explicit TAO_ETCL_Literal_Constraint (CORBA::Boolean boolean);
   explicit TAO_ETCL_Literal_Constraint (CORBA::Double doub);
   explicit TAO_ETCL_Literal_Constraint (char const *str);
-  explicit TAO_ETCL_Literal_Constraint (CORBA::Any *any);
+  explicit TAO_ETCL_Literal_Constraint (CORBA::Any const *any);
 
   TAO_ETCL_Literal_Constraint (TAO_ETCL_Literal_Constraint const &lit);
   explicit TAO_ETCL_Literal_Constraint (ETCL_Literal_Constraint const *lit);
