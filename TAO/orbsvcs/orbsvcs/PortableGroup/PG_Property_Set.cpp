@@ -61,7 +61,7 @@ TAO::PG_Property_Set::decode (PortableGroup::Properties const & property_set)
                         property.val);
 
 #if 0
-    ACE_CString name = static_cast<const char *> (nc.id);
+    ACE_CString name = static_cast<char const *> (nc.id);
 
     const PortableGroup::Value * value_copy;
     ACE_NEW_THROW_EX (value_copy,
@@ -230,13 +230,13 @@ int TAO::test_encode_decode ()
 {
   int result = 1;
   static const long testLong = 123456L;
-  static const char * testLongKey = "MyLong";
+  static char const *testLongKey = "MyLong";
 
-  static const char * testString = "Now is the time for all good people.";
-  static const char * testStringKey = "plover";
+  static char const *testString = "Now is the time for all good people.";
+  static char const *testStringKey = "plover";
 
   static const double testDouble = 3.1415;
-  static const char * testDoubleKey = "pi";
+  static char const *testDoubleKey = "pi";
 
   PortableGroup::Properties_var property_set = new PortableGroup::Properties;
   //scope encoder to be sure its gone before decoding
@@ -279,7 +279,7 @@ int TAO::test_encode_decode ()
     result = 0;
   }
 
-  const char * stringResult = "";
+  char const *stringResult = "";
   if (find (decoder, testStringKey, stringResult))
   {
     if (0 != std::strcmp (testString, stringResult))

@@ -109,10 +109,10 @@ TAO::PG_Object_Group::~PG_Object_Group ()
 /////////////////////
 // q&d debug function
 static void
-dump_ior (const char * base,
-          const char * ext,
+dump_ior (char const *base,
+          char const *ext,
           unsigned long version,
-          const char * iogr)
+          char const *iogr)
 {
   char filename[1000];
   std::sprintf (filename, "%s_%lu.%s", base, version, ext);
@@ -545,7 +545,7 @@ TAO::PG_Object_Group::distribute_iogr ()
                               "IOGR to %C member: %C@%C.\n",
                               (info->is_primary_ ? "Primary" : "Backup"),
                               this->role_.c_str (),
-                              static_cast<const char *> (info->location_[0].id)
+                              static_cast<char const *> (info->location_[0].id)
                               ));
                 }
               //        dump_ior ("group", "iogr", this->tagged_component_.object_group_ref_version, iogr);
@@ -830,8 +830,8 @@ TAO::PG_Object_Group::create_members (size_t count)
                                   ACE_TEXT ("PG (%P|%t) Replica Factory ")
                                   ACE_TEXT ("@ %C refused create_object ")
                                   ACE_TEXT ("request for type %C\n"),
-                                  static_cast<const char *> (factory_info.the_location[0].id),
-                                  static_cast<const char *> (this->type_id_.in ())
+                                  static_cast<char const *> (factory_info.the_location[0].id),
+                                  static_cast<char const *> (this->type_id_.in ())
                                   ));
                     }
                 }
