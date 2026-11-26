@@ -40,9 +40,9 @@ static int Test_Result {};
 // to change it.
 // For some odd reason, NT will try to send a single large buffer, but not
 // multiple smaller ones that add up to the large size.
-const size_t Test3_Send_Size = 4*1024;
-const size_t Test3_Loops = 10;
-const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
+size_t const Test3_Send_Size = 4*1024;
+size_t const Test3_Loops = 10;
+size_t const Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 unsigned port = 8088;
 const ACE_TCHAR *notifier_file {};
 

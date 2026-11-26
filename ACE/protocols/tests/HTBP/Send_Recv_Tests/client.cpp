@@ -29,9 +29,9 @@
 // Change to non-zero if test fails
 static int Test_Result {};
 
-const size_t Test3_Send_Size = 4*1024;
-const size_t Test3_Loops = 10;
-const size_t Test3_Total_Size = Test3_Send_Size * Test3_Loops;
+size_t const Test3_Send_Size = 4*1024;
+size_t const Test3_Loops = 10;
+size_t const Test3_Total_Size = Test3_Send_Size * Test3_Loops;
 
 const ACE_TCHAR * remote_host {};
 const ACE_TCHAR * config_file {};
@@ -142,7 +142,9 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // The server will verify that this data pattern gets there intact.
 
   for (i = 0; i < sizeof buffer; ++i)
-    buffer[i] = static_cast<u_char> (i);
+    {
+      buffer[i] = static_cast<u_char> (i);
+    }
 
   iovec iov[5];
 
@@ -220,13 +222,15 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   }
 
   for (i = 0; Test_Result == 0 && i < 255; ++i)
-    if (buffer2[i] != buffer[i])
-      {
-        ACE_ERROR ((LM_ERROR,
-                    ACE_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
-                    i, buffer2[i], buffer[i]));
-        Test_Result = 1;
-      }
+    {
+      if (buffer2[i] != buffer[i])
+        {
+          ACE_ERROR ((LM_ERROR,
+                      ACE_TEXT ("(%P|%t) Test 2, rcvd byte %d is %d, not %d\n"),
+                      i, buffer2[i], buffer[i]));
+          Test_Result = 1;
+        }
+    }
 
   stream.close ();
 
