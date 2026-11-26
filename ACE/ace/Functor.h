@@ -248,11 +248,11 @@ public:
  * @brief Function object for hashing a const string
  */
 template<>
-class ACE_Export ACE_Hash<const char *>
+class ACE_Export ACE_Hash<char const *>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const char *t) const;
+  unsigned long operator () (char const *t) const;
 };
 
 /**
@@ -263,7 +263,7 @@ class ACE_Export ACE_Hash<char *>
 {
 public:
   /// Calls ACE::hash_pjw
-  unsigned long operator () (const char *t) const;
+  unsigned long operator () (char const *t) const;
 };
 
 /**
@@ -279,12 +279,12 @@ public:
  * @brief Function object for determining whether two const strings are equal.
  */
 template<>
-class ACE_Export ACE_Equal_To<const char *>
+class ACE_Export ACE_Equal_To<char const *>
 {
 public:
   /// Simply calls std::strcmp
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  int operator () (char const *lhs,
+                   char const *rhs) const;
 };
 
 /**
@@ -296,8 +296,8 @@ class ACE_Export ACE_Equal_To<char *>
 {
 public:
   /// Simply calls std::strcmp
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  int operator () (char const *lhs,
+                   char const *rhs) const;
 };
 
 /**
@@ -370,12 +370,12 @@ public:
  * is less than the second const string.
  */
 template<>
-class ACE_Export ACE_Less_Than<const char *>
+class ACE_Export ACE_Less_Than<char const *>
 {
 public:
   /// Simply calls std::strcmp
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  int operator () (char const *lhs,
+                   char const *rhs) const;
 };
 
 /**
@@ -387,8 +387,8 @@ class ACE_Export ACE_Less_Than<char *>
 {
 public:
   /// Simply calls std::strcmp
-  int operator () (const char *lhs,
-                   const char *rhs) const;
+  int operator () (char const *lhs,
+                   char const *rhs) const;
 };
 
 #if defined (ACE_HAS_WCHAR)

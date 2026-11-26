@@ -138,13 +138,13 @@ ACE_Hash<ACE_UINT64>::operator () (const ACE_UINT64 &t) const
 #endif /* ACE_SIZEOF_LONG < 8 */
 
 ACE_INLINE unsigned long
-ACE_Hash<const char *>::operator () (const char *t) const
+ACE_Hash<char const *>::operator () (char const *t) const
 {
   return ACE::hash_pjw (t);
 }
 
 ACE_INLINE unsigned long
-ACE_Hash<char *>::operator () (const char *t) const
+ACE_Hash<char *>::operator () (char const *t) const
 {
   return ACE::hash_pjw (t);
 }
@@ -157,13 +157,13 @@ ACE_Hash<void *>::operator () (const void *t) const
 
 /***********************************************************************/
 ACE_INLINE int
-ACE_Equal_To<const char *>::operator () (const char *lhs, const char *rhs) const
+ACE_Equal_To<char const *>::operator () (char const *lhs, char const *rhs) const
 {
   return !std::strcmp (lhs, rhs);
 }
 
 ACE_INLINE int
-ACE_Equal_To<char *>::operator () (const char *lhs, const char *rhs) const
+ACE_Equal_To<char *>::operator () (char const *lhs, char const *rhs) const
 {
   return !std::strcmp (lhs, rhs);
 }
@@ -200,13 +200,13 @@ ACE_Equal_To<ACE_UINT64>::operator () (const ACE_UINT64 lhs, const ACE_UINT64 rh
 
 /****************************************************************************/
 ACE_INLINE int
-ACE_Less_Than<const char *>::operator () (const char *lhs, const char *rhs) const
+ACE_Less_Than<char const *>::operator () (char const *lhs, char const *rhs) const
 {
   return (std::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
 
 ACE_INLINE int
-ACE_Less_Than<char *>::operator () (const char *lhs, const char *rhs) const
+ACE_Less_Than<char *>::operator () (char const *lhs, char const *rhs) const
 {
   return (std::strcmp (lhs, rhs) < 0) ? 1 : 0;
 }
