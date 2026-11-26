@@ -4,7 +4,7 @@
 /// This module is here to contain the base valuetype for
 /// h_key below. This base class is required when a valuetype
 /// is used as a primary key. This module replaces the original
-/// #include of Components.idl, and breaks the resulting
+/// \#include of Components.idl, and breaks the resulting
 /// dependency of this test on CIAO. Note that this workaround
 /// is sufficient for the IFR loader, which is the only thing
 /// that processes this IDL file in the test. If the IDL
