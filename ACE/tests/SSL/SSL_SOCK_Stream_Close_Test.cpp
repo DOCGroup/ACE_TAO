@@ -96,6 +96,14 @@ int run_main (int, ACE_TCHAR *[])
 
   int result {};
   ACE_SSL_Context * const context = ACE_SSL_Context::instance ();
+#if OPENSSL_VERSION_NUMBER >= 0x10101000L && !defined (LIBRESSL_VERSION_NUMBER)
+  // Unread TLS 1.3 session tickets can reset the connection when the client
+  // closes immediately, before the server has sent its close notification.
+  if (::SSL_CTX_set_num_tickets (context->context (), 0) != 1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cannot disable TLS session tickets\n")), 1);
+    }
+#endif
   if (context->certificate ("dummy.pem", SSL_FILETYPE_PEM) != 0
       || context->private_key ("key.pem", SSL_FILETYPE_PEM) != 0)
     {
