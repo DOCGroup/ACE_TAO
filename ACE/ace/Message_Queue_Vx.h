@@ -186,8 +186,8 @@ protected:
   /// @}
 
 private:
-  ACE_Message_Queue_Vx (const ACE_Message_Queue_Vx &) = delete;
-  void operator= (const ACE_Message_Queue_Vx &) = delete;
+  ACE_Message_Queue_Vx (ACE_Message_Queue_Vx const &) = delete;
+  void operator= (ACE_Message_Queue_Vx const &) = delete;
   ACE_Message_Queue_Vx (ACE_Message_Queue_Vx &&) = delete;
   void operator= (ACE_Message_Queue_Vx &&) = delete;
 

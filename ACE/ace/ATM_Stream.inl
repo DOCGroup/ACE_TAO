@@ -107,7 +107,7 @@ ACE_ATM_Stream::recv (void *buf,
 
 ACE_INLINE
 ssize_t
-ACE_ATM_Stream::send_n (const void *buf,
+ACE_ATM_Stream::send_n (void const *buf,
                         size_t n,
                         int flags) const
 {

@@ -70,7 +70,7 @@ public:
                 int *flags = nullptr) const;
 
   /// Send exactly n bytes to the connected transport mechanism.
-  ssize_t send_n (const void *buf,
+  ssize_t send_n (void const *buf,
                   size_t n,
                   int flags) const;
   /// @}

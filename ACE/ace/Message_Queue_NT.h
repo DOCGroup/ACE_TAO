@@ -187,8 +187,8 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_Message_Queue_NT (const ACE_Message_Queue_NT &) = delete;
-  void operator= (const ACE_Message_Queue_NT &) = delete;
+  ACE_Message_Queue_NT (ACE_Message_Queue_NT const &) = delete;
+  void operator= (ACE_Message_Queue_NT const &) = delete;
   ACE_Message_Queue_NT (ACE_Message_Queue_NT &&) = delete;
   void operator= (ACE_Message_Queue_NT &&) = delete;
 
