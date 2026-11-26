@@ -12,7 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  const char TOPOLOGY_ID_NAME[] = "TopologyID";
+  char const TOPOLOGY_ID_NAME[] = "TopologyID";
 
   XML_Topology_Factory::XML_Topology_Factory () = default;
 

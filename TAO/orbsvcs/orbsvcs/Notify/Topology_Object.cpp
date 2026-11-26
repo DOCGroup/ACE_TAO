@@ -41,7 +41,7 @@ namespace TAO_Notify
   }
 
   Topology_Object *
-  Topology_Object::load_child (const ACE_CString & /*type*/,
+  Topology_Object::load_child (ACE_CString const & /*type*/,
     CORBA::Long /* id */,
     const NVPList& /* attrs */)
   {

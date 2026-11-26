@@ -84,7 +84,7 @@ TAO_Notify_Object::deactivate ()
   {
     this->poa_->deactivate (this->id_);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
   {
     // Do not propagate any exceptions
     if (TAO_debug_level > 2)
@@ -161,7 +161,7 @@ TAO_Notify_Object::destroy_proxy_poa ()
       }
       this->proxy_poa_ = nullptr;
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const& ex)
     {
       if (TAO_debug_level > 2)
       {
@@ -195,7 +195,7 @@ TAO_Notify_Object::destroy_object_poa ()
       }
       this->object_poa_ = nullptr;
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const& ex)
     {
       if (TAO_debug_level > 2)
       {

@@ -52,7 +52,7 @@ TAO_Notify_Method_Request_Queueable::init (const TAO_Notify_Event* event)
   this->time_ = event->creation_time ();
 }
 
-const ACE_Time_Value&
+ACE_Time_Value const&
 TAO_Notify_Method_Request_Queueable::creation_time () const
 {
   return this->time_;

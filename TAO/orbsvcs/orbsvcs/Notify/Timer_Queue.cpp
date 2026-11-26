@@ -15,8 +15,8 @@ TAO_Notify_Timer_Queue::release ()
 
 long
 TAO_Notify_Timer_Queue::schedule_timer (ACE_Event_Handler *handler,
-                                    const ACE_Time_Value &delay_time,
-                                    const ACE_Time_Value &interval)
+                                    ACE_Time_Value const &delay_time,
+                                    ACE_Time_Value const &interval)
 {
   return
     this->timer_queue_.schedule (handler,

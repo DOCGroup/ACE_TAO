@@ -103,7 +103,7 @@ TAO_Notify_ETCL_Filter::~TAO_Notify_ETCL_Filter ()
     {
       this->destroy();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       if (TAO_debug_level)
       {
@@ -303,7 +303,7 @@ TAO_Notify_ETCL_Filter::modify_constraints (
     {
       this->add_constraints_i (modify_list);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Restore,
       for (index = 0; index < modify_list.length (); ++index)
@@ -457,7 +457,7 @@ TAO_Notify_ETCL_Filter::destroy ()
 }
 
 CORBA::Boolean
-TAO_Notify_ETCL_Filter::match (const CORBA::Any & /*filterable_data */)
+TAO_Notify_ETCL_Filter::match (CORBA::Any const & /*filterable_data */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

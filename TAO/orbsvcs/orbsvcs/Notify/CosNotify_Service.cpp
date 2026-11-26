@@ -399,7 +399,7 @@ TAO_CosNotify_Service::finalize_service (
               }
             }
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           // We're shutting things down, so ignore exceptions
         }

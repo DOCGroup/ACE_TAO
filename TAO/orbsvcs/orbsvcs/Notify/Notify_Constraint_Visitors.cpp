@@ -278,7 +278,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
             }
 
             DynamicAny::DynAny_var dyn_any =
-              TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any &> (
+              TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const &> (
                 disc_tc.in (),
                 disc_any);
             dyn_union.set_discriminator (dyn_any.in ());
@@ -341,7 +341,7 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
         return -1;
       }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     return -1;
   }
@@ -415,7 +415,7 @@ TAO_Notify_Constraint_Visitor::visit_component_pos (
         return comp->accept (this);
       }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     return -1;
   }
@@ -547,7 +547,7 @@ TAO_Notify_Constraint_Visitor::visit_component_array (
         return comp->accept (this);
       }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     return -1;
   }
@@ -628,7 +628,7 @@ TAO_Notify_Constraint_Visitor::visit_special (ETCL_Special *special)
       return -1;
     }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     return -1;
   }
@@ -787,7 +787,7 @@ TAO_Notify_Constraint_Visitor::visit_default (ETCL_Default *def)
 
     return (disc_value == default_index_value);
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     return -1;
   }
@@ -1160,7 +1160,7 @@ TAO_Notify_Constraint_Visitor::visit_in (ETCL_Binary_Expr *binary)
                 CORBA::TypeCode_var tc = component->type ();
                 kind = TAO_DynAnyFactory::unalias (tc.in ());
               }
-              catch (const CORBA::Exception&)
+              catch (CORBA::Exception const&)
               {
                 return return_value;
               }
@@ -1214,7 +1214,7 @@ TAO_Notify_Constraint_Visitor::visit_preference (ETCL_Preference *)
 
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::sequence_does_contain (
-    const CORBA::Any *any,
+    CORBA::Any const *any,
     TAO_ETCL_Literal_Constraint &item)
 {
   try
@@ -1255,7 +1255,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
           }
       }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     return false;
   }
@@ -1265,7 +1265,7 @@ TAO_Notify_Constraint_Visitor::sequence_does_contain (
 
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::array_does_contain (
-    const CORBA::Any *any,
+    CORBA::Any const *any,
     TAO_ETCL_Literal_Constraint &item)
 {
   try
@@ -1301,7 +1301,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
           }
       }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     return false;
   }
@@ -1311,7 +1311,7 @@ TAO_Notify_Constraint_Visitor::array_does_contain (
 
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::struct_does_contain (
-    const CORBA::Any *any,
+    CORBA::Any const *any,
     TAO_ETCL_Literal_Constraint &item)
 {
   try
@@ -1350,7 +1350,7 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
           }
       }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     return false;
   }
@@ -1360,7 +1360,7 @@ TAO_Notify_Constraint_Visitor::struct_does_contain (
 
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::union_does_contain (
-    const CORBA::Any *any,
+    CORBA::Any const *any,
     TAO_ETCL_Literal_Constraint &item)
 {
   try
@@ -1391,7 +1391,7 @@ TAO_Notify_Constraint_Visitor::union_does_contain (
 
     return (item == element);
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     return false;
   }
@@ -1399,10 +1399,10 @@ TAO_Notify_Constraint_Visitor::union_does_contain (
 
 CORBA::Boolean
 TAO_Notify_Constraint_Visitor::any_does_contain (
-    const CORBA::Any *any,
+    CORBA::Any const *any,
     TAO_ETCL_Literal_Constraint &item)
 {
-  const CORBA::Any *result {};
+  CORBA::Any const *result {};
   *any >>= result;
 
   TAO_ETCL_Literal_Constraint element (const_cast<CORBA::Any *>(result));

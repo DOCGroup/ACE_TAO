@@ -37,13 +37,13 @@ public:
   TAO_Notify_Property_Boolean& operator= (const TAO_Notify_Property_Boolean& rhs);
 
   /// Assignment from CORBA::Boolean
-  TAO_Notify_Property_Boolean& operator= (const CORBA::Boolean& rhs);
+  TAO_Notify_Property_Boolean& operator= (CORBA::Boolean const& rhs);
 
   /// Equality comparison operator.
-  bool operator== (const CORBA::Boolean &rhs) const;
+  bool operator== (CORBA::Boolean const &rhs) const;
 
   /// Inequality comparison operator.
-  bool operator!= (const CORBA::Boolean &rhs) const;
+  bool operator!= (CORBA::Boolean const &rhs) const;
 
   int set (const TAO_Notify_PropertySeq& property_seq);
 

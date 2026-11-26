@@ -20,10 +20,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  const char REGISTRY_TYPE[] = "reconnect_registry";
-  const char RECONNECT_ID[] = "ReconnectId";
-  const char RECONNECT_IOR[] = "IOR";
-  const char REGISTRY_CALLBACK_TYPE[] = "reconnect_callback";
+  char const REGISTRY_TYPE[] = "reconnect_registry";
+  char const RECONNECT_ID[] = "ReconnectId";
+  char const RECONNECT_IOR[] = "IOR";
+  char const REGISTRY_CALLBACK_TYPE[] = "reconnect_callback";
 
   Reconnection_Registry::Reconnection_Registry (Topology_Parent & parent)
   {
@@ -131,7 +131,7 @@ namespace TAO_Notify
   // During reload of persistent topology
 
   Topology_Object*
-  Reconnection_Registry::load_child (const ACE_CString & type,
+  Reconnection_Registry::load_child (ACE_CString const & type,
         CORBA::Long,
         const NVPList& attrs)
   {
@@ -208,7 +208,7 @@ namespace TAO_Notify
           bad_ids.push_back (entry->ext_id_);
         }
       }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
       {
         ORBSVCS_DEBUG ((LM_DEBUG,
           ACE_TEXT ("(%P|%t) Reconnection Registry: Exception sending reconnection to client -- discarding registry entry\n")

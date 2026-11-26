@@ -188,8 +188,8 @@ Routing_Slip_Persistence_Manager::load_next ()
 }
 
 bool
-Routing_Slip_Persistence_Manager::store(const ACE_Message_Block& event,
-  const ACE_Message_Block& routing_slip)
+Routing_Slip_Persistence_Manager::store(ACE_Message_Block const& event,
+  ACE_Message_Block const& routing_slip)
 {
   bool result {};
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
@@ -201,7 +201,7 @@ Routing_Slip_Persistence_Manager::store(const ACE_Message_Block& event,
 }
 
 bool
-Routing_Slip_Persistence_Manager::update(const ACE_Message_Block& routing_slip)
+Routing_Slip_Persistence_Manager::update(ACE_Message_Block const& routing_slip)
 {
   bool result {};
   ACE_GUARD_RETURN(TAO_SYNCH_MUTEX, ace_mon, this->lock_, result);
@@ -405,8 +405,8 @@ Routing_Slip_Persistence_Manager::Event_Header::Event_Header ()
 }
 
 bool
-Routing_Slip_Persistence_Manager::store_i(const ACE_Message_Block& event,
-  const ACE_Message_Block& routing_slip)
+Routing_Slip_Persistence_Manager::store_i(ACE_Message_Block const& event,
+  ACE_Message_Block const& routing_slip)
 {
   bool result {};
 
@@ -462,7 +462,7 @@ Routing_Slip_Persistence_Manager::store_i(const ACE_Message_Block& event,
 
 bool
 Routing_Slip_Persistence_Manager::update_i(
-  const ACE_Message_Block& routing_slip)
+  ACE_Message_Block const& routing_slip)
 {
   bool result = true;
   size_t const routing_slip_size = routing_slip.total_length();
@@ -483,7 +483,7 @@ Routing_Slip_Persistence_Manager::update_i(
 
 bool
 Routing_Slip_Persistence_Manager::store_event(
-  const ACE_Message_Block& event)
+  ACE_Message_Block const& event)
 {
   bool result = true;
   size_t const event_size = event.total_length();
@@ -506,7 +506,7 @@ Routing_Slip_Persistence_Manager::store_event(
 
 size_t
 Routing_Slip_Persistence_Manager::fill_block(Persistent_Storage_Block& psb,
-  size_t offset_into_block, const ACE_Message_Block* data,
+  size_t offset_into_block, ACE_Message_Block const* data,
   size_t offset_into_msg)
 {
   unsigned char* ptr = (unsigned char*)data->rd_ptr();
@@ -541,7 +541,7 @@ bool
 Routing_Slip_Persistence_Manager::build_chain(
     Persistent_Storage_Block* first_block, Block_Header& first_header,
     ACE_Unbounded_Stack<size_t>& allocated_blocks,
-    const ACE_Message_Block& data)
+    ACE_Message_Block const& data)
 {
   size_t const data_size = data.total_length();
   size_t remainder = data_size;
@@ -558,7 +558,7 @@ Routing_Slip_Persistence_Manager::build_chain(
   }
   size_t pos = first_header.put_header(
     *first_block);
-  const ACE_Message_Block* mblk = std::addressof (data);
+  ACE_Message_Block const* mblk = std::addressof (data);
   remainder = this->fill_block(*first_block, pos, mblk, 0);
   while ((remainder == 0) && (mblk->cont() != nullptr))
   {

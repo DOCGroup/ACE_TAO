@@ -78,7 +78,7 @@ using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Consumer>;
   void deliver (TAO_Notify_Method_Request_Event * request);
 
   /// Push @a event to this consumer.
-  virtual void push (const CORBA::Any& event) = 0;
+  virtual void push (CORBA::Any const& event) = 0;
 
   /// Push @a event to this consumer.
   virtual void push (const CosNotification::StructuredEvent& event) = 0;

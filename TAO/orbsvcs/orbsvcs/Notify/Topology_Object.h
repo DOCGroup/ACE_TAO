@@ -121,7 +121,7 @@ namespace TAO_Notify
     /// Use "type" as passed in to determine what kind of child (supporting
     /// the Topology_Object interface) to create and return.  Inform it of
     /// its new ID.
-    virtual Topology_Object* load_child (const ACE_CString & type,
+    virtual Topology_Object* load_child (ACE_CString const & type,
       CORBA::Long id,
       const NVPList& attrs);
 

@@ -24,8 +24,8 @@ TAO_Notify_Timer_Reactor::release ()
 
 long
 TAO_Notify_Timer_Reactor::schedule_timer (ACE_Event_Handler *handler,
-                               const ACE_Time_Value &delay_time,
-                               const ACE_Time_Value &interval)
+                               ACE_Time_Value const &delay_time,
+                               ACE_Time_Value const &interval)
 {
   return this->reactor_->schedule_timer (handler, 0, delay_time, interval);
 }

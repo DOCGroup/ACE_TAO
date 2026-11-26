@@ -54,7 +54,7 @@ public:
   ~TAO_Notify_Event () override;
 
   /// Translate Any to Structured
-  static void translate (const CORBA::Any& any, CosNotification::StructuredEvent& notification);
+  static void translate (CORBA::Any const& any, CosNotification::StructuredEvent& notification);
 
   /// Translate Structured to Any
   static void translate (const CosNotification::StructuredEvent& notification, CORBA::Any& any);
@@ -106,7 +106,7 @@ public:
   const TAO_Notify_Property_Boolean& reliable() const;
 
   /// Event creation time
-  const ACE_Time_Value& creation_time () const;
+  ACE_Time_Value const& creation_time () const;
   /// @}
 
 protected:

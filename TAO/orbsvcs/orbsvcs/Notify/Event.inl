@@ -18,7 +18,7 @@ TAO_Notify_Event::reliable () const
   return this->reliable_;
 }
 
-ACE_INLINE const ACE_Time_Value&
+ACE_INLINE ACE_Time_Value const&
 TAO_Notify_Event::creation_time () const
 {
   return this->time_;

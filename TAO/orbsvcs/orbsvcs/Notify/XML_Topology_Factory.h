@@ -22,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  extern const char TOPOLOGY_ID_NAME[];
+  extern char const TOPOLOGY_ID_NAME[];
 
   /**
    * \brief Create XML topology savers and loaders

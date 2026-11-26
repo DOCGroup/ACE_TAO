@@ -65,15 +65,15 @@ public:
   void set_callback(Persistent_Callback* callback);
 
   /// Store an event + routing slip.
-  bool store(const ACE_Message_Block& event,
-    const ACE_Message_Block& routing_slip);
+  bool store(ACE_Message_Block const& event,
+    ACE_Message_Block const& routing_slip);
 
   /// \brief Update the routing slip.
   ///
   /// We must always overwrite the first block
   /// last, and it may not chance.  Other blocks should be freed and
   /// reallocated.
-  bool update(const ACE_Message_Block& routing_slip);
+  bool update(ACE_Message_Block const& routing_slip);
 
   /// \brief Remove our associated event and routing slip from the
   /// Persistent_File_Allocator.
@@ -187,17 +187,17 @@ private:
     Overflow_Header ();
   };
 
-  bool store_i(const ACE_Message_Block& event,
-    const ACE_Message_Block& routing_slip);
+  bool store_i(ACE_Message_Block const& event,
+    ACE_Message_Block const& routing_slip);
 
-  bool update_i(const ACE_Message_Block& routing_slip);
+  bool update_i(ACE_Message_Block const& routing_slip);
 
-  bool store_event(const ACE_Message_Block& event);
+  bool store_event(ACE_Message_Block const& event);
 
   /// Fill in a block with data, and return the number of bytes
   /// of data remaining to be written.
   size_t fill_block(Persistent_Storage_Block& psb,
-    size_t offset_into_block, const ACE_Message_Block* data,
+    size_t offset_into_block, ACE_Message_Block const* data,
     size_t offset_into_msg);
   size_t fill_block(Persistent_Storage_Block& psb,
     size_t offset_into_block, unsigned char* data,
@@ -208,7 +208,7 @@ private:
     Persistent_Storage_Block* first_block,
     Block_Header& first_header,
     ACE_Unbounded_Stack<size_t>& allocated_blocks,
-    const ACE_Message_Block& data);
+    ACE_Message_Block const& data);
 
   /// Reload a chain from persistent store.
   bool reload_chain(Persistent_Storage_Block* first_block,

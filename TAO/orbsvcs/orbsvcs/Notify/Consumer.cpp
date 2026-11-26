@@ -228,7 +228,7 @@ TAO_Notify_Consumer::deliver (TAO_Notify_Method_Request_Event * request)
               {
                 this->proxy_supplier ()->destroy (from_timeout);
               }
-            catch (const CORBA::Exception&)
+            catch (CORBA::Exception const&)
               {
                 // todo is there something meaningful we can do here?
               }
@@ -254,7 +254,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
                       ));
         }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& ex)
+  catch (CORBA::OBJECT_NOT_EXIST const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -267,7 +267,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         }
       result = DISPATCH_FAIL;
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (CORBA::TRANSIENT const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -279,7 +279,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
                       ex._info ().c_str ()
                       ));
         }
-      const CORBA::ULong BITS_5_THRU_12_MASK = 0x00000f80u;
+      CORBA::ULong const BITS_5_THRU_12_MASK = 0x00000f80u;
       switch (ex.minor () & 0xfffff000u)
         {
         case CORBA::OMGVMCID:
@@ -309,7 +309,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
             } break;
         }
     }
-  catch (const CORBA::TIMEOUT& ex)
+  catch (CORBA::TIMEOUT const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -322,7 +322,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         }
       result = DISPATCH_FAIL_TIMEOUT;
     }
-  catch (const CORBA::COMM_FAILURE& ex)
+  catch (CORBA::COMM_FAILURE const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -335,7 +335,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         }
       result = DISPATCH_FAIL;
     }
-  catch (const CORBA::SystemException& ex)
+  catch (CORBA::SystemException const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -348,7 +348,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
         }
       result = DISPATCH_DISCARD;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       ORBSVCS_ERROR ( (LM_ERROR,
                    ACE_TEXT ("(%P|%t) TAO_Notify_Consumer %d::push ")
@@ -389,7 +389,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
     {
       this->push (batch);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST& ex)
+  catch (CORBA::OBJECT_NOT_EXIST const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -402,7 +402,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         }
       result = DISPATCH_FAIL;
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (CORBA::TRANSIENT const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -414,7 +414,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
                       ex._info ().c_str ()
                       ));
         }
-      const CORBA::ULong BITS_5_THRU_12_MASK = 0x00000f80u;
+      CORBA::ULong const BITS_5_THRU_12_MASK = 0x00000f80u;
       switch (ex.minor () & 0xfffff000u)
         {
         case CORBA::OMGVMCID:
@@ -444,7 +444,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
             } break;
         }
     }
-  catch (const CORBA::TIMEOUT& ex)
+  catch (CORBA::TIMEOUT const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -457,7 +457,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         }
       result = DISPATCH_FAIL_TIMEOUT;
     }
-  catch (const CORBA::COMM_FAILURE& ex)
+  catch (CORBA::COMM_FAILURE const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -470,7 +470,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         }
       result = DISPATCH_FAIL;
     }
-  catch (const CORBA::SystemException& ex)
+  catch (CORBA::SystemException const& ex)
     {
       if (DEBUG_LEVEL  > 0)
         {
@@ -483,7 +483,7 @@ TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
         }
       result = DISPATCH_DISCARD;
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   ACE_TEXT ("(%P|%t) TAO_Notify_Consumer ")
@@ -605,7 +605,7 @@ TAO_Notify_Consumer::dispatch_from_queue (
               {
                 this->proxy_supplier ()->destroy ();
               }
-            catch (const CORBA::Exception&)
+            catch (CORBA::Exception const&)
               {
                 // todo is there something reasonable to do here?
               }
@@ -696,7 +696,7 @@ TAO_Notify_Consumer::cancel_timer ()
 }
 
 int
-TAO_Notify_Consumer::handle_timeout (const ACE_Time_Value&, const void*)
+TAO_Notify_Consumer::handle_timeout (ACE_Time_Value const&, void const*)
 {
   if (!this->is_suspended() && this->timer_.isSet() && this->timer_id_ != -1)
     {
@@ -860,11 +860,11 @@ TAO_Notify_Consumer::is_alive (bool allow_nil_consumer)
           status = true;
         }
     }
-  catch (const CORBA::TIMEOUT&)
+  catch (CORBA::TIMEOUT const&)
     {
        status = true;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (DEBUG_LEVEL > 0)
       {

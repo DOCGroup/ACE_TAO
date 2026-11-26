@@ -33,7 +33,7 @@ TAO_Notify_Event::release ()
 }
 
 void
-TAO_Notify_Event::translate (const CORBA::Any& any, CosNotification::StructuredEvent& notification)
+TAO_Notify_Event::translate (CORBA::Any const& any, CosNotification::StructuredEvent& notification)
 {
   notification.remainder_of_body <<= any;
   notification.header.fixed_header.event_type.type_name = CORBA::string_dup ("%ANY");

@@ -191,7 +191,7 @@ TAO_Notify_ProxyConsumer::last_ping() const
 }
 
 void
-TAO_Notify_ProxyConsumer::last_ping(const ACE_Time_Value& tv)
+TAO_Notify_ProxyConsumer::last_ping(ACE_Time_Value const& tv)
 {
   this->last_ping_ = tv;
 }

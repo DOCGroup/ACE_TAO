@@ -508,7 +508,7 @@ TAO_Notify_EventChannelFactory::activate_self ()
     }
     this->reconnect ();
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     // ignore for now
   }

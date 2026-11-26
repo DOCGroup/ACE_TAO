@@ -40,8 +40,8 @@ public:
 
   /// Constructor. It does not assume ownership of the @a event_channel
   /// parameter.
-  TAO_Notify_validate_client_Task (const ACE_Time_Value &delay,
-                                     const ACE_Time_Value &interval,
+  TAO_Notify_validate_client_Task (ACE_Time_Value const &delay,
+                                     ACE_Time_Value const &interval,
                                      TAO_Notify_EventChannelFactory *ecf);
 
   TAO_Notify_validate_client_Task (TAO_Notify_validate_client_Task const &) = delete;

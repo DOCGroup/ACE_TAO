@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify_Extensions
 {
-  extern TAO_Notify_Export const char BlockingPolicy[];
+  extern TAO_Notify_Export char const BlockingPolicy[];
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

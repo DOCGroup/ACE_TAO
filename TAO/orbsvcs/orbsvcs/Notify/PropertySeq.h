@@ -55,7 +55,7 @@ public:
 protected:
   /// Add the value. Used by subclasses to initialize the property map from their
   /// member variables.
-  void add(const ACE_CString& name, const CORBA::Any& val);
+  void add(ACE_CString const& name, CORBA::Any const& val);
 
 protected:
   /// Property Map.

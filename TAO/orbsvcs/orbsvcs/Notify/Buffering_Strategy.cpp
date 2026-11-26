@@ -75,7 +75,7 @@ TAO_Notify_Buffering_Strategy::oldest_event ()
         dynamic_cast<TAO_Notify_Method_Request_Queueable*> (mb);
       if (event != nullptr)
         {
-          const ACE_Time_Value& etime = event->creation_time ();
+          ACE_Time_Value const& etime = event->creation_time ();
           if (etime < tv)
           {
             tv = etime;
@@ -211,7 +211,7 @@ TAO_Notify_Buffering_Strategy::enqueue (TAO_Notify_Method_Request_Queueable* met
 }
 
 int
-TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &method_request, const ACE_Time_Value *abstime)
+TAO_Notify_Buffering_Strategy::dequeue (TAO_Notify_Method_Request_Queueable* &method_request, ACE_Time_Value const *abstime)
 {
   ACE_Message_Block *mb {};
 

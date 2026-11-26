@@ -63,7 +63,7 @@ public:
 
   CosNotifyFilter::MappingFilter_ptr create_mapping_filter (
       char const *constraint_grammar,
-      const CORBA::Any & default_value) override;
+      CORBA::Any const & default_value) override;
 
   void remove_filter (CosNotifyFilter::Filter_ptr filter) override;
 

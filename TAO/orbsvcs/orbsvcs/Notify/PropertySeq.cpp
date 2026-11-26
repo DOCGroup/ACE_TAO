@@ -49,7 +49,7 @@ TAO_Notify_PropertySeq::populate (CosNotification::PropertySeq_var& prop_seq) co
 }
 
 void
-TAO_Notify_PropertySeq::add(const ACE_CString& name, const CORBA::Any& val)
+TAO_Notify_PropertySeq::add(ACE_CString const& name, CORBA::Any const& val)
 {
   int ret = this->property_map_.rebind (name, val);
   ACE_ASSERT(ret >= 0);

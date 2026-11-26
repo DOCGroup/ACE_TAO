@@ -66,7 +66,7 @@ public:
   TAO_Notify_SupplierAdmin& supplier_admin ();
 
   ACE_Time_Value last_ping() const;
-  void last_ping(const ACE_Time_Value& tv);
+  void last_ping(ACE_Time_Value const& tv);
 
 protected:
   /// Access the Supplier

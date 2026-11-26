@@ -141,7 +141,7 @@ Routing_Slip::create (
         }
       }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       ORBSVCS_ERROR ((LM_ERROR,
         ACE_TEXT ("(%P|%t) Routing_Slip::create: Exception reloading event.\n")
@@ -749,10 +749,10 @@ Routing_Slip::enter_state_saving (Routing_Slip_Guard & guard)
     TAO_OutputCDR event_cdr;
     this->event_->marshal (event_cdr);
 
-    const ACE_Message_Block *event_mb = event_cdr.begin ();
+    ACE_Message_Block const *event_mb = event_cdr.begin ();
     TAO_OutputCDR rs_cdr;
     marshal (rs_cdr);
-    const ACE_Message_Block *rs_mb = rs_cdr.begin ();
+    ACE_Message_Block const *rs_mb = rs_cdr.begin ();
 
     guard.release ();
     this->rspm_->store (*event_mb, *rs_mb);
@@ -789,7 +789,7 @@ Routing_Slip::enter_state_updating (Routing_Slip_Guard & guard)
 
   TAO_OutputCDR rs_cdr;
   marshal (rs_cdr);
-  const ACE_Message_Block *rs_mb = rs_cdr.begin ();
+  ACE_Message_Block const *rs_mb = rs_cdr.begin ();
   guard.release ();
 
   ACE_ASSERT (this->rspm_ != nullptr);
@@ -963,7 +963,7 @@ Routing_Slip::unmarshal (TAO_Notify_EventChannelFactory &ecf, TAO_InputCDR & cdr
           }
         }
       }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
       {
         // @@todo should we log this?
         // just ignore failures

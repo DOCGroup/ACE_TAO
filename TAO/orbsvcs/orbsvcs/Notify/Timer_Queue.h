@@ -43,8 +43,8 @@ public:
 
   /// Schedule a timer
   long schedule_timer (ACE_Event_Handler *handler,
-                               const ACE_Time_Value &delay_time,
-                               const ACE_Time_Value &interval) override;
+                               ACE_Time_Value const &delay_time,
+                               ACE_Time_Value const &interval) override;
 
   /// Cancel Timer
   int cancel_timer (long timer_id) override;

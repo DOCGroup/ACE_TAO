@@ -58,7 +58,7 @@ public:
   /// Dequeue batch. This method will block for @a abstime if non-zero or else blocks till an item is available.
   /// Return -1 on error or if nothing is available, else the number of items actually dequeued (1).
   int dequeue (TAO_Notify_Method_Request_Queueable* &method_request,
-               const ACE_Time_Value *abstime);
+               ACE_Time_Value const *abstime);
 
   /// Shutdown
   void shutdown ();

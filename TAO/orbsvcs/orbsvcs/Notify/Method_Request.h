@@ -61,7 +61,7 @@ public:
   void init (const TAO_Notify_Event * event);
 
   /// The creation time of the event to which this request corresponds.
-  const ACE_Time_Value& creation_time () const;
+  ACE_Time_Value const& creation_time () const;
 
 private:
   ACE_Time_Value time_;

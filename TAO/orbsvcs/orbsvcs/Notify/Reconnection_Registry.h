@@ -24,10 +24,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace TAO_Notify
 {
-  extern const char REGISTRY_TYPE[];
-  extern const char RECONNECT_ID[];
-  extern const char RECONNECT_IOR[];
-  extern const char REGISTRY_CALLBACK_TYPE[];
+  extern char const REGISTRY_TYPE[];
+  extern char const RECONNECT_ID[];
+  extern char const RECONNECT_IOR[];
+  extern char const REGISTRY_CALLBACK_TYPE[];
 
   /**
    * @class Reconnection_Registry
@@ -70,7 +70,7 @@ namespace TAO_Notify
     ///////////////////////////////////////
     // During reload of persistent topology
 
-    Topology_Object* load_child (const ACE_CString & type,
+    Topology_Object* load_child (ACE_CString const & type,
       CORBA::Long id,
       const NVPList& attrs) override;
 

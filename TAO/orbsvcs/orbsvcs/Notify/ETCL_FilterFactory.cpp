@@ -51,7 +51,7 @@ TAO_Notify_ETCL_FilterFactory::create (PortableServer::POA_ptr filter_poa)
         {
           object = filter_poa->servant_to_reference (this);
         }
-      catch (const CORBA::Exception& )
+      catch (CORBA::Exception const& )
         {
          return CosNotifyFilter::FilterFactory::_nil();
         }
@@ -74,7 +74,7 @@ TAO_Notify_ETCL_FilterFactory::destroy ()
         this->filter_poa_->servant_to_id (this);
       this->filter_poa_->deactivate_object (id.in());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 
@@ -130,7 +130,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
         {
           oid = this->filter_poa_->servant_to_id (filter);
         }
-      catch (const CORBA::Exception& )
+      catch (CORBA::Exception const& )
         {
           throw CORBA::INTERNAL ();
         }
@@ -143,7 +143,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
 
 CosNotifyFilter::MappingFilter_ptr
 TAO_Notify_ETCL_FilterFactory::create_mapping_filter (char const */*constraint_grammar*/,
-                                                      const CORBA::Any & /*default_value*/)
+                                                      CORBA::Any const & /*default_value*/)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

@@ -94,7 +94,7 @@ int TAO_Notify_Method_Request_Dispatch::execute_i ()
           consumer->deliver (this);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (TAO_debug_level > 0)
         {

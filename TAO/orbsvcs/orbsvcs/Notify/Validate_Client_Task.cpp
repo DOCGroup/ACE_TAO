@@ -8,8 +8,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_validate_client_Task::
-     TAO_Notify_validate_client_Task (const ACE_Time_Value &delay,
-                                const ACE_Time_Value &interval,
+     TAO_Notify_validate_client_Task (ACE_Time_Value const &delay,
+                                ACE_Time_Value const &interval,
                                 TAO_Notify_EventChannelFactory *ecf)
   : delay_ (delay),
     interval_ (interval),

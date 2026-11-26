@@ -82,15 +82,15 @@ protected:
                        int op_type);
 
   /// These use dynamic anys to look inside the ETCL component.
-  CORBA::Boolean sequence_does_contain (const CORBA::Any *any,
+  CORBA::Boolean sequence_does_contain (CORBA::Any const *any,
                                         TAO_ETCL_Literal_Constraint &item);
-  CORBA::Boolean array_does_contain (const CORBA::Any *any,
+  CORBA::Boolean array_does_contain (CORBA::Any const *any,
                                      TAO_ETCL_Literal_Constraint &item);
-  CORBA::Boolean struct_does_contain (const CORBA::Any *any,
+  CORBA::Boolean struct_does_contain (CORBA::Any const *any,
                                       TAO_ETCL_Literal_Constraint &item);
-  CORBA::Boolean union_does_contain (const CORBA::Any *any,
+  CORBA::Boolean union_does_contain (CORBA::Any const *any,
                                      TAO_ETCL_Literal_Constraint &item);
-  CORBA::Boolean any_does_contain (const CORBA::Any *any,
+  CORBA::Boolean any_does_contain (CORBA::Any const *any,
                                    TAO_ETCL_Literal_Constraint &item);
 
   /// Utility function to compare a TAO_ETCL_Literal_Constraint type

@@ -79,7 +79,7 @@ namespace TAO_Notify
   {
   }
 
-  NVP::NVP(char const *n, const ACE_CString & v)
+  NVP::NVP(char const *n, ACE_CString const & v)
     : name(n), value(v)
   {
   }

@@ -37,8 +37,8 @@ public:
 
   /// Schedule a timer
   virtual long schedule_timer (ACE_Event_Handler *handler,
-                               const ACE_Time_Value &delay_time,
-                               const ACE_Time_Value &interval) = 0;
+                               ACE_Time_Value const &delay_time,
+                               ACE_Time_Value const &interval) = 0;
 
   /// Cancel Timer
   virtual int cancel_timer (long timer_id) = 0;
