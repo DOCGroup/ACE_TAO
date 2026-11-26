@@ -70,7 +70,7 @@ extern "C"
   int t_close(int fildes);
   int t_connect(int fildes, struct t_call *sndcall,
                 struct t_call *rcvcall);
-  void t_error(const char *errmsg);
+  void t_error(char const *errmsg);
   int t_free(char *ptr, int struct_type);
   int t_getinfo(int fildes, struct t_info *info);
   int t_getname (int fildes, struct netbuf *namep, int type);
@@ -86,7 +86,7 @@ extern "C"
   int t_rcvrel(int fildes);
   int t_rcvudata(int fildes, struct t_unitdata *unitdata, int *flags);
   int t_rcvuderr(int fildes, struct t_uderr *uderr);
-  int t_snd(int fildes, const char *buf, unsigned int nbytes, int flags);
+  int t_snd(int fildes, char const *buf, unsigned int nbytes, int flags);
   int t_snddis(int fildes, struct t_call *call);
   int t_sndrel(int fildes);
   int t_sndudata(int fildes, struct t_unitdata *unitdata);
@@ -139,7 +139,7 @@ namespace ACE_OS
                  struct t_call *rcvcall);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  void t_error (const char *errmsg);
+  void t_error (char const *errmsg);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_free (char *ptr,
@@ -198,7 +198,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int t_snd (ACE_HANDLE fildes,
-             const char *buf,
+             char const *buf,
              unsigned int nbytes,
              int flags);
 

@@ -34,13 +34,13 @@ ACE_TLI_Connector::ACE_TLI_Connector ()
 
 int
 ACE_TLI_Connector::connect (ACE_TLI_Stream &new_stream,
-                            const ACE_Addr &remote_sap,
+                            ACE_Addr const &remote_sap,
                             ACE_Time_Value *timeout,
-                            const ACE_Addr &local_sap,
+                            ACE_Addr const &local_sap,
                             int reuse_addr,
                             int flags,
                             int /* perms */,
-                            const char device[],
+                            char const device[],
                             struct t_info *info,
                             int rwf,
                             struct netbuf *udata,

@@ -46,13 +46,13 @@ public:
    * @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   ACE_TLI_Connector (ACE_TLI_Stream &new_stream,
-                     const ACE_Addr &remote_sap,
+                     ACE_Addr const &remote_sap,
                      ACE_Time_Value *timeout = nullptr,
-                     const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                     ACE_Addr const &local_sap = ACE_Addr::sap_any,
                      int reuse_addr = 0,
                      int flags = O_RDWR,
                      int perms = 0,
-                     const char device[] = ACE_TLI_TCP_DEVICE,
+                     char const device[] = ACE_TLI_TCP_DEVICE,
                      struct t_info *info = nullptr,
                      int rw_flag = 1,
                      struct netbuf *udata = nullptr,
@@ -74,13 +74,13 @@ public:
    * @c local_addr is reused, even if it hasn't been cleanedup yet.
    */
   int connect (ACE_TLI_Stream &new_stream,
-               const ACE_Addr &remote_sap,
+               ACE_Addr const &remote_sap,
                ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR,
                int perms = 0,
-               const char device[] = ACE_TLI_TCP_DEVICE,
+               char const device[] = ACE_TLI_TCP_DEVICE,
                struct t_info *info = nullptr,
                int rw_flag = 1,
                struct netbuf *udata = nullptr,

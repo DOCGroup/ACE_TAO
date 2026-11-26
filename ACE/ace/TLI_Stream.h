@@ -56,54 +56,54 @@ public:
   /// @name timod bindings
   /// @{
   /// Send an n byte buffer to the connected socket (uses t_snd(3)).
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout = nullptr) const;
+                ACE_Time_Value const *timeout = nullptr) const;
 
   /// Recv an n byte buffer from the connected socket (uses t_rcv(3)).
   ssize_t recv (void *buf,
                 size_t n,
                 int *flags,
-                const ACE_Time_Value *timeout = nullptr) const;
+                ACE_Time_Value const *timeout = nullptr) const;
 
   /// Send exactly n bytes to the connected socket (uses t_snd(3)).
-  ssize_t send_n (const void *buf,
+  ssize_t send_n (void const *buf,
                   size_t n,
                   int flags,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
   /// Recv exactly n bytes from the connected socket (uses t_rcv(3)).
   ssize_t recv_n (void *buf,
                   size_t n,
                   int *flags,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
   /// @}
 
   /// @name tirdwr bindings
   /// @{
   /// Send an n byte buffer to the connected socket (uses write(2)).
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
-                const ACE_Time_Value *timeout = nullptr) const;
+                ACE_Time_Value const *timeout = nullptr) const;
 
   /// Recv an n byte buffer from the connected socket (uses read(2)).
   ssize_t recv (void *buf,
                 size_t n,
-                const ACE_Time_Value *timeout = nullptr) const;
+                ACE_Time_Value const *timeout = nullptr) const;
 
   /// Send n bytes, keep trying until n are sent (uses write(2)).
-  ssize_t send_n (const void *buf,
+  ssize_t send_n (void const *buf,
                   size_t n,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
   /// Recv n bytes, keep trying until n are received (uses read (2)).
   ssize_t recv_n (void *buf,
                   size_t n,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
   /// @}
 

@@ -119,9 +119,9 @@ ACE_TLI_Stream::close ()
 }
 
 ssize_t
-ACE_TLI_Stream::send (const void *buf,
+ACE_TLI_Stream::send (void const *buf,
                       size_t n,
-                      const ACE_Time_Value *timeout) const
+                      ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send");
   return ACE::send (this->get_handle (),
@@ -131,10 +131,10 @@ ACE_TLI_Stream::send (const void *buf,
 }
 
 ssize_t
-ACE_TLI_Stream::send (const void *buf,
+ACE_TLI_Stream::send (void const *buf,
                       size_t n,
                       int flags,
-                      const ACE_Time_Value *timeout) const
+                      ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send");
   return ACE::t_snd (this->get_handle (),
@@ -147,7 +147,7 @@ ACE_TLI_Stream::send (const void *buf,
 ssize_t
 ACE_TLI_Stream::recv (void *buf,
                       size_t n,
-                      const ACE_Time_Value *timeout) const
+                      ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv");
   return ACE::recv (this->get_handle (),
@@ -160,7 +160,7 @@ ssize_t
 ACE_TLI_Stream::recv (void *buf,
                       size_t n,
                       int *flags,
-                      const ACE_Time_Value *timeout) const
+                      ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv");
   int f = 0;
@@ -178,9 +178,9 @@ ACE_TLI_Stream::recv (void *buf,
 }
 
 ssize_t
-ACE_TLI_Stream::send_n (const void *buf,
+ACE_TLI_Stream::send_n (void const *buf,
                         size_t n,
-                        const ACE_Time_Value *timeout,
+                        ACE_Time_Value const *timeout,
                         size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send_n");
@@ -192,10 +192,10 @@ ACE_TLI_Stream::send_n (const void *buf,
 }
 
 ssize_t
-ACE_TLI_Stream::send_n (const void *buf,
+ACE_TLI_Stream::send_n (void const *buf,
                         size_t n,
                         int flags,
-                        const ACE_Time_Value *timeout,
+                        ACE_Time_Value const *timeout,
                         size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_TLI_Stream::send_n");
@@ -211,7 +211,7 @@ ACE_TLI_Stream::send_n (const void *buf,
 ssize_t
 ACE_TLI_Stream::recv_n (void *buf,
                         size_t n,
-                        const ACE_Time_Value *timeout,
+                        ACE_Time_Value const *timeout,
                         size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv_n");
@@ -226,7 +226,7 @@ ssize_t
 ACE_TLI_Stream::recv_n (void *buf,
                         size_t n,
                         int *flags,
-                        const ACE_Time_Value *timeout,
+                        ACE_Time_Value const *timeout,
                         size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_TLI_Stream::recv_n");

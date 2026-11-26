@@ -83,7 +83,7 @@ t_connect(ACE_HANDLE fildes,
 }
 
 ACE_INLINE void
-t_error (const char *errmsg)
+t_error (char const *errmsg)
 {
 #if defined (ACE_HAS_TLI)
   ::t_error (errmsg);
@@ -314,7 +314,7 @@ t_rcvuderr (ACE_HANDLE handle, struct t_uderr *uderr)
 
 ACE_INLINE int
 t_snd (ACE_HANDLE handle,
-       const char *buf,
+       char const *buf,
        unsigned int nbytes,
        int flags)
 {
