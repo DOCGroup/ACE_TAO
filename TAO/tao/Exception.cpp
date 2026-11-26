@@ -34,7 +34,7 @@ CORBA::Exception::Exception (char const *repository_id,
 {
 }
 
-CORBA::Exception::Exception (const CORBA::Exception &src)
+CORBA::Exception::Exception (CORBA::Exception const &src)
   : id_ (CORBA::string_dup (src.id_)),
     name_ (CORBA::string_dup (src.name_))
 {
@@ -45,7 +45,7 @@ CORBA::Exception::Exception (const CORBA::Exception &src)
 // can do this because it's got the local name and the id.
 
 CORBA::Exception &
-CORBA::Exception::operator= (const CORBA::Exception &src)
+CORBA::Exception::operator= (CORBA::Exception const &src)
 {
   if (this != std::addressof (src))
     {
@@ -103,7 +103,7 @@ CORBA::Exception::_tao_any_destructor (void *x)
 namespace CORBA
 {
   ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
-                                const CORBA::Exception &e)
+                                CORBA::Exception const &e)
   {
     os << e._name () << " (" << e._rep_id () << ')';
 
@@ -111,7 +111,7 @@ namespace CORBA
   }
 
   ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
-                                const CORBA::Exception *e)
+                                CORBA::Exception const *e)
   {
     os << e->_name () << " (" << e->_rep_id () << ')';
 

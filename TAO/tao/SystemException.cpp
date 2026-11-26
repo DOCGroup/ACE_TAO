@@ -32,27 +32,27 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
  * The @c errno encoding is located in the bottom 7 bits.
  */
 /// @{
-const CORBA::ULong TAO_UNSPECIFIED_MINOR_CODE        = 0x0U;
-const CORBA::ULong TAO_ETIMEDOUT_MINOR_CODE          = 0x1U;
-const CORBA::ULong TAO_ENFILE_MINOR_CODE             = 0x2U;
-const CORBA::ULong TAO_EMFILE_MINOR_CODE             = 0x3U;
-const CORBA::ULong TAO_EPIPE_MINOR_CODE              = 0x4U;
-const CORBA::ULong TAO_ECONNREFUSED_MINOR_CODE       = 0x5U;
-const CORBA::ULong TAO_ENOENT_MINOR_CODE             = 0x6U;
-const CORBA::ULong TAO_EBADF_MINOR_CODE              = 0x7U;
-const CORBA::ULong TAO_ENOSYS_MINOR_CODE             = 0x8U;
-const CORBA::ULong TAO_EPERM_MINOR_CODE              = 0x9U;
-const CORBA::ULong TAO_EAFNOSUPPORT_MINOR_CODE       = 0xAU;
-const CORBA::ULong TAO_EAGAIN_MINOR_CODE             = 0xBU;
-const CORBA::ULong TAO_ENOMEM_MINOR_CODE             = 0xCU;
-const CORBA::ULong TAO_EACCES_MINOR_CODE             = 0xDU;
-const CORBA::ULong TAO_EFAULT_MINOR_CODE             = 0xEU;
-const CORBA::ULong TAO_EBUSY_MINOR_CODE              = 0xFU;
-const CORBA::ULong TAO_EEXIST_MINOR_CODE             = 0x10U;
-const CORBA::ULong TAO_EINVAL_MINOR_CODE             = 0x11U;
-const CORBA::ULong TAO_ECOMM_MINOR_CODE              = 0x12U;
-const CORBA::ULong TAO_ECONNRESET_MINOR_CODE         = 0x13U;
-const CORBA::ULong TAO_ENOTSUP_MINOR_CODE            = 0x14U;
+CORBA::ULong const TAO_UNSPECIFIED_MINOR_CODE        = 0x0U;
+CORBA::ULong const TAO_ETIMEDOUT_MINOR_CODE          = 0x1U;
+CORBA::ULong const TAO_ENFILE_MINOR_CODE             = 0x2U;
+CORBA::ULong const TAO_EMFILE_MINOR_CODE             = 0x3U;
+CORBA::ULong const TAO_EPIPE_MINOR_CODE              = 0x4U;
+CORBA::ULong const TAO_ECONNREFUSED_MINOR_CODE       = 0x5U;
+CORBA::ULong const TAO_ENOENT_MINOR_CODE             = 0x6U;
+CORBA::ULong const TAO_EBADF_MINOR_CODE              = 0x7U;
+CORBA::ULong const TAO_ENOSYS_MINOR_CODE             = 0x8U;
+CORBA::ULong const TAO_EPERM_MINOR_CODE              = 0x9U;
+CORBA::ULong const TAO_EAFNOSUPPORT_MINOR_CODE       = 0xAU;
+CORBA::ULong const TAO_EAGAIN_MINOR_CODE             = 0xBU;
+CORBA::ULong const TAO_ENOMEM_MINOR_CODE             = 0xCU;
+CORBA::ULong const TAO_EACCES_MINOR_CODE             = 0xDU;
+CORBA::ULong const TAO_EFAULT_MINOR_CODE             = 0xEU;
+CORBA::ULong const TAO_EBUSY_MINOR_CODE              = 0xFU;
+CORBA::ULong const TAO_EEXIST_MINOR_CODE             = 0x10U;
+CORBA::ULong const TAO_EINVAL_MINOR_CODE             = 0x11U;
+CORBA::ULong const TAO_ECOMM_MINOR_CODE              = 0x12U;
+CORBA::ULong const TAO_ECONNRESET_MINOR_CODE         = 0x13U;
+CORBA::ULong const TAO_ENOTSUP_MINOR_CODE            = 0x14U;
 // *Don't* use TAO_<errno>_MINOR_CODE greater than 0x7FU!
 /// @}
 
@@ -79,7 +79,7 @@ CORBA::SystemException::SystemException (CORBA::ULong code,
 {
 }
 
-CORBA::SystemException::SystemException (const CORBA::SystemException &src)
+CORBA::SystemException::SystemException (CORBA::SystemException const &src)
   : CORBA::Exception (src),
     minor_ (src.minor_),
     completed_ (src.completed_)
@@ -87,7 +87,7 @@ CORBA::SystemException::SystemException (const CORBA::SystemException &src)
 }
 
 CORBA::SystemException &
-CORBA::SystemException::operator= (const CORBA::SystemException &src)
+CORBA::SystemException::operator= (CORBA::SystemException const &src)
 {
   if (this != std::addressof (src))
     {
@@ -459,7 +459,7 @@ CORBA::SystemException::_info () const
 
 char const *
 CORBA::SystemException::_tao_get_omg_exception_description (
-  const CORBA::SystemException &exc,
+  CORBA::SystemException const &exc,
   CORBA::ULong minor_code)
 {
 #ifndef ACE_NDEBUG
@@ -693,7 +693,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   --minor_code;  // Adjust to match table offset.
 
   CORBA::UNKNOWN const * unknown_exception =
-    dynamic_cast <const CORBA::UNKNOWN *> (std::addressof (exc));
+    dynamic_cast <CORBA::UNKNOWN const *> (std::addressof (exc));
   if (unknown_exception != nullptr
       && minor_code < sizeof UNKNOWN_TABLE / sizeof (char *))
   {
@@ -701,7 +701,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::BAD_PARAM const * bad_param__exception =
-    dynamic_cast <const CORBA::BAD_PARAM *> (std::addressof (exc));
+    dynamic_cast <CORBA::BAD_PARAM const *> (std::addressof (exc));
   if (bad_param__exception != nullptr
       && minor_code < sizeof BAD_PARAM_TABLE / sizeof (char *))
   {
@@ -709,7 +709,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::IMP_LIMIT const * imp_limit_exception =
-    dynamic_cast <const CORBA::IMP_LIMIT *> (std::addressof (exc));
+    dynamic_cast <CORBA::IMP_LIMIT const *> (std::addressof (exc));
   if (imp_limit_exception != nullptr
       && minor_code < sizeof IMP_LIMIT_TABLE / sizeof (char *))
   {
@@ -717,7 +717,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::INITIALIZE const * initialize_exception =
-    dynamic_cast <const CORBA::INITIALIZE *> (std::addressof (exc));
+    dynamic_cast <CORBA::INITIALIZE const *> (std::addressof (exc));
   if (initialize_exception != nullptr
       && minor_code < sizeof INITIALIZE_TABLE / sizeof (char *))
   {
@@ -725,7 +725,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::INV_OBJREF const * inv_objref_exception =
-    dynamic_cast <const CORBA::INV_OBJREF *> (std::addressof (exc));
+    dynamic_cast <CORBA::INV_OBJREF const *> (std::addressof (exc));
   if (inv_objref_exception != nullptr
       && minor_code < sizeof INV_OBJREF_TABLE / sizeof (char *))
   {
@@ -733,7 +733,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::MARSHAL const * marshal_exception =
-    dynamic_cast <const CORBA::MARSHAL *> (std::addressof (exc));
+    dynamic_cast <CORBA::MARSHAL const *> (std::addressof (exc));
   if (marshal_exception != nullptr
       && minor_code < sizeof MARSHAL_TABLE / sizeof (char *))
   {
@@ -741,7 +741,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::BAD_TYPECODE const * bad_typecode_exception =
-    dynamic_cast <const CORBA::BAD_TYPECODE *> (std::addressof (exc));
+    dynamic_cast <CORBA::BAD_TYPECODE const *> (std::addressof (exc));
   if (bad_typecode_exception != nullptr
       && minor_code < sizeof BAD_TYPECODE_TABLE / sizeof (char *))
   {
@@ -749,7 +749,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::NO_IMPLEMENT const * no_implement_exception =
-    dynamic_cast <const CORBA::NO_IMPLEMENT *> (std::addressof (exc));
+    dynamic_cast <CORBA::NO_IMPLEMENT const *> (std::addressof (exc));
   if (no_implement_exception != nullptr
       && minor_code < sizeof NO_IMPLEMENT_TABLE / sizeof (char *))
   {
@@ -757,7 +757,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::NO_RESOURCES const * no_resource_exception =
-    dynamic_cast <const CORBA::NO_RESOURCES *> (std::addressof (exc));
+    dynamic_cast <CORBA::NO_RESOURCES const *> (std::addressof (exc));
   if (no_resource_exception != nullptr
       && minor_code < sizeof NO_RESOURCES_TABLE / sizeof (char *))
   {
@@ -765,7 +765,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::BAD_INV_ORDER const * bad_inv_order_exception =
-    dynamic_cast <const CORBA::BAD_INV_ORDER *> (std::addressof (exc));
+    dynamic_cast <CORBA::BAD_INV_ORDER const *> (std::addressof (exc));
   if (bad_inv_order_exception != nullptr
       && minor_code < sizeof BAD_INV_ORDER_TABLE / sizeof (char *))
   {
@@ -773,7 +773,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::TRANSIENT const * transient_exception =
-    dynamic_cast <const CORBA::TRANSIENT *> (std::addressof (exc));
+    dynamic_cast <CORBA::TRANSIENT const *> (std::addressof (exc));
   if (transient_exception != nullptr
       && minor_code < sizeof TRANSIENT_TABLE / sizeof (char *))
   {
@@ -781,7 +781,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::OBJ_ADAPTER const * obj_adapter_exception =
-    dynamic_cast <const CORBA::OBJ_ADAPTER *> (std::addressof (exc));
+    dynamic_cast <CORBA::OBJ_ADAPTER const *> (std::addressof (exc));
   if (obj_adapter_exception != nullptr
       && minor_code < sizeof OBJ_ADAPTER_TABLE / sizeof (char *))
   {
@@ -789,7 +789,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::DATA_CONVERSION const * data_conversion_exception =
-    dynamic_cast <const CORBA::DATA_CONVERSION *> (std::addressof (exc));
+    dynamic_cast <CORBA::DATA_CONVERSION const *> (std::addressof (exc));
   if (data_conversion_exception != nullptr
       && minor_code < sizeof DATA_CONVERSION_TABLE / sizeof (char *))
   {
@@ -797,7 +797,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::OBJECT_NOT_EXIST const * object_not_exist_exception =
-    dynamic_cast <const CORBA::OBJECT_NOT_EXIST *> (std::addressof (exc));
+    dynamic_cast <CORBA::OBJECT_NOT_EXIST const *> (std::addressof (exc));
   if (object_not_exist_exception != nullptr
       && minor_code < sizeof OBJECT_NOT_EXIST_TABLE / sizeof (char *))
   {
@@ -805,7 +805,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::INV_POLICY const * inv_policy_exception =
-    dynamic_cast <const CORBA::INV_POLICY *> (std::addressof (exc));
+    dynamic_cast <CORBA::INV_POLICY const *> (std::addressof (exc));
   if (inv_policy_exception != nullptr
       && minor_code < sizeof INV_POLICY_TABLE / sizeof (char *))
   {
@@ -813,7 +813,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::ACTIVITY_COMPLETED const * activity_completed_exception =
-    dynamic_cast <const CORBA::ACTIVITY_COMPLETED *> (std::addressof (exc));
+    dynamic_cast <CORBA::ACTIVITY_COMPLETED const *> (std::addressof (exc));
   if (activity_completed_exception != nullptr
       && minor_code < sizeof ACTIVITY_COMPLETED_TABLE / sizeof (char *))
   {
@@ -821,7 +821,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::ACTIVITY_REQUIRED const * activity_required_exception =
-    dynamic_cast <const CORBA::ACTIVITY_REQUIRED *> (std::addressof (exc));
+    dynamic_cast <CORBA::ACTIVITY_REQUIRED const *> (std::addressof (exc));
   if (activity_required_exception != nullptr
       && minor_code < sizeof ACTIVITY_REQUIRED_TABLE / sizeof (char *))
   {
@@ -829,7 +829,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::BAD_OPERATION const * bad_operation_exception =
-    dynamic_cast <const CORBA::BAD_OPERATION *> (std::addressof (exc));
+    dynamic_cast <CORBA::BAD_OPERATION const *> (std::addressof (exc));
   if (bad_operation_exception != nullptr
       && minor_code < sizeof BAD_OPERATION_TABLE / sizeof (char *))
   {
@@ -837,7 +837,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::BAD_CONTEXT const * bad_context_exception =
-    dynamic_cast <const CORBA::BAD_CONTEXT *> (std::addressof (exc));
+    dynamic_cast <CORBA::BAD_CONTEXT const *> (std::addressof (exc));
   if (bad_context_exception != nullptr
       && minor_code < sizeof BAD_CONTEXT_TABLE / sizeof (char *))
   {
@@ -845,7 +845,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::CODESET_INCOMPATIBLE const * codeset_incompatible_exception =
-    dynamic_cast <const CORBA::CODESET_INCOMPATIBLE *> (std::addressof (exc));
+    dynamic_cast <CORBA::CODESET_INCOMPATIBLE const *> (std::addressof (exc));
   if (codeset_incompatible_exception != nullptr
       && minor_code < sizeof CODESET_INCOMPATIBLE_TABLE / sizeof (char *))
   {
@@ -853,7 +853,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::INTF_REPOS const * intf_repos_exception =
-    dynamic_cast <const CORBA::INTF_REPOS *> (std::addressof (exc));
+    dynamic_cast <CORBA::INTF_REPOS const *> (std::addressof (exc));
   if (intf_repos_exception != nullptr
       && minor_code < sizeof INTF_REPOS_TABLE / sizeof (char *))
   {
@@ -861,7 +861,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
   }
 
   CORBA::TIMEOUT const * timeout_exception =
-    dynamic_cast <const CORBA::TIMEOUT *> (std::addressof (exc));
+    dynamic_cast <CORBA::TIMEOUT const *> (std::addressof (exc));
   if (timeout_exception != nullptr
       && minor_code < sizeof TIMEOUT_TABLE / sizeof (char *))
   {
@@ -938,7 +938,7 @@ static char const *repo_id_array[] = {
   };
 
 // Since we add an extra element subtract 1
-static const CORBA::ULong array_sz =
+static CORBA::ULong const array_sz =
   (sizeof (repo_id_array) / sizeof (char const *)) - 1;
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL

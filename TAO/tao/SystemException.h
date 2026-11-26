@@ -84,7 +84,7 @@ namespace CORBA
      *       exceptions are typically caught by reference, not by
      *       copy.
      */
-    SystemException (const SystemException & src);
+    SystemException (SystemException const & src);
 
     ~SystemException () override = default;
 
@@ -104,7 +104,7 @@ namespace CORBA
     static SystemException *_downcast (CORBA::Exception *exception);
 
     /// The const version of narrow operation to a SystemException
-    static const SystemException *_downcast(const CORBA::Exception *exception);
+    static SystemException const *_downcast(CORBA::Exception const *exception);
 
     void _raise () const override = 0;
 
@@ -133,7 +133,7 @@ namespace CORBA
   protected:
     SystemException ();
 
-    SystemException & operator= (const SystemException &src);
+    SystemException & operator= (SystemException const &src);
 
     /// Constructor using a repository id.
     SystemException (CORBA::ULong code, CORBA::CompletionStatus completed);
@@ -147,7 +147,7 @@ namespace CORBA
     /// Return the exception description associated with the given OMG
     /// minor code.
     static char const *_tao_get_omg_exception_description (
-      const CORBA::SystemException &exc, CORBA::ULong minor_code);
+      CORBA::SystemException const &exc, CORBA::ULong minor_code);
 
   private:
     /// Minor code.

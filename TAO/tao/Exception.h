@@ -100,7 +100,7 @@ namespace CORBA
      *       exceptions are typically caught by reference, not by
      *       copy.
      */
-    Exception (const Exception &src);
+    Exception (Exception const &src);
 
     virtual ~Exception () = default;
 
@@ -185,7 +185,7 @@ namespace CORBA
   protected:
     Exception () = default;
 
-    Exception & operator = (const Exception & src);
+    Exception & operator = (Exception const & src);
 
     /// Construct from a repository id.
     Exception (char const *repository_id, char const *local_name);
@@ -202,10 +202,10 @@ namespace CORBA
 
   /// Required by C++ mapping.
   TAO_Export ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
-                                           const CORBA::Exception &e);
+                                           CORBA::Exception const &e);
 
   TAO_Export ACE_OSTREAM_TYPE& operator<< (ACE_OSTREAM_TYPE &os,
-                                           const CORBA::Exception *e);
+                                           CORBA::Exception const *e);
 
 #endif /* (ACE_LACKS_IOSTREAM_TOTALLY) */
 } // End CORBA namespace
