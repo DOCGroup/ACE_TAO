@@ -33,14 +33,14 @@ public:
   /// for MyFoo object that is not currently active.
   PortableServer::Servant preinvoke (const PortableServer::ObjectId &oid,
                                      PortableServer::POA_ptr adapter,
-                                     const char *operation,
+                                     char const *operation,
                                      PortableServer::ServantLocator::Cookie &the_cookie) override;
 
   /// This method is invoked whenever a MyFooServant completes a
   /// request.
   void postinvoke (const PortableServer::ObjectId &oid,
                    PortableServer::POA_ptr adapter,
-                   const char *operation,
+                   char const *operation,
                    PortableServer::ServantLocator::Cookie the_cookie,
                    PortableServer::Servant the_servant) override;
 

@@ -15,7 +15,7 @@
 PortableServer::Servant
 Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
                             PortableServer::POA_ptr /* poa_ptr */,
-                            const char * /*operation*/,
+                            char const */*operation*/,
                             PortableServer::ServantLocator::Cookie & /* cookie */)
 {
   CORBA::String_var const s = PortableServer::ObjectId_to_string (oid);
@@ -45,7 +45,7 @@ Servant_Locator::preinvoke (const PortableServer::ObjectId &oid,
 void
 Servant_Locator::postinvoke (const PortableServer::ObjectId &,
                              PortableServer::POA_ptr,
-                             const char *,
+                             char const *,
                              PortableServer::ServantLocator::Cookie ,
                              PortableServer::Servant)
 {
