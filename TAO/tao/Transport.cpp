@@ -273,7 +273,7 @@ TAO_Transport::tear_listen_point_list (TAO_InputCDR &)
 int
 TAO_Transport::send_message_shared (TAO_Stub *stub,
                                     TAO_Message_Semantics message_semantics,
-                                    const ACE_Message_Block *message_block,
+                                    ACE_Message_Block const *message_block,
                                     ACE_Time_Value *max_wait_time)
 {
   int result {};
@@ -643,7 +643,7 @@ TAO_Transport::format_queue_message (TAO_OutputCDR &stream,
 }
 
 int
-TAO_Transport::send_message_block_chain (const ACE_Message_Block *mb,
+TAO_Transport::send_message_block_chain (ACE_Message_Block const *mb,
                                          size_t &bytes_transferred,
                                          ACE_Time_Value *max_wait_time)
 {
@@ -658,7 +658,7 @@ TAO_Transport::send_message_block_chain (const ACE_Message_Block *mb,
 }
 
 int
-TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
+TAO_Transport::send_message_block_chain_i (ACE_Message_Block const *mb,
                                            size_t &bytes_transferred,
                                            TAO::Transport::Drain_Constraints const & dc)
 {
@@ -692,7 +692,7 @@ TAO_Transport::send_message_block_chain_i (const ACE_Message_Block *mb,
 }
 
 int
-TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
+TAO_Transport::send_synchronous_message_i (ACE_Message_Block const *mb,
                                            ACE_Time_Value *max_wait_time)
 {
   // We are going to block, so there is no need to clone
@@ -787,7 +787,7 @@ TAO_Transport::send_synchronous_message_i (const ACE_Message_Block *mb,
 }
 
 int
-TAO_Transport::send_reply_message_i (const ACE_Message_Block *mb,
+TAO_Transport::send_reply_message_i (ACE_Message_Block const *mb,
                                      ACE_Time_Value *max_wait_time)
 {
   // Don't clone now.. We could be sent in one shot!
@@ -948,8 +948,8 @@ TAO_Transport::cancel_output_i ()
 }
 
 int
-TAO_Transport::handle_timeout (const ACE_Time_Value & /* current_time */,
-                               const void *act)
+TAO_Transport::handle_timeout (ACE_Time_Value const & /* current_time */,
+                               void const *act)
 {
   if (TAO_debug_level > 6)
     {
@@ -1463,7 +1463,7 @@ TAO_Transport::send_connection_closed_notifications_i ()
 int
 TAO_Transport::send_message_shared_i (TAO_Stub *stub,
                                       TAO_Message_Semantics message_semantics,
-                                      const ACE_Message_Block *message_block,
+                                      ACE_Message_Block const *message_block,
                                       ACE_Time_Value *max_wait_time)
 {
   int ret {};
@@ -1502,7 +1502,7 @@ TAO_Transport::send_message_shared_i (TAO_Stub *stub,
 
 int
 TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
-                                            const ACE_Message_Block *message_block,
+                                            ACE_Message_Block const *message_block,
                                             ACE_Time_Value *max_wait_time)
 {
   // Let's figure out if the message should be queued without trying
@@ -1752,7 +1752,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
 }
 
 int
-TAO_Transport::queue_message_i (const ACE_Message_Block *message_block,
+TAO_Transport::queue_message_i (ACE_Message_Block const *message_block,
                                 ACE_Time_Value *max_wait_time, bool back)
 {
   TAO_Queued_Message *queued_message {};

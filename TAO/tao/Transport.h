@@ -528,7 +528,7 @@ public:
    */
   virtual ssize_t recv (char *buffer,
                         size_t len,
-                        const ACE_Time_Value *timeout = nullptr) = 0;
+                        ACE_Time_Value const *timeout = nullptr) = 0;
 
   /**
    * @name Control connection lifecycle
@@ -750,7 +750,7 @@ public:
    */
   virtual int send_message_shared (TAO_Stub *stub,
                                    TAO_Message_Semantics message_semantics,
-                                   const ACE_Message_Block *message_block,
+                                   ACE_Message_Block const *message_block,
                                    ACE_Time_Value *max_wait_time);
 
 protected:
@@ -763,7 +763,7 @@ protected:
   /// held.
   int send_message_shared_i (TAO_Stub *stub,
                              TAO_Message_Semantics message_semantics,
-                             const ACE_Message_Block *message_block,
+                             ACE_Message_Block const *message_block,
                              ACE_Time_Value *max_wait_time);
 
   /// Queue a message for @a message_block
@@ -772,7 +772,7 @@ protected:
   ///            block, used in the implementation of timeouts.
   /// @param back If true, the message will be pushed to the back of the queue.
   ///        If false, the message will be pushed to the front of the queue.
-  int queue_message_i (const ACE_Message_Block *message_block,
+  int queue_message_i (ACE_Message_Block const *message_block,
                        ACE_Time_Value *max_wait_time, bool back=true);
 
   /**
@@ -808,12 +808,12 @@ public:
    * the connection.
    *
    */
-  int send_message_block_chain (const ACE_Message_Block *message_block,
+  int send_message_block_chain (ACE_Message_Block const *message_block,
                                 size_t &bytes_transferred,
                                 ACE_Time_Value *max_wait_time = nullptr);
 
   /// Send a message block chain, assuming the lock is held
-  int send_message_block_chain_i (const ACE_Message_Block *message_block,
+  int send_message_block_chain_i (ACE_Message_Block const *message_block,
                                   size_t &bytes_transferred,
                                   TAO::Transport::Drain_Constraints const & dc);
 
@@ -843,7 +843,7 @@ public:
    *       messages (oneways) that have been sitting for too long on
    *       the queue.
    */
-  int handle_timeout (const ACE_Time_Value &current_time, const void* act);
+  int handle_timeout (ACE_Time_Value const &current_time, void const* act);
 
   /// Accessor to recv_buffer_size_
   size_t recv_buffer_size () const;
@@ -948,18 +948,18 @@ private:
 
   /// Send a synchronous message, i.e. block until the message is on
   /// the wire
-  int send_synchronous_message_i (const ACE_Message_Block *message_block,
+  int send_synchronous_message_i (ACE_Message_Block const *message_block,
                                   ACE_Time_Value *max_wait_time);
 
   /// Send a reply message, i.e. do not block until the message is on
   /// the wire, but just return after adding them to the queue.
-  int send_reply_message_i (const ACE_Message_Block *message_block,
+  int send_reply_message_i (ACE_Message_Block const *message_block,
                             ACE_Time_Value *max_wait_time);
 
   /// Send an asynchronous message, i.e. do not block until the message is on
   /// the wire
   int send_asynchronous_message_i (TAO_Stub *stub,
-                                   const ACE_Message_Block *message_block,
+                                   ACE_Message_Block const *message_block,
                                    ACE_Time_Value *max_wait_time);
 
   /// A helper method used by send_synchronous_message_i() and
@@ -1300,8 +1300,8 @@ namespace TAO
       CORBA::LongLong messages_received () const;
       CORBA::LongLong bytes_received () const;
 
-      void opened_since (const ACE_Time_Value& tv);
-      const ACE_Time_Value& opened_since () const;
+      void opened_since (ACE_Time_Value const& tv);
+      ACE_Time_Value const& opened_since () const;
 
     private:
       /// Mutex guarding the internal state of the statistics

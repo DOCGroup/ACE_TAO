@@ -173,7 +173,7 @@ public:
     return this->acceptor_->handle_accept_error (this);
   }
 
-  int handle_timeout (const ACE_Time_Value&, const void*) override
+  int handle_timeout (ACE_Time_Value const&, void const*) override
   {
     return this->acceptor_->handle_expiration (this);
   }

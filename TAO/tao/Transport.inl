@@ -267,14 +267,14 @@ TAO::Transport::Stats::bytes_received () const
 }
 
 ACE_INLINE void
-TAO::Transport::Stats::opened_since (const ACE_Time_Value& tv)
+TAO::Transport::Stats::opened_since (ACE_Time_Value const& tv)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_);
 
   this->opened_since_ = tv;
 }
 
-ACE_INLINE const ACE_Time_Value&
+ACE_INLINE ACE_Time_Value const&
 TAO::Transport::Stats::opened_since () const
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX, ace_mon, this->stat_mutex_, ACE_Time_Value::zero);
