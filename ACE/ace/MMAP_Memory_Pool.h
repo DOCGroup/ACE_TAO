@@ -57,7 +57,7 @@ public:
     NEVER_FIXED = 2
   };
 
-  ACE_MMAP_Memory_Pool_Options (const void *base_addr = ACE_DEFAULT_BASE_ADDR,
+  ACE_MMAP_Memory_Pool_Options (void const *base_addr = ACE_DEFAULT_BASE_ADDR,
                                 int use_fixed_addr = ALWAYS_FIXED,
                                 bool write_each_page = true,
                                 size_t minimum_bytes = 0,
@@ -69,7 +69,7 @@ public:
                                 bool install_signal_handler = true);
 
   /// Base address of the memory-mapped backing store.
-  const void *base_addr_;
+  void const *base_addr_;
 
   /**
    * Determines whether we set @c base_addr_ or if mmap(2) selects it
@@ -134,7 +134,7 @@ public:
 
   /// Initialize the pool.
   ACE_MMAP_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
-                        const OPTIONS *options = nullptr);
+                        OPTIONS const *options = nullptr);
 
   ~ACE_MMAP_Memory_Pool () override;
 
@@ -313,7 +313,7 @@ class ACE_Export ACE_Lite_MMAP_Memory_Pool : public ACE_MMAP_Memory_Pool
 public:
   /// Initialize the pool.
   ACE_Lite_MMAP_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
-                             const OPTIONS *options = nullptr);
+                             OPTIONS const *options = nullptr);
 
   ~ACE_Lite_MMAP_Memory_Pool () override;
 

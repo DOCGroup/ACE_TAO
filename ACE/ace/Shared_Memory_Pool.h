@@ -81,7 +81,7 @@ public:
 
   /// Initialize the pool.
   ACE_Shared_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
-                          const OPTIONS *options = nullptr);
+                          OPTIONS const *options = nullptr);
 
   ~ACE_Shared_Memory_Pool () override = default;
   ACE_Shared_Memory_Pool (ACE_Shared_Memory_Pool const &) = delete;
@@ -181,7 +181,7 @@ protected:
   std::unique_ptr<void *[]> const shm_addr_table_;
 
   /// Find the segment that contains the @a searchPtr
-  virtual int find_seg (const void *const searchPtr,
+  virtual int find_seg (void const *const searchPtr,
                         ACE_OFF_T &offset,
                         size_t &counter);
 

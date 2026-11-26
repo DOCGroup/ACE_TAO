@@ -96,7 +96,7 @@ ACE_Sbrk_Memory_Pool::dump () const
 }
 
 ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool (ACE_TCHAR const *,
-                                            const OPTIONS *)
+                                            OPTIONS const *)
 {
   ACE_TRACE ("ACE_Sbrk_Memory_Pool::ACE_Sbrk_Memory_Pool");
 }

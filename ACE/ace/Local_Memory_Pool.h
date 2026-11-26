@@ -46,7 +46,7 @@ public:
 
   /// Initialize the pool.
   ACE_Local_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
-                         const OPTIONS *options = nullptr);
+                         OPTIONS const *options = nullptr);
 
   virtual ~ACE_Local_Memory_Pool ();
 

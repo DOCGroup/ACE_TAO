@@ -62,7 +62,7 @@ ACE_Shared_Memory_Pool::in_use (ACE_OFF_T &offset,
 }
 
 int
-ACE_Shared_Memory_Pool::find_seg (const void* const searchPtr,
+ACE_Shared_Memory_Pool::find_seg (void const * const searchPtr,
                                   ACE_OFF_T &offset,
                                   size_t &counter)
 {
@@ -246,7 +246,7 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
 
 ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
   ACE_TCHAR const *backing_store_name,
-  const OPTIONS *options)
+  OPTIONS const *options)
   : file_perms_ (options ? options->file_perms_ : ACE_DEFAULT_FILE_PERMS),
     max_segments_ (options ? options->max_segments_ : ACE_DEFAULT_MAX_SEGMENTS),
     minimum_bytes_ (options ? options->minimum_bytes_ : 0),
