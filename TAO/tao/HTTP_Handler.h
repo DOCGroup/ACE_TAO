@@ -79,9 +79,11 @@ public:
                    char const *request_suffix = "HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n");
 
 private:
-  //NOTE: these functions return -1 on error
+  /// @name Operations returning -1 on error
+  /// @{
   int send_request () override;
   int receive_reply () override;
+  /// @}
   char const *request_prefix_;
   char const *request_suffix_;
 };
