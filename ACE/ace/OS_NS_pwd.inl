@@ -23,7 +23,7 @@ ACE_OS::getpwent ()
 }
 
 ACE_INLINE struct passwd *
-ACE_OS::getpwnam (const char *name)
+ACE_OS::getpwnam (char const *name)
 {
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
   return ::getpwnam (name);
@@ -34,7 +34,7 @@ ACE_OS::getpwnam (const char *name)
 }
 
 ACE_INLINE int
-ACE_OS::getpwnam_r (const char *name,
+ACE_OS::getpwnam_r (char const *name,
                     struct passwd *pwd,
                     char *buffer,
                     size_t bufsize,

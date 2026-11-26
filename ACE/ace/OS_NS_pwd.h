@@ -41,10 +41,10 @@ namespace ACE_OS
   struct passwd *getpwent ();
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct passwd *getpwnam (const char *user);
+  struct passwd *getpwnam (char const *user);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int getpwnam_r (const char *name,
+  int getpwnam_r (char const *name,
                   struct passwd *pwd,
                   char *buffer,
                   size_t bufsize,

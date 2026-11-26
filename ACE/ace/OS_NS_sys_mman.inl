@@ -38,7 +38,7 @@ ACE_OS::mmap (void *addr,
               ACE_OFF_T off,
               ACE_HANDLE *file_mapping,
               LPSECURITY_ATTRIBUTES sa,
-              const ACE_TCHAR *file_mapping_name)
+              ACE_TCHAR const *file_mapping_name)
 {
   ACE_OS_TRACE ("ACE_OS::mmap");
 #if !defined (ACE_WIN32)
@@ -226,7 +226,7 @@ ACE_OS::munmap (void *addr, size_t len)
 }
 
 ACE_INLINE ACE_HANDLE
-ACE_OS::shm_open (const ACE_TCHAR *filename,
+ACE_OS::shm_open (ACE_TCHAR const *filename,
                   int mode,
                   mode_t perms,
                   LPSECURITY_ATTRIBUTES sa)
@@ -258,7 +258,7 @@ ACE_OS::shm_open (const ACE_TCHAR *filename,
 }
 
 ACE_INLINE int
-ACE_OS::shm_unlink (const ACE_TCHAR *path)
+ACE_OS::shm_unlink (ACE_TCHAR const *path)
 {
   ACE_OS_TRACE ("ACE_OS::shm_unlink");
 #if defined (ACE_HAS_SHM_OPEN)

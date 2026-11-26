@@ -48,7 +48,7 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int msgsnd (int int_id,
-              const void *buf,
+              void const *buf,
               size_t len,
               int flags);
   /// @}

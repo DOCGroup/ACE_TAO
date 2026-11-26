@@ -47,7 +47,7 @@ namespace ACE_OS
               ACE_OFF_T off = 0,
               ACE_HANDLE *file_mapping = nullptr,
               LPSECURITY_ATTRIBUTES sa = 0,
-              const ACE_TCHAR *file_mapping_name = nullptr);
+              ACE_TCHAR const *file_mapping_name = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int mprotect (void *addr,
@@ -65,13 +65,13 @@ namespace ACE_OS
   /// @}
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  ACE_HANDLE shm_open (const ACE_TCHAR *filename,
+  ACE_HANDLE shm_open (ACE_TCHAR const *filename,
                        int mode,
                        mode_t perms = 0,
                        LPSECURITY_ATTRIBUTES sa = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int shm_unlink (const ACE_TCHAR *path);
+  int shm_unlink (ACE_TCHAR const *path);
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL
