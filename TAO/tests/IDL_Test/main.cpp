@@ -56,6 +56,9 @@ static_assert (std::is_move_constructible_v<CORBA::Environment>
                "Copyable TAO classes accept rvalues through their copy operations");
 static_assert (!std::is_move_constructible_v<TAO_Queued_Data>,
                "Queued nodes cannot be move constructed");
+static_assert (std::is_constructible_v<TAO_ETCL_Literal_Constraint,
+                                       CORBA::Any const *>,
+               "ETCL literals accept a const Any");
 static_assert (!std::is_abstract_v<OBV_Supports_Abstract_Operation>,
                "A directly supported abstract-interface operation uses its generated default");
 static_assert (!std::is_abstract_v<OBV_Copy_Derived>,
