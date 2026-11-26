@@ -1,6 +1,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE::HTBP::Addr &
+ACE_INLINE ACE::HTBP::Addr const &
 TAO::HTIOP::Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode

@@ -91,7 +91,7 @@ TAO::HTIOP::Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     return -1;
   }
 
-   const ACE::HTBP::Addr &remote_address =
+   ACE::HTBP::Addr const &remote_address =
      htiop_endpoint->object_addr ();
 
    // Verify that the remote ACE::HTBP::Addr was initialized properly.

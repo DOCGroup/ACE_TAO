@@ -53,9 +53,9 @@ namespace TAO
       Endpoint (char const *host,
                 CORBA::UShort port,
                 char const *htid,
-                const ACE::HTBP::Addr &addr);
+                ACE::HTBP::Addr const &addr);
 
-      Endpoint (const ACE::HTBP::Addr &addr,
+      Endpoint (ACE::HTBP::Addr const &addr,
                 int use_dotted_decimal_addresses);
 
       /// Constructor.  This constructor is used when decoding endpoints.
@@ -76,7 +76,7 @@ namespace TAO
 
       /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
       /// endpoints are equivalent if their port and host are the same.
-      CORBA::Boolean is_equivalent (const TAO_Endpoint *other_endpoint) override;
+      CORBA::Boolean is_equivalent (TAO_Endpoint const *other_endpoint) override;
 
       /// Return a hash value for this object.
       CORBA::ULong hash () override;
@@ -85,7 +85,7 @@ namespace TAO
       /// @name HTIOP_Endpoint-specific methods
       /// @{
       /// Return a reference to @c object_addr_.
-      const ACE::HTBP::Addr &object_addr () const;
+      ACE::HTBP::Addr const &object_addr () const;
 
       /// Return a pointer to the host string.  This object maintains
       /// ownership of this string.
@@ -112,7 +112,7 @@ namespace TAO
 
     private:
       /// Helper method for setting INET_Addr.
-      int set (const ACE::HTBP::Addr &addr,
+      int set (ACE::HTBP::Addr const &addr,
                int use_dotted_decimal_addresses);
 
       /// String representing the host name.

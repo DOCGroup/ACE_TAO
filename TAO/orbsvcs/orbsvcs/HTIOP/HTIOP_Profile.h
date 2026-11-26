@@ -52,9 +52,9 @@ namespace TAO
 
       /// Profile constructor, same as above except the object_key has
       /// already been marshaled.
-      Profile (const ACE::HTBP::Addr &addr,
-               const TAO::ObjectKey &object_key,
-               const TAO_GIOP_Message_Version &version,
+      Profile (ACE::HTBP::Addr const &addr,
+               TAO::ObjectKey const &object_key,
+               TAO_GIOP_Message_Version const &version,
                TAO_ORB_Core *orb_core);
 
       ///  Profile constructor, this is the most efficient since it
@@ -62,9 +62,9 @@ namespace TAO
       Profile (char const *host,
                CORBA::UShort port,
                char const *htid,
-               const TAO::ObjectKey &object_key,
-               const ACE::HTBP::Addr &addr,
-               const TAO_GIOP_Message_Version &version,
+               TAO::ObjectKey const &object_key,
+               ACE::HTBP::Addr const &addr,
+               TAO_GIOP_Message_Version const &version,
                TAO_ORB_Core *orb_core);
 
       /// Profile constructor, default.
@@ -115,7 +115,7 @@ namespace TAO
       int decode_endpoints () override;
       void parse_string_i (char const *string) override;
       void create_profile_body (TAO_OutputCDR &cdr) const override;
-      CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile) override;
+      CORBA::Boolean do_is_equivalent (TAO_Profile const *other_profile) override;
 
     protected:
       /**

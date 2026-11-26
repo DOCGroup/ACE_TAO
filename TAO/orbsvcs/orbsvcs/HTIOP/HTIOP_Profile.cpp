@@ -26,9 +26,9 @@ TAO::HTIOP::Profile::object_key_delimiter () const
   return TAO::HTIOP::Profile::object_key_delimiter_;
 }
 
-TAO::HTIOP::Profile::Profile (const ACE::HTBP::Addr &addr,
-                                      const TAO::ObjectKey &object_key,
-                                      const TAO_GIOP_Message_Version &version,
+TAO::HTIOP::Profile::Profile (ACE::HTBP::Addr const &addr,
+                                      TAO::ObjectKey const &object_key,
+                                      TAO_GIOP_Message_Version const &version,
                                       TAO_ORB_Core *orb_core)
   : TAO_Profile (OCI_TAG_HTIOP_PROFILE,
                  orb_core,
@@ -43,9 +43,9 @@ TAO::HTIOP::Profile::Profile (const ACE::HTBP::Addr &addr,
 TAO::HTIOP::Profile::Profile (char const *host,
                                       CORBA::UShort port,
                                       char const *htid,
-                                      const TAO::ObjectKey &object_key,
-                                      const ACE::HTBP::Addr &addr,
-                                      const TAO_GIOP_Message_Version &version,
+                                      TAO::ObjectKey const &object_key,
+                                      ACE::HTBP::Addr const &addr,
+                                      TAO_GIOP_Message_Version const &version,
                                       TAO_ORB_Core *orb_core)
   : TAO_Profile (OCI_TAG_HTIOP_PROFILE,
                  orb_core,
@@ -216,10 +216,10 @@ TAO::HTIOP::Profile::parse_string_i (char const *ior)
 }
 
 CORBA::Boolean
-TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO::HTIOP::Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
-  const TAO::HTIOP::Profile *op =
-    dynamic_cast<const TAO::HTIOP::Profile *> (other_profile);
+  TAO::HTIOP::Profile const *op =
+    dynamic_cast<TAO::HTIOP::Profile const *> (other_profile);
 
   if (op == nullptr)
   {
@@ -227,7 +227,7 @@ TAO::HTIOP::Profile::do_is_equivalent (const TAO_Profile *other_profile)
   }
 
   // Check endpoints equivalence.
-  const TAO::HTIOP::Endpoint *other_endp = std::addressof (op->endpoint_);
+  TAO::HTIOP::Endpoint const *other_endp = std::addressof (op->endpoint_);
   for (TAO::HTIOP::Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
@@ -260,7 +260,7 @@ TAO::HTIOP::Profile::hash (CORBA::ULong max)
   hashval += this->version_.minor;
   hashval += this->tag ();
 
-  const TAO::ObjectKey &ok =
+  TAO::ObjectKey const &ok =
     this->ref_object_key_->object_key ();
 
   if (ok.length () >= 4)
@@ -387,7 +387,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
   HTIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  const TAO::HTIOP::Endpoint *endpoint = std::addressof (this->endpoint_);
+  TAO::HTIOP::Endpoint const *endpoint = std::addressof (this->endpoint_);
   for (CORBA::ULong i {};
        i < this->count_;
        ++i)

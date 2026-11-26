@@ -15,7 +15,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO::HTIOP::Endpoint::Endpoint (const ACE::HTBP::Addr &addr,
+TAO::HTIOP::Endpoint::Endpoint (ACE::HTBP::Addr const &addr,
                                         int use_dotted_decimal_addresses)
   : TAO_Endpoint (OCI_TAG_HTIOP_PROFILE),
     host_ (),
@@ -31,7 +31,7 @@ TAO::HTIOP::Endpoint::Endpoint (const ACE::HTBP::Addr &addr,
 TAO::HTIOP::Endpoint::Endpoint (char const *host,
                                         CORBA::UShort port,
                                         char const *htid,
-                                        const ACE::HTBP::Addr &addr)
+                                        ACE::HTBP::Addr const &addr)
   : TAO_Endpoint (OCI_TAG_HTIOP_PROFILE),
     host_ (),
     port_ (port),
@@ -85,7 +85,7 @@ TAO::HTIOP::Endpoint::Endpoint (char const *host,
 TAO::HTIOP::Endpoint::~Endpoint () = default;
 
 int
-TAO::HTIOP::Endpoint::set (const ACE::HTBP::Addr &addr,
+TAO::HTIOP::Endpoint::set (ACE::HTBP::Addr const &addr,
                          int use_dotted_decimal_addresses)
 {
   char tmp_host[MAXHOSTNAMELEN + 1];
@@ -203,7 +203,7 @@ TAO::HTIOP::Endpoint::duplicate ()
 }
 
 CORBA::Boolean
-TAO::HTIOP::Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+TAO::HTIOP::Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
 {
   TAO_Endpoint *endpt =
     const_cast<TAO_Endpoint *> (other_endpoint);

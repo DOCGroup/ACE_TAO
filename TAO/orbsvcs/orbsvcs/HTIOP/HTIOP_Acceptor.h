@@ -70,10 +70,10 @@ namespace TAO
 
       /// @@ Helper method for the implementation repository, should go
       ///    away
-      const ACE::HTBP::Addr& address () const;
+      ACE::HTBP::Addr const& address () const;
 
       /// Returns the array of endpoints in this acceptor
-      const ACE::HTBP::Addr *endpoints ();
+      ACE::HTBP::Addr const *endpoints ();
 
       using BASE_ACCEPTOR = TAO_Strategy_Acceptor<Completion_Handler, ACE_SOCK_ACCEPTOR>;
       using CREATION_STRATEGY = Creation_Strategy<Completion_Handler>;
@@ -99,11 +99,11 @@ namespace TAO
 
       int close () override;
 
-      int create_profile (const TAO::ObjectKey &object_key,
+      int create_profile (TAO::ObjectKey const &object_key,
                                   TAO_MProfile &mprofile,
                                   CORBA::Short priority) override;
 
-      bool is_collocated (const TAO_Endpoint *endpoint) override;
+      bool is_collocated (TAO_Endpoint const *endpoint) override;
 
       CORBA::ULong endpoint_count () override;
 
@@ -135,7 +135,7 @@ namespace TAO
        * virtual to allow a derived class implementation to be invoked
        * instead.
        */
-      virtual int open_i (const ACE::HTBP::Addr &addr,
+      virtual int open_i (ACE::HTBP::Addr const &addr,
                           ACE_Reactor *reactor);
 
       /**
@@ -158,13 +158,13 @@ namespace TAO
 
       /// Helper method to add a new profile to the mprofile for
       /// each endpoint.
-      int create_new_profile (const TAO::ObjectKey &object_key,
+      int create_new_profile (TAO::ObjectKey const &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority);
 
       /// Helper method to create a profile that contains all of
       /// our endpoints.
-      int create_shared_profile (const TAO::ObjectKey &object_key,
+      int create_shared_profile (TAO::ObjectKey const &object_key,
                                  TAO_MProfile &mprofile,
                                  CORBA::Short priority);
 

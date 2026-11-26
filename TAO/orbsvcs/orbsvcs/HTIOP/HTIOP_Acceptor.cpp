@@ -55,7 +55,7 @@ TAO::HTIOP::Acceptor::~Acceptor ()
 // TODO =
 //    2) For V1.[1,2] there are tagged components
 int
-TAO::HTIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
+TAO::HTIOP::Acceptor::create_profile (TAO::ObjectKey const &object_key,
                                     TAO_MProfile &mprofile,
                                     CORBA::Short priority)
 {
@@ -84,7 +84,7 @@ TAO::HTIOP::Acceptor::create_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO::HTIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
+TAO::HTIOP::Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
                                         TAO_MProfile &mprofile,
                                         CORBA::Short priority)
 {
@@ -140,7 +140,7 @@ TAO::HTIOP::Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
+TAO::HTIOP::Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
                                            TAO_MProfile &mprofile,
                                            CORBA::Short priority)
 {
@@ -218,10 +218,10 @@ TAO::HTIOP::Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 }
 
 bool
-TAO::HTIOP::Acceptor::is_collocated (const TAO_Endpoint *endpoint)
+TAO::HTIOP::Acceptor::is_collocated (TAO_Endpoint const *endpoint)
 {
-  const TAO::HTIOP::Endpoint *endp =
-    dynamic_cast<const TAO::HTIOP::Endpoint *> (endpoint);
+  TAO::HTIOP::Endpoint const *endp =
+    dynamic_cast<TAO::HTIOP::Endpoint const *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)
@@ -525,7 +525,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO::HTIOP::Acceptor::open_i (const ACE::HTBP::Addr& addr,
+TAO::HTIOP::Acceptor::open_i (ACE::HTBP::Addr const& addr,
                             ACE_Reactor *reactor)
 {
   CREATION_STRATEGY *creation_strategy {};
