@@ -159,9 +159,7 @@ TAO_FixedSeq_Var_T<T>::operator[] (CORBA::ULong index) const
 
 template<typename T>
 ACE_INLINE
-TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T ()
-{
-}
+TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T () = default;
 
 template<typename T>
 ACE_INLINE
