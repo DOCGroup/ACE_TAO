@@ -23,9 +23,9 @@ void replace_key(char* ior, char* end_ior,
     }
 
   char* pos = ior;
-  const char *oldkey_begin =
-    reinterpret_cast<const char *> (oldkey.get_buffer ());
-  const char* oldkey_end = oldkey_begin + keylen;
+  char const *oldkey_begin =
+    reinterpret_cast<char const *> (oldkey.get_buffer ());
+  char const *oldkey_end = oldkey_begin + keylen;
 
   while ((pos = std::search(pos, end_ior,oldkey_begin, oldkey_end)) != end_ior) {
     std::memcpy (pos, newkey.get_buffer (), keylen);

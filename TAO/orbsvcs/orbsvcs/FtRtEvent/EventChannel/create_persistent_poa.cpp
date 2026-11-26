@@ -4,7 +4,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 PortableServer::POA_var create_persistent_poa(PortableServer::POA_var root_poa,
                                               PortableServer::POAManager_var mgr,
-                                              const char* name,
+                                              char const *name,
                                               CORBA::PolicyList& policy_list)
 {
   PortableServer::POA_var result;

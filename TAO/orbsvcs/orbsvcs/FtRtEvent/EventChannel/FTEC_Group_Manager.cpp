@@ -111,7 +111,7 @@ void TAO_FTEC_Group_Manager::add_member (
     CORBA::ULong object_group_ref_version)
 {
   TAO_FTRTEC::Log(1, ACE_TEXT("add_member location = <%s>\n"),
-    (const char*)info.the_location[0].id);
+    (char const *)info.the_location[0].id);
 
   std::unique_ptr<TAO_FTEC_Group_Manager_Impl> new_impl =
     std::make_unique<TAO_FTEC_Group_Manager_Impl> ();

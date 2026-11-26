@@ -44,7 +44,7 @@ public:
 
   bool copy_ft_group_component(CORBA::Object_ptr obj);
 
-  void set_ft_domain_id(const char*);
+  void set_ft_domain_id(char const *);
   void set_group_id(CORBA::ULongLong);
   void set_ref_version(CORBA::ULong);
   CORBA::ULong increment_ref_version();

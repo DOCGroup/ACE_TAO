@@ -54,8 +54,8 @@ public:
   const PortableServer::ObjectId& object_id() const;
   const CosNaming::Name& name() const;
 
-  void object_id(const char* oid);
-  void name(const char* nam);
+  void object_id(char const *oid);
+  void name(char const *nam);
   GroupInfoPublisherBase();
 
   GroupInfoPublisherBase(GroupInfoPublisherBase const&) = delete;

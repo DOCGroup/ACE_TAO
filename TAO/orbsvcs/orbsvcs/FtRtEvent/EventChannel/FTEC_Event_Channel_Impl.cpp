@@ -394,7 +394,7 @@ void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat)
 {
   FtRtecEventChannelAdmin::EventChannelState state;
 
-  Safe_InputCDR cdr (reinterpret_cast<const char *> (stat.get_buffer ()),
+  Safe_InputCDR cdr (reinterpret_cast<char const *> (stat.get_buffer ()),
                      stat.length ());
   cdr >> state;
 
@@ -408,7 +408,7 @@ void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s)
   FTRTEC::Replication_Service::instance()->check_validity();
 
   if (!Request_Context_Repository().is_executed_request()) {
-    Safe_InputCDR cdr (reinterpret_cast<const char *> (s.get_buffer ()),
+    Safe_InputCDR cdr (reinterpret_cast<char const *> (s.get_buffer ()),
                        s.length ());
 
     FtRtecEventChannelAdmin::Operation_var op(new FtRtecEventChannelAdmin::Operation);
