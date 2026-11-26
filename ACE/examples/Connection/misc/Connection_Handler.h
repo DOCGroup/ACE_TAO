@@ -32,8 +32,8 @@ protected:
   int handle_input (ACE_HANDLE) override;
 
   /// Handles timeouts.
-  int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg) override;
 
   /// Handles a signal.
   int handle_signal (int signum, siginfo_t *, ucontext_t *) override;

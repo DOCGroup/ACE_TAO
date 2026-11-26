@@ -33,7 +33,7 @@ Svc_Handler::open (void *)
 }
 
 void
-Svc_Handler::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Svc_Handler::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   if (result.success () && result.bytes_transferred () > 0)
     {

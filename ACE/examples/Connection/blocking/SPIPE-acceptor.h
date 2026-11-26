@@ -37,7 +37,7 @@ public:
 
   /// This is called when asynchronous read from the socket complete
   /// Handle data from the client.
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
 private:
   ACE_Asynch_Read_Stream ar_;

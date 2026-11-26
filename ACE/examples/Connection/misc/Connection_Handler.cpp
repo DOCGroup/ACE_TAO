@@ -175,8 +175,8 @@ Connection_Handler::handle_signal (int signum, siginfo_t *, ucontext_t *)
 }
 
 int
-Connection_Handler::handle_timeout (const ACE_Time_Value &,
-                                    const void *arg)
+Connection_Handler::handle_timeout (ACE_Time_Value const &,
+                                    void const *arg)
 {
 #if defined (ACE_NDEBUG)
   ACE_UNUSED_ARG (arg);
