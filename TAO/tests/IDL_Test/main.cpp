@@ -983,6 +983,25 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int error_count = 0;
 
+  CORBA::Any source_any;
+  source_any <<= CORBA::Long (42);
+  CORBA::Any moved_value (std::move (source_any));
+  CORBA::Any assigned_value;
+  assigned_value <<= CORBA::Long (12);
+  assigned_value = std::move (moved_value);
+  CORBA::Any * const self_value = std::addressof (assigned_value);
+  assigned_value = std::move (*self_value);
+  CORBA::Any shared_value (assigned_value);
+  assigned_value = std::move (shared_value);
+  CORBA::Long extracted_value {};
+  if (source_any.impl () != nullptr || moved_value.impl () != nullptr ||
+      shared_value.impl () != nullptr ||
+      !(assigned_value >>= extracted_value) || extracted_value != 42)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Any move failed\n"));
+    }
+
   CORBA::Any_var original_any (new CORBA::Any);
   CORBA::Any * const original_any_ptr = original_any.ptr ();
   CORBA::Any_var moved_any (std::move (original_any));

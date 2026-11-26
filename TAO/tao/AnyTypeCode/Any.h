@@ -64,10 +64,12 @@ namespace CORBA
 
     Any () = default;
     Any (Any const &);
+    Any (Any &&) noexcept;
 
     ~Any ();
 
     Any &operator= (Any const &);
+    Any &operator= (Any &&) noexcept;
     TAO::Any_Impl *impl () const;
 
     /// Used in our destruction if we ourselves are stored in an Any.

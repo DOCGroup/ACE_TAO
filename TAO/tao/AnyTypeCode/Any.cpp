@@ -15,6 +15,7 @@
 #include "ace/OS_Memory.h"
 #include <cstring>
 #include <memory>
+#include <utility>
 
 #if !defined (__ACE_INLINE__)
 # include "tao/AnyTypeCode/Any.inl"
@@ -31,6 +32,11 @@ CORBA::Any::Any (CORBA::Any const &rhs)
     {
       this->impl_->_add_ref ();
     }
+}
+
+CORBA::Any::Any (CORBA::Any &&rhs) noexcept
+  : impl_ (std::exchange (rhs.impl_, nullptr))
+{
 }
 
 CORBA::Any::~Any ()
@@ -59,6 +65,20 @@ CORBA::Any::operator= (CORBA::Any const &rhs)
         }
     }
 
+  return *this;
+}
+
+CORBA::Any &
+CORBA::Any::operator= (CORBA::Any &&rhs) noexcept
+{
+  if (this != std::addressof (rhs))
+    {
+      if (this->impl_)
+        {
+          this->impl_->_remove_ref ();
+        }
+      this->impl_ = std::exchange (rhs.impl_, nullptr);
+    }
   return *this;
 }
 
