@@ -20,8 +20,8 @@
 #include "ace/OS_NS_unistd.h"
 
 static int debug = 0;
-static const char *one_second_timeout = "one second timeout";
-static const char *two_second_timeout = "two second timeout";
+static char const *one_second_timeout = "one second timeout";
+static char const *two_second_timeout = "two second timeout";
 
 namespace
 {
@@ -43,8 +43,8 @@ public:
 
   ~Reference_Counted_Event_Handler () override;
 
-  int handle_timeout (const ACE_Time_Value &,
-                      const void *) override;
+  int handle_timeout (ACE_Time_Value const &,
+                      void const *) override;
 
   int handle_close (ACE_HANDLE handle,
                     ACE_Reactor_Mask masks) override;
@@ -85,14 +85,14 @@ Reference_Counted_Event_Handler::~Reference_Counted_Event_Handler ()
 }
 
 int
-Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
-                                                 const void *arg)
+Reference_Counted_Event_Handler::handle_timeout (ACE_Time_Value const &,
+                                                 void const *arg)
 {
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %Ld\n",
-                  static_cast<const char *> (arg),
+                  static_cast<char const *> (arg),
                   this->reference_count_.load ()));
     }
 
@@ -219,11 +219,11 @@ template <class TIMER_QUEUE>
 class cancellation_test
 {
 public:
-  cancellation_test (const char *);
+  cancellation_test (char const *);
 };
 
 template <class TIMER_QUEUE>
-cancellation_test<TIMER_QUEUE>::cancellation_test (const char *timer_queue_type)
+cancellation_test<TIMER_QUEUE>::cancellation_test (char const *timer_queue_type)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nCancellation test for %C\n\n",
@@ -323,11 +323,11 @@ template<class TIMER_QUEUE>
 class expire_test
 {
 public:
-  expire_test (const char *);
+  expire_test (char const *);
 };
 
 template <class TIMER_QUEUE>
-expire_test<TIMER_QUEUE>::expire_test (const char *timer_queue_type)
+expire_test<TIMER_QUEUE>::expire_test (char const *timer_queue_type)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nExpire test for %C\n\n",
@@ -343,11 +343,11 @@ template<class TIMER_QUEUE>
 class upcall_test
 {
 public:
-  upcall_test (const char *);
+  upcall_test (char const *);
 };
 
 template <class TIMER_QUEUE>
-upcall_test<TIMER_QUEUE>::upcall_test (const char *timer_queue_type)
+upcall_test<TIMER_QUEUE>::upcall_test (char const *timer_queue_type)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nOne upcall test for %C\n\n",
@@ -366,8 +366,8 @@ public:
 
   ~Simple_Event_Handler () override;
 
-  int handle_timeout (const ACE_Time_Value &,
-                      const void *) override;
+  int handle_timeout (ACE_Time_Value const &,
+                      void const *) override;
 
   int handle_close (ACE_HANDLE,
                     ACE_Reactor_Mask) override;
@@ -392,14 +392,14 @@ Simple_Event_Handler::~Simple_Event_Handler ()
 }
 
 int
-Simple_Event_Handler::handle_timeout (const ACE_Time_Value &,
-                                      const void *arg)
+Simple_Event_Handler::handle_timeout (ACE_Time_Value const &,
+                                      void const *arg)
 {
   if (debug)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Simple_Event_Handler::handle_timeout() for arg = %C\n",
-                  static_cast<const char *> (arg)));
+                  static_cast<char const *> (arg)));
     }
   return 0;
 }
@@ -479,11 +479,11 @@ template <class TIMER_QUEUE>
 class simple_test
 {
 public:
-  simple_test (const char *);
+  simple_test (char const *);
 };
 
 template <class TIMER_QUEUE>
-simple_test<TIMER_QUEUE>::simple_test (const char *timer_queue_type)
+simple_test<TIMER_QUEUE>::simple_test (char const *timer_queue_type)
 {
   ACE_DEBUG ((LM_DEBUG,
               "\nSimple test for %C\n\n",

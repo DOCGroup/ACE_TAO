@@ -71,8 +71,8 @@ public:
     return 0;
   }
 
-  int handle_timeout (const ACE_Time_Value &,
-                              const void *arg) override
+  int handle_timeout (ACE_Time_Value const &,
+                              void const *arg) override
   {
     int *act = (int *) arg;
     ACE_TEST_ASSERT (*act == 42 || *act == 007);
@@ -95,7 +95,7 @@ struct Interval_Handler : public ACE_Event_Handler
 {
   Interval_Handler () : trip_count_ (0) { }
 
-  int handle_timeout (const ACE_Time_Value & , const void *) override
+  int handle_timeout (ACE_Time_Value const & , void const *) override
   {
     ++trip_count_;
     return 0;
@@ -153,7 +153,7 @@ test_functionality (ACE_Timer_Queue *tq)
   // Do a test on earliest_time.
   ACE_Time_Value const earliest_time = tq->gettimeofday ();
 
-  const void *timer_act {};
+  void const *timer_act {};
   ACE_NEW (timer_act, int (1));
   timer_id = tq->schedule (&eh, timer_act, earliest_time);
 
@@ -212,14 +212,14 @@ test_functionality (ACE_Timer_Queue *tq)
                          tq->gettimeofday ());
   ACE_TEST_ASSERT (result != -1);
 
-  const void *timer_act1 {};
+  void const *timer_act1 {};
   ACE_NEW (timer_act1, int (42));
   result = tq->schedule (&eh,
                          timer_act1,
                          tq->gettimeofday () + ACE_Time_Value (100));
   ACE_TEST_ASSERT (result != -1);
 
-  const void *timer_act2 {};
+  void const *timer_act2 {};
   ACE_NEW (timer_act2, int (42));
   result = tq->schedule (&eh,
                          timer_act2,
@@ -315,12 +315,12 @@ test_functionality (ACE_Timer_Queue *tq)
 
 static void
 test_performance (ACE_Timer_Queue *tq,
-                  const ACE_TCHAR *test_name)
+                  ACE_TCHAR const *test_name)
 {
   Example_Handler eh;
   ACE_Profile_Timer timer;
   int i;
-  const void *timer_act {};
+  void const *timer_act {};
 
   ACE_TEST_ASSERT (tq->is_empty ());
   ACE_TEST_ASSERT (ACE_Time_Value::zero == ACE_Time_Value (0));
@@ -606,7 +606,7 @@ class Timer_Queue_Stack
 {
 public:
   Timer_Queue_Stack (ACE_Timer_Queue *queue,
-    const ACE_TCHAR *name,
+    ACE_TCHAR const *name,
     Timer_Queue_Stack *next = nullptr)
     : queue_ (queue),
     name_ (name),
@@ -618,7 +618,7 @@ public:
   ACE_Timer_Queue *queue_;
 
   /// Name of the Queue that we're testing.
-  const ACE_TCHAR *name_;
+  ACE_TCHAR const *name_;
 
   /// Pointer to the next @c Timer_Queue.
   Timer_Queue_Stack *next_;
