@@ -71,13 +71,13 @@ AsyncAccessManager::is_running () const
 }
 
 bool
-AsyncAccessManager::has_server (const char *s) const
+AsyncAccessManager::has_server (char const *s) const
 {
   return std::strcmp (this->info_->ping_id (), s) == 0;
 }
 
 void
-AsyncAccessManager::report (const char* operation) const
+AsyncAccessManager::report (char const *operation) const
 {
   const Server_Info* si = info_.operator->();
   ORBSVCS_DEBUG ((LM_DEBUG,
@@ -353,7 +353,7 @@ AsyncAccessManager::is_final (ImplementationRepository::AAM_Status s)
           s == ImplementationRepository::AAM_RETRIES_EXCEEDED);
 }
 
-const char *
+char const *
 AsyncAccessManager::status_name (ImplementationRepository::AAM_Status s)
 {
   switch (s)
@@ -491,7 +491,7 @@ AsyncAccessManager::server_is_shutting_down ()
 }
 
 void
-AsyncAccessManager::server_is_running (const char *partial_ior,
+AsyncAccessManager::server_is_running (char const *partial_ior,
                                        ImplementationRepository::ServerObject_ptr ref)
 {
   if (ImR_Locator_i::debug () > 4)
@@ -914,7 +914,7 @@ ActivatorReceiver::kill_server_excep (Messaging::ExceptionHolder * )
 }
 
 
-AccessLiveListener::AccessLiveListener (const char *server,
+AccessLiveListener::AccessLiveListener (char const *server,
                                         AsyncAccessManager *aam,
                                         LiveCheck &pinger)
   :LiveListener (server),
@@ -926,7 +926,7 @@ AccessLiveListener::AccessLiveListener (const char *server,
 {
 }
 
-AccessLiveListener::AccessLiveListener (const char *server,
+AccessLiveListener::AccessLiveListener (char const *server,
                                         AsyncAccessManager *aam,
                                         LiveCheck &pinger,
                                         ImplementationRepository::ServerObject_ptr ref)
