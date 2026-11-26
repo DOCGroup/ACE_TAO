@@ -324,7 +324,7 @@ Shared_Backing_Store::update_unique_id (ACE_CString const &key,
                                         UniqueId& uid)
 {
   UniqueId temp_id;
-  const bool found = (unique_ids.find (key, temp_id) == 0);
+  bool const found = (unique_ids.find (key, temp_id) == 0);
 
   ::create_uid (entry_repo_type, entry_repo_id, uid);
   this->bind_unique_id (key, unique_ids, uid);
@@ -1337,7 +1337,7 @@ Shared_Backing_Store::LocatorListings_XMLHandler::startElement (
   const ACEXML_Char* qName,
   ACEXML_Attributes* attrs)
 {
-  const bool server =
+  bool const server =
     (ACE_OS::strcasecmp (qName, Locator_XMLHandler::SERVER_INFO_TAG) == 0);
   if (!server &&
       (ACE_OS::strcasecmp (qName, Locator_XMLHandler::ACTIVATOR_INFO_TAG) != 0))

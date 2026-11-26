@@ -72,7 +72,7 @@ Locator_XMLHandler::startElement (const ACEXML_Char*,
       this->env_vars_.clear ();
 
       // if attrs exists and if the previously required 9 fields
-      const size_t previous_size = 9;
+      size_t const previous_size = 9;
       if (attrs != 0 && attrs->getLength () >= previous_size)
         {
           size_t index = 0;

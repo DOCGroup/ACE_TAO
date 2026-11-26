@@ -207,7 +207,7 @@ private:
     /// listings file
     Locator_Repository::AIMap unmatched_activators_;
     /// indicates if only changes should be tracked
-    const bool only_changes_;
+    bool const only_changes_;
   };
   using XMLHandler_Ptr = ACE_Strong_Bound_Ptr<LocatorListings_XMLHandler,
                                                ACE_Null_Mutex>;

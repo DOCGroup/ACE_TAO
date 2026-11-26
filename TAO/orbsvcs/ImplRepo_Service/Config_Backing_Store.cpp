@@ -329,7 +329,7 @@ Heap_Backing_Store::repo_mode() const
 }
 
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
-static HKEY setup_registry (const bool start_clean)
+static HKEY setup_registry (bool const start_clean)
 {
   if (start_clean)
     {
