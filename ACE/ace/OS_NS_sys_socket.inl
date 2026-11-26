@@ -19,7 +19,7 @@ typedef void *ACE_SOCKOPT_TYPE1;
 #elif defined (ACE_HAS_CHARPTR_SOCKOPT)
 typedef char *ACE_SOCKOPT_TYPE1;
 #else
-typedef const char *ACE_SOCKOPT_TYPE1;
+typedef char const *ACE_SOCKOPT_TYPE1;
 #endif /* ACE_HAS_VOIDPTR_SOCKOPT */
 
 ACE_INLINE ACE_HANDLE
@@ -563,7 +563,7 @@ ACE_OS::recvv (ACE_HANDLE handle,
 }
 
 ACE_INLINE ssize_t
-ACE_OS::send (ACE_HANDLE handle, const char *buf, size_t len, int flags)
+ACE_OS::send (ACE_HANDLE handle, char const *buf, size_t len, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::send");
 
@@ -677,7 +677,7 @@ ACE_OS::sendmsg (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE_OS::sendto (ACE_HANDLE handle,
-                const char *buf,
+                char const *buf,
                 size_t len,
                 int flags,
                 const struct sockaddr *addr,
@@ -928,7 +928,7 @@ ACE_INLINE int
 ACE_OS::setsockopt (ACE_HANDLE handle,
                     int level,
                     int optname,
-                    const char *optval,
+                    char const *optval,
                     int optlen)
 {
   ACE_OS_TRACE ("ACE_OS::setsockopt");
@@ -1042,7 +1042,7 @@ ACE_OS::socketpair (int domain, int type,
 }
 
 ACE_INLINE unsigned int
-ACE_OS::if_nametoindex (const char *ifname)
+ACE_OS::if_nametoindex (char const *ifname)
 {
   ACE_OS_TRACE ("ACE_OS::if_nametoindex");
 #ifdef ACE_LACKS_IF_NAMETOINDEX

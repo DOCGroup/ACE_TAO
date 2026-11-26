@@ -42,7 +42,7 @@ namespace ACE_OS {
   /// is generally good enough for typical situations, but it is ``not
   /// quite right'' in its semantics.
   extern ACE_Export
-  ACE_HANDLE open (const char *filename,
+  ACE_HANDLE open (char const *filename,
                    int mode,
                    mode_t perms = ACE_DEFAULT_OPEN_PERMS,
                    LPSECURITY_ATTRIBUTES sa = 0);

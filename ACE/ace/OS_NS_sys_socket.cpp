@@ -16,7 +16,7 @@ ACE_HANDLE
 ACE_OS::accept (ACE_HANDLE handle,
                 struct sockaddr *addr,
                 int *addrlen,
-                const ACE_Accept_QoS_Params &qos_params)
+                ACE_Accept_QoS_Params const &qos_params)
 {
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
   ACE_SOCKCALL_RETURN (::WSAAccept (reinterpret_cast<ACE_SOCKET> (handle),
@@ -38,7 +38,7 @@ int
 ACE_OS::connect (ACE_HANDLE handle,
                  const sockaddr *addr,
                  int addrlen,
-                 const ACE_QoS_Params &qos_params)
+                 ACE_QoS_Params const &qos_params)
 {
   ACE_OS_TRACE ("ACE_OS::connect");
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
@@ -62,7 +62,7 @@ ACE_HANDLE
 ACE_OS::join_leaf (ACE_HANDLE socket,
                    const sockaddr *name,
                    int namelen,
-                   const ACE_QoS_Params &qos_params)
+                   ACE_QoS_Params const &qos_params)
 {
 # if defined (ACE_HAS_WINSOCK2) && (ACE_HAS_WINSOCK2 != 0)
 
@@ -214,7 +214,7 @@ ACE_OS::sendv_partial_i (ACE_HANDLE handle,
 
 ssize_t
 ACE_OS::send_partial_i (ACE_HANDLE handle,
-                        const char *buf,
+                        char const *buf,
                         size_t len,
                         int flags)
 {

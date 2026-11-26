@@ -12,7 +12,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_HANDLE
-ACE_OS::open (const char *filename,
+ACE_OS::open (char const *filename,
               int mode,
               mode_t perms,
               LPSECURITY_ATTRIBUTES sa)

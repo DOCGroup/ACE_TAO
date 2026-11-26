@@ -93,7 +93,7 @@ namespace ACE_OS
   ACE_HANDLE accept (ACE_HANDLE handle,
                      struct sockaddr *addr,
                      int *addrlen,
-                     const ACE_Accept_QoS_Params &qos_params);
+                     ACE_Accept_QoS_Params const &qos_params);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int bind (ACE_HANDLE s,
@@ -119,7 +119,7 @@ namespace ACE_OS
   int connect (ACE_HANDLE handle,
                const sockaddr *addr,
                int addrlen,
-               const ACE_QoS_Params &qos_params);
+               ACE_QoS_Params const &qos_params);
 
   /// Retrieve information about available transport protocols
   /// installed on the local machine. Windows specific...
@@ -149,7 +149,7 @@ namespace ACE_OS
   ACE_HANDLE join_leaf (ACE_HANDLE socket,
                         const sockaddr *name,
                         int namelen,
-                        const ACE_QoS_Params &qos_params);
+                        ACE_QoS_Params const &qos_params);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int listen (ACE_HANDLE handle,
@@ -200,7 +200,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t send (ACE_HANDLE handle,
-                const char *buf,
+                char const *buf,
                 size_t len,
                 int flags = 0);
 
@@ -208,7 +208,7 @@ namespace ACE_OS
   /// requires a buffer to do a partial send
   extern ACE_Export
   ssize_t send_partial_i (ACE_HANDLE handle,
-                          const char *buf,
+                          char const *buf,
                           size_t len,
                           int flags);
 
@@ -227,7 +227,7 @@ namespace ACE_OS
 
   ACE_NAMESPACE_INLINE_FUNCTION
   ssize_t sendto (ACE_HANDLE handle,
-                  const char *buf,
+                  char const *buf,
                   size_t len,
                   int flags,
                   const struct sockaddr *addr,
@@ -261,7 +261,7 @@ namespace ACE_OS
   int setsockopt (ACE_HANDLE handle,
                   int level,
                   int optname,
-                  const char *optval,
+                  char const *optval,
                   int optlen);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -269,7 +269,7 @@ namespace ACE_OS
                 int how);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  unsigned int if_nametoindex (const char *ifname);
+  unsigned int if_nametoindex (char const *ifname);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   char *if_indextoname (unsigned int ifindex, char *ifname);
