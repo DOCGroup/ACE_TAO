@@ -139,7 +139,7 @@ ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (ACE_TCHAR const *pool_name)
 template <ACE_MEM_POOL_1, class ACE_LOCK> ACE_INLINE
 ACE_Malloc<ACE_MEM_POOL_2, ACE_LOCK>::ACE_Malloc (ACE_TCHAR const *pool_name,
                                                   ACE_TCHAR const *lock_name,
-                                                  const ACE_MEM_POOL_OPTIONS *options)
+                                                  ACE_MEM_POOL_OPTIONS const *options)
   : ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_Control_Block> (pool_name, lock_name, options)
 {
 }

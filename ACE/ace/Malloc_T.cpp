@@ -334,7 +334,7 @@ ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (
 
 #if defined (ACE_HAS_WCHAR)
 template <class MALLOC>
-ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const wchar_t *pool_name)
+ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (wchar_t const *pool_name)
   : allocator_ (ACE_TEXT_WCHAR_TO_TCHAR (pool_name))
 {
   ACE_TRACE ("ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter");
@@ -342,8 +342,8 @@ ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (const wchar_t *pool_name)
 
 template <class MALLOC>
 ACE_Allocator_Adapter<MALLOC>::ACE_Allocator_Adapter (
-  const wchar_t *pool_name,
-  const wchar_t *lock_name,
+  wchar_t const *pool_name,
+  wchar_t const *lock_name,
   MEMORY_POOL_OPTIONS options)
     : allocator_ (ACE_TEXT_WCHAR_TO_TCHAR (pool_name),
                   ACE_TEXT_WCHAR_TO_TCHAR (lock_name),
@@ -542,7 +542,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (ACE_TCHAR const *p
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (ACE_TCHAR const *pool_name,
                                                               ACE_TCHAR const *lock_name,
-                                                              const ACE_MEM_POOL_OPTIONS *options)
+                                                              ACE_MEM_POOL_OPTIONS const *options)
   : memory_pool_ (pool_name, options)
 {
   ACE_TRACE ("ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T");
@@ -565,7 +565,7 @@ ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (ACE_TCHAR const *p
 
 template <ACE_MEM_POOL_1, class ACE_LOCK, class ACE_CB>
 ACE_Malloc_T<ACE_MEM_POOL_2, ACE_LOCK, ACE_CB>::ACE_Malloc_T (ACE_TCHAR const *pool_name,
-                                                              const ACE_MEM_POOL_OPTIONS *options,
+                                                              ACE_MEM_POOL_OPTIONS const *options,
                                                               ACE_LOCK *lock)
   : memory_pool_ (pool_name, options),
     lock_ (lock)

@@ -189,9 +189,9 @@ class ACE_Export ACE_Allocator_Std_Adapter
 public:
   using value_type = T;
   using pointer = T *;
-  using const_pointer = const T *;
+  using const_pointer = T const *;
   using reference = T &;
-  using const_reference = const T &;
+  using const_reference = T const &;
   using size_type = size_t;
   using difference_type = std::ptrdiff_t;
   template <typename U> struct rebind { using other = ACE_Allocator_Std_Adapter<U>; };
@@ -218,7 +218,7 @@ public:
     ACE_Allocator::instance()->free(ptr);
   }
 
-  static void construct(T* ptr, const T& value)
+  static void construct(T* ptr, T const & value)
   {
     new (static_cast<void*>(ptr)) T(value);
   }

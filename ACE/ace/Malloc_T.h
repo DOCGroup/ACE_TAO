@@ -235,15 +235,15 @@ public:
    * @note @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so. */
-  explicit ACE_Allocator_Adapter (const wchar_t *pool_name);
+  explicit ACE_Allocator_Adapter (wchar_t const *pool_name);
 
   /**
    * @note @a pool_name should be located in
    * a directory with the appropriate visibility and protection so
    * that all processes that need to access it can do so.
    */
-  ACE_Allocator_Adapter (const wchar_t *pool_name,
-                         const wchar_t *lock_name,
+  ACE_Allocator_Adapter (wchar_t const *pool_name,
+                         wchar_t const *lock_name,
                          MEMORY_POOL_OPTIONS options = 0);
 #endif /* ACE_HAS_WCHAR */
 
@@ -470,7 +470,7 @@ public:
    */
   ACE_Malloc_T (ACE_TCHAR const *pool_name,
                 ACE_TCHAR const *lock_name,
-                const ACE_MEM_POOL_OPTIONS *options = nullptr);
+                ACE_MEM_POOL_OPTIONS const *options = nullptr);
 
   /**
    * Initialize an ACE_Malloc with an external ACE_LOCK.
@@ -479,7 +479,7 @@ public:
    * properly set up and ready for use before being passed to this method.
    */
   ACE_Malloc_T (ACE_TCHAR const *pool_name,
-                const ACE_MEM_POOL_OPTIONS *options,
+                ACE_MEM_POOL_OPTIONS const *options,
                 ACE_LOCK *lock);
 
   ~ACE_Malloc_T ();
@@ -858,7 +858,7 @@ public:
    */
   ACE_Malloc (ACE_TCHAR const *pool_name,
               ACE_TCHAR const *lock_name,
-              const ACE_MEM_POOL_OPTIONS *options = nullptr);
+              ACE_MEM_POOL_OPTIONS const *options = nullptr);
 };
 
 template <ACE_MEM_POOL_1, class ACE_LOCK>
