@@ -317,12 +317,6 @@ CORBA::Any_out::Any_out (CORBA::Any_var &s)
 {
 }
 
-ACE_INLINE
-CORBA::Any_out::Any_out (CORBA::Any_out const &s)
-  : ptr_ (s.ptr_)
-{
-}
-
 ACE_INLINE CORBA::Any_out &
 CORBA::Any_out::operator= (CORBA::Any_out const &s)
 {

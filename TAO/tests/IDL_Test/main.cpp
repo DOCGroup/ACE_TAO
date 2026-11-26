@@ -43,7 +43,7 @@ static_assert (std::is_move_constructible_v<CORBA::Any>
                && std::is_move_assignable_v<CORBA::Any_var>
                && std::is_move_constructible_v<CORBA::Any_out>
                && std::is_move_assignable_v<CORBA::Any_out>,
-               "Any and its wrappers accept rvalues through their copy operations");
+               "Any and its wrappers accept rvalues");
 static_assert (std::is_move_constructible_v<CORBA::Environment>
                && std::is_move_assignable_v<CORBA::Environment>
                && std::is_move_constructible_v<TAO_Queued_Data>

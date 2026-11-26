@@ -238,7 +238,8 @@ namespace CORBA
     Any_out () = delete;
     Any_out (Any *&);
     Any_out (Any_var &);
-    Any_out (Any_out const &);
+    Any_out (Any_out const &) = default;
+    Any_out (Any_out &&) = default;
 
     /// Assignment from a Any_out.
     Any_out &operator= (Any_out const &s);
