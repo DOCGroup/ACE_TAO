@@ -77,7 +77,7 @@ int AMI_Primary_Replication_Strategy::svc()
     }
     orb_->destroy();
   }
-  catch (const CORBA::Exception& ex){
+  catch (CORBA::Exception const& ex){
     ex._tao_print_exception ("AMI_Primary_Replication_Strategy::svc");
     running_ = false;
     return -1;
@@ -125,7 +125,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
 
           obj->sendc_set_update(handler, state);
        }
-       catch (const CORBA::Exception& ex){
+       catch (CORBA::Exception const& ex){
          ex._tao_print_exception (
            "AMI_Primary_Replication_Strategy::replicate_request : ");
          manager->handle_exception(i);

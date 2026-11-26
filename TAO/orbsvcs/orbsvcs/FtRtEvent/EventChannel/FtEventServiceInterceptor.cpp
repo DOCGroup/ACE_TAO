@@ -236,7 +236,7 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
 
       Request_Context_Repository().set_transaction_depth(ri, transaction_depth);
     }
-    catch (const CORBA::BAD_PARAM&){
+    catch (CORBA::BAD_PARAM const&){
     }
 
     FTRT::SequenceNumber sequence_no =
@@ -244,7 +244,7 @@ FtEventServiceInterceptor::receive_request (PortableInterceptor::ServerRequestIn
 
     Request_Context_Repository().set_sequence_number(ri, sequence_no);
   }
-  catch (const CORBA::BAD_PARAM&){
+  catch (CORBA::BAD_PARAM const&){
   }
 }
 
@@ -259,7 +259,7 @@ FtEventServiceInterceptor::send_reply (PortableInterceptor::ServerRequestInfo_pt
       service_context,
       ft_request_service_context);
   }
-  catch (const CORBA::BAD_PARAM&){
+  catch (CORBA::BAD_PARAM const&){
     return;
   }
 

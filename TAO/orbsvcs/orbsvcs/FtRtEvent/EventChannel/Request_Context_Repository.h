@@ -56,7 +56,7 @@ public:
     get_object_id(PortableInterceptor::ServerRequestInfo_ptr ri);
 
   void set_cached_result(PortableInterceptor::ServerRequestInfo_ptr ri,
-                         const CORBA::Any& result);
+                         CORBA::Any const& result);
 
   CORBA::Any_ptr get_cached_result();
   bool is_executed_request();

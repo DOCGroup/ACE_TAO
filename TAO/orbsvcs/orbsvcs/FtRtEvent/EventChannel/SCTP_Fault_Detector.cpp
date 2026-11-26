@@ -20,9 +20,9 @@ SCTP_Connector::SCTP_Connector () = default;
 
 int
 SCTP_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
-                             const ACE_Addr &remote_sap,
-                             const ACE_Time_Value *timeout,
-                             const ACE_Addr &local_sap,
+                             ACE_Addr const &remote_sap,
+                             ACE_Time_Value const *timeout,
+                             ACE_Addr const &local_sap,
                              int reuse_addr,
                              int /* flags */,
                              int /* perms */,

@@ -62,7 +62,7 @@ void UpdateableHandler::set_update_excep (
   try{
     excep_holder->raise_exception();
   }
-  catch (const CORBA::Exception& ex){
+  catch (CORBA::Exception const& ex){
     ex._tao_print_exception ("A corba exception\n");
   }
 
