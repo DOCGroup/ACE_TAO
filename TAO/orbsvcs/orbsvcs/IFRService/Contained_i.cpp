@@ -358,7 +358,7 @@ TAO_Contained_i::name_exists (char const *name)
                                             ACE_TEXT("container_id"),
                                             container_id);
 
-  if (container_id == "")
+  if (container_id.empty ())
     {
       TAO_Contained_i::tmp_name_holder_ = name;
       ACE_Configuration_Section_Key root_key = this->repo_->root_key ();
@@ -382,7 +382,7 @@ TAO_Contained_i::name_exists (char const *name)
 
   ACE_Configuration_Section_Key defns_key;
   this->repo_->config ()->open_section (container_key,
-                                        "defns",
+                                        ACE_TEXT ("defns"),
                                         false,
                                         defns_key);
 
@@ -405,7 +405,7 @@ TAO_Contained_i::name_exists (char const *name)
                                               ACE_TEXT("name"),
                                               defn_name);
 
-    if (defn_name == name)
+    if (defn_name == ACE_TEXT_CHAR_TO_TCHAR (name))
       {
         return true;
       }
@@ -420,7 +420,7 @@ TAO_Contained_i::contents_name_update (ACE_TString stem,
 {
   ACE_Configuration_Section_Key defns_key;
   if (this->repo_->config ()->open_section (key,
-                                            "defns",
+                                            ACE_TEXT ("defns"),
                                             false,
                                             defns_key)
        != 0)
@@ -447,9 +447,9 @@ TAO_Contained_i::contents_name_update (ACE_TString stem,
                                                 ACE_TEXT("name"),
                                                 name);
 
-      ACE_TString absolute_name = stem + "::" + name;
+      ACE_TString absolute_name = stem + ACE_TEXT ("::") + name;
       this->repo_->config ()->set_string_value (defn_key,
-                                                "absolute_name",
+                                                ACE_TEXT ("absolute_name"),
                                                 absolute_name);
 
       this->contents_name_update (absolute_name,
