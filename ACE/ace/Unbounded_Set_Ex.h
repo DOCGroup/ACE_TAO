@@ -89,8 +89,8 @@ public:
   T& operator* ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Unbounded_Set_Ex_Iterator<T, C> &) const;
-  bool operator!= (const ACE_Unbounded_Set_Ex_Iterator<T, C> &) const;
+  bool operator== (ACE_Unbounded_Set_Ex_Iterator<T, C> const &) const;
+  bool operator!= (ACE_Unbounded_Set_Ex_Iterator<T, C> const &) const;
   /// @}
 
   /// Declare the dynamic allocation hooks.
@@ -163,8 +163,8 @@ public:
   T& operator* ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Unbounded_Set_Ex_Const_Iterator<T, C> &) const;
-  bool operator!= (const ACE_Unbounded_Set_Ex_Const_Iterator<T, C> &) const;
+  bool operator== (ACE_Unbounded_Set_Ex_Const_Iterator<T, C> const &) const;
+  bool operator!= (ACE_Unbounded_Set_Ex_Const_Iterator<T, C> const &) const;
   /// @}
 
   /// Declare the dynamic allocation hooks.
@@ -352,7 +352,7 @@ private:
   void delete_nodes ();
 
   /// Copy nodes into this set.
-  void copy_nodes (const ACE_Unbounded_Set_Ex<T, C> &);
+  void copy_nodes (ACE_Unbounded_Set_Ex<T, C> const &);
 
   /// Head of the linked list of Nodes.
   NODE *head_ {};

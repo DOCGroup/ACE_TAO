@@ -84,7 +84,7 @@ ACE_Unbounded_Set_Ex<T, C>::dump () const
 }
 
 template <class T, class C> void
-ACE_Unbounded_Set_Ex<T, C>::copy_nodes (const ACE_Unbounded_Set_Ex<T, C> &us)
+ACE_Unbounded_Set_Ex<T, C>::copy_nodes (ACE_Unbounded_Set_Ex<T, C> const &us)
 {
   for (NODE *curr = us.head_->next_;
        curr != us.head_;
@@ -394,14 +394,14 @@ ACE_Unbounded_Set_Ex_Iterator<T, C>::operator* ()
 }
 
 template <class T, class C> bool
-ACE_Unbounded_Set_Ex_Iterator<T, C>::operator== (const ACE_Unbounded_Set_Ex_Iterator<T, C> &rhs) const
+ACE_Unbounded_Set_Ex_Iterator<T, C>::operator== (ACE_Unbounded_Set_Ex_Iterator<T, C> const &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::operator==");
   return (this->set_ == rhs.set_ && this->current_ == rhs.current_);
 }
 
 template <class T, class C> bool
-ACE_Unbounded_Set_Ex_Iterator<T, C>::operator!= (const ACE_Unbounded_Set_Ex_Iterator<T, C> &rhs) const
+ACE_Unbounded_Set_Ex_Iterator<T, C>::operator!= (ACE_Unbounded_Set_Ex_Iterator<T, C> const &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Iterator<T, C>::operator!=");
   return (this->set_ != rhs.set_ || this->current_ != rhs.current_);
@@ -419,7 +419,7 @@ ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::dump () const
 
 template <class T, class C>
 ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::ACE_Unbounded_Set_Ex_Const_Iterator (
-  const ACE_Unbounded_Set_Ex<T, C> &s,
+  ACE_Unbounded_Set_Ex<T, C> const &s,
   bool end)
   : current_ (!end ? s.head_->next_ : s.head_ ),
     set_ (std::addressof (s))
@@ -503,14 +503,14 @@ ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator* ()
 }
 
 template <class T, class C> bool
-ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator== (const ACE_Unbounded_Set_Ex_Const_Iterator<T, C> &rhs) const
+ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator== (ACE_Unbounded_Set_Ex_Const_Iterator<T, C> const &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator==");
   return (this->set_ == rhs.set_ && this->current_ == rhs.current_);
 }
 
 template <class T, class C> bool
-ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator!= (const ACE_Unbounded_Set_Ex_Const_Iterator<T, C> &rhs) const
+ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator!= (ACE_Unbounded_Set_Ex_Const_Iterator<T, C> const &rhs) const
 {
   //ACE_TRACE ("ACE_Unbounded_Set_Ex_Const_Iterator<T, C>::operator!=");
   return (this->set_ != rhs.set_ || this->current_ != rhs.current_);

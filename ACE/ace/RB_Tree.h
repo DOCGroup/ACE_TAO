@@ -193,7 +193,7 @@ public:
 
   ACE_RB_Tree (ACE_Allocator *alloc = nullptr);
 
-  ACE_RB_Tree (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &rbt);
+  ACE_RB_Tree (ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &rbt);
 
   /// Initialize an RB Tree.
   int open (ACE_Allocator *alloc = nullptr);
@@ -584,10 +584,10 @@ class ACE_RB_Tree_Iterator_Base
 {
 public:
 
-  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
+  ACE_RB_Tree_Iterator_Base (ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &iter);
 
   /// Assignment operator: copies both the tree reference and the position in the tree.
-  void operator= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &iter);
+  void operator= (ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &iter);
 
   /// @name Iterator operations
   /// @{
@@ -604,13 +604,13 @@ public:
   ACE_RB_Tree_Node<EXT_ID, INT_ID> * operator-> () const;
 
   /// Returns a const reference to the tree over which we're iterating.
-  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree ();
+  ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &tree ();
 
   /// Comparison operator: returns 1 if both iterators point to the same position, otherwise 0.
-  bool operator== (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &) const;
 
   /// Comparison operator: returns 1 if the iterators point to different positions, otherwise 0.
-  bool operator!= (const ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator!= (ACE_RB_Tree_Iterator_Base<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -627,14 +627,14 @@ protected:
    * at the first element in the tree (if this integer is 0, the
    * iterator is positioned at the last element in the tree).
    */
-  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+  ACE_RB_Tree_Iterator_Base (ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &tree,
                              int set_first);
 
   /**
    * Constructor.  Takes an ACE_RB_Tree over which to iterate, and
    * a pointer to a node in the tree.
    */
-  ACE_RB_Tree_Iterator_Base (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+  ACE_RB_Tree_Iterator_Base (ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &tree,
                              ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry);
 
   /**
@@ -662,7 +662,7 @@ protected:
   /// @}
 
   /// Reference to the ACE_RB_Tree over which we're iterating.
-  const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> *tree_ {};
+  ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const *tree_ {};
 
   /// Pointer to the node currently under the iterator.
   ACE_RB_Tree_Node <EXT_ID, INT_ID> *node_ {};
@@ -690,13 +690,13 @@ public:
    * at the first element in the tree (if this integer is 0, the
    * iterator is positioned at the last element in the tree).
    */
-  ACE_RB_Tree_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+  ACE_RB_Tree_Iterator (ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &tree,
                         int set_first = 1);
   /**
    * Constructor.  Takes an ACE_RB_Tree over which to iterate
    * and a pointer to a node in the tree.
    */
-  ACE_RB_Tree_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+  ACE_RB_Tree_Iterator (ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &tree,
                         ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry);
 
    /**
@@ -810,14 +810,14 @@ public:
    * at the last element in the tree (if this integer is 0, the
    * iterator is positioned at the first element in the tree).
    */
-  ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+  ACE_RB_Tree_Reverse_Iterator (ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &tree,
                                 int set_last = 1);
 
   /**
    * Constructor.  Takes an ACE_RB_Tree over which to iterate, and
    * a point to a node in the tree.
    */
-  ACE_RB_Tree_Reverse_Iterator (const ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree,
+  ACE_RB_Tree_Reverse_Iterator (ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> const &tree,
                                 ACE_RB_Tree_Node<EXT_ID, INT_ID>* entry);
 
   /**
