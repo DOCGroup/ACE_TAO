@@ -5,7 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE unsigned long
-ACE_OS::inet_addr (const char *name)
+ACE_OS::inet_addr (char const *name)
 {
   ACE_OS_TRACE ("ACE_OS::inet_addr");
 #if defined (ACE_LACKS_INET_ADDR)
@@ -64,8 +64,8 @@ ACE_OS::inet_ntoa (const struct in_addr addr)
 # endif
 }
 
-ACE_INLINE const char *
-ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
+ACE_INLINE char const *
+ACE_OS::inet_ntop (int family, void const *addrptr, char *strptr, size_t len)
 {
   ACE_OS_TRACE ("ACE_OS::inet_ntop");
 
@@ -95,7 +95,7 @@ ACE_OS::inet_ntop (int family, const void *addrptr, char *strptr, size_t len)
 }
 
 ACE_INLINE int
-ACE_OS::inet_pton (int family, const char *strptr, void *addrptr)
+ACE_OS::inet_pton (int family, char const *strptr, void *addrptr)
 {
   ACE_OS_TRACE ("ACE_OS::inet_pton");
 

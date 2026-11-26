@@ -15,7 +15,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
+ACE_OS::inet_aton (char const *host_name, struct in_addr *addr)
 {
 #if defined (ACE_LACKS_INET_ATON)
 #  if defined (ACE_WIN32)
@@ -36,7 +36,7 @@ ACE_OS::inet_aton (const char *host_name, struct in_addr *addr)
     }
   ACE_UINT32 ip = 0;
   int part = 0;
-  for (const char *dot; *host_name; host_name = *dot ? dot + 1 : dot, ++part)
+  for (char const *dot; *host_name; host_name = *dot ? dot + 1 : dot, ++part)
     {
       if (part > 3)
         {

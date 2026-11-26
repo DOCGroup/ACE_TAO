@@ -29,24 +29,24 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 namespace ACE_OS {
   ACE_NAMESPACE_INLINE_FUNCTION
-  unsigned long inet_addr (const char *name);
+  unsigned long inet_addr (char const *name);
 
   extern ACE_Export
-  int inet_aton (const char *strptr,
+  int inet_aton (char const *strptr,
                  struct in_addr *addr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   char *inet_ntoa (const struct in_addr addr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  const char *inet_ntop (int family,
-                         const void *addrptr,
+  char const *inet_ntop (int family,
+                         void const *addrptr,
                          char *strptr,
                          size_t len);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int inet_pton (int family,
-                 const char *strptr,
+                 char const *strptr,
                  void *addrptr);
 } /* namespace ACE_OS */
 

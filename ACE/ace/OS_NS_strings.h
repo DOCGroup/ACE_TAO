@@ -31,9 +31,9 @@ class ACE_Time_Value;
 
 namespace ACE_OS
 {
-  /// Compares two strings (case insensitive const char version).
+  /// Compares two strings (case insensitive char const version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  int strcasecmp (const char *s, const char *t);
+  int strcasecmp (char const *s, char const *t);
 
 #if defined (ACE_HAS_WCHAR)
   /// Compares two strings (case insensitive const wchar_t version).
@@ -41,9 +41,9 @@ namespace ACE_OS
   int strcasecmp (const wchar_t *s, const wchar_t *t);
 #endif /* ACE_HAS_WCHAR */
 
-  /// Compares two arrays (case insensitive const char version).
+  /// Compares two arrays (case insensitive char const version).
   ACE_NAMESPACE_INLINE_FUNCTION
-  int strncasecmp (const char *s, const char *t, size_t len);
+  int strncasecmp (char const *s, char const *t, size_t len);
 
 #if defined (ACE_HAS_WCHAR)
   /// Compares two arrays (case insensitive const wchar_t version).
@@ -54,11 +54,11 @@ namespace ACE_OS
 #if defined (ACE_LACKS_STRCASECMP)
   /// Emulated strcasecmp - Performs a case insensitive comparison of strings.
   extern ACE_Export
-  int strcasecmp_emulation (const char *s, const char *t);
+  int strcasecmp_emulation (char const *s, char const *t);
 
   /// Emulated strncasecmp - Performs a case insensitvie comparison of arrays.
   extern ACE_Export
-  int strncasecmp_emulation (const char *s, const char *t, size_t len);
+  int strncasecmp_emulation (char const *s, char const *t, size_t len);
 #endif /* ACE_LACKS_STRCASECMP */
 
 } /* namespace ACE_OS */

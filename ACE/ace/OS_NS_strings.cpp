@@ -12,10 +12,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_LACKS_STRCASECMP)
 int
-ACE_OS::strcasecmp_emulation (const char *s, const char *t)
+ACE_OS::strcasecmp_emulation (char const *s, char const *t)
 {
-  const char *scan1 = s;
-  const char *scan2 = t;
+  char const *scan1 = s;
+  char const *scan2 = t;
 
   while (*scan1 != 0
          && ACE_OS::ace_tolower (*scan1)
@@ -50,12 +50,12 @@ ACE_OS::strcasecmp_emulation (const char *s, const char *t)
 
 #if defined (ACE_LACKS_STRCASECMP)
 int
-ACE_OS::strncasecmp_emulation (const char *s,
-                               const char *t,
+ACE_OS::strncasecmp_emulation (char const *s,
+                               char const *t,
                                size_t len)
 {
-  const char *scan1 = s;
-  const char *scan2 = t;
+  char const *scan1 = s;
+  char const *scan2 = t;
   size_t count = 0;
 
   while (count++ < len
