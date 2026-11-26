@@ -31,11 +31,6 @@ namespace TAO
     struct OpenSSL_traits<::EVP_PKEY>
     {
       /// Increase the reference count on the given OpenSSL structure.
-      /**
-       * @note This used to be in a function template but MSVC++ 6
-       *       can't handle function templates correctly so reproduce
-       *       the code in each specialization.  *sigh*
-       */
       static ::EVP_PKEY * _duplicate (::EVP_PKEY * st)
       {
         if (st != nullptr)

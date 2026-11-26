@@ -41,12 +41,6 @@ namespace TAO
      *
      * This class encapsulates the X.509 certificate associated with a
      * given a principal.
-     *
-     * @note Why is this class not the TAO::SSLIOP namespace?  Because
-     *       brain damaged MSVC++ 6 cannot call a base class
-     *       constructor of class declared in a namespace that is more
-     *       than one level deep in a sub-class base member
-     *       initializer list.
      */
     class TAO_SSLIOP_Export SSLIOP_Credentials
       : public virtual SecurityLevel3::Credentials,
