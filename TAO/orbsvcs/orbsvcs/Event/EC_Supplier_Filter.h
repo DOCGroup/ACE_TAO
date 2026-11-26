@@ -102,7 +102,7 @@ public:
 
   /// Events are first scheduled by the TAO_EC_Scheduling_Strategy,
   /// and then pushed through this class again.
-  virtual void push_scheduled_event (RtecEventComm::EventSet &event,
+  virtual void push_scheduled_event (RtecEventComm::EventSet const &event,
                                      TAO_EC_QOS_Info const &event_info) = 0;
 
   /// Increment and decrement the reference count, locking must be
@@ -116,14 +116,14 @@ public:
 class TAO_EC_Filter_Worker : public TAO_ESF_Worker<TAO_EC_ProxyPushSupplier>
 {
 public:
-  TAO_EC_Filter_Worker (RtecEventComm::EventSet &event,
+  TAO_EC_Filter_Worker (RtecEventComm::EventSet const &event,
                         TAO_EC_QOS_Info const &event_info);
 
   void work (TAO_EC_ProxyPushSupplier *supplier) override;
 
 private:
   /// The event we push on each case, use a reference to avoid copies.
-  RtecEventComm::EventSet &event_;
+  RtecEventComm::EventSet const &event_;
 
   /// The QoS info propagated on each event.
   TAO_EC_QOS_Info const &event_info_;

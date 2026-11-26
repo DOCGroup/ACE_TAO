@@ -55,7 +55,7 @@ public:
   void shutdown () override;
   void push (RtecEventComm::EventSet const &event,
              TAO_EC_ProxyPushConsumer *consumer) override;
-  void push_scheduled_event (RtecEventComm::EventSet &event,
+  void push_scheduled_event (RtecEventComm::EventSet const &event,
                              TAO_EC_QOS_Info const &event_info) override;
   CORBA::ULong _decr_refcnt () override;
   CORBA::ULong _incr_refcnt () override;

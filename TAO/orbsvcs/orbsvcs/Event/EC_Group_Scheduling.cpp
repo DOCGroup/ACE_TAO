@@ -19,7 +19,6 @@ TAO_EC_Group_Scheduling::schedule_event (RtecEventComm::EventSet const &event,
                                         TAO_EC_Supplier_Filter *filter)
 {
   TAO_EC_QOS_Info event_info;
-  // @@ yuck...
-  filter->push_scheduled_event (const_cast<RtecEventComm::EventSet&> (event),
+  filter->push_scheduled_event (event,
                                 event_info);
 }
