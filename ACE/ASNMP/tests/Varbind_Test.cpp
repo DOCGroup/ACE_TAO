@@ -225,6 +225,10 @@ static void VbTest()
   ACE_TEST_ASSERT (moved_packet_id == o1);
   move_packet_source += v5;
   ACE_TEST_ASSERT (move_packet_source.get_vb_count () == 1);
+  Pdu empty_packet;
+  move_packet_assigned = std::move (empty_packet);
+  ACE_TEST_ASSERT (move_packet_assigned.get_vb_count () == 0);
+  ACE_TEST_ASSERT (empty_packet.get_vb_count () == 0);
 
   ACE_TEST_ASSERT(copied_pdu.delete_vb (0) == 1);
   ACE_TEST_ASSERT(copied_pdu.get_vb_count() == 1);

@@ -99,6 +99,10 @@ static void OidTest()
   ACE_TEST_ASSERT (move_constructed.valid () == 0);
   ACE_TEST_ASSERT (move_assigned.oidval ()->ptr == original_oid);
   ACE_TEST_ASSERT (move_assigned == d2);
+  Oid empty_oid;
+  move_assigned = std::move (empty_oid);
+  ACE_TEST_ASSERT (move_assigned.valid () == 0);
+  ACE_TEST_ASSERT (empty_oid.valid () == 0);
 
   Oid d_prefix ("1.2.3tail", 5);
   ACE_TEST_ASSERT (d_prefix.valid () == 1);
