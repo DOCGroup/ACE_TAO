@@ -211,7 +211,7 @@ performance_test (void (*ptf) (TEST_MAP &, size_t, KEY *),
                   size_t iterations,
                   KEY *keys,
                   size_t table_size,
-                  const ACE_TCHAR *test_name)
+                  ACE_TCHAR const *test_name)
 {
   ACE_Profile_Timer timer;
   timer.start ();

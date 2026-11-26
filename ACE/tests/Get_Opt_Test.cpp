@@ -25,10 +25,10 @@ static const ACE_TString empty_string (ACE_TEXT (""));
 static int
 parse_args (int test_number,
             int ordering,
-            const ACE_TCHAR *test_args,
+            ACE_TCHAR const *test_args,
             int skip_argv = 1,
             int report_errors = 1,
-            const ACE_TString &opt_prefix = empty_string)
+            ACE_TString const &opt_prefix = empty_string)
 {
   ACE_TString test;
   ACE_TString optstring (opt_prefix);

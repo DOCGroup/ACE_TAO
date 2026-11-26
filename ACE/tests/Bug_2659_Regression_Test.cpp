@@ -31,8 +31,8 @@ EntryExit ee (CNAME,MNAME,LOC)
 class EntryExit
 {
 public:
-  EntryExit (const ACE_TCHAR* class_name,
-             const ACE_TCHAR *method_name,
+  EntryExit (ACE_TCHAR const * class_name,
+             ACE_TCHAR const *method_name,
              void *location = nullptr)
   {
     class_name_ [20] = method_name_[20] = 0;

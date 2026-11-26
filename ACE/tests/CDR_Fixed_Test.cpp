@@ -17,8 +17,8 @@ namespace
 {
   bool failed = false;
 
-  void log (ACE_OSTREAM_TYPE *os, const char *label, const char *expected,
-            const ACE_CDR::Fixed &f)
+  void log (ACE_OSTREAM_TYPE *os, char const *label, char const *expected,
+            ACE_CDR::Fixed const &f)
   {
 #ifdef ACE_LACKS_IOSTREAM_TOTALLY
     ACE_OS::fprintf (os, "%s: expected %s got ", label, expected);
