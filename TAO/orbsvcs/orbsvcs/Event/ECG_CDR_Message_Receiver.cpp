@@ -30,7 +30,7 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
   , request_size_ (request_size)
   , fragment_count_ (fragment_count)
 {
-  ACE_CDR::grow (&this->payload_, this->request_size_);
+  ACE_CDR::grow (std::addressof (this->payload_), this->request_size_);
   this->payload_.wr_ptr (request_size_);
 
   this->received_fragments_ = this->default_received_fragments_;

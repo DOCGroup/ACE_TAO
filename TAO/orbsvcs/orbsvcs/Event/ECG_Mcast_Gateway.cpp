@@ -15,6 +15,8 @@
 #include "tao/ORB_Core.h"
 #include "ace/OS_NS_strings.h"
 
+#include <memory>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/ECG_Mcast_Gateway.inl"
 #endif /* __ACE_INLINE__ */
@@ -337,7 +339,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint ()
     {
       if (dgram.ACE_SOCK::set_option (IPPROTO_IP,
                                       IP_MULTICAST_TTL,
-                                      &this->ttl_value_,
+                                      std::addressof (this->ttl_value_),
                                       sizeof (this->ttl_value_))
           == -1)
         {
@@ -350,7 +352,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint ()
 
   if (dgram.ACE_SOCK::set_option (IPPROTO_IP,
                                   IP_MULTICAST_LOOP,
-                                  &this->ip_multicast_loop_,
+                                  std::addressof (this->ip_multicast_loop_),
                                   sizeof (this->ip_multicast_loop_)) == -1)
     {
       ORBSVCS_ERROR ((LM_ERROR,
