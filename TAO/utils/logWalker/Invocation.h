@@ -17,8 +17,8 @@ using NotifyIncidents = std::vector<ACE_CString>;
 ///
 /// An outgoing invocation is detected when Muxed_TMS[%d] is followed by
 /// the process or thread performing dump_msg. An incoming invocation is
-/// detected when Transport[%d]::process_parsed_messages reports that no
-/// data is missing. Depending on the connection context, this may indicate
+/// detected when a Transport reports through @c process_parsed_messages that
+/// no data is missing. Depending on the connection context, this may indicate
 /// a request or a reply.
 ///
 /// Concurrent dump_msg calls can print the preamble and body out of order.
