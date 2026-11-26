@@ -175,7 +175,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       }
     root_context_2 = CosNaming::NamingContext::_narrow (ns2obj.in ());
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("Unable to resolve name servers"));
     return -1;
@@ -211,7 +211,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CORBA::Object_var obj1_on_replica =
           root_context_2->resolve (level1);
       }
-      catch (const CosNaming::NamingContext::NotFound&)
+      catch (CosNaming::NamingContext::NotFound const &)
         {
           ACE_ERROR ((LM_ERROR,
                       ACE_TEXT("Did not resolve object from replica on first.\n")));
@@ -225,7 +225,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT("Object appeared after a short wait.\n")));
           }
-          catch (const CosNaming::NamingContext::NotFound& second_ex)
+          catch (CosNaming::NamingContext::NotFound const & second_ex)
             {
               second_ex._tao_print_exception ("It really is not there. Failing...\n");
               return -1;
@@ -233,7 +233,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("Unable to create a lot of objects"));
     return -1;
@@ -256,7 +256,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       next_context = deep_context;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("Unable to create deep context"));
     return -1;
@@ -284,7 +284,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         CosNaming::NamingContext_var nc =
           CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
-      catch (const CosNaming::NamingContext::NotFound&)
+      catch (CosNaming::NamingContext::NotFound const &)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unable to resolve wide context object from replica.\n")));
 
@@ -297,7 +297,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             ACE_DEBUG ((LM_DEBUG,
                         ACE_TEXT("Object appeared after a short wait.\n")));
           }
-          catch (const CosNaming::NamingContext::NotFound& second_ex)
+          catch (CosNaming::NamingContext::NotFound const & second_ex)
             {
               second_ex._tao_print_exception (ACE_TEXT ("It really is not there. Failing...\n"));
               return -1;
@@ -305,7 +305,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("Unable to create wide context"));
     return -1;
@@ -340,7 +340,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          "Unbound context not removed from on retry\n"),
                         -1);
     }
-    catch (const CosNaming::NamingContext::NotFound&)
+    catch (CosNaming::NamingContext::NotFound const &)
       {
         // Not on replica --- as it should be.
         if (retried)
@@ -409,7 +409,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                          "Unbound context not removed from on retry\n"),
                         -1);
     }
-    catch (const CosNaming::NamingContext::NotFound&)
+    catch (CosNaming::NamingContext::NotFound const &)
       {
         // Not on replica --- as it should be.
         if (retried)
@@ -420,7 +420,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           }
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("Unable to delete objects"));
     return -1;
@@ -447,7 +447,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            -1);
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("Unable to resolve object from redundant server"));
     return -1;
@@ -468,7 +468,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
-  catch (const CosNaming::NamingContext::NotFound& ex)
+  catch (CosNaming::NamingContext::NotFound const & ex)
   {
     // expect exception since the context was deleted.
     // Make sure the right exception reason is provided.
@@ -479,7 +479,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                            -1);
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (ACE_TEXT ("Wrong exception type returned from resolve.\n"));
       return -1;
@@ -503,11 +503,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                         -1);
       }
   }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       // Expected exception
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("Unexpected Exception received.\n"));
     return -1;
@@ -527,11 +527,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       // Expected exception
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("Unexpected Exception received.\n"));
     return -1;
@@ -554,11 +554,11 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     -1);
   }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       // Expected exception
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
              ACE_TEXT ("Unexpected Exception received resolving ")
@@ -588,7 +588,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
                         -1);
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("Unable to resolve deep context from redundant server"));
@@ -679,7 +679,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("Unbound %i objects in %.2f secs\n"),
                 test_runs, secs));
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("ERROR: Exception during performance test.\n"));
     return -1;

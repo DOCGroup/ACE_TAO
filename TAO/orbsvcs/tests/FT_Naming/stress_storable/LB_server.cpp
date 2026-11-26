@@ -22,7 +22,7 @@ LB_server::destroy ()
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception caught while destroying LB_server\n"));
@@ -142,7 +142,7 @@ LB_server::start_orb_and_poa ()
                             -1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception raised initialising ORB or POA"));
@@ -218,7 +218,7 @@ LB_server::create_object_group ()
 
       this->write_ior_to_file (ior.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception raised while creating object group"));
@@ -246,7 +246,7 @@ LB_server::register_servant (Basic *servant, char const *loc)
                                            location,
                                            basic.in ());
     }
-  catch (const CORBA::UserException& ex)
+  catch (CORBA::UserException const & ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("Caught %C during add_member for loc = %C\n"),

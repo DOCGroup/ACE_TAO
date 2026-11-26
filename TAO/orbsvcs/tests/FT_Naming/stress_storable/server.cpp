@@ -31,7 +31,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       try {
         (lb_server.name_svc ())->rebind (name, lb_server.object_group ());
       }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
       {
         ex._tao_print_exception ("Unable to bind object group in name service.\n");
         return 1;
@@ -112,7 +112,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         return 1;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("lb_server exception");
       return 1;

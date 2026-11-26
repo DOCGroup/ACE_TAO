@@ -34,19 +34,19 @@ Basic::remove_member ()
                   ACE_TEXT ("(%P|%t) - Removed Member at Location <%C>\n"),
                   this->location_.in ()));
     }
-  catch (const PortableGroup::ObjectNotFound& ex)
+  catch (PortableGroup::ObjectNotFound const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Caught exception in remove_member"));
       throw CORBA::INTERNAL ();
     }
-  catch (const PortableGroup::MemberNotFound& ex)
+  catch (PortableGroup::MemberNotFound const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Caught exception in remove_member"));
       throw CORBA::INTERNAL ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception caught while destroying member\n"));

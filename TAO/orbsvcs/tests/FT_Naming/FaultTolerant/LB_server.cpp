@@ -24,7 +24,7 @@ LB_server::destroy ()
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception caught while destroying LB_server\n"));
@@ -146,7 +146,7 @@ LB_server::start_orb_and_poa ()
                             -1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception raised initialising ORB or POA"));
@@ -193,7 +193,7 @@ LB_server::create_object_group (char const *group_name)
 
       this->write_ior_to_file (this->ior_output_file_, ior.in ());
     }
-  catch (const PortableGroup::ObjectNotCreated&)
+  catch (PortableGroup::ObjectNotCreated const &)
     {
       this->object_group_ =
         this->naming_manager_->get_object_group_ref_from_name (group_name);
@@ -201,7 +201,7 @@ LB_server::create_object_group (char const *group_name)
                   "(%P|%t) LB_server - object group already exists\n"));
       return 1;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception raised while creating object group"));
@@ -237,12 +237,12 @@ LB_server::register_servant (Basic *servant, char const *loc)
                                            location,
                                            basic.in ());
     }
-  catch (const PortableGroup::ObjectNotAdded& )
+  catch (PortableGroup::ObjectNotAdded const & )
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%P|%t) Member was already added previously.\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception raised while registering servant"));
@@ -265,7 +265,7 @@ LB_server::remove_servant (char const *loc)
       this->naming_manager_->remove_member (this->object_group_.in (),
                                             location);
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         ACE_TEXT ("Exception raised while removing servant"));

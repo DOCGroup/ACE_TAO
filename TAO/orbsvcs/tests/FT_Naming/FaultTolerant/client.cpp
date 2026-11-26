@@ -447,7 +447,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       break;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to resolve name servers"));
@@ -509,7 +509,7 @@ do_failover_name_test (
     }
 
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to resolve name servers"));
@@ -550,7 +550,7 @@ do_failover_name_test (
       try {
         CORBA::Object_var obj1_on_replica = root_context_1->resolve (level1);
       }
-      catch (const CosNaming::NamingContext::NotFound& ex)
+      catch (CosNaming::NamingContext::NotFound const & ex)
         {
           ex._tao_print_exception (
             ACE_TEXT ("INFO: Unable to resolve object from replica. Sleeping for a second.\n"));
@@ -569,7 +569,7 @@ do_failover_name_test (
                         ACE_TEXT ("INFO: Object appeared after a short ")
                         ACE_TEXT ("wait.\n")));
           }
-          catch (const CosNaming::NamingContext::NotFound& second_ex)
+          catch (CosNaming::NamingContext::NotFound const & second_ex)
             {
               second_ex._tao_print_exception (
                 ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
@@ -578,7 +578,7 @@ do_failover_name_test (
         }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to create a lot of objects"));
@@ -603,7 +603,7 @@ do_failover_name_test (
       next_context = deep_context;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to create deep context"));
@@ -632,7 +632,7 @@ do_failover_name_test (
         CosNaming::NamingContext_var nc =
           CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
-      catch (const CosNaming::NamingContext::NotFound&)
+      catch (CosNaming::NamingContext::NotFound const &)
         {
           ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
@@ -649,7 +649,7 @@ do_failover_name_test (
                          ACE_TEXT ("INFO: Object appeared after a short ")
                          ACE_TEXT ("wait.\n")));
           }
-          catch (const CosNaming::NamingContext::NotFound& second_ex)
+          catch (CosNaming::NamingContext::NotFound const & second_ex)
             {
               second_ex._tao_print_exception (
                 ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
@@ -658,7 +658,7 @@ do_failover_name_test (
         }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to create wide context"));
@@ -697,7 +697,7 @@ do_failover_name_test (
                           ACE_TEXT ("on retry\n")),
                           RC_ERROR);
     }
-    catch (const CosNaming::NamingContext::NotFound&)
+    catch (CosNaming::NamingContext::NotFound const &)
       {
         // Not on replica --- as it should be.
         if (retried)
@@ -777,7 +777,7 @@ do_failover_name_test (
                          ACE_TEXT ("on retry\n")),
                          RC_ERROR);
     }
-    catch (const CosNaming::NamingContext::NotFound&)
+    catch (CosNaming::NamingContext::NotFound const &)
       {
         // Not on replica --- as it should be.
         if (retried)
@@ -788,7 +788,7 @@ do_failover_name_test (
           }
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to delete objects"));
@@ -816,7 +816,7 @@ do_failover_name_test (
                          RC_ERROR);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
         ACE_TEXT ("ERROR: Unable to resolve object from redundant server"));
@@ -840,7 +840,7 @@ do_failover_name_test (
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     RC_ERROR);
   }
-  catch (const CosNaming::NamingContext::NotFound& ex)
+  catch (CosNaming::NamingContext::NotFound const & ex)
   {
     // expect exception since the context was deleted.
     // Make sure the right exception reason is provided.
@@ -851,7 +851,7 @@ do_failover_name_test (
                          RC_ERROR);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
           ACE_TEXT ("ERROR: Wrong exception type returned from resolve.\n"));
@@ -880,11 +880,11 @@ do_failover_name_test (
                           RC_ERROR);
     }
   }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       // Expected exception
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ( ACE_TEXT ("ERROR: Unexpected Exception received.\n"));
     return RC_ERROR;
@@ -906,11 +906,11 @@ do_failover_name_test (
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     RC_ERROR);
   }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       // Expected exception
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ( ACE_TEXT ("ERROR: Unexpected Exception received.\n"));
     return RC_ERROR;
@@ -935,11 +935,11 @@ do_failover_name_test (
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     RC_ERROR);
   }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       // Expected exception
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
              ACE_TEXT ("ERROR: Unexpected Exception received resolving ")
@@ -973,7 +973,7 @@ do_failover_name_test (
                       RC_ERROR);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to resolve deep context from redundant server"));
@@ -1074,7 +1074,7 @@ do_failover_objectgroup_test (
     }
 
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to resolve name manager servers"));
@@ -1136,7 +1136,7 @@ do_persistence_name_test (
                           RC_ERROR);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to resolve name servers"));
     return RC_ERROR;
@@ -1178,7 +1178,7 @@ do_persistence_name_test (
       try {
         CORBA::Object_var obj1_on_replica = root_context_1->resolve (level1);
       }
-      catch (const CosNaming::NamingContext::NotFound& ex)
+      catch (CosNaming::NamingContext::NotFound const & ex)
         {
           ex._tao_print_exception (
             ACE_TEXT ("ERROR: Unable to resolve object from repository. Sleeping for a second.\n"));
@@ -1193,7 +1193,7 @@ do_persistence_name_test (
             ACE_ERROR ((LM_ERROR,
                         ACE_TEXT ("INFO: Object appeared after a short wait.\n")));
           }
-          catch (const CosNaming::NamingContext::NotFound& second_ex)
+          catch (CosNaming::NamingContext::NotFound const & second_ex)
             {
               second_ex._tao_print_exception (
                 ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
@@ -1202,7 +1202,7 @@ do_persistence_name_test (
         }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to create or validate a lot of objects"));
@@ -1230,7 +1230,7 @@ do_persistence_name_test (
         next_context = deep_context;
       }
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to create deep context"));
       return RC_ERROR;
@@ -1264,7 +1264,7 @@ do_persistence_name_test (
         CosNaming::NamingContext_var nc =
           CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
-      catch (const CosNaming::NamingContext::NotFound&)
+      catch (CosNaming::NamingContext::NotFound const &)
         {
           ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
@@ -1281,7 +1281,7 @@ do_persistence_name_test (
                          ACE_TEXT ("INFO: Object appeared after a short ")
                          ACE_TEXT ("wait.\n")));
           }
-          catch (const CosNaming::NamingContext::NotFound& second_ex)
+          catch (CosNaming::NamingContext::NotFound const & second_ex)
             {
               second_ex._tao_print_exception (
                   ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
@@ -1290,7 +1290,7 @@ do_persistence_name_test (
         }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to create or validate wide context"));
@@ -1398,7 +1398,7 @@ do_persistence_objectgroup_test (
 
       for (unsigned int i = 0; i < locations->length(); ++i)
       {
-        const PortableGroup::Location & loc = locations[i];
+        PortableGroup::Location const & loc = locations[i];
         if (loc.length() > 0) {
           ACE_DEBUG (( LM_DEBUG,
                        ACE_TEXT ("INFO: validating group member %C\n"),
@@ -1441,13 +1441,13 @@ do_persistence_objectgroup_test (
                                    RC_ERROR);
               }
             }
-            catch (const CORBA::Exception& ex)
+            catch (CORBA::Exception const & ex)
             {
               ex._tao_print_exception ("ERROR: invoking get_string on Basic object.\n");
               return RC_ERROR;
             }
           }
-          catch (const PortableGroup::MemberNotFound&)
+          catch (PortableGroup::MemberNotFound const &)
           {
             ACE_ERROR_RETURN ((LM_ERROR,
                                ACE_TEXT ("ERROR: Unable to find member location %C\n"),
@@ -1473,7 +1473,7 @@ do_persistence_objectgroup_test (
           {
             PortableGroup::Locations_var locations =
               naming_manager_1->locations_of_members (group_var.in());
-            const PortableGroup::Location & loc = locations.inout ()[0];
+            PortableGroup::Location const & loc = locations.inout ()[0];
             unsigned int num_locations = locations->length();
 
             PortableGroup::Location location_name (1);
@@ -1504,14 +1504,14 @@ do_persistence_objectgroup_test (
             out << loc[0].id.in () << std::endl;
             out << member_str.in() << std::endl;
           }
-          catch (const PortableGroup::ObjectGroupNotFound&)
+          catch (PortableGroup::ObjectGroupNotFound const &)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("ERROR: Unable to find group %C\n"),
                                  basic_group_name),
                                 RC_ERROR);
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               ACE_ERROR_RETURN ((LM_ERROR,
                                  ACE_TEXT ("ERROR: Unable to remove members ")
@@ -1576,7 +1576,7 @@ do_persistence_objectgroup_test (
                             ACE_TEXT ("ERROR: No group names found")));
               }
           }
-        catch (const CORBA::Exception& ex)
+        catch (CORBA::Exception const & ex)
           {
             ex._tao_print_exception ("CORBA::Exception caught:");
             ACE_ERROR_RETURN ((LM_ERROR,
@@ -1587,14 +1587,14 @@ do_persistence_objectgroup_test (
       }
 
     }
-    catch (const PortableGroup::ObjectGroupNotFound&)
+    catch (PortableGroup::ObjectGroupNotFound const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("ERROR: Unable to find group %C\n"),
                          basic_group_name),
                          RC_ERROR);
     }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("ERROR: Unable to list members for group %C\n"),
@@ -1603,7 +1603,7 @@ do_persistence_objectgroup_test (
     }
 
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
        ACE_TEXT ("ERROR: Unable To Resolve Name Manager Servers"));
@@ -1718,7 +1718,7 @@ do_equivalence_name_test (
                 ACE_TEXT ("INFO: ns2ref profile count: %d\n"),
                 ns2_count));
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("ERROR: Unable to resolve name servers"));
     return RC_ERROR;
@@ -1755,7 +1755,7 @@ do_equivalence_name_test (
       try {
         CORBA::Object_var obj1_on_replica = root_context_2->resolve (level1);
       }
-      catch (const CosNaming::NamingContext::NotFound& )
+      catch (CosNaming::NamingContext::NotFound const & )
         {
           ACE_DEBUG ((LM_INFO,
                       "INFO: Unable to resolve object from replica. "
@@ -1772,7 +1772,7 @@ do_equivalence_name_test (
                         ACE_TEXT ("INFO: Object appeared after a short ")
                         ACE_TEXT ("wait.\n")));
           }
-          catch (const CosNaming::NamingContext::NotFound& second_ex)
+          catch (CosNaming::NamingContext::NotFound const & second_ex)
             {
               second_ex._tao_print_exception (
                 ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
@@ -1781,7 +1781,7 @@ do_equivalence_name_test (
         }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to create a lot of objects"));
@@ -1806,7 +1806,7 @@ do_equivalence_name_test (
       next_context = deep_context;
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to create deep context"));
@@ -1837,7 +1837,7 @@ do_equivalence_name_test (
         CosNaming::NamingContext_var nc =
           CosNaming::NamingContext::_narrow (obj1_on_replica.in ());
       }
-      catch (const CosNaming::NamingContext::NotFound&)
+      catch (CosNaming::NamingContext::NotFound const &)
         {
           ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("INFO: Unable to resolve wide context object from ")
@@ -1856,7 +1856,7 @@ do_equivalence_name_test (
                         ACE_TEXT ("INFO: Object appeared after a ")
                         ACE_TEXT ("short wait.\n")));
           }
-          catch (const CosNaming::NamingContext::NotFound& second_ex)
+          catch (CosNaming::NamingContext::NotFound const & second_ex)
             {
               second_ex._tao_print_exception (
                 ACE_TEXT ("ERROR: It really is not there. Failing...\n"));
@@ -1865,7 +1865,7 @@ do_equivalence_name_test (
         }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to create wide context"));
@@ -1906,7 +1906,7 @@ do_equivalence_name_test (
                           ACE_TEXT ("on retry\n")),
                           RC_ERROR);
     }
-    catch (const CosNaming::NamingContext::NotFound&)
+    catch (CosNaming::NamingContext::NotFound const &)
       {
         // Not on replica --- as it should be.
         if (retried)
@@ -1982,7 +1982,7 @@ do_equivalence_name_test (
                           ACE_TEXT (" on retry\n")),
                           RC_ERROR);
     }
-    catch (const CosNaming::NamingContext::NotFound&)
+    catch (CosNaming::NamingContext::NotFound const &)
       {
         // Not on replica --- as it should be.
         if (retried)
@@ -1993,7 +1993,7 @@ do_equivalence_name_test (
           }
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to delete objects"));
@@ -2023,7 +2023,7 @@ do_equivalence_name_test (
                          RC_ERROR);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
         ACE_TEXT ("ERROR: Unable to resolve object from redundant server"));
@@ -2047,7 +2047,7 @@ do_equivalence_name_test (
                     ACE_TEXT ("redundant server - deleted object found.\n")),
                     RC_ERROR);
   }
-  catch (const CosNaming::NamingContext::NotFound& ex)
+  catch (CosNaming::NamingContext::NotFound const & ex)
   {
     // expect exception since the context was deleted.
     // Make sure the right exception reason is provided.
@@ -2059,7 +2059,7 @@ do_equivalence_name_test (
                             RC_ERROR);
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
           ACE_TEXT ("ERROR: Wrong exception type returned from resolve.\n"));
@@ -2088,11 +2088,11 @@ do_equivalence_name_test (
                          RC_ERROR);
     }
   }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       // Expected exception
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ( ACE_TEXT ("ERROR: Unexpected Exception ")
                               ACE_TEXT ("received.\n"));
@@ -2115,11 +2115,11 @@ do_equivalence_name_test (
                        ACE_TEXT ("- deleted object found.\n")),
                        RC_ERROR);
   }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       // Expected exception
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ( ACE_TEXT ("ERROR: Unexpected Exception ")
                               ACE_TEXT ("received.\n"));
@@ -2145,11 +2145,11 @@ do_equivalence_name_test (
                        ACE_TEXT ("- deleted object found.\n")),
                        RC_ERROR);
   }
-  catch (const CosNaming::NamingContext::NotFound&)
+  catch (CosNaming::NamingContext::NotFound const &)
     {
       // Expected exception
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
              ACE_TEXT ("ERROR: Unexpected Exception received resolving ")
@@ -2182,7 +2182,7 @@ do_equivalence_name_test (
                       RC_ERROR);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("ERROR: Unable to resolve deep context from redundant server."));
@@ -2421,7 +2421,7 @@ do_equivalence_objectgroup_test (
     }
 
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ++error_count;
     ex._tao_print_exception (
