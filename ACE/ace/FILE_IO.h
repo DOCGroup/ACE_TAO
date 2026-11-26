@@ -87,7 +87,7 @@ public:
 #endif /* ACE_HAS_STREAM_PIPES */
 
   /// Send iovecs via @c writev().
-  ssize_t send (const iovec iov[], int n) const;
+  ssize_t send (iovec const iov[], int n) const;
 
   /// Recv iovecs via @c readv().
   ssize_t recv (iovec iov[], int n) const;
@@ -120,7 +120,7 @@ public:
                 ACE_OVERLAPPED *overlapped) const;
 
   /// Send an @c iovec of size @a n to the file.
-  ssize_t sendv (const iovec iov[],
+  ssize_t sendv (iovec const iov[],
                  int n) const;
 
   /**
@@ -136,7 +136,7 @@ public:
 
   /// Send an @c iovec of size @a n to the file.  Will block until all
   /// bytes are sent or an error occurs.
-  ssize_t sendv_n (const iovec iov[],
+  ssize_t sendv_n (iovec const iov[],
                    int n) const;
 
   /// Receive an @c iovec of size @a n to the file.

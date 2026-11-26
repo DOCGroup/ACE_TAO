@@ -5,7 +5,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE ssize_t
-ACE_FILE_IO::sendv_n (const iovec iov[], int n) const
+ACE_FILE_IO::sendv_n (iovec const iov[], int n) const
 {
   ACE_TRACE ("ACE_FILE_IO::sendv_n");
   return ACE::writev_n (this->get_handle (),
@@ -41,7 +41,7 @@ ACE_FILE_IO::recvv_n (iovec iov[], int n) const
 /// Send an @c iovec of size @c n to the file.
 
 ACE_INLINE ssize_t
-ACE_FILE_IO::sendv (const iovec iov[], int n) const
+ACE_FILE_IO::sendv (iovec const iov[], int n) const
 {
   ACE_TRACE ("ACE_FILE_IO::sendv");
   return ACE_OS::writev (this->get_handle (), iov, n);
@@ -82,7 +82,7 @@ ACE_FILE_IO::recv (void *buf, size_t n) const
 }
 
 ACE_INLINE ssize_t
-ACE_FILE_IO::send (const iovec iov[], int n) const
+ACE_FILE_IO::send (iovec const iov[], int n) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
   return ACE_OS::writev (this->get_handle (), iov, n);
@@ -100,28 +100,28 @@ ACE_INLINE ssize_t
 ACE_FILE_IO::recv (ACE_Str_Buf *cntl, ACE_Str_Buf *data, int *band, int *flags) const
 {
   ACE_TRACE ("ACE_FILE_IO::recv");
-  return ACE_OS::getpmsg (this->get_handle (), (strbuf *) cntl, (strbuf *) data, band, flags);
+  return ACE_OS::getpmsg (this->get_handle (), cntl, data, band, flags);
 }
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::send (ACE_Str_Buf const *cntl, ACE_Str_Buf const *data, int band, int flags) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
-  return ACE_OS::putpmsg (this->get_handle (), (strbuf *) cntl, (strbuf *) data, band, flags);
+  return ACE_OS::putpmsg (this->get_handle (), cntl, data, band, flags);
 }
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::recv (ACE_Str_Buf *cntl, ACE_Str_Buf *data, int *flags) const
 {
   ACE_TRACE ("ACE_FILE_IO::recv");
-  return ACE_OS::getmsg (this->get_handle (), (strbuf *) cntl, (strbuf *) data, flags);
+  return ACE_OS::getmsg (this->get_handle (), cntl, data, flags);
 }
 
 ACE_INLINE ssize_t
 ACE_FILE_IO::send (ACE_Str_Buf const *cntl, ACE_Str_Buf const *data, int flags) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
-  return ACE_OS::putmsg (this->get_handle (), (strbuf *) cntl, (strbuf *) data, flags);
+  return ACE_OS::putmsg (this->get_handle (), cntl, data, flags);
 }
 
 ACE_INLINE ssize_t
