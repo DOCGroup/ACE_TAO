@@ -178,7 +178,7 @@ ACE::select (int width,
              ACE_Handle_Set *readfds,
              ACE_Handle_Set *writefds,
              ACE_Handle_Set *exceptfds,
-             const ACE_Time_Value *timeout)
+             ACE_Time_Value const *timeout)
 {
   int const result = ACE_OS::select (width,
                                readfds ? readfds->fdset () : nullptr,
@@ -209,7 +209,7 @@ ACE::select (int width,
 int
 ACE::select (int width,
              ACE_Handle_Set &readfds,
-             const ACE_Time_Value *timeout)
+             ACE_Time_Value const *timeout)
 {
   int const result = ACE_OS::select (width,
                                readfds.fdset (),
@@ -334,7 +334,7 @@ ACE::hash_pjw (char const *str, size_t len)
 
   for (size_t i = 0; i < len; ++i)
     {
-      const char temp = str[i];
+      char const temp = str[i];
       hash = (hash << 4) + (temp * 13);
 
       u_long const g = hash & 0xf0000000;
@@ -466,7 +466,7 @@ ACE::recv (ACE_HANDLE handle,
            void *buf,
            size_t len,
            int flags,
-           const ACE_Time_Value *timeout)
+           ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -496,7 +496,7 @@ ACE::t_rcv (ACE_HANDLE handle,
             void *buf,
             size_t len,
             int *flags,
-            const ACE_Time_Value *timeout)
+            ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -525,7 +525,7 @@ ssize_t
 ACE::recv (ACE_HANDLE handle,
            void *buf,
            size_t n,
-           const ACE_Time_Value *timeout)
+           ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -551,7 +551,7 @@ ssize_t
 ACE::recvmsg (ACE_HANDLE handle,
               struct msghdr *msg,
               int flags,
-              const ACE_Time_Value *timeout)
+              ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -580,7 +580,7 @@ ACE::recvfrom (ACE_HANDLE handle,
                int flags,
                struct sockaddr *addr,
                int *addrlen,
-               const ACE_Time_Value *timeout)
+               ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -660,7 +660,7 @@ ACE::recv_n_i (ACE_HANDLE handle,
                void *buf,
                size_t len,
                int flags,
-               const ACE_Time_Value *timeout,
+               ACE_Time_Value const *timeout,
                size_t *bt)
 {
   size_t temp;
@@ -784,7 +784,7 @@ ACE::t_rcv_n_i (ACE_HANDLE handle,
                 void *buf,
                 size_t len,
                 int *flags,
-                const ACE_Time_Value *timeout,
+                ACE_Time_Value const *timeout,
                 size_t *bt)
 {
   size_t temp;
@@ -904,7 +904,7 @@ ssize_t
 ACE::recv_n_i (ACE_HANDLE handle,
                void *buf,
                size_t len,
-               const ACE_Time_Value *timeout,
+               ACE_Time_Value const *timeout,
                size_t *bt)
 {
   size_t temp;
@@ -1020,7 +1020,7 @@ ssize_t
 ACE::recvv (ACE_HANDLE handle,
             iovec *iov,
             int iovcnt,
-            const ACE_Time_Value *timeout)
+            ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -1107,7 +1107,7 @@ ssize_t
 ACE::recvv_n_i (ACE_HANDLE handle,
                 iovec *iov,
                 int iovcnt,
-                const ACE_Time_Value *timeout,
+                ACE_Time_Value const *timeout,
                 size_t *bt)
 {
   size_t temp;
@@ -1183,7 +1183,7 @@ ACE::recvv_n_i (ACE_HANDLE handle,
 ssize_t
 ACE::recv_n (ACE_HANDLE handle,
              ACE_Message_Block *message_block,
-             const ACE_Time_Value *timeout,
+             ACE_Time_Value const *timeout,
              size_t *bt)
 {
   size_t temp;
@@ -1196,7 +1196,7 @@ ACE::recv_n (ACE_HANDLE handle,
   while (message_block != nullptr)
     {
       // Our current message block chain.
-      const ACE_Message_Block *current_message_block = message_block;
+      ACE_Message_Block const *current_message_block = message_block;
 
       while (current_message_block != nullptr)
         {
@@ -1284,10 +1284,10 @@ ACE::recv_n (ACE_HANDLE handle,
 
 ssize_t
 ACE::send (ACE_HANDLE handle,
-           const void *buf,
+           void const *buf,
            size_t n,
            int flags,
-           const ACE_Time_Value *timeout)
+           ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -1314,10 +1314,10 @@ ACE::send (ACE_HANDLE handle,
 
 ssize_t
 ACE::t_snd (ACE_HANDLE handle,
-            const void *buf,
+            void const *buf,
             size_t n,
             int flags,
-            const ACE_Time_Value *timeout)
+            ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -1344,9 +1344,9 @@ ACE::t_snd (ACE_HANDLE handle,
 
 ssize_t
 ACE::send (ACE_HANDLE handle,
-           const void *buf,
+           void const *buf,
            size_t n,
-           const ACE_Time_Value *timeout)
+           ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -1372,7 +1372,7 @@ ssize_t
 ACE::sendmsg (ACE_HANDLE handle,
               const struct msghdr *msg,
               int flags,
-              const ACE_Time_Value *timeout)
+              ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -1402,7 +1402,7 @@ ACE::sendto (ACE_HANDLE handle,
              int flags,
              const struct sockaddr *addr,
              int addrlen,
-             const ACE_Time_Value *timeout)
+             ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -1427,7 +1427,7 @@ ACE::sendto (ACE_HANDLE handle,
 
 ssize_t
 ACE::send_n_i (ACE_HANDLE handle,
-               const void *buf,
+               void const *buf,
                size_t len,
                int flags,
                size_t *bt)
@@ -1483,10 +1483,10 @@ ACE::send_n_i (ACE_HANDLE handle,
 
 ssize_t
 ACE::send_n_i (ACE_HANDLE handle,
-               const void *buf,
+               void const *buf,
                size_t len,
                int flags,
-               const ACE_Time_Value *timeout,
+               ACE_Time_Value const *timeout,
                size_t *bt)
 {
   size_t temp;
@@ -1554,7 +1554,7 @@ ACE::send_n_i (ACE_HANDLE handle,
 
 ssize_t
 ACE::t_snd_n_i (ACE_HANDLE handle,
-                const void *buf,
+                void const *buf,
                 size_t len,
                 int flags,
                 size_t *bt)
@@ -1606,10 +1606,10 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
 
 ssize_t
 ACE::t_snd_n_i (ACE_HANDLE handle,
-                const void *buf,
+                void const *buf,
                 size_t len,
                 int flags,
-                const ACE_Time_Value *timeout,
+                ACE_Time_Value const *timeout,
                 size_t *bt)
 {
   size_t temp;
@@ -1678,7 +1678,7 @@ ACE::t_snd_n_i (ACE_HANDLE handle,
 
 ssize_t
 ACE::send_n_i (ACE_HANDLE handle,
-               const void *buf,
+               void const *buf,
                size_t len,
                size_t *bt)
 {
@@ -1728,9 +1728,9 @@ ACE::send_n_i (ACE_HANDLE handle,
 
 ssize_t
 ACE::send_n_i (ACE_HANDLE handle,
-               const void *buf,
+               void const *buf,
                size_t len,
-               const ACE_Time_Value *timeout,
+               ACE_Time_Value const *timeout,
                size_t *bt)
 {
   size_t temp;
@@ -1845,7 +1845,7 @@ ssize_t
 ACE::sendv (ACE_HANDLE handle,
             const iovec *iov,
             int iovcnt,
-            const ACE_Time_Value *timeout)
+            ACE_Time_Value const *timeout)
 {
   if (timeout == nullptr)
     {
@@ -1937,7 +1937,7 @@ ssize_t
 ACE::sendv_n_i (ACE_HANDLE handle,
                 const iovec *i,
                 int iovcnt,
-                const ACE_Time_Value *timeout,
+                ACE_Time_Value const *timeout,
                 size_t *bt)
 {
   size_t temp;
@@ -2018,7 +2018,7 @@ ACE::sendv_n_i (ACE_HANDLE handle,
 
 ssize_t
 ACE::write_n (ACE_HANDLE handle,
-              const ACE_Message_Block *message_block,
+              ACE_Message_Block const *message_block,
               size_t *bt)
 {
   size_t temp;
@@ -2031,7 +2031,7 @@ ACE::write_n (ACE_HANDLE handle,
   while (message_block != nullptr)
     {
       // Our current message block chain.
-      const ACE_Message_Block *current_message_block = message_block;
+      ACE_Message_Block const *current_message_block = message_block;
 
       while (current_message_block != nullptr)
         {
@@ -2117,8 +2117,8 @@ ACE::write_n (ACE_HANDLE handle,
 
 ssize_t
 ACE::send_n (ACE_HANDLE handle,
-             const ACE_Message_Block *message_block,
-             const ACE_Time_Value *timeout,
+             ACE_Message_Block const *message_block,
+             ACE_Time_Value const *timeout,
              size_t *bt)
 {
   size_t temp;
@@ -2131,7 +2131,7 @@ ACE::send_n (ACE_HANDLE handle,
   while (message_block != nullptr)
     {
       // Our current message block chain.
-      const ACE_Message_Block *current_message_block = message_block;
+      ACE_Message_Block const *current_message_block = message_block;
 
       while (current_message_block != nullptr)
         {
@@ -2307,7 +2307,7 @@ ACE::writev_n (ACE_HANDLE handle,
 
 int
 ACE::handle_ready (ACE_HANDLE handle,
-                   const ACE_Time_Value *timeout,
+                   ACE_Time_Value const *timeout,
                    bool read_ready,
                    bool write_ready,
                    bool exception_ready)
@@ -2369,7 +2369,7 @@ ACE::handle_ready (ACE_HANDLE handle,
 
 int
 ACE::enter_recv_timedwait (ACE_HANDLE handle,
-                           const ACE_Time_Value *timeout,
+                           ACE_Time_Value const *timeout,
                            int &val)
 {
   int const result = ACE::handle_read_ready (handle, timeout);
@@ -2386,7 +2386,7 @@ ACE::enter_recv_timedwait (ACE_HANDLE handle,
 
 int
 ACE::enter_send_timedwait (ACE_HANDLE handle,
-                           const ACE_Time_Value *timeout,
+                           ACE_Time_Value const *timeout,
                            int &val)
 {
   int const result = ACE::handle_write_ready (handle, timeout);
@@ -2547,7 +2547,7 @@ ACE::timestamp (ACE_TCHAR date_and_time[],
 /// 012345678901234567890123456
 /// 2010-12-02 12:56:00.123456@c nul
 ACE_TCHAR *
-ACE::timestamp (const ACE_Time_Value& time_value,
+ACE::timestamp (ACE_Time_Value const& time_value,
                 ACE_TCHAR date_and_time[],
                 size_t date_and_timelen,
                 bool return_pointer_to_first_digit)
@@ -2611,7 +2611,7 @@ ACE::round_to_allocation_granularity (size_t len)
 
 ACE_HANDLE
 ACE::handle_timed_complete (ACE_HANDLE h,
-                            const ACE_Time_Value *timeout,
+                            ACE_Time_Value const *timeout,
                             int is_tli)
 {
   ACE_TRACE ("ACE::handle_timed_complete");
@@ -2879,9 +2879,9 @@ ACE::handle_timed_accept (ACE_HANDLE listener,
 /// Make the current process a UNIX daemon.  This is based on Stevens
 /// code from APUE.
 int
-ACE::daemonize (const ACE_TCHAR pathname[],
+ACE::daemonize (ACE_TCHAR const pathname[],
                 bool close_all_handles,
-                const ACE_TCHAR program_name[])
+                ACE_TCHAR const program_name[])
 {
   ACE_TRACE ("ACE::daemonize");
 #if !defined (ACE_LACKS_FORK)

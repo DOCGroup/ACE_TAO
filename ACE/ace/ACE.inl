@@ -22,7 +22,7 @@ ACE::read_n (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE::write_n (ACE_HANDLE handle,
-              const void *buf,
+              void const *buf,
               size_t len,
               size_t *bytes_transferred)
 {
@@ -37,7 +37,7 @@ ACE::recv_n (ACE_HANDLE handle,
              void *buf,
              size_t len,
              int flags,
-             const ACE_Time_Value *timeout,
+             ACE_Time_Value const *timeout,
              size_t *bytes_transferred)
 {
   if (timeout == nullptr)
@@ -66,7 +66,7 @@ ACE::t_rcv_n (ACE_HANDLE handle,
               void *buf,
               size_t len,
               int *flags,
-              const ACE_Time_Value *timeout,
+              ACE_Time_Value const *timeout,
               size_t *bytes_transferred)
 {
   if (timeout == nullptr)
@@ -94,7 +94,7 @@ ACE_INLINE ssize_t
 ACE::recv_n (ACE_HANDLE handle,
              void *buf,
              size_t len,
-             const ACE_Time_Value *timeout,
+             ACE_Time_Value const *timeout,
              size_t *bytes_transferred)
 {
   if (timeout == nullptr)
@@ -118,7 +118,7 @@ ACE_INLINE ssize_t
 ACE::recvv_n (ACE_HANDLE handle,
               iovec *iov,
               int iovcnt,
-              const ACE_Time_Value *timeout,
+              ACE_Time_Value const *timeout,
               size_t *bytes_transferred)
 {
   if (timeout == nullptr)
@@ -140,10 +140,10 @@ ACE::recvv_n (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE::send_n (ACE_HANDLE handle,
-             const void *buf,
+             void const *buf,
              size_t len,
              int flags,
-             const ACE_Time_Value *timeout,
+             ACE_Time_Value const *timeout,
              size_t *bytes_transferred)
 {
   if (timeout == nullptr)
@@ -169,10 +169,10 @@ ACE::send_n (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE::t_snd_n (ACE_HANDLE handle,
-              const void *buf,
+              void const *buf,
               size_t len,
               int flags,
-              const ACE_Time_Value *timeout,
+              ACE_Time_Value const *timeout,
               size_t *bytes_transferred)
 {
   if (timeout == nullptr)
@@ -198,9 +198,9 @@ ACE::t_snd_n (ACE_HANDLE handle,
 
 ACE_INLINE ssize_t
 ACE::send_n (ACE_HANDLE handle,
-             const void *buf,
+             void const *buf,
              size_t len,
-             const ACE_Time_Value *timeout,
+             ACE_Time_Value const *timeout,
              size_t *bytes_transferred)
 {
   if (timeout == nullptr)
@@ -224,7 +224,7 @@ ACE_INLINE ssize_t
 ACE::sendv_n (ACE_HANDLE handle,
               const iovec *iov,
               int iovcnt,
-              const ACE_Time_Value *timeout,
+              ACE_Time_Value const *timeout,
               size_t *bytes_transferred)
 {
   if (timeout == nullptr)
@@ -245,7 +245,7 @@ ACE::sendv_n (ACE_HANDLE handle,
 }
 
 ACE_INLINE ssize_t
-ACE::send_i (ACE_HANDLE handle, const void *buf, size_t len)
+ACE::send_i (ACE_HANDLE handle, void const *buf, size_t len)
 {
 #if defined (ACE_WIN32) || defined (ACE_MQX) || defined (__ghs__)
   return ACE_OS::send (handle, static_cast<char const *> (buf), len);
@@ -265,19 +265,19 @@ ACE::recv_i (ACE_HANDLE handle, void *buf, size_t len)
 }
 
 ACE_INLINE int
-ACE::handle_read_ready (ACE_HANDLE handle, const ACE_Time_Value *timeout)
+ACE::handle_read_ready (ACE_HANDLE handle, ACE_Time_Value const *timeout)
 {
   return ACE::handle_ready (handle, timeout, true, false, false);
 }
 
 ACE_INLINE int
-ACE::handle_write_ready (ACE_HANDLE handle, const ACE_Time_Value *timeout)
+ACE::handle_write_ready (ACE_HANDLE handle, ACE_Time_Value const *timeout)
 {
   return ACE::handle_ready (handle, timeout, false, true, false);
 }
 
 ACE_INLINE int
-ACE::handle_exception_ready (ACE_HANDLE handle, const ACE_Time_Value *timeout)
+ACE::handle_exception_ready (ACE_HANDLE handle, ACE_Time_Value const *timeout)
 {
   return ACE::handle_ready (handle, timeout, false, false, true);
 }
@@ -317,7 +317,7 @@ ACE::isdotdir (const wchar_t *s)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE void
-ACE::unique_name (const void *object,
+ACE::unique_name (void const *object,
                   ACE_TCHAR *name,
                   size_t length)
 {
