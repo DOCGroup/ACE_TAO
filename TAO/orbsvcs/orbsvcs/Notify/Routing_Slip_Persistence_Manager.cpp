@@ -521,7 +521,7 @@ Routing_Slip_Persistence_Manager::fill_block(Persistent_Storage_Block& psb,
   size_t result {};
   if (data_size > 0)
   {
-    const size_t max_size = this->allocator_->block_size() - offset_into_block;
+    size_t const max_size = this->allocator_->block_size() - offset_into_block;
     size_t size_to_copy = data_size;
     if (size_to_copy > max_size)
     {

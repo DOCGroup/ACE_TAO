@@ -7,7 +7,7 @@ namespace TAO_Notify
 Bit_Vector::Bit_Vector() = default;
 
 bool
-Bit_Vector::is_set(const size_t location) const
+Bit_Vector::is_set(size_t const location) const
 {
   bool result {};
   if (location < this->size_)
@@ -18,7 +18,7 @@ Bit_Vector::is_set(const size_t location) const
 }
 
 void
-Bit_Vector::set_bit(const size_t location, bool set)
+Bit_Vector::set_bit(size_t const location, bool set)
 {
   if (location >= this->size_)
   {
@@ -56,7 +56,7 @@ Bit_Vector::find_first_bit(bool set) const
 }
 
 void
-Bit_Vector::evaluate_firsts(const size_t location, bool set)
+Bit_Vector::evaluate_firsts(size_t const location, bool set)
 {
   if (set)
   {
@@ -83,7 +83,7 @@ Bit_Vector::evaluate_firsts(const size_t location, bool set)
 }
 
 size_t
-Bit_Vector::find_first_bit_of(const size_t location, bool set)
+Bit_Vector::find_first_bit_of(size_t const location, bool set)
 {
   size_t newloc {};
   size_t idx {};

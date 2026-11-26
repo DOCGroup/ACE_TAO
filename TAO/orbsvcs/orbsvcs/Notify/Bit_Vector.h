@@ -41,19 +41,19 @@ public:
   ~Bit_Vector() = default;
 
   /// \brief Determine if a bit at location is set.
-  bool is_set(const size_t location) const;
+  bool is_set(size_t const location) const;
   /// \brief Set or unset a bit at location, growing the vector as needed.
-  void set_bit(const size_t location, bool set);
+  void set_bit(size_t const location, bool set);
 
   /// \brief Find the first bit that is either set or unset in an O(1).
   size_t find_first_bit(bool set) const;
 
 private:
   /// Update our first set and unset bits.
-  void evaluate_firsts(const size_t location, bool set);
+  void evaluate_firsts(size_t const location, bool set);
   /// Iterate from location to the end, finding the first bit that
   /// matches the requested set or unset value.
-  size_t find_first_bit_of(const size_t location, bool set);
+  size_t find_first_bit_of(size_t const location, bool set);
 
 private:
   VECTOR_TYPE bitvec_;

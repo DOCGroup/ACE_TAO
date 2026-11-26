@@ -18,8 +18,8 @@ namespace TAO_Notify
 {
 Persistent_Callback::~Persistent_Callback() = default;
 
-Persistent_Storage_Block::Persistent_Storage_Block(const size_t block_number,
-  const size_t block_size)
+Persistent_Storage_Block::Persistent_Storage_Block(size_t const block_number,
+  size_t const block_size)
   : block_number_(block_number)
   , no_write_(false)
   , sync_(false)
@@ -174,7 +174,7 @@ Persistent_File_Allocator::~Persistent_File_Allocator()
 
 bool
 Persistent_File_Allocator::open (ACE_TCHAR const *filename,
-  const size_t block_size)
+  size_t const block_size)
 {
   bool file_opened = this->pstore_.open(filename, block_size);
   if (file_opened)
@@ -358,7 +358,7 @@ Persistent_File_Allocator::write(Persistent_Storage_Block* psb)
 }
 
 void
-Persistent_File_Allocator::free_block(const size_t block_number)
+Persistent_File_Allocator::free_block(size_t const block_number)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->free_blocks_lock_);
   ACE_ASSERT (this->free_blocks_.is_set (block_number));

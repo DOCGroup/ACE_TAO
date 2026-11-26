@@ -52,8 +52,8 @@ class TAO_Notify_Serv_Export Persistent_Storage_Block
 public:
   /// The constructor.  Initializes the callback to nullptr.
   Persistent_Storage_Block(
-    const size_t block_number,
-    const size_t block_size);
+    size_t const block_number,
+    size_t const block_size);
   /// The copy constructor.  Makes a deep copy of the passed in PSB.
   Persistent_Storage_Block(const Persistent_Storage_Block& psb);
   Persistent_Storage_Block& operator= (Persistent_Storage_Block const &psb);
@@ -130,7 +130,7 @@ public:
   Persistent_File_Allocator& operator= (Persistent_File_Allocator&&) = delete;
 
   bool open (ACE_TCHAR const *filename,
-    const size_t block_size = 512);
+    size_t const block_size = 512);
 
   /// \brief Wait for pending I/O and terminate our work thread.
   void shutdown();
@@ -172,7 +172,7 @@ public:
 
 private:
   /// Free a previously assigned block.
-  void free_block(const size_t block_number);
+  void free_block(size_t const block_number);
   /// Find and allocate a free block.
   bool allocate_block(size_t& block_number);
 
