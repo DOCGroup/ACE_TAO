@@ -26,7 +26,7 @@ using namespace TAO_VERSIONED_NAMESPACE_NAME::TAO;
 
 using tested_sequence = unbounded_object_reference_sequence<mock_reference, mock_reference_var>;
 
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const tested_sequence &sequence)
+CORBA::Boolean operator<< (TAO_OutputCDR &strm, tested_sequence const &sequence)
 {
   return TAO::marshal_sequence(strm, sequence);
 }

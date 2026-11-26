@@ -77,7 +77,7 @@ TAO::Objref_Traits<mock_reference>::marshal (
   return true;
 }
 
-CORBA::Boolean operator<< (TAO_OutputCDR &, const mock_reference *)
+CORBA::Boolean operator<< (TAO_OutputCDR &, mock_reference const *)
 {
   mock_reference::serialize_calls ();
   return true;

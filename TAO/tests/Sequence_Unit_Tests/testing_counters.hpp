@@ -60,9 +60,9 @@ public:
     , counter_(counter)
   { }
 
-  expected_calls (const expected_calls &) = delete;
+  expected_calls (expected_calls const &) = delete;
   expected_calls (expected_calls &&) = delete;
-  expected_calls &operator= (const expected_calls &) = delete;
+  expected_calls &operator= (expected_calls const &) = delete;
   expected_calls &operator= (expected_calls &&) = delete;
 
   inline bool expect(long n)

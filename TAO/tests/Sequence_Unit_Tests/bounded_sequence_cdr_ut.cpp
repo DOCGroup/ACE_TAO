@@ -29,7 +29,7 @@ CORBA::ULong constexpr TMAX = 64;
 
 using tested_sequence = bounded_object_reference_sequence<mock_reference, mock_reference_var,TMAX>;
 
-CORBA::Boolean operator<< (TAO_OutputCDR &strm, const tested_sequence &sequence)
+CORBA::Boolean operator<< (TAO_OutputCDR &strm, tested_sequence const &sequence)
 {
   return TAO::marshal_sequence(strm, sequence);
 }
