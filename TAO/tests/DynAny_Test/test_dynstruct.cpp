@@ -225,7 +225,7 @@ Test_DynStruct::run_test ()
               ts_out2 = nullptr;
             }
         }
-      catch (const CORBA::TypeCode::BadKind& )
+      catch (CORBA::TypeCode::BadKind const & )
         {
         }
 
@@ -355,7 +355,7 @@ Test_DynStruct::run_test ()
         ++this->error_count_;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("test_dynstruct::run_test");
       ++this->error_count_;

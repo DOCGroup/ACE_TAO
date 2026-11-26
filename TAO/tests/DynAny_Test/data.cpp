@@ -64,7 +64,7 @@ Data::Data (CORBA::ORB_var orb)
       // Clean up after the POA
       root_poa->destroy (true, true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception in ORB/POA init\n");
     }

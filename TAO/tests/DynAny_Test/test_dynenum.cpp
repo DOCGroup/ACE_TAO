@@ -220,7 +220,7 @@ Test_DynEnum::run_test ()
           }
        }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("test_dynenum::run_test");
       ++this->error_count_;

@@ -157,7 +157,7 @@ Test_DynArray::run_test ()
 
       ftc1->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("test_dynarray::run_test");
       ++this->error_count_;

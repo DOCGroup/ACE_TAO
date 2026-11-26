@@ -359,7 +359,7 @@ Test_DynUnion::run_test ()
 
           s_out3 = ftc2->get_typecode ();
         }
-      catch (const CORBA::TypeCode::BadKind& )
+      catch (CORBA::TypeCode::BadKind const & )
         {
           // Failed to create
         }
@@ -504,7 +504,7 @@ Test_DynUnion::run_test ()
 
       // if we get here the create_dyn_any worked.
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("test_dynunion::run_test");
       ++this->error_count_;

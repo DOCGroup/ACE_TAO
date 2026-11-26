@@ -751,7 +751,7 @@ Test_DynAny::run_test ()
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ACE_ERROR ((LM_ERROR,
                   "fixed DynAny test failed during %C\n",
