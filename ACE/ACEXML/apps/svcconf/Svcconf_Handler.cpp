@@ -20,8 +20,8 @@
 
 void
 ACEXML_Svcconf_Handler::characters (ACEXML_Char const *,
-                                    int,
-                                    int)
+                                    size_t,
+                                    size_t)
 {
 }
 
@@ -304,7 +304,7 @@ ACEXML_Svcconf_Handler::startElement (ACEXML_Char const *,
 
       if (ACE_Service_Repository::instance()->find
           (this->stream_info_.name (),
-           (const ACE_Service_Type **) &this->stream_svc_type_) == -1)
+           std::addressof (this->stream_svc_type_)) == -1)
         {
           // build the error message
           ACE_TString msg (ACE_TEXT ("Cannot find stream '"));

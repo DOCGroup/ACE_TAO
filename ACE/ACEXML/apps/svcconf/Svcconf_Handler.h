@@ -94,8 +94,8 @@ public:
 
   /// Receive notification of character data.
   void characters (ACEXML_Char const *ch,
-                   int start,
-                   int length) override;
+                   size_t start,
+                   size_t length) override;
 
   /// Receive notification of the end of a document.
   void endDocument () override;
@@ -194,7 +194,7 @@ private:
   bool in_module_ {};
 
   /// Non-owning; the service repository owns this record and manages stream_'s lifetime.
-  ACE_Service_Type *stream_svc_type_ {};
+  ACE_Service_Type const *stream_svc_type_ {};
   ACE_Stream_Type *stream_ {};
 
   ACE_Parsed_Info parsed_info_;
