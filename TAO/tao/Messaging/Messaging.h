@@ -34,7 +34,7 @@ public:
   static int init ();
 };
 
-static const int TAO_Requires_Messaging_Initializer = TAO_Messaging_Initializer::init ();
+static int const TAO_Requires_Messaging_Initializer = TAO_Messaging_Initializer::init ();
 
 enum TAO_AMI_Reply_Status
 {

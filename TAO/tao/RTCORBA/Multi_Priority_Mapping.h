@@ -65,7 +65,7 @@ private:
   int base_native_priority_;
   int base_corba_priority_;
 
-  const int priority_spacing_;
+  int const priority_spacing_;
   bool const priorities_contiguous_;
 
   /// The scheduling policy
