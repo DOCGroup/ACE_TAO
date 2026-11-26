@@ -45,7 +45,7 @@ namespace CORBA
     static UserException *_downcast (CORBA::Exception *exception);
 
     /// The const version of narrow operation
-    static const UserException *_downcast (CORBA::Exception const *exception);
+    static UserException const *_downcast (CORBA::Exception const *exception);
 
     void _raise () const override = 0;
 

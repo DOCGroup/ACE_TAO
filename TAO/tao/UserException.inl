@@ -1,9 +1,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-CORBA::UserException::UserException ()
-{
-}
+CORBA::UserException::UserException () = default;
 
 ACE_INLINE
 CORBA::UserException::UserException (char const * repository_id,
@@ -14,10 +12,7 @@ CORBA::UserException::UserException (char const * repository_id,
 }
 
 ACE_INLINE
-CORBA::UserException::UserException (CORBA::UserException const & rhs)
-  : CORBA::Exception (rhs)
-{
-}
+CORBA::UserException::UserException (CORBA::UserException const &rhs) = default;
 
 ACE_INLINE CORBA::UserException *
 CORBA::UserException::_downcast (CORBA::Exception * exception)
@@ -25,10 +20,10 @@ CORBA::UserException::_downcast (CORBA::Exception * exception)
   return dynamic_cast<CORBA::UserException *> (exception);
 }
 
-ACE_INLINE const CORBA::UserException *
+ACE_INLINE CORBA::UserException const *
 CORBA::UserException::_downcast (CORBA::Exception const * exception)
 {
-  return dynamic_cast<const CORBA::UserException *> (exception);
+  return dynamic_cast<CORBA::UserException const *> (exception);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL
