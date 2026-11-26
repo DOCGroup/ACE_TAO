@@ -9,6 +9,8 @@
 #include "ace/OS_NS_fcntl.h"
 #include "ace/Truncate.h"
 
+#include <memory>
+
 #if defined (ACE_WIN32)
 // Specifies no sharing flags.
 #define R_MASK ACE_DEFAULT_OPEN_PERMS
@@ -506,7 +508,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (ACE_TCHAR const *filename,
     }
 
   // Can we stat the file?
-  if (ACE_OS::stat (this->filename_, &this->stat_) == -1)
+  if (ACE_OS::stat (this->filename_, std::addressof (this->stat_)) == -1)
     {
       this->error_i (ACE_Filecache_Object::ACE_STAT_FAILED);
       return;
@@ -644,7 +646,7 @@ ACE_Filecache_Object::release ()
           ACE_OS::close (original);
           ACE_OS::unlink (this->filename_);
         }
-      else if (ACE_OS::stat (this->filename_, &this->stat_) == -1)
+      else if (ACE_OS::stat (this->filename_, std::addressof (this->stat_)) == -1)
         this->error_ = ACE_Filecache_Object::ACE_STAT_FAILED;
 #endif
 
