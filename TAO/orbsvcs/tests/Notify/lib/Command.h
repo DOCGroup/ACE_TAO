@@ -45,10 +45,10 @@ public:
   virtual void execute_i () = 0;
 
   /// Return the name of this command.
-  virtual const char* get_name () = 0;
+  virtual char const *get_name () = 0;
 
   /// Each derived type must also implement the following signature:
-  /// \c static const char* name ();
+  /// \c static char const *name ();
 
 protected:
   /// Non-owning link to the next command; TAO_Notify_Tests_Command_Builder owns the chain.

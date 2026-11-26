@@ -11,13 +11,13 @@ TAO_Notify_Tests_ConsumerAdmin_Command::TAO_Notify_Tests_ConsumerAdmin_Command (
 
 TAO_Notify_Tests_ConsumerAdmin_Command::~TAO_Notify_Tests_ConsumerAdmin_Command () = default;
 
-const char*
+char const *
 TAO_Notify_Tests_ConsumerAdmin_Command::get_name ()
 {
   return TAO_Notify_Tests_ConsumerAdmin_Command::name ();
 }
 
-const char*
+char const *
 TAO_Notify_Tests_ConsumerAdmin_Command::name ()
 {
   return TAO_Notify_Tests_Name::consumer_admin_command;

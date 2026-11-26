@@ -11,13 +11,13 @@ TAO_Notify_Tests_SupplierAdmin_Command::TAO_Notify_Tests_SupplierAdmin_Command (
 
 TAO_Notify_Tests_SupplierAdmin_Command::~TAO_Notify_Tests_SupplierAdmin_Command () = default;
 
-const char*
+char const *
 TAO_Notify_Tests_SupplierAdmin_Command::get_name ()
 {
   return TAO_Notify_Tests_SupplierAdmin_Command::name ();
 }
 
-const char*
+char const *
 TAO_Notify_Tests_SupplierAdmin_Command::name ()
 {
   return TAO_Notify_Tests_Name::supplier_admin_command;

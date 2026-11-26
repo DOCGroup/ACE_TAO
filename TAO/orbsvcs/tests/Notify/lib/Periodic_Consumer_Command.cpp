@@ -15,13 +15,13 @@ TAO_Notify_Tests_Periodic_Consumer_Command::TAO_Notify_Tests_Periodic_Consumer_C
 TAO_Notify_Tests_Periodic_Consumer_Command::~TAO_Notify_Tests_Periodic_Consumer_Command ()
   = default;
 
-const char*
+char const *
 TAO_Notify_Tests_Periodic_Consumer_Command::get_name ()
 {
   return TAO_Notify_Tests_Periodic_Consumer_Command::name ();
 }
 
-const char*
+char const *
 TAO_Notify_Tests_Periodic_Consumer_Command::name ()
 {
   return TAO_Notify_Tests_Name::periodic_consumer_command;

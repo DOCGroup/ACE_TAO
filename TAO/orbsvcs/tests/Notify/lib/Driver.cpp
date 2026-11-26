@@ -13,10 +13,10 @@
 #include "Activation_Manager.h"
 #include <memory>
 
-const char *
+char const *
 sched_policy_name (int sched_policy)
 {
-  const char *name {};
+  char const *name {};
 
   switch (sched_policy)
     {
@@ -175,7 +175,7 @@ TAO_Notify_Tests_Driver::parse_args (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg {};
+  ACE_TCHAR const *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {

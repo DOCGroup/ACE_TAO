@@ -51,7 +51,7 @@ public:
   void dump_stats (ACE_TCHAR const *msg, bool dump_samples);
 
   /// Get the name of the proxy
-  const char* proxy_name ();
+  char const *proxy_name ();
 
 protected:
   /// svc method.

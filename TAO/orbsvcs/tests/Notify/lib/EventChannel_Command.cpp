@@ -13,13 +13,13 @@ TAO_Notify_Tests_EventChannel_Command::TAO_Notify_Tests_EventChannel_Command ()
 
 TAO_Notify_Tests_EventChannel_Command::~TAO_Notify_Tests_EventChannel_Command () = default;
 
-const char*
+char const *
 TAO_Notify_Tests_EventChannel_Command::get_name ()
 {
   return TAO_Notify_Tests_EventChannel_Command::name ();
 }
 
-const char*
+char const *
 TAO_Notify_Tests_EventChannel_Command::name ()
 {
   return TAO_Notify_Tests_Name::event_channel_command;

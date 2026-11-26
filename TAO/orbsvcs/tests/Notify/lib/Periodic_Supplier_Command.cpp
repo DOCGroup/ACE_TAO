@@ -13,13 +13,13 @@ TAO_Notify_Tests_Periodic_Supplier_Command::TAO_Notify_Tests_Periodic_Supplier_C
 
 TAO_Notify_Tests_Periodic_Supplier_Command::~TAO_Notify_Tests_Periodic_Supplier_Command () = default;
 
-const char*
+char const *
 TAO_Notify_Tests_Periodic_Supplier_Command::get_name ()
 {
   return TAO_Notify_Tests_Periodic_Supplier_Command::name ();
 }
 
-const char*
+char const *
 TAO_Notify_Tests_Periodic_Supplier_Command::name ()
 {
   return TAO_Notify_Tests_Name::periodic_supplier_command;

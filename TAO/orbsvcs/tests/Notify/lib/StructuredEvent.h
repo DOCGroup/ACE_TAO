@@ -25,25 +25,25 @@ class TAO_NOTIFY_TEST_Export TAO_Notify_Tests_StructuredEvent
 {
 public:
   TAO_Notify_Tests_StructuredEvent ();
-  TAO_Notify_Tests_StructuredEvent (const char* name);
-  TAO_Notify_Tests_StructuredEvent (const char* domain, const char* type);
-  TAO_Notify_Tests_StructuredEvent (const char* name, const char* domain, const char* type);
+  TAO_Notify_Tests_StructuredEvent (char const *name);
+  TAO_Notify_Tests_StructuredEvent (char const *domain, char const *type);
+  TAO_Notify_Tests_StructuredEvent (char const *name, char const *domain, char const *type);
 
   ~TAO_Notify_Tests_StructuredEvent ();
 
-  void name (const char* name);
-  void type (const char* domain, const char* type);
+  void name (char const *name);
+  void type (char const *domain, char const *type);
 
-  const char* type ();
+  char const *type ();
 
   /// add <name,value> to optional header sequence.
-  void opt_header (const char* name, CORBA::Any const & value);
+  void opt_header (char const *name, CORBA::Any const & value);
 
   /// add <name,value> to filterable body sequence.
-  void filter (const char* name, CORBA::Any const & value);
+  void filter (char const *name, CORBA::Any const & value);
 
   /// add <name,value> to variable header sequence.
-  void qos (const char* name, CORBA::Any const & value);
+  void qos (char const *name, CORBA::Any const & value);
 
   /// The remainder_of_body
   void payload (CORBA::Any const & value);

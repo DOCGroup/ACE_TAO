@@ -37,8 +37,8 @@ public:
   void execute_i () override;
 
   /// Name of object
-  const char* get_name () override;
-  static const char* name ();
+  char const *get_name () override;
+  static char const *name ();
 
 protected:
   enum COMMAND

@@ -63,7 +63,7 @@ public:
 
   /// Create an Event Channel.  Ownership is passed to the caller.
   CosNotifyChannelAdmin::EventChannel_ptr create_event_channel (
-                                              const char* name,
+                                              char const *name,
                                               bool resolve);
 
 protected:

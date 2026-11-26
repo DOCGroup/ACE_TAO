@@ -178,7 +178,7 @@ Notify_Test_Client::notify_factory ()
 }
 
 CosNotifyChannelAdmin::EventChannel_ptr
-Notify_Test_Client::create_event_channel (const char* cname, bool resolve)
+Notify_Test_Client::create_event_channel (char const *cname, bool resolve)
 {
   CosNotifyChannelAdmin::EventChannel_var ec;
   CosNaming::Name name (1);

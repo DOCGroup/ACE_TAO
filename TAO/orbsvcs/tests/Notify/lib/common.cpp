@@ -6,7 +6,7 @@
 
 #include <cstdio>
 
-const char*
+char const *
 Any_String (const CORBA::Any& any)
 {
   static char out[256] = "";
@@ -15,7 +15,7 @@ Any_String (const CORBA::Any& any)
   CORBA::Long l;
   CORBA::ULong ul;
   CORBA::ULongLong ull;
-  const char* str {};
+  char const *str {};
 
   if (any >>= s)
     {

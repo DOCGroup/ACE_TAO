@@ -42,7 +42,7 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
     return -1;
   }
 
-  const ACE_TCHAR *current_arg {};
+  ACE_TCHAR const *current_arg {};
 
   while (arg_shifter.is_anything_left ())
     {

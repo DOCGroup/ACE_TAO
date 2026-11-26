@@ -10,13 +10,13 @@ TAO_Notify_Tests_Filter_Command::TAO_Notify_Tests_Filter_Command ()
 
 TAO_Notify_Tests_Filter_Command::~TAO_Notify_Tests_Filter_Command () = default;
 
-const char*
+char const *
 TAO_Notify_Tests_Filter_Command::get_name ()
 {
   return TAO_Notify_Tests_Filter_Command::name ();
 }
 
-const char*
+char const *
 TAO_Notify_Tests_Filter_Command::name ()
 {
   return TAO_Notify_Tests_Name::filter_command;

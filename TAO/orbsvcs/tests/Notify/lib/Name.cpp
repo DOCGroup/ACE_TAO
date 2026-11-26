@@ -1,10 +1,10 @@
 #include "Name.h"
 
 #define TAO_Notify_Tests_DECLARE_NAME(target, name) \
-const char* const TAO_Notify_Tests_Name::target = name;
+char const *const TAO_Notify_Tests_Name::target = name;
 
 #define TAO_Notify_Tests_DECLARE_TCHAR_NAME(target, name) \
-const ACE_TCHAR* const TAO_Notify_Tests_Name::target = ACE_TEXT (name);
+ACE_TCHAR const *const TAO_Notify_Tests_Name::target = ACE_TEXT (name);
 
 TAO_Notify_Tests_DECLARE_TCHAR_NAME (command_builder,"Command_Builder")
 TAO_Notify_Tests_DECLARE_NAME (root_poa,"RootPOA")

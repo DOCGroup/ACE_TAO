@@ -50,7 +50,7 @@ public:
 
   /// Get the command name.
   char const* get_name () override;
-  static const char* name ();
+  static char const *name ();
 
 protected:
   /// Create the POA with the params parsed.
