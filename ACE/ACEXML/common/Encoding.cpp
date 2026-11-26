@@ -13,7 +13,7 @@ ACEXML_Char const * ACEXML_Encoding::encoding_names_[8] = {
   ACE_TEXT ("Unsupported Encoding")
 };
 
-const ACEXML_UTF8 ACEXML_Encoding::byte_order_mark_[][4] = {
+ACEXML_UTF8 const ACEXML_Encoding::byte_order_mark_[][4] = {
   { '\x00', '\x00', '\xFE', '\xFF' }, // UCS-4, big-endian  (1234 order)
   { '\xFF', '\xFE', '\x00', '\x00' }, // UCS-4, little-endian  (4321 order)
   { '\x00', '\x00', '\xFF', '\xFE' }, // UCS-4, unusual octet order (2143)
@@ -23,7 +23,7 @@ const ACEXML_UTF8 ACEXML_Encoding::byte_order_mark_[][4] = {
   { '\xEF', '\xBB', '\xBF', '\xFF' }  // UTF-8
 };
 
-const ACEXML_UTF8 ACEXML_Encoding::magic_values_[][4] = {
+ACEXML_UTF8 const ACEXML_Encoding::magic_values_[][4] = {
   { '\x00', '\x00', '\x00', '\x3c' }, //
   { '\x3c', '\x00', '\x00', '\x00' }, // UCS-4 and variants
   { '\x00', '\x00', '\x3c', '\x00' }, //
@@ -34,31 +34,31 @@ const ACEXML_UTF8 ACEXML_Encoding::magic_values_[][4] = {
 };
 
 ACEXML_Char const *
-ACEXML_Encoding::get_encoding (char const * input)
+ACEXML_Encoding::get_encoding (char const *input)
 {
-  if ((std::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16BE][0], input, 2) == 0)
+  if ((std::memcmp (ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16BE], input, 2) == 0)
       && (input[2] != 0 || input[3] != 0)) // 3 & 4 should not be both zero
     {
       return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16BE];
     }
-  else if ((std::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16LE][0], input, 2) == 0)
+  else if ((std::memcmp (ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16LE], input, 2) == 0)
     && (input[2] != 0 || input[3] != 0)) // 3 & 4 should not be both zero
     {
       return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16LE];
     }
-  else if (std::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF8][0], input, 3) == 0)
+  else if (std::memcmp (ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF8], input, 3) == 0)
     {
       return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF8];
     }
-  else if (std::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF16BE][0], input, 4) == 0)
+  else if (std::memcmp (ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF16BE], input, 4) == 0)
     {
       return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16BE];
     }
-  else if (std::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF16LE][0], input, 4) == 0)
+  else if (std::memcmp (ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF16LE], input, 4) == 0)
     {
       return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF16LE];
     }
-  else if (std::memcmp (&ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF8][0], input, 4) == 0)
+  else if (std::memcmp (ACEXML_Encoding::magic_values_[ACEXML_Encoding::UTF8], input, 4) == 0)
     {
       return ACEXML_Encoding::encoding_names_[ACEXML_Encoding::UTF8];
     }

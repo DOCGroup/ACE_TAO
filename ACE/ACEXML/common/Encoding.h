@@ -40,13 +40,13 @@ public:
     OTHER
   } ENCODING;
 
-  static ACEXML_Char const * encoding_names_[8];
+  static ACEXML_Char const *encoding_names_[8];
 
-  static const ACEXML_UTF8 byte_order_mark_[][4];
+  static ACEXML_UTF8 const byte_order_mark_[][4];
 
-  static const ACEXML_UTF8 magic_values_[][4];
+  static ACEXML_UTF8 const magic_values_[][4];
 
-  static ACEXML_Char const * get_encoding (char const * input);
+  static ACEXML_Char const *get_encoding (char const *input);
 };
 
 #include /**/ "ace/post.h"
