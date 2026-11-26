@@ -268,7 +268,7 @@ Manipulation::perform_iteration (unsigned int *seed,
             }
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore all exceptions
     }

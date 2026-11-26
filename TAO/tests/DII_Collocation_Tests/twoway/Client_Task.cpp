@@ -55,7 +55,7 @@ Client_Task::svc ()
 
       Test::Simple_Test_var const simple_test
         = Test::Simple_Test::_narrow (simple_test_obj.in ());
-      const CORBA::Long l {200};
+      CORBA::Long const l {200};
       CORBA::Request_var req (obj->_request ("test_basic_arg"));
       req->add_in_arg ("basic") <<= TEST_BASIC_VALUE;
       req->add_out_arg ("x") <<= l;

@@ -1094,7 +1094,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       ACE_ERROR ((LM_ERROR, "Partial object vector changed the target\n"));
     }
 
-  const ACE_CDR::ULongLong test_ull =
+  ACE_CDR::ULongLong const test_ull =
     ACE_UINT64_LITERAL (122192928000000000);
 
   if (test_ull != AAAX)
@@ -1106,7 +1106,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" is incorrect\n")));
     }
 
-  const CORBA::LongLong test_nll = ACE_INT64_LITERAL (-122192928000000000);
+  CORBA::LongLong const test_nll = ACE_INT64_LITERAL (-122192928000000000);
 
   if (test_nll != NAAA)
     {
@@ -1117,7 +1117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   ACE_TEXT (" is incorrect\n")));
     }
 
-  const CORBA::LongLong test_pll = ACE_INT64_LITERAL (122192928000000000);
+  CORBA::LongLong const test_pll = ACE_INT64_LITERAL (122192928000000000);
 
   if (test_pll != PAAA)
     {
