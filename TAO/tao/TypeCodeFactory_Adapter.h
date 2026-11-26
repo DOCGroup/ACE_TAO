@@ -62,18 +62,18 @@ public:
   virtual CORBA::TypeCode_ptr create_struct_tc (
       char const *id,
       char const *name,
-      const CORBA::StructMemberSeq &members) = 0;
+      CORBA::StructMemberSeq const &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_union_tc (
       char const *id,
       char const *name,
       CORBA::TypeCode_ptr discriminator_type,
-      const CORBA::UnionMemberSeq &members) = 0;
+      CORBA::UnionMemberSeq const &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_enum_tc (
       char const *id,
       char const *name,
-      const CORBA::EnumMemberSeq &members) = 0;
+      CORBA::EnumMemberSeq const &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_alias_tc (
       char const *id,
@@ -83,7 +83,7 @@ public:
   virtual CORBA::TypeCode_ptr create_exception_tc (
       char const *id,
       char const *name,
-      const CORBA::StructMemberSeq &members) = 0;
+      CORBA::StructMemberSeq const &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_interface_tc (
       char const *id,
@@ -112,7 +112,7 @@ public:
       char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members) = 0;
+      CORBA::ValueMemberSeq const &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_value_box_tc (
       char const *id,
@@ -146,7 +146,7 @@ public:
       char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
-      const CORBA::ValueMemberSeq &members) = 0;
+      CORBA::ValueMemberSeq const &members) = 0;
 
   /**
    * @name TAO-specific TypeCode factory methods.

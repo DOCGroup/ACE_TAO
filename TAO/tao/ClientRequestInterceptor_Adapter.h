@@ -93,7 +93,7 @@ namespace TAO
     /// Register an interceptor with policies.
     virtual void add_interceptor (
       PortableInterceptor::ClientRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) = 0;
+      CORBA::PolicyList const & policies) = 0;
 
     /// Convert TAO Invocation status to a PI status
     virtual PortableInterceptor::ReplyStatus pi_reply_status (

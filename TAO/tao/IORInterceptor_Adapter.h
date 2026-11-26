@@ -59,7 +59,7 @@ public:
 
   virtual void add_interceptor (
       PortableInterceptor::IORInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) = 0;
+      CORBA::PolicyList const & policies) = 0;
 
   virtual void destroy_interceptors () = 0;
 

@@ -147,7 +147,7 @@ namespace TAO
     /// Register an interceptor with policies.
     virtual void add_interceptor (
       PortableInterceptor::ServerRequestInterceptor_ptr interceptor,
-      const CORBA::PolicyList& policies) = 0;
+      CORBA::PolicyList const & policies) = 0;
 
     virtual TAO::PICurrent_Impl *allocate_pi_current () = 0;
 

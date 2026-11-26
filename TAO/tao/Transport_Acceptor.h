@@ -53,7 +53,7 @@ namespace TAO
  * representation is "TA\x00".  If necessary, we can request more ORB
  * types later.
  */
-const CORBA::ULong TAO_ORB_TYPE = 0x54414f00U;
+CORBA::ULong const TAO_ORB_TYPE = 0x54414f00U;
 
 // ****************************************************************
 
