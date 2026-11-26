@@ -28,6 +28,7 @@ private:
   Headers_Map_Item &operator= (char *);
   Headers_Map_Item &operator= (const char *);
   Headers_Map_Item &operator= (const Headers_Map_Item &);
+  Headers_Map_Item &operator= (Headers_Map_Item &&) = delete;
 
 public:
   const char *header () const;
