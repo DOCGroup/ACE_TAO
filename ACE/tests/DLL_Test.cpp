@@ -55,7 +55,7 @@ int handle_test (ACE_DLL &dll)
 int basic_test (ACE_DLL &dll)
 {
   ACE_TString dll_file;
-  const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
+  char const *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
   if (subdir_env)
     {
       dll_file = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);

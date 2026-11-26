@@ -56,14 +56,14 @@ Hello_Impl::operator new (size_t bytes)
 __attribute__ ((noinline))
 #endif
 void *
-Hello_Impl::operator new (size_t bytes, const std::nothrow_t &nt) noexcept
+Hello_Impl::operator new (size_t bytes, std::nothrow_t const &nt) noexcept
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::new\n"));
   return ::operator new (bytes, nt);
 }
 
 void
-Hello_Impl::operator delete (void *ptr, const std::nothrow_t&) noexcept
+Hello_Impl::operator delete (void *ptr, std::nothrow_t const &) noexcept
 {
   ACE_DEBUG ((LM_INFO, "Hello_Impl::delete\n"));
   ::operator delete (ptr);
@@ -130,7 +130,7 @@ Child::test ()
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing base exception\n")));
     base_excep->_raise();
   }
-  catch (const Base&)
+  catch (Base const &)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught base\n")));
   }
@@ -141,7 +141,7 @@ Child::test ()
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception\n")));
     derived_excep->_raise();
   }
-  catch (const Derived&)
+  catch (Derived const &)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived\n")));
   }
@@ -152,7 +152,7 @@ Child::test ()
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception\n")));
     derived_excep_base->_raise();
   }
-  catch (const Base&)
+  catch (Base const &)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived as base\n")));
   }
@@ -163,7 +163,7 @@ Child::test ()
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("throwing derived exception allocated with _alloc\n")));
     derived_excep_base->_raise();
   }
-  catch (const Derived&)
+  catch (Derived const &)
   {
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("caught derived exception\n")));
   }
