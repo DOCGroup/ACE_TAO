@@ -145,10 +145,10 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::shared_bind_i (
   bool rebind)
 {
   ACE_TRACE ("ACE_Local_Name_Space::shared_bind_i");
-  const size_t name_len = (name.length () + 1) * sizeof (ACE_WCHAR_T);
-  const size_t value_len = (value.length () + 1) * sizeof (ACE_WCHAR_T);
-  const size_t type_len = ACE_OS::strlen (type) + 1;
-  const size_t total_len = name_len + value_len + type_len;
+  size_t const name_len = (name.length () + 1) * sizeof (ACE_WCHAR_T);
+  size_t const value_len = (value.length () + 1) * sizeof (ACE_WCHAR_T);
+  size_t const type_len = ACE_OS::strlen (type) + 1;
+  size_t const total_len = name_len + value_len + type_len;
   char *ptr = static_cast<char *> (this->allocator_->malloc (total_len));
 
   if (ptr == nullptr)
@@ -342,7 +342,7 @@ ACE_Local_Name_Space<ACE_MEM_POOL_2, ACE_LOCK>::resolve_i (
   // ACE_WCHAR_T
   char const *temp = ns_internal.type ();
 
-  const size_t len = ACE_OS::strlen (ns_internal.type ());
+  size_t const len = ACE_OS::strlen (ns_internal.type ());
   // Makes a copy here. Caller needs to call delete to free up
   // memory.
   char *new_type {};

@@ -81,8 +81,8 @@ ACE_NS_String::strstr (ACE_NS_String const &s) const
   else
     {
       // They're smaller than we are...
-      const size_t len = (this->len_ - s.len_) / sizeof (ACE_WCHAR_T);
-      const size_t pat_len = s.len_ / sizeof (ACE_WCHAR_T) - 1;
+      size_t const len = (this->len_ - s.len_) / sizeof (ACE_WCHAR_T);
+      size_t const pat_len = s.len_ / sizeof (ACE_WCHAR_T) - 1;
 
       for (size_t i = 0; i <= len; ++i)
         {
