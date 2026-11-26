@@ -51,17 +51,17 @@ public:
   ssize_t recv (void *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout = nullptr) const;
+                ACE_Time_Value const *timeout = nullptr) const;
 
   /// Recv an @a n byte buffer from the connected socket.
   ssize_t recv (void *buf,
                 size_t n,
-                const ACE_Time_Value *timeout = nullptr) const;
+                ACE_Time_Value const *timeout = nullptr) const;
 
   /// Recv an @c iovec of size @a n from the connected socket.
   ssize_t recvv (iovec iov[],
                  int n,
-                 const ACE_Time_Value *timeout = nullptr) const;
+                 ACE_Time_Value const *timeout = nullptr) const;
 
   /**
    * Allows a client to read from a socket without having to provide a
@@ -72,7 +72,7 @@ public:
    * delete [] io_vec->iov_base.
    */
   ssize_t recvv (iovec *io_vec,
-                 const ACE_Time_Value *timeout = nullptr) const;
+                 ACE_Time_Value const *timeout = nullptr) const;
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
   /// Recv @a n varargs messages to the connected socket.
@@ -86,20 +86,20 @@ public:
                 ACE_OVERLAPPED *overlapped) const;
 
   /// Send an @a n byte buffer to the connected socket.
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout = nullptr) const;
+                ACE_Time_Value const *timeout = nullptr) const;
 
   /// Send an @a n byte buffer to the connected socket.
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
-                const ACE_Time_Value *timeout = nullptr) const;
+                ACE_Time_Value const *timeout = nullptr) const;
 
   /// Send an @c iovec of size @a n to the connected socket.
   ssize_t sendv (const iovec iov[],
                  int n,
-                 const ACE_Time_Value *timeout = nullptr) const;
+                 ACE_Time_Value const *timeout = nullptr) const;
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
   /// Send @a n varargs messages to the connected socket.
@@ -108,7 +108,7 @@ public:
 #endif
 
   /// Send @a n bytes via Win32 @c WriteFile using overlapped I/O.
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 

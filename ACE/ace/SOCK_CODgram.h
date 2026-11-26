@@ -65,8 +65,8 @@ public:
    * @li <b>remote_addr != ACE_Addr::sap_any && local_addr != ACE_Addr::sap_any:</b>
    *     Bind to the local address and connect to the remote address.
    */
-  ACE_SOCK_CODgram (const ACE_Addr &remote_sap,
-                    const ACE_Addr &local_sap = ACE_Addr::sap_any,
+  ACE_SOCK_CODgram (ACE_Addr const &remote_sap,
+                    ACE_Addr const &local_sap = ACE_Addr::sap_any,
                     int protocol_family = ACE_PROTOCOL_FAMILY_INET,
                     int protocol = 0,
                     int reuse_addr = 0);
@@ -108,8 +108,8 @@ public:
    * @li <b>remote_addr != ACE_Addr::sap_any && local_addr != ACE_Addr::sap_any:</b>
    *     Bind to the local address and connect to the remote address.
    */
-  int open (const ACE_Addr &remote_sap,
-            const ACE_Addr &local_sap = ACE_Addr::sap_any,
+  int open (ACE_Addr const &remote_sap,
+            ACE_Addr const &local_sap = ACE_Addr::sap_any,
             int protocol_family = ACE_PROTOCOL_FAMILY_INET,
             int protocol = 0,
             int reuse_addr = 0);

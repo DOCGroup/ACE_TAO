@@ -106,57 +106,57 @@ public:
   ssize_t recv_n (void *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
   /// Try to recv exactly @a len bytes into @a buf from the connected socket.
   ssize_t recv_n (void *buf,
                   size_t len,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
   /// Receive an @c iovec of size @c iovcnt from the connected socket.
   ssize_t recvv_n (iovec iov[],
                    int iovcnt,
-                   const ACE_Time_Value *timeout = nullptr,
+                   ACE_Time_Value const *timeout = nullptr,
                    size_t *bytes_transferred = nullptr) const;
 
   /// Try to send exactly @a len bytes from @a buf to the connection socket.
-  ssize_t send_n (const void *buf,
+  ssize_t send_n (void const *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
   /// Try to send exactly @a len bytes from @a buf to the connected socket.
-  ssize_t send_n (const void *buf,
+  ssize_t send_n (void const *buf,
                   size_t len,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
   /// Send all the @a message_blocks chained through their @c next and
   /// @c cont pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
-  ssize_t send_n (const ACE_Message_Block *message_block,
-                  const ACE_Time_Value *timeout = nullptr,
+  ssize_t send_n (ACE_Message_Block const *message_block,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
   /// Send an @c iovec of size @c iovcnt to the connected socket.
   ssize_t sendv_n (const iovec iov[],
                    int iovcnt,
-                   const ACE_Time_Value *timeout = nullptr,
+                   ACE_Time_Value const *timeout = nullptr,
                    size_t *bytes_transferred = nullptr) const;
   /// @}
 
   /// @name Urgent data transfer
   /// @{
-  ssize_t send_urg (const void *ptr,
+  ssize_t send_urg (void const *ptr,
                     size_t len = sizeof (char),
-                    const ACE_Time_Value *timeout = nullptr) const;
+                    ACE_Time_Value const *timeout = nullptr) const;
 
   ssize_t recv_urg (void *ptr,
                     size_t len = sizeof (char),
-                    const ACE_Time_Value *timeout = nullptr) const;
+                    ACE_Time_Value const *timeout = nullptr) const;
   /// @}
 
   /// @name Endpoint shutdown

@@ -26,7 +26,7 @@ ACE_SOCK_Dgram_Mcast::set_option (int option,
 }
 
 ACE_INLINE ssize_t
-ACE_SOCK_Dgram_Mcast::send (const void *buf,
+ACE_SOCK_Dgram_Mcast::send (void const *buf,
                             size_t n,
                             int flags) const
 {

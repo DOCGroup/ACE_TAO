@@ -90,8 +90,8 @@ ACE_SOCK_SEQPACK_Connector::shared_open (ACE_SOCK_SEQPACK_Association &new_assoc
 
 int
 ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
-                                          const ACE_Time_Value *timeout,
-                                          const ACE_Addr &local_sap)
+                                          ACE_Time_Value const *timeout,
+                                          ACE_Addr const &local_sap)
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_connect_start");
 
@@ -126,8 +126,8 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
 // Multihomed version of same
 int
 ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
-                                          const ACE_Time_Value *timeout,
-                                          const ACE_Multihomed_INET_Addr &local_sap)
+                                          ACE_Time_Value const *timeout,
+                                          ACE_Multihomed_INET_Addr const &local_sap)
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_connect_start");
 
@@ -248,7 +248,7 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_start (ACE_SOCK_SEQPACK_Association &
 
 int
 ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association &new_association,
-                                           const ACE_Time_Value *timeout,
+                                           ACE_Time_Value const *timeout,
                                            int result)
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::shared_connect_finish");
@@ -298,9 +298,9 @@ ACE_SOCK_SEQPACK_Connector::shared_connect_finish (ACE_SOCK_SEQPACK_Association 
 
 int
 ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
-                             const ACE_Addr &remote_sap,
-                             const ACE_Time_Value *timeout,
-                             const ACE_Addr &local_sap,
+                             ACE_Addr const &remote_sap,
+                             ACE_Time_Value const *timeout,
+                             ACE_Addr const &local_sap,
                              int reuse_addr,
                              int /* flags */,
                              int /* perms */,
@@ -334,9 +334,9 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
 // Multihomed version of same
 int
 ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_association,
-                             const ACE_Addr &remote_sap,
-                             const ACE_Time_Value *timeout,
-                             const ACE_Multihomed_INET_Addr &local_sap,
+                             ACE_Addr const &remote_sap,
+                             ACE_Time_Value const *timeout,
+                             ACE_Multihomed_INET_Addr const &local_sap,
                              int reuse_addr,
                              int /* flags */,
                              int /* perms */,
@@ -372,7 +372,7 @@ ACE_SOCK_SEQPACK_Connector::connect (ACE_SOCK_SEQPACK_Association &new_associati
 int
 ACE_SOCK_SEQPACK_Connector::complete (ACE_SOCK_SEQPACK_Association &new_association,
                               ACE_Addr *remote_sap,
-                              const ACE_Time_Value *tv)
+                              ACE_Time_Value const *tv)
 {
   ACE_TRACE ("ACE_SOCK_SEQPACK_Connector::complete");
   ACE_HANDLE h = ACE::handle_timed_complete (new_association.get_handle (),
@@ -422,9 +422,9 @@ ACE_SOCK_SEQPACK_Connector::complete (ACE_SOCK_SEQPACK_Association &new_associat
 }
 
 ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
-                                        const ACE_Addr &remote_sap,
-                                        const ACE_Time_Value *timeout,
-                                        const ACE_Addr &local_sap,
+                                        ACE_Addr const &remote_sap,
+                                        ACE_Time_Value const *timeout,
+                                        ACE_Addr const &local_sap,
                                         int reuse_addr,
                                         int flags,
                                         int perms,
@@ -451,9 +451,9 @@ ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Associa
 
 // Multihomed version of same
 ACE_SOCK_SEQPACK_Connector::ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
-                                        const ACE_Addr &remote_sap,
-                                        const ACE_Time_Value *timeout,
-                                        const ACE_Multihomed_INET_Addr &local_sap,
+                                        ACE_Addr const &remote_sap,
+                                        ACE_Time_Value const *timeout,
+                                        ACE_Multihomed_INET_Addr const &local_sap,
                                         int reuse_addr,
                                         int flags,
                                         int perms,

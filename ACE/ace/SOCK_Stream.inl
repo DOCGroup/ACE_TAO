@@ -56,7 +56,7 @@ ACE_INLINE ssize_t
 ACE_SOCK_Stream::recv_n (void *buf,
                          size_t len,
                          int flags,
-                         const ACE_Time_Value *timeout,
+                         ACE_Time_Value const *timeout,
                          size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::recv_n");
@@ -71,7 +71,7 @@ ACE_SOCK_Stream::recv_n (void *buf,
 ACE_INLINE ssize_t
 ACE_SOCK_Stream::recv_n (void *buf,
                          size_t len,
-                         const ACE_Time_Value *timeout,
+                         ACE_Time_Value const *timeout,
                          size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::recv_n");
@@ -85,7 +85,7 @@ ACE_SOCK_Stream::recv_n (void *buf,
 ACE_INLINE ssize_t
 ACE_SOCK_Stream::recvv_n (iovec iov[],
                           int n,
-                          const ACE_Time_Value *timeout,
+                          ACE_Time_Value const *timeout,
                           size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::recvv_n");
@@ -97,10 +97,10 @@ ACE_SOCK_Stream::recvv_n (iovec iov[],
 }
 
 ACE_INLINE ssize_t
-ACE_SOCK_Stream::send_n (const void *buf,
+ACE_SOCK_Stream::send_n (void const *buf,
                          size_t len,
                          int flags,
-                         const ACE_Time_Value *timeout,
+                         ACE_Time_Value const *timeout,
                          size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::send_n");
@@ -113,9 +113,9 @@ ACE_SOCK_Stream::send_n (const void *buf,
 }
 
 ACE_INLINE ssize_t
-ACE_SOCK_Stream::send_n (const void *buf,
+ACE_SOCK_Stream::send_n (void const *buf,
                          size_t len,
-                         const ACE_Time_Value *timeout,
+                         ACE_Time_Value const *timeout,
                          size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::send_n");
@@ -129,7 +129,7 @@ ACE_SOCK_Stream::send_n (const void *buf,
 ACE_INLINE ssize_t
 ACE_SOCK_Stream::sendv_n (const iovec iov[],
                           int n,
-                          const ACE_Time_Value *timeout,
+                          ACE_Time_Value const *timeout,
                           size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::sendv_n");
@@ -141,8 +141,8 @@ ACE_SOCK_Stream::sendv_n (const iovec iov[],
 }
 
 ACE_INLINE ssize_t
-ACE_SOCK_Stream::send_n (const ACE_Message_Block *message_block,
-                         const ACE_Time_Value *timeout,
+ACE_SOCK_Stream::send_n (ACE_Message_Block const *message_block,
+                         ACE_Time_Value const *timeout,
                          size_t *bytes_transferred) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::send_n");
@@ -153,9 +153,9 @@ ACE_SOCK_Stream::send_n (const ACE_Message_Block *message_block,
 }
 
 ACE_INLINE ssize_t
-ACE_SOCK_Stream::send_urg (const void *ptr,
+ACE_SOCK_Stream::send_urg (void const *ptr,
                            size_t len,
-                           const ACE_Time_Value *timeout) const
+                           ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::send_urg");
   return ACE::send (this->get_handle (),
@@ -168,7 +168,7 @@ ACE_SOCK_Stream::send_urg (const void *ptr,
 ACE_INLINE ssize_t
 ACE_SOCK_Stream::recv_urg (void *ptr,
                            size_t len,
-                           const ACE_Time_Value *timeout) const
+                           ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_Stream::recv_urg");
   return ACE::recv (this->get_handle (),

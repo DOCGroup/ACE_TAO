@@ -85,9 +85,9 @@ public:
    *
    */
   ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
-                      const ACE_Addr &remote_sap,
-                      const ACE_Time_Value *timeout = nullptr,
-                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                      ACE_Addr const &remote_sap,
+                      ACE_Time_Value const *timeout = nullptr,
+                      ACE_Addr const &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = 0,
                       int perms = 0,
@@ -131,9 +131,9 @@ public:
    *
    */
   ACE_SOCK_SEQPACK_Connector (ACE_SOCK_SEQPACK_Association &new_association,
-                      const ACE_Addr &remote_sap,
-                      const ACE_Time_Value *timeout,
-                      const ACE_Multihomed_INET_Addr &local_sap,
+                      ACE_Addr const &remote_sap,
+                      ACE_Time_Value const *timeout,
+                      ACE_Multihomed_INET_Addr const &local_sap,
                       int reuse_addr = 0,
                       int flags = 0,
                       int perms = 0,
@@ -181,9 +181,9 @@ public:
    *                    code.
    */
   int connect (ACE_SOCK_SEQPACK_Association &new_association,
-               const ACE_Addr &remote_sap,
-               const ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &remote_sap,
+               ACE_Time_Value const *timeout = nullptr,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
@@ -231,9 +231,9 @@ public:
    */
 
   int connect (ACE_SOCK_SEQPACK_Association &new_association,
-               const ACE_Addr &remote_sap,
-               const ACE_Time_Value *timeout,
-               const ACE_Multihomed_INET_Addr &local_sap,
+               ACE_Addr const &remote_sap,
+               ACE_Time_Value const *timeout,
+               ACE_Multihomed_INET_Addr const &local_sap,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
@@ -257,7 +257,7 @@ public:
    */
   int complete (ACE_SOCK_SEQPACK_Association &new_association,
                 ACE_Addr *remote_sap = nullptr,
-                const ACE_Time_Value *timeout = nullptr);
+                ACE_Time_Value const *timeout = nullptr);
 
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
@@ -295,16 +295,16 @@ protected:
 
   /// Perform operations that must be called before @c ACE_OS::connect.
   int shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
-                            const ACE_Time_Value *timeout,
-                            const ACE_Addr &local_sap);
+                            ACE_Time_Value const *timeout,
+                            ACE_Addr const &local_sap);
 
   int shared_connect_start (ACE_SOCK_SEQPACK_Association &new_association,
-                            const ACE_Time_Value *timeout,
-                            const ACE_Multihomed_INET_Addr &local_sap);
+                            ACE_Time_Value const *timeout,
+                            ACE_Multihomed_INET_Addr const &local_sap);
 
   /// Perform operations that must be called after @c ACE_OS::connect.
   int shared_connect_finish (ACE_SOCK_SEQPACK_Association &new_association,
-                             const ACE_Time_Value *timeout,
+                             ACE_Time_Value const *timeout,
                              int result);
 };
 

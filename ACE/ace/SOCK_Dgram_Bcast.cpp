@@ -71,7 +71,7 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast ()
 // Here's the general-purpose constructor used by a connectionless
 // datagram ``server''...
 
-ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
+ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (ACE_Addr const &local,
                                             int protocol_family,
                                             int protocol,
                                             int reuse_addr,
@@ -91,7 +91,7 @@ ACE_SOCK_Dgram_Bcast::ACE_SOCK_Dgram_Bcast (const ACE_Addr &local,
 // Here's the general-purpose open routine.
 
 int
-ACE_SOCK_Dgram_Bcast::open (const ACE_Addr &local,
+ACE_SOCK_Dgram_Bcast::open (ACE_Addr const &local,
                             int protocol_family,
                             int protocol,
                             int reuse_addr,
@@ -315,7 +315,7 @@ ACE_SOCK_Dgram_Bcast::mk_broadcast (ACE_TCHAR const *host_name)
 // number of bytes sent.
 
 ssize_t
-ACE_SOCK_Dgram_Bcast::send (const void *buf,
+ACE_SOCK_Dgram_Bcast::send (void const *buf,
                             size_t n,
                             u_short port_number,
                             int flags) const
@@ -397,7 +397,7 @@ ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
 ssize_t
 ACE_SOCK_Dgram_Bcast::send (const iovec iov[],
                             int n,
-                            const ACE_Addr &addr,
+                            ACE_Addr const &addr,
                             int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::send");

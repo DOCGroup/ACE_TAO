@@ -232,7 +232,7 @@ ACE_SOCK_Acceptor::dump () const
 }
 
 int
-ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
+ACE_SOCK_Acceptor::shared_open (ACE_Addr const &local_sap,
                                 int protocol_family,
                                 int backlog,
                                 int ipv6_only)
@@ -342,7 +342,7 @@ ACE_SOCK_Acceptor::shared_open (const ACE_Addr &local_sap,
 }
 
 int
-ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
+ACE_SOCK_Acceptor::open (ACE_Addr const &local_sap,
                          ACE_Protocol_Info *protocolinfo,
                          ACE_SOCK_GROUP g,
                          u_long flags,
@@ -378,7 +378,7 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
     }
 }
 
-ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
+ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (ACE_Addr const &local_sap,
                                       ACE_Protocol_Info *protocolinfo,
                                       ACE_SOCK_GROUP g,
                                       u_long flags,
@@ -408,7 +408,7 @@ ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
 // General purpose routine for performing server ACE_SOCK creation.
 
 int
-ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
+ACE_SOCK_Acceptor::open (ACE_Addr const &local_sap,
                          int reuse_addr,
                          int protocol_family,
                          int backlog,
@@ -448,7 +448,7 @@ ACE_SOCK_Acceptor::open (const ACE_Addr &local_sap,
 
 // General purpose routine for performing server ACE_SOCK creation.
 
-ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
+ACE_SOCK_Acceptor::ACE_SOCK_Acceptor (ACE_Addr const &local_sap,
                                       int reuse_addr,
                                       int protocol_family,
                                       int backlog,

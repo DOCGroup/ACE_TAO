@@ -47,7 +47,7 @@ class ACE_SDM_helpers
 public:
   // Convert ACE_INET_Addr to string, using local formatting rules.
 
-  static void addr_to_string (const ACE_INET_Addr &ip_addr,
+  static void addr_to_string (ACE_INET_Addr const &ip_addr,
                               ACE_TCHAR *ret_string,  // results here.
                               size_t len,
                               int clip_portnum)       // clip port# info?
@@ -66,7 +66,7 @@ public:
         }
     }
     // op== for ip_mreq structs.
-    static bool is_equal (const ip_mreq &m1, const ip_mreq &m2)
+    static bool is_equal (ip_mreq const &m1, ip_mreq const &m2)
       {
         return m1.IMR_MULTIADDR.s_addr == m2.IMR_MULTIADDR.s_addr
           && m1.imr_interface.s_addr == m2.imr_interface.s_addr;
@@ -163,7 +163,7 @@ ACE_SOCK_Dgram_Mcast::~ACE_SOCK_Dgram_Mcast ()
 }
 
 int
-ACE_SOCK_Dgram_Mcast::open (const ACE_INET_Addr &mcast_addr,
+ACE_SOCK_Dgram_Mcast::open (ACE_INET_Addr const &mcast_addr,
                             ACE_TCHAR const *net_if,
                             int reuse_addr)
 {
@@ -191,7 +191,7 @@ ACE_SOCK_Dgram_Mcast::open (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
+ACE_SOCK_Dgram_Mcast::open_i (ACE_INET_Addr const &mcast_addr,
                               ACE_TCHAR const *net_if,
                               int reuse_addr)
 {
@@ -282,7 +282,7 @@ ACE_SOCK_Dgram_Mcast::open_i (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
+ACE_SOCK_Dgram_Mcast::subscribe_ifs (ACE_INET_Addr const &mcast_addr,
                                      ACE_TCHAR const *net_if,
                                      int reuse_addr)
 {
@@ -510,7 +510,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_ifs (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
+ACE_SOCK_Dgram_Mcast::join (ACE_INET_Addr const &mcast_addr,
                             int reuse_addr,
                             ACE_TCHAR const *net_if)
 {
@@ -593,7 +593,7 @@ ACE_SOCK_Dgram_Mcast::join (const ACE_INET_Addr &mcast_addr,
 
 // Attempt subscribe and return status.
 int
-ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
+ACE_SOCK_Dgram_Mcast::subscribe_i (ACE_INET_Addr const &mcast_addr,
                                    int reuse_addr,
                                    ACE_TCHAR const *net_if)
 {
@@ -660,7 +660,7 @@ ACE_SOCK_Dgram_Mcast::subscribe_i (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
+ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (ACE_INET_Addr const &mcast_addr,
                                        ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe_ifs");
@@ -862,7 +862,7 @@ ACE_SOCK_Dgram_Mcast::unsubscribe_ifs (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-ACE_SOCK_Dgram_Mcast::leave (const ACE_INET_Addr &mcast_addr,
+ACE_SOCK_Dgram_Mcast::leave (ACE_INET_Addr const &mcast_addr,
                              ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::leave");
@@ -899,7 +899,7 @@ ACE_SOCK_Dgram_Mcast::leave (const ACE_INET_Addr &mcast_addr,
 
 // Attempt unsubscribe and return status.
 int
-ACE_SOCK_Dgram_Mcast::unsubscribe_i (const ACE_INET_Addr &mcast_addr,
+ACE_SOCK_Dgram_Mcast::unsubscribe_i (ACE_INET_Addr const &mcast_addr,
                                      ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Mcast::unsubscribe_i");

@@ -23,8 +23,8 @@ ACE_SOCK_CODgram::dump () const
 
 // Here's the general-purpose constructor.
 
-ACE_SOCK_CODgram::ACE_SOCK_CODgram (const ACE_Addr &remote,
-                                    const ACE_Addr &local,
+ACE_SOCK_CODgram::ACE_SOCK_CODgram (ACE_Addr const &remote,
+                                    ACE_Addr const &local,
                                     int protocol_family,
                                     int protocol,
                                     int reuse_addr)
@@ -62,7 +62,7 @@ ACE_SOCK_CODgram::ACE_SOCK_CODgram (const ACE_Addr &remote,
 */
 
 int
-ACE_SOCK_CODgram::open (const ACE_Addr &remote, const ACE_Addr &local,
+ACE_SOCK_CODgram::open (ACE_Addr const &remote, ACE_Addr const &local,
                         int protocol_family, int protocol,
                         int reuse_addr)
 {

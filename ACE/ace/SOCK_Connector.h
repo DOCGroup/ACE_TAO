@@ -77,9 +77,9 @@ public:
    *                    protocol is selected by kernel (typically TCP).
    */
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
-                      const ACE_Addr &remote_sap,
-                      const ACE_Time_Value *timeout = nullptr,
-                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                      ACE_Addr const &remote_sap,
+                      ACE_Time_Value const *timeout = nullptr,
+                      ACE_Addr const &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = 0,
                       int perms = 0,
@@ -126,10 +126,10 @@ public:
    * @param perms       Ignored.
    */
   ACE_SOCK_Connector (ACE_SOCK_Stream &new_stream,
-                      const ACE_Addr &remote_sap,
+                      ACE_Addr const &remote_sap,
                       ACE_QoS_Params qos_params,
-                      const ACE_Time_Value *timeout = nullptr,
-                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                      ACE_Time_Value const *timeout = nullptr,
+                      ACE_Addr const &local_sap = ACE_Addr::sap_any,
                       ACE_Protocol_Info *protocolinfo = nullptr,
                       ACE_SOCK_GROUP g = 0,
                       u_long flags = 0,
@@ -178,9 +178,9 @@ public:
    *                    code.
    */
   int connect (ACE_SOCK_Stream &new_stream,
-               const ACE_Addr &remote_sap,
-               const ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &remote_sap,
+               ACE_Time_Value const *timeout = nullptr,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = 0,
                int perms = 0,
@@ -231,10 +231,10 @@ public:
    *                    code.
    */
   int connect (ACE_SOCK_Stream &new_stream,
-               const ACE_Addr &remote_sap,
+               ACE_Addr const &remote_sap,
                ACE_QoS_Params qos_params,
-               const ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Time_Value const *timeout = nullptr,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                ACE_Protocol_Info *protocolinfo = nullptr,
                ACE_SOCK_GROUP g = 0,
                u_long flags = 0,
@@ -259,7 +259,7 @@ public:
    */
   int complete (ACE_SOCK_Stream &new_stream,
                 ACE_Addr *remote_sap = nullptr,
-                const ACE_Time_Value *timeout = nullptr);
+                ACE_Time_Value const *timeout = nullptr);
 
   /// Resets any event associations on this handle
   bool reset_new_handle (ACE_HANDLE handle);
@@ -297,12 +297,12 @@ protected:
 
   /// Perform operations that must be called before @c ACE_OS::connect.
   int shared_connect_start (ACE_SOCK_Stream &new_stream,
-                            const ACE_Time_Value *timeout,
-                            const ACE_Addr &local_sap);
+                            ACE_Time_Value const *timeout,
+                            ACE_Addr const &local_sap);
 
   /// Perform operations that must be called after @c ACE_OS::connect.
   int shared_connect_finish (ACE_SOCK_Stream &new_stream,
-                             const ACE_Time_Value *timeout,
+                             ACE_Time_Value const *timeout,
                              int result);
 };
 

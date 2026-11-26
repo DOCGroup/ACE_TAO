@@ -44,7 +44,7 @@ public:
    * the socket will only accept connections from IPv6 peers. If zero
    * the socket will accept both IPv4 and v6 if it is able to.
    */
-  ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
+  ACE_SOCK_Acceptor (ACE_Addr const &local_sap,
                      int reuse_addr = 0,
                      int protocol_family = PF_UNSPEC,
                      int backlog = ACE_DEFAULT_BACKLOG,
@@ -52,7 +52,7 @@ public:
                      int ipv6_only = 0);
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.
-  ACE_SOCK_Acceptor (const ACE_Addr &local_sap,
+  ACE_SOCK_Acceptor (ACE_Addr const &local_sap,
                      ACE_Protocol_Info *protocolinfo,
                      ACE_SOCK_GROUP g,
                      u_long flags,
@@ -73,7 +73,7 @@ public:
    * @retval Returns 0 on success and
    * -1 on failure.
    */
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
@@ -82,7 +82,7 @@ public:
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g,
             u_long flags,
@@ -163,7 +163,7 @@ protected:
    * both the QoS-enabled @c open method and the BSD-style @c open
    * method.
    */
-  int shared_open (const ACE_Addr &local_sap,
+  int shared_open (ACE_Addr const &local_sap,
                    int protocol_family,
                    int backlog,
                    int ipv6_only);

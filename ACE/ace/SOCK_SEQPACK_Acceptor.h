@@ -47,7 +47,7 @@ public:
    * connections on.  If @a reuse_addr is 1 then we'll use the
    * @c SO_REUSEADDR to reuse this address.
    */
-  ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,
+  ACE_SOCK_SEQPACK_Acceptor (ACE_Addr const &local_sap,
                              int reuse_addr = 0,
                              int protocol_family = PF_UNSPEC,
                              int backlog = ACE_DEFAULT_BACKLOG,
@@ -55,7 +55,7 @@ public:
 
   /// Multihomed version of same
 
-  ACE_SOCK_SEQPACK_Acceptor (const ACE_Multihomed_INET_Addr &local_sap,
+  ACE_SOCK_SEQPACK_Acceptor (ACE_Multihomed_INET_Addr const &local_sap,
                              int reuse_addr = 0,
                              int protocol_family = PF_UNSPEC,
                              int backlog = ACE_DEFAULT_BACKLOG,
@@ -63,7 +63,7 @@ public:
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
-  ACE_SOCK_SEQPACK_Acceptor (const ACE_Addr &local_sap,
+  ACE_SOCK_SEQPACK_Acceptor (ACE_Addr const &local_sap,
                              ACE_Protocol_Info *protocolinfo,
                              ACE_SOCK_GROUP g,
                              u_long flags,
@@ -79,7 +79,7 @@ public:
    * @c SO_REUSEADDR to reuse this address.  Returns 0 on success and
    * -1 on failure.
    */
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
@@ -87,7 +87,7 @@ public:
 
   /// Multihomed version of same
 
-  int open (const ACE_Multihomed_INET_Addr &local_sap,
+  int open (ACE_Multihomed_INET_Addr const &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_UNSPEC,
             int backlog = ACE_DEFAULT_BACKLOG,
@@ -95,7 +95,7 @@ public:
 
   /// Initialize a passive-mode QoS-enabled acceptor socket.  Returns 0
   /// on success and -1 on failure.
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             ACE_Protocol_Info *protocolinfo,
             ACE_SOCK_GROUP g,
             u_long flags,
@@ -158,13 +158,13 @@ protected:
    * both the QoS-enabled @c open method and the BSD-style @c open
    * method.
    */
-  int shared_open (const ACE_Addr &local_sap,
+  int shared_open (ACE_Addr const &local_sap,
                    int protocol_family,
                    int backlog);
 
   /// Multihomed version of same.
 
-  int shared_open (const ACE_Multihomed_INET_Addr &local_sap,
+  int shared_open (ACE_Multihomed_INET_Addr const &local_sap,
                    int protocol_family,
                    int backlog);
 

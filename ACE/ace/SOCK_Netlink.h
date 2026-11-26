@@ -78,7 +78,7 @@ public:
   */
   ssize_t send (const iovec iov[],
                 int n,
-                const ACE_Addr &addr,
+                ACE_Addr const &addr,
                 int flags = 0) const;
 
   /// Declare the dynamic allocation hooks.

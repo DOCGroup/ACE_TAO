@@ -50,7 +50,7 @@ ssize_t
 ACE_SOCK_Dgram::recv (iovec *io_vec,
                       ACE_Addr &addr,
                       int flags,
-                      const ACE_Time_Value *timeout) const
+                      ACE_Time_Value const *timeout) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::recv");
 #if defined (FIONREAD)
@@ -121,7 +121,7 @@ ACE_SOCK_Dgram::recv (iovec *io_vec,
 // the special variable SAP_ANY then we are going to arbitrarily bind
 // to a portnumber.
 int
-ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
+ACE_SOCK_Dgram::shared_open (ACE_Addr const &local,
                              int protocol_family,
                              int ipv6_only)
 {
@@ -173,7 +173,7 @@ ACE_SOCK_Dgram::shared_open (const ACE_Addr &local,
 }
 
 int
-ACE_SOCK_Dgram::open (const ACE_Addr &local,
+ACE_SOCK_Dgram::open (ACE_Addr const &local,
                       int protocol_family,
                       int protocol,
                       ACE_Protocol_Info *protocolinfo,
@@ -204,7 +204,7 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
 
 // Here's the general-purpose open routine.
 int
-ACE_SOCK_Dgram::open (const ACE_Addr &local,
+ACE_SOCK_Dgram::open (ACE_Addr const &local,
                       int protocol_family,
                       int protocol,
                       int reuse_addr,
@@ -237,7 +237,7 @@ ACE_SOCK_Dgram::open (const ACE_Addr &local,
 
 // Here's the general-purpose constructor used by a connectionless
 // datagram ``server''...
-ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
+ACE_SOCK_Dgram::ACE_SOCK_Dgram (ACE_Addr const &local,
                                 int protocol_family,
                                 int protocol,
                                 int reuse_addr,
@@ -257,7 +257,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
     }
 }
 
-ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
+ACE_SOCK_Dgram::ACE_SOCK_Dgram (ACE_Addr const &local,
                                 int protocol_family,
                                 int protocol,
                                 ACE_Protocol_Info *protocolinfo,
@@ -289,7 +289,7 @@ ACE_SOCK_Dgram::ACE_SOCK_Dgram (const ACE_Addr &local,
 ssize_t
 ACE_SOCK_Dgram::send (const iovec iov[],
                       int n,
-                      const ACE_Addr &addr,
+                      ACE_Addr const &addr,
                       int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::send");
@@ -421,7 +421,7 @@ ACE_SOCK_Dgram::recv (iovec iov[],
 ssize_t
 ACE_SOCK_Dgram::send (const iovec iov[],
                       int n,
-                      const ACE_Addr &addr,
+                      ACE_Addr const &addr,
                       int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram::send");
@@ -557,7 +557,7 @@ ACE_SOCK_Dgram::recv (void *buf,
                       size_t n,
                       ACE_Addr &addr,
                       int flags,
-                      const ACE_Time_Value *timeout) const
+                      ACE_Time_Value const *timeout) const
 {
   if( ACE::handle_read_ready (this->get_handle (), timeout) == 1 )
     {
@@ -571,11 +571,11 @@ ACE_SOCK_Dgram::recv (void *buf,
 }
 
 ssize_t
-ACE_SOCK_Dgram::send (const void *buf,
+ACE_SOCK_Dgram::send (void const *buf,
                       size_t n,
-                      const ACE_Addr &addr,
+                      ACE_Addr const &addr,
                       int flags,
-                      const ACE_Time_Value *timeout) const
+                      ACE_Time_Value const *timeout) const
 {
   // Check the status of the current socket.
   if( ACE::handle_write_ready (this->get_handle (), timeout) == 1 )
@@ -693,7 +693,7 @@ ACE_SOCK_Dgram::set_nic (ACE_TCHAR const *net_if,
 
 int
 ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
-                                       const ACE_INET_Addr &mcast_addr,
+                                       ACE_INET_Addr const &mcast_addr,
                                        ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::make_multicast_ifaddr");
@@ -735,7 +735,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
                   LPSOCKADDR sa = pUnicast->Address.lpSockaddr;
                   if (sa->sa_family == AF_INET)
                     {
-                      const void *addr = &(((sockaddr_in *)sa)->sin_addr);
+                      void const *addr = &(((sockaddr_in *)sa)->sin_addr);
                       set_result = interface_addr.set_address ((char const *) addr, 4, 0);
                     }
                 }
@@ -815,7 +815,7 @@ ACE_SOCK_Dgram::make_multicast_ifaddr (ip_mreq *ret_mreq,
 //      if_nametoindex or that is not Win32 >= Windows XP/Server 2003
 int
 ACE_SOCK_Dgram::make_multicast_ifaddr6 (ipv6_mreq *ret_mreq,
-                                        const ACE_INET_Addr &mcast_addr,
+                                        ACE_INET_Addr const &mcast_addr,
                                         ACE_TCHAR const *net_if)
 {
   ACE_TRACE ("ACE_SOCK_Dgram::make_multicast_ifaddr6");

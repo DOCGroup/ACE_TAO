@@ -12,9 +12,9 @@ ACE_SOCK_Dgram_Bcast::~ACE_SOCK_Dgram_Bcast ()
 // preassigned to the broadcast address of the subnet...)
 
 ACE_INLINE ssize_t
-ACE_SOCK_Dgram_Bcast::send (const void *buf,
+ACE_SOCK_Dgram_Bcast::send (void const *buf,
                             size_t n,
-                            const ACE_Addr &addr,
+                            ACE_Addr const &addr,
                             int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Dgram_Bcast::send");

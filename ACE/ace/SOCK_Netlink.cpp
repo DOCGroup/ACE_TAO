@@ -61,7 +61,7 @@ ACE_SOCK_Netlink::ACE_SOCK_Netlink (ACE_Netlink_Addr &local,
 ssize_t
 ACE_SOCK_Netlink::send (const iovec iov[],
                         int n,
-                        const ACE_Addr &addr,
+                        ACE_Addr const &addr,
                         int flags) const
 {
   ACE_TRACE ("ACE_SOCK_Netlink::send");
