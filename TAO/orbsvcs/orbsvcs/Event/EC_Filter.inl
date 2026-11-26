@@ -38,9 +38,7 @@ TAO_EC_Filter::matches (RtecEventComm::EventHeader const &rhs,
 // ****************************************************************
 
 ACE_INLINE
-TAO_EC_Null_Filter::TAO_EC_Null_Filter ()
-{
-}
+TAO_EC_Null_Filter::TAO_EC_Null_Filter () = default;
 
 // ****************************************************************
 

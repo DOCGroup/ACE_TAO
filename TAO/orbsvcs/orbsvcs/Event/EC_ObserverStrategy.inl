@@ -1,9 +1,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_EC_Null_ObserverStrategy::TAO_EC_Null_ObserverStrategy ()
-{
-}
+TAO_EC_Null_ObserverStrategy::TAO_EC_Null_ObserverStrategy () = default;
 
 // ****************************************************************
 
