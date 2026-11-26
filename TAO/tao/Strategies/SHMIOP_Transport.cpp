@@ -42,7 +42,7 @@ TAO_SHMIOP_Transport::connection_handler_i ()
 ssize_t
 TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
-                            const ACE_Time_Value *max_wait_time)
+                            ACE_Time_Value const *max_wait_time)
 {
   bytes_transferred = 0;
   for (int i {}; i < iovcnt; ++i)
@@ -66,7 +66,7 @@ TAO_SHMIOP_Transport::send (iovec *iov, int iovcnt,
 ssize_t
 TAO_SHMIOP_Transport::recv (char *buf,
                             size_t len,
-                            const ACE_Time_Value *max_wait_time)
+                            ACE_Time_Value const *max_wait_time)
 {
   ssize_t n {};
 

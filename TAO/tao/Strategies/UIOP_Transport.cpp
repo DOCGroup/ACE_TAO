@@ -38,7 +38,7 @@ TAO_UIOP_Transport::connection_handler_i ()
 ssize_t
 TAO_UIOP_Transport::send (iovec *iov, int iovcnt,
                           size_t &bytes_transferred,
-                          const ACE_Time_Value *max_wait_time)
+                          ACE_Time_Value const *max_wait_time)
 {
   ssize_t const retval =
     this->connection_handler_->peer ().sendv (iov, iovcnt, max_wait_time);
@@ -54,7 +54,7 @@ TAO_UIOP_Transport::send (iovec *iov, int iovcnt,
 ssize_t
 TAO_UIOP_Transport::recv (char *buf,
                           size_t len,
-                          const ACE_Time_Value *max_wait_time)
+                          ACE_Time_Value const *max_wait_time)
 {
   ssize_t const n = this->connection_handler_->peer ().recv (buf,
                                                              len,

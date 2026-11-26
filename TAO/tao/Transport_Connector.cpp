@@ -157,7 +157,7 @@ TAO_Connector::make_mprofile (char const *string, TAO_MProfile &mprofile)
     }
 
   // Find the object key
-  const ACE_CString::size_type objkey_index =
+  ACE_CString::size_type const objkey_index =
     ior.find (this->object_key_delimiter (), ior_index);
 
   if (objkey_index == 0 || objkey_index == ACE_CString::npos)

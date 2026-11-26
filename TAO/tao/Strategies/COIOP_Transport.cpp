@@ -43,7 +43,7 @@ ssize_t
 TAO_COIOP_Transport::send (iovec *,
                           int ,
                           size_t &bytes_transferred,
-                          const ACE_Time_Value *)
+                          ACE_Time_Value const *)
 {
   // We don't send data over the wire with COIOP
   bytes_transferred = 0;
@@ -52,7 +52,7 @@ TAO_COIOP_Transport::send (iovec *,
 }
 
 ssize_t
-TAO_COIOP_Transport::recv (char *, size_t , const ACE_Time_Value *)
+TAO_COIOP_Transport::recv (char *, size_t , ACE_Time_Value const *)
 {
   return 0;
 }
@@ -100,7 +100,7 @@ TAO_COIOP_Transport::send_message (TAO_OutputCDR &,
 int
 TAO_COIOP_Transport::send_message_shared (TAO_Stub *,
                                           TAO_Message_Semantics,
-                                          const ACE_Message_Block *,
+                                          ACE_Message_Block const *,
                                           ACE_Time_Value *)
 {
   return 1;

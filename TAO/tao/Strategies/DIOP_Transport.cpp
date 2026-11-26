@@ -46,9 +46,9 @@ TAO_DIOP_Transport::connection_handler_i ()
 ssize_t
 TAO_DIOP_Transport::send (iovec *iov, int iovcnt,
                           size_t &bytes_transferred,
-                          const ACE_Time_Value *)
+                          ACE_Time_Value const *)
 {
-  const ACE_INET_Addr &addr = this->connection_handler_->addr ();
+  ACE_INET_Addr const &addr = this->connection_handler_->addr ();
 
   ssize_t bytes_to_send {};
   for (int i {}; i < iovcnt; ++i)
@@ -70,7 +70,7 @@ TAO_DIOP_Transport::send (iovec *iov, int iovcnt,
 ssize_t
 TAO_DIOP_Transport::recv (char *buf,
                           size_t len,
-                          const ACE_Time_Value * /* max_wait_time */)
+                          ACE_Time_Value const * /* max_wait_time */)
 {
   ACE_INET_Addr from_addr;
 
