@@ -2513,7 +2513,7 @@ int ACE_Log_Formatter::copy_trunc (char const *str, int limit)
 
 void ACE_Log_Formatter::prepare_format ()
 {
-  const char in_progress = this->in_prog_;
+  char const in_progress = this->in_prog_;
   this->in_prog_ = ' ';
   switch (in_progress)
     {
@@ -2660,7 +2660,7 @@ bool ACE_Log_Formatter::process_conversion ()
         if (this->fp_ == this->fmt_out_ + 3 &&
             this->fmt_out_[1] == '.' && this->fmt_out_[2] == '1')
           {
-            const char abbrev =
+            char const abbrev =
               this->priority_ == LM_STARTUP ? 'U' :
               this->priority_ == LM_EMERGENCY ? '!' :
               (ACE_OS::strlen (pri) < 4) ? '?' : pri[3];
@@ -2986,7 +2986,7 @@ ACE_Log_Formatter &ACE_Log_Formatter::operator, (ACE_WCHAR_T pct_wz)
 
 ACE_Log_Formatter &ACE_Log_Formatter::operator, (ACE_WCHAR_T const *pct_WZ)
 {
-  this->insert_arg (pct_WZ ? pct_WZ : (const ACE_WCHAR_T *) L"(null)");
+  this->insert_arg (pct_WZ ? pct_WZ : (ACE_WCHAR_T const *) L"(null)");
   return *this;
 }
 

@@ -69,7 +69,7 @@ typedef void (*ACE_INHERIT_LOG_MSG_HOOK) (ACE_OS_Thread_Descriptor*,
 
 typedef void (*ACE_CLOSE_LOG_MSG_HOOK) ();
 
-typedef void (*ACE_SYNC_LOG_MSG_HOOK) (const ACE_TCHAR *prog_name);
+typedef void (*ACE_SYNC_LOG_MSG_HOOK) (ACE_TCHAR const *prog_name);
 
 typedef ACE_OS_Thread_Descriptor *(*ACE_THR_DESC_LOG_MSG_HOOK) ();
 
