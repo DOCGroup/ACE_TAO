@@ -75,7 +75,7 @@ public:
 
   /// Parse a string containing a URL style IOR and return an
   /// MProfile.  Verify that ior is in the correct format.
-  int make_mprofile (const char *ior, TAO_MProfile &mprofile);
+  int make_mprofile (char const *ior, TAO_MProfile &mprofile);
 
   /// Helper function to assist corbaloc parsing. The default simply validates
   /// the protocol identifier and scans up to the next comma or slash.
@@ -83,7 +83,7 @@ public:
   /// method to  provide a custom scanner.
   /// The profile returned is either null if this the ior does not match or an
   /// empty profile of the correct type, obtained from make_profile().
-  virtual TAO_Profile *corbaloc_scan (const char *ior, size_t &len);
+  virtual TAO_Profile *corbaloc_scan (char const *ior, size_t &len);
 
   ///  Initialize object and register with reactor.
   virtual int open (TAO_ORB_Core *orb_core) = 0;
@@ -112,7 +112,7 @@ public:
 
   /// Check that the prefix of the provided endpoint is valid for use
   /// with a given pluggable protocol.
-  virtual int check_prefix (const char *endpoint) = 0;
+  virtual int check_prefix (char const *endpoint) = 0;
 
   /// Return the object key delimiter to use or expect.
   virtual char object_key_delimiter () const = 0;

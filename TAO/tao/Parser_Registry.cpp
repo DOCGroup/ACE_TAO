@@ -68,7 +68,7 @@ TAO_Parser_Registry::open (TAO_ORB_Core *orb_core)
 }
 
 TAO_IOR_Parser *
-TAO_Parser_Registry::match_parser (const char *ior_string)
+TAO_Parser_Registry::match_parser (char const *ior_string)
 {
   for (TAO_IOR_Parser * const parser : this->parsers_)
     {

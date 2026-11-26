@@ -50,7 +50,7 @@ public:
 
   /// Find the parser that can parse @a ior_string
   /// The lookup is based on the prefix in the string
-  TAO_IOR_Parser *match_parser (const char *ior_string);
+  TAO_IOR_Parser *match_parser (char const *ior_string);
 
   using const_iterator = std::vector<TAO_IOR_Parser *>::const_iterator;
   const_iterator begin () const;

@@ -47,7 +47,7 @@
 static void
 dump_iov (iovec *iov, int iovcnt, size_t id,
           size_t current_transfer,
-          const ACE_TCHAR *location)
+          ACE_TCHAR const *location)
 {
   ACE_GUARD (ACE_Log_Msg, ace_mon, *ACE_Log_Msg::instance ());
 
@@ -1429,7 +1429,7 @@ TAO_Transport::check_buffering_constraints_i (TAO_Stub *stub, bool &must_flush)
 }
 
 void
-TAO_Transport::report_invalid_event_handler (const char *caller)
+TAO_Transport::report_invalid_event_handler (char const *caller)
 {
   if (TAO_debug_level > 0)
     {

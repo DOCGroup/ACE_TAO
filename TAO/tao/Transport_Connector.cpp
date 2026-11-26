@@ -74,14 +74,14 @@ TAO_Connector::TAO_Connector (CORBA::ULong tag)
 TAO_Connector::~TAO_Connector () = default;
 
 TAO_Profile *
-TAO_Connector::corbaloc_scan (const char *str, size_t &len)
+TAO_Connector::corbaloc_scan (char const *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
     {
       return nullptr;
     }
-  const char *comma_pos = std::strchr (str,',');
-  const char *slash_pos = std::strchr (str,'/');
+  char const *comma_pos = std::strchr (str,',');
+  char const *slash_pos = std::strchr (str,'/');
   if (comma_pos == nullptr && slash_pos == nullptr)
     {
       len = std::strlen (str);
@@ -98,7 +98,7 @@ TAO_Connector::corbaloc_scan (const char *str, size_t &len)
 }
 
 int
-TAO_Connector::make_mprofile (const char *string, TAO_MProfile &mprofile)
+TAO_Connector::make_mprofile (char const *string, TAO_MProfile &mprofile)
 {
   // This method utilizes the "Template Method" design pattern to
   // parse the given URL style IOR for the protocol being used

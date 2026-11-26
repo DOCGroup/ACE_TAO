@@ -976,7 +976,7 @@ private:
   void reset_flush_timer ();
 
   /// Print out error messages if the event handler is not valid
-  void report_invalid_event_handler (const char *caller);
+  void report_invalid_event_handler (char const *caller);
 
   /// Is invoked by handle_input operation. It consolidate message on
   /// top of incoming_message_stack.  The amount of missing data is

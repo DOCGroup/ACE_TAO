@@ -734,7 +734,7 @@ TAO_IIOP_Connector::make_profile ()
 }
 
 int
-TAO_IIOP_Connector::check_prefix (const char *endpoint)
+TAO_IIOP_Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (endpoint == nullptr || *endpoint == '\0')
