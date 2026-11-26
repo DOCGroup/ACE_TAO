@@ -28,7 +28,7 @@ ACE_ARGV_Queue_Entry_T<CHAR_TYPE>::dump () const
 
   ACELIB_DEBUG ((LM_DEBUG, ACE_BEGIN_DUMP, this));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("arg_ = %s"), this->arg_));
-  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("quote_arg_ = %d"), (int)this->quote_arg_));
+  ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("quote_arg_ = %d"), this->quote_arg_));
   ACELIB_DEBUG ((LM_DEBUG, ACE_END_DUMP));
 #endif /* ACE_HAS_DUMP */
 }
@@ -47,10 +47,12 @@ ACE_ARGV_T<CHAR_TYPE>::dump () const
     const_cast<ACE_ARGV_T<CHAR_TYPE> *> (this);
 
   for (int i {}; i < this->argc_; ++i)
-    ACELIB_DEBUG ((LM_DEBUG,
-                ACE_TEXT ("\nargv_[%i] = %s"),
-                i,
-                this_obj->argv ()[i]));
+    {
+      ACELIB_DEBUG ((LM_DEBUG,
+                     ACE_TEXT ("\nargv_[%i] = %s"),
+                     i,
+                     this_obj->argv ()[i]));
+    }
 
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\nbuf = %s\n"), this->buf_));
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT ("\n")));

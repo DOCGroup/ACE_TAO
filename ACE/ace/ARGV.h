@@ -55,8 +55,6 @@ public:
   ACE_ARGV_Queue_Entry_T &operator= (ACE_ARGV_Queue_Entry_T const &) = default;
   ACE_ARGV_Queue_Entry_T &operator= (ACE_ARGV_Queue_Entry_T &&) = default;
 
-  /// We need this destructor to keep some compilers from complaining.
-  /// It's just a no-op, however.
   ~ACE_ARGV_Queue_Entry_T () = default;
 
   /// Dump the state of this object.
