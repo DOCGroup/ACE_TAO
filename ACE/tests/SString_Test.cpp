@@ -116,7 +116,7 @@ int testIterator()
 
 int testConstIterator()
 {
-  const ACE_CString s1 ("Hello, World");
+  ACE_CString const s1 ("Hello, World");
 
   // Use the advance () method to count number of characters.
   size_t count = 0;

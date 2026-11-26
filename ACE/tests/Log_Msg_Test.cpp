@@ -254,7 +254,7 @@ test_log_msg_features (ACE_TCHAR const *program)
   // properly guarded.
   ACE_TCHAR big[ACE_Log_Record::MAXLOGMSGLEN + 1];
   size_t i = 0;
-  static const ACE_TCHAR alphabet[] = ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
+  static ACE_TCHAR const alphabet[] = ACE_TEXT ("abcdefghijklmnopqrstuvwxyz");
   const size_t j = ACE_OS::strlen (alphabet);
   while (i < ACE_Log_Record::MAXLOGMSGLEN)
     {

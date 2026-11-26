@@ -121,7 +121,7 @@ test_bucket_construction_failure ()
 static constexpr size_t STRING_TABLE_ENTRIES = 3 * 2;
 static constexpr size_t MAX_HASH = 6;
 
-using HASH_STRING_ENTRY = ACE_Hash_Map_Entry<const ACE_TCHAR *, const ACE_TCHAR *>;
+using HASH_STRING_ENTRY = ACE_Hash_Map_Entry<ACE_TCHAR const *, ACE_TCHAR const *>;
 
 // @@ The following requires too much internal implementation
 // information about the <ACE_Hash_Map_Manager>.  We need to figure
@@ -131,18 +131,18 @@ static const size_t STRING_TABLE_SIZE =
 
 static ACE_Static_Allocator<STRING_TABLE_SIZE> ace_test_allocator;
 
-using HASH_STRING_MAP = ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
+using HASH_STRING_MAP = ACE_Hash_Map_Manager_Ex<ACE_TCHAR const *, ACE_TCHAR const *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>;
 
-using HASH_STRING_ITER = ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
+using HASH_STRING_ITER = ACE_Hash_Map_Iterator_Ex<ACE_TCHAR const *, ACE_TCHAR const *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>;
 
-using HASH_STRING_CONST_ITER = ACE_Hash_Map_Const_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
+using HASH_STRING_CONST_ITER = ACE_Hash_Map_Const_Iterator_Ex<ACE_TCHAR const *, ACE_TCHAR const *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>;
 
-using HASH_STRING_REVERSE_ITER = ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
+using HASH_STRING_REVERSE_ITER = ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TCHAR const *, ACE_TCHAR const *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>;
 
 struct String_Table
 {
-  const ACE_TCHAR *key_;
-  const ACE_TCHAR *value_;
+  ACE_TCHAR const *key_;
+  ACE_TCHAR const *value_;
 };
 
 static String_Table string_table[] =
@@ -244,8 +244,8 @@ int test_two_allocators ()
         }
     }
 
-  const ACE_TCHAR *key = ACE_TEXT ("key");
-  const ACE_TCHAR *val = ACE_TEXT ("value");
+  ACE_TCHAR const *key = ACE_TEXT ("key");
+  ACE_TCHAR const *val = ACE_TEXT ("value");
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("- Binding ('%s', '%s'), should fail...\n"),
               key, val));
@@ -295,7 +295,7 @@ run_test ()
         }
     }
 
-  const ACE_TCHAR *entry {};
+  ACE_TCHAR const *entry {};
 
   // Check the <find> operation.
   for (i = 0; string_table[i].key_ != nullptr; ++i)
@@ -319,7 +319,7 @@ run_test ()
 
   // Check the <trybind> operation.
   {
-    const ACE_TCHAR *pc = string_table[1].value_;
+    ACE_TCHAR const *pc = string_table[1].value_;
     if (hash.trybind (string_table[0].key_,
                       pc) != 1)
       {

@@ -81,7 +81,7 @@ run_main (int, ACE_TCHAR* [])
           ACE_OS::free (expanded);
         }
 
-      const ACE_TCHAR* const defstr = ACE_TEXT ("Sarah Cleeland is Two!");
+      ACE_TCHAR const* const defstr = ACE_TEXT ("Sarah Cleeland is Two!");
 
       ACE_Env_Value<ACE_TString> sval1 (ACE_TEXT ("This_Shouldnt_Be_Set_Hopefully"),
                                         defstr);
