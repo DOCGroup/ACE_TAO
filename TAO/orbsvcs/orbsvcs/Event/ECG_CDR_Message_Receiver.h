@@ -126,7 +126,7 @@ private:
  * This class is used by various Gateway classes (Senders/Receivers)
  * responsible for federating Event Channels with UDP/Mcast.
  *
- * = REASSEMBLY
+ * @par Reassembly
  * Fragmentation is described in ECG_CDR_Message_Sender.h
  * Whenever an incomplete fragment is received (one with
  * fragment_count > 1) we allocate an entry for the message in an

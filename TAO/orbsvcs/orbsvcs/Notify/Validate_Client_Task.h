@@ -31,9 +31,6 @@ class TAO_Notify_EventChannelFactory;
  *
  * Defines the interface for the consumer control strategy.
  * This strategy handles misbehaving or failing consumers.
- * = MEMORY MANAGEMENT
- * = LOCKING
- * = TODO
  */
 class TAO_Notify_Serv_Export TAO_Notify_validate_client_Task
   : public ACE_Task<ACE_NULL_SYNCH>

@@ -69,7 +69,7 @@ template<class Target> class TAO_ESF_Worker;
  * + _incr_refcnt() - increment the reference count.
  * + _decr_refcnt() - decrement the reference count.
  *
- * = VARIANTS
+ * @par Variants
  *
  * We identify several sources of variation:
  *
