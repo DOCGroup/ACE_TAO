@@ -52,6 +52,41 @@ public:
    * with instances of this service type, the properties definitions
    * for this service type, and the service type names of the
    * immediate super-types to this service type.
+   *
+   * If the type creation is successful, an incarnation number is
+   * returned as the value of the operation. Incarnation numbers are
+   * opaque values that are assigned to each modification to the
+   * repository's state. An incarnation number can be quoted when
+   * invoking the list_types operation to retrieve all changes to the
+   * service repository since a particular logical time. (Note:
+   * IncarnationNumber is currently declared as a struct consisting of
+   * two unsigned longs; what we really want here is an unsigned hyper
+   * [64-bit integer]. A future revision task force should modify this
+   * when CORBA systems support IDL 64-bit integers.)
+   *
+   * If the "name" parameter is malformed, then the
+   * CosTrading::IllegalServiceType exception is raised.  If the type
+   * already exists, then the ServiceTypeExists exception is raised.
+   * If the "if_name" parameter is not a sub-type of the interface
+   * associated with a service type from which this service type is
+   * derived, such that substitutability would be violated, then the
+   * InterfaceTypeMismatch exception is raised.  If a property name
+   * supplied in the "props" parameter is malformed, the
+   * CosTrading::IllegalPropertyName exception is raised.  If the
+   * same property name appears two or more times in the "props"
+   * parameter, the CosTrading::DuplicatePropertyName exception is
+   * raised.  If a property value type associated with this service
+   * type illegally modifies the value type of a super-type's
+   * property, or if two super-types incompatibly declare value types
+   * for the same property name, then the ValueTypeRedefinition
+   * exception is raised.  If one of the ServiceTypeNames in
+   * "super_types" is malformed, then the
+   * CosTrading::IllegalServiceType exception is raised. If one of the
+   * ServiceTypeNames in "super_types" does not exist, then the
+   * CosTrading::UnknownServiceType exception is raised.  If the same
+   * service type name is included two or more times in this
+   * parameter, the DuplicateServiceTypeName exception is raised.
+   * END SPEC
    */
   CosTradingRepos::ServiceTypeRepository::IncarnationNumber
   add_type (char const* name,
@@ -59,40 +94,6 @@ public:
             CosTradingRepos::ServiceTypeRepository::PropStructSeq const& props,
             CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const& super_types) override;
 
-  // If the type creation is successful, an incarnation number is
-  // returned as the value of the operation. Incarnation numbers are
-  // opaque values that are assigned to each modification to the
-  // repository's state. An incarnation number can be quoted when
-  // invoking the list_types operation to retrieve all changes to the
-  // service repository since a particular logical time. (Note:
-  // IncarnationNumber is currently declared as a struct consisting of
-  // two unsigned longs; what we really want here is an unsigned hyper
-  // [64-bit integer]. A future revision task force should modify this
-  // when CORBA systems support IDL 64-bit integers.)
-
-  // If the "name" parameter is malformed, then the
-  // CosTrading::IllegalServiceType exception is raised.  If the type
-  // already exists, then the ServiceTypeExists exception is raised.
-  // If the "if_name" parameter is not a sub-type of the interface
-  // associated with a service type from which this service type is
-  // derived, such that substitutability would be violated, then the
-  // InterfaceTypeMismatch exception is raised.  If a property name
-  // supplied in the "props" parameter is malformed, the
-  // CosTrading::IllegalPropertyName exception is raised.  If the
-  // same property name appears two or more times in the "props"
-  // parameter, the CosTrading::DuplicatePropertyName exception is
-  // raised.  If a property value type associated with this service
-  // type illegally modifies the value type of a super-type's
-  // property, or if two super-types incompatibly declare value types
-  // for the same property name, then the ValueTypeRedefinition
-  // exception is raised.  If one of the ServiceTypeNames in
-  // "super_types" is malformed, then the
-  // CosTrading::IllegalServiceType exception is raised. If one of the
-  // ServiceTypeNames in "super_types" does not exist, then the
-  // CosTrading::UnknownServiceType exception is raised.  If the same
-  // service type name is included two or more times in this
-  // parameter, the DuplicateServiceTypeName exception is raised.
-  // END SPEC
 
   /**
    * BEGIN SPEC
