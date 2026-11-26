@@ -104,7 +104,7 @@ namespace ACE
             if (this->putq (mb.get (), std::addressof (nowait)) == -1)
               {
                 INET_ERROR (1, (LM_ERROR, DLINFO
-                            ACE_TEXT ("ACE_IOS_StreamHandler - discarding input data, "),
+                            ACE_TEXT ("ACE_IOS_StreamHandler - discarding input data, ")
                             ACE_TEXT ("enqueue failed (%d)\n"),
                             ACE_OS::last_error ()));
                 this->connected_ = false;
@@ -175,8 +175,8 @@ namespace ACE
             if (send_cnt <= 0)
               {
                 INET_ERROR (1, (LM_ERROR, DLINFO
-                            ACE_TEXT ("%p; ACE_IOS_StreamHandler - "),
-                            ACE_TEXT ("send failed\n")));
+                            ACE_TEXT ("ACE_IOS_StreamHandler - %p\n"),
+                            ACE_TEXT ("send failed")));
                 this->connected_ = false;
                 return this->using_reactor () ? -1 : 0;
               }
@@ -484,8 +484,8 @@ namespace ACE
         if (this->putq (mb.get (), std::addressof (nowait)) == -1)
           {
             INET_ERROR (1, (LM_ERROR, DLINFO
-                        ACE_TEXT ("(%d) ACE_IOS_StreamHandler - discarding output data, "),
-                        ACE_TEXT ("enqueue failed\n"),
+                        ACE_TEXT ("ACE_IOS_StreamHandler - discarding output data, ")
+                        ACE_TEXT ("enqueue failed (%d)\n"),
                         ACE_OS::last_error ()));
             return 0;
           }
