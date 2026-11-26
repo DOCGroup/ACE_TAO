@@ -88,7 +88,7 @@ ACE_CDR::swap_2 (char const *orig, char* target)
   __asm rol ax, 8;
   __asm mov [ecx], ax;
 #else
-  ACE_UINT16 usrc = * reinterpret_cast<const ACE_UINT16*> (orig);
+  ACE_UINT16 usrc = * reinterpret_cast<ACE_UINT16 const*> (orig);
   ACE_UINT16* udst = reinterpret_cast<ACE_UINT16*> (target);
   *udst = (usrc << 8) | (usrc >> 8);
 #endif /* ACE_HAS_PENTIUM */
@@ -114,7 +114,7 @@ ACE_CDR::swap_4 (char const *orig, char* target)
 #elif defined(ACE_HAS_INTEL_ASSEMBLY)
   // We have ACE_HAS_PENTIUM, so we know the sizeof's.
   unsigned int j =
-    *reinterpret_cast<const unsigned int*> (orig);
+    *reinterpret_cast<unsigned int const*> (orig);
   asm ("bswap %1" : "=r" (j) : "0" (j));
   *reinterpret_cast<unsigned int*> (target) = j;
 #elif defined(ACE_HAS_PENTIUM) \
@@ -126,7 +126,7 @@ ACE_CDR::swap_4 (char const *orig, char* target)
   __asm bswap eax;
   __asm mov [ecx], eax;
 #else
-  ACE_UINT32 x = * reinterpret_cast<const ACE_UINT32*> (orig);
+  ACE_UINT32 x = * reinterpret_cast<ACE_UINT32 const*> (orig);
   x = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
   * reinterpret_cast<ACE_UINT32*> (target) = x;
 #endif /* ACE_HAS_INTRINSIC_BYTESWAP */
@@ -157,8 +157,8 @@ ACE_CDR::swap_8 (char const *orig, char* target)
   *reinterpret_cast<unsigned long*> (target) = x;
 #elif defined(ACE_HAS_PENTIUM) && defined(__GNUG__) \
     && !defined(ACE_LACKS_INLINE_ASSEMBLY)
-  unsigned int i =*reinterpret_cast<const unsigned int*> (orig);
-  unsigned int j = *reinterpret_cast<const unsigned int*> (orig + 4);
+  unsigned int i =*reinterpret_cast<unsigned int const*> (orig);
+  unsigned int j = *reinterpret_cast<unsigned int const*> (orig + 4);
   asm ("bswap %1" : "=r" (i) : "0" (i));
   asm ("bswap %1" : "=r" (j) : "0" (j));
   *reinterpret_cast<unsigned int*> (target + 4) = i;
@@ -185,8 +185,8 @@ ACE_CDR::swap_8 (char const *orig, char* target)
   x = (x << 32) | (x >> 32);
   *reinterpret_cast<unsigned long*> (target) = x;
 #else
-  ACE_UINT32 x = * reinterpret_cast<const ACE_UINT32*> (orig);
-  ACE_UINT32 y = * reinterpret_cast<const ACE_UINT32*> (orig + 4);
+  ACE_UINT32 x = * reinterpret_cast<ACE_UINT32 const*> (orig);
+  ACE_UINT32 y = * reinterpret_cast<ACE_UINT32 const*> (orig + 4);
   x = (x << 24) | ((x & 0xff00) << 8) | ((x & 0xff0000) >> 8) | (x >> 24);
   y = (y << 24) | ((y & 0xff00) << 8) | ((y & 0xff0000) >> 8) | (y >> 24);
   * reinterpret_cast<ACE_UINT32*> (target) = y;
@@ -285,8 +285,8 @@ ACE_CDR::Fixed::digit (int n) const
 ACE_INLINE void
 ACE_CDR::Fixed::digit (int n, int val)
 {
-  const int idx = 15 - (n + 1) / 2;
-  const int byte = (n % 2) ? (this->value_[idx] & 0xf0) | val
+  int const idx = 15 - (n + 1) / 2;
+  int const byte = (n % 2) ? (this->value_[idx] & 0xf0) | val
                            : ((val << 4) | (this->value_[idx] & 0xf));
   this->value_[idx] = static_cast<ACE_CDR::Octet> (byte);
 }

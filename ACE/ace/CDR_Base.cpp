@@ -87,9 +87,9 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
         {
 #if defined (ACE_HAS_INTEL_ASSEMBLY)
           unsigned int a =
-            * reinterpret_cast<const unsigned int*> (orig);
+            * reinterpret_cast<unsigned int const*> (orig);
           unsigned int b =
-            * reinterpret_cast<const unsigned int*> (orig + 4);
+            * reinterpret_cast<unsigned int const*> (orig + 4);
           asm ( "bswap %1"      : "=r" (a) : "0" (a) );
           asm ( "bswap %1"      : "=r" (b) : "0" (b) );
           asm ( "rol $16, %1"   : "=r" (a) : "0" (a) );
@@ -120,8 +120,8 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
 
           * reinterpret_cast<unsigned long*> (target) = a;
 #else
-          ACE_UINT32 const a = *reinterpret_cast<const ACE_UINT32 *> (orig);
-          ACE_UINT32 const b = *reinterpret_cast<const ACE_UINT32 *> (orig + 4);
+          ACE_UINT32 const a = *reinterpret_cast<ACE_UINT32 const *> (orig);
+          ACE_UINT32 const b = *reinterpret_cast<ACE_UINT32 const *> (orig + 4);
 
           ACE_UINT32 const a1 = (a & 0x00ff00ffU) << 8;
           ACE_UINT32 const b1 = (b & 0x00ff00ffU) << 8;
@@ -142,9 +142,9 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
         {
 #if defined (ACE_HAS_INTEL_ASSEMBLY)
           unsigned int a =
-            * reinterpret_cast<const unsigned int*> (orig);
+            * reinterpret_cast<unsigned int const*> (orig);
           unsigned int b =
-            * reinterpret_cast<const unsigned int*> (orig + 4);
+            * reinterpret_cast<unsigned int const*> (orig + 4);
           asm ( "bswap %1" : "=r" (a) : "0" (a) );
           asm ( "bswap %1" : "=r" (b) : "0" (b) );
           // We're little endian.
@@ -200,8 +200,8 @@ ACE_CDR::swap_2_array (char const * orig, char* target, size_t n)
           * reinterpret_cast<ACE_UINT16*> (target + 6) = b4;
 #endif
 #else
-          ACE_UINT32 a = * reinterpret_cast<const ACE_UINT32*> (orig);
-          ACE_UINT32 b = * reinterpret_cast<const ACE_UINT32*> (orig + 4);
+          ACE_UINT32 a = * reinterpret_cast<ACE_UINT32 const*> (orig);
+          ACE_UINT32 b = * reinterpret_cast<ACE_UINT32 const*> (orig + 4);
 
           ACE_UINT32 a1 = (a & 0x00ff00ff) << 8;
           ACE_UINT32 b1 = (b & 0x00ff00ff) << 8;
@@ -375,10 +375,10 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
   while (orig < end)
     {
 #if defined (ACE_HAS_PENTIUM) && defined (__GNUG__)
-      unsigned int a = *reinterpret_cast<const unsigned int*> (orig);
-      unsigned int b = *reinterpret_cast<const unsigned int*> (orig + 4);
-      unsigned int c = *reinterpret_cast<const unsigned int*> (orig + 8);
-      unsigned int d = *reinterpret_cast<const unsigned int*> (orig + 12);
+      unsigned int a = *reinterpret_cast<unsigned int const*> (orig);
+      unsigned int b = *reinterpret_cast<unsigned int const*> (orig + 4);
+      unsigned int c = *reinterpret_cast<unsigned int const*> (orig + 8);
+      unsigned int d = *reinterpret_cast<unsigned int const*> (orig + 12);
 
       asm ("bswap %1" : "=r" (a) : "0" (a));
       asm ("bswap %1" : "=r" (b) : "0" (b));
@@ -407,10 +407,10 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
       __asm mov 8[esi], ebx
       __asm mov 12[esi], eax
 #else
-      ACE_UINT32 a = * reinterpret_cast<const ACE_UINT32*> (orig);
-      ACE_UINT32 b = * reinterpret_cast<const ACE_UINT32*> (orig + 4);
-      ACE_UINT32 c = * reinterpret_cast<const ACE_UINT32*> (orig + 8);
-      ACE_UINT32 d = * reinterpret_cast<const ACE_UINT32*> (orig + 12);
+      ACE_UINT32 a = * reinterpret_cast<ACE_UINT32 const*> (orig);
+      ACE_UINT32 b = * reinterpret_cast<ACE_UINT32 const*> (orig + 4);
+      ACE_UINT32 c = * reinterpret_cast<ACE_UINT32 const*> (orig + 8);
+      ACE_UINT32 d = * reinterpret_cast<ACE_UINT32 const*> (orig + 12);
 
       // Expect the optimizer reordering this A LOT.
       // We leave it this way for clarity.
@@ -781,8 +781,8 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::LongLong val)
   int idx = 15;
   while (true)
     {
-      const int mod = static_cast<int> (val % 10);
-      const unsigned int digit = (mod < 0) ? -mod : mod;
+      int const mod = static_cast<int> (val % 10);
+      unsigned int const digit = (mod < 0) ? -mod : mod;
       if (high)
         {
           f.value_[idx--] |= digit << 4;
@@ -817,7 +817,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_integer (ACE_CDR::ULongLong val)
   int idx = 15;
   while (true)
     {
-      const unsigned int digit = val % 10;
+      unsigned int const digit = val % 10;
       if (high)
         {
           f.value_[idx--] |= digit << 4;
@@ -862,7 +862,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_floating (LongDouble val)
     }
 
   // How many digits are to the left of the decimal point?
-  const size_t digits_left =
+  size_t const digits_left =
     static_cast<size_t> (1 + ((val > 0) ? std::log10 (val) : 0));
   if (digits_left > MAX_DIGITS)
     {
@@ -958,7 +958,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (char const *str)
       ++str;
     }
 
-  const size_t span = std::strspn (str, ".0123456789");
+  size_t const span = std::strspn (str, ".0123456789");
 
   Fixed f;
   f.value_[15] = negative ? NEGATIVE : POSITIVE;
@@ -978,7 +978,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (char const *str)
             }
         }
 
-      const unsigned int digit = str[iter - 1] - '0';
+      unsigned int const digit = str[iter - 1] - '0';
       if (high)
         {
           f.value_[idx--] |= digit << 4;
@@ -1126,7 +1126,7 @@ namespace {
     }
 
     char *const buffer_;
-    const size_t buffer_size_;
+    size_t const buffer_size_;
     size_t idx_;
   };
 }
@@ -1209,7 +1209,7 @@ ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (const ACE_CDR::Fixed &f)
   ConstIterator rhs_iter = f.begin ();
   if (f.scale_ > this->scale_)
     {
-      const int scale_diff = f.scale_ - this->scale_;
+      int const scale_diff = f.scale_ - this->scale_;
       rhs_iter += scale_diff - this->lshift (scale_diff);
     }
 
@@ -1594,7 +1594,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
       return *this;
     }
 
-  const int shift = q.lshift (MAX_DIGITS);
+  int const shift = q.lshift (MAX_DIGITS);
   if (shift)
     {
       const Octet scale = static_cast<Octet> (r.lshift (shift));
@@ -1634,7 +1634,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::div_helper2 (const Fixed &rhs, Fixed &r) const
     }
   else
     {
-      const int dig = this->digits_ - rhs.digits_ - 1;
+      int const dig = this->digits_ - rhs.digits_ - 1;
       Fixed top = *this, bot = *this; // split with bot having dig digits
       for (int i = 0; i < dig; ++i)
         {
@@ -1805,7 +1805,7 @@ bool ACE_CDR::Fixed::less (const ACE_CDR::Fixed &rhs) const
       return std::memcmp (a.value_, b.value_, sizeof a.value_) < 0;
     }
 
-  const int a_int_dig = a.digits_ - a.scale_, b_int_dig = b.digits_ - b.scale_;
+  int const a_int_dig = a.digits_ - a.scale_, b_int_dig = b.digits_ - b.scale_;
 
   if (a_int_dig > b_int_dig)
     {
@@ -1828,7 +1828,7 @@ bool ACE_CDR::Fixed::less (const ACE_CDR::Fixed &rhs) const
         }
     }
 
-  const int common_frac = (std::min) (a.scale_, b.scale_),
+  int const common_frac = (std::min) (a.scale_, b.scale_),
     common_dig = (std::min) (a_int_dig, b_int_dig) + common_frac,
     a_off = a.scale_ - common_frac, // a's offset (more scale than b)
     b_off = b.scale_ - common_frac; // b's offset (more scale than a)
