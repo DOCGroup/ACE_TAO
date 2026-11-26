@@ -14,8 +14,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_Token_Request::ACE_Token_Request (int token_type,
                                       int proxy_type,
                                       ACE_UINT32 operation_type,
-                                      const ACE_TCHAR token_name[],
-                                      const ACE_TCHAR client_id[],
+                                      ACE_TCHAR const token_name[],
+                                      ACE_TCHAR const client_id[],
                                       ACE_Synch_Options const &options)
 {
   this->token_type (token_type);

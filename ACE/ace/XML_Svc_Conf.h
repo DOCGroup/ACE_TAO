@@ -42,9 +42,9 @@ public:
 
   virtual ~ACE_XML_Svc_Conf () = 0;
 
-  virtual int parse_file (const ACE_TCHAR file[]) = 0;
+  virtual int parse_file (ACE_TCHAR const file[]) = 0;
 
-  virtual int parse_string (const ACE_TCHAR str[]) = 0;
+  virtual int parse_string (ACE_TCHAR const str[]) = 0;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
