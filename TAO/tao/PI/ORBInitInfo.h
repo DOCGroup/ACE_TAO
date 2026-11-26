@@ -61,6 +61,7 @@ public:
    * PortableInterceptor::ORBInitInfo interface.
    */
   /// @{
+
   /// Return the argument vector for the ORB currently being
   /// initialized as a string sequence.
   CORBA::StringSeq * arguments () override;
@@ -133,8 +134,9 @@ public:
       CORBA::PolicyType type,
       PortableInterceptor::PolicyFactory_ptr policy_factory) override;
 
-  CORBA::ORB_ptr _get_orb () override;
   /// @}
+
+  CORBA::ORB_ptr _get_orb () override;
 
   /**
    * @name TAO Extensions
@@ -143,6 +145,7 @@ public:
    * specification, and are TAO-specific extensions.
    */
   /// @{
+
   /// Allocate a slot in the ORB's TSS resources.
   /**
    * TAO uses a single TSS key for these resources, so it is useful to

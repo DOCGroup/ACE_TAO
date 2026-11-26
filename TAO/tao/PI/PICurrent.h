@@ -62,6 +62,7 @@ namespace TAO
      * interface.
      */
     /// @{
+
     /// Retrieve information stored in the slot table at the given
     /// SlotId.
     CORBA::Any *get_slot (PortableInterceptor::SlotId id) override;
