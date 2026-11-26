@@ -52,10 +52,10 @@ public:
 
   Annotation_Test &run (const std::string &idl);
 
-  AST_Decl *assert_node (const char *name, UTL_Scope *from = nullptr);
+  AST_Decl *assert_node (char const *name, UTL_Scope *from = nullptr);
 
   template <typename T>
-  T *assert_node (const char *name, UTL_Scope *from = nullptr)
+  T *assert_node (char const *name, UTL_Scope *from = nullptr)
   {
     T *cast = dynamic_cast<T *> (assert_node (name, from));
     if (!cast)
@@ -69,7 +69,7 @@ public:
     return cast;
   }
 
-  AST_Annotation_Decl *assert_annotation_decl (const char *name);
+  AST_Annotation_Decl *assert_annotation_decl (char const *name);
 
   void assert_annotation_appl_count (AST_Decl *node, size_t count);
 
@@ -83,10 +83,10 @@ public:
     AST_Annotation_Appl *anno_appl, size_t count);
 
   AST_Annotation_Member *get_annotation_member (
-    AST_Annotation_Decl *anno_decl, const char *name);
+    AST_Annotation_Decl *anno_decl, char const *name);
 
   AST_Annotation_Member *get_annotation_member (
-    AST_Annotation_Appl *anno_appl, const char *name);
+    AST_Annotation_Appl *anno_appl, char const *name);
 
   void assert_annotation_member_type (
     AST_Annotation_Member *member, AST_Expression::ExprType type);

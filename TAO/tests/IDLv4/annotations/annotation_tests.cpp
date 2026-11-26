@@ -11,7 +11,7 @@
 
 namespace {
   void assert_node_has_annotation (
-    Annotation_Test &t, const char *node_name, AST_Annotation_Decl *annotation)
+    Annotation_Test &t, char const *node_name, AST_Annotation_Decl *annotation)
   {
     AST_Decl *node = t.assert_node (node_name);
     t.assert_annotation_appl_count (node, 1);

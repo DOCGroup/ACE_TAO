@@ -27,7 +27,7 @@ namespace stream8 {
 
 template <typename IntType>
 void
-expect_equals (bool &any_failed, const char *name, IntType actual, IntType expected)
+expect_equals (bool &any_failed, char const *name, IntType actual, IntType expected)
 {
   if (actual != expected)
     {

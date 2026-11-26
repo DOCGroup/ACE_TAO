@@ -167,7 +167,7 @@ Annotation_Test::run (const std::string &idl)
 }
 
 AST_Decl *
-Annotation_Test::assert_node (const char *name, UTL_Scope *from)
+Annotation_Test::assert_node (char const *name, UTL_Scope *from)
 {
   AST_Decl *node {};
   UTL_ScopedName *scoped_name = FE_Utils::string_to_scoped_name (name);
@@ -198,7 +198,7 @@ Annotation_Test::assert_node (const char *name, UTL_Scope *from)
 }
 
 AST_Annotation_Decl *
-Annotation_Test::assert_annotation_decl (const char *name)
+Annotation_Test::assert_annotation_decl (char const *name)
 {
   AST_Annotation_Decl *node = assert_node<AST_Annotation_Decl> (name);
 
@@ -327,7 +327,7 @@ Annotation_Test::assert_annotation_member_count (
 
 AST_Annotation_Member *
 Annotation_Test::get_annotation_member (
-  AST_Annotation_Decl *anno_decl, const char *name)
+  AST_Annotation_Decl *anno_decl, char const *name)
 {
   AST_Decl *decl = (*anno_decl)[name];
   AST_Annotation_Member *member = decl ?
@@ -345,7 +345,7 @@ Annotation_Test::get_annotation_member (
 
 AST_Annotation_Member *
 Annotation_Test::get_annotation_member (
-  AST_Annotation_Appl *anno_appl, const char *name)
+  AST_Annotation_Appl *anno_appl, char const *name)
 {
   return get_annotation_member (
     dynamic_cast<AST_Annotation_Decl *> (anno_appl), name);
@@ -482,12 +482,12 @@ Annotation_Test::results ()
 void
 Annotation_Test::print_idl_with_line_numbers ()
 {
-  static const char* start_marker =
+  static char const *start_marker =
 #ifndef ACE_WIN32
     "\x1b[31m"
 #endif
     ">";
-  static const char* end_marker =
+  static char const *end_marker =
 #ifndef ACE_WIN32
     "\x1b[0m"
 #endif
