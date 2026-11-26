@@ -80,7 +80,7 @@ public:
                                 CORBA::ULong m);
 
   /// Verify if condition is given for LOCATION_FORWARD_PERM reply
-  virtual CORBA::Boolean is_permanent_forward_condition (const CORBA::Object_ptr obj,
+  virtual CORBA::Boolean is_permanent_forward_condition (CORBA::Object_ptr const obj,
                                                          const TAO_Service_Context &service_context) const;
 
   /// Allow the service layer to decide whether the COMM_FAILURE

@@ -113,7 +113,7 @@ public:
   int generate_exception_reply (
       TAO_OutputCDR &cdr,
       TAO_Pluggable_Reply_Params_Base &params,
-      const CORBA::Exception &x);
+      CORBA::Exception const &x);
 
   /// Header length
   size_t header_length () const;

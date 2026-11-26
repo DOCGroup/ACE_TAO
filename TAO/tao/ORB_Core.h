@@ -633,7 +633,7 @@ public:
   /// Set/Get the IOR of the Implementation Repository service.
   /// @{
   CORBA::Object_ptr implrepo_service ();
-  void implrepo_service (const CORBA::Object_ptr ir);
+  void implrepo_service (CORBA::Object_ptr const ir);
   /// @}
 
   /// Do we attempt to register with the Implementation Repository
@@ -896,7 +896,7 @@ public:
   /// Verify condition for  permanent forward is given,
   /// both parameters must provide group attributes.
   CORBA::Boolean is_permanent_forward_condition
-    (const CORBA::Object_ptr obj,
+    (CORBA::Object_ptr const obj,
     const TAO_Service_Context &service_context);
 
   /// Configuration accessor method

@@ -2921,10 +2921,10 @@ TAO_ORB_Core::list_initial_references ()
   // Make sure the "terminating" zero is the last array element so
   // that there is a stop condition when iterating through the list.
 
-  static const size_t initial_services_size =
+  static size_t const initial_services_size =
     sizeof (initial_services) / sizeof (initial_services[0]);
 
-  const size_t total_size =
+  size_t const total_size =
     initial_services_size
     + this->init_ref_map_.size ()
     + this->object_ref_table_.current_size ();

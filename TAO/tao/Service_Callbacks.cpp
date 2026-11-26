@@ -37,7 +37,7 @@ TAO_Service_Callbacks::hash_ft (TAO_Profile *,
 }
 
 CORBA::Boolean
-TAO_Service_Callbacks::is_permanent_forward_condition (const CORBA::Object_ptr,
+TAO_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr const,
                                                        const TAO_Service_Context &) const
 {
   return false;

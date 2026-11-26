@@ -899,7 +899,7 @@ int
 TAO_GIOP_Message_Base::generate_exception_reply (
     TAO_OutputCDR &cdr,
     TAO_Pluggable_Reply_Params_Base &params,
-    const CORBA::Exception &x)
+    CORBA::Exception const &x)
 {
   // A new try/catch block, but if something goes wrong now we have no
   // hope, just abort.
