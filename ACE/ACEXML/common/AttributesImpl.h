@@ -39,6 +39,7 @@ public:
   ACEXML_Attribute () = default;
 
   ACEXML_Attribute (ACEXML_Attribute const &attr);
+  ACEXML_Attribute (ACEXML_Attribute &&) = default;
 
   /// Initialize all attribute fields.
   ACEXML_Attribute (ACEXML_Char const *uri,
@@ -87,6 +88,7 @@ public:
   void value (ACEXML_Char const *value);
 
   ACEXML_Attribute &operator= (ACEXML_Attribute const &rhs);
+  ACEXML_Attribute &operator= (ACEXML_Attribute &&) = default;
 
   /// Comparison operator.
   bool operator!= (ACEXML_Attribute const&rhs) const;

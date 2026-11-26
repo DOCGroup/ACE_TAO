@@ -1,9 +1,25 @@
 #include "ACEXML/common/AttributesImpl.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_main.h"
+#include <utility>
 
 int ACE_TMAIN (int, ACE_TCHAR *[])
 {
+  ACEXML_Attribute original (ACE_TEXT ("urn:move"), ACE_TEXT ("name"),
+                             ACE_TEXT ("p:name"), ACE_TEXT ("CDATA"),
+                             ACE_TEXT ("value"));
+  ACEXML_Char const * const original_value = original.value ();
+  ACEXML_Attribute moved (std::move (original));
+  ACEXML_Attribute assigned;
+  assigned = std::move (moved);
+  if (assigned.value () == nullptr || assigned.value () != original_value ||
+      original.value () != nullptr ||
+      moved.value () != nullptr ||
+      ACE_OS::strcmp (assigned.value (), ACE_TEXT ("value")) != 0)
+    {
+      return 1;
+    }
+
   ACEXML_AttributesImpl attributes (1);
   if (attributes.addAttribute (ACE_TEXT ("urn:one"), ACE_TEXT ("one"),
                                ACE_TEXT ("p:one"), ACE_TEXT ("CDATA"),
