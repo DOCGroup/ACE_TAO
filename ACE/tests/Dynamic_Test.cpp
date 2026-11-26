@@ -18,8 +18,8 @@ public:
 
   void *operator new (size_t n);
 
-  void *operator new (size_t n, const std::nothrow_t&) noexcept;
-  void operator delete (void *p, const std::nothrow_t&) noexcept;
+  void *operator new (size_t n, std::nothrow_t const &) noexcept;
+  void operator delete (void *p, std::nothrow_t const &) noexcept;
   void * operator new (size_t n, void *p);
 
   void operator delete (void *);
@@ -55,7 +55,7 @@ A::operator new (size_t n)
 }
 
 void*
-A::operator new (size_t n, const std::nothrow_t&) noexcept
+A::operator new (size_t n, std::nothrow_t const &) noexcept
 {
   ACE_Dynamic *const dynamic_instance = ACE_Dynamic::instance ();
 
@@ -79,7 +79,7 @@ A::operator new (size_t n, const std::nothrow_t&) noexcept
 }
 
 void
-A::operator delete (void *p, const std::nothrow_t&) noexcept
+A::operator delete (void *p, std::nothrow_t const &) noexcept
 {
   ::delete [] static_cast <char *> (p);
 }

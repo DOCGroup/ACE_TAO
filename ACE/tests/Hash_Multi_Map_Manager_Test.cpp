@@ -11,7 +11,7 @@
 #include "ace/Hash_Multi_Map_Manager_T.h"
 #include "ace/Null_Mutex.h"
 
-using HASH_STRING_MAP = ACE_Hash_Multi_Map_Manager<const ACE_TCHAR *, const ACE_TCHAR *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
+using HASH_STRING_MAP = ACE_Hash_Multi_Map_Manager<ACE_TCHAR const *, ACE_TCHAR const *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>;
 
 using HASH_STRING_ENTRY = HASH_STRING_MAP::ENTRY;
 using HASH_STRING_VALUE_SET = HASH_STRING_ENTRY::VALUE_SET;
@@ -20,10 +20,10 @@ using HASH_STRING_ITERATOR = HASH_STRING_MAP::ITERATOR;
 using HASH_STRING_CONST_ITERATOR = HASH_STRING_MAP::CONST_ITERATOR;
 using HASH_STRING_REVERSE_ITERATOR = HASH_STRING_MAP::REVERSE_ITERATOR;
 
-static const ACE_TCHAR *color_sorts[] = {ACE_TEXT ("warm"), ACE_TEXT ("cold"), ACE_TEXT ("neutral"), nullptr};
-static const ACE_TCHAR *warm_colors[] = {ACE_TEXT ("red"), ACE_TEXT ("yellow"), ACE_TEXT ("orange"), nullptr};
-static const ACE_TCHAR *cold_colors[] = {ACE_TEXT ("blue"), ACE_TEXT ("cyan"), nullptr};
-static const ACE_TCHAR *neutral_colors[] = {ACE_TEXT ("green"), ACE_TEXT ("purple"), nullptr};
+static ACE_TCHAR const *color_sorts[] = {ACE_TEXT ("warm"), ACE_TEXT ("cold"), ACE_TEXT ("neutral"), nullptr};
+static ACE_TCHAR const *warm_colors[] = {ACE_TEXT ("red"), ACE_TEXT ("yellow"), ACE_TEXT ("orange"), nullptr};
+static ACE_TCHAR const *cold_colors[] = {ACE_TEXT ("blue"), ACE_TEXT ("cyan"), nullptr};
+static ACE_TCHAR const *neutral_colors[] = {ACE_TEXT ("green"), ACE_TEXT ("purple"), nullptr};
 
 static int
 run_test ()
@@ -167,7 +167,7 @@ run_test ()
 
   value_set.reset ();
   value_set.insert (neutral_colors[0]);
-  const ACE_TCHAR *old_key;
+  ACE_TCHAR const *old_key;
   old_value_set.reset ();
   if (colors.rebind (color_sorts[2],
                      value_set,

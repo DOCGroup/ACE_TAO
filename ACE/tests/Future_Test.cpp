@@ -56,7 +56,7 @@ class Prime_Scheduler : public ACE_Task_Base
   friend class Method_Request_name;
   friend class Method_Request_end;
 public:
-  Prime_Scheduler (const ACE_TCHAR *,
+  Prime_Scheduler (ACE_TCHAR const *,
                    Prime_Scheduler * = nullptr);
 
   //FUZZ: disable check_for_lack_ACE_OS
@@ -72,7 +72,7 @@ public:
   /// @name Active Object proxy methods
   /// @{
   ACE_Future<u_long> work (u_long param, int count = 1);
-  ACE_Future<const ACE_TCHAR*> name ();
+  ACE_Future<ACE_TCHAR const *> name ();
   void end ();
   /// @}
 
@@ -84,7 +84,7 @@ protected:
   /// @name Servant methods
   /// @{
   u_long work_i (u_long, int);
-  const ACE_TCHAR *name_i ();
+  ACE_TCHAR const *name_i ();
   /// @}
 
 private:
@@ -165,7 +165,7 @@ class Method_Request_name : public ACE_Method_Request
 {
 public:
   Method_Request_name (Prime_Scheduler *,
-                       ACE_Future<const ACE_TCHAR*> &);
+                       ACE_Future<ACE_TCHAR const *> &);
   ~Method_Request_name () override;
 
   /// This is the entry point into the Active Object method.
@@ -173,11 +173,11 @@ public:
 
 private:
   Prime_Scheduler *scheduler_;
-  ACE_Future<const ACE_TCHAR*> future_result_;
+  ACE_Future<ACE_TCHAR const *> future_result_;
 };
 
 Method_Request_name::Method_Request_name (Prime_Scheduler *new_scheduler,
-                                          ACE_Future<const ACE_TCHAR*> &new_result)
+                                          ACE_Future<ACE_TCHAR const *> &new_result)
   : scheduler_ (new_scheduler),
     future_result_ (new_result)
 {
@@ -230,7 +230,7 @@ Method_Request_end::call ()
   return -1;
 }
 
-Prime_Scheduler::Prime_Scheduler (const ACE_TCHAR *newname,
+Prime_Scheduler::Prime_Scheduler (ACE_TCHAR const *newname,
                                   Prime_Scheduler *new_scheduler)
   : scheduler_ (new_scheduler)
 {
@@ -319,13 +319,13 @@ Prime_Scheduler::work_i (u_long param,
   return ACE::is_prime (param, 2, param / 2);
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Prime_Scheduler::name_i ()
 {
   return this->name_;
 }
 
-ACE_Future<const ACE_TCHAR *>
+ACE_Future<ACE_TCHAR const *>
 Prime_Scheduler::name ()
 {
   if (this->scheduler_)
@@ -335,7 +335,7 @@ Prime_Scheduler::name ()
     }
   else
     {
-      ACE_Future<const ACE_TCHAR*> new_future;
+      ACE_Future<ACE_TCHAR const *> new_future;
 
       // @@ What happens if new fails here?
       this->activation_queue_.enqueue
@@ -413,7 +413,7 @@ run_main (int, ACE_TCHAR *[])
         ACE_Future<u_long> fresultc;
         ACE_Future<u_long> fresultd;
         ACE_Future<u_long> fresulte;
-        ACE_Future<const ACE_TCHAR *> fname;
+        ACE_Future<ACE_TCHAR const *> fname;
 
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("(%t) going to do a non-blocking call\n")));
@@ -470,7 +470,7 @@ run_main (int, ACE_TCHAR *[])
                     (u_int) resultd,
                     (u_int) resulte));
 
-        const ACE_TCHAR *name {};
+        ACE_TCHAR const *name {};
         fname.get (name);
 
         ACE_DEBUG ((LM_DEBUG,

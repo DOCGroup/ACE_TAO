@@ -23,7 +23,7 @@
 
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
-static int check_type_consistency (const ACE_INET_Addr &addr)
+static int check_type_consistency (ACE_INET_Addr const &addr)
 {
   int family = -1;
 
