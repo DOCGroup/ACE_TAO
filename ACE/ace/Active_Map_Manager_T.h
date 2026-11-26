@@ -163,7 +163,7 @@ public:
   size_t total_size () const;
 
   /// Returns a key that cannot be found in the map.
-  static const ACE_Active_Map_Manager_Key npos ();
+  static ACE_Active_Map_Manager_Key const npos ();
 
   /// Dump the state of an object.
   void dump () const;

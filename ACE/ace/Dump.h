@@ -141,7 +141,7 @@ private:
     /// subobject corresponding to the base class is destroyed (hence
     /// on destruction of the subobject its handle won't exist anymore
     /// and we'll have to check for that).
-    const ACE_Dumpable_Ptr dumper_ {};
+    ACE_Dumpable_Ptr const dumper_ {};
   };
 
   /// Singleton instance of this class.

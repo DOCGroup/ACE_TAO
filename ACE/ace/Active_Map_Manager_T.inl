@@ -265,7 +265,7 @@ ACE_Active_Map_Manager<T>::total_size () const
 }
 
 /* static */
-template <class T> ACE_INLINE const ACE_Active_Map_Manager_Key
+template <class T> ACE_INLINE ACE_Active_Map_Manager_Key const
 ACE_Active_Map_Manager<T>::npos ()
 {
   return ACE_Active_Map_Manager_Key (~0, ~0);
