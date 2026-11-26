@@ -1031,8 +1031,8 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_close (ACE_HANDLE,
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_timeout
-  (const ACE_Time_Value &tv,
-   const void *arg)
+  (ACE_Time_Value const &tv,
+   void const *arg)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_timeout");
   errno = ETIME;
@@ -1063,7 +1063,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::cancel ()
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::register_handler
   (SVC_HANDLER *svc_handler,
-   const ACE_Synch_Options &synch_options,
+   ACE_Synch_Options const &synch_options,
    bool restart)
 {
   ACE_TRACE ("ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::register_handler");
@@ -1163,7 +1163,7 @@ template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::accept
   (SVC_HANDLER *svc_handler,
    typename PEER_ACCEPTOR::PEER_ADDR *remote_addr,
-   const ACE_Synch_Options &synch_options,
+   ACE_Synch_Options const &synch_options,
    bool restart,
    bool reset_new_handle)
 {

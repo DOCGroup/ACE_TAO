@@ -138,8 +138,8 @@ ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::close (SVC_HANDLER *&sh)
 
 template <typename SVC_HANDLER> int
 ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout
-(const ACE_Time_Value &tv,
- const void *arg)
+(ACE_Time_Value const &tv,
+ void const *arg)
 {
   // This method is called if a connection times out before completing.
   ACE_TRACE ("ACE_NonBlocking_Connect_Handler<SVC_HANDLER>::handle_timeout");
@@ -367,7 +367,7 @@ template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
 ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect
 (SVC_HANDLER *&sh,
  const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
- const ACE_Synch_Options &synch_options,
+ ACE_Synch_Options const &synch_options,
  const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
  int reuse_addr,
  int flags,
@@ -389,7 +389,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect
 (SVC_HANDLER *&sh,
  SVC_HANDLER *&sh_copy,
  const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
- const ACE_Synch_Options &synch_options,
+ ACE_Synch_Options const &synch_options,
  const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
  int reuse_addr,
  int flags,
@@ -411,7 +411,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_i
 (SVC_HANDLER *&sh,
  SVC_HANDLER **sh_copy,
  const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
- const ACE_Synch_Options &synch_options,
+ ACE_Synch_Options const &synch_options,
  const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
  int reuse_addr,
  int flags,
@@ -522,7 +522,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_n
  SVC_HANDLER *sh[],
  typename PEER_CONNECTOR::PEER_ADDR remote_addrs[],
  ACE_TCHAR *failed_svc_handlers,
- const ACE_Synch_Options &synch_options)
+ ACE_Synch_Options const &synch_options)
 {
   int result {};
 
@@ -587,7 +587,7 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::cancel (SVC_HANDLER *sh)
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
 ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect
 (SVC_HANDLER *sh,
- const ACE_Synch_Options &synch_options)
+ ACE_Synch_Options const &synch_options)
 {
   ACE_TRACE ("ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::nonblocking_connect");
 

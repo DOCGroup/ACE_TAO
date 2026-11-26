@@ -104,7 +104,7 @@ public:
 
   /// This method is called if a connection times out before
   /// completing.
-  int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg) override;
 
   /// Should Reactor resume us if we have been suspended before the upcall?
   int resume_handler () override;
@@ -203,9 +203,9 @@ public:
    */
   virtual int connect (SVC_HANDLER *&svc_handler,
                        const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
-                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
+                       ACE_Synch_Options const &synch_options = ACE_Synch_Options::defaults,
                        const typename PEER_CONNECTOR::PEER_ADDR &local_addr
-                         = reinterpret_cast<const peer_addr_type &>(peer_addr_type::sap_any),
+                         = reinterpret_cast<peer_addr_type const &>(peer_addr_type::sap_any),
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
@@ -223,9 +223,9 @@ public:
   virtual int connect (SVC_HANDLER *&svc_handler_hint,
                        SVC_HANDLER *&svc_handler,
                        const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
-                       const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
+                       ACE_Synch_Options const &synch_options = ACE_Synch_Options::defaults,
                        const typename PEER_CONNECTOR::PEER_ADDR &local_addr
-                         = reinterpret_cast<const peer_addr_type &>(peer_addr_type::sap_any),
+                         = reinterpret_cast<peer_addr_type const &>(peer_addr_type::sap_any),
                        int reuse_addr = 0,
                        int flags = O_RDWR,
                        int perms = 0);
@@ -242,7 +242,7 @@ public:
                          SVC_HANDLER *svc_handlers[],
                          typename PEER_CONNECTOR::PEER_ADDR remote_addrs[],
                          ACE_TCHAR *failed_svc_handlers = nullptr,
-                         const ACE_Synch_Options &synch_options =
+                         ACE_Synch_Options const &synch_options =
                          ACE_Synch_Options::defaults);
 
   /**
@@ -342,13 +342,13 @@ protected:
 
   /// Creates and registers ACE_NonBlocking_Connect_Handler.
   int nonblocking_connect (SVC_HANDLER *,
-                           const ACE_Synch_Options &);
+                           ACE_Synch_Options const &);
 
   /// Implementation of the connect methods.
   virtual int connect_i (SVC_HANDLER *&svc_handler,
                          SVC_HANDLER **sh_copy,
                          const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
-                         const ACE_Synch_Options &synch_options,
+                         ACE_Synch_Options const &synch_options,
                          const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
                          int reuse_addr,
                          int flags,

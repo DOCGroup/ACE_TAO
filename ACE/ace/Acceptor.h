@@ -587,7 +587,7 @@ public:
   /// {SVC_HANDLER}, and activate the {SVC_HANDLER}.
   virtual int accept (SVC_HANDLER * = nullptr,
                       typename PEER_ACCEPTOR::PEER_ADDR *remote_addr = nullptr,
-                      const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
+                      ACE_Synch_Options const &synch_options = ACE_Synch_Options::defaults,
                       bool restart = true,
                       bool reset_new_handle = false);
   /// @}
@@ -644,8 +644,8 @@ protected:
   int handle_input (ACE_HANDLE) override;
 
   /// Called when an acceptor times out...
-  int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg) override;
   /// @}
 
   /// @name Dynamic linking hooks
@@ -680,7 +680,7 @@ private:
    * be called by developers directly.
    */
   int register_handler (SVC_HANDLER *svc_handler,
-                        const ACE_Synch_Options &options,
+                        ACE_Synch_Options const &options,
                         bool restart);
 
   /// Hold the svc_handler_ across asynchrony boundaries.
