@@ -347,7 +347,7 @@ TAO_UnionDef_i::members_i (CORBA::UnionMemberSeq const &members)
 }
 
 void
-TAO_UnionDef_i::fetch_label (const ACE_Configuration_Section_Key member_key,
+TAO_UnionDef_i::fetch_label (ACE_Configuration_Section_Key const member_key,
                              CORBA::UnionMember &member)
 {
   ACE_Configuration::VALUETYPE vt;

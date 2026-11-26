@@ -73,7 +73,7 @@ public:
   static TimeBase::TimeT to_TimeT (ACE_Time_Value const &rhs);
 
   /// @brief Convert relative TimeBase::TimeT to a ACE_Time_Value.
-  static ACE_Time_Value to_Time_Value (const TimeBase::TimeT &rhs);
+  static ACE_Time_Value to_Time_Value (TimeBase::TimeT const &rhs);
 
   /// @brief Convert absolute ACE_Time_Value to a TimeBase::TimeT
   static void Absolute_Time_Value_to_TimeT (TimeBase::TimeT &lhs,
@@ -87,12 +87,12 @@ public:
   static TimeBase::TimeT to_Absolute_TimeT (ACE_Time_Value const &rhs);
 
   /// @brief Convert absolute TimeBase::TimeT to a ACE_Time_Value.
-  static ACE_Time_Value to_Absolute_Time_Value (const TimeBase::TimeT &rhs);
+  static ACE_Time_Value to_Absolute_Time_Value (TimeBase::TimeT const &rhs);
   /// @}
 
 private:
   /// @brief Number of nanoseconds between the CORBA and UNIX epochs.
-  static const ACE_UINT64 Time_Base_Offset;
+  static ACE_UINT64 const Time_Base_Offset;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

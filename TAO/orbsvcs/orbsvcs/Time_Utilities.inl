@@ -97,7 +97,7 @@ ORBSVCS_Time::Absolute_TimeT_to_Time_Value (ACE_Time_Value &lhs,
 }
 
 ACE_INLINE ACE_Time_Value
-ORBSVCS_Time::to_Absolute_Time_Value (const TimeBase::TimeT& t)
+ORBSVCS_Time::to_Absolute_Time_Value (TimeBase::TimeT const& t)
 {
   ACE_Time_Value r;
   ORBSVCS_Time::Absolute_TimeT_to_Time_Value (r, t);

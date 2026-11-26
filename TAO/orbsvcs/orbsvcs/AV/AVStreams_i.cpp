@@ -350,10 +350,10 @@ operator < (MMDevice_Map_Hash_Key const &left,
 
   try
     {
-      const CORBA::ULong left_hash =
+      CORBA::ULong const left_hash =
         left.mmdevice_->_hash (left.hash_maximum_);
 
-      const CORBA::ULong right_hash =
+      CORBA::ULong const right_hash =
         right.mmdevice_->_hash (right.hash_maximum_);
 
       result = left_hash < right_hash;
