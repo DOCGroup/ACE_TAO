@@ -67,7 +67,7 @@ private:
 };
 
 /**
- * @class TAO_ETCL_Filter
+ * @class TAO_Notify_ETCL_Filter
  *
  * @brief Implementation of CosNotifyFilter::Filter servant.
  */

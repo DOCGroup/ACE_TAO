@@ -22,9 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Proxy;
 
 /**
- * @class TAO_Subscription_Change_Worker
- *
- * @brief
+ * @class TAO_Notify_Subscription_Change_Worker
  */
 class TAO_Notify_Serv_Export TAO_Notify_Subscription_Change_Worker : public TAO_ESF_Worker<TAO_Notify_Proxy>
 {
