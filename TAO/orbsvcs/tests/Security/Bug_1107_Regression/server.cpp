@@ -78,7 +78,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // Keep a second implementation alive to validate SSLIOP profile equivalence.
       Foo_i server_impl2 (orb.in (), security_current.in ());
       Foo::Bar_var server2 = server_impl2._this ();
-      const CORBA::Boolean equivalent = server->_is_equivalent (server2.in ());
+      CORBA::Boolean const equivalent = server->_is_equivalent (server2.in ());
       if (equivalent)
         {
           ACE_ERROR ((LM_ERROR,

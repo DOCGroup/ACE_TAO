@@ -216,7 +216,7 @@ Connection_Manager::find_receivers ()
 {
   CosNaming::BindingIterator_var iterator;
   CosNaming::BindingList_var binding_list;
-  const CORBA::ULong chunk = 100;
+  CORBA::ULong const chunk = 100;
 
   // Get the list of receivers registered for this sender.
   this->receiver_context_->list (chunk,
