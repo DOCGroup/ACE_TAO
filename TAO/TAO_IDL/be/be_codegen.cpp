@@ -2192,7 +2192,7 @@ TAO_CodeGen::gen_stub_hdr_includes ()
       this->client_header_.get ()
     );
 
-  const bool idl4 = idl_global->idl_version_ >= IDL_VERSION_4;
+  bool const idl4 = idl_global->idl_version_ >= IDL_VERSION_4;
   this->gen_standard_include (this->client_header_.get (), idl4 ? "tao/Basic_Types_IDLv4.h" : "tao/Basic_Types.h");
 
   if (idl4)

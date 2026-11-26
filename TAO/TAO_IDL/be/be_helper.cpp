@@ -593,7 +593,7 @@ signed_int_helper (TAO_OutStream &os, IntType value, IntType min, char const *sp
    *
    * Apparently the workaround is to write it as `VALUE_PLUS_ONE - 1`.
    */
-  const bool min_value = value == min;
+  bool const min_value = value == min;
   if (min_value)
     {
       ++value;
