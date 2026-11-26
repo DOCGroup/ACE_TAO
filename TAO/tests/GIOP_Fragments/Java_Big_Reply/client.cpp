@@ -1,7 +1,7 @@
 #include "Client_Task.h"
 #include "ace/Get_Opt.h"
 
-static const ACE_TCHAR *ior = ACE_TEXT("file://server.ior");
+static ACE_TCHAR const *ior = ACE_TEXT("file://server.ior");
 static size_t nthreads = 1;
 
 int
