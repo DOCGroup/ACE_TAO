@@ -36,13 +36,13 @@ namespace TAO
      * a servant request to the strategy object, it will create the
      * appropriate (subclass of) TP_Request object to "wrap"
      * the servant request in a "queue-friendly" wrapper.  The ORB thread
-     * will then place the TP_Request object on to the queue.  Note that
-     * this scenario pertains to what are being called "remote requests".
-     * There are other scenarios in which other types of requests can
-     * get added to this queue.
+     * will then place the TP_Request object on to the queue.
      *
      * The strategy object will employ a set of worker threads that are
      * responsible for "servicing" the servant requests in the queue.
+     *
+     * @note This scenario pertains to remote requests. Other types of
+     * requests can also be added to this queue.
      *
      * @note In the future, support will be added to allow the client
      *       application inject "custom" TP_Request objects into

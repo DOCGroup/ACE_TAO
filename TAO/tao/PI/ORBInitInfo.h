@@ -76,8 +76,9 @@ public:
   /// reference with the ORB being initialized.
   /**
    * This method is particularly useful for registering references to
-   * local (locality constrained) objects.  Note that this method
-   * should be called in ORBInitializer::pre_init() so that the
+   * local (locality constrained) objects.
+   *
+   * @note This method should be called in ORBInitializer::pre_init() so that the
    * registered reference will be available to the
    * resolve_initial_references() that may be called in the
    * ORBInitializer::post_init() call.

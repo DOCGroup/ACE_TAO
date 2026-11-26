@@ -43,7 +43,8 @@ namespace TAO
 
     /// Added to provide registration for the several static service
     /// objects, brought in with this ORBInitializer_Registry
-    /// implementation. Note that this is more reliable than using
+    /// implementation.
+    /// @note This is more reliable than using
     /// static initializers, since multiple copies of the dynamic
     /// service object will require their own (multiple) copies of the
     /// dependent static service objects. That is just impossible
