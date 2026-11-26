@@ -43,8 +43,8 @@ ACE_UTF32_Encoding_Converter::to_utf8 (void const * source,
 {
   static constexpr ACE_UINT32 byteMask = 0xBF;
   static constexpr ACE_UINT32 byteMark = 0x80;
-  static const ACE_UINT32 UNI_SUR_HIGH_START = get_UNI_SUR_HIGH_START ();
-  static const ACE_UINT32 UNI_SUR_LOW_END = get_UNI_SUR_LOW_END ();
+  static ACE_UINT32 const UNI_SUR_HIGH_START = get_UNI_SUR_HIGH_START ();
+  static ACE_UINT32 const UNI_SUR_LOW_END = get_UNI_SUR_LOW_END ();
   static ACE_Byte const * firstByteMark = get_first_byte_mark ();
 
   Result result = CONVERSION_OK;
@@ -128,9 +128,9 @@ ACE_UTF32_Encoding_Converter::from_utf8 (ACE_Byte const * source,
                                          size_t target_size,
                                          bool strict)
 {
-  static const ACE_UINT32 UNI_SUR_HIGH_START = get_UNI_SUR_HIGH_START ();
-  static const ACE_UINT32 UNI_SUR_LOW_END = get_UNI_SUR_LOW_END ();
-  static const ACE_UINT32 UNI_REPLACEMENT_CHAR = get_UNI_REPLACEMENT_CHAR ();
+  static ACE_UINT32 const UNI_SUR_HIGH_START = get_UNI_SUR_HIGH_START ();
+  static ACE_UINT32 const UNI_SUR_LOW_END = get_UNI_SUR_LOW_END ();
+  static ACE_UINT32 const UNI_REPLACEMENT_CHAR = get_UNI_REPLACEMENT_CHAR ();
   static ACE_Byte const * trailingBytesForUTF8 = get_trailing_bytes_for_utf8 ();
   static ACE_UINT32 const * offsetsFromUTF8 = get_offsets_from_utf8 ();
 
