@@ -371,7 +371,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
         }
       }
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const & ex)
     {
       if (this->test_output_file_ == nullptr) // ignore if this is a test run
       {
@@ -582,7 +582,7 @@ void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * rep
 
 CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     char const *type_id,
-    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::Criteria const & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
   METHOD_ENTRY(FT_ReplicaFactory_i::create_object);
@@ -668,7 +668,7 @@ FT_TestReplica_i * FT_ReplicaFactory_i::create_replica(char const *name)
 }
 
 void FT_ReplicaFactory_i::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId & factory_creation_id)
+    PortableGroup::GenericFactory::FactoryCreationId const & factory_creation_id)
 {
   METHOD_ENTRY(FT_ReplicaFactory_i::delete_object);
 

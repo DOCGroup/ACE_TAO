@@ -23,9 +23,9 @@ public:
 // Forbidden.
 private:
   TAO_FT_ReplicationManagerController (
-    const TAO_FT_ReplicationManagerController & rhs);
+    TAO_FT_ReplicationManagerController const & rhs);
   TAO_FT_ReplicationManagerController & operator = (
-    const TAO_FT_ReplicationManagerController & rhs);
+    TAO_FT_ReplicationManagerController const & rhs);
 
 /////////////////////////////
 // Private implementation.
@@ -87,7 +87,7 @@ int TAO_FT_ReplicationManagerController::init (int &argc, ACE_TCHAR *argv[])
       }
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT (
@@ -157,7 +157,7 @@ int TAO_FT_ReplicationManagerController::run ()
       ACE_OS::sleep (tv);
     }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       ACE_TEXT ("TAO_FT_ReplicationManagerController::run:\n"));

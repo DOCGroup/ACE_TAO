@@ -69,13 +69,13 @@ namespace TAO
     char const *role,
     char const *type_id,
     PortableGroup::ObjectGroupId group_id,
-    const PortableGroup::Location & location);
+    PortableGroup::Location const & location);
 
     ////////////////////
     // forbidden methods
    private:
-      Object_Group_Creator (const Object_Group_Creator & rhs);
-      Object_Group_Creator & operator = (const Object_Group_Creator & rhs);
+      Object_Group_Creator (Object_Group_Creator const & rhs);
+      Object_Group_Creator & operator = (Object_Group_Creator const & rhs);
 
     /// @name Data members
     /// @{

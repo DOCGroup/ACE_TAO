@@ -52,7 +52,7 @@ namespace
    * @returns value is the data loaded from state.
    */
   template<typename BUFFER>
-  long loadLong(const BUFFER & state, size_t offset)
+  long loadLong(BUFFER const & state, size_t offset)
   {
     long result
       = ((state[offset    ] & 0xFF) << 24)
@@ -266,7 +266,7 @@ FT::State * FT_TestReplica_i::get_update ()
   return vState._retn();
 }
 
-void FT_TestReplica_i::set_update (const FT::State & s)
+void FT_TestReplica_i::set_update (FT::State const & s)
 {
 #if defined(FT_TEST_LACKS_UPDATE)
   throw FT::InvalidUpdate ();
@@ -294,7 +294,7 @@ void FT_TestReplica_i::set_update (const FT::State & s)
 #endif // FT_TEST_LACKS_STATE
 }
 
-void FT_TestReplica_i::set_state (const FT::State & s)
+void FT_TestReplica_i::set_state (FT::State const & s)
 {
 #if defined(FT_TEST_LACKS_STATE)
   throw FT::InvalidState ();

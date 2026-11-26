@@ -227,7 +227,7 @@ int StubFaultConsumer::idle(int & result)
 ////////////////
 // CORBA methods
 void StubFaultConsumer::push_structured_event(
-  const CosNotification::StructuredEvent &notification)
+  CosNotification::StructuredEvent const &notification)
 {
   ////////////////////////////////////////
   // keep track of how many we've received
@@ -242,12 +242,12 @@ void StubFaultConsumer::push_structured_event(
     static_cast<char const *> (notification.header.fixed_header.event_type.type_name),
     static_cast<char const *> (notification.header.fixed_header.event_name)
     ));
-  const CosNotification::FilterableEventBody & filterable = notification.filterable_data;
+  CosNotification::FilterableEventBody const & filterable = notification.filterable_data;
 
   size_t const propertyCount = filterable.length ();
   for (size_t nProp = 0; nProp < propertyCount; ++nProp)
   {
-    const CosNotification::Property & property = filterable[nProp];
+    CosNotification::Property const & property = filterable[nProp];
 
     char const *property_name = static_cast<char const *> (property.name);
     char const *value = "<unknown>";
@@ -267,8 +267,8 @@ void StubFaultConsumer::push_structured_event(
 }
 
 void StubFaultConsumer::offer_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed)
+    CosNotification::EventTypeSeq const & added,
+    CosNotification::EventTypeSeq const & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);

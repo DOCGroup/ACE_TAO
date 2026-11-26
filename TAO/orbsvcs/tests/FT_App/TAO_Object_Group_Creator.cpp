@@ -86,7 +86,7 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb)
         throw CORBA::OBJECT_NOT_EXIST ();
       }
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         "Creator: Exception resolving ReplicationManager,\n");
@@ -114,7 +114,7 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
   char const *role,
   char const *type_id,
   PortableGroup::ObjectGroupId group_id,
-  const PortableGroup::Location & location)
+  PortableGroup::Location const & location)
 {
   int result = 0;
 

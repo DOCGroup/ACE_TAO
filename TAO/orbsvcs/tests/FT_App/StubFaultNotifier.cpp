@@ -324,7 +324,7 @@ void StubFaultNotifier::shutdown_i ()
 }
 
 void StubFaultNotifier::push_structured_fault (
-    const CosNotification::StructuredEvent & event)
+    CosNotification::StructuredEvent const & event)
 {
   ACE_ERROR ((LM_ERROR,
     "FaultNotifier: Received Fault notification:\n"
@@ -335,12 +335,12 @@ void StubFaultNotifier::push_structured_fault (
     static_cast<char const *> (event.header.fixed_header.event_type.type_name),
     static_cast<char const *> (event.header.fixed_header.event_name)
     ));
-  const CosNotification::FilterableEventBody & filterable = event.filterable_data;
+  CosNotification::FilterableEventBody const & filterable = event.filterable_data;
 
   size_t const propertyCount = filterable.length ();
   for (size_t nProp = 0; nProp < propertyCount; ++nProp)
   {
-    const CosNotification::Property & property = filterable[nProp];
+    CosNotification::Property const & property = filterable[nProp];
     ACE_ERROR ((LM_ERROR,
       "FaultNotifier:   Property Name: %s\n",
       static_cast<char const *> (property.name)
@@ -350,7 +350,7 @@ void StubFaultNotifier::push_structured_fault (
 }
 
 void StubFaultNotifier::push_sequence_fault (
-    const CosNotification::EventBatch & events)
+    CosNotification::EventBatch const & events)
 {
   ACE_UNUSED_ARG (events);
   throw CORBA::NO_IMPLEMENT();
@@ -411,7 +411,7 @@ int StubFaultNotifier::idle(int & result)
       }
     }
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
     quit = 1;
   }

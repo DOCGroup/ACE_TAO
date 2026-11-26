@@ -103,7 +103,7 @@ public:
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id) override;
 
   void delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId &factory_creation_id) override;
+    PortableGroup::GenericFactory::FactoryCreationId const &factory_creation_id) override;
 
   //////////////////////////////////////////
   // CORBA interface PullMonitorable methods

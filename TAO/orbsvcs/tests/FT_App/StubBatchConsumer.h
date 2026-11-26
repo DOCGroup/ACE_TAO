@@ -76,8 +76,8 @@ public:
 private:
   /// @name Disabled operations
   /// @{
-  StubBatchConsumer (const StubBatchConsumer & rhs);
-  StubBatchConsumer & operator = (const StubBatchConsumer & rhs);
+  StubBatchConsumer (StubBatchConsumer const & rhs);
+  StubBatchConsumer & operator = (StubBatchConsumer const & rhs);
   /// @}
 
   /// @name Data members

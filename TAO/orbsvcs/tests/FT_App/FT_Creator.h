@@ -56,8 +56,8 @@ namespace FTAPP
     ////////////////////
     // forbidden methods
    private:
-      FT_Creator (const FT_Creator & rhs);
-      FT_Creator & operator = (const FT_Creator & rhs);
+      FT_Creator (FT_Creator const & rhs);
+      FT_Creator & operator = (FT_Creator const & rhs);
 
     /// @name Data members
     /// @{

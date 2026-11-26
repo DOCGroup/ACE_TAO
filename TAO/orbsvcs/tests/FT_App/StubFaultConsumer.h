@@ -76,8 +76,8 @@ public:
   /// @name Disabled operations
   /// @{
 private:
-  StubFaultConsumer (const StubFaultConsumer & rhs);
-  StubFaultConsumer & operator = (const StubFaultConsumer & rhs);
+  StubFaultConsumer (StubFaultConsumer const & rhs);
+  StubFaultConsumer & operator = (StubFaultConsumer const & rhs);
   /// @}
 
   /// @name Data members

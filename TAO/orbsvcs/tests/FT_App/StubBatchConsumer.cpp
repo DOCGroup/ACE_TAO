@@ -109,15 +109,15 @@ int StubBatchConsumer::idle(int & result)
 
 //virtual
 void StubBatchConsumer::push_structured_events (
-    const CosNotification::EventBatch & notifications)
+    CosNotification::EventBatch const & notifications)
 {
   ACE_UNUSED_ARG (notifications);
   //@@ sequence of structured event handling not written yet
 }
 
 void StubBatchConsumer::offer_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed)
+    CosNotification::EventTypeSeq const & added,
+    CosNotification::EventTypeSeq const & removed)
 {
   ACE_UNUSED_ARG (added);
   ACE_UNUSED_ARG (removed);

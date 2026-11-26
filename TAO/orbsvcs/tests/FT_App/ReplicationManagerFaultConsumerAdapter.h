@@ -59,9 +59,9 @@ public:
   /// @{
 private:
   ReplicationManagerFaultConsumerAdapter (
-    const ReplicationManagerFaultConsumerAdapter & rhs);
+    ReplicationManagerFaultConsumerAdapter const & rhs);
   ReplicationManagerFaultConsumerAdapter & operator =
-    (const ReplicationManagerFaultConsumerAdapter & rhs);
+    (ReplicationManagerFaultConsumerAdapter const & rhs);
   /// @}
 
   /// @name Data members

@@ -44,8 +44,8 @@ private:
   ////////////////////
   // forbidden methods
  private:
-    FTClientMain (const FTClientMain & rhs);
-    FTClientMain & operator = (const FTClientMain & rhs);
+    FTClientMain (FTClientMain const & rhs);
+    FTClientMain & operator = (FTClientMain const & rhs);
 
   ////////////////
   // Data members
@@ -443,7 +443,7 @@ int FTClientMain::pass (
               // not quite sure why, yet.  Dale
               this->replica_->is_alive();
             }
-            catch (const CORBA::Exception&)
+            catch (CORBA::Exception const &)
             {
               ACE_OS::fprintf (stdout, "FT Client: Ignoring expected exception during shutdown.\n");
               ; // ignore exception during shutdown
@@ -548,7 +548,7 @@ int FTClientMain::run ()
       {
         result = pass (counter, more, command, retry);
       }
-      catch (const CORBA::SystemException& sysex)
+      catch (CORBA::SystemException const & sysex)
       {
         ACE_OS::fprintf (stdout, "FT Client: Caught system exception:\n");
         sysex._tao_print_exception ("FT Client");
@@ -609,7 +609,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       result = app.run ();
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("FT_Client::main\t\n");
       result = -1;
