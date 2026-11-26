@@ -46,9 +46,10 @@ public:
   ~ACE_RW_Process_Mutex ();
 
   /**
-   * Explicitly destroy the mutex.  Note that only one thread should
-   * call this method since it doesn't protect against race
-   * conditions.
+   * Explicitly destroy the mutex.
+   *
+   * @note Only one thread should call this method since it doesn't
+   * protect against race conditions.
    */
   int remove ();
 

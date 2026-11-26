@@ -47,9 +47,10 @@ public:
   ~ACE_RW_Mutex ();
 
   /**
-   * Explicitly destroy a readers/writer lock.  Note that only one
-   * thread should call this method since it doesn't protect against
-   * race conditions.
+   * Explicitly destroy a readers/writer lock.
+   *
+   * @note Only one thread should call this method since it doesn't
+   * protect against race conditions.
    */
   int remove ();
 

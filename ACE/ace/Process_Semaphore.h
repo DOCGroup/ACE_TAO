@@ -43,9 +43,10 @@ public:
                          int max = 0x7FFFFFFF);
 
   /**
-   * Explicitly destroy the semaphore.  Note that only one thread
-   * should call this method since it doesn't protect against race
-   * conditions.
+   * Explicitly destroy the semaphore.
+   *
+   * @note Only one thread should call this method since it doesn't
+   * protect against race conditions.
    */
   int remove ();
 
