@@ -16,7 +16,7 @@ namespace ACE
 {
   namespace FTP
   {
-    const int Response::eof_ = std::char_traits<char>::eof ();
+    int const Response::eof_ = std::char_traits<char>::eof ();
 
     Response::Response()
       : status_ (NORESPONSE)

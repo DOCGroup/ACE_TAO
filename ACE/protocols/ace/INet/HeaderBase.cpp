@@ -13,13 +13,13 @@ namespace ACE
 {
   namespace INet
   {
-    const int         HeaderBase::UNKNOWN_CONTENT_LENGTH     = -1;
+    int const         HeaderBase::UNKNOWN_CONTENT_LENGTH     = -1;
     const ACE_CString HeaderBase::UNKNOWN_CONTENT_TYPE;
     const ACE_CString HeaderBase::CONTENT_LENGTH             = "Content-Length";
     const ACE_CString HeaderBase::CONTENT_TYPE               = "Content-Type";
     const ACE_CString HeaderBase::EMPTY;
 
-    const int HeaderBase::eof_ = std::char_traits<char>::eof();
+    int const HeaderBase::eof_ = std::char_traits<char>::eof();
 
     HeaderBase::HeaderBase()
       {

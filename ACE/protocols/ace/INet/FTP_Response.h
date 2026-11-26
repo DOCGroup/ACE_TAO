@@ -109,7 +109,7 @@ namespace ACE
               static StatusType status_type (int status);
 
             private:
-              static const int eof_;
+              static int const eof_;
 
               int read_line (std::istream& is, std::ostream& os);
 

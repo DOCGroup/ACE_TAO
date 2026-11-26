@@ -39,7 +39,7 @@ namespace ACE
     const ACE_CString Request::FTP_PASV = "PASV";
     const ACE_CString Request::FTP_STAT = "STAT";
 
-    const int Request::eof_ = std::char_traits<char>::eof ();
+    int const Request::eof_ = std::char_traits<char>::eof ();
 
     Request::Request()
       {

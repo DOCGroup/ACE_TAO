@@ -89,7 +89,7 @@ namespace ACE
               static const ACE_CString FTP_STAT;
 
             private:
-              static const int eof_;
+              static int const eof_;
 
               enum Limits
               {

@@ -103,7 +103,7 @@ namespace ACE
               /// given stream.
               virtual bool read(std::istream& str);
 
-              static const int         UNKNOWN_CONTENT_LENGTH;
+              static int const         UNKNOWN_CONTENT_LENGTH;
               static const ACE_CString UNKNOWN_CONTENT_TYPE;
 
               static const ACE_CString CONTENT_LENGTH;
@@ -133,7 +133,7 @@ namespace ACE
               int     read_field (std::istream& str, ACE_CString& var, size_t maxlen, char delim);
               int     read_ws_field (std::istream& str, ACE_CString& var, size_t maxlen);
 
-              static const int eof_;
+              static int const eof_;
 
             private:
               /// Limits for reading a header

@@ -603,7 +603,7 @@ namespace ACE
     bool
     ClientRequestHandler::parse_address (const ACE_CString& str, ACE_INET_Addr& addr)
       {
-        static const int eof_ = std::char_traits<char>::eof ();
+        static int const eof_ = std::char_traits<char>::eof ();
 
         ACE::IOS::CString_OStream sos_host;
         u_short port_hi = 0, port_lo = 0;
@@ -646,7 +646,7 @@ namespace ACE
     bool
     ClientRequestHandler::parse_ext_address (const ACE_CString& str, ACE_INET_Addr& addr)
       {
-        static const int eof_ = std::char_traits<char>::eof ();
+        static int const eof_ = std::char_traits<char>::eof ();
 
         ACE::IOS::CString_IStream sis (str);
         sis.ignore (str.length (), '(');

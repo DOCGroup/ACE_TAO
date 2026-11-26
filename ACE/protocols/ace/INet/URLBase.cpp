@@ -68,7 +68,7 @@ namespace ACE
 
     bool URL_Base::parse (const ACE_CString& url_string)
       {
-        static const int eof =
+        static int const eof =
           std::char_traits<ACE::IOS::CString_OStream::char_type>::eof ();
 
         ACE_CString uri = url_string;
@@ -258,7 +258,7 @@ namespace ACE
                                          std::ostream& os,
                                          int lastch)
       {
-        static const int eof =
+        static int const eof =
           std::char_traits<ACE::IOS::CString_OStream::char_type>::eof ();
 
         ACE::IOS::CString_OStream& sos =
@@ -378,7 +378,7 @@ namespace ACE
 
     int URL_INetAuthBase::parse_authority (std::istream& is)
       {
-        static const int eof =
+        static int const eof =
           std::char_traits<ACE::IOS::CString_OStream::char_type>::eof ();
 
         ACE::IOS::CString_OStream sos;
