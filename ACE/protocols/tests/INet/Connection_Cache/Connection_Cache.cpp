@@ -5,6 +5,15 @@
 #include "ace/OS_main.h"
 #include <stdexcept>
 
+#if defined (ACE_HAS_THREADS)
+# include "ace/OS_NS_stdlib.h"
+# include "ace/OS_NS_sys_time.h"
+# include "ace/Semaphore.h"
+# include <thread>
+
+thread_local ACE_Semaphore *lookup_observer {};
+#endif
+
 class Test_Key : public ACE::INet::ConnectionKey
 {
 public:
@@ -15,6 +24,13 @@ public:
 protected:
   bool equal (ACE::INet::ConnectionKey const &other) const override
   {
+#if defined (ACE_HAS_THREADS)
+    if (lookup_observer != nullptr)
+      {
+        lookup_observer->release ();
+        lookup_observer = nullptr;
+      }
+#endif
     return dynamic_cast<Test_Key const *> (std::addressof (other)) != nullptr;
   }
 };
@@ -37,6 +53,26 @@ public:
 private:
   Result result_;
 };
+
+#if defined (ACE_HAS_THREADS)
+class Blocking_Factory : public ACE::INet::ConnectionFactory
+{
+public:
+  Blocking_Factory (ACE_Semaphore &entered, ACE_Semaphore &proceed)
+    : entered_ (entered), proceed_ (proceed) {}
+
+  ACE::INet::ConnectionHolder *create_connection (ACE::INet::ConnectionKey const &) const override
+  {
+    entered_.release ();
+    proceed_.acquire ();
+    return nullptr;
+  }
+
+private:
+  ACE_Semaphore &entered_;
+  ACE_Semaphore &proceed_;
+};
+#endif
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
@@ -71,5 +107,53 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not retry connection after factory failure\n")), 1);
     }
+#if defined (ACE_HAS_THREADS)
+  ACE::INet::ConnectionCache concurrent_cache;
+  ACE_Semaphore factory_entered (0);
+  ACE_Semaphore finish_factory (0);
+  ACE_Semaphore waiter_lookup (0);
+  ACE_Semaphore waiter_finished (0);
+  Blocking_Factory const blocked (factory_entered, finish_factory);
+  bool creator_result {};
+  bool waiter_result {};
+  std::thread creator ([&] ()
+    {
+      ACE::INet::ConnectionHolder *created {};
+      creator_result = concurrent_cache.claim_connection (key, created, blocked);
+    });
+  ACE_Time_Value deadline = ACE_OS::gettimeofday () + ACE_Time_Value (5);
+  if (factory_entered.acquire (deadline) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Factory was not called\n")));
+      ACE_OS::exit (1);
+    }
+  std::thread waiter ([&] ()
+    {
+      lookup_observer = std::addressof (waiter_lookup);
+      ACE::INet::ConnectionHolder *claimed {};
+      waiter_result = concurrent_cache.claim_connection (key, claimed, success)
+        && concurrent_cache.close_connection (key, claimed);
+      waiter_finished.release ();
+    });
+  deadline = ACE_OS::gettimeofday () + ACE_Time_Value (5);
+  if (waiter_lookup.acquire (deadline) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Waiting caller did not reach the cache\n")));
+      ACE_OS::exit (1);
+    }
+  finish_factory.release ();
+  creator.join ();
+  deadline = ACE_OS::gettimeofday () + ACE_Time_Value (5);
+  if (waiter_finished.acquire (deadline) == -1)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Waiting caller was not awakened\n")));
+      ACE_OS::exit (1);
+    }
+  waiter.join ();
+  if (creator_result || !waiter_result)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Waiting caller could not retry after factory failure\n")), 1);
+    }
+#endif
   return 0;
 }
