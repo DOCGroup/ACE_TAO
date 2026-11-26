@@ -46,8 +46,8 @@ public:
   {
   }
 
-  /// Constructor from const char* makes a copy.
-  inline String_Manager_T (const character_type *s) :
+  /// Constructor from char const * makes a copy.
+  inline String_Manager_T (character_type const *s) :
     ptr_ (s_traits::duplicate (s))
   {
   }
@@ -75,7 +75,7 @@ public:
   }
 
   /// Assignment from a constant * will make a copy
-  inline String_Manager_T &operator= (const character_type *p) {
+  inline String_Manager_T &operator= (character_type const *p) {
     // Strongly exception safe by means of copy and non-throwing swap
     // technique.
     String_Manager_T <character_type> tmp (p);
@@ -92,12 +92,12 @@ public:
   }
 
   /// Cast (read-only)
-  inline operator const character_type*() const {
+  inline operator character_type const*() const {
     return this->ptr_;
   }
 
   /// For in parameter.
-  inline const character_type *in () const {
+  inline character_type const *in () const {
     return this->ptr_;
   }
 
@@ -129,12 +129,12 @@ private:
   using WString_Manager = TAO::String_Manager_T<CORBA::WChar>;
 }
 
-inline bool operator< (const TAO::String_Manager &lhs, const TAO::String_Manager &rhs)
+inline bool operator< (TAO::String_Manager const &lhs, TAO::String_Manager const &rhs)
 {
   return std::strcmp (lhs.in (), rhs.in ()) < 0;
 }
 
-inline bool operator< (const TAO::WString_Manager &lhs, const TAO::WString_Manager &rhs)
+inline bool operator< (TAO::WString_Manager const &lhs, TAO::WString_Manager const &rhs)
 {
   return ACE_OS::strcmp (lhs.in (), rhs.in ()) < 0;
 }

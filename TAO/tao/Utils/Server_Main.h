@@ -35,7 +35,7 @@
  *      int init (CORBA::ORB_ptr orb );
  *      int idle(int &result);
  *      int fini ();
- *      const char * identity () const;
+ *      char const *identity () const;
  *
  *      parse_args, self_register, self_unregister return 0 if ok, nonzero for error.
  *      idle returns 0 to continue execution; nonzero to exit -- returning "result" from the process

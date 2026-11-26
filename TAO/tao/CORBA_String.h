@@ -58,7 +58,7 @@ namespace TAO
     }
 
     /// Constructor. Makes a copy of p.
-    inline String_var (const character_type *p) : ptr_ (s_traits::duplicate (p))
+    inline String_var (character_type const *p) : ptr_ (s_traits::duplicate (p))
     {
     }
 
@@ -78,8 +78,8 @@ namespace TAO
       return *this;
     }
 
-    /// Assignment to a const char*.  Makes a copy.
-    inline String_var &operator= (const character_type *p)
+    /// Assignment to a char const *.  Makes a copy.
+    inline String_var &operator= (character_type const *p)
     {
       String_var <charT> tmp (p);
       std::swap (this->ptr_, tmp.ptr_);
@@ -100,7 +100,7 @@ namespace TAO
     }
 
     /// Only read privileges.
-    inline operator const character_type *() const
+    inline operator character_type const *() const
     {
       return this->ptr_;
     }
@@ -120,7 +120,7 @@ namespace TAO
     }
 
     /// For in parameter.
-    inline const character_type *in () const
+    inline character_type const *in () const
     {
       return this->ptr_;
     }
@@ -184,7 +184,7 @@ namespace TAO
     {
     }
 
-    inline String_out (const String_out<charT> &s) : ptr_ (s.ptr_)
+    inline String_out (String_out<charT> const &s) : ptr_ (s.ptr_)
     {
     }
 
@@ -203,7 +203,7 @@ namespace TAO
     }
 
     /// Assignment from a constant char*.
-    inline String_out& operator= (const character_type* p)
+    inline String_out& operator= (character_type const* p)
     {
       this->ptr_ = s_traits::duplicate (p);
       return *this;
