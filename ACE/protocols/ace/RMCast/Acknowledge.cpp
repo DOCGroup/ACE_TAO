@@ -399,7 +399,7 @@ namespace ACE_RMCast
   ACE_THR_FUNC_RETURN Acknowledge::
   track_thunk (void* obj)
   {
-    reinterpret_cast<Acknowledge*> (obj)->track ();
+    static_cast<Acknowledge*> (obj)->track ();
     return ACE_THR_FUNC_RETURN_NULL;
   }
 }

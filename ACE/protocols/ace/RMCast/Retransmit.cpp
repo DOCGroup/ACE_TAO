@@ -99,7 +99,7 @@ namespace ACE_RMCast
   ACE_THR_FUNC_RETURN Retransmit::
   track_thunk (void* obj)
   {
-    reinterpret_cast<Retransmit*> (obj)->track ();
+    static_cast<Retransmit*> (obj)->track ();
     return ACE_THR_FUNC_RETURN_NULL;
   }
 

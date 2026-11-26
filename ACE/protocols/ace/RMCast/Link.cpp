@@ -56,7 +56,7 @@ namespace ACE_RMCast
     // Bind address and port.
     //
     if (ACE_OS::connect (ssock_.get_handle (),
-                         reinterpret_cast<sockaddr*> (addr_.get_addr ()),
+                         static_cast<sockaddr*> (addr_.get_addr ()),
                          addr_.get_addr_size ()) == -1)
     {
       ACE_OS::perror ("connect: ");
@@ -325,7 +325,7 @@ namespace ACE_RMCast
   ACE_THR_FUNC_RETURN Link::
   recv_thunk (void* obj)
   {
-    reinterpret_cast<Link*> (obj)->recv ();
+    static_cast<Link*> (obj)->recv ();
     return ACE_THR_FUNC_RETURN_NULL;
   }
 
