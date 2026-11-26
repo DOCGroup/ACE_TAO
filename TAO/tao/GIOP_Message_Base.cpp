@@ -283,7 +283,7 @@ TAO_GIOP_Message_Base::format_message (TAO_OutputCDR &stream, TAO_Stub *stub, TA
               this->dump_consolidated_msg (stream);
             }
 
-          const bool compressed=
+          bool const compressed =
             stub ?
             ziop_adapter->marshal_data (stream, *stub) :
             ziop_adapter->marshal_data (stream, *this->orb_core_, request);

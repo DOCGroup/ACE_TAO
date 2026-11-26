@@ -86,31 +86,31 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // The default size of TAO's ORB table, i.e. the one used as the
 // underlying implementation for the CORBA::ORB_init() function.
 #if !defined (TAO_DEFAULT_ORB_TABLE_SIZE)
-const size_t TAO_DEFAULT_ORB_TABLE_SIZE = 16;
+size_t const TAO_DEFAULT_ORB_TABLE_SIZE = 16;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // The default size of TAO's adapter registry.
 #if !defined (TAO_DEFAULT_ADAPTER_REGISTRY_SIZE)
-const size_t TAO_DEFAULT_ADAPTER_REGISTRY_SIZE = 16;
+size_t const TAO_DEFAULT_ADAPTER_REGISTRY_SIZE = 16;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // The default size of the reply dispatcher table, ie. if the reply
 // dispatcher strategy needs a table to maintain association between
 // request id's and reply dispatchers
 #if !defined (TAO_RD_TABLE_SIZE)
-const size_t TAO_RD_TABLE_SIZE = 16;
+size_t const TAO_RD_TABLE_SIZE = 16;
 #endif  /* !TAO_RD_TABLE_SIZE */
 
 // The default size of TAO's policy factory registry, i.e. the map
 // used as the underlying implementation for the
 // PortableInterceptor::ORBInitInfo::register_policy_factory() method.
 #if !defined (TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE)
-const size_t TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE = 64;
+size_t const TAO_DEFAULT_POLICY_FACTORY_REGISTRY_SIZE = 64;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // Should we use parallel connect
 #if !defined (TAO_USE_PARALLEL_CONNECT)
-const bool TAO_USE_PARALLEL_CONNECT = false;
+bool const TAO_USE_PARALLEL_CONNECT = false;
 #endif /* !TAO_USE_PARALLEL_CONNECT */
 
 #if !defined (TAO_ACCEPT_ERROR_DELAY)
@@ -127,14 +127,14 @@ const int TAO_SO_LINGER = -1;
 // PortableInterceptor::ORBInitInfo::register_initial_reference()
 // methods.
 #if !defined (TAO_DEFAULT_OBJECT_REF_TABLE_SIZE)
-const size_t TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
+size_t const TAO_DEFAULT_OBJECT_REF_TABLE_SIZE = 256;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // The default size of TAO's ValueFactory table, i.e. the
 // one used as the underlying implementation for the
 // CORBA::ORB::register_value_factory() method.
 #if !defined (TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE)
-const size_t TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
+size_t const TAO_DEFAULT_VALUE_FACTORY_TABLE_SIZE = 128;
 #endif  /* !TAO_DEFAULT_ORB_TABLE_SIZE */
 
 // The default size of TAO's server active object map.

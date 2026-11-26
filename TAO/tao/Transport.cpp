@@ -1683,7 +1683,7 @@ TAO_Transport::send_asynchronous_message_i (TAO_Stub *stub,
       // ... if the queue is full we need to activate the output on the
       // queue ...
       bool must_flush {};
-      const bool constraints_reached =
+      bool const constraints_reached =
         this->check_buffering_constraints_i (stub,
                                              must_flush);
 

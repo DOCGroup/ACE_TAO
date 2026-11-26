@@ -1091,7 +1091,7 @@ TAO_Connector::check_connection_closure (
       if (!closed)
         {
           // Check if the handler has been opened.
-          const bool open = connection_handler->is_open ();
+          bool const open = connection_handler->is_open ();
 
           // Some other thread was able to open the handler even
           // though wait failed for this thread.

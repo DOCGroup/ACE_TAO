@@ -289,7 +289,7 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (char const *s)
 bool
 TAO_ORB_Parameters::preferred_interfaces (char const *s)
 {
-  const bool valid= check_preferred_interfaces_string (s);
+  bool const valid = check_preferred_interfaces_string (s);
   if (valid)
     {
       // Append any valid string to those already specified
