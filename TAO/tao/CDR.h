@@ -356,7 +356,7 @@ public:
                 TAO_ORB_Core* orb_core = nullptr);
 
   /// Create an input stream from an ACE_Message_Block
-  TAO_InputCDR (const ACE_Message_Block *data,
+  TAO_InputCDR (ACE_Message_Block const *data,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
                 ACE_CDR::Octet minor_version = TAO_DEF_GIOP_MINOR,
@@ -364,7 +364,7 @@ public:
 
   /// Create an input stream from an ACE_Message_Block with an optional lock
   /// used to protect the data.
-  TAO_InputCDR (const ACE_Message_Block *data,
+  TAO_InputCDR (ACE_Message_Block const *data,
                 ACE_Lock* lock,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,
@@ -394,11 +394,11 @@ public:
    * internal buffer; so the same stream can be read multiple times
    * efficiently.
    */
-  TAO_InputCDR (const TAO_InputCDR& rhs);
+  TAO_InputCDR (TAO_InputCDR const& rhs);
 
   /// When interpreting indirected TypeCodes it is useful to make a
   /// "copy" of the stream starting in the new position.
-  TAO_InputCDR (const TAO_InputCDR& rhs,
+  TAO_InputCDR (TAO_InputCDR const& rhs,
                 size_t size,
                 ACE_CDR::Long offset);
   /**
@@ -409,11 +409,11 @@ public:
    * for the code that supplies these values to the base class
    * constructor.
    */
-  TAO_InputCDR (const TAO_InputCDR& rhs,
+  TAO_InputCDR (TAO_InputCDR const& rhs,
                 size_t size);
 
   /// Create an input CDR from an output CDR.
-  TAO_InputCDR (const TAO_OutputCDR& rhs,
+  TAO_InputCDR (TAO_OutputCDR const& rhs,
                 ACE_Allocator* buffer_allocator = nullptr,
                 ACE_Allocator* data_block_allocator = nullptr,
                 ACE_Allocator* message_block_allocator = nullptr,
@@ -424,7 +424,7 @@ public:
   TAO_InputCDR (ACE_InputCDR::Transfer_Contents rhs,
                 TAO_ORB_Core* orb_core = nullptr);
 
-  TAO_InputCDR& operator= (const TAO_InputCDR&) = default;
+  TAO_InputCDR& operator= (TAO_InputCDR const&) = default;
 
   virtual ~TAO_InputCDR ();
 
@@ -510,14 +510,14 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_wstring x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::string &x);
+                                      std::string const &x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::string_view &x);
+                                      std::string_view const &x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_std_string x);
 #if !defined(ACE_LACKS_STD_WSTRING)
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::wstring &x);
+                                      std::wstring const &x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_std_wstring x);
 #endif /* ACE_LACKS_STD_WSTRING */

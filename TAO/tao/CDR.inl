@@ -151,7 +151,7 @@ TAO_InputCDR::TAO_InputCDR (size_t bufsiz,
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
+TAO_InputCDR::TAO_InputCDR (ACE_Message_Block const *data,
                             int byte_order,
                             ACE_CDR::Octet major_version,
                             ACE_CDR::Octet minor_version,
@@ -165,7 +165,7 @@ TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const ACE_Message_Block *data,
+TAO_InputCDR::TAO_InputCDR (ACE_Message_Block const *data,
                             ACE_Lock* lock,
                             int byte_order,
                             ACE_CDR::Octet major_version,
@@ -217,7 +217,7 @@ TAO_InputCDR::TAO_InputCDR (ACE_Data_Block *data,
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
+TAO_InputCDR::TAO_InputCDR (TAO_InputCDR const& rhs,
                             size_t size,
                             ACE_CDR::Long offset)
   : ACE_InputCDR (rhs,
@@ -228,7 +228,7 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
+TAO_InputCDR::TAO_InputCDR (TAO_InputCDR const& rhs,
                             size_t size)
   : ACE_InputCDR (rhs,
                   size),
@@ -237,7 +237,7 @@ TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs,
 }
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const TAO_InputCDR& rhs)
+TAO_InputCDR::TAO_InputCDR (TAO_InputCDR const& rhs)
   : ACE_InputCDR (rhs),
     orb_core_ (rhs.orb_core_),
     repo_id_map_ (rhs.repo_id_map_),
@@ -448,7 +448,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::string &x)
+                                      std::string const &x)
 {
   return
     os.fragment_stream (ACE_CDR::OCTET_ALIGN,
@@ -457,7 +457,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::string_view &x)
+                                      std::string_view const &x)
 {
   return
     os.fragment_stream (ACE_CDR::OCTET_ALIGN,
@@ -477,7 +477,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const std::wstring &x)
+                                      std::wstring const &x)
 {
   return
     os.fragment_stream ((sizeof (CORBA::WChar) == 2

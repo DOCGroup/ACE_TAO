@@ -204,7 +204,7 @@ int
 TAO_OutputCDR::offset (char* pos)
 {
   int offset {};
-  const ACE_Message_Block * cur_mb = this->begin ();
+  ACE_Message_Block const * cur_mb = this->begin ();
   char* wr_ptr = this->current ()->wr_ptr ();
   bool found {};
 
@@ -238,7 +238,7 @@ TAO_OutputCDR::offset (char* pos)
 
 // ****************************************************************
 
-TAO_InputCDR::TAO_InputCDR (const TAO_OutputCDR& rhs,
+TAO_InputCDR::TAO_InputCDR (TAO_OutputCDR const& rhs,
                             ACE_Allocator* buffer_allocator,
                             ACE_Allocator* data_block_allocator,
                             ACE_Allocator* message_block_allocator,
