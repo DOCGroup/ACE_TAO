@@ -19,9 +19,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Intrusive_List
  *
- * @brief Implement an intrusive double linked list
+ * @brief Implement an intrusive doubly linked list.
  *
- * Intrusive lists assume that the elements they contain the pointers
+ * Intrusive lists assume that their elements contain the pointers
  * required to build the list.  They are useful as light-weight
  * containers and free-lists.
  *
@@ -33,16 +33,16 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  * - void T::prev (T* );
  *
  * A simple way to satisfy the Intrusive_List requirements would be to
- * implement a helper class:
+ * derive from the helper class:
  *
- * class My_Object : public ACE_Intrusive_List_Node<My_Object> {<BR>
- * ....<BR>
- * };<BR>
+ * @code
+ * class My_Object : public ACE_Intrusive_List_Node<My_Object>
+ * {
+ *   // ...
+ * };
  *
- * typedef ACE_Intrusive_List<My_Object> My_Object_List;
- *
- * However, ACE is supported on platforms that would surely get
- * confused using such templates.
+ * using My_Object_List = ACE_Intrusive_List<My_Object>;
+ * @endcode
  *
  * @todo The ACE_Message_Queue is an example of an intrusive list (or
  * queue) but it is not implemented in terms of this class.
