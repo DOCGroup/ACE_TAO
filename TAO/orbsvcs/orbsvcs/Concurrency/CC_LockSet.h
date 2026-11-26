@@ -143,8 +143,10 @@ private:
   /**
    * This is the semaphore for the lock set. The semaphore is used to
    * queue requests for locks in modes stronger than currently
-   * possible to grant.  Note that the @c ACE_Token provides strict
-   * FIFO ordering of acquisition/release of the lock.
+   * possible to grant.
+   *
+   * @note The @c ACE_Token provides strict FIFO ordering of
+   * acquisition and release of the lock.
    */
   ACE_Token semaphore_;
 

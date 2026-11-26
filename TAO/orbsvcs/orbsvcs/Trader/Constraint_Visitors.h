@@ -244,16 +244,16 @@ public:
   int visit_random (TAO_Noop_Constraint* noop_random) override;
 
   /**
-   * Takes the logical and of the results of both operands. Note that
-   * in the case where the left operand returns zero, the result is
-   * immediately known.
+   * Takes the logical and of the results of both operands.
+   *
+   * @note If the left operand returns zero, the result is immediately known.
    */
   int visit_and (TAO_Binary_Constraint* boolean_and) override;
 
   /**
-   * Takes the logical or of the results of both operands. Note that
-   * in the case where the left operand returns one, the result is
-   * immediately known.
+   * Takes the logical or of the results of both operands.
+   *
+   * @note If the left operand returns one, the result is immediately known.
    */
   int visit_or (TAO_Binary_Constraint* boolean_or) override;
 
