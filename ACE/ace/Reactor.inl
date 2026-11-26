@@ -175,7 +175,7 @@ ACE_Reactor::close ()
 }
 
 ACE_INLINE int
-ACE_Reactor::work_pending (const ACE_Time_Value &max_wait_time)
+ACE_Reactor::work_pending (ACE_Time_Value const &max_wait_time)
 {
   return this->implementation ()->work_pending (max_wait_time);
 }
@@ -219,7 +219,7 @@ ACE_Reactor::register_handler (int signum,
 }
 
 ACE_INLINE int
-ACE_Reactor::register_handler (const ACE_Sig_Set &sigset,
+ACE_Reactor::register_handler (ACE_Sig_Set const &sigset,
                                ACE_Event_Handler *new_sh,
                                ACE_Sig_Action *new_disp)
 {
@@ -243,7 +243,7 @@ ACE_Reactor::remove_handler (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_Reactor::remove_handler (const ACE_Handle_Set &handle_set,
+ACE_Reactor::remove_handler (ACE_Handle_Set const &handle_set,
                              ACE_Reactor_Mask mask)
 {
   return this->implementation ()->remove_handler (handle_set, mask);
@@ -262,7 +262,7 @@ ACE_Reactor::remove_handler (int signum,
 }
 
 ACE_INLINE int
-ACE_Reactor::remove_handler (const ACE_Sig_Set &sigset)
+ACE_Reactor::remove_handler (ACE_Sig_Set const &sigset)
 {
   return this->implementation ()->remove_handler (sigset);
 }
@@ -280,7 +280,7 @@ ACE_Reactor::suspend_handler (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_Reactor::suspend_handler (const ACE_Handle_Set &handles)
+ACE_Reactor::suspend_handler (ACE_Handle_Set const &handles)
 {
   return this->implementation ()->suspend_handler (handles);
 }
@@ -304,7 +304,7 @@ ACE_Reactor::resume_handler (ACE_HANDLE handle)
 }
 
 ACE_INLINE int
-ACE_Reactor::resume_handler (const ACE_Handle_Set &handles)
+ACE_Reactor::resume_handler (ACE_Handle_Set const &handles)
 {
   return this->implementation ()->resume_handler (handles);
 }

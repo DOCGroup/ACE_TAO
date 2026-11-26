@@ -29,7 +29,7 @@ public:
 
   int close () override;
 
-  int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero) override;
+  int work_pending (ACE_Time_Value const &max_wait_time = ACE_Time_Value::zero) override;
 
   int handle_events (ACE_Time_Value *max_wait_time = nullptr) override;
   int alertable_handle_events (ACE_Time_Value *max_wait_time = nullptr) override;
@@ -52,7 +52,7 @@ public:
                         ACE_HANDLE io_handle,
                         ACE_Event_Handler *event_handler,
                         ACE_Reactor_Mask mask) override;
-  int register_handler (const ACE_Handle_Set &handles,
+  int register_handler (ACE_Handle_Set const &handles,
                         ACE_Event_Handler *event_handler,
                         ACE_Reactor_Mask mask) override;
   int register_handler (int signum,
@@ -60,7 +60,7 @@ public:
                         ACE_Sig_Action *new_disp = nullptr,
                         ACE_Event_Handler **old_sh = nullptr,
                         ACE_Sig_Action *old_disp = nullptr) override;
-  int register_handler (const ACE_Sig_Set &sigset,
+  int register_handler (ACE_Sig_Set const &sigset,
                         ACE_Event_Handler *new_sh,
                         ACE_Sig_Action *new_disp = nullptr) override;
 
@@ -68,40 +68,40 @@ public:
                       ACE_Reactor_Mask mask) override;
   int remove_handler (ACE_HANDLE handle,
                       ACE_Reactor_Mask mask) override;
-  int remove_handler (const ACE_Handle_Set &handle_set,
+  int remove_handler (ACE_Handle_Set const &handle_set,
                       ACE_Reactor_Mask mask) override;
   int remove_handler (int signum,
                       ACE_Sig_Action *new_disp,
                       ACE_Sig_Action *old_disp = nullptr,
                       int sigkey = -1) override;
-  int remove_handler (const ACE_Sig_Set &sigset) override;
+  int remove_handler (ACE_Sig_Set const &sigset) override;
 
   int suspend_handler (ACE_Event_Handler *event_handler) override;
   int suspend_handler (ACE_HANDLE handle) override;
-  int suspend_handler (const ACE_Handle_Set &handles) override;
+  int suspend_handler (ACE_Handle_Set const &handles) override;
 
   int suspend_handlers () override;
 
   int resume_handler (ACE_Event_Handler *event_handler) override;
   int resume_handler (ACE_HANDLE handle) override;
-  int resume_handler (const ACE_Handle_Set &handles) override;
+  int resume_handler (ACE_Handle_Set const &handles) override;
 
   int resume_handlers () override;
   int resumable_handler () override;
   bool uses_event_associations () override;
 
   long schedule_timer (ACE_Event_Handler *event_handler,
-                       const void *arg,
-                       const ACE_Time_Value &delay,
-                       const ACE_Time_Value &interval = ACE_Time_Value::zero) override;
+                       void const *arg,
+                       ACE_Time_Value const &delay,
+                       ACE_Time_Value const &interval = ACE_Time_Value::zero) override;
 
   int reset_timer_interval (long timer_id,
-                            const ACE_Time_Value &interval) override;
+                            ACE_Time_Value const &interval) override;
 
   int cancel_timer (ACE_Event_Handler *event_handler,
                     int dont_call_handle_close = 1) override;
   int cancel_timer (long timer_id,
-                    const void **arg = nullptr,
+                    void const **arg = nullptr,
                     int dont_call_handle_close = 1) override;
 
   int schedule_wakeup (ACE_Event_Handler *event_handler,

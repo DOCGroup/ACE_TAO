@@ -418,7 +418,7 @@ ACE_Reactor::register_handler (ACE_HANDLE event_handle,
 }
 
 int
-ACE_Reactor::register_handler (const ACE_Handle_Set &handles,
+ACE_Reactor::register_handler (ACE_Handle_Set const &handles,
                                ACE_Event_Handler *event_handler,
                                ACE_Reactor_Mask mask)
 {
@@ -442,9 +442,9 @@ ACE_Reactor::register_handler (const ACE_Handle_Set &handles,
 
 long
 ACE_Reactor::schedule_timer (ACE_Event_Handler *event_handler,
-                             const void *arg,
-                             const ACE_Time_Value &delta,
-                             const ACE_Time_Value &interval)
+                             void const *arg,
+                             ACE_Time_Value const &delta,
+                             ACE_Time_Value const &interval)
 {
   // Remember the old reactor.
   ACE_Reactor *old_reactor = event_handler->reactor ();
@@ -503,7 +503,7 @@ ACE_Reactor::notify (ACE_Event_Handler *event_handler,
 int
 ACE_Reactor::reset_timer_interval
   (long timer_id,
-   const ACE_Time_Value &interval)
+   ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_Reactor::reset_timer_interval");
 
@@ -520,7 +520,7 @@ ACE_Reactor::cancel_timer (ACE_Event_Handler *event_handler,
 
 int
 ACE_Reactor::cancel_timer (long timer_id,
-                           const void **arg,
+                           void const **arg,
                            int dont_call_handle_close)
 {
   return this->implementation ()->cancel_timer (timer_id,

@@ -263,7 +263,7 @@ public:
    */
   /// @name Event loop drivers
   /// @{
-  int work_pending (const ACE_Time_Value &max_wait_time = ACE_Time_Value::zero);
+  int work_pending (ACE_Time_Value const &max_wait_time = ACE_Time_Value::zero);
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
@@ -383,7 +383,7 @@ public:
    * multiple times for the same @a event_handler and @a masks but
    * different @a handles.
    */
-  int register_handler (const ACE_Handle_Set &handles,
+  int register_handler (ACE_Handle_Set const &handles,
                         ACE_Event_Handler *event_handler,
                         ACE_Reactor_Mask masks);
 
@@ -411,7 +411,7 @@ public:
    * multiple times for the same @a event_handler and @a sig_action but
    * different @c signals.
    */
-  int register_handler (const ACE_Sig_Set &sigset,
+  int register_handler (ACE_Sig_Set const &sigset,
                         ACE_Event_Handler *event_handler,
                         ACE_Sig_Action *sig_action = nullptr);
 
@@ -448,7 +448,7 @@ public:
    * Shorthand for calling remove_handler(ACE_HANDLE,ACE_Reactor_Mask)
    * multiple times for the same @a masks but different @a handles.
    */
-  int remove_handler (const ACE_Handle_Set &handles,
+  int remove_handler (ACE_Handle_Set const &handles,
                       ACE_Reactor_Mask masks);
 
   /**
@@ -477,7 +477,7 @@ public:
    * remove_handler(int,ACE_Sig_Action*,ACE_Sig_Action*,int) multiple
    * times for every signal in @a sigset.
    */
-  int remove_handler (const ACE_Sig_Set &sigset);
+  int remove_handler (ACE_Sig_Set const &sigset);
 
   /// @}
 
@@ -501,7 +501,7 @@ public:
    * Shorthand for calling suspend_handler(ACE_HANDLE) with multiple
    * @a handles.
    */
-  int suspend_handler (const ACE_Handle_Set &handles);
+  int suspend_handler (ACE_Handle_Set const &handles);
 
   /**
    * Suspend all registered handles temporarily.
@@ -526,7 +526,7 @@ public:
    * Shorthand for calling resume_handler(ACE_HANDLE) with multiple
    * @a handles.
    */
-  int resume_handler (const ACE_Handle_Set &handles);
+  int resume_handler (ACE_Handle_Set const &handles);
 
   /**
    * Resume all registered handles.
@@ -572,9 +572,9 @@ public:
    * @retval              -1 on failure, with errno set.
    */
   long schedule_timer (ACE_Event_Handler *event_handler,
-                               const void *arg,
-                               const ACE_Time_Value &delay,
-                               const ACE_Time_Value &interval =
+                               void const *arg,
+                               ACE_Time_Value const &delay,
+                               ACE_Time_Value const &interval =
                                 ACE_Time_Value::zero) override;
 
   using ACE_Reactor_Timer_Interface::schedule_timer;
@@ -591,7 +591,7 @@ public:
    * This change will not take effect until the next timeout.
    */
   int reset_timer_interval (long timer_id,
-                                    const ACE_Time_Value &interval) override;
+                                    ACE_Time_Value const &interval) override;
 
   using ACE_Reactor_Timer_Interface::reset_timer_interval;
 
@@ -610,7 +610,7 @@ public:
    * ACE_Event_Handler::remove_reference() will also be called.
    */
   int cancel_timer (long timer_id,
-                            const void **arg = nullptr,
+                            void const **arg = nullptr,
                             int dont_call_handle_close = 1) override;
 
   /**
