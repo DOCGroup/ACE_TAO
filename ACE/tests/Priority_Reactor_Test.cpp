@@ -303,7 +303,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
-  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
+  if (acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,

@@ -80,7 +80,7 @@ check_micro_nano (unsigned long long microinterval, unsigned long long nanointer
 static
 void
 time_interval (RTIClock *timer,
-               const ACE_Time_Value & interval,
+               ACE_Time_Value const & interval,
                RTINtpTime& duration)
 {
   struct RTINtpTime start_time;
