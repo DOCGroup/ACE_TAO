@@ -140,6 +140,7 @@ public:
    * i.e. they are specific to TAO.
    */
   /// @{
+
   /// Create an enumeration TypeCode.
   CORBA::TypeCode_ptr create_enum_tc (
     char const * id,

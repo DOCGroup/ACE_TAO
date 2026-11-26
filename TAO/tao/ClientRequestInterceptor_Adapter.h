@@ -70,6 +70,7 @@ namespace TAO
      *
      */
     /// @{
+
     /// This method implements one of the "starting" client side
     /// interception points.
     virtual void send_request (Invocation_Base &invocation) = 0;
