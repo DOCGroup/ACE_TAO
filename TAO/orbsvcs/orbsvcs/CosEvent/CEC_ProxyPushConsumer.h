@@ -33,7 +33,7 @@ class TAO_CEC_ProxyPushSupplier;
  * remember that this class is used to communicate with a
  * PushSupplier, so, in effect, this is the ambassador for a
  * supplier inside the event channel.
- * = MEMORY MANAGEMENT
+ * @par Memory Management
  * The object commits suicide when disconnect_push_consumer() is
  * called.
  */

@@ -35,9 +35,6 @@ namespace CORBA
  *
  * Defines the interface for the consumer control strategy.
  * This strategy handles misbehaving or failing consumers.
- * = MEMORY MANAGEMENT
- * = LOCKING
- * = TODO
  */
 class TAO_Event_Serv_Export TAO_CEC_ConsumerControl
 {

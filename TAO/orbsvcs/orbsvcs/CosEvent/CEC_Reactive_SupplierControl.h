@@ -70,9 +70,6 @@ private:
  *
  * Defines the interface for the supplier control strategy.
  * This strategy handles misbehaving or failing suppliers.
- * = MEMORY MANAGEMENT
- * = LOCKING
- * = TODO
  */
 class TAO_Event_Serv_Export TAO_CEC_Reactive_SupplierControl
   : public TAO_CEC_SupplierControl

@@ -37,13 +37,12 @@ class TAO_CEC_EventChannel;
  * Implement the CosEventChannelAdmin::SupplierAdmin interface.
  * This class is an Abstract Factory for the
  * TAO_CEC_ProxyPushConsumer.
- * = MEMORY MANAGEMENT
+ * @par Memory Management
  * It does not assume ownership of the TAO_CEC_EventChannel object
- * = LOCKING
+ * @par Locking
  * @@ TODO
  * No provisions for locking, access must be serialized
  * externally.
- * = TODO
  */
 class TAO_Event_Serv_Export TAO_CEC_SupplierAdmin
   : public POA_CosEventChannelAdmin::SupplierAdmin
