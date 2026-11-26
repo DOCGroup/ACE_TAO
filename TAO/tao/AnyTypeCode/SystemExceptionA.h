@@ -26,11 +26,11 @@ namespace CORBA
 
 #define TAO_SYSTEM_EXCEPTION(name) \
   TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, \
-                                           const CORBA::name &); \
+                                           CORBA::name const &); \
   TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, \
                                            CORBA::name *); \
-  TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (const CORBA::Any &, \
-                                                     const CORBA::name *&); \
+  TAO_AnyTypeCode_Export CORBA::Boolean operator>>= (CORBA::Any const &, \
+                                                     CORBA::name const *&); \
   extern TAO_AnyTypeCode_Export TypeCode_ptr const _tc_ ## name
 
   /// the unknown exception

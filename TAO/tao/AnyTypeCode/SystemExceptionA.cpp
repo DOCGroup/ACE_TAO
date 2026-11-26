@@ -132,7 +132,7 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 void \
-CORBA::operator<<= (CORBA::Any &any, const CORBA::name &ex) \
+CORBA::operator<<= (CORBA::Any &any, CORBA::name const &ex) \
 { \
   TAO::Any_SystemException::insert_copy ( \
       any, \
@@ -160,15 +160,15 @@ STANDARD_EXCEPTION_LIST
 
 #define TAO_SYSTEM_EXCEPTION(name) \
 CORBA::Boolean \
-CORBA::operator>>= (const CORBA::Any &any, \
-                    const CORBA::name *&ex) \
+CORBA::operator>>= (CORBA::Any const &any, \
+                    CORBA::name const *&ex) \
 { \
   return \
     TAO::Any_SystemException::extract ( \
         any, \
         CORBA::name ::_tao_any_destructor, \
         CORBA::_tc_ ## name, \
-        (const CORBA::SystemException *&) ex, \
+        (CORBA::SystemException const *&) ex, \
         std::addressof (CORBA::name ::_tao_create)); \
 }
 

@@ -29,7 +29,7 @@ namespace CORBA
   class Any;
   using Any_ptr = Any *;
 
-TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, const CORBA::Exception &);
+TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Exception const &);
 TAO_AnyTypeCode_Export void operator<<= (CORBA::Any &, CORBA::Exception *);
 }
 
