@@ -8,8 +8,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_Sched_Params::ACE_Sched_Params (
-      const Policy policy,
-      const ACE_Sched_Priority priority,
+      Policy const policy,
+      ACE_Sched_Priority const priority,
       const int scope,
       ACE_Time_Value const &quantum)
   : policy_ (policy),
@@ -28,7 +28,7 @@ ACE_Sched_Params::policy () const
 }
 
 ACE_INLINE void
-ACE_Sched_Params::policy (const ACE_Sched_Params::Policy policy)
+ACE_Sched_Params::policy (ACE_Sched_Params::Policy const policy)
 {
   this->policy_ = policy;
 }
@@ -40,7 +40,7 @@ ACE_Sched_Params::priority () const
 }
 
 ACE_INLINE void
-ACE_Sched_Params::priority (const ACE_Sched_Priority priority)
+ACE_Sched_Params::priority (ACE_Sched_Priority const priority)
 {
   this->priority_ = priority;
 }
@@ -69,7 +69,7 @@ ACE_Sched_Params::quantum (ACE_Time_Value const &quant)
   this->quantum_ = quant;
 }
 
-ACE_INLINE const ACE_Sched_Params::Policy &
+ACE_INLINE ACE_Sched_Params::Policy const &
 ACE_Sched_Priority_Iterator::policy () const
 {
   return this->policy_;
@@ -82,7 +82,7 @@ ACE_Sched_Priority_Iterator::scope () const
 }
 
 ACE_INLINE
-ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy &policy,
+ACE_Sched_Priority_Iterator::ACE_Sched_Priority_Iterator (ACE_Sched_Params::Policy const &policy,
                                                           int scope)
  : policy_ (policy),
    scope_ (scope),

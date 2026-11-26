@@ -61,8 +61,8 @@ class ACE_Export ACE_Sched_Params
 public:
   using Policy = int;
 
-  ACE_Sched_Params (const Policy policy,
-                    const ACE_Sched_Priority priority,
+  ACE_Sched_Params (Policy const policy,
+                    ACE_Sched_Priority const priority,
                     const int scope = ACE_SCOPE_THREAD,
                     ACE_Time_Value const &quantum = ACE_Time_Value::zero);
 
@@ -72,13 +72,13 @@ public:
   /// @name Policy accessors
   /// @{
   Policy policy () const;
-  void policy (const Policy);
+  void policy (Policy const);
   /// @}
 
   /// @name Priority accessors
   /// @{
   ACE_Sched_Priority priority () const;
-  void priority (const ACE_Sched_Priority);
+  void priority (ACE_Sched_Priority const);
   /// @}
 
   /// @name Scope accessors
@@ -96,9 +96,9 @@ public:
   /// @name Accessors for OS-specific priorities
   /// These return priority values for ACE_SCHED_OTHER if the policy is invalid.
   /// @{
-  static int priority_min (const Policy,
+  static int priority_min (Policy const,
                            const int scope = ACE_SCOPE_THREAD);
-  static int priority_max (const Policy,
+  static int priority_max (Policy const,
                            const int scope = ACE_SCOPE_THREAD);
 
   /**
@@ -108,7 +108,7 @@ public:
    * already the highest priority (for the specified policy), then it is
    * returned.
    */
-  static int next_priority (const Policy,
+  static int next_priority (Policy const,
                             const int priority,
                             const int scope = ACE_SCOPE_THREAD);
 
@@ -119,7 +119,7 @@ public:
    * already the lowest priority (for the specified policy), then it is
    * returned.
    */
-  static int previous_priority (const Policy,
+  static int previous_priority (Policy const,
                                 const int priority,
                                 const int scope = ACE_SCOPE_THREAD);
   /// @}
@@ -174,7 +174,7 @@ class ACE_Export ACE_Sched_Priority_Iterator
 public:
   /// Initialize the iterator, the arguments define the scheduling
   /// policy and scope for the priorities (see ACE_Sched_Param).
-  ACE_Sched_Priority_Iterator (const ACE_Sched_Params::Policy &policy,
+  ACE_Sched_Priority_Iterator (ACE_Sched_Params::Policy const &policy,
                                int scope = ACE_SCOPE_THREAD);
 
   ~ACE_Sched_Priority_Iterator ();
@@ -190,7 +190,7 @@ public:
   void next ();
 
   /// Accessor for the scheduling policy over which we are iterating.
-  const ACE_Sched_Params::Policy &policy () const;
+  ACE_Sched_Params::Policy const &policy () const;
 
   /// Accessor for the scheduling
   int scope () const;
