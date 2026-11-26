@@ -135,7 +135,7 @@ MIF_Scheduler::create_scheduling_parameter (const MIF_Scheduling::SchedulingPara
 
 void
 MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType& guid,
-                                             const char *,
+                                             char const *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
 {
@@ -166,7 +166,7 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 
 void
 MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                                           const char *name,
+                                                           char const *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
 {
@@ -178,7 +178,7 @@ MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
 
 void
 MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& guid,
-                                          const char* name,
+                                          char const *name,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr implicit_sched_param)
 {
@@ -205,7 +205,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
 void
 MIF_Scheduler::end_scheduling_segment (
                     const RTScheduling::Current::IdType &guid,
-                    const char *)
+                    char const *)
 {
 #ifdef KOKYU_DSRT_LOGGING
   size_t const guid_value = guid_to_size_t (guid);
@@ -218,7 +218,7 @@ MIF_Scheduler::end_scheduling_segment (
 void
 MIF_Scheduler::end_nested_scheduling_segment (
                    const RTScheduling::Current::IdType &,
-                   const char *,
+                   char const *,
                    CORBA::Policy_ptr)
 {
 }
@@ -570,7 +570,7 @@ MIF_Scheduler::scheduling_discipline_name ()
 }
 
 RTScheduling::ResourceManager_ptr
-MIF_Scheduler::create_resource_manager (const char *,
+MIF_Scheduler::create_resource_manager (char const *,
                                         CORBA::Policy_ptr)
 {
   throw CORBA::NO_IMPLEMENT ();
@@ -578,7 +578,7 @@ MIF_Scheduler::create_resource_manager (const char *,
 
 void
 MIF_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
-                                         const char *,
+                                         char const *,
                                          CORBA::Policy_ptr)
 {
   throw CORBA::NO_IMPLEMENT ();

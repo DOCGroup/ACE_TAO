@@ -76,25 +76,25 @@ public ::CORBA::LocalObject
   void shutdown ();
 
   void begin_new_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                                     const char * name,
+                                     char const *name,
                                      CORBA::Policy_ptr sched_param,
                                      CORBA::Policy_ptr implicit_sched_param) override;
 
   void begin_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                                        const char * name,
+                                        char const *name,
                                         CORBA::Policy_ptr sched_param,
                                         CORBA::Policy_ptr implicit_sched_param) override;
 
   void update_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                                  const char * name,
+                                  char const *name,
                                   CORBA::Policy_ptr sched_param,
                                   CORBA::Policy_ptr implicit_sched_param) override;
 
   void end_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                               const char * name) override;
+                               char const *name) override;
 
   void end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                                      const char * name,
+                                      char const *name,
                                       CORBA::Policy_ptr outer_sched_param) override;
 
   void send_request (PortableInterceptor::ClientRequestInfo_ptr ri) override;
@@ -130,11 +130,11 @@ public ::CORBA::LocalObject
   char * scheduling_discipline_name () override;
 
   RTScheduling::ResourceManager_ptr create_resource_manager (
-    const char * name,
+    char const *name,
     CORBA::Policy_ptr scheduling_parameter) override;
 
   void set_scheduling_parameter (PortableServer::Servant & resource,
-                                 const char * name,
+                                 char const *name,
                                  CORBA::Policy_ptr scheduling_parameter) override;
 
  private:

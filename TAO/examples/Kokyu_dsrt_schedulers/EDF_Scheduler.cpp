@@ -107,7 +107,7 @@ EDF_Scheduler::create_scheduling_parameter (const EDF_Scheduling::SchedulingPara
 
 void
 EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                             const char *,
+                                             char const *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
 {
@@ -142,7 +142,7 @@ EDF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 
 void
 EDF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                                const char *name,
+                                                char const *name,
                                                 CORBA::Policy_ptr sched_param,
                                                 CORBA::Policy_ptr implicit_sched_param)
 {
@@ -156,7 +156,7 @@ EDF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
 
 void
 EDF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& guid,
-                                          const char* name,
+                                          char const *name,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr implicit_sched_param)
 {
@@ -184,7 +184,7 @@ EDF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType& g
 
 void
 EDF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                       const char *)
+                                       char const *)
 {
   size_t const guid_value = guid_to_size_t (guid);
 #ifdef KOKYU_DSRT_LOGGING
@@ -197,7 +197,7 @@ EDF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 
 void
 EDF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType & guid,
-                                              const char *,
+                                              char const *,
                                               CORBA::Policy_ptr)
 {
   size_t const guid_value = guid_to_size_t (guid);
@@ -662,7 +662,7 @@ EDF_Scheduler::scheduling_discipline_name ()
 }
 
 RTScheduling::ResourceManager_ptr
-EDF_Scheduler::create_resource_manager (const char *,
+EDF_Scheduler::create_resource_manager (char const *,
                                         CORBA::Policy_ptr)
 {
   throw CORBA::NO_IMPLEMENT ();
@@ -670,7 +670,7 @@ EDF_Scheduler::create_resource_manager (const char *,
 
 void
 EDF_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
-                                         const char *,
+                                         char const *,
                                          CORBA::Policy_ptr)
 {
   throw CORBA::NO_IMPLEMENT ();
