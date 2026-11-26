@@ -18,9 +18,9 @@ class JAWS_HTTP_10_Read_Task : public JAWS_Pipeline_Handler
 {
 public:
   JAWS_HTTP_10_Read_Task ();
-  virtual ~JAWS_HTTP_10_Read_Task ();
+  ~JAWS_HTTP_10_Read_Task () override;
 
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+  int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) override;
 
 private:
 };
@@ -31,9 +31,9 @@ class JAWS_HTTP_10_Parse_Task : public JAWS_Pipeline_Handler
 {
 public:
   JAWS_HTTP_10_Parse_Task ();
-  virtual ~JAWS_HTTP_10_Parse_Task ();
+  ~JAWS_HTTP_10_Parse_Task () override;
 
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+  int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) override;
 };
 
 // Write the response
@@ -42,9 +42,9 @@ class JAWS_HTTP_10_Write_Task : public JAWS_Pipeline_Handler
 {
 public:
   JAWS_HTTP_10_Write_Task ();
-  virtual ~JAWS_HTTP_10_Write_Task ();
+  ~JAWS_HTTP_10_Write_Task () override;
 
-  virtual int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv);
+  int handle_put (JAWS_Data_Block *data, ACE_Time_Value *tv) override;
 
 private:
 };
