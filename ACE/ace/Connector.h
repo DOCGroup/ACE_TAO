@@ -235,7 +235,7 @@ public:
    * @a remote_addrs using @a synch_options.  Returns -1 if failure
    * occurs and 0 otherwise.  If @a failed_svc_handlers is non-NULL, a
    * 1 is placed in the corresponding index of @a failed_svc_handlers
-   * for each <svc_handlers[i]> that failed to connect, else a 0 is
+   * for each @c svc_handlers[i] that failed to connect, else a 0 is
    * placed in that index.
    */
   virtual int connect_n (size_t n,
@@ -246,8 +246,9 @@ public:
                          ACE_Synch_Options::defaults);
 
   /**
-   * Cancel the @a svc_handler that was started asynchronously. Note that
-   * this is the only case when the Connector does not actively close
+   * Cancel the @a svc_handler that was started asynchronously.
+   *
+   * @note This is the only case when the Connector does not actively close
    * the @a svc_handler. It is left up to the caller of @c cancel to
    * decide the fate of the @a svc_handler.
    */

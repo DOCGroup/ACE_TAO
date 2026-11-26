@@ -400,8 +400,9 @@ namespace ACE
 
   /**
    * Return a dynamically allocated duplicate of @a str, substituting
-   * the environment variable if @c str[0] @c == @c '$'.  Note that
-   * the pointer is allocated with @c ACE_OS::malloc and must be freed
+   * the environment variable if @c str[0] @c == @c '$'.
+   *
+   * @note The pointer is allocated with @c ACE_OS::malloc and must be freed
    * by @c ACE_OS::free.
    */
   extern ACE_Export ACE_TCHAR *strenvdup (ACE_TCHAR const *str);
@@ -646,9 +647,10 @@ namespace ACE
    * Terminate the process abruptly with id @a pid.  On Win32 platforms
    * this uses {TerminateProcess} and on POSIX platforms is uses
    * {kill} with the -9 (SIGKILL) signal, which cannot be caught or
-   * ignored.  Note that this call is potentially dangerous to use
-   * since the process being terminated may not have a chance to
-   * cleanup before it shuts down.
+   * ignored.
+   *
+   * @note This call is potentially dangerous because the process may not
+   * have a chance to clean up before it shuts down.
    */
   extern ACE_Export int terminate_process (pid_t pid);
 
