@@ -149,7 +149,7 @@ struct Tester
       source[0] = 42;
       value_type * const buffer = source.get_buffer();
 
-      tested_sequence destination(std::move(source));
+      tested_sequence destination (std::move (source));
 
       FAIL_RETURN_IF_NOT(a.expect(1), a);
       FAIL_RETURN_IF_NOT(f.expect(0), f);
@@ -177,7 +177,7 @@ struct Tester
       value_type * const buffer = source.get_buffer();
       tested_sequence destination(2, 1, alloc_and_init_buffer(), true);
 
-      destination = std::move(source);
+      destination = std::move (source);
 
       FAIL_RETURN_IF_NOT(a.expect(2), a);
       FAIL_RETURN_IF_NOT(f.expect(1), f);

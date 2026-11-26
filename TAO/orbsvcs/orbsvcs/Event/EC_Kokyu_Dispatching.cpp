@@ -92,7 +92,7 @@ TAO_EC_Kokyu_Dispatching::setup_lanes ()
   // Create Kokyu::Dispatcher using factory
   Kokyu::Dispatcher_Auto_Ptr
     tmp(Kokyu::Dispatcher_Factory::create_dispatcher(attrs));
-  this->dispatcher_ = std::move(tmp);
+  this->dispatcher_ = std::move (tmp);
   this->lanes_setup_ = true;
 
   //ORBSVCS_DEBUG ((LM_DEBUG, "Kokyu dispatcher setup\n"));
