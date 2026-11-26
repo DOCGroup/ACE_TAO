@@ -31,7 +31,7 @@ CORBA::Long vt_graph_impl::size ()
 
 // Add a node to the graph with no edges.
 void
-vt_graph_impl::add_node (const char * name)
+vt_graph_impl::add_node (char const *name)
 {
   Supports_Test::Node * new_node = 0;
   ACE_NEW (new_node, node_impl (name));
@@ -181,7 +181,7 @@ node_impl::node_impl ()
 }
 
 // Initialize state.
-node_impl::node_impl (const char * name)
+node_impl::node_impl (char const *name)
 {
         name_ (name);
         weight_ (0);
