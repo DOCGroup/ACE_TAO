@@ -81,7 +81,7 @@ namespace TAO
     transport_type *transport ();
 
     /// Return the underlying transport
-    const transport_type *transport () const;
+    transport_type const *transport () const;
 
     /// Set recycle_state.
     void recycle_state (Cache_Entries_State new_state);
@@ -138,18 +138,18 @@ namespace TAO
 
     explicit Cache_ExtId_T (transport_descriptor_type *prop);
 
-    Cache_ExtId_T (const Cache_ExtId_T & rhs);
+    Cache_ExtId_T (Cache_ExtId_T const & rhs);
 
     ~Cache_ExtId_T ();
 
     /// Assignment operator (does copy memory).
-    Cache_ExtId_T& operator= (const Cache_ExtId_T &rhs);
+    Cache_ExtId_T& operator= (Cache_ExtId_T const &rhs);
 
     /// Equality comparison operator (must match both id_ and kind_).
-    bool operator== (const Cache_ExtId_T &rhs) const;
+    bool operator== (Cache_ExtId_T const &rhs) const;
 
     /// Inequality comparison operator.
-    bool operator!= (const Cache_ExtId_T &rhs) const;
+    bool operator!= (Cache_ExtId_T const &rhs) const;
 
     /// hash function is required in order for this class to be usable by
     /// ACE_Hash_Map_Manager_Ex.

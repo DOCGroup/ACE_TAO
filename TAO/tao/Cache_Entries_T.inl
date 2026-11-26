@@ -110,7 +110,7 @@ namespace TAO
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
   Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE> &
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::operator= (const Cache_ExtId_T &rhs)
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::operator= (Cache_ExtId_T const &rhs)
   {
     if (this != std::addressof (rhs))
       {
@@ -133,20 +133,20 @@ namespace TAO
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::Cache_ExtId_T (const Cache_ExtId_T &rhs)
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::Cache_ExtId_T (Cache_ExtId_T const &rhs)
   {
     *this = rhs;
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE bool
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::operator== (const Cache_ExtId_T &rhs) const
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::operator== (Cache_ExtId_T const &rhs) const
   {
     return (this->transport_property_->is_equivalent (rhs.transport_property_) &&
             this->index_ == rhs.index_);
   }
 
   template <typename TRANSPORT_DESCRIPTOR_TYPE> ACE_INLINE bool
-  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::operator!= (const Cache_ExtId_T &rhs) const
+  Cache_ExtId_T<TRANSPORT_DESCRIPTOR_TYPE>::operator!= (Cache_ExtId_T const &rhs) const
   {
     if (this->transport_property_->is_equivalent (rhs.transport_property_) &&
         this->index_ == rhs.index_)
