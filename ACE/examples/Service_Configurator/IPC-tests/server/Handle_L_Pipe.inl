@@ -7,9 +7,7 @@ ACE_INLINE
 Handle_L_Pipe::~Handle_L_Pipe () = default;
 
 ACE_INLINE
-Handle_L_Pipe::Handle_L_Pipe ()
-{
-}
+Handle_L_Pipe::Handle_L_Pipe () = default;
 
 ACE_INLINE int
 Handle_L_Pipe::open (ACE_UNIX_Addr const &suap, int async)

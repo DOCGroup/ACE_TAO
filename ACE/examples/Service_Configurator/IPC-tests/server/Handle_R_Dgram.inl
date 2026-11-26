@@ -1,12 +1,11 @@
 #include "ace/Get_Opt.h"
+#include "ace/Reactor.h"
 #include "ace/OS_NS_stdio.h"
 #include "ace/OS_NS_string.h"
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_R_Dgram::Handle_R_Dgram ()
-{
-}
+Handle_R_Dgram::Handle_R_Dgram () = default;
 
 ACE_INLINE int
 Handle_R_Dgram::open (ACE_INET_Addr const &r, int async)

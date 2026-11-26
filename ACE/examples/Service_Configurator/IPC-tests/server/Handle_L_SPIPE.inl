@@ -9,9 +9,7 @@
 #include "ace/OS_NS_string.h"
 
 ACE_INLINE
-Handle_L_SPIPE::Handle_L_SPIPE ()
-{
-}
+Handle_L_SPIPE::Handle_L_SPIPE () = default;
 
 ACE_INLINE int
 Handle_L_SPIPE::open (ACE_SPIPE_Addr const &rendezvous_spipe)

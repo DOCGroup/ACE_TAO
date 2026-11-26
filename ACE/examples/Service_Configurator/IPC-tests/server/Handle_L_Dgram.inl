@@ -4,9 +4,7 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_L_Dgram::Handle_L_Dgram ()
-{
-}
+Handle_L_Dgram::Handle_L_Dgram () = default;
 
 ACE_INLINE int
 Handle_L_Dgram::open (ACE_UNIX_Addr const &suad, int async)

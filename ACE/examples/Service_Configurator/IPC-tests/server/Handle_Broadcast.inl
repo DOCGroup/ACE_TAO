@@ -8,9 +8,7 @@ ACE_INLINE
 Handle_Broadcast::~Handle_Broadcast () = default;
 
 ACE_INLINE
-Handle_Broadcast::Handle_Broadcast ()
-{
-}
+Handle_Broadcast::Handle_Broadcast () = default;
 
 ACE_INLINE int
 Handle_Broadcast::open (ACE_INET_Addr const &r, int async)

@@ -6,9 +6,7 @@
 #include "ace/OS_NS_unistd.h"
 
 ACE_INLINE
-Handle_L_FIFO::Handle_L_FIFO ()
-{
-}
+Handle_L_FIFO::Handle_L_FIFO () = default;
 
 ACE_INLINE int
 Handle_L_FIFO::open (ACE_TCHAR const *rendezvous_fifo)
