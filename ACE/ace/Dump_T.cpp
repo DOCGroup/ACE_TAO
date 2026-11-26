@@ -19,8 +19,8 @@ ACE_Dumpable_Adapter<Concrete>::~ACE_Dumpable_Adapter ()
 }
 
 template <class Concrete>
-ACE_Dumpable_Adapter<Concrete>::ACE_Dumpable_Adapter (const Concrete *t)
-  : ACE_Dumpable (static_cast<const void *> (t)), this_ (t)
+ACE_Dumpable_Adapter<Concrete>::ACE_Dumpable_Adapter (Concrete const *t)
+  : ACE_Dumpable (static_cast<void const *> (t)), this_ (t)
 {
   ACE_TRACE ("ACE_Dumpable_Adapter<Concrete>::ACE_Dumpable_Adapter");
 }

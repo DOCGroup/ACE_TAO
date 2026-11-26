@@ -33,7 +33,7 @@ template <class Concrete>
 class ACE_Dumpable_Adapter : public ACE_Dumpable
 {
 public:
-  ACE_Dumpable_Adapter (const Concrete *t);
+  ACE_Dumpable_Adapter (Concrete const *t);
   ~ACE_Dumpable_Adapter () override;
 
   /// Concrete dump method (simply delegates to the dump() method of
@@ -45,7 +45,7 @@ public:
 
 private:
   /// Pointer to @c this of @c Concrete.
-  const Concrete *this_;
+  Concrete const *this_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -85,9 +85,9 @@ public:
    */
   ACE_TSS (TYPE *ts_obj = nullptr);
 
-  ACE_TSS (const ACE_TSS &) = delete;
+  ACE_TSS (ACE_TSS const &) = delete;
   ACE_TSS (ACE_TSS &&) = delete;
-  ACE_TSS &operator= (const ACE_TSS &) = delete;
+  ACE_TSS &operator= (ACE_TSS const &) = delete;
   ACE_TSS &operator= (ACE_TSS &&) = delete;
 
   /// Deregister this object from thread-specific storage administration.
