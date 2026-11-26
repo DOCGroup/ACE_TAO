@@ -57,7 +57,7 @@ ACE_Service_Type::dump () const
 
 ACE_Service_Type::ACE_Service_Type (ACE_TCHAR const *n,
                                     ACE_Service_Type_Impl *t,
-                                    const ACE_DLL &dll,
+                                    ACE_DLL const &dll,
                                     bool active)
   : type_ (t),
     dll_ (dll),

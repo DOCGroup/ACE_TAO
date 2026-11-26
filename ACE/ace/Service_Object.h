@@ -94,7 +94,7 @@ public:
 
   ACE_Service_Type (ACE_TCHAR const *n,
                     ACE_Service_Type_Impl *o,
-                    const ACE_DLL &dll,
+                    ACE_DLL const &dll,
                     bool active);
   ACE_Service_Type (ACE_TCHAR const *n,
                     ACE_Service_Type_Impl *o,
@@ -110,8 +110,8 @@ public:
   ACE_TCHAR const *name () const;
   void name (ACE_TCHAR const *);
 
-  const ACE_Service_Type_Impl *type () const;
-  void type (const ACE_Service_Type_Impl *, bool active = true);
+  ACE_Service_Type_Impl const *type () const;
+  void type (ACE_Service_Type_Impl const *, bool active = true);
 
   /// Is this just a stub for the real thing?
   bool is_forward_declaration () const;
@@ -131,10 +131,10 @@ public:
   void dump () const;
 
   /// Get to the DLL's implentation
-  const ACE_DLL & dll () const;
+  ACE_DLL const & dll () const;
 
   /// Sets the DLL
-  void dll (const ACE_DLL&);
+  void dll (ACE_DLL const&);
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -149,7 +149,7 @@ private:
   std::unique_ptr<ACE_TCHAR[], Name_Deleter> name_ {};
 
   /// Pointer to C++ object that implements the svc.
-  const ACE_Service_Type_Impl *type_;
+  ACE_Service_Type_Impl const *type_;
 
   /// ACE_DLL representing the shared object file (non-zero if
   /// dynamically linked).

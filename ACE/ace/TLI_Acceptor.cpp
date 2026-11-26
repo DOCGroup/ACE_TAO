@@ -26,7 +26,7 @@ public:
   ACE_HANDLE open (ACE_HANDLE fd, int size);
   int close ();
 
-  int enqueue (const char device[], bool restart, int rwflag);
+  int enqueue (char const device[], bool restart, int rwflag);
   int dequeue (ACE_TLI_Request *&ptr);
   int remove (int sequence_number);
 
@@ -125,7 +125,7 @@ ACE_TLI_Request_Queue::dequeue (ACE_TLI_Request *&ptr)
 
 static ACE_HANDLE
 open_new_endpoint (ACE_HANDLE listen_handle,
-                   const char dev[],
+                   char const dev[],
                    struct t_call *callp,
                    int rwf,
                    ACE_Addr *remote_sap = nullptr)
@@ -231,7 +231,7 @@ ACE_TLI_Request_Queue::ACE_TLI_Request_Queue ()
 // structures when one arrives.
 
 int
-ACE_TLI_Request_Queue::enqueue (const char device[],
+ACE_TLI_Request_Queue::enqueue (char const device[],
                                       bool restart, int rwflag)
 {
   ACE_TRACE ("ACE_TLI_Request_Queue::enqueue");
@@ -302,12 +302,12 @@ ACE_TLI_Request_Queue::remove (int sequence_number)
 }
 
 ACE_HANDLE
-ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
+ACE_TLI_Acceptor::open (ACE_Addr const &remote_sap,
                         int reuse_addr,
                         int oflag,
                         struct t_info *info,
                         int qlen,
-                        const char dev[])
+                        char const dev[])
 {
   ACE_TRACE ("ACE_TLI_Acceptor::open");
   ACE_HANDLE res = 0;
@@ -386,12 +386,12 @@ ACE_TLI_Acceptor::open (const ACE_Addr &remote_sap,
   return this->get_handle ();
 }
 
-ACE_TLI_Acceptor::ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
+ACE_TLI_Acceptor::ACE_TLI_Acceptor (ACE_Addr const &remote_sap,
                                     int reuse_addr,
                                     int oflag,
                                     struct t_info *info,
                                     int back,
-                                    const char dev[])
+                                    char const dev[])
 {
   ACE_TRACE ("ACE_TLI_Acceptor::ACE_TLI_Acceptor");
   if (this->open (remote_sap,

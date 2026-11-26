@@ -43,20 +43,20 @@ public:
   ACE_TLI_Acceptor ();
 
   /// Initiate a passive mode socket.
-  ACE_TLI_Acceptor (const ACE_Addr &remote_sap,
+  ACE_TLI_Acceptor (ACE_Addr const &remote_sap,
                     int reuse_addr = 0,
                     int oflag = O_RDWR,
                     struct t_info *info = nullptr,
                     int backlog = ACE_DEFAULT_BACKLOG,
-                    const char device[] = ACE_TLI_TCP_DEVICE);
+                    char const device[] = ACE_TLI_TCP_DEVICE);
 
   /// Initiate a passive mode socket.
-  ACE_HANDLE open (const ACE_Addr &remote_sap,
+  ACE_HANDLE open (ACE_Addr const &remote_sap,
                    int reuse_addr = 0,
                    int oflag = O_RDWR,
                    struct t_info *info = nullptr,
                    int backlog = ACE_DEFAULT_BACKLOG,
-                   const char device[] = ACE_TLI_TCP_DEVICE);
+                   char const device[] = ACE_TLI_TCP_DEVICE);
 
   /// Close down the acceptor and release resources.
   int close ();
@@ -89,7 +89,7 @@ public:
 
 private:
   /// Network "device" we are using.
-  const char *device_ {};
+  char const *device_ {};
 
   /// Number of connections to queue.
   int backlog_ {};

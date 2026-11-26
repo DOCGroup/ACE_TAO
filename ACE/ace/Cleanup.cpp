@@ -61,7 +61,7 @@ ACE_Cleanup_Info_Node::~ACE_Cleanup_Info_Node ()
 ACE_ALLOC_HOOK_DEFINE(ACE_Cleanup_Info_Node)
 
 bool
-ACE_Cleanup_Info_Node::operator== (const ACE_Cleanup_Info_Node &o) const
+ACE_Cleanup_Info_Node::operator== (ACE_Cleanup_Info_Node const &o) const
 {
   return o.object_ == this->object_
     && o.cleanup_hook_ == this->cleanup_hook_
@@ -69,7 +69,7 @@ ACE_Cleanup_Info_Node::operator== (const ACE_Cleanup_Info_Node &o) const
 }
 
 bool
-ACE_Cleanup_Info_Node::operator!= (const ACE_Cleanup_Info_Node &o) const
+ACE_Cleanup_Info_Node::operator!= (ACE_Cleanup_Info_Node const &o) const
 {
   return !(*this == o);
 }

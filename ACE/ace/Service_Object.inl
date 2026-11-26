@@ -18,7 +18,7 @@ ACE_Service_Type::name () const
   return this->name_.get ();
 }
 
-ACE_INLINE const ACE_Service_Type_Impl *
+ACE_INLINE ACE_Service_Type_Impl const *
 ACE_Service_Type::type () const
 {
   ACE_TRACE ("ACE_Service_Type::type");
@@ -26,7 +26,7 @@ ACE_Service_Type::type () const
 }
 
 ACE_INLINE void
-ACE_Service_Type::type (const ACE_Service_Type_Impl *o, bool enabled)
+ACE_Service_Type::type (ACE_Service_Type_Impl const *o, bool enabled)
 {
   ACE_TRACE ("ACE_Service_Type::type");
   this->type_ = o;
@@ -54,13 +54,13 @@ ACE_Service_Type::fini_called () const
   return this->fini_already_called_;
 }
 
-ACE_INLINE const ACE_DLL & ACE_Service_Type::dll () const
+ACE_INLINE ACE_DLL const & ACE_Service_Type::dll () const
 {
   ACE_TRACE ("ACE_Service_Type::dll");
   return this->dll_;
 }
 
-ACE_INLINE void ACE_Service_Type::dll (const ACE_DLL &adll)
+ACE_INLINE void ACE_Service_Type::dll (ACE_DLL const &adll)
 {
   ACE_TRACE ("ACE_Service_Type::dll");
   this->dll_ = adll;

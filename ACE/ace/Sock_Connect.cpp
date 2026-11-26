@@ -136,7 +136,7 @@ ACE::bind_port (ACE_HANDLE handle, ACE_UINT32 ip_addr, int address_family)
 
 int
 ACE::get_bcast_addr (ACE_UINT32 &bcast_addr,
-                     const ACE_TCHAR *host_name,
+                     ACE_TCHAR const *host_name,
                      ACE_UINT32 host_addr,
                      ACE_HANDLE handle)
 {
@@ -867,7 +867,7 @@ ACE::get_ip_interfaces (size_t &count, ACE_INET_Addr *&addrs)
           // Format the address intoa proper IPv6 decimal address specification and
           // resolve the resulting text using getaddrinfo().
 
-          const char* ip_fmt = "%s:%s:%s:%s:%s:%s:%s:%s%%%d";
+          char const* ip_fmt = "%s:%s:%s:%s:%s:%s:%s:%s%%%d";
           ACE_OS::snprintf (s_ipaddr, 64, ip_fmt,
                             addr_p[0], addr_p[1], addr_p[2], addr_p[3],
                             addr_p[4], addr_p[5], addr_p[6], addr_p[7],

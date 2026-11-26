@@ -69,10 +69,10 @@ public:
   ~ACE_Cleanup_Info_Node ();
 
   /// Equality operator.
-  bool operator== (const ACE_Cleanup_Info_Node &o) const;
+  bool operator== (ACE_Cleanup_Info_Node const &o) const;
 
   /// Inequality operator.
-  bool operator!= (const ACE_Cleanup_Info_Node &o) const;
+  bool operator!= (ACE_Cleanup_Info_Node const &o) const;
 
   void* object();
 
