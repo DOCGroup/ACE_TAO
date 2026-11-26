@@ -1,4 +1,7 @@
 #include "ace/SV_Message_Queue.h"
+#include "ace/OS_NS_sys_msg.h"
+
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,10 +30,11 @@ ACE_Typed_SV_Message_Queue<T>::recv (ACE_Typed_SV_Message<T> &mb,
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::recv");
 
   int length =
-    this->message_queue_.recv (reinterpret_cast<ACE_SV_Message &> (mb),
-                               mb.max_size (),
-                               mb.type (),
-                               mflags);
+    ACE_OS::msgrcv (this->message_queue_.get_id (),
+                    std::addressof (mb),
+                    mb.max_size (),
+                    mb.type (),
+                    mflags);
   if (length != -1)
     {
       mb.length (length);
@@ -45,11 +49,10 @@ ACE_Typed_SV_Message_Queue<T>::send (ACE_Typed_SV_Message<T> const &mb,
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::send");
   return
-    this->message_queue_.send (
-      reinterpret_cast<ACE_SV_Message &> (
-        const_cast<ACE_Typed_SV_Message<T> &> (mb)),
-      mb.length (),
-      mflags);
+    ACE_OS::msgsnd (this->message_queue_.get_id (),
+                    std::addressof (mb),
+                    mb.length (),
+                    mflags);
 }
 
 template <class T> ACE_INLINE int
