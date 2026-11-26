@@ -319,6 +319,7 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * Methods used to search and modify the handler repository.
      */
     /// @{
+
     /// Return a pointer to the Event_Tuple associated with @a handle.
     /// If there is none associated, returns 0 and sets errno.
     Event_Tuple *find (ACE_HANDLE handle);
@@ -345,9 +346,9 @@ class ACE_Export ACE_Dev_Poll_Reactor : public ACE_Reactor_Impl
      * underlying handler array.
      */
     /// @{
-    /// Check the @a handle to make sure it's a valid @c ACE_HANDLE that
-    /// within the range of legal handles (i.e., greater than or equal to
-    /// zero and less than @c max_size_).
+
+    /// Return true and set errno if @a handle is outside the legal range
+    /// (zero through @c max_size_ minus one).
     bool invalid_handle (ACE_HANDLE handle) const;
 
     /// Check the handle to make sure it's a valid @c ACE_HANDLE that is
@@ -871,6 +872,7 @@ public:
    * manipulated with these methods.
    */
   /// @{
+
   /// GET/SET/ADD/CLR the dispatch mask "bit" bound with the
   /// event_handler and mask.
   /**
@@ -897,6 +899,7 @@ public:
    * These methods are unimplemented.
    */
   /// @{
+
   /// GET/SET/ADD/CLR the ready "bit" bound with the event_handler
   /// and mask.
   int ready_ops (ACE_Event_Handler *event_handler,
