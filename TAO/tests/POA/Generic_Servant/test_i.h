@@ -34,7 +34,7 @@ public:
 
   /// Sleep for some time.
   void sleep (CORBA::ULong timeout,
-              const char *operation);
+              char const *operation);
 
 protected:
   /// Our ORB.

@@ -28,7 +28,7 @@ test_i::oneway_method ()
 
 void
 test_i::sleep (CORBA::ULong timeout,
-               const char *method)
+               char const *method)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Thread %t starting %s with timeout %d\n",
