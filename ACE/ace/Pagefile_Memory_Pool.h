@@ -58,7 +58,7 @@ public:
   using OPTIONS = ACE_Pagefile_Memory_Pool_Options;
 
   /// Initialize the pool.
-  ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
+  ACE_Pagefile_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
                             const OPTIONS *options = nullptr);
 
   virtual ~ACE_Pagefile_Memory_Pool () = default;

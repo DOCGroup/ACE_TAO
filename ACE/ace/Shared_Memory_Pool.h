@@ -39,14 +39,14 @@ class ACE_Export ACE_Shared_Memory_Pool_Options
 public:
   /// Initialization method.
   ACE_Shared_Memory_Pool_Options (
-    const char *base_addr = ACE_DEFAULT_BASE_ADDR,
+    char const *base_addr = ACE_DEFAULT_BASE_ADDR,
     size_t max_segments = ACE_DEFAULT_MAX_SEGMENTS,
     size_t file_perms = ACE_DEFAULT_FILE_PERMS,
     ACE_OFF_T minimum_bytes = 0,
     size_t segment_size = ACE_DEFAULT_SEGMENT_SIZE);
 
   /// Base address of the memory-mapped backing store.
-  const char *base_addr_;
+  char const *base_addr_;
 
   /// Number of shared memory segments to allocate.
   size_t max_segments_;
@@ -80,7 +80,7 @@ public:
   using OPTIONS = ACE_Shared_Memory_Pool_Options;
 
   /// Initialize the pool.
-  ACE_Shared_Memory_Pool (const ACE_TCHAR *backing_store_name = nullptr,
+  ACE_Shared_Memory_Pool (ACE_TCHAR const *backing_store_name = nullptr,
                           const OPTIONS *options = nullptr);
 
   ~ACE_Shared_Memory_Pool () override = default;

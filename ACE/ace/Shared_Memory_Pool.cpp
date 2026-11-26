@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_ALLOC_HOOK_DEFINE(ACE_Shared_Memory_Pool)
 
 ACE_Shared_Memory_Pool_Options::ACE_Shared_Memory_Pool_Options (
-  const char *base_addr,
+  char const *base_addr,
   size_t max_segments,
   size_t file_perms,
   ACE_OFF_T minimum_bytes,
@@ -245,7 +245,7 @@ ACE_Shared_Memory_Pool::handle_signal (int, siginfo_t *siginfo, ucontext_t *)
 }
 
 ACE_Shared_Memory_Pool::ACE_Shared_Memory_Pool (
-  const ACE_TCHAR *backing_store_name,
+  ACE_TCHAR const *backing_store_name,
   const OPTIONS *options)
   : file_perms_ (options ? options->file_perms_ : ACE_DEFAULT_FILE_PERMS),
     max_segments_ (options ? options->max_segments_ : ACE_DEFAULT_MAX_SEGMENTS),

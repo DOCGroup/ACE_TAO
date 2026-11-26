@@ -38,7 +38,7 @@ ACE_Pagefile_Memory_Pool::release (int)
   return this->unmap ();
 }
 
-ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (const ACE_TCHAR *backing_store_name,
+ACE_Pagefile_Memory_Pool::ACE_Pagefile_Memory_Pool (ACE_TCHAR const *backing_store_name,
                                                     const OPTIONS *options)
   : object_handle_ (0),
     page_size_ (ACE_Pagefile_Memory_Pool::round_to_page_size (1))

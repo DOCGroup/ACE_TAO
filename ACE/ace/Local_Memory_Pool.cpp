@@ -16,7 +16,7 @@ ACE_Local_Memory_Pool::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (const ACE_TCHAR *,
+ACE_Local_Memory_Pool::ACE_Local_Memory_Pool (ACE_TCHAR const *,
                                               const OPTIONS *)
 {
   ACE_TRACE ("ACE_Local_Memory_Pool::ACE_Local_Memory_Pool");
