@@ -8,9 +8,7 @@
 #include <cstring>
 #include <utility>
 
-MIF_Sched_Param_Policy::MIF_Sched_Param_Policy ()
-{
-}
+MIF_Sched_Param_Policy::MIF_Sched_Param_Policy () = default;
 
 MIF_Sched_Param_Policy::MIF_Sched_Param_Policy (
     MIF_Sched_Param_Policy const &rhs

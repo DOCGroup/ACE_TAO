@@ -8,9 +8,7 @@
 #include <cstring>
 #include <utility>
 
-FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy ()
-{
-}
+FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy () = default;
 
 FP_Segment_Sched_Param_Policy::FP_Segment_Sched_Param_Policy (
     FP_Segment_Sched_Param_Policy const &rhs)

@@ -8,9 +8,7 @@
 #include <cstring>
 #include <utility>
 
-MUF_Sched_Param_Policy::MUF_Sched_Param_Policy ()
-{
-}
+MUF_Sched_Param_Policy::MUF_Sched_Param_Policy () = default;
 
 MUF_Sched_Param_Policy::MUF_Sched_Param_Policy (
     MUF_Sched_Param_Policy const &rhs
