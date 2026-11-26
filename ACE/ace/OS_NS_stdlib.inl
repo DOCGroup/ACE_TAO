@@ -42,13 +42,13 @@ ACE_OS::abort ()
 }
 
 ACE_INLINE int
-ACE_OS::atexit (ACE_EXIT_HOOK func, const char* name)
+ACE_OS::atexit (ACE_EXIT_HOOK func, char const* name)
 {
   return ACE_OS_Object_Manager::instance ()->at_exit (func, name);
 }
 
 ACE_INLINE int
-ACE_OS::atoi (const char *s)
+ACE_OS::atoi (char const *s)
 {
   return ::atoi (s);
 }
@@ -66,7 +66,7 @@ ACE_OS::atoi (const wchar_t *s)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE long
-ACE_OS::atol (const char *s)
+ACE_OS::atol (char const *s)
 {
   return ::atol (s);
 }
@@ -84,7 +84,7 @@ ACE_OS::atol (const wchar_t *s)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE double
-ACE_OS::atof (const char *s)
+ACE_OS::atof (char const *s)
 {
   return ::atof (s);
 }
@@ -104,7 +104,7 @@ ACE_OS::atof (const wchar_t *s)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE void *
-ACE_OS::atop (const char *s)
+ACE_OS::atop (char const *s)
 {
   ACE_TRACE ("ACE_OS::atop");
 #if defined (ACE_WIN64)
@@ -131,8 +131,8 @@ ACE_OS::atop (const wchar_t *s)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE void *
-ACE_OS::bsearch (const void *key,
-                 const void *base,
+ACE_OS::bsearch (void const *key,
+                 void const *base,
                  size_t nel,
                  size_t size,
                  ACE_COMPARE_FUNC compar)
@@ -150,7 +150,7 @@ ACE_OS::bsearch (const void *key,
 }
 
 ACE_INLINE char *
-ACE_OS::getenv (const char *symbol)
+ACE_OS::getenv (char const *symbol)
 {
   ACE_OS_TRACE ("ACE_OS::getenv");
 #if defined (ACE_LACKS_GETENV)
@@ -255,12 +255,12 @@ ACE_OS::mkstemp (wchar_t *s)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::putenv (const char *string)
+ACE_OS::putenv (char const *string)
 {
   ACE_OS_TRACE ("ACE_OS::putenv");
 #if defined (ACE_LACKS_PUTENV) && defined (ACE_HAS_SETENV)
   int result = 0;
-  const char *const sp = std::strchr (string, '=');
+  char const *const sp = std::strchr (string, '=');
   if (sp)
     {
       char *stmp = ACE_OS::strdup (string);
@@ -293,7 +293,7 @@ ACE_OS::putenv (const char *string)
 }
 
 ACE_INLINE int
-ACE_OS::setenv(const char *envname, const char *envval, int overwrite)
+ACE_OS::setenv(char const *envname, char const *envval, int overwrite)
 {
 #if defined (ACE_LACKS_SETENV)
   ACE_UNUSED_ARG (envname);
@@ -306,7 +306,7 @@ ACE_OS::setenv(const char *envname, const char *envval, int overwrite)
 }
 
 ACE_INLINE int
-ACE_OS::unsetenv(const char *name)
+ACE_OS::unsetenv(char const *name)
 {
 #if defined (ACE_LACKS_UNSETENV)
   ACE_UNUSED_ARG (name);
@@ -387,7 +387,7 @@ ACE_OS::rand_r (unsigned int *seed)
 
 #if !defined (ACE_LACKS_REALPATH)
 ACE_INLINE char *
-ACE_OS::realpath (const char *file_name,
+ACE_OS::realpath (char const *file_name,
                   char *resolved_name)
 {
 #    if defined (ACE_WIN32)
@@ -439,7 +439,7 @@ ACE_OS::srand (u_int seed)
 }
 
 ACE_INLINE double
-ACE_OS::strtod (const char *s, char **endptr)
+ACE_OS::strtod (char const *s, char **endptr)
 {
   return ::strtod (s, endptr);
 }
@@ -453,7 +453,7 @@ ACE_OS::strtod (const wchar_t *s, wchar_t **endptr)
 #endif /* ACE_HAS_WCHAR && !ACE_LACKS_WCSTOD */
 
 ACE_INLINE long
-ACE_OS::strtol (const char *s, char **ptr, int base)
+ACE_OS::strtol (char const *s, char **ptr, int base)
 {
 #if defined (ACE_LACKS_STRTOL)
   return ACE_OS::strtol_emulation (s, ptr, base);
@@ -475,7 +475,7 @@ ACE_OS::strtol (const wchar_t *s, wchar_t **ptr, int base)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE unsigned long
-ACE_OS::strtoul (const char *s, char **ptr, int base)
+ACE_OS::strtoul (char const *s, char **ptr, int base)
 {
 #if defined (ACE_LACKS_STRTOUL)
   return ACE_OS::strtoul_emulation (s, ptr, base);
@@ -497,7 +497,7 @@ ACE_OS::strtoul (const wchar_t *s, wchar_t **ptr, int base)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE ACE_INT64
-ACE_OS::strtoll (const char *s, char **ptr, int base)
+ACE_OS::strtoll (char const *s, char **ptr, int base)
 {
 #if defined (ACE_LACKS_STRTOLL)
   return ACE_OS::strtoll_emulation (s, ptr, base);
@@ -523,7 +523,7 @@ ACE_OS::strtoll (const wchar_t *s, wchar_t **ptr, int base)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE ACE_UINT64
-ACE_OS::strtoull (const char *s, char **ptr, int base)
+ACE_OS::strtoull (char const *s, char **ptr, int base)
 {
 #if defined (ACE_LACKS_STRTOULL)
   return ACE_OS::strtoull_emulation (s, ptr, base);
@@ -549,7 +549,7 @@ ACE_OS::strtoull (const wchar_t *s, wchar_t **ptr, int base)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::system (const ACE_TCHAR *s)
+ACE_OS::system (ACE_TCHAR const *s)
 {
   // ACE_OS_TRACE ("ACE_OS::system");
 #if defined (ACE_LACKS_SYSTEM)
@@ -562,7 +562,7 @@ ACE_OS::system (const ACE_TCHAR *s)
 #endif /* ACE_LACKS_SYSTEM */
 }
 
-ACE_INLINE const char*
+ACE_INLINE char const*
 ACE_OS::getprogname ()
 {
 #if defined (ACE_HAS_GETPROGNAME)
@@ -573,7 +573,7 @@ ACE_OS::getprogname ()
 }
 
 ACE_INLINE void
-ACE_OS::setprogname (const char* name)
+ACE_OS::setprogname (char const* name)
 {
 #if defined (ACE_HAS_SETPROGNAME)
   ::setprogname (name);

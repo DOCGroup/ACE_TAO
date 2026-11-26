@@ -107,7 +107,7 @@ ACE_OS::getenvstrings ()
 // allocated with <ACE_OS::malloc> and must be freed by
 // <ACE_OS::free>.
 ACE_TCHAR *
-ACE_OS::strenvdup (const ACE_TCHAR *str)
+ACE_OS::strenvdup (ACE_TCHAR const *str)
 {
   ACE_TCHAR const * const start = ACE_OS::strchr (str, ACE_TEXT ('$'));
   if (start != nullptr)
@@ -397,7 +397,7 @@ ACE_OS::realloc (void *ptr, size_t nbytes)
 
 #if defined (ACE_LACKS_REALPATH)
 char *
-ACE_OS::realpath (const char *file_name,
+ACE_OS::realpath (char const *file_name,
                   char *resolved_name)
 {
   ACE_OS_TRACE ("ACE_OS::realpath");
@@ -598,9 +598,9 @@ ACE_OS::realpath (const char *file_name,
 
 #if defined (ACE_LACKS_STRTOL)
 long
-ACE_OS::strtol_emulation (const char *nptr, char **endptr, int base)
+ACE_OS::strtol_emulation (char const *nptr, char **endptr, int base)
 {
-  const char *s = nptr;
+  char const *s = nptr;
   unsigned long acc;
   int c;
   unsigned long cutoff;
@@ -794,11 +794,11 @@ ACE_OS::wcstol_emulation (const wchar_t *nptr,
 
 #if defined (ACE_LACKS_STRTOUL)
 unsigned long
-ACE_OS::strtoul_emulation (const char *nptr,
+ACE_OS::strtoul_emulation (char const *nptr,
                            char **endptr,
                            int base)
 {
-  const char *s = nptr;
+  char const *s = nptr;
   unsigned long acc;
   int c;
   unsigned long cutoff;
@@ -968,11 +968,11 @@ ACE_OS::wcstoul_emulation (const wchar_t *nptr,
 
 #if defined (ACE_LACKS_STRTOLL)
 ACE_INT64
-ACE_OS::strtoll_emulation (const char *nptr,
+ACE_OS::strtoll_emulation (char const *nptr,
          char **endptr,
          int base)
 {
-  const char *s = nptr;
+  char const *s = nptr;
   ACE_UINT64 acc;
   int c;
   ACE_UINT64 cutoff;
@@ -1152,11 +1152,11 @@ ACE_OS::wcstoll_emulation (const wchar_t *nptr,
 
 #if defined (ACE_LACKS_STRTOULL)
 ACE_UINT64
-ACE_OS::strtoull_emulation (const char *nptr,
+ACE_OS::strtoull_emulation (char const *nptr,
                             char **endptr,
                             int base)
 {
-  const char *s = nptr;
+  char const *s = nptr;
   ACE_UINT64 acc;
   int c;
   ACE_UINT64 cutoff;
@@ -1447,12 +1447,12 @@ char * __progname = const_cast<char *> ("");
 #   endif
 // __progname definition is provided in case the INTEGRITY simulator is used.
 # else
-static const char *__progname = "";
+static char const *__progname = "";
 # endif
 #endif /* !ACE_HAS_GETPROGNAME && !ACE_HAS_SETPROGNAME */
 
 #if !defined (ACE_HAS_GETPROGNAME)
-const char*
+char const*
 ACE_OS::getprogname_emulation ()
 {
     return __progname;
@@ -1461,9 +1461,9 @@ ACE_OS::getprogname_emulation ()
 
 #if !defined (ACE_HAS_SETPROGNAME)
 void
-ACE_OS::setprogname_emulation (const char* progname)
+ACE_OS::setprogname_emulation (char const* progname)
 {
-  const char *p = std::strrchr (progname, '/');
+  char const *p = std::strrchr (progname, '/');
   if (p != nullptr)
     {
 #  if defined (ACE_INTEGRITY)
