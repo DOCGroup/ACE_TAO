@@ -12,12 +12,12 @@ TAO_EC_RTCORBA_Dispatching::
     , priority_mapping_ (mapping)
     , current_ (RTCORBA::Current::_duplicate (current))
 {
-  CORBA::ULong number_lanes = this->lanes_.length ();
-  TAO_EC_Dispatching_Task *tasks {};
-  ACE_NEW (tasks, TAO_EC_Dispatching_Task[number_lanes]);
-  this->tasks_.reset (tasks);
+  CORBA::ULong const number_lanes = this->lanes_.length ();
+  this->tasks_ = std::make_unique<TAO_EC_Dispatching_Task[]> (number_lanes);
   for (CORBA::ULong i {}; i != this->lanes_.length (); ++i)
-    this->tasks_[i].thr_mgr (std::addressof (this->thread_manager_));
+    {
+      this->tasks_[i].thr_mgr (std::addressof (this->thread_manager_));
+    }
 }
 
 TAO_EC_RTCORBA_Dispatching::~TAO_EC_RTCORBA_Dispatching () = default;
