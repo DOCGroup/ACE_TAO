@@ -35,7 +35,7 @@ private:
   /// Creates the requested handler type.
   int create_handler (ACE_SSL_SOCK_Acceptor &acceptor,
                       Handler *(*handler_factory) (ACE_SSL_SOCK_Stream *),
-                      const char *handler_type);
+                      char const *handler_type);
 
   /// Creates a twoway handler.
   static Handler *make_twoway_handler (ACE_SSL_SOCK_Stream *);
@@ -490,7 +490,7 @@ int
 Handler_Factory::create_handler (
   ACE_SSL_SOCK_Acceptor &acceptor,
   Handler * (*handler_factory) (ACE_SSL_SOCK_Stream* ),
-  const char *handler_type)
+  char const *handler_type)
 {
   ACE_SSL_SOCK_Stream* new_stream;
 

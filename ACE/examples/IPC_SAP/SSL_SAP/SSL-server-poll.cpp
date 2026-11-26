@@ -160,7 +160,7 @@ handle_connections (ACE_SSL_SOCK_Acceptor &peer_acceptor,
             }
           else
             {
-              const char *s = client.get_host_name ();
+              char const *s = client.get_host_name ();
 
               ACE_ASSERT (s != nullptr);
               ACE_DEBUG ((LM_DEBUG,

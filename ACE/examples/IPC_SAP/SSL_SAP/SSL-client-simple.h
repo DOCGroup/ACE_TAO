@@ -19,16 +19,16 @@ public:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Returns how long to sleep to implement the proper transmission rates.
-  const ACE_Time_Value &sleep_time () const;
+  ACE_Time_Value const &sleep_time () const;
 
   /// Returns the server port.
   u_short port () const;
 
   /// Returns the server host.
-  const ACE_TCHAR *host () const;
+  ACE_TCHAR const *host () const;
 
   /// Returns the string that shuts down the client or server.
-  const char *quit_string () const;
+  char const *quit_string () const;
 
   /// Reads from the appropriate location.
   ssize_t read (void *buf, size_t len, size_t &iterations);
@@ -37,7 +37,7 @@ public:
   size_t message_len () const;
 
   /// Returns a pointer to the message.
-  const void *message_buf () const;
+  void const *message_buf () const;
 
   /// Runs the test.
   void run ();
@@ -57,7 +57,7 @@ private:
   void oneway_client_test ();
 
   /// Host of the server.
-  const ACE_TCHAR *host_;
+  ACE_TCHAR const *host_;
 
   /// Port of the server.
   u_short port_;

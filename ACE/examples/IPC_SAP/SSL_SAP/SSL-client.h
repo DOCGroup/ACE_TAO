@@ -22,19 +22,19 @@ public:
 
   /// Return the amount of time to sleep in order to implement the
   /// proper transmission rates.
-  const ACE_Time_Value &sleep_time () const;
+  ACE_Time_Value const &sleep_time () const;
 
   /// Port of the server.
   u_short port () const;
 
   /// Host of the server.
-  const ACE_TCHAR *host () const;
+  ACE_TCHAR const *host () const;
 
   /// Number of threads.
   size_t threads () const;
 
   /// String that shuts down the client/server.
-  const char *quit_string () const;
+  char const *quit_string () const;
 
   /// Read from the appropriate location.
   ssize_t read (void *buf, size_t len, size_t &iterations);
@@ -43,7 +43,7 @@ public:
   size_t message_len () const;
 
   /// Returns a pointer to the message.
-  const void *message_buf () const;
+  void const *message_buf () const;
 
   /// Returns a pointer to the entry point into the thread that runs
   /// the client test function.
@@ -66,7 +66,7 @@ private:
   static void *oneway_client_test (void *);
 
   /// Host of the server.
-  const ACE_TCHAR *host_;
+  ACE_TCHAR const *host_;
 
   /// Port of the server.
   u_short port_;

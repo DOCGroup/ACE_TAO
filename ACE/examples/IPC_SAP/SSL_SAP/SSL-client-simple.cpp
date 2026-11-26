@@ -74,7 +74,7 @@ Options::message_len () const
   return this->message_len_;
 }
 
-const void *
+void const *
 Options::message_buf () const
 {
   return this->message_buf_;
@@ -155,19 +155,19 @@ Options::port () const
   return this->port_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Options::host () const
 {
   return this->host_;
 }
 
-const char *
+char const *
 Options::quit_string () const
 {
   return this->quit_string_;
 }
 
-const ACE_Time_Value &
+ACE_Time_Value const &
 Options::sleep_time () const
 {
   return this->sleep_time_;
