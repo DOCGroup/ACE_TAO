@@ -56,7 +56,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n)
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void *
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n,
-                                                          const std::nothrow_t&) noexcept
+                                                          std::nothrow_t const&) noexcept
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new(nothrow)");
 
@@ -83,7 +83,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator new (size_t n,
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete (void *p,
-                                         const std::nothrow_t&) noexcept
+                                         std::nothrow_t const&) noexcept
 {
   ACE_TRACE("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::operator delete(nothrow)");
   ::delete [] static_cast <char *> (p);
@@ -309,8 +309,8 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::handle_close (ACE_HANDLE,
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> int
-ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::handle_timeout (const ACE_Time_Value &,
-                                                         const void *)
+ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::handle_timeout (ACE_Time_Value const &,
+                                                         void const *)
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::handle_timeout");
   return this->handle_close ();
@@ -383,7 +383,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycle_state () const
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> void
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycler (ACE_Connection_Recycling_Strategy *recycler,
-                                                   const void *recycling_act)
+                                                   void const *recycling_act)
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycler");
   this->recycler_ = recycler;
@@ -397,7 +397,7 @@ ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycler () const
   return this->recycler_;
 }
 
-template <typename PEER_STREAM, typename SYNCH_TRAITS> const void *
+template <typename PEER_STREAM, typename SYNCH_TRAITS> void const *
 ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycling_act () const
 {
   ACE_TRACE ("ACE_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::recycling_act");
@@ -539,8 +539,8 @@ ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::dump () const
 }
 
 template <typename PEER_STREAM, typename SYNCH_TRAITS> int
-ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::handle_timeout (const ACE_Time_Value &,
-                                                                     const void *)
+ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::handle_timeout (ACE_Time_Value const &,
+                                                                     void const *)
 {
   ACE_TRACE ("ACE_Buffered_Svc_Handler<PEER_STREAM, SYNCH_TRAITS>::handle_timeout");
   return 0;

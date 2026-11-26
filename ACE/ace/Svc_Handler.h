@@ -149,8 +149,8 @@ public:
 
   /// Default behavior when timeouts occur is to close down the
   /// @c Svc_Handler by calling @c handle_close.
-  int handle_timeout (const ACE_Time_Value &time,
-                      const void *) override;
+  int handle_timeout (ACE_Time_Value const &time,
+                      void const *) override;
 
   /// Get the underlying handle associated with the @c peer_.
   ACE_HANDLE get_handle () const override;
@@ -173,8 +173,8 @@ public:
   /// @c Svc_Handler is allocated dynamically, which allows it to clean
   /// itself up correctly whether or not it's allocated statically or
   /// dynamically.
-  void *operator new (size_t n, const std::nothrow_t&) noexcept;
-  void operator delete (void *p, const std::nothrow_t&) noexcept;
+  void *operator new (size_t n, std::nothrow_t const&) noexcept;
+  void operator delete (void *p, std::nothrow_t const&) noexcept;
 
   /// This operator permits "placement new" on a per-object basis.
   void * operator new (size_t n, void *p);
@@ -218,13 +218,13 @@ public:
   /// Set the recycler and the @a recycling_act that is used during
   /// purging and caching.
   virtual void recycler (ACE_Connection_Recycling_Strategy *recycler,
-                         const void *recycling_act);
+                         void const *recycling_act);
 
   /// Get the recycler.
   virtual ACE_Connection_Recycling_Strategy *recycler () const;
 
   /// Get the recycling act.
-  virtual const void *recycling_act () const;
+  virtual void const *recycling_act () const;
 
   /**
    * Upcall made by the recycler when it is about to recycle the
@@ -251,7 +251,7 @@ protected:
 
   /// Asynchronous Completion Token (ACT) to be used to when talking to
   /// the recycler.
-  const void *recycling_act_ {};
+  void const *recycling_act_ {};
 };
 
 /**
@@ -307,8 +307,8 @@ public:
 
   /// This method is not currently implemented -- this is where the
   /// integration with the @c Reactor would occur.
-  int handle_timeout (const ACE_Time_Value &time,
-                      const void *) override;
+  int handle_timeout (ACE_Time_Value const &time,
+                      void const *) override;
 
   /// Dump the state of an object.
   void dump () const;
