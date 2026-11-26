@@ -32,7 +32,7 @@
 
 using TOKEN_INVARIANTS = ACE_Token_Invariant_Manager;
 
-static const ACE_TCHAR *server_host = ACE_DEFAULT_SERVER_HOST;
+static ACE_TCHAR const *server_host = ACE_DEFAULT_SERVER_HOST;
 static constexpr int server_port = 23456;
 
 // Synchronize starts of threads, so that they all start before one
@@ -46,7 +46,7 @@ struct Test_Params
 public:
   ACE_Token_Proxy *token1_;
   ACE_Token_Proxy *token2_;
-  const ACE_TCHAR *collection_name_;
+  ACE_TCHAR const *collection_name_;
 };
 
 static ACE_THR_FUNC_RETURN
@@ -226,7 +226,7 @@ run_main (int, ACE_TCHAR *[])
 
   run_test (A.get (), B.get (), R.get (), W.get ());
 
-  const ACE_TCHAR *token_exe =
+  ACE_TCHAR const *token_exe =
     ACE_TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
     ACE_TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
     ACE_TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR
@@ -241,7 +241,7 @@ run_main (int, ACE_TCHAR *[])
     }
   else
     {
-      const ACE_TCHAR *cl =
+      ACE_TCHAR const *cl =
         ACE_TEXT ("..") ACE_DIRECTORY_SEPARATOR_STR
         ACE_TEXT ("netsvcs") ACE_DIRECTORY_SEPARATOR_STR
         ACE_TEXT ("servers") ACE_DIRECTORY_SEPARATOR_STR

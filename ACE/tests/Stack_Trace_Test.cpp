@@ -22,10 +22,10 @@ struct SomeException
 {
   static const ssize_t SKIP = 1; //@TODO: #ifdef this for MACOSX which needs 2
   SomeException () : where_(SKIP), explanation_ ("") { }
-  SomeException (const char *explanation)
+  SomeException (char const *explanation)
     : where_(SKIP), explanation_(explanation) { }
   ACE_Stack_Trace where_;
-  const char *explanation_;
+  char const *explanation_;
 };
 
 void

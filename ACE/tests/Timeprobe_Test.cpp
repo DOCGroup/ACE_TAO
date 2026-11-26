@@ -20,7 +20,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *events_descriptions_0[] =
+static char const *events_descriptions_0[] =
 {
   "Event Zero",
   "Event One",
@@ -48,7 +48,7 @@ enum
   EVENT_NINE
 };
 
-static const char *events_descriptions_1[] =
+static char const *events_descriptions_1[] =
 {
   "Work start",
   "Work end"
