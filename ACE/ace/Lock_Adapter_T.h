@@ -56,6 +56,7 @@ public:
 
   /// @name Lock accessors
   /// @{
+
   /// Block the thread until the lock is acquired.
   int acquire () override;
 

@@ -32,12 +32,13 @@ class ACE_Export ACE_LSOCK_Stream : public ACE_SOCK_Stream, public ACE_LSOCK
 public:
   /// @name Send and receive methods
   /// @{
-  /// Send iovecs via @c writev().
+
+  /// Send iovecs and a handle.
   ssize_t send_msg (const iovec iov[],
                     size_t n,
                     ACE_HANDLE handle);
 
-  /// Send iovecs via @c writev().
+  /// Receive iovecs and a handle.
   ssize_t recv_msg (iovec iov[],
                     size_t n,
                     ACE_HANDLE &handle);
