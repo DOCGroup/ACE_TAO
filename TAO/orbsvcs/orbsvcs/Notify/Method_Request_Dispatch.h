@@ -46,7 +46,7 @@ public:
 
   /// Construct from a delivery rquest
   TAO_Notify_Method_Request_Dispatch (
-    const TAO_Notify::Delivery_Request_Ptr & delivery,
+    TAO_Notify::Delivery_Request_Ptr const & delivery,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 
@@ -103,7 +103,7 @@ public:
   /// Constuct construct from Delivery Request
   /// should ONLY be used by unmarshall
   TAO_Notify_Method_Request_Dispatch_Queueable (
-    const TAO_Notify::Delivery_Request_Ptr & request,
+    TAO_Notify::Delivery_Request_Ptr const & request,
     TAO_Notify_ProxySupplier* proxy_supplier,
     bool filtering);
 

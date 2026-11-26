@@ -34,7 +34,7 @@ public:
   using const_iterator = Storage::const_iterator;
 
   TAO_Notify_EventTypeSeq ();
-  explicit TAO_Notify_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq);
+  explicit TAO_Notify_EventTypeSeq (CosNotification::EventTypeSeq const& event_type_seq);
   TAO_Notify_EventTypeSeq (const TAO_Notify_EventTypeSeq & rhs);
   TAO_Notify_EventTypeSeq & operator = (const TAO_Notify_EventTypeSeq & rhs);
 
@@ -45,10 +45,10 @@ public:
   void intersection (const TAO_Notify_EventTypeSeq& rhs, const TAO_Notify_EventTypeSeq& lhs);
 
   /// insert_seq the contents of @a event_type_seq into this object.
-  void insert_seq (const CosNotification::EventTypeSeq& event_type_seq);
+  void insert_seq (CosNotification::EventTypeSeq const& event_type_seq);
 
   /// remove_seq the contents of @a event_type_seq from this object.
-  void remove_seq (const CosNotification::EventTypeSeq& event_type_seq);
+  void remove_seq (CosNotification::EventTypeSeq const& event_type_seq);
 
   /// insert_seq the contents of @a event_type_seq into this object.
   void insert_seq (const TAO_Notify_EventTypeSeq& event_type_seq);

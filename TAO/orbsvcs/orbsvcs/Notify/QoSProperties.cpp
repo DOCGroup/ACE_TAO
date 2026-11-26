@@ -127,7 +127,7 @@ TAO_Notify_QoSProperties::init ()
 }
 
 int
-TAO_Notify_QoSProperties::init (const CosNotification::PropertySeq& prop_seq, CosNotification::PropertyErrorSeq& err_seq)
+TAO_Notify_QoSProperties::init (CosNotification::PropertySeq const& prop_seq, CosNotification::PropertyErrorSeq& err_seq)
 {
   int err_index = -1;
 

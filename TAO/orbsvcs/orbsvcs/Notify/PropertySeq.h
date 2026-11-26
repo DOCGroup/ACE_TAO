@@ -41,7 +41,7 @@ public:
   TAO_Notify_PropertySeq &operator= (TAO_Notify_PropertySeq &&) = delete;
 
   /// Return 0 on success, -1 on error.
-  int init (const CosNotification::PropertySeq& prop_seq);
+  int init (CosNotification::PropertySeq const& prop_seq);
 
   /// Find the @a value for property @a name. Returns 0 on success.
   int find (char const *name, CosNotification::PropertyValue& value) const;

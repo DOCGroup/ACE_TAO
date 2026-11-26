@@ -57,7 +57,7 @@ public:
   int close (u_long flags) override;
 
   /// Activate the threadpool
-  void init (const NotifyExt::ThreadPoolParams& tp_params, const TAO_Notify_AdminProperties::Ptr& admin_properties);
+  void init (NotifyExt::ThreadPoolParams const& tp_params, const TAO_Notify_AdminProperties::Ptr& admin_properties);
 
   /// Queue the request
   void execute (TAO_Notify_Method_Request& method_request) override;

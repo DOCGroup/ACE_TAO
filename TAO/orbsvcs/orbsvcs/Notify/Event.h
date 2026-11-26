@@ -57,7 +57,7 @@ public:
   static void translate (CORBA::Any const& any, CosNotification::StructuredEvent& notification);
 
   /// Translate Structured to Any
-  static void translate (const CosNotification::StructuredEvent& notification, CORBA::Any& any);
+  static void translate (CosNotification::StructuredEvent const& notification, CORBA::Any& any);
 
   /// Get the event type.
   virtual const TAO_Notify_EventType& type () const = 0;

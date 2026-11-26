@@ -81,13 +81,13 @@ using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Consumer>;
   virtual void push (CORBA::Any const& event) = 0;
 
   /// Push @a event to this consumer.
-  virtual void push (const CosNotification::StructuredEvent& event) = 0;
+  virtual void push (CosNotification::StructuredEvent const& event) = 0;
 
   /// Push a batch of events to this consumer.
-  virtual void push (const CosNotification::EventBatch& event) = 0;
+  virtual void push (CosNotification::EventBatch const& event) = 0;
 
   /// Dispatch the batch of events to the attached consumer
-  DispatchStatus dispatch_batch (const CosNotification::EventBatch& batch);
+  DispatchStatus dispatch_batch (CosNotification::EventBatch const& batch);
 
   /// Dispatch the pending events
   void dispatch_pending ();
@@ -159,8 +159,8 @@ protected:
     TAO_Notify_Method_Request_Event * request);
 
   // Dispatch updates
-  void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                           const CosNotification::EventTypeSeq& removed) override;
+  void dispatch_updates_i (CosNotification::EventTypeSeq const& added,
+                           CosNotification::EventTypeSeq const& removed) override;
 
   /// Get the shared Proxy Lock
   TAO_SYNCH_MUTEX* proxy_lock ();

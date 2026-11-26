@@ -464,7 +464,7 @@ TAO_Notify_ETCL_Filter::match (CORBA::Any const & /*filterable_data */)
 
 CORBA::Boolean
 TAO_Notify_ETCL_Filter::match_structured (
-  const CosNotification::StructuredEvent & filterable_data)
+  CosNotification::StructuredEvent const & filterable_data)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -497,7 +497,7 @@ TAO_Notify_ETCL_Filter::match_structured (
 
 CORBA::Boolean
 TAO_Notify_ETCL_Filter::match_typed (
-                            const CosNotification::PropertySeq & /* filterable_data */)
+                            CosNotification::PropertySeq const & /* filterable_data */)
 {
   throw CORBA::NO_IMPLEMENT ();
 }

@@ -43,7 +43,7 @@ class TAO_Notify_Proxy_Builder_T
 public:
   PROXY_PTR
   build (PARENT *parent, CosNotifyChannelAdmin::ProxyID_out proxy_id
-         , const CosNotification::QoSProperties & initial_qos)
+         , CosNotification::QoSProperties const & initial_qos)
   {
     PROXY_VAR proxy_ret;
 
@@ -190,8 +190,8 @@ TAO_Notify_Builder::build_event_channel_factory (PortableServer::POA_ptr poa,
 CosNotifyChannelAdmin::EventChannel_ptr
 TAO_Notify_Builder::build_event_channel (
   TAO_Notify_EventChannelFactory* ecf,
-  const CosNotification::QoSProperties & initial_qos,
-  const CosNotification::AdminProperties & initial_admin,
+  CosNotification::QoSProperties const & initial_qos,
+  CosNotification::AdminProperties const & initial_admin,
   CosNotifyChannelAdmin::ChannelID_out id,
   char const *ec_name)
 {
@@ -332,7 +332,7 @@ CosNotifyChannelAdmin::ProxyConsumer_ptr
 TAO_Notify_Builder::build_proxy(TAO_Notify_SupplierAdmin* sa
                             , CosNotifyChannelAdmin::ClientType ctype
                             , CosNotifyChannelAdmin::ProxyID_out proxy_id
-                            , const CosNotification::QoSProperties & initial_qos)
+                            , CosNotification::QoSProperties const & initial_qos)
 {
   switch (ctype)
     {
@@ -366,7 +366,7 @@ CosNotifyChannelAdmin::ProxySupplier_ptr
 TAO_Notify_Builder::build_proxy(TAO_Notify_ConsumerAdmin* ca
                             , CosNotifyChannelAdmin::ClientType ctype
                             , CosNotifyChannelAdmin::ProxyID_out proxy_id
-                            , const CosNotification::QoSProperties & initial_qos)
+                            , CosNotification::QoSProperties const & initial_qos)
 {
   switch (ctype)
     {
@@ -501,7 +501,7 @@ TAO_Notify_Builder::apply_reactive_concurrency (TAO_Notify_Object& object)
 }
 
 void
-TAO_Notify_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object, const NotifyExt::ThreadPoolParams& tp_params)
+TAO_Notify_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object, NotifyExt::ThreadPoolParams const& tp_params)
 {
   TAO_Notify_ThreadPool_Task* worker_task {};
 
@@ -515,7 +515,7 @@ TAO_Notify_Builder::apply_thread_pool_concurrency (TAO_Notify_Object& object, co
 }
 
 void
-TAO_Notify_Builder::apply_lane_concurrency (TAO_Notify_Object& /*object*/, const NotifyExt::ThreadPoolLanesParams& /*tpl_params*/)
+TAO_Notify_Builder::apply_lane_concurrency (TAO_Notify_Object& /*object*/, NotifyExt::ThreadPoolLanesParams const& /*tpl_params*/)
 {
   // No lane support
   throw CORBA::NO_IMPLEMENT ();

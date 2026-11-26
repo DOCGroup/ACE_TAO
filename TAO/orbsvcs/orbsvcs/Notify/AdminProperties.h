@@ -47,7 +47,7 @@ public:
   TAO_Notify_AdminProperties &operator= (TAO_Notify_AdminProperties &&) = delete;
 
   /// Init
-  int init (const CosNotification::PropertySeq& prop_seq);
+  int init (CosNotification::PropertySeq const& prop_seq);
 
   /// finish initialization after values are set by topology load
   void init ();

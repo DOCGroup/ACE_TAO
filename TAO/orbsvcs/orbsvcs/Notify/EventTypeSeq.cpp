@@ -17,7 +17,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq ()
 = default;
 
-TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (const CosNotification::EventTypeSeq& event_type_seq)
+TAO_Notify_EventTypeSeq::TAO_Notify_EventTypeSeq (CosNotification::EventTypeSeq const& event_type_seq)
 {
   this->insert_seq (event_type_seq);
 }
@@ -146,7 +146,7 @@ TAO_Notify_EventTypeSeq::populate_no_special (CosNotification::EventTypeSeq& eve
 }
 
 void
-TAO_Notify_EventTypeSeq::insert_seq (const CosNotification::EventTypeSeq& event_type_seq)
+TAO_Notify_EventTypeSeq::insert_seq (CosNotification::EventTypeSeq const& event_type_seq)
 {
   TAO_Notify_EventType event_type;
 
@@ -158,7 +158,7 @@ TAO_Notify_EventTypeSeq::insert_seq (const CosNotification::EventTypeSeq& event_
 }
 
 void
-TAO_Notify_EventTypeSeq::remove_seq (const CosNotification::EventTypeSeq& event_type_seq)
+TAO_Notify_EventTypeSeq::remove_seq (CosNotification::EventTypeSeq const& event_type_seq)
 {
   TAO_Notify_EventType event_type;
 

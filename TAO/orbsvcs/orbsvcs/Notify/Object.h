@@ -71,7 +71,7 @@ public:
   CORBA::Object_ptr ref ();
 
   /// Set the QoS Properties.
-  virtual void set_qos (const CosNotification::QoSProperties & qos);
+  virtual void set_qos (CosNotification::QoSProperties const & qos);
 
   /// Get the QoS Properties.
   CosNotification::QoSProperties* get_qos ();
@@ -91,7 +91,7 @@ public:
 
   /// Load our attributes. Each derived type should call the superclass
   /// load first before loading its own attributes.
-  virtual void load_attrs(const TAO_Notify::NVPList& attrs);
+  virtual void load_attrs(TAO_Notify::NVPList const& attrs);
 
   /// Allow access to the underlying worker task.
   TAO_Notify_Worker_Task* get_worker_task ();

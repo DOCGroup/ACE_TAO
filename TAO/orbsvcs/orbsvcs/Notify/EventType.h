@@ -33,7 +33,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_Notify::Topology_
 public:
   TAO_Notify_EventType ();
   TAO_Notify_EventType (char const *domain_name, char const *type_name);
-  explicit TAO_Notify_EventType (const CosNotification::EventType& event_type);
+  explicit TAO_Notify_EventType (CosNotification::EventType const& event_type);
   TAO_Notify_EventType (const TAO_Notify_EventType& event_type);
 
   virtual ~TAO_Notify_EventType ();
@@ -42,7 +42,7 @@ public:
   u_long hash () const;
 
   /// Assignment from CosNotification::EventType
-  TAO_Notify_EventType& operator=(const CosNotification::EventType& event_type);
+  TAO_Notify_EventType& operator=(CosNotification::EventType const& event_type);
 
   TAO_Notify_EventType& operator=(const TAO_Notify_EventType& event_type);
 
@@ -61,13 +61,13 @@ public:
   CORBA::Boolean is_special () const;
 
   /// Get the type underneath us.
-  const CosNotification::EventType& native () const;
+  CosNotification::EventType const& native () const;
 
   /// Helper to print contents.
   void dump () const;
 
   /// Initialize from an NVPList, return false on failure
-  bool init(const TAO_Notify::NVPList& attrs);
+  bool init(TAO_Notify::NVPList const& attrs);
 
   // TAO_Notify::Topology_Object
 

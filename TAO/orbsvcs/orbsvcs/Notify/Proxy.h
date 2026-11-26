@@ -88,8 +88,8 @@ public:
       const TAO_Notify_EventTypeSeq& types);
 
   /// Notification of subscriptions/offers set at the admin.
-  virtual void admin_types_changed (const CosNotification::EventTypeSeq & added,
-                                    const CosNotification::EventTypeSeq & removed) = 0;
+  virtual void admin_types_changed (CosNotification::EventTypeSeq const & added,
+                                    CosNotification::EventTypeSeq const & removed) = 0;
 
   /// Override, TAO_Notify_Object::qos_changed
   void qos_changed (TAO_Notify_QoSProperties const &qos_properties) override;

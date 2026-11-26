@@ -253,7 +253,7 @@ TAO_Notify_Object::set_poa (TAO_Notify_POA_Helper* poa)
 }
 
 void
-TAO_Notify_Object::set_qos (const CosNotification::QoSProperties & qos)
+TAO_Notify_Object::set_qos (CosNotification::QoSProperties const & qos)
 {
   CosNotification::PropertyErrorSeq err_seq;
 
@@ -363,7 +363,7 @@ TAO_Notify_Object::save_attrs (TAO_Notify::NVPList& attrs)
 }
 
 void
-TAO_Notify_Object::load_attrs(const TAO_Notify::NVPList& attrs)
+TAO_Notify_Object::load_attrs(TAO_Notify::NVPList const& attrs)
 {
   attrs.load (this->qos_properties_.event_reliability ());
   attrs.load (this->qos_properties_.connection_reliability ());

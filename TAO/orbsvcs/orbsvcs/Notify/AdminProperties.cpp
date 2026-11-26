@@ -22,7 +22,7 @@ TAO_Notify_AdminProperties::TAO_Notify_AdminProperties ()
 TAO_Notify_AdminProperties::~TAO_Notify_AdminProperties () = default;
 
 int
-TAO_Notify_AdminProperties::init (const CosNotification::PropertySeq& prop_seq)
+TAO_Notify_AdminProperties::init (CosNotification::PropertySeq const& prop_seq)
 {
   if (TAO_Notify_PropertySeq::init (prop_seq) != 0)
   {

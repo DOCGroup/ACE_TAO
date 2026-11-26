@@ -46,7 +46,7 @@ TAO_Notify_EventType::TAO_Notify_EventType (char const *domain_name,
 }
 
 TAO_Notify_EventType::TAO_Notify_EventType (
-    const CosNotification::EventType& event_type)
+    CosNotification::EventType const& event_type)
 {
   this->init_i (event_type.domain_name.in (), event_type.type_name.in ());
 }
@@ -75,7 +75,7 @@ TAO_Notify_EventType::recompute_hash ()
 }
 
 TAO_Notify_EventType&
-TAO_Notify_EventType::operator=(const CosNotification::EventType& event_type)
+TAO_Notify_EventType::operator=(CosNotification::EventType const& event_type)
 {
   this->init_i (event_type.domain_name.in (),event_type.type_name.in ());
 
@@ -131,7 +131,7 @@ TAO_Notify_EventType::dump () const
 }
 
 /// Initialize from an NVPList, return false on failure
-bool TAO_Notify_EventType::init(const TAO_Notify::NVPList& attrs)
+bool TAO_Notify_EventType::init(TAO_Notify::NVPList const& attrs)
 {
   bool result {};
 

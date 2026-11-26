@@ -31,7 +31,7 @@ TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
 
 // Construct from a delivery rquest
 TAO_Notify_Method_Request_Dispatch::TAO_Notify_Method_Request_Dispatch (
-      const TAO_Notify::Delivery_Request_Ptr & delivery,
+      TAO_Notify::Delivery_Request_Ptr const & delivery,
       TAO_Notify_ProxySupplier* proxy_supplier,
       bool filtering)
   : TAO_Notify_Method_Request_Event (delivery)
@@ -203,7 +203,7 @@ TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch
   /// Constuct construct from Delivery Request
   /// should ONLY be used by unmarshall
 TAO_Notify_Method_Request_Dispatch_Queueable::TAO_Notify_Method_Request_Dispatch_Queueable (
-        const TAO_Notify::Delivery_Request_Ptr & request,
+        TAO_Notify::Delivery_Request_Ptr const & request,
         TAO_Notify_ProxySupplier* proxy_supplier,
         bool filtering)
   : TAO_Notify_Method_Request_Dispatch (

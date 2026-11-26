@@ -8,7 +8,7 @@ TAO_Notify_EventType::hash () const
   return this->hash_value_;
 }
 
-ACE_INLINE const CosNotification::EventType&
+ACE_INLINE CosNotification::EventType const&
 TAO_Notify_EventType::native () const
 {
   return event_type_;

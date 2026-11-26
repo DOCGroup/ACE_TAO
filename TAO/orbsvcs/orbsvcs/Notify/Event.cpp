@@ -41,7 +41,7 @@ TAO_Notify_Event::translate (CORBA::Any const& any, CosNotification::StructuredE
 }
 
 void
-TAO_Notify_Event::translate (const CosNotification::StructuredEvent& notification, CORBA::Any& any)
+TAO_Notify_Event::translate (CosNotification::StructuredEvent const& notification, CORBA::Any& any)
 {
   any <<= notification;   // is the typecode set by this operation or do we need to set it explicity.
 }

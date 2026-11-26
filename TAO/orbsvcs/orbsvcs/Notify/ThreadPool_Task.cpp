@@ -36,7 +36,7 @@ TAO_Notify_ThreadPool_Task::buffering_strategy ()
 }
 
 void
-TAO_Notify_ThreadPool_Task::init (const NotifyExt::ThreadPoolParams& tp_params,
+TAO_Notify_ThreadPool_Task::init (NotifyExt::ThreadPoolParams const& tp_params,
                                   const TAO_Notify_AdminProperties::Ptr& admin_properties)
 {
   ACE_ASSERT (this->timer_.get() == nullptr);

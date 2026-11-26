@@ -49,8 +49,8 @@ TAO_Notify_EventChannel::~TAO_Notify_EventChannel () = default;
 
 void
 TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
-                           , const CosNotification::QoSProperties & initial_qos
-                           , const CosNotification::AdminProperties & initial_admin)
+                           , CosNotification::QoSProperties const & initial_qos
+                           , CosNotification::AdminProperties const & initial_admin)
 {
   ACE_ASSERT (!this->ca_container_);
 
@@ -93,7 +93,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 
   this->event_manager().init ();
 
-  const CosNotification::QoSProperties &default_ec_qos =
+  CosNotification::QoSProperties const &default_ec_qos =
     TAO_Notify_PROPERTIES::instance ()->default_event_channel_qos_properties ();
 
   this->set_qos (default_ec_qos);
@@ -159,7 +159,7 @@ TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
 
   this->event_manager().init ();
 
-  const CosNotification::QoSProperties &default_ec_qos =
+  CosNotification::QoSProperties const &default_ec_qos =
     TAO_Notify_PROPERTIES::instance ()->default_event_channel_qos_properties ();
 
   this->set_qos (default_ec_qos);
@@ -483,7 +483,7 @@ TAO_Notify_EventChannel::save_attrs(TAO_Notify::NVPList& attrs)
 }
 
 void
-TAO_Notify_EventChannel::load_attrs(const TAO_Notify::NVPList& attrs)
+TAO_Notify_EventChannel::load_attrs(TAO_Notify::NVPList const& attrs)
 {
   TAO_Notify_Object::load_attrs(attrs);
   attrs.load(this->admin_properties().max_global_queue_length());

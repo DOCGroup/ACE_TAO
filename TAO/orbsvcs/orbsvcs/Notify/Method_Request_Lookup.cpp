@@ -30,7 +30,7 @@ TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
 }
 
 TAO_Notify_Method_Request_Lookup::TAO_Notify_Method_Request_Lookup (
-      const TAO_Notify::Delivery_Request_Ptr& delivery,
+      TAO_Notify::Delivery_Request_Ptr const& delivery,
       TAO_Notify_ProxyConsumer * proxy)
   : TAO_Notify_Method_Request_Event (delivery)
   , proxy_consumer_ (proxy)

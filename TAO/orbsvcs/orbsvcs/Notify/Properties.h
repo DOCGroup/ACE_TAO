@@ -80,34 +80,34 @@ public:
   void separate_dispatching_orb (bool b);
 
   /// The QoS property applied to each newly created event channel.
-  const CosNotification::QoSProperties& default_event_channel_qos_properties ();
+  CosNotification::QoSProperties const& default_event_channel_qos_properties ();
 
   /// Set the default event channel QoS property.
-  void default_event_channel_qos_properties (const CosNotification::QoSProperties &ec_qos);
+  void default_event_channel_qos_properties (CosNotification::QoSProperties const &ec_qos);
 
   /// The QoS property applied to each newly created supplier admin.
-  const CosNotification::QoSProperties& default_supplier_admin_qos_properties ();
+  CosNotification::QoSProperties const& default_supplier_admin_qos_properties ();
 
   /// Set the default supplier admin QoS property.
-  void default_supplier_admin_qos_properties (const CosNotification::QoSProperties &sa_qos);
+  void default_supplier_admin_qos_properties (CosNotification::QoSProperties const &sa_qos);
 
   /// The QoS property applied to each newly created consumer admin.
-  const CosNotification::QoSProperties& default_consumer_admin_qos_properties ();
+  CosNotification::QoSProperties const& default_consumer_admin_qos_properties ();
 
   /// Set the default consumer admin QoS property.
-  void default_consumer_admin_qos_properties (const CosNotification::QoSProperties &ca_qos);
+  void default_consumer_admin_qos_properties (CosNotification::QoSProperties const &ca_qos);
 
   /// The QoS property applied to each newly created proxy supplier.
-  const CosNotification::QoSProperties& default_proxy_supplier_qos_properties ();
+  CosNotification::QoSProperties const& default_proxy_supplier_qos_properties ();
 
   /// Set the default proxy supplier QoS property.
-  void default_proxy_supplier_qos_properties (const CosNotification::QoSProperties &ps_qos);
+  void default_proxy_supplier_qos_properties (CosNotification::QoSProperties const &ps_qos);
 
   /// The QoS property applied to each newly created proxy consumer.
-  const CosNotification::QoSProperties& default_proxy_consumer_qos_properties ();
+  CosNotification::QoSProperties const& default_proxy_consumer_qos_properties ();
 
   /// Set the default proxy consumer QoS property.
-  void default_proxy_consumer_qos_properties (const CosNotification::QoSProperties &pc_qos);
+  void default_proxy_consumer_qos_properties (CosNotification::QoSProperties const &pc_qos);
 
   CosNotifyChannelAdmin::InterFilterGroupOperator defaultConsumerAdminFilterOp ();
   void defaultConsumerAdminFilterOp (CosNotifyChannelAdmin::InterFilterGroupOperator op);

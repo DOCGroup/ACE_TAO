@@ -60,8 +60,8 @@ public:
   /// Build EventChannel.
   virtual CosNotifyChannelAdmin::EventChannel_ptr
   build_event_channel (TAO_Notify_EventChannelFactory* ecf
-                       , const CosNotification::QoSProperties & initial_qos
-                       , const CosNotification::AdminProperties & initial_admin
+                       , CosNotification::QoSProperties const & initial_qos
+                       , CosNotification::AdminProperties const & initial_admin
                        , CosNotifyChannelAdmin::ChannelID_out id
                        , char const *ec_name = nullptr);
 
@@ -103,7 +103,7 @@ public:
   build_proxy (TAO_Notify_SupplierAdmin* sa
                , CosNotifyChannelAdmin::ClientType ctype
                , CosNotifyChannelAdmin::ProxyID_out proxy_id
-               , const CosNotification::QoSProperties & initial_qos);
+               , CosNotification::QoSProperties const & initial_qos);
 
   /// Reload ProxyConsumer
   virtual TAO_Notify_ProxyConsumer *
@@ -116,7 +116,7 @@ public:
   build_proxy (TAO_Notify_ConsumerAdmin* ca
                , CosNotifyChannelAdmin::ClientType ctype
                , CosNotifyChannelAdmin::ProxyID_out proxy_id
-               , const CosNotification::QoSProperties & initial_qos);
+               , CosNotification::QoSProperties const & initial_qos);
 
   /// Reload ProxySupplier.
   virtual TAO_Notify_ProxySupplier *
@@ -139,12 +139,12 @@ public:
   /// Apply Thread Pools.
   virtual void apply_thread_pool_concurrency (
       TAO_Notify_Object& object,
-      const NotifyExt::ThreadPoolParams& tp_params);
+      NotifyExt::ThreadPoolParams const& tp_params);
 
   /// Apply Thread Pools with Lanes.
   virtual void apply_lane_concurrency (
       TAO_Notify_Object& object,
-      const NotifyExt::ThreadPoolLanesParams& tpl_params);
+      NotifyExt::ThreadPoolLanesParams const& tpl_params);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

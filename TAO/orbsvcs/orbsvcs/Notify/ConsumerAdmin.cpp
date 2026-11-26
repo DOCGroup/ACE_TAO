@@ -46,7 +46,7 @@ TAO_Notify_ConsumerAdmin::init (TAO_Notify_EventChannel *ec)
 {
   TAO_Notify_Admin::init (ec);
 
-  const CosNotification::QoSProperties &default_ca_qos =
+  CosNotification::QoSProperties const &default_ca_qos =
     TAO_Notify_PROPERTIES::instance ()->default_consumer_admin_qos_properties ();
 
   this->set_qos (default_ca_qos);
@@ -135,7 +135,7 @@ TAO_Notify::Topology_Object*
 TAO_Notify_ConsumerAdmin::load_proxy (
   CORBA::Long id,
   CosNotifyChannelAdmin::ClientType ctype,
-  const TAO_Notify::NVPList& attrs)
+  TAO_Notify::NVPList const& attrs)
 {
   TAO_Notify_Builder* bld = TAO_Notify_PROPERTIES::instance()->builder();
   TAO_Notify_ProxySupplier * proxy =

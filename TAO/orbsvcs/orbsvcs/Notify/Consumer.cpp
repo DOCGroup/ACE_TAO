@@ -382,7 +382,7 @@ TAO_Notify_Consumer::dispatch_request (TAO_Notify_Method_Request_Event * request
 }
 
 TAO_Notify_Consumer::DispatchStatus
-TAO_Notify_Consumer::dispatch_batch (const CosNotification::EventBatch& batch)
+TAO_Notify_Consumer::dispatch_batch (CosNotification::EventBatch const& batch)
 {
   DispatchStatus result = DISPATCH_SUCCESS;
   try
@@ -726,7 +726,7 @@ TAO_Notify_Consumer::shutdown ()
 }
 
 void
-TAO_Notify_Consumer::dispatch_updates_i (const CosNotification::EventTypeSeq& added, const CosNotification::EventTypeSeq& removed)
+TAO_Notify_Consumer::dispatch_updates_i (CosNotification::EventTypeSeq const& added, CosNotification::EventTypeSeq const& removed)
 {
   if (this->have_not_yet_verified_publish_)
     {

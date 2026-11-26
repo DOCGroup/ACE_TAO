@@ -49,7 +49,7 @@ public:
 protected:
   TAO_Notify_Method_Request_Lookup (const TAO_Notify_Event * event, TAO_Notify_ProxyConsumer * proxy);
 
-  TAO_Notify_Method_Request_Lookup (const TAO_Notify::Delivery_Request_Ptr& delivery, TAO_Notify_ProxyConsumer * proxy);
+  TAO_Notify_Method_Request_Lookup (TAO_Notify::Delivery_Request_Ptr const& delivery, TAO_Notify_ProxyConsumer * proxy);
 
   /// Execute the dispatch operation.
   int execute_i ();

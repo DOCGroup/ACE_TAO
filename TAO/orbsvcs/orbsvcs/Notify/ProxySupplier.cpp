@@ -31,7 +31,7 @@ TAO_Notify_ProxySupplier::init (TAO_Notify_ConsumerAdmin* consumer_admin)
   this->filter_admin_.event_channel (
     this->consumer_admin_->event_channel());
 
-  const CosNotification::QoSProperties &default_ps_qos =
+  CosNotification::QoSProperties const &default_ps_qos =
     TAO_Notify_PROPERTIES::instance ()->default_proxy_supplier_qos_properties ();
 
   {

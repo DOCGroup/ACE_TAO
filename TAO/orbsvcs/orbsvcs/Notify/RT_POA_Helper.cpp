@@ -11,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Notify_RT_POA_Helper::~TAO_Notify_RT_POA_Helper () = default;
 
 void
-TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolParams& tp_params)
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, NotifyExt::ThreadPoolParams const& tp_params)
 {
   ACE_CString child_poa_name = this->get_unique_id ();
 
@@ -20,7 +20,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const Notify
 
 void
 TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, char const *poa_name
-                                 , const NotifyExt::ThreadPoolParams& tp_params)
+                                 , NotifyExt::ThreadPoolParams const& tp_params)
 {
   CORBA::PolicyList policy_list (4);
 
@@ -71,7 +71,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, char const *
 }
 
 void
-TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const NotifyExt::ThreadPoolLanesParams& tpl_params)
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, NotifyExt::ThreadPoolLanesParams const& tpl_params)
 {
   ACE_CString child_poa_name = this->get_unique_id ();
 
@@ -80,7 +80,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const Notify
 
 void
 TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, char const *poa_name
-                                 , const NotifyExt::ThreadPoolLanesParams& tpl_params)
+                                 , NotifyExt::ThreadPoolLanesParams const& tpl_params)
 {
   CORBA::PolicyList policy_list (4);
 

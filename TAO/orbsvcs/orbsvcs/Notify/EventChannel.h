@@ -64,8 +64,8 @@ public:
 
   /// Init
   void init (TAO_Notify_EventChannelFactory* ecf
-             , const CosNotification::QoSProperties & initial_qos
-             , const CosNotification::AdminProperties & initial_admin);
+             , CosNotification::QoSProperties const & initial_qos
+             , CosNotification::AdminProperties const & initial_admin);
 
   /// Init (for reload)
   void init (TAO_Notify::Topology_Parent * parent);
@@ -101,7 +101,7 @@ public:
 
   /// Shutdown
   int shutdown () override;
-  void load_attrs(const TAO_Notify::NVPList& attrs) override;
+  void load_attrs(TAO_Notify::NVPList const& attrs) override;
 
   /// TAO_Notify_Container_T requires a destroy method
   void destroy () override;

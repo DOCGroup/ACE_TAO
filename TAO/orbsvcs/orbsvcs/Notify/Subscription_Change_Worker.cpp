@@ -5,8 +5,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Subscription_Change_Worker::TAO_Notify_Subscription_Change_Worker (
-  const CosNotification::EventTypeSeq & added,
-  const CosNotification::EventTypeSeq & removed)
+  CosNotification::EventTypeSeq const & added,
+  CosNotification::EventTypeSeq const & removed)
   : added_ (added), removed_ (removed)
 {
 }

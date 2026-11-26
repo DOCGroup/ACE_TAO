@@ -11,7 +11,7 @@ TAO_Notify_PropertySeq::TAO_Notify_PropertySeq () = default;
 TAO_Notify_PropertySeq::~TAO_Notify_PropertySeq () = default;
 
 int
-TAO_Notify_PropertySeq::init (const CosNotification::PropertySeq& prop_seq)
+TAO_Notify_PropertySeq::init (CosNotification::PropertySeq const& prop_seq)
 {
   ACE_CString name;
 

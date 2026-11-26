@@ -68,8 +68,8 @@ public:
 
 protected:
   /// Implementation of Peer specific dispatch_updates
-  virtual void dispatch_updates_i (const CosNotification::EventTypeSeq& added,
-                                   const CosNotification::EventTypeSeq& removed) = 0;
+  virtual void dispatch_updates_i (CosNotification::EventTypeSeq const& added,
+                                   CosNotification::EventTypeSeq const& removed) = 0;
 
 private:
   /// Release

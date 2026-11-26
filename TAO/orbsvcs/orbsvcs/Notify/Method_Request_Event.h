@@ -36,7 +36,7 @@ public:
 
   /// Construct from a delivery request
   explicit TAO_Notify_Method_Request_Event (
-    const TAO_Notify::Delivery_Request_Ptr & delivery_request);
+    TAO_Notify::Delivery_Request_Ptr const & delivery_request);
 
   /// Construct from another Method Request
   /// Event is passed separately because it may be a copy of the one in request.
