@@ -83,7 +83,7 @@ namespace TAO
     /// @{
     virtual CORBA::Object_ptr make_object (
       char const *repository_id,
-      const PortableInterceptor::ObjectId & id) = 0;
+      PortableInterceptor::ObjectId const & id) = 0;
     /// @}
   };
 

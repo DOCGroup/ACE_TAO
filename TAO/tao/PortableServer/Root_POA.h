@@ -194,12 +194,12 @@ public:
 
   /// Store the given TaggedComponent for eventual insertion into all
   /// object reference profiles.
-  void save_ior_component (const IOP::TaggedComponent &component);
+  void save_ior_component (IOP::TaggedComponent const &component);
 
   /// Store the given TaggedComponent for eventual insertion into all
   /// object reference profiles with the given ProfileId.
   void save_ior_component_and_profile_id (
-    const IOP::TaggedComponent &component,
+    IOP::TaggedComponent const &component,
     IOP::ProfileId profile_id);
 
 #if (TAO_HAS_MINIMUM_POA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -258,7 +258,7 @@ public:
   virtual CORBA::PolicyList *client_exposed_policies (
       CORBA::Short object_priority);
 
-  TAO_Root_POA (const String &name,
+  TAO_Root_POA (String const &name,
                 PortableServer::POAManager_ptr poa_manager,
                 TAO_POA_Policy_Set const &policies,
                 TAO_Root_POA *parent,
@@ -325,7 +325,7 @@ public:
 
   CORBA::ULong outstanding_requests () const;
 
-  const ACE_CString &name () const;
+  ACE_CString const &name () const;
 
   CORBA::Boolean waiting_destruction () const;
 
@@ -439,7 +439,7 @@ public:
   /// Check the state of this POA
   void check_state ();
 
-  int delete_child (const String &child);
+  int delete_child (String const &child);
 
   PortableServer::Servant user_id_to_servant_i (PortableServer::ObjectId const &oid);
 
@@ -471,7 +471,7 @@ protected:
 
 #if ! defined (CORBA_E_MICRO)
   /// Template method for creating new POA's of this type.
-  virtual TAO_Root_POA *new_POA (const String &name,
+  virtual TAO_Root_POA *new_POA (String const &name,
                             PortableServer::POAManager_ptr poa_manager,
                             TAO_POA_Policy_Set const &policies,
                             TAO_Root_POA *parent,
@@ -485,11 +485,11 @@ protected:
       PortableServer::POAManager_ptr poa_manager,
       CORBA::PolicyList const &policies);
 
-  PortableServer::POA_ptr create_POA_i (const String &adapter_name,
+  PortableServer::POA_ptr create_POA_i (String const &adapter_name,
                                         PortableServer::POAManager_ptr poa_manager,
                                         TAO_POA_Policy_Set const &policies);
 
-  TAO_Root_POA *find_POA_i (const ACE_CString &child_name,
+  TAO_Root_POA *find_POA_i (ACE_CString const &child_name,
                             CORBA::Boolean activate_it);
 #endif
 
@@ -513,12 +513,12 @@ protected:
 
   /// Add the given tagged component to all profiles.
   void add_ior_component (TAO_MProfile & mprofile,
-                          const IOP::TaggedComponent & component);
+                          IOP::TaggedComponent const & component);
 
   /// Add the given tagged component to all profiles matching the given
   /// ProfileId.
   void add_ior_component_to_profile (TAO_MProfile & mprofile,
-                                     const IOP::TaggedComponent & component,
+                                     IOP::TaggedComponent const & component,
                                      IOP::ProfileId profile_id);
 
   /// Wrapper for the ORB's key_to_object that will alter the object pointer

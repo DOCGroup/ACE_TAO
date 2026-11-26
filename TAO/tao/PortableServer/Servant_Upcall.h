@@ -219,8 +219,10 @@ namespace TAO
       Pre_Invoke_State pre_invoke_state_;
 
     private:
-      Servant_Upcall (const Servant_Upcall &);
-      void operator= (const Servant_Upcall &);
+      Servant_Upcall (Servant_Upcall const &) = delete;
+      Servant_Upcall (Servant_Upcall &&) = delete;
+      void operator= (Servant_Upcall const &) = delete;
+      void operator= (Servant_Upcall &&) = delete;
     };
   }
 }

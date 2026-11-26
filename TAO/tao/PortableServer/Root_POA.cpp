@@ -487,7 +487,7 @@ TAO_Root_POA::create_POA_i (char const *adapter_name,
 
 #if ! defined (CORBA_E_MICRO)
 TAO_Root_POA *
-TAO_Root_POA::new_POA (const String &name,
+TAO_Root_POA::new_POA (String const &name,
                        PortableServer::POAManager_ptr poa_manager,
                        TAO_POA_Policy_Set const &policies,
                        TAO_Root_POA *parent,
@@ -603,7 +603,7 @@ TAO_Root_POA::find_POA (char const *adapter_name,
 
 #if ! defined (CORBA_E_MICRO)
 TAO_Root_POA *
-TAO_Root_POA::find_POA_i (const ACE_CString &child_name,
+TAO_Root_POA::find_POA_i (ACE_CString const &child_name,
                           CORBA::Boolean activate_it)
 {
   TAO_Root_POA *child {};
@@ -1041,7 +1041,7 @@ TAO_Root_POA::adapter_name_i ()
 
 void
 TAO_Root_POA::add_ior_component (TAO_MProfile & mprofile,
-                                 const IOP::TaggedComponent &component)
+                                 IOP::TaggedComponent const &component)
 {
   // Add the given tagged component to all profiles.
   CORBA::ULong const profile_count = mprofile.profile_count ();
@@ -1057,7 +1057,7 @@ TAO_Root_POA::add_ior_component (TAO_MProfile & mprofile,
 void
 TAO_Root_POA::add_ior_component_to_profile (
     TAO_MProfile & mprofile,
-    const IOP::TaggedComponent &component,
+    IOP::TaggedComponent const &component,
     IOP::ProfileId profile_id)
 {
   // Add the given tagged component to all profiles matching the given
@@ -1308,8 +1308,8 @@ CORBA::Object_ptr
 TAO_Root_POA::invoke_key_to_object_helper_i (char const *repository_id,
                                              PortableServer::ObjectId const & id)
 {
-  const PortableInterceptor::ObjectId &user_oid =
-    reinterpret_cast <const PortableInterceptor::ObjectId &>(id);
+  PortableInterceptor::ObjectId const &user_oid =
+    reinterpret_cast <PortableInterceptor::ObjectId const &>(id);
 
   // Ask the ORT to create the object.
   if (this->ORT_adapter_i ())
@@ -2040,7 +2040,7 @@ TAO_Root_POA::components_established (PortableInterceptor::IORInfo_ptr info)
 }
 
 void
-TAO_Root_POA::save_ior_component (const IOP::TaggedComponent &component)
+TAO_Root_POA::save_ior_component (IOP::TaggedComponent const &component)
 {
   CORBA::ULong const old_len = this->tagged_component_.length ();
 
@@ -2050,7 +2050,7 @@ TAO_Root_POA::save_ior_component (const IOP::TaggedComponent &component)
 
 void
 TAO_Root_POA::
-save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
+save_ior_component_and_profile_id (IOP::TaggedComponent const &component,
                                    IOP::ProfileId profile_id)
 {
   // The length of this->tagged_component_id_ is the same as the

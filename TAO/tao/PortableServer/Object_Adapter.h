@@ -381,8 +381,8 @@ public:
                        CORBA::Octet const *folded_buffer);
 
     /// Comparison operators.
-    bool operator== (const poa_name_iterator &rhs) const;
-    bool operator!= (const poa_name_iterator &rhs) const;
+    bool operator== (poa_name_iterator const &rhs) const;
+    bool operator!= (poa_name_iterator const &rhs) const;
 
     /// Dereference operator.
     ACE_CString operator* () const;

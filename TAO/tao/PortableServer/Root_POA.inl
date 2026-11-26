@@ -79,7 +79,7 @@ TAO_Root_POA::persistent ()
   return (this->cached_policies_.lifespan () == PortableServer::PERSISTENT);
 }
 
-ACE_INLINE const ACE_CString &
+ACE_INLINE ACE_CString const &
 TAO_Root_POA::name () const
 {
   return this->name_;

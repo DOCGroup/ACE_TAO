@@ -1118,13 +1118,13 @@ TAO_Object_Adapter::poa_name_iterator::poa_name_iterator (
 }
 
 bool
-TAO_Object_Adapter::poa_name_iterator::operator== (const poa_name_iterator &rhs) const
+TAO_Object_Adapter::poa_name_iterator::operator== (poa_name_iterator const &rhs) const
 {
   return this->position_ == rhs.position_;
 }
 
 bool
-TAO_Object_Adapter::poa_name_iterator::operator!= (const poa_name_iterator &rhs) const
+TAO_Object_Adapter::poa_name_iterator::operator!= (poa_name_iterator const &rhs) const
 {
   return !this->operator== (rhs);
 }
