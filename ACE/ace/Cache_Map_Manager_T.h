@@ -255,7 +255,7 @@ public:
   /// @{
   ACE_Cache_Map_Iterator (IMPLEMENTATION const &iterator_impl);
 
-  ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
+  ACE_Cache_Map_Iterator (ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs);
 
   virtual ~ACE_Cache_Map_Iterator () = default;
   /// @}
@@ -268,8 +268,8 @@ public:
                                     CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
   /// Comparison operators.
-  bool operator== (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
-  bool operator!= (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
+  bool operator== (ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs) const;
+  bool operator!= (ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs) const;
 
   /// Returns a reference to the internal element @c this is pointing
   /// to.
@@ -331,7 +331,7 @@ public:
   /// @{
   ACE_Cache_Map_Reverse_Iterator (REVERSE_IMPLEMENTATION const &iterator_impl);
 
-  ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
+  ACE_Cache_Map_Reverse_Iterator (ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs);
 
   ~ACE_Cache_Map_Reverse_Iterator () = default;
   /// @}
@@ -344,8 +344,8 @@ public:
                                            CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
   /// Comparison operators.
-  bool operator== (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
-  bool operator!= (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs) const;
+  bool operator== (ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs) const;
+  bool operator!= (ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs) const;
 
   /// Returns a reference to the internal element @c this is pointing
   /// to.

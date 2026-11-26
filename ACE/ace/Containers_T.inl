@@ -289,7 +289,7 @@ ACE_Array<T>::ACE_Array (size_t size,
 /// The copy constructor (performs initialization).
 
 template <class T> ACE_INLINE
-ACE_Array<T>::ACE_Array (const ACE_Array<T> &s)
+ACE_Array<T>::ACE_Array (ACE_Array<T> const &s)
    : ACE_Array_Base<T> (s)
 {
 }
@@ -297,7 +297,7 @@ ACE_Array<T>::ACE_Array (const ACE_Array<T> &s)
 /// Assignment operator (performs assignment).
 
 template <class T> ACE_INLINE void
-ACE_Array<T>::operator= (const ACE_Array<T> &s)
+ACE_Array<T>::operator= (ACE_Array<T> const &s)
 {
   // Check for "self-assignment".
 
@@ -310,7 +310,7 @@ ACE_Array<T>::operator= (const ACE_Array<T> &s)
 /// Compare this array with @a s for inequality.
 
 template <class T> ACE_INLINE bool
-ACE_Array<T>::operator!= (const ACE_Array<T> &s) const
+ACE_Array<T>::operator!= (ACE_Array<T> const &s) const
 {
   return !(*this == s);
 }
@@ -320,7 +320,7 @@ ACE_Array<T>::operator!= (const ACE_Array<T> &s) const
 // ****************************************************************
 
 template <class T> ACE_INLINE void
-ACE_DLList<T>::operator= (const ACE_DLList<T> &l)
+ACE_DLList<T>::operator= (ACE_DLList<T> const &l)
 {
   ACE_DLList_Base::operator= (l);
 }
@@ -362,7 +362,7 @@ ACE_DLList<T>::ACE_DLList (ACE_Allocator *alloc)
 }
 
 template <class T> ACE_INLINE
-ACE_DLList<T>::ACE_DLList (const ACE_DLList<T> &l)
+ACE_DLList<T>::ACE_DLList (ACE_DLList<T> const &l)
   : ACE_DLList_Base (l)
 {
 }

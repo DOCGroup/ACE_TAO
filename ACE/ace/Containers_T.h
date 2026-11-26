@@ -87,14 +87,14 @@ public:
    * Initialize the stack to be an exact copy of the Bounded_Stack provided
    * as a parameter.
    */
-  ACE_Bounded_Stack (const ACE_Bounded_Stack<T> &s);
+  ACE_Bounded_Stack (ACE_Bounded_Stack<T> const &s);
 
   /**
    * Perform a deep copy operation using the Bounded_Stack parameter.  If the
    * capacity of the lhs isn't sufficient for the rhs, then the underlying data
    * structure will be reallocated to accomadate the larger number of elements.
    */
-  void operator= (const ACE_Bounded_Stack<T> &s);
+  void operator= (ACE_Bounded_Stack<T> const &s);
 
   /// Perform actions needed when stack goes out of scope.
   /**
@@ -217,13 +217,13 @@ public:
   /**
    * Initialize the stack and copy the provided stack into the current stack.
    */
-  ACE_Fixed_Stack (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
+  ACE_Fixed_Stack (ACE_Fixed_Stack<T, ACE_SIZE> const &s);
 
   /// Assignment operator (performs assignment).
   /**
    * Perform a deep copy of the provided stack.
    */
-  void operator= (const ACE_Fixed_Stack<T, ACE_SIZE> &s);
+  void operator= (ACE_Fixed_Stack<T, ACE_SIZE> const &s);
 
   /// Perform actions needed when stack goes out of scope.
   /**
@@ -391,13 +391,13 @@ public:
   /**
    * Initialize this stack to be an exact copy of {s}.
    */
-  ACE_Unbounded_Stack (const ACE_Unbounded_Stack<T> &s);
+  ACE_Unbounded_Stack (ACE_Unbounded_Stack<T> const &s);
 
   /// Assignment operator (performs assignment).
   /**
    * Perform a deep copy of the rhs into the lhs.
    */
-  void operator= (const ACE_Unbounded_Stack<T> &s);
+  void operator= (ACE_Unbounded_Stack<T> const &s);
 
   /// Perform actions needed when stack goes out of scope.
   /**
@@ -492,7 +492,7 @@ private:
   void delete_all_nodes ();
 
   /// Copy all nodes from {s} to {this}.
-  void copy_all_nodes (const ACE_Unbounded_Stack<T> &s);
+  void copy_all_nodes (ACE_Unbounded_Stack<T> const &s);
 
   /// Head of the linked list of Nodes.
   ACE_Node<T> *head_ {};
@@ -597,7 +597,7 @@ public:
 
   /// @}
 protected:
-  ACE_Double_Linked_List_Iterator_Base (const ACE_Double_Linked_List<T> &);
+  ACE_Double_Linked_List_Iterator_Base (ACE_Double_Linked_List<T> const &);
 
   ACE_Double_Linked_List_Iterator_Base (const
                                         ACE_Double_Linked_List_Iterator_Base<T>
@@ -639,7 +639,7 @@ protected:
   /// Remember where we are.
   T *current_ {};
 
-  const ACE_Double_Linked_List<T> *dllist_;
+  ACE_Double_Linked_List<T> const *dllist_;
   /// @}
 };
 
@@ -660,7 +660,7 @@ template <class T>
 class ACE_Double_Linked_List_Iterator : public ACE_Double_Linked_List_Iterator_Base <T>
 {
 public:
-  ACE_Double_Linked_List_Iterator (const ACE_Double_Linked_List<T> &);
+  ACE_Double_Linked_List_Iterator (ACE_Double_Linked_List<T> const &);
 
   /**
    * Retasks the iterator to iterate over a new
@@ -849,13 +849,13 @@ public:
    * Create a double linked list that is a copy of the provided
    * parameter.
    */
-  ACE_Double_Linked_List (const ACE_Double_Linked_List<T> &);
+  ACE_Double_Linked_List (ACE_Double_Linked_List<T> const &);
 
   /**
    * Perform a deep copy of the provided list by first deleting the nodes of the
    * lhs and then copying the nodes of the rhs.
    */
-  void operator= (const ACE_Double_Linked_List<T> &);
+  void operator= (ACE_Double_Linked_List<T> const &);
 
   /**
    * Clean up the memory allocated for the nodes of the list.
@@ -962,7 +962,7 @@ protected:
    * Copy the elements of the provided list by allocated new nodes and assigning
    * them with the proper data.
    */
-  void copy_nodes (const ACE_Double_Linked_List<T> &rhs);
+  void copy_nodes (ACE_Double_Linked_List<T> const &rhs);
 
   /// Setup header pointer.  Called after we create the head node in ctor.
   /**
@@ -1032,7 +1032,7 @@ class ACE_DLList : public ACE_DLList_Base
 
 public:
   /// Delegates to ACE_Double_Linked_List.
-  void operator= (const ACE_DLList<T> &l);
+  void operator= (ACE_DLList<T> const &l);
 
   /**
    * @name Queue-like insert and delete methods
@@ -1097,7 +1097,7 @@ public:
   ACE_DLList (ACE_Allocator *the_allocator = nullptr);
 
   /// Delegates to ACE_Double_Linked_List.
-  ACE_DLList (const ACE_DLList<T> &l);
+  ACE_DLList (ACE_DLList<T> const &l);
 
   /**
    * Deletes all ACE_DLList_Node objects in the list starting from the head.
@@ -1340,7 +1340,7 @@ template <class T, size_t ACE_SIZE>
 class ACE_Fixed_Set_Const_Iterator : public ACE_Fixed_Set_Iterator_Base <T, ACE_SIZE>
 {
 public:
-  ACE_Fixed_Set_Const_Iterator (const ACE_Fixed_Set<T, ACE_SIZE> &s);
+  ACE_Fixed_Set_Const_Iterator (ACE_Fixed_Set<T, ACE_SIZE> const &s);
 
   /// @name Iteration methods
   /// @{
@@ -1413,12 +1413,12 @@ public:
   /**
    * Initializes a set to be a copy of the set parameter.
    */
-  ACE_Fixed_Set (const ACE_Fixed_Set<T, ACE_SIZE> &);
+  ACE_Fixed_Set (ACE_Fixed_Set<T, ACE_SIZE> const &);
 
   /**
    * Deep copy of one set to another.
    */
-  void operator= (const ACE_Fixed_Set<T, ACE_SIZE> &);
+  void operator= (ACE_Fixed_Set<T, ACE_SIZE> const &);
 
   /**
    * Destroys a set.
@@ -1613,14 +1613,14 @@ public:
   /**
    * Initialize the Bounded_Set to be a copy of the Bounded_Set parameter.
    */
-  ACE_Bounded_Set (const ACE_Bounded_Set<T> &);
+  ACE_Bounded_Set (ACE_Bounded_Set<T> const &);
 
   /**
    * The assignment will make a deep copy of the Bounded_Set provided.  If the
    * rhs has more elements than the capacity of the lhs, then the lhs will be
    * deleted and reallocated to accomadate the larger number of elements.
    */
-  void operator= (const ACE_Bounded_Set<T> &);
+  void operator= (ACE_Bounded_Set<T> const &);
 
   /**
    * Clean up the underlying dynamically allocated memory that is used by
@@ -1820,7 +1820,7 @@ public:
   /**
    * Initialize the set to be a copy of the provided set.
    */
-  ACE_Ordered_MultiSet (const ACE_Ordered_MultiSet<T> &);
+  ACE_Ordered_MultiSet (ACE_Ordered_MultiSet<T> const &);
 
   /**
    * Delete the nodes of the set.
@@ -1830,7 +1830,7 @@ public:
   /**
    * Delete the nodes in lhs, and copy the nodes from the rhs.
    */
-  void operator= (const ACE_Ordered_MultiSet<T> &);
+  void operator= (ACE_Ordered_MultiSet<T> const &);
 
   /// @name Check boundary conditions
   /// @{
@@ -1923,7 +1923,7 @@ private:
   void delete_nodes ();
 
   /// Copy nodes into this set.
-  void copy_nodes (const ACE_Ordered_MultiSet<T> &);
+  void copy_nodes (ACE_Ordered_MultiSet<T> const &);
 
   /// Head of the bilinked list of Nodes.
   ACE_DNode<T> *head_ {};
@@ -2002,7 +2002,7 @@ public:
    * copy of the contents of parameter {s}, i.e., *this == s will
    * return true.
    */
-  ACE_Array (const ACE_Array<T> &s);
+  ACE_Array (ACE_Array<T> const &s);
 
   /**
    * Assignment operator performs an assignment by making an exact
@@ -2013,7 +2013,7 @@ public:
    * be copied without reallocating. Otherwise, @c array_ must be deleted
    * and reallocated before copying the contents of @a s.
    */
-  void operator= (const ACE_Array<T> &s);
+  void operator= (ACE_Array<T> const &s);
 
   /// @name Compare operators
   /// @{
@@ -2024,7 +2024,7 @@ public:
    * if their {size}'s are equal and all the elements from 0 .. {size}
    * are equal.
    */
-  bool operator== (const ACE_Array<T> &s) const;
+  bool operator== (ACE_Array<T> const &s) const;
 
   ///Inequality comparison operator.
   /**
@@ -2032,7 +2032,7 @@ public:
    * {s} is always the complement of the boolean return value of
    * {*this} == {s}.
    */
-  bool operator!= (const ACE_Array<T> &s) const;
+  bool operator!= (ACE_Array<T> const &s) const;
   /// @}
 };
 

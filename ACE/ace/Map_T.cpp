@@ -24,10 +24,10 @@ ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::clone () const
 }
 
 template <class T, class IMPLEMENTATION, class ENTRY> int
-ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::compare (const ACE_Iterator_Impl<T> &rhs) const
+ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::compare (ACE_Iterator_Impl<T> const &rhs) const
 {
-  const ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &rhs_local
-    = dynamic_cast<const ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &> (rhs);
+  ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> const &rhs_local
+    = dynamic_cast<ACE_Map_Impl_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> const &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -66,10 +66,10 @@ ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::clone () const
 }
 
 template <class T, class IMPLEMENTATION, class ENTRY> int
-ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const
+ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY>::compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const
 {
-  const ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &rhs_local
-    = dynamic_cast<const ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> &> (rhs);
+  ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> const &rhs_local
+    = dynamic_cast<ACE_Map_Impl_Reverse_Iterator_Adapter<T, IMPLEMENTATION, ENTRY> const &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -292,10 +292,10 @@ ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::clone () const
 }
 
 template <class T, class VALUE> int
-ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::compare (const ACE_Iterator_Impl<T> &rhs) const
+ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE>::compare (ACE_Iterator_Impl<T> const &rhs) const
 {
-  const ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE> &rhs_local
-    = dynamic_cast<const ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE> &> (rhs);
+  ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE> const &rhs_local
+    = dynamic_cast<ACE_Active_Map_Manager_Iterator_Adapter<T, VALUE> const &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -334,10 +334,10 @@ ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::clone () const
 }
 
 template <class T, class VALUE> int
-ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const
+ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE>::compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const
 {
-  const ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE> &rhs_local
-    = dynamic_cast<const ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE> &> (rhs);
+  ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE> const &rhs_local
+    = dynamic_cast<ACE_Active_Map_Manager_Reverse_Iterator_Adapter<T, VALUE> const &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -724,10 +724,10 @@ ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>:
 }
 
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> int
-ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::compare (const ACE_Iterator_Impl<T> &rhs) const
+ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::compare (ACE_Iterator_Impl<T> const &rhs) const
 {
-  const ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &rhs_local
-    = dynamic_cast<const ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &> (rhs);
+  ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> const &rhs_local
+    = dynamic_cast<ACE_Hash_Map_Manager_Ex_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> const &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -766,10 +766,10 @@ ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPAR
 }
 
 template <class T, class KEY, class VALUE, class HASH_KEY, class COMPARE_KEYS> int
-ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const
+ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS>::compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const
 {
-  const ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &rhs_local
-    = dynamic_cast<const ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> &> (rhs);
+  ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> const &rhs_local
+    = dynamic_cast<ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<T, KEY, VALUE, HASH_KEY, COMPARE_KEYS> const &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -1007,10 +1007,10 @@ ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::clone () const
 }
 
 template <class T, class KEY, class VALUE> int
-ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Iterator_Impl<T> &rhs) const
+ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE>::compare (ACE_Iterator_Impl<T> const &rhs) const
 {
-  const ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE> &rhs_local
-    = dynamic_cast<const ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE> &> (rhs);
+  ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE> const &rhs_local
+    = dynamic_cast<ACE_Map_Manager_Iterator_Adapter<T, KEY, VALUE> const &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }
@@ -1048,10 +1048,10 @@ ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::clone () const
 }
 
 template <class T, class KEY, class VALUE> int
-ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const
+ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE>::compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const
 {
-  const ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE> &rhs_local
-    = dynamic_cast<const ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE> &> (rhs);
+  ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE> const &rhs_local
+    = dynamic_cast<ACE_Map_Manager_Reverse_Iterator_Adapter<T, KEY, VALUE> const &> (rhs);
 
   return this->implementation_ == rhs_local.implementation_;
 }

@@ -79,7 +79,7 @@ public:
   virtual ACE_Iterator_Impl<T> *clone () const = 0;
 
   /// Comparison.
-  virtual int compare (const ACE_Iterator_Impl<T> &rhs) const = 0;
+  virtual int compare (ACE_Iterator_Impl<T> const &rhs) const = 0;
 
   /// Dereference.
   virtual T dereference () const = 0;
@@ -108,7 +108,7 @@ public:
   virtual ACE_Reverse_Iterator_Impl<T> *clone () const = 0;
 
   /// Comparison.
-  virtual int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const = 0;
+  virtual int compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const = 0;
 
   /// Dereference.
   virtual T dereference () const = 0;
@@ -137,15 +137,15 @@ public:
 
   ACE_Iterator (ACE_Iterator_Impl<T> *impl);
 
-  ACE_Iterator (const ACE_Iterator<T> &rhs);
+  ACE_Iterator (ACE_Iterator<T> const &rhs);
 
   ~ACE_Iterator ();
 
-  ACE_Iterator<T> &operator= (const ACE_Iterator<T> &rhs);
+  ACE_Iterator<T> &operator= (ACE_Iterator<T> const &rhs);
 
   /// Comparison operators.
-  bool operator== (const ACE_Iterator<T> &rhs) const;
-  bool operator!= (const ACE_Iterator<T> &rhs) const;
+  bool operator== (ACE_Iterator<T> const &rhs) const;
+  bool operator!= (ACE_Iterator<T> const &rhs) const;
 
   /// Dereference operator.
   T operator *() const;
@@ -187,11 +187,11 @@ public:
 
   ACE_Reverse_Iterator (ACE_Reverse_Iterator_Impl<T> *impl);
 
-  ACE_Reverse_Iterator (const ACE_Reverse_Iterator<T> &rhs);
+  ACE_Reverse_Iterator (ACE_Reverse_Iterator<T> const &rhs);
 
   ~ACE_Reverse_Iterator ();
 
-  ACE_Reverse_Iterator<T> &operator= (const ACE_Reverse_Iterator<T> &rhs);
+  ACE_Reverse_Iterator<T> &operator= (ACE_Reverse_Iterator<T> const &rhs);
 
   /**
    * @name Comparison Operators
@@ -199,8 +199,8 @@ public:
    * The usual equality operators.
    */
   /// @{
-  bool operator== (const ACE_Reverse_Iterator<T> &rhs) const;
-  bool operator!= (const ACE_Reverse_Iterator<T> &rhs) const;
+  bool operator== (ACE_Reverse_Iterator<T> const &rhs) const;
+  bool operator!= (ACE_Reverse_Iterator<T> const &rhs) const;
   /// @}
 
   /// Dereference operator.
@@ -431,7 +431,7 @@ public:
   ACE_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  int compare (const ACE_Iterator_Impl<T> &rhs) const override;
+  int compare (ACE_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
   T dereference () const override;
@@ -472,7 +472,7 @@ public:
   ACE_Reverse_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const override;
+  int compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
   T dereference () const override;
@@ -689,7 +689,7 @@ public:
   /// Type aliases.
   using implementation = typename ACE_Active_Map_Manager<VALUE>::iterator;
 
-  ACE_Active_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
+  ACE_Active_Map_Manager_Iterator_Adapter (ACE_Map_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> const &impl);
 
   virtual ~ACE_Active_Map_Manager_Iterator_Adapter () = default;
 
@@ -697,7 +697,7 @@ public:
   ACE_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  int compare (const ACE_Iterator_Impl<T> &rhs) const override;
+  int compare (ACE_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
   T dereference () const override;
@@ -730,7 +730,7 @@ public:
   /// Type aliases.
   using implementation = typename ACE_Active_Map_Manager<VALUE>::reverse_iterator;
 
-  ACE_Active_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> &impl);
+  ACE_Active_Map_Manager_Reverse_Iterator_Adapter (ACE_Map_Reverse_Iterator<ACE_Active_Map_Manager_Key, VALUE, ACE_Null_Mutex> const &impl);
 
   virtual ~ACE_Active_Map_Manager_Reverse_Iterator_Adapter ();
 
@@ -738,7 +738,7 @@ public:
   ACE_Reverse_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const override;
+  int compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
   T dereference () const override;
@@ -968,7 +968,7 @@ public:
   /// Type aliases.
   using implementation = typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::iterator;
 
-  ACE_Hash_Map_Manager_Ex_Iterator_Adapter (const ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
+  ACE_Hash_Map_Manager_Ex_Iterator_Adapter (ACE_Hash_Map_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> const &impl);
 
   virtual ~ACE_Hash_Map_Manager_Ex_Iterator_Adapter ();
 
@@ -976,7 +976,7 @@ public:
   ACE_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  int compare (const ACE_Iterator_Impl<T> &rhs) const override;
+  int compare (ACE_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
   T dereference () const override;
@@ -1009,7 +1009,7 @@ public:
   /// Type aliases.
   using implementation = typename ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>::reverse_iterator;
 
-  ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (const ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> &impl);
+  ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter (ACE_Hash_Map_Reverse_Iterator_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex> const &impl);
 
   virtual ~ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter ();
 
@@ -1017,7 +1017,7 @@ public:
   ACE_Reverse_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const override;
+  int compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
   T dereference () const override;
@@ -1239,7 +1239,7 @@ public:
   /// Type aliases.
   using implementation = typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::iterator;
 
-  ACE_Map_Manager_Iterator_Adapter (const ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
+  ACE_Map_Manager_Iterator_Adapter (ACE_Map_Iterator<KEY, VALUE, ACE_Null_Mutex> const &impl);
 
   virtual ~ACE_Map_Manager_Iterator_Adapter ();
 
@@ -1247,7 +1247,7 @@ public:
   ACE_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  int compare (const ACE_Iterator_Impl<T> &rhs) const override;
+  int compare (ACE_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
   T dereference () const override;
@@ -1280,7 +1280,7 @@ public:
   /// Type aliases.
   using implementation = typename ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>::reverse_iterator;
 
-  ACE_Map_Manager_Reverse_Iterator_Adapter (const ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> &impl);
+  ACE_Map_Manager_Reverse_Iterator_Adapter (ACE_Map_Reverse_Iterator<KEY, VALUE, ACE_Null_Mutex> const &impl);
 
   virtual ~ACE_Map_Manager_Reverse_Iterator_Adapter ();
 
@@ -1288,7 +1288,7 @@ public:
   ACE_Reverse_Iterator_Impl<T> *clone () const override;
 
   /// Comparison.
-  int compare (const ACE_Reverse_Iterator_Impl<T> &rhs) const override;
+  int compare (ACE_Reverse_Iterator_Impl<T> const &rhs) const override;
 
   /// Dereference.
   T dereference () const override;

@@ -50,7 +50,7 @@ public:
   using VALUE_SET_ITERATOR = ACE_Unbounded_Set_Iterator<INT_ID>;
 
   ACE_Hash_Multi_Map_Entry (EXT_ID const &ext_id,
-                            const ACE_Unbounded_Set<INT_ID> &int_id_set,
+                            ACE_Unbounded_Set<INT_ID> const &int_id_set,
                             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *next = nullptr,
                             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev = nullptr);
 
@@ -245,7 +245,7 @@ public:
    * to bind an existing entry, and returns -1 if failures occur.
    */
   int bind (EXT_ID const &ext_id,
-            const ACE_Unbounded_Set<INT_ID> &int_id_set);
+            ACE_Unbounded_Set<INT_ID> const &int_id_set);
 
   /**
    * Same as a normal bind, except the map entry is also passed back
@@ -253,7 +253,7 @@ public:
    * created entry, or the existing one.
    */
   int bind (EXT_ID const &ext_id,
-            const ACE_Unbounded_Set<INT_ID> &int_id_set,
+            ACE_Unbounded_Set<INT_ID> const &int_id_set,
             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -282,7 +282,7 @@ public:
    * and returns -1 if failures occur.
    */
   int rebind (EXT_ID const &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set);
+              ACE_Unbounded_Set<INT_ID> const &int_id_set);
 
   /**
    * Same as a normal rebind, except the map entry is also passed back
@@ -290,7 +290,7 @@ public:
    * created entry, or the existing one.
    */
   int rebind (EXT_ID const &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -301,7 +301,7 @@ public:
    * existing entry was rebound, and returns -1 if failures occur.
    */
   int rebind (EXT_ID const &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set);
 
   /**
@@ -310,7 +310,7 @@ public:
    * created entry, or the existing one.
    */
   int rebind (EXT_ID const &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
@@ -325,7 +325,7 @@ public:
    * and returns -1 if failures occur.
    */
   int rebind (EXT_ID const &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               EXT_ID &old_ext_id,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set);
 
@@ -335,7 +335,7 @@ public:
    * created entry, or the existing one.
    */
   int rebind (EXT_ID const &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               EXT_ID &old_ext_id,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
@@ -439,11 +439,11 @@ protected:
 
   /// Performs bind.  Must be called with locks held.
   int bind_i (EXT_ID const &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set);
+              ACE_Unbounded_Set<INT_ID> const &int_id_set);
 
   /// Performs bind.  Must be called with locks held.
   int bind_i (EXT_ID const &ext_id,
-              const ACE_Unbounded_Set<INT_ID> &int_id_set,
+              ACE_Unbounded_Set<INT_ID> const &int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs trybind.  Must be called with locks held.
@@ -457,33 +457,33 @@ protected:
 
   /// Performs rebind.  Must be called with locks held.
   int rebind_i (EXT_ID const &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set);
+                ACE_Unbounded_Set<INT_ID> const &int_id_set);
 
   /// Performs rebind.  Must be called with locks held.
   int rebind_i (EXT_ID const &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set,
                 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
   int rebind_i (EXT_ID const &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set,
                 ACE_Unbounded_Set<INT_ID> &old_int_id);
 
   /// Performs rebind.  Must be called with locks held.
   int rebind_i (EXT_ID const &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set,
                 ACE_Unbounded_Set<INT_ID> &old_int_id_set,
                 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
   int rebind_i (EXT_ID const &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set,
                 EXT_ID &old_ext_id,
                 ACE_Unbounded_Set<INT_ID> &old_int_id_set);
 
   /// Performs rebind.  Must be called with locks held.
   int rebind_i (EXT_ID const &ext_id,
-                const ACE_Unbounded_Set<INT_ID> &int_id_set,
+                ACE_Unbounded_Set<INT_ID> const &int_id_set,
                 EXT_ID &old_ext_id,
                 ACE_Unbounded_Set<INT_ID> &old_int_id_set,
                 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
@@ -622,8 +622,8 @@ public:
   ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
-  bool operator!= (const ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+  bool operator!= (ACE_Hash_Multi_Map_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -665,7 +665,7 @@ class ACE_Hash_Multi_Map_Const_Iterator_Base
 public:
   /// Constructor.  If @a head != 0, the iterator constructed is positioned
   /// at the head of the map, it is positioned at the end otherwise.
-  ACE_Hash_Multi_Map_Const_Iterator_Base (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
+  ACE_Hash_Multi_Map_Const_Iterator_Base (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &mm,
                                           int head);
 
   /// ITERATION methods.
@@ -685,11 +685,11 @@ public:
 
   /// Returns reference the @c Hash_Multi_Map_Manager that is being iterated
   /// over.
-  const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
+  ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const & map ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
-  bool operator!= (const ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+  bool operator!= (ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -707,7 +707,7 @@ protected:
   void dump_i () const;
 
   /// Map we are iterating over.
-  const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> *map_man_;
+  ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const *map_man_;
 
   /// Keeps track of how far we've advanced in the table.
   ssize_t index_;
@@ -781,7 +781,7 @@ template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class 
 class ACE_Hash_Multi_Map_Const_Iterator : public ACE_Hash_Multi_Map_Const_Iterator_Base<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>
 {
 public:
-  ACE_Hash_Multi_Map_Const_Iterator (const ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
+  ACE_Hash_Multi_Map_Const_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &mm,
                                      int tail = 0);
 
   /// Iteration methods.
@@ -866,8 +866,8 @@ public:
   ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>& map ();
 
   /// Check if two iterators point to the same position
-  bool operator== (const ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
-  bool operator!= (const ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &) const;
+  bool operator== (ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
+  bool operator!= (ACE_Hash_Multi_Map_Bucket_Iterator<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> const &) const;
 
   /// @}
 
