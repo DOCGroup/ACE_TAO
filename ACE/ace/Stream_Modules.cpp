@@ -145,14 +145,15 @@ ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp, size_t leng
   ACE_TRACE ("ACE_Stream_Head<ACE_SYNCH_USE, TIME_POLICY>::info");
   ACE_TCHAR const * const name = this->name ();
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
+  if (*strp == nullptr)
     {
-      return -1;
+      *strp = ACE_OS::strdup (name);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
     }
-  else
-    {
-      ACE_OS::strsncpy (*strp, name, length);
-    }
+  ACE_OS::strsncpy (*strp, name, length);
   return static_cast<int> (ACE_OS::strlen (name));
 }
 
@@ -295,14 +296,15 @@ ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp, size_t leng
   ACE_TRACE ("ACE_Stream_Tail<ACE_SYNCH_USE, TIME_POLICY>::info");
   ACE_TCHAR const * const name = this->name ();
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
+  if (*strp == nullptr)
     {
-      return -1;
+      *strp = ACE_OS::strdup (name);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
     }
-  else
-    {
-      ACE_OS::strsncpy (*strp, name, length);
-    }
+  ACE_OS::strsncpy (*strp, name, length);
   return static_cast<int> (ACE_OS::strlen (name));
 }
 
@@ -378,14 +380,15 @@ ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>::info (ACE_TCHAR **strp,
   ACE_TRACE ("ACE_Thru_Task<ACE_SYNCH_USE, TIME_POLICY>::info");
   ACE_TCHAR const * const name = this->name ();
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (name)) == nullptr)
+  if (*strp == nullptr)
     {
-      return -1;
+      *strp = ACE_OS::strdup (name);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
     }
-  else
-    {
-      ACE_OS::strsncpy (*strp, name, length);
-    }
+  ACE_OS::strsncpy (*strp, name, length);
   return static_cast<int> (ACE_OS::strlen (name));
 }
 

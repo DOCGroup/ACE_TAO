@@ -200,14 +200,15 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
                     addr_str,
                     ACE_TEXT ("# acceptor factory\n"));
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
     {
-      return -1;
+      *strp = ACE_OS::strdup (buf);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
     }
-  else
-    {
-      ACE_OS::strsncpy (*strp, buf, length);
-    }
+  ACE_OS::strsncpy (*strp, buf, length);
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -901,14 +902,15 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
                     ? ACE_TEXT ("<unknown>")
                     : this->service_description_);
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
     {
-      return -1;
+      *strp = ACE_OS::strdup (buf);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
     }
-  else
-    {
-      ACE_OS::strsncpy (*strp, buf, length);
-    }
+  ACE_OS::strsncpy (*strp, buf, length);
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -1292,14 +1294,15 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
                     addr_str,
                     ACE_TEXT ("#oneshot acceptor factory\n"));
 
-  if (*strp == nullptr && (*strp = ACE_OS::strdup (buf)) == nullptr)
+  if (*strp == nullptr)
     {
-      return -1;
+      *strp = ACE_OS::strdup (buf);
+      if (*strp == nullptr)
+        {
+          return -1;
+        }
     }
-  else
-    {
-      ACE_OS::strsncpy (*strp, buf, length);
-    }
+  ACE_OS::strsncpy (*strp, buf, length);
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 

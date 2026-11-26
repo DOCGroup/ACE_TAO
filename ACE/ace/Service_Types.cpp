@@ -303,14 +303,15 @@ ACE_Module_Type::info (ACE_TCHAR **str, size_t len) const
                     this->name (),
                     ACE_TEXT ("# ACE_Module\n"));
 
-  if (*str == nullptr && (*str = ACE_OS::strdup (buf)) == nullptr)
+  if (*str == nullptr)
     {
-      return -1;
+      *str = ACE_OS::strdup (buf);
+      if (*str == nullptr)
+        {
+          return -1;
+        }
     }
-  else
-    {
-      ACE_OS::strsncpy (*str, buf, len);
-    }
+  ACE_OS::strsncpy (*str, buf, len);
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
@@ -400,14 +401,15 @@ ACE_Stream_Type::info (ACE_TCHAR **str, size_t len) const
                     this->name (),
                     ACE_TEXT ("# STREAM\n"));
 
-  if (*str == nullptr && (*str = ACE_OS::strdup (buf)) == nullptr)
+  if (*str == nullptr)
     {
-      return -1;
+      *str = ACE_OS::strdup (buf);
+      if (*str == nullptr)
+        {
+          return -1;
+        }
     }
-  else
-    {
-      ACE_OS::strsncpy (*str, buf, len);
-    }
+  ACE_OS::strsncpy (*str, buf, len);
   return static_cast<int> (ACE_OS::strlen (buf));
 }
 
