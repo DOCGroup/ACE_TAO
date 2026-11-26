@@ -420,8 +420,9 @@ namespace CORBA
     void shutdown (CORBA::Boolean wait_for_completion = false);
 
     /**
-     * Explicitly destroy the ORB, releasing any resources.  Note that
-     * TAO *cannot* implicitly release the resources even if you have
+     * Explicitly destroy the ORB, releasing any resources.
+     *
+     * @note TAO *cannot* implicitly release the resources even if you have
      * destroyed all the references to a particular ORB since
      * CORBA::ORB_init() is required to return the same pointer if
      * called with the same ORBid, only after ORB::destroy() is called

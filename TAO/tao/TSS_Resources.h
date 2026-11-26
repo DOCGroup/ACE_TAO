@@ -58,7 +58,9 @@ public:
 public:
   /**
    * Points to structure containing state for the current upcall
-   * context in this thread.  Note that it does not come from the
+   * context in this thread.
+   *
+   * @note It does not come from the
    * resource factory because it must always be held in
    * thread-specific storage.  For now, since TAO_ORB_Core instances
    * are TSS singletons, we simply ride along and don't allocate

@@ -200,10 +200,8 @@ private:
   /// Addressing mode for this request.
   TAO_Target_Specification::TAO_Target_Address addressing_mode_ {TAO_Target_Specification::Key_Addr};
 
-  /**
-   * The arguments of this operation. Note that the return value is also
-   * an argument
-   */
+  /// The arguments of this operation.
+  /// @note The return value is also an argument.
   TAO::Argument **args_ {};
 
   /// Number of arguments including the return value
