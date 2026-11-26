@@ -45,6 +45,7 @@ public:
 
   /// @name ATM-specific open and shutdown operations
   /// @{
+
   /// open the stream.
   int open (ACE_ATM_Params params = ACE_ATM_Params());
 
