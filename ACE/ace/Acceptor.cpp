@@ -595,8 +595,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
    ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> *acc_s,
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
    ACE_Scheduling_Strategy<SVC_HANDLER> *sch_s,
-   const ACE_TCHAR *service_name,
-   const ACE_TCHAR *service_description,
+   ACE_TCHAR const *service_name,
+   ACE_TCHAR const *service_description,
    int use_select,
    int reuse_addr)
 {

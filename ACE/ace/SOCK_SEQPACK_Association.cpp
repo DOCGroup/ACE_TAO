@@ -54,7 +54,7 @@ ACE_SOCK_SEQPACK_Association::abort ()
   if (-1 == ACE_OS::setsockopt (this->get_handle (),
                                 SOL_SOCKET,
                                 SO_LINGER,
-                                reinterpret_cast<const char *> (&slinger),
+                                reinterpret_cast<char const *> (&slinger),
                                 sizeof (linger)))
   {
     return -1;

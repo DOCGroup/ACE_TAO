@@ -373,8 +373,8 @@ public:
                     ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> * =nullptr,
                     ACE_Concurrency_Strategy<SVC_HANDLER> * = nullptr,
                     ACE_Scheduling_Strategy<SVC_HANDLER> * = nullptr,
-                    const ACE_TCHAR *service_name = nullptr,
-                    const ACE_TCHAR *service_description = nullptr,
+                    ACE_TCHAR const *service_name = nullptr,
+                    ACE_TCHAR const *service_description = nullptr,
                     int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                     int reuse_addr = 1);
 
