@@ -56,7 +56,7 @@ public:
   {}
 
   /// Construct from ACE_Time_Value
-  explicit ACE_Time_Value_T(const ACE_Time_Value& tv,
+  explicit ACE_Time_Value_T(ACE_Time_Value const& tv,
                             const TIME_POLICY& tp = TIME_POLICY ())
     : ACE_Time_Value (tv),
       time_policy_ (tp)
@@ -65,7 +65,7 @@ public:
   ~ACE_Time_Value_T () override = default;
 
   /// Add @a tv to this.
-  ACE_Time_Value_T<TIME_POLICY> &operator += (const ACE_Time_Value &tv);
+  ACE_Time_Value_T<TIME_POLICY> &operator += (ACE_Time_Value const &tv);
 
   /// Add @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator += (time_t tv);
@@ -74,13 +74,13 @@ public:
   ACE_Time_Value_T<TIME_POLICY> &operator = (ACE_Time_Value_T<TIME_POLICY> const &tv);
 
   /// Assign @ tv to this
-  ACE_Time_Value_T<TIME_POLICY> &operator = (const ACE_Time_Value &tv);
+  ACE_Time_Value_T<TIME_POLICY> &operator = (ACE_Time_Value const &tv);
 
   /// Assign @ tv to this
   ACE_Time_Value_T<TIME_POLICY> &operator = (time_t tv);
 
   /// Subtract @a tv to this.
-  ACE_Time_Value_T<TIME_POLICY> &operator -= (const ACE_Time_Value &tv);
+  ACE_Time_Value_T<TIME_POLICY> &operator -= (ACE_Time_Value const &tv);
 
   /// Subtract @a tv to this.
   ACE_Time_Value_T<TIME_POLICY> &operator -= (time_t tv);

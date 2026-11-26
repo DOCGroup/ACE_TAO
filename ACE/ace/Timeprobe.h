@@ -70,7 +70,7 @@ public:
   u_long minimum_id_;
 
   /// Comparison
-  bool operator== (const ACE_Event_Descriptions &rhs) const;
+  bool operator== (ACE_Event_Descriptions const &rhs) const;
 };
 
 /**

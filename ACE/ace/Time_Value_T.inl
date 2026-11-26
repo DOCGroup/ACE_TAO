@@ -1,7 +1,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class TIME_POLICY>
-ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator += (const ACE_Time_Value &tv)
+ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator += (ACE_Time_Value const &tv)
 {
   this->ACE_Time_Value::operator +=(tv);
   return *this;
@@ -23,7 +23,7 @@ ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator = (ACE_Ti
 }
 
 template <class TIME_POLICY>
-ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator = (const ACE_Time_Value &tv)
+ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator = (ACE_Time_Value const &tv)
 {
   this->ACE_Time_Value::operator =(tv);
   return *this;
@@ -37,7 +37,7 @@ ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator = (time_t
 }
 
 template <class TIME_POLICY>
-ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator -= (const ACE_Time_Value &tv)
+ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator -= (ACE_Time_Value const &tv)
 {
   this->ACE_Time_Value::operator -=(tv);
   return *this;
