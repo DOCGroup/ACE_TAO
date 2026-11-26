@@ -6,7 +6,7 @@
 #include <ace/SOCK_Dgram_Mcast.h>
 #include <ace/Refcounted_Auto_Ptr.h>
 #include <cstring>
-
+#include <memory>
 
 #include "Messaging.hpp"
 #include "Protocol.hpp"
@@ -23,7 +23,7 @@ namespace ACE_TMCast
               size_t size)
         : size_ (size)
     {
-      std::memcpy (&header_, header, sizeof (Protocol::MessageHeader));
+      std::memcpy (std::addressof (header_), header, sizeof (Protocol::MessageHeader));
       std::memcpy (payload_, payload, size_);
     }
 
@@ -66,8 +66,11 @@ namespace ACE_TMCast
       if (ACE_OS::thr_create (&thread_thunk,
                               this,
                               THR_JOINABLE,
-                              &unused,
-                              &thread_) != 0) ACE_OS::abort ();
+                              std::addressof (unused),
+                              std::addressof (thread_)) != 0)
+        {
+          ACE_OS::abort ();
+        }
     }
 
     LinkListener (LinkListener const&) = delete;
@@ -95,7 +98,7 @@ namespace ACE_TMCast
     static ACE_THR_FUNC_RETURN
     thread_thunk (void* arg)
     {
-      LinkListener* obj = reinterpret_cast<LinkListener*> (arg);
+      LinkListener* obj = static_cast<LinkListener*> (arg);
 
       obj->execute ();
       return ACE_THR_FUNC_RETURN_NULL;
@@ -132,7 +135,7 @@ namespace ACE_TMCast
                                   Protocol::MAX_MESSAGE_SIZE,
                                   junk,
                                   0,
-                                  &timeout);
+                                  std::addressof (timeout));
 
           if (n != -1)
           {
