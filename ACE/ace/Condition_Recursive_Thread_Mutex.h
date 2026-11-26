@@ -48,9 +48,10 @@ public:
   ~ACE_Condition ();
 
   /**
-   * Explicitly destroy the condition variable.  Note that only one
-   * thread should call this method since it doesn't protect against
-   * race conditions.
+   * Explicitly destroy the condition variable.
+   *
+   * @note Only one thread should call this method since it doesn't
+   * protect against race conditions.
    */
   int remove ();
 
