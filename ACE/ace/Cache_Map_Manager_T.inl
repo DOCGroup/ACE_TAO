@@ -57,7 +57,7 @@ ACE_Cache_Map_Manager<KEY, VALUE, CMAP_TYPE, ITERATOR_IMPL, REVERSE_ITERATOR_IMP
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES> ACE_INLINE
-ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>::ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs)
+ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>::ACE_Cache_Map_Iterator (ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs)
   : iterator_implementation_ (rhs.iterator_implementation_)
 {
 }
@@ -146,7 +146,7 @@ ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>
 ////////////////////////////////////////////////////////////////////////////////
 
 template <class KEY, class VALUE, class REVERSE_IMPLEMENTATION, class CACHING_STRATEGY, class ATTRIBUTES> ACE_INLINE
-ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>::ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator <KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs)
+ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES>::ACE_Cache_Map_Reverse_Iterator (ACE_Cache_Map_Reverse_Iterator <KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs)
   : reverse_iterator_implementation_ (rhs.reverse_iterator_implementation_)
 {
 }

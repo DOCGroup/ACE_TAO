@@ -264,8 +264,8 @@ public:
   /// @{
   ACE_Cache_Map_Iterator <KEY, VALUE, IMPLEMENTATION,
                           CACHING_STRATEGY, ATTRIBUTES> &operator=
-      (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
-                                    CACHING_STRATEGY, ATTRIBUTES> &rhs);
+      (ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION,
+                              CACHING_STRATEGY, ATTRIBUTES> const &rhs);
 
   /// Comparison operators.
   bool operator== (ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs) const;
@@ -340,8 +340,8 @@ public:
   /// @{
   ACE_Cache_Map_Reverse_Iterator <KEY, VALUE, REVERSE_IMPLEMENTATION,
                                   CACHING_STRATEGY, ATTRIBUTES> &operator=
-     (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,
-                                           CACHING_STRATEGY, ATTRIBUTES> &rhs);
+     (ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION,
+                                     CACHING_STRATEGY, ATTRIBUTES> const &rhs);
 
   /// Comparison operators.
   bool operator== (ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> const &rhs) const;
