@@ -64,7 +64,7 @@ private:
 class Hash_Key
 {
 public:
-  u_long operator () (const KEY &key) const
+  u_long operator () (KEY const &key) const
     {
       // Recover system generated part of key.
       u_long value;
@@ -81,8 +81,8 @@ public:
 class Key_Adapter
 {
 public:
-  int encode (const KEY &original_key,
-              const ACE_Active_Map_Manager_Key &active_key,
+  int encode (KEY const &original_key,
+              ACE_Active_Map_Manager_Key const &active_key,
               KEY &modified_key)
     {
       // Keep original information in the key intact.
@@ -102,7 +102,7 @@ public:
       return 0;
     }
 
-  int decode (const KEY &modified_key,
+  int decode (KEY const &modified_key,
               ACE_Active_Map_Manager_Key &active_key)
     {
       // Read the active key data from the back of the key.
@@ -116,7 +116,7 @@ public:
       return 0;
     }
 
-  int decode (const KEY &modified_key,
+  int decode (KEY const &modified_key,
               KEY &original_key)
     {
       // Read the original user key data from the front of the
