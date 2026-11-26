@@ -5,7 +5,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_Utils
 {
   ACE_INLINE
-  const UUID_Node::Node_ID & UUID_Node::node_ID () const
+  UUID_Node::Node_ID const & UUID_Node::node_ID () const
   {
     return this->node_ID_;
   }
@@ -23,7 +23,7 @@ namespace ACE_Utils
   }
 
   ACE_INLINE
-  UUID::UUID (const UUID &right)
+  UUID::UUID (UUID const &right)
     : thr_id_ (right.thr_id_),
       pid_ (right.pid_)
   {
@@ -39,7 +39,7 @@ namespace ACE_Utils
   ACE_INLINE unsigned long
   UUID::hash () const
   {
-    return ACE::hash_pjw (reinterpret_cast <const char *> (&this->uuid_),
+    return ACE::hash_pjw (reinterpret_cast <char const *> (&this->uuid_),
                           UUID::BINARY_SIZE);
   }
 
@@ -103,7 +103,7 @@ namespace ACE_Utils
     this->uuid_.clock_seq_low_ = clock_seq_low;
   }
 
-  ACE_INLINE const UUID_Node &
+  ACE_INLINE UUID_Node const &
   UUID::node () const
   {
     return this->uuid_.node_;
@@ -116,7 +116,7 @@ namespace ACE_Utils
   }
 
   ACE_INLINE void
-  UUID::node (const UUID_Node & node)
+  UUID::node (UUID_Node const & node)
   {
     std::memcpy (&this->uuid_.node_, node.node_ID (), UUID_Node::NODE_ID_SIZE);
   }
@@ -147,26 +147,26 @@ namespace ACE_Utils
 
 #ifndef ACE_LACKS_SSCANF
   ACE_INLINE void
-  UUID::from_string (const ACE_CString& uuidString)
+  UUID::from_string (ACE_CString const& uuidString)
   {
     this->from_string_i (uuidString);
   }
 #endif
 
   ACE_INLINE bool
-  UUID::operator == (const UUID &right) const
+  UUID::operator == (UUID const &right) const
   {
     return 0 == std::memcmp (&this->uuid_, &right.uuid_, BINARY_SIZE);
   }
 
   ACE_INLINE bool
-  UUID::operator != (const UUID &right) const
+  UUID::operator != (UUID const &right) const
   {
     return 0 != std::memcmp (&this->uuid_, &right.uuid_, BINARY_SIZE);
   }
 
   ACE_INLINE bool
-  UUID_Node::operator == (const UUID_Node& rt) const
+  UUID_Node::operator == (UUID_Node const& rt) const
   {
     for (size_t i = 0; i < NODE_ID_SIZE; ++i)
       if (node_ID_ [i] != rt.node_ID_ [i])
@@ -178,7 +178,7 @@ namespace ACE_Utils
   }
 
   ACE_INLINE bool
-  UUID_Node::operator != (const UUID_Node& right) const
+  UUID_Node::operator != (UUID_Node const& right) const
   {
     return !(*this == right);
   }

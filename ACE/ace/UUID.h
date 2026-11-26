@@ -44,13 +44,13 @@ namespace ACE_Utils
     /**
      * @overload
      */
-    const Node_ID & node_ID () const;
+    Node_ID const & node_ID () const;
 
     /// Test for equality.
-    bool operator == (const UUID_Node & right) const;
+    bool operator == (UUID_Node const & right) const;
 
     /// Test for inequality.
-    bool operator != (const UUID_Node & right) const;
+    bool operator != (UUID_Node const & right) const;
 
   private:
     /// The value of the node id.
@@ -85,10 +85,10 @@ namespace ACE_Utils
 
 #ifndef ACE_LACKS_SSCANF
     /// Constructs a UUID from a string representation.
-    explicit UUID (const ACE_CString& uuidString);
+    explicit UUID (ACE_CString const& uuidString);
 #endif
 
-    UUID (const UUID &right);
+    UUID (UUID const &right);
 
     ~UUID () = default;
 
@@ -108,9 +108,9 @@ namespace ACE_Utils
     void clock_seq_low (u_char);
 
     UUID_Node & node ();
-    const UUID_Node & node () const;
+    UUID_Node const & node () const;
 
-    void node (const UUID_Node & node);
+    void node (UUID_Node const & node);
 
     ACE_CString* thr_id ();
     void thr_id (char*);
@@ -119,25 +119,25 @@ namespace ACE_Utils
     void pid (char*);
 
     /// Returns a string representation of the UUID
-    const ACE_CString* to_string () const;
+    ACE_CString const* to_string () const;
 
 #ifndef ACE_LACKS_SSCANF
     /// Set the value using a string
-    void from_string (const ACE_CString& uuid_string);
+    void from_string (ACE_CString const& uuid_string);
 #endif
 
     /// NIL UUID
-    static const UUID NIL_UUID;
+    static UUID const NIL_UUID;
 
     /// Equality Operations
-    bool operator == (const UUID &right) const;
-    bool operator != (const UUID &right) const;
+    bool operator == (UUID const &right) const;
+    bool operator != (UUID const &right) const;
 
     /// Compute a hash value for the UUID.
     unsigned long hash () const;
 
     /// Assign an existing UUID to this UUID.
-    const UUID & operator = (const UUID & rhs);
+    UUID const & operator = (UUID const & rhs);
 
     ACE_ALLOC_HOOK_DECLARE;
 
@@ -151,7 +151,7 @@ namespace ACE_Utils
      * @param[in]        uuid_string        String version of UUID.
      */
 #ifndef ACE_LACKS_SSCANF
-    void from_string_i (const ACE_CString& uuid_string);
+    void from_string_i (ACE_CString const& uuid_string);
 #endif
 
     /// Data Members for Class Attributes

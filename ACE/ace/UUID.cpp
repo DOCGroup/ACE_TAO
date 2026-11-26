@@ -22,10 +22,10 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_Utils
 {
   // NIL version of the UUID
-  const UUID UUID::NIL_UUID;
+  UUID const UUID::NIL_UUID;
 
 #ifndef ACE_LACKS_SSCANF
-  UUID::UUID (const ACE_CString& uuid_string)
+  UUID::UUID (ACE_CString const& uuid_string)
   {
     this->init ();
     this->from_string_i (uuid_string);
@@ -34,8 +34,8 @@ namespace ACE_Utils
 
   ACE_ALLOC_HOOK_DEFINE(UUID);
 
-  const UUID &
-  UUID::operator = (const UUID & rhs)
+  UUID const &
+  UUID::operator = (UUID const & rhs)
   {
     if (this != std::addressof (rhs))
       {
@@ -61,7 +61,7 @@ namespace ACE_Utils
     return *this;
   }
 
-  const ACE_CString * UUID::to_string () const
+  ACE_CString const * UUID::to_string () const
   {
     // Compute the string representation only once.
     if (this->as_string_)
@@ -151,7 +151,7 @@ namespace ACE_Utils
 
 #ifndef ACE_LACKS_SSCANF
   void
-  UUID::from_string_i (const ACE_CString& uuid_string)
+  UUID::from_string_i (ACE_CString const& uuid_string)
   {
     if (uuid_string.length () < NIL_UUID.to_string ()->length ())
       {
@@ -193,7 +193,7 @@ namespace ACE_Utils
         // because some compilers dont support vsscanf, including
         // MSVC. It appears that most platforms support sscanf though
         // so we need to use it directly.
-        const int nScanned =
+        int const nScanned =
 #if defined (ACE_HAS_TR24731_2005_CRT)
           sscanf_s (
                    uuid_string.c_str (),
@@ -238,7 +238,7 @@ namespace ACE_Utils
       }
     else
       {
-        const int nScanned =
+        int const nScanned =
 #if defined (ACE_HAS_TR24731_2005_CRT)
           sscanf_s (uuid_string.c_str (),
                     "%8x-%4x-%4x-%2x%2x-%2x%2x%2x%2x%2x%2x",
@@ -507,7 +507,7 @@ namespace ACE_Utils
   void
   UUID_Generator::get_systemtime (UUID_Time & timestamp)
   {
-    const UUID_Time timeOffset =
+    UUID_Time const timeOffset =
       ACE_UINT64_LITERAL (0x1B21DD213814000);
 
     /// Get the time of day, convert to 100ns ticks then add the offset.
