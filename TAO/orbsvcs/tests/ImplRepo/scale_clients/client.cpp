@@ -117,7 +117,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           {
             n = test->get_num_requests (request_delay_secs);
           }
-        catch (const CORBA::TIMEOUT &ex)
+        catch (CORBA::TIMEOUT const &ex)
           {
             ex._tao_print_exception ("timeout exception:");
             if (i == max_tries - 1)
@@ -151,7 +151,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception ("Client:");
   }
 

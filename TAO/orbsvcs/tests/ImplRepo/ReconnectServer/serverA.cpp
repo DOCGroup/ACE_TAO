@@ -115,7 +115,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     rootPOA->destroy (true, true);
     orb->destroy ();
   }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("Exception caught by serverA:");
     return 1;

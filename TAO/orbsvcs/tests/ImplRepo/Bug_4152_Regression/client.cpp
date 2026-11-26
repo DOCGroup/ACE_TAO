@@ -75,7 +75,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         n));
           }
       }
-    catch (const CORBA::Exception &ex)
+    catch (CORBA::Exception const &ex)
       {
         ACE_DEBUG ((LM_DEBUG,
                     "(%P|%t) Client caught: %C on first attempt, retrying killit <%d> shutdown <%d>\n",
@@ -106,7 +106,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                             n));
               }
           }
-        catch (const CORBA::Exception &second_attempt_ex)
+        catch (CORBA::Exception const &second_attempt_ex)
           {
             second_attempt_ex._tao_print_exception ("Client second attempt: ");
           }
@@ -114,7 +114,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("client:");
       return -1;

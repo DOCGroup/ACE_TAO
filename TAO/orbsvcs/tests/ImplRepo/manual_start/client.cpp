@@ -46,7 +46,7 @@ do_test ()
                   ACE_TEXT ("client contact completed\n")));
       return;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ACE_DEBUG ((LM_DEBUG,
                   ACE_TEXT ("client caught %C during contact\n"),
@@ -63,7 +63,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   {
     orb = CORBA::ORB_init(argc, argv);
   }
-  catch(const CORBA::Exception& ex)
+  catch(CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("client ORB init:"));
     return 1;
@@ -77,7 +77,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     do_test ();
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception (ACE_TEXT ("client:"));
     retval = -1;
   }
@@ -86,7 +86,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   {
     orb->destroy();
   }
-  catch(const CORBA::Exception& ex)
+  catch(CORBA::Exception const & ex)
   {
     ex._tao_print_exception (ACE_TEXT ("client ORB destroy:"));
     return 1;

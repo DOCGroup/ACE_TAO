@@ -59,7 +59,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         n));
           }
       }
-    catch (const CORBA::Exception &ex)
+    catch (CORBA::Exception const &ex)
       {
         ex._tao_print_exception ("Client caught: ");
 #if 0
@@ -74,7 +74,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         "Client received reply from server %d on second attempt\n",
                         n));
           }
-        catch (const CORBA::Exception &ex)
+        catch (CORBA::Exception const &ex)
           {
             ex._tao_print_exception ("Client second attempt: ");
           }
@@ -85,7 +85,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     return 0;
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("client:");
     }

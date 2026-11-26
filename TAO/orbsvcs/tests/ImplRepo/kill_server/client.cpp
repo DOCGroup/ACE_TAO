@@ -61,7 +61,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     }
     return 0;
   }
-  catch(const CORBA::TRANSIENT& ex) {
+  catch(CORBA::TRANSIENT const & ex) {
     if (expect_transient)
     {
       return 0;
@@ -69,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     ex._tao_print_exception ("client:");
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception ("client:");
   }
   return -1;

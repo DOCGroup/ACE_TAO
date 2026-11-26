@@ -51,7 +51,7 @@ Ping_Death_Request_Interceptor::receive_request_service_contexts (
     {
       this->poa_->destroy (true,true);
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_DEBUG ((LM_DEBUG, "(%P) deactivate raised %C\n",
                   ex._name()));

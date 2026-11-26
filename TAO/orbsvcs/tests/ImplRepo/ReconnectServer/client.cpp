@@ -37,12 +37,12 @@ class Client_Task : public ACE_Task_Base
             reconnected_ = true;
           }
         }
-        catch (const CORBA::OBJECT_NOT_EXIST &)
+        catch (CORBA::OBJECT_NOT_EXIST const &)
         {
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t)caught OBJECT_NOT_EXIST exception for request %d\n"), i ));
           caught_object_not_exist_ = true;
         }
-        catch (const CORBA::Exception & /*ex*/)
+        catch (CORBA::Exception const & /*ex*/)
         {
           communication_failed_ = true;
         }
@@ -153,7 +153,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("(%P|%t) Client test failed.\n")), 1);
     }
   }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
   {
     ex._tao_print_exception ("Exception caught by client:");
     return 1;

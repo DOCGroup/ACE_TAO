@@ -146,7 +146,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     root_poa->destroy(true,true);
     orb->destroy();
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception (ACE_TEXT("Server main()"));
     return 1;
   }

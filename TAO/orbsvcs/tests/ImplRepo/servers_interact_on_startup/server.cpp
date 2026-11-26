@@ -148,7 +148,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         ACE_TEXT ("(%P|%t|%T) Server %d received reply from server %d\n"),
                         server_num, n));
           }
-        catch (const CORBA::TRANSIENT &)
+        catch (CORBA::TRANSIENT const &)
           {
             if (expect_transient)
               {
@@ -197,7 +197,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 ACE_TEXT ("(%P|%t|%T) Server %d ending serving of %C\n"),
                 server_num, poa_name.c_str ()));
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception (ACE_TEXT ("Server main()"));
     return 1;
   }

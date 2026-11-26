@@ -119,7 +119,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       orb->destroy ();
       return 0;
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_CString str = ex._info ();
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Server main() caught: %C\n"),

@@ -59,7 +59,7 @@ public:
                         ACE_TEXT("message <%d> to server\n"),
                         try_count));
           }
-        catch (const CORBA::Exception& ex)
+        catch (CORBA::Exception const & ex)
           {
             ACE_DEBUG ((LM_INFO,
                         ACE_TEXT("(%P|%t) ignoring %C\n"),
@@ -225,7 +225,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Client main() Caught CORBA::Exception: %C\n"),
                 ex._name ()));

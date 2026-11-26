@@ -148,7 +148,7 @@ Server_i::init (int argc, ACE_TCHAR** argv)
           test->get();
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Server_i::init");
       throw;
@@ -175,7 +175,7 @@ Server_i::run ()
 
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Server_i::run");
       throw;

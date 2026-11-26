@@ -63,7 +63,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                     ACE_TEXT("Client got reply: %C\n"),
                           message.in()));
             }
-          catch (const CORBA::Exception &ex)
+          catch (CORBA::Exception const &ex)
             {
               ACE_CString str = ex._info ();
               ACE_ERROR_RETURN ((LM_ERROR,
@@ -76,7 +76,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       return 0;
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ACE_CString str = ex._info ();
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Client main() caught: %C\n"),

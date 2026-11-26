@@ -105,7 +105,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         messenger->abort(2);
         ACE_OS::sleep(seconds_between_requests);
       }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
       {
         // Swallow
       }
@@ -124,7 +124,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     orb->destroy ();
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     std::cerr << "Client main() Caught CORBA::Exception: " << ex << std::endl;
     return 1;
   }

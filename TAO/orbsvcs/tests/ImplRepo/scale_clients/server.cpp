@@ -141,7 +141,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       "(%P|%t) Server: ended <%C>\n",
       poa_name.c_str()));
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     ex._tao_print_exception ("Server main()");
     return 1;
   }

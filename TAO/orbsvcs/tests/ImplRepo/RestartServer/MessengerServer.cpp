@@ -109,7 +109,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
     terminator.putq(mb);
     terminator.wait();
   }
-  catch(const CORBA::Exception& ex) {
+  catch(CORBA::Exception const & ex) {
     std::cerr << "Server main() Caught CORBA::Exception" << ex << std::endl;
     return 1;
   }

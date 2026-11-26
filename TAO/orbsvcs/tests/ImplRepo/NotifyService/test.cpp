@@ -30,7 +30,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 CosNotifyChannelAdmin::EventChannelFactory::_narrow (obj.in ());
               success = true;
             }
-          catch (const CORBA::OBJECT_NOT_EXIST &)
+          catch (CORBA::OBJECT_NOT_EXIST const &)
             {
               ACE_DEBUG ((LM_DEBUG,
                           ACE_TEXT ("Test caught Object Not Exist, retry %d\n"),
@@ -49,7 +49,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
           ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Test Retries exceeded\n")));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Test");
       return 1;

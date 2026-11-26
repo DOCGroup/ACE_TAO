@@ -152,7 +152,7 @@ Server_i::init (int argc, ACE_TCHAR** argv)
     policies[0]->destroy();
     policies[1]->destroy();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ("Server_i::init");
     throw;
@@ -189,7 +189,7 @@ Server_i::run ()
     this->root_poa_->destroy(true, true);
     this->orb_->destroy();
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ("Server_i::run");
     throw;
