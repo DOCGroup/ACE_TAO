@@ -96,7 +96,7 @@ public:
   class ACE_Export ACE_Name_Node
   {
   public:
-    ACE_Name_Node (const char *name,
+    ACE_Name_Node (char const *name,
                    char *name_ptr,
                    char *pointer,
                    ACE_Name_Node *head);
@@ -116,10 +116,10 @@ public:
                           void *base_addr);
 
     /// Return a pointer to the name of this node.
-    const char *name () const;
+    char const *name () const;
 
     /// Assign a name;
-    void name (const char *);
+    void name (char const *);
 
     /// Name of the Node.
     CHAR_PTR name_;
@@ -182,7 +182,7 @@ public:
   void dump () const;
 
 private:
-  void operator= (const ACE_Control_Block &) = delete;
+  void operator= (ACE_Control_Block const &) = delete;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

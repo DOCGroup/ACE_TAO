@@ -61,7 +61,7 @@ public:
   /// block.  Return the starting address of the current building
   /// block, 0 if error occurs.  @a len specify the string length,
   /// not the actually data size.
-  ACE_CHAR_T *copy (const ACE_CHAR_T *data,
+  ACE_CHAR_T *copy (ACE_CHAR_T const *data,
               size_t len);
 
   /// Return the maximum @a size

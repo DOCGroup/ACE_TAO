@@ -158,7 +158,7 @@ ACE_Obstack_T<ACE_CHAR_T>::~ACE_Obstack_T ()
 }
 
 template <class ACE_CHAR_T> ACE_CHAR_T *
-ACE_Obstack_T<ACE_CHAR_T>::copy (const ACE_CHAR_T *s,
+ACE_Obstack_T<ACE_CHAR_T>::copy (ACE_CHAR_T const *s,
                                  size_t len)
 {
   ACE_TRACE ("ACE_Obstack_T<ACE_CHAR_T>::copy");

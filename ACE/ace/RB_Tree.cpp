@@ -941,7 +941,7 @@ ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK>::
 dump_node_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> &node) const
 {
 #if defined (ACE_HAS_DUMP)
-  const char * color_str = (node.color () == ACE_RB_Tree_Node_Base::RED)
+  char const * color_str = (node.color () == ACE_RB_Tree_Node_Base::RED)
                            ? "RED" : "BLACK";
 
   ACELIB_DEBUG ((LM_DEBUG,  ACE_TEXT (" color=[%C]\n"), color_str));

@@ -98,7 +98,7 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node ()
   ACE_TRACE ("ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node");
 }
 
-ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
+ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (char const *name,
                                                     char *name_ptr,
                                                     char *pointer,
                                                     ACE_Name_Node *next)
@@ -116,14 +116,14 @@ ACE_PI_Control_Block::ACE_Name_Node::ACE_Name_Node (const char *name,
   }
 }
 
-const char *
+char const *
 ACE_PI_Control_Block::ACE_Name_Node::name () const
 {
   return this->name_;
 }
 
 void
-ACE_PI_Control_Block::ACE_Name_Node::name (const char *)
+ACE_PI_Control_Block::ACE_Name_Node::name (char const *)
 {
   ACE_ASSERT (false); // not implemented yet.
 }
