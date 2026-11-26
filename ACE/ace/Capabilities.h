@@ -135,34 +135,34 @@ public:
 
 public:
   /// Get a string entry.
-  int getval (const ACE_TCHAR *ent, ACE_TString &val);
+  int getval (ACE_TCHAR const *ent, ACE_TString &val);
 
   /// Get an integer entry.
-  int getval (const ACE_TCHAR *ent, int &val);
+  int getval (ACE_TCHAR const *ent, int &val);
 
   /// Get the ACE_Capabilities name from FILE fname and load the
   /// associated capabitily entries in map.
-  int getent (const ACE_TCHAR *fname, const ACE_TCHAR *name);
+  int getent (ACE_TCHAR const *fname, ACE_TCHAR const *name);
 
 protected:
   /// Parse an integer property
-  const ACE_TCHAR *parse (const ACE_TCHAR *buf, int &cap);
+  ACE_TCHAR const *parse (ACE_TCHAR const *buf, int &cap);
 
   /// Parse a string property
-  const ACE_TCHAR *parse (const ACE_TCHAR *buf, ACE_TString &cap);
+  ACE_TCHAR const *parse (ACE_TCHAR const *buf, ACE_TString &cap);
 
   /// Fill the ACE_Capabilities with description in ent.
-  int fillent(const ACE_TCHAR *ent);
+  int fillent(ACE_TCHAR const *ent);
 
   /// Parse a cap entry
-  int parseent (const ACE_TCHAR *name, ACE_TCHAR *line);
+  int parseent (ACE_TCHAR const *name, ACE_TCHAR *line);
 
   /// Get a line from FILE input stream
   int getline (FILE* fp,
                ACE_TString &line);
 
   /// Is a valid entry
-  bool is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line);
+  bool is_entry (ACE_TCHAR const *name, ACE_TCHAR const *line);
 
   /// Reset the set of capabilities
   void resetcaps ();

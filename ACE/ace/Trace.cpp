@@ -72,9 +72,9 @@ ACE_Trace::get_nesting_indent ()
 // Perform the first part of the trace, which prints out the string N,
 // the LINE, and the ACE_FILE as the function is entered.
 
-ACE_Trace::ACE_Trace (const ACE_TCHAR *n,
+ACE_Trace::ACE_Trace (ACE_TCHAR const *n,
                       int line,
-                      const ACE_TCHAR *file)
+                      ACE_TCHAR const *file)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (line);

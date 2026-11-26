@@ -66,7 +66,7 @@ public:
   ACE_Cleanup_Info_Node (void *object,
                          ACE_CLEANUP_FUNC cleanup_hook,
                          void *param,
-                         const char *name);
+                         char const *name);
   ~ACE_Cleanup_Info_Node ();
 
   /// Equality operator.
@@ -94,7 +94,7 @@ private:
   void *param_ {};
 
   /// Name of the cleanup object
-  const char *name_ {};
+  char const *name_ {};
 };
 
 using ACE_Cleanup_Info_Node_List = ACE_Intrusive_List<ACE_Cleanup_Info_Node>;
@@ -116,7 +116,7 @@ public:
   ~ACE_OS_Exit_Info () = default;
 
   /// Use to register a cleanup hook.
-  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name = nullptr);
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, char const * name = nullptr);
 
   /// Look for a registered cleanup hook object.  Returns true if already
   /// registered, false if not.

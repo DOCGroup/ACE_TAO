@@ -14,7 +14,7 @@
 #include /**/ "ace/config-all.h"
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-ACE_Export void __ace_assert(const char *file, int line, const ACE_TCHAR *expression);
+ACE_Export void __ace_assert(char const *file, int line, ACE_TCHAR const *expression);
 ACE_END_VERSIONED_NAMESPACE_DECL
 
 #define ACE_TEST_ASSERT(X) \

@@ -38,7 +38,7 @@ ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node ()
 ACE_Cleanup_Info_Node::ACE_Cleanup_Info_Node (void *object,
                                               ACE_CLEANUP_FUNC cleanup_hook,
                                               void *param,
-                                              const char *name)
+                                              char const *name)
   : object_ (object),
     cleanup_hook_ (cleanup_hook),
     param_ (param),
@@ -80,7 +80,7 @@ int
 ACE_OS_Exit_Info::at_exit_i (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
                              void *param,
-                             const char* name)
+                             char const * name)
 {
   // Return -1 and sets errno if unable to allocate storage.  Enqueue
   // at the head and dequeue from the head to get LIFO ordering.

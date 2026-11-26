@@ -25,8 +25,8 @@ ACE_Capabilities::~ACE_Capabilities ()
   this->resetcaps ();
 }
 
-const ACE_TCHAR *
-ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
+ACE_TCHAR const *
+ACE_Capabilities::parse (ACE_TCHAR const *buf, ACE_TString &cap)
 {
   while (*buf != ACE_TEXT ('\0') && *buf != ACE_TEXT (','))
     {
@@ -82,8 +82,8 @@ ACE_Capabilities::parse (const ACE_TCHAR *buf, ACE_TString &cap)
   return buf;
 }
 
-const ACE_TCHAR *
-ACE_Capabilities::parse (const ACE_TCHAR *buf, int &cap)
+ACE_TCHAR const *
+ACE_Capabilities::parse (ACE_TCHAR const *buf, int &cap)
 {
   int n {};
 
@@ -114,7 +114,7 @@ ACE_Capabilities::resetcaps ()
 }
 
 int
-ACE_Capabilities::fillent (const ACE_TCHAR *buf)
+ACE_Capabilities::fillent (ACE_TCHAR const *buf)
 {
   this->resetcaps ();
   while (*buf)
@@ -207,7 +207,7 @@ ACE_Capabilities::fillent (const ACE_TCHAR *buf)
 }
 
 bool
-ACE_Capabilities::is_entry (const ACE_TCHAR *name, const ACE_TCHAR *line)
+ACE_Capabilities::is_entry (ACE_TCHAR const *name, ACE_TCHAR const *line)
 {
   for (;;)
     {
@@ -274,7 +274,7 @@ ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
 }
 
 int
-ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
+ACE_Capabilities::getval (ACE_TCHAR const *keyname, ACE_TString &val)
 {
   ACE_CapEntry* cap {};
   if (this->caps_.find (keyname, cap) == -1)
@@ -293,7 +293,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, ACE_TString &val)
 }
 
 int
-ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
+ACE_Capabilities::getval (ACE_TCHAR const *keyname, int &val)
 {
   ACE_CapEntry *cap {};
   if (this->caps_.find (keyname, cap) == -1)
@@ -320,7 +320,7 @@ ACE_Capabilities::getval (const ACE_TCHAR *keyname, int &val)
 }
 
 static bool
-is_empty (const ACE_TCHAR *line)
+is_empty (ACE_TCHAR const *line)
 {
   while (*line && ACE_OS::ace_isspace (*line))
     {
@@ -331,7 +331,7 @@ is_empty (const ACE_TCHAR *line)
 }
 
 static bool
-is_line (const ACE_TCHAR *line)
+is_line (ACE_TCHAR const *line)
 {
   while (*line && ACE_OS::ace_isspace (*line))
     {
@@ -342,7 +342,7 @@ is_line (const ACE_TCHAR *line)
 }
 
 int
-ACE_Capabilities::getent (const ACE_TCHAR *fname, const ACE_TCHAR *name)
+ACE_Capabilities::getent (ACE_TCHAR const *fname, ACE_TCHAR const *name)
 {
   std::unique_ptr<FILE, int (*) (FILE *)> fp {
     ACE_OS::fopen (fname, ACE_TEXT ("r")), ACE_OS::fclose};
