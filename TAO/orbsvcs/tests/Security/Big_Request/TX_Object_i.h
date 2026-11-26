@@ -28,7 +28,7 @@ public:
 
   ~TX_Object_i () override = default;
 
-  void send (const DataSeq & data) override;
+  void send (DataSeq const & data) override;
 
   void recv (DataSeq_out data) override;
 

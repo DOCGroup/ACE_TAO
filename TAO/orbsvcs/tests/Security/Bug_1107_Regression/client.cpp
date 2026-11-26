@@ -44,7 +44,7 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
       // This invocation should result in a CORBA::NO_PERMISSION exception.
       server->baz ();
     }
-  catch (const CORBA::NO_PERMISSION &)
+  catch (CORBA::NO_PERMISSION const &)
     {
       ACE_DEBUG ((LM_INFO,
                   ACE_TEXT ("(%P|%t) Received CORBA::NO_PERMISSION from server, as expected.\n")));
@@ -144,7 +144,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                       ACE_TEXT ("secure_invocation_test returned <%d>\n"),
                       status));
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const &ex)
         {
           if (options.use_certificate)
             {
@@ -165,7 +165,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       }
       return status;
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception in main:");
       return 1;

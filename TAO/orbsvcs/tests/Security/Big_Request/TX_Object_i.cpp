@@ -6,7 +6,7 @@ TX_Object_i::TX_Object_i (CORBA::ORB_ptr orb)
 }
 
 void
-TX_Object_i::send (const DataSeq & data)
+TX_Object_i::send (DataSeq const & data)
 {
   this->data_ = data;
 

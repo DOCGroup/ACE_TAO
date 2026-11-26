@@ -19,12 +19,12 @@ Client_Task::svc ()
       // call message
       this->messenger_->call_message ("user");
     }
-  catch (const CORBA::NO_PERMISSION &ex)
+  catch (CORBA::NO_PERMISSION const &ex)
     {
       result_ = 1;
       ex._tao_print_exception ("ERROR: Caught CORBA::NO_PERMISSION exception");
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       result_ = 1;
       ex._tao_print_exception ("Caught exception:");
