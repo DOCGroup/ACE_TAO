@@ -10,12 +10,16 @@
 
 #include "test_config.h"
 #include "ace/OS_NS_string.h"
+#include "ace/OS_NS_unistd.h"
 #include "ace/FILE_Connector.h"
 #include "ace/Null_Condition.h"
 #include "ace/Null_Mutex.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Synch_Traits.h"
 #include <memory>
+#if defined (ACE_HAS_ALLOC_HOOKS)
+# include "ace/Malloc_Base.h"
+#endif
 
 using SVC_HANDLER = ACE_Buffered_Svc_Handler<ACE_FILE_IO, ACE_NULL_SYNCH>;
 
@@ -145,6 +149,29 @@ run_main (int argc, ACE_TCHAR *argv[])
       }
 
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
+
+    if (info.size_ > 0)
+      {
+        if (ACE_OS::lseek (file_io.get_handle (), 0, SEEK_SET) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not rewind file\n")), 1);
+          }
+        iovec result {};
+        ssize_t const received = file_io.recvv (std::addressof (result));
+        bool const valid = received == info.size_
+          && result.iov_len == static_cast<size_t> (received)
+          && result.iov_base != nullptr
+          && (received < 6 || ACE_OS::memcmp (result.iov_base, "hello ", 6) == 0);
+#if defined (ACE_HAS_ALLOC_HOOKS)
+        ACE_Allocator::instance ()->free (result.iov_base);
+#else
+        delete [] static_cast<char *> (result.iov_base);
+#endif
+        if (!valid)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Reading file into allocated buffer failed\n")), 1);
+          }
+      }
 
     file_io.close ();
 
