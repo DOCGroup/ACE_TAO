@@ -209,16 +209,20 @@ static void VbTest()
   ACE_TEST_ASSERT(copied_vb == v10);
 
   Pdu move_packet_source (pdu);
+  move_packet_source.set_notify_id (o1);
   Pdu move_packet (std::move (move_packet_source));
   Pdu move_packet_assigned;
   move_packet_assigned = std::move (move_packet);
   Vb moved_packet_vb;
   int const packet_result = move_packet_assigned.get_vb (moved_packet_vb, 1);
+  Oid moved_packet_id;
+  move_packet_assigned.get_notify_id (moved_packet_id);
   ACE_TEST_ASSERT (move_packet_source.get_vb_count () == 0);
   ACE_TEST_ASSERT (move_packet.get_vb_count () == 0);
   ACE_TEST_ASSERT (move_packet_assigned.get_vb_count () == 2);
   ACE_TEST_ASSERT (packet_result == 1);
   ACE_TEST_ASSERT (moved_packet_vb == v10);
+  ACE_TEST_ASSERT (moved_packet_id == o1);
   move_packet_source += v5;
   ACE_TEST_ASSERT (move_packet_source.get_vb_count () == 1);
 

@@ -492,7 +492,7 @@ void Pdu::get_notify_timestamp (TimeTicks &timestamp) const
 // set the notify id
 void Pdu::set_notify_id (Oid id)
 {
-    notify_id_ = id;
+  this->notify_id_ = std::move (id);
 }
 
 // get the notify id
