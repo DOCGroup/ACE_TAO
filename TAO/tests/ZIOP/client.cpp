@@ -9,7 +9,7 @@
 
 #include <cstring>
 
-static const ACE_TCHAR *ior = ACE_TEXT("file://") DEFAULT_IOR_FILENAME;
+static ACE_TCHAR const *ior = ACE_TEXT("file://") DEFAULT_IOR_FILENAME;
 static ::Compression::CompressionManager_var compression_manager {};
 CORBA::ULong big_msg_size = 40000;
 

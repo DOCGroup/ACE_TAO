@@ -230,7 +230,7 @@ test256_compressor (::Compression::Compressor_var const& compressor)
     }
 
     ACE_HEX_DUMP((  LM_INFO,
-                    reinterpret_cast<const char*>(test256_array),
+                    reinterpret_cast<char const *>(test256_array),
                     BUFF_256_SIZE,
                     ACE_TEXT("Original (test256) Buffer")
                     ));
@@ -250,7 +250,7 @@ test256_compressor (::Compression::Compressor_var const& compressor)
     }
 
     ACE_HEX_DUMP((  LM_INFO,
-                    reinterpret_cast<const char*>(comp_out.get_buffer()),
+                    reinterpret_cast<char const *>(comp_out.get_buffer()),
                     comp_out.length(),
                     ACE_TEXT("Compressed Buffer")
                     ));
@@ -399,7 +399,7 @@ test128_compressor (::Compression::Compressor_var const& compressor)
     }
 
     ACE_HEX_DUMP((  LM_INFO,
-                    reinterpret_cast<const char*>(comp_out.get_buffer()),
+                    reinterpret_cast<char const *>(comp_out.get_buffer()),
                     comp_out.length(),
                     ACE_TEXT("Compressed (test128) Buffer")
                     ));
@@ -461,7 +461,7 @@ test129A_compressor (::Compression::Compressor_var const& compressor)
     }
 
     ACE_HEX_DUMP((  LM_INFO,
-                reinterpret_cast<const char*>(comp_out.get_buffer()),
+                reinterpret_cast<char const *>(comp_out.get_buffer()),
                 comp_out.length(),
                 ACE_TEXT("Compressed (test129A) Buffer")
                 ));
@@ -525,7 +525,7 @@ test129B_compressor (::Compression::Compressor_var const& compressor)
     }
 
     ACE_HEX_DUMP((  LM_INFO,
-                reinterpret_cast<const char*>(comp_out.get_buffer()),
+                reinterpret_cast<char const *>(comp_out.get_buffer()),
                 comp_out.length(),
                 ACE_TEXT("Compressed (test129B) Buffer")
                 ));
