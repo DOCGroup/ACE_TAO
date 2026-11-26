@@ -36,9 +36,7 @@ ACE_IOStream<STREAM>::eof () const
 }
 
 template <class STREAM> ACE_INLINE
-ACE_SOCK_Dgram_SC<STREAM>::ACE_SOCK_Dgram_SC ()
-{
-}
+ACE_SOCK_Dgram_SC<STREAM>::ACE_SOCK_Dgram_SC () = default;
 
 template <class STREAM> ACE_INLINE
 ACE_SOCK_Dgram_SC<STREAM>::ACE_SOCK_Dgram_SC (STREAM &source,

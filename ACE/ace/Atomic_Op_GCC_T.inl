@@ -4,9 +4,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
 ACE_INLINE
-ACE_Atomic_Op_GCC<T>::ACE_Atomic_Op_GCC ()
-{
-}
+ACE_Atomic_Op_GCC<T>::ACE_Atomic_Op_GCC () = default;
 
 template <typename T>
 ACE_INLINE

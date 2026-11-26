@@ -12,9 +12,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 #if defined (ACE_HAS_BUILTIN_ATOMIC_OP)
 
 ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op ()
-{
-}
+ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op () = default;
 
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, long>::ACE_Atomic_Op (long c)
@@ -195,9 +193,7 @@ ACE_Atomic_Op<ACE_Thread_Mutex, long>::value_i ()
 }
 
 ACE_INLINE
-ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op ()
-{
-}
+ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op () = default;
 
 ACE_INLINE
 ACE_Atomic_Op<ACE_Thread_Mutex, unsigned long>::ACE_Atomic_Op (unsigned long c)
