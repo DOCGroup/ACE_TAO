@@ -45,12 +45,10 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Complex_Address_Server :
 {
 public:
   /// Create a new TAO_ECG_Complex_Address_Server object.
-  /*
-   * (Constructor access is restricted to insure that all
-   * TAO_ECG_Complex_Address_Server objects are heap-allocated.)
-   * @c is_source_mapping flag indicates whether this
-   * server maps based on event header source or event header type.
-   */
+  /// Constructor access is restricted to ensure that all
+  /// TAO_ECG_Complex_Address_Server objects are heap-allocated.
+  /// The @a is_source_mapping flag selects mapping by event header source
+  /// or event header type.
   static PortableServer::Servant_var<TAO_ECG_Complex_Address_Server>
          create (bool is_source_mapping = true);
 

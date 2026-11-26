@@ -198,13 +198,10 @@ public:
 
   /// Same as the method above, but also gives the client an opportunity to
   /// specify consumer qos, i.e., which EC traffic should get multicasted.
-  /*
-   * By default, multicast sender subscribes to all events in the
-   * Event Channel, i.e., all events pushed to the EC get multicasted
-   * (as long as their ttl is > 0).  This method allows clients to
-   * specify a more restrictive qos, hence limiting which EC traffic
-   * gets multicasted.
-   */
+  /// By default, the multicast sender subscribes to all events in the
+  /// Event Channel, i.e., all events pushed to the EC get multicasted
+  /// (as long as their TTL is greater than zero). This method allows clients
+  /// to specify a more restrictive QoS, limiting which traffic gets multicasted.
   int init (RtecEventChannelAdmin::ConsumerQOS const & consumer_qos,
             char const *address_server_arg,
             Attributes const & attributes = Attributes());
