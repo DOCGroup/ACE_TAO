@@ -56,9 +56,9 @@ class CCustomEventHandlerUpcall
         /// This method is called when the timer expires.
         int timeout (TTimerQueue&,
                      ICustomEventHandler* p_Handler,
-                     const void* p_vParameter,
+                     void const * p_vParameter,
                      int /*recurring_timer*/,
-                     const ACE_Time_Value& /*cur_time*/)
+                     ACE_Time_Value const & /*cur_time*/)
         {
             ACE_TRACE("timeout");
 
@@ -66,15 +66,15 @@ class CCustomEventHandlerUpcall
         }
 
         /// This method is called when a timer is registered.
-        int registration(TTimerQueue&, ICustomEventHandler*, const void*) { return 0; }
+        int registration(TTimerQueue&, ICustomEventHandler*, void const *) { return 0; }
 
         /// This method is called before the timer expires.
-        int preinvoke(TTimerQueue&, ICustomEventHandler*, const void*,
-            int, const ACE_Time_Value&, const void*&) { return 0; }
+        int preinvoke(TTimerQueue&, ICustomEventHandler*, void const *,
+            int, ACE_Time_Value const &, void const *&) { return 0; }
 
         /// This method is called after the timer expires.
-        int postinvoke(TTimerQueue&, ICustomEventHandler*, const void*,
-            int, const ACE_Time_Value&, const void*) { return 0; }
+        int postinvoke(TTimerQueue&, ICustomEventHandler*, void const *,
+            int, ACE_Time_Value const &, void const *) { return 0; }
 
         /// This method is called when a handler is canceled
         int cancel_type(TTimerQueue&, ICustomEventHandler*, int, int&) { return 0; }
@@ -89,7 +89,7 @@ class CCustomEventHandlerUpcall
 
         /// This method is called when the timer queue is destroyed and
         /// the timer is still contained in it
-        int deletion(TTimerQueue&, ICustomEventHandler* p_Handler, const void*)
+        int deletion(TTimerQueue&, ICustomEventHandler* p_Handler, void const *)
         {
             ACE_TRACE("deletion");
             delete p_Handler;

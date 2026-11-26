@@ -23,7 +23,7 @@
 class Test_SIGINT_Handler : public ACE_Event_Handler
 {
 public:
-  Test_SIGINT_Handler (ACE_Reactor *reactor, const char *message)
+  Test_SIGINT_Handler (ACE_Reactor *reactor, char const *message)
     : message_ (message)
   {
     int const result = reactor->register_handler (SIGINT, this);
