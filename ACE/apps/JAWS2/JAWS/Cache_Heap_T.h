@@ -38,7 +38,7 @@ public:
   int maxsize (Cache_Manager *cm, size_t new_maxsize);
 
   /// Insert an object into the heap.
-  int insert (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
+  int insert (EXT_ID const &ext_id, JAWS_Cache_Object *const &int_id);
 
   /// Remove the highest-priority object from the heap.
   int remove (EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
@@ -75,7 +75,7 @@ class JAWS_Cache_Heap_Item
   friend class JAWS_Cache_Heap<EXT_ID, FACT, H_FN, E_FN>;
 
 public:
-  JAWS_Cache_Heap_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
+  JAWS_Cache_Heap_Item (EXT_ID const &ext_id, JAWS_Cache_Object *const &int_id);
   unsigned int priority () const;
 
 private:

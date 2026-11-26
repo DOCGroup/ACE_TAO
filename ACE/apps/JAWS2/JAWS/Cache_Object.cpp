@@ -4,7 +4,7 @@
 #include "ace/Guard_T.h"
 #include "ace/OS_NS_time.h"
 
-JAWS_Cache_Object::JAWS_Cache_Object (const void *data, size_t size)
+JAWS_Cache_Object::JAWS_Cache_Object (void const *data, size_t size)
   : internal_ (nullptr),
     data_ (data),
     size_ (size)
@@ -31,7 +31,7 @@ JAWS_Cache_Object::internal (void *item)
   this->internal_ = item;
 }
 
-const void *
+void const *
 JAWS_Cache_Object::data () const
 {
   return this->data_;
@@ -94,7 +94,7 @@ JAWS_Cache_Object::heap_item (void *item)
 }
 
 JAWS_Referenced_Cache_Object::
-JAWS_Referenced_Cache_Object (const void *data, size_t size)
+JAWS_Referenced_Cache_Object (void const *data, size_t size)
   : JAWS_Cache_Object (data, size),
     lock_adapter_ (count_)
 {
@@ -147,7 +147,7 @@ JAWS_Referenced_Cache_Object::priority_i () const
 }
 
 JAWS_Counted_Cache_Object::
-JAWS_Counted_Cache_Object (const void *data, size_t size)
+JAWS_Counted_Cache_Object (void const *data, size_t size)
   : JAWS_Cache_Object (data, size),
     count_ (0),
     new_count_ (0),
@@ -230,7 +230,7 @@ JAWS_Referenced_Cache_Object_Factory
 ::~JAWS_Referenced_Cache_Object_Factory () = default;
 
 JAWS_Cache_Object *
-JAWS_Referenced_Cache_Object_Factory::create (const void *data, size_t size)
+JAWS_Referenced_Cache_Object_Factory::create (void const *data, size_t size)
 {
   JAWS_Referenced_Cache_Object *obj;
 
@@ -260,7 +260,7 @@ JAWS_Counted_Cache_Object_Factory
 ::~JAWS_Counted_Cache_Object_Factory () = default;
 
 JAWS_Cache_Object *
-JAWS_Counted_Cache_Object_Factory::create (const void *data, size_t size)
+JAWS_Counted_Cache_Object_Factory::create (void const *data, size_t size)
 {
   JAWS_Counted_Cache_Object *obj;
 

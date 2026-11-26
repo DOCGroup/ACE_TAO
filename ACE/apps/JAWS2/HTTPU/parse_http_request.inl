@@ -9,7 +9,7 @@ Parse_HTTP_Request::method () const
   return (int) *this->method_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 Parse_HTTP_Request::method_str () const
 {
   return *this->method_;
@@ -27,13 +27,13 @@ Parse_HTTP_Request::minor_version () const
   return this->minor_version_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 Parse_HTTP_Request::version () const
 {
   return this->version_ ? this->version_ : "HTTP/0.9";
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 Parse_HTTP_Request::url () const
 {
   return this->url_;

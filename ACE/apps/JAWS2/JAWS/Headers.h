@@ -17,20 +17,20 @@
 class JAWS_Export JAWS_Header_Data
 {
 public:
-  JAWS_Header_Data (const char *name, const char *value = nullptr, int type = 0);
-  JAWS_Header_Data (const char *name, int type, const char *value = nullptr);
+  JAWS_Header_Data (char const *name, char const *value = nullptr, int type = 0);
+  JAWS_Header_Data (char const *name, int type, char const *value = nullptr);
   ~JAWS_Header_Data ();
   JAWS_Header_Data (JAWS_Header_Data const &) = delete;
   JAWS_Header_Data (JAWS_Header_Data &&) = delete;
   JAWS_Header_Data &operator= (JAWS_Header_Data const &) = delete;
   JAWS_Header_Data &operator= (JAWS_Header_Data &&) = delete;
 
-  const char * header_name () const;
-  const char * header_value () const;
+  char const * header_name () const;
+  char const * header_value () const;
   int header_type () const;
 
-  void header_name (const char *name);
-  void header_value (const char *value);
+  void header_name (char const *name);
+  void header_value (char const *value);
   void header_type (int type);
 
 private:
@@ -53,14 +53,14 @@ public:
   int insert (JAWS_Header_Data *new_data);
 
   /// Find a header from the beginning of the list; return nullptr if absent.
-  JAWS_Header_Data * find (const char *const &header_name);
+  JAWS_Header_Data * find (char const *const &header_name);
 
   /// Continue searching from the previous find position; return nullptr if
   /// absent.
-  JAWS_Header_Data * find_next (const char *const &header_name);
+  JAWS_Header_Data * find_next (char const *const &header_name);
 
   /// Remove all headers matching header_name.
-  void remove_all (const char *const &header_name);
+  void remove_all (char const *const &header_name);
 
   /// Return an iterator over the header table.
   JAWS_Header_Table_Iterator &iter ();

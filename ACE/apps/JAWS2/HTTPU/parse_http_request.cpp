@@ -1,7 +1,7 @@
 #include "HTTPU/parse_http_request.h"
 #include <cstring>
 
-Parse_HTTP_Request::Parse_HTTP_Request (const char *request)
+Parse_HTTP_Request::Parse_HTTP_Request (char const *request)
   : method_ {},
     major_version_ (-1),
     minor_version_ (-1),
@@ -32,7 +32,7 @@ Parse_HTTP_Request::dump ()
 }
 
 void
-Parse_HTTP_Request::init (const char *request)
+Parse_HTTP_Request::init (char const *request)
 {
   this->request_ = ACE_OS::strdup (request);
   if (this->request_ == nullptr)

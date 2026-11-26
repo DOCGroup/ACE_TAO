@@ -1,7 +1,7 @@
 #include "ace/Log_Msg.h"
 #include "HTTPU/http_status.h"
 
-const char *
+char const *
 HTTP_SCode::table_ [HTTP_SCode::SC_TABLE_SIZE];
 
 HTTP_SCode_Node HTTP_SCode_Base::STATUS_OK (200, "OK");
@@ -32,7 +32,7 @@ HTTP_SCode_Node HTTP_SCode_Base::STATUS_QUIT (599, "Quit");
 
 HTTP_SCode_Node HTTP_SCode_Base::DUMMY (0, nullptr);
 
-HTTP_SCode_Node::HTTP_SCode_Node (int code, const char *code_str)
+HTTP_SCode_Node::HTTP_SCode_Node (int code, char const *code_str)
   : code_ (code),
     code_str_ (code_str)
 {
@@ -43,10 +43,10 @@ HTTP_SCode_Node::HTTP_SCode_Node (int code, const char *code_str)
   }
 }
 
-const char *
+char const *
 HTTP_SCode::operator[] (int i) const
 {
-  const char *s = "Unknown";
+  char const *s = "Unknown";
 
   if (MIN_STATUS_CODE <= i && i <= MAX_STATUS_CODE)
   {

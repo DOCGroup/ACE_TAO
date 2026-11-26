@@ -31,14 +31,14 @@ using JAWS_Counted_Filecache_Manager =
 
 using JAWS_Filecache_Manager = JAWS_Counted_Filecache_Manager;
 
-using JAWS_Filecache_Proxy = JAWS_Cache_Proxy<const char *, JAWS_FILE, JAWS_Filecache_Manager>;
+using JAWS_Filecache_Proxy = JAWS_Cache_Proxy<char const *, JAWS_FILE, JAWS_Filecache_Manager>;
 
 class JAWS_Export JAWS_Cached_FILE : private JAWS_Filecache_Proxy
 {
 public:
-  explicit JAWS_Cached_FILE (const char *const &filename,
+  explicit JAWS_Cached_FILE (char const *const &filename,
                     JAWS_Filecache_Proxy::Cache_Manager *cm = nullptr);
-  JAWS_Cached_FILE (const char *const &filename,
+  JAWS_Cached_FILE (char const *const &filename,
                     JAWS_FILE *&file,
                     size_t size,
                     JAWS_Filecache_Proxy::Cache_Manager *cm = nullptr);

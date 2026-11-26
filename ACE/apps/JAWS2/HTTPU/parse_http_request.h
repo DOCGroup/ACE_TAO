@@ -19,17 +19,17 @@ public:
   Parse_HTTP_Request &operator= (Parse_HTTP_Request const &) = delete;
   Parse_HTTP_Request &operator= (Parse_HTTP_Request &&) = delete;
 
-  void init (const char *request);
+  void init (char const *request);
 
   int method () const;
-  const char *method_str () const;
+  char const *method_str () const;
 
   int major_version () const;
   int minor_version () const;
 
-  const char *version () const;
+  char const *version () const;
 
-  const char *url () const;
+  char const *url () const;
 
   enum { HTTPU_OK, NO_MEMORY, BAD_REQUEST, NOT_IMPLEMENTED };
 

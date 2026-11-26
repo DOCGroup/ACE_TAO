@@ -8,7 +8,7 @@
 class JAWS_String_Hash_Functor
 {
 public:
-  JAWS_String_Hash_Functor (const char *s);
+  JAWS_String_Hash_Functor (char const *s);
   operator unsigned long () const;
 
 private:
@@ -18,7 +18,7 @@ private:
 class JAWS_String_Equal_Functor
 {
 public:
-  JAWS_String_Equal_Functor (const char *s1, const char *s2);
+  JAWS_String_Equal_Functor (char const *s1, char const *s2);
   operator int () const;
 
 private:
@@ -29,13 +29,13 @@ class JAWS_Strdup_String
 {
 public:
   JAWS_Strdup_String ();
-  JAWS_Strdup_String (const char *s);
-  JAWS_Strdup_String (const JAWS_Strdup_String &s);
+  JAWS_Strdup_String (char const *s);
+  JAWS_Strdup_String (JAWS_Strdup_String const &s);
   ~JAWS_Strdup_String ();
 
-  operator const char * () const;
-  void operator = (const char *s);
-  void operator = (const JAWS_Strdup_String &s);
+  operator char const * () const;
+  void operator = (char const *s);
+  void operator = (JAWS_Strdup_String const &s);
 
 private:
   int *c_;

@@ -23,20 +23,20 @@ public:
   JAWS_Cache_Hash &operator= (JAWS_Cache_Hash const &) = delete;
   JAWS_Cache_Hash &operator= (JAWS_Cache_Hash &&) = delete;
 
-  int find (const EXT_ID &ext_id) const;
-  int find (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id) const;
-  int bind (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
-  int trybind (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
-  int rebind (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id,
+  int find (EXT_ID const &ext_id) const;
+  int find (EXT_ID const &ext_id, JAWS_Cache_Object *&int_id) const;
+  int bind (EXT_ID const &ext_id, JAWS_Cache_Object *const &int_id);
+  int trybind (EXT_ID const &ext_id, JAWS_Cache_Object *&int_id);
+  int rebind (EXT_ID const &ext_id, JAWS_Cache_Object *const &int_id,
               EXT_ID &old_ext_id, JAWS_Cache_Object *&old_int_id);
 
-  int unbind (const EXT_ID &ext_id);
-  int unbind (const EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
+  int unbind (EXT_ID const &ext_id);
+  int unbind (EXT_ID const &ext_id, JAWS_Cache_Object *&int_id);
 
   size_t size () const;
 
 protected:
-  virtual unsigned long hash (const EXT_ID &ext_id) const;
+  virtual unsigned long hash (EXT_ID const &ext_id) const;
   bool isprime (size_t number) const;
   int new_cachebucket (size_t idx);
 

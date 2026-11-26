@@ -74,15 +74,15 @@ public:
 
   /// Retrieve the object associated with key. Return 0 on success, -1 on
   /// failure.
-  int GET (const KEY &key, JAWS_Cache_Object *&cobj);
+  int GET (KEY const &key, JAWS_Cache_Object *&cobj);
 
   /// Insert or replace the object associated with key. Return 0 on success,
   /// -1 on failure.
-  int PUT (const KEY &key, const void *data, size_t size,
+  int PUT (KEY const &key, void const *data, size_t size,
            JAWS_Cache_Object *&obj);
 
   /// Create a cached object and increment its reference count.
-  int MAKE (const void *data, size_t size, JAWS_Cache_Object *&cobj);
+  int MAKE (void const *data, size_t size, JAWS_Cache_Object *&cobj);
 
   /// Increment the object's reference count.
   int TAKE (JAWS_Cache_Object *const &cobj);
@@ -97,18 +97,18 @@ public:
 protected:
   /// Retrieve the object associated with key. Return 0 on success, -1 on
   /// failure.
-  int GET_i (const KEY &key, JAWS_Cache_Object *&object);
+  int GET_i (KEY const &key, JAWS_Cache_Object *&object);
 
   /// Insert or replace the object associated with key. Return 0 on success,
   /// -1 on failure.
-  int PUT_i (const KEY &key, const void *data, size_t size,
+  int PUT_i (KEY const &key, void const *data, size_t size,
              JAWS_Cache_Object *&object);
 
   /// Remove the lowest-priority object from the cache.
   int FLUSH_i ();
 
   /// Remove the object associated with key.
-  int FLUSH_i (const KEY &key);
+  int FLUSH_i (KEY const &key);
 
   /// Decrement the object's reference count, possibly deleting it.
   int DROP_i (JAWS_Cache_Object *&cobj);
@@ -141,10 +141,10 @@ public:
   using Cache_Manager_Singleton = ACE_Singleton<Cache_Manager, ACE_SYNCH_MUTEX>;
 
   /// Construct a proxy for a cache lookup.
-  JAWS_Cache_Proxy (const KEY &, Cache_Manager * = nullptr);
+  JAWS_Cache_Proxy (KEY const &, Cache_Manager * = nullptr);
 
   /// Construct a proxy that inserts or replaces a cached object.
-  JAWS_Cache_Proxy (const KEY &, DATA *, size_t, Cache_Manager * = nullptr);
+  JAWS_Cache_Proxy (KEY const &, DATA *, size_t, Cache_Manager * = nullptr);
 
   virtual ~JAWS_Cache_Proxy ();
 

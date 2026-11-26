@@ -21,14 +21,14 @@ class HTTPU_Export HTTP_SCode_Node
 
 public:
   operator int () const;
-  operator const char * () const;
+  operator char const * () const;
 
 private:
-  HTTP_SCode_Node (int code, const char *code_str);
+  HTTP_SCode_Node (int code, char const *code_str);
 
 private:
   int code_;
-  const char *code_str_;
+  char const *code_str_;
 };
 
 class HTTPU_Export HTTP_SCode_Base
@@ -75,7 +75,7 @@ protected:
 
 public:
   /// Return the reason string corresponding to a status code number.
-  const char * operator[] (int) const;
+  char const * operator[] (int) const;
 
   /// Return the singleton instance.
   static HTTP_SCode *instance ();
@@ -88,7 +88,7 @@ public:
   void dump ();
 
 private:
-  static const char *table_[SC_TABLE_SIZE];
+  static char const *table_[SC_TABLE_SIZE];
 };
 
 using HTTP_SCode_Singleton = ACE_Singleton<HTTP_SCode, ACE_SYNCH_MUTEX>;

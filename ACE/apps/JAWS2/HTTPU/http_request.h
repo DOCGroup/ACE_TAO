@@ -28,7 +28,7 @@ public:
   Parse_HTTP_Request *request_line ();
 
   /// Return the parsed request line.
-  const Parse_HTTP_Request *request_line () const;
+  Parse_HTTP_Request const *request_line () const;
 
   /// Return the parsed URL.
   HTTP_Parse_URL *url ();

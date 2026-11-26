@@ -30,7 +30,7 @@ JAWS_Counted_Filecache_Factory::destroy (JAWS_Cache_Object *object)
   this->JAWS_Counted_Cache_Object_Factory::destroy (object);
 }
 
-JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
+JAWS_Cached_FILE::JAWS_Cached_FILE (char const *const &filename,
                                     JAWS_Filecache_Proxy::Cache_Manager *cm)
   : JAWS_Filecache_Proxy (filename, cm)
 {
@@ -69,7 +69,7 @@ JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
   this->file_.set_handle (handle);
 }
 
-JAWS_Cached_FILE::JAWS_Cached_FILE (const char *const &filename,
+JAWS_Cached_FILE::JAWS_Cached_FILE (char const *const &filename,
                                     JAWS_FILE *&file,
                                     size_t size,
                                     JAWS_Filecache_Proxy::Cache_Manager *cm)

@@ -79,7 +79,7 @@ HTTP_Hdr_Node HTTP_HCodes::A ("<A", "<A %s>");
 HTTP_Hdr_Node HTTP_HCodes::SCRIPT ("<SCRIPT", "<SCRIPT %s>");
 HTTP_Hdr_Node HTTP_HCodes::APPLET ("<APPLET", "<APPLET %s>");
 
-const int &HTTP_HCodes::NUM_HEADER_STRINGS
+int const &HTTP_HCodes::NUM_HEADER_STRINGS
   = HTTP_Header_Nodes_Singleton::instance ()->num_header_strings_;
 
 HTTP_Header_Nodes::HTTP_Header_Nodes ()
@@ -87,7 +87,7 @@ HTTP_Header_Nodes::HTTP_Header_Nodes ()
 {
 }
 
-HTTP_Hdr_Node::HTTP_Hdr_Node (const char *token, const char *format)
+HTTP_Hdr_Node::HTTP_Hdr_Node (char const *token, char const *format)
   : token_ (token),
     format_ (format)
 {
@@ -108,20 +108,20 @@ HTTP_Headers::HTTP_Headers ()
 {
 }
 
-const char *
+char const *
 HTTP_Headers::header (int name) const
 {
   return this->header_token (name);
 }
 
-const char *
+char const *
 HTTP_Headers::value (int index)
 {
   this->value_reset ();
   return this->value_next (index);
 }
 
-const char *
+char const *
 HTTP_Headers::value_next (int index)
 {
   char const *hv {};

@@ -9,13 +9,13 @@ JAWS_IO_Acceptor::JAWS_IO_Acceptor () = default;
 JAWS_IO_Acceptor::~JAWS_IO_Acceptor () = default;
 
 int
-JAWS_IO_Acceptor::open (const ACE_INET_Addr &, int)
+JAWS_IO_Acceptor::open (ACE_INET_Addr const &, int)
 {
   return -1;
 }
 
 int
-JAWS_IO_Acceptor::open (const ACE_HANDLE &)
+JAWS_IO_Acceptor::open (ACE_HANDLE const &)
 {
   return -1;
 }
@@ -33,7 +33,7 @@ JAWS_IO_Acceptor::accept (ACE_SOCK_Stream &, ACE_Addr *, ACE_Time_Value *,
 }
 
 int
-JAWS_IO_Acceptor::accept (size_t, const void *)
+JAWS_IO_Acceptor::accept (size_t, void const *)
 {
   return -1;
 }
@@ -45,13 +45,13 @@ JAWS_IO_Acceptor::get_handle ()
 }
 
 int
-JAWS_IO_Synch_Acceptor::open (const ACE_INET_Addr &local_sap, int backlog)
+JAWS_IO_Synch_Acceptor::open (ACE_INET_Addr const &local_sap, int backlog)
 {
   return this->acceptor_.open (local_sap, 1, PF_INET, backlog);
 }
 
 int
-JAWS_IO_Synch_Acceptor::open (const ACE_HANDLE &socket)
+JAWS_IO_Synch_Acceptor::open (ACE_HANDLE const &socket)
 {
   ACE_HANDLE const handle = this->acceptor_.get_handle ();
   if (handle == socket)
@@ -80,7 +80,7 @@ JAWS_IO_Synch_Acceptor::accept (ACE_SOCK_Stream &new_stream,
 }
 
 int
-JAWS_IO_Synch_Acceptor::accept (size_t, const void *)
+JAWS_IO_Synch_Acceptor::accept (size_t, void const *)
 {
   return -1;
 }
@@ -101,7 +101,7 @@ JAWS_IO_Asynch_Acceptor::JAWS_IO_Asynch_Acceptor ()
 JAWS_IO_Asynch_Acceptor::~JAWS_IO_Asynch_Acceptor () = default;
 
 int
-JAWS_IO_Asynch_Acceptor::open (const ACE_INET_Addr &address, int backlog)
+JAWS_IO_Asynch_Acceptor::open (ACE_INET_Addr const &address, int backlog)
 {
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   if (!this->acceptor_)
@@ -130,7 +130,7 @@ JAWS_IO_Asynch_Acceptor::open (const ACE_INET_Addr &address, int backlog)
 }
 
 int
-JAWS_IO_Asynch_Acceptor::open (const ACE_HANDLE &socket)
+JAWS_IO_Asynch_Acceptor::open (ACE_HANDLE const &socket)
 {
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   if (!this->acceptor_)
@@ -158,7 +158,7 @@ JAWS_IO_Asynch_Acceptor::open (const ACE_HANDLE &socket)
 }
 
 int
-JAWS_IO_Asynch_Acceptor::accept (size_t bytes_to_read, const void *act)
+JAWS_IO_Asynch_Acceptor::accept (size_t bytes_to_read, void const *act)
 {
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO) || defined (ACE_HAS_AIO_CALLS)
   return this->acceptor_ ? this->acceptor_->accept (bytes_to_read, act) : -1;

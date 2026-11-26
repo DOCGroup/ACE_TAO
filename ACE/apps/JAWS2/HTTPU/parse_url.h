@@ -19,16 +19,16 @@ public:
   HTTP_Parse_URL &operator= (HTTP_Parse_URL const &) = delete;
   HTTP_Parse_URL &operator= (HTTP_Parse_URL &&) = delete;
 
-  void init (const char *url);
+  void init (char const *url);
 
   enum URL_SCHEME { HTTP, FTP };
 
-  const char *scheme () const;
-  const char *user () const;
-  const char *passwd () const;
-  const char *host () const;
+  char const *scheme () const;
+  char const *user () const;
+  char const *passwd () const;
+  char const *host () const;
   int port () const;
-  const char *url_path () const;
+  char const *url_path () const;
 
   enum URL_ERROR { URL_ERROR_NONE, URL_ERROR_STRDUP, URL_ERROR_SCHEME, URL_ERROR_SLASHSLASH };
 
@@ -41,7 +41,7 @@ private:
   void parse_scheme (char *&p);
   void parse_host (char *&p);
   void parse_url_path (char *&p);
-  void is_cgi (const char *path);
+  void is_cgi (char const *path);
 
   void set_port_from_scheme ();
 
@@ -49,12 +49,12 @@ private:
   /// Owns the buffer; the remaining string members point into it.
   char *url_;
 
-  const char *scheme_;
-  const char *user_;
-  const char *passwd_;
-  const char *host_;
+  char const *scheme_;
+  char const *user_;
+  char const *passwd_;
+  char const *host_;
   int port_;
-  const char *url_path_;
+  char const *url_path_;
 
   int error_;
   bool is_cgi_;

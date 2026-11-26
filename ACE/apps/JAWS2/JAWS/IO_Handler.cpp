@@ -335,7 +335,7 @@ JAWS_Asynch_Handler::open (ACE_HANDLE h,
 }
 
 void
-JAWS_Asynch_Handler::act (const void *act_ref)
+JAWS_Asynch_Handler::act (void const *act_ref)
 {
   JAWS_TRACE ("JAWS_Asynch_Handler::act");
 
@@ -485,7 +485,7 @@ JAWS_Asynch_Handler::handle_transmit_file (const
 }
 
 void
-JAWS_Asynch_Handler::handle_accept (const ACE_Asynch_Accept::Result &result)
+JAWS_Asynch_Handler::handle_accept (ACE_Asynch_Accept::Result const &result)
 {
   JAWS_TRACE ("JAWS_Asynch_Handler::handle_accept");
   this->dispatch_handler ();

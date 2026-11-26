@@ -21,21 +21,21 @@ public:
   JAWS_Assoc_Array &operator= (JAWS_Assoc_Array &&) = delete;
 
   /// Return the index associated with key k, or -1 if not found.
-  int index (const KEY &k);
+  int index (KEY const &k);
 
   /// Return the data associated with key k, or nullptr if not found.
-  DATA * find (const KEY &k);
+  DATA * find (KEY const &k);
 
   /// Return the data at index i, or nullptr if the index is invalid.
   DATA * find_by_index (int i);
 
   /// Insert copies of the key and data and return the inserted data, or
   /// nullptr on error. If the key already exists, return its existing data.
-  DATA * insert (const KEY &k, const DATA &d);
+  DATA * insert (KEY const &k, DATA const &d);
 
   /// Remove and destroy the item for key k. Return 1 if removed, 0 if not
   /// found, or -1 on error.
-  int remove (const KEY &k);
+  int remove (KEY const &k);
 
   /// Destroy all keys and associated data.
   void clear ();
@@ -43,7 +43,7 @@ public:
 protected:
   /// Return the matching index, an available insertion index, or maxsize_ if
   /// the table is full.
-  int find_i (const KEY &k);
+  int find_i (KEY const &k);
 
 private:
   std::vector<std::unique_ptr<KEY>> k_array_;

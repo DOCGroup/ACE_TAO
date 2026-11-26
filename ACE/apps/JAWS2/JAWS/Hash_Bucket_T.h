@@ -17,7 +17,7 @@ template <class EXT_ID, class INT_ID>
 class JAWS_Hash_Bucket_Item
 {
 public:
-  JAWS_Hash_Bucket_Item (const EXT_ID &ext_id, const INT_ID &int_id,
+  JAWS_Hash_Bucket_Item (EXT_ID const &ext_id, INT_ID const &int_id,
                          JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = nullptr,
                          JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev = nullptr);
   explicit JAWS_Hash_Bucket_Item (JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next = nullptr,
@@ -64,8 +64,8 @@ public:
   bool is_empty () const;
 
   /// Add an item at the head of the list and return the inserted item.
-  JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *push (const EXT_ID &ext_id,
-                                              const INT_ID &int_id);
+  JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *push (EXT_ID const &ext_id,
+                                              INT_ID const &int_id);
 
   /// Remove and return the first item, or nullptr if empty. The caller owns
   /// the returned node and must free it.
@@ -89,7 +89,7 @@ template <class EXT_ID, class INT_ID>
 class JAWS_Hash_Bucket_DLCStack_Iterator
 {
 public:
-  explicit JAWS_Hash_Bucket_DLCStack_Iterator (const JAWS_HASH_BUCKET_DLCSTACK &dlcstack);
+  explicit JAWS_Hash_Bucket_DLCStack_Iterator (JAWS_HASH_BUCKET_DLCSTACK const &dlcstack);
   JAWS_Hash_Bucket_DLCStack_Iterator (JAWS_Hash_Bucket_DLCStack_Iterator const &) = delete;
   JAWS_Hash_Bucket_DLCStack_Iterator (JAWS_Hash_Bucket_DLCStack_Iterator &&) = delete;
   JAWS_Hash_Bucket_DLCStack_Iterator &operator= (JAWS_Hash_Bucket_DLCStack_Iterator const &) = delete;
@@ -119,7 +119,7 @@ public:
   int done () const;
 
 private:
-  const JAWS_HASH_BUCKET_DLCSTACK &dlcstack_;
+  JAWS_HASH_BUCKET_DLCSTACK const &dlcstack_;
   JAWS_HASH_BUCKET_ITEM *next_;
   JAWS_HASH_BUCKET_ITEM *prev_;
   int done_;
@@ -139,28 +139,28 @@ public:
   JAWS_Hash_Bucket_Manager &operator= (JAWS_Hash_Bucket_Manager &&) = delete;
   int close ();
 
-  int find (const EXT_ID &ext_id) const;
+  int find (EXT_ID const &ext_id) const;
   /// Find ext_id and write its value to int_id; return 0 if found, -1 if not.
-  int find (const EXT_ID &ext_id, INT_ID &int_id) const;
+  int find (EXT_ID const &ext_id, INT_ID &int_id) const;
 
   /// Bind ext_id only when absent; return 0 when inserted, 1 when already
   /// bound, or -1 on failure.
-  int bind (const EXT_ID &ext_id, const INT_ID &int_id);
-  int trybind (const EXT_ID &ext_id, INT_ID &int_id);
+  int bind (EXT_ID const &ext_id, INT_ID const &int_id);
+  int trybind (EXT_ID const &ext_id, INT_ID &int_id);
 
   /// Bind ext_id to int_id, returning the old values when replacing an
   /// existing entry. Return 0 when inserted, 1 when replaced, or -1 on error.
-  int rebind (const EXT_ID &ext_id, const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id, INT_ID const &int_id,
               EXT_ID &old_ext_id, INT_ID &old_int_id);
 
   /// Remove ext_id; return 0 on success and -1 if it was not found.
-  int unbind (const EXT_ID &ext_id);
+  int unbind (EXT_ID const &ext_id);
   /// Remove ext_id and return the associated value in int_id.
-  int unbind (const EXT_ID &ext_id, INT_ID &int_id);
+  int unbind (EXT_ID const &ext_id, INT_ID &int_id);
 
 protected:
   /// Return the item for ext_id, or nullptr if it is absent.
-  JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *find_i (const EXT_ID &ext_id) const;
+  JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *find_i (EXT_ID const &ext_id) const;
 
 private:
   JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID> dlcstack_;

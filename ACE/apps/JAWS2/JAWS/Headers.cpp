@@ -5,7 +5,7 @@
 
 // Header Data
 
-JAWS_Header_Data::JAWS_Header_Data (const char *name, const char *value,
+JAWS_Header_Data::JAWS_Header_Data (char const *name, char const *value,
                                     int type)
   : header_name_ (name ? ACE_OS::strdup (name) : nullptr),
     header_value_ (value ? ACE_OS::strdup (value) : nullptr),
@@ -13,8 +13,8 @@ JAWS_Header_Data::JAWS_Header_Data (const char *name, const char *value,
 {
 }
 
-JAWS_Header_Data::JAWS_Header_Data (const char *name, int type,
-                                    const char *value)
+JAWS_Header_Data::JAWS_Header_Data (char const *name, int type,
+                                    char const *value)
   : header_name_ (name ? ACE_OS::strdup (name) : nullptr),
     header_value_ (value ? ACE_OS::strdup (value) : nullptr),
     header_type_ (type)
@@ -27,13 +27,13 @@ JAWS_Header_Data::~JAWS_Header_Data ()
   ACE_OS::free (this->header_value_);
 }
 
-const char *
+char const *
 JAWS_Header_Data::header_name () const
 {
   return this->header_name_;
 }
 
-const char *
+char const *
 JAWS_Header_Data::header_value () const
 {
   return this->header_value_;
@@ -46,14 +46,14 @@ JAWS_Header_Data::header_type () const
 }
 
 void
-JAWS_Header_Data::header_name (const char *name)
+JAWS_Header_Data::header_name (char const *name)
 {
   ACE_OS::free (this->header_name_);
   this->header_name_ = name ? ACE_OS::strdup (name) : nullptr;
 }
 
 void
-JAWS_Header_Data::header_value (const char *value)
+JAWS_Header_Data::header_value (char const *value)
 {
   ACE_OS::free (this->header_value_);
   this->header_value_ = value ? ACE_OS::strdup (value) : nullptr;
@@ -91,14 +91,14 @@ JAWS_Headers::insert (JAWS_Header_Data *new_data)
 }
 
 JAWS_Header_Data *
-JAWS_Headers::find (const char *const &header_name)
+JAWS_Headers::find (char const *const &header_name)
 {
   this->iter_.first ();
   return this->find_next (header_name);
 }
 
 JAWS_Header_Data *
-JAWS_Headers::find_next (const char *const &header_name)
+JAWS_Headers::find_next (char const *const &header_name)
 {
   JAWS_Header_Data *data {};
   JAWS_Header_Table_Iterator &i = this->iter_;
@@ -124,7 +124,7 @@ JAWS_Headers::find_next (const char *const &header_name)
 }
 
 void
-JAWS_Headers::remove_all (const char *const &header_name)
+JAWS_Headers::remove_all (char const *const &header_name)
 {
   JAWS_Header_Data *data;
   int done;

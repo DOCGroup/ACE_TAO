@@ -22,18 +22,18 @@ public:
   int end_of_line () const;
   void end_of_line (int flag);
 
-  const char *last_header_name () const;
+  char const *last_header_name () const;
 
   int last_header_length () const;
   void last_header_length (int len);
 
-  const JAWS_Header_Data * last_header_data () const;
+  JAWS_Header_Data const * last_header_data () const;
 
   char *header_buf ();
 
   void append_last_header_value (char c);
   int append_last_header_value ();
-  void append_last_header_value (const char *begin, const char *end);
+  void append_last_header_value (char const *begin, char const *end);
   void reduce_last_header_value ();
 
   /// Insert the previous header if present, then create a new header with ht.
@@ -95,10 +95,10 @@ public:
   int parse_header_value (JAWS_Header_Info *info, ACE_Message_Block &mb);
 
   /// Return the first character in [start, end) that occurs in set.
-  char * skipset (const char *set, char *start, char *end);
+  char * skipset (char const *set, char *start, char *end);
 
   /// Return the first character in [start, end) that does not occur in set.
-  char * skipcset (const char *set, char *start, char *end);
+  char * skipcset (char const *set, char *start, char *end);
 };
 
 using JAWS_Parse_Headers_Singleton = ACE_Singleton<JAWS_Parse_Headers, ACE_SYNCH_MUTEX>;

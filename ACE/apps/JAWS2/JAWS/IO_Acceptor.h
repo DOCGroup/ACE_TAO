@@ -39,10 +39,10 @@ public:
   JAWS_IO_Acceptor &operator= (JAWS_IO_Acceptor &&) = delete;
 
   /// Open a passive socket listener.
-  virtual int open (const ACE_INET_Addr &address, int backlog = 20);
+  virtual int open (ACE_INET_Addr const &address, int backlog = 20);
 
   /// Adopt a listener socket.
-  virtual int open (const ACE_HANDLE &socket);
+  virtual int open (ACE_HANDLE const &socket);
 
   /// Accept a connection synchronously.
   virtual int accept (ACE_SOCK_Stream &new_stream,
@@ -74,10 +74,10 @@ public:
   JAWS_IO_Synch_Acceptor &operator= (JAWS_IO_Synch_Acceptor &&) = delete;
 
   /// Open a passive mode socket.
-  int open (const ACE_INET_Addr &local_sap, int backlog = 20) override;
+  int open (ACE_INET_Addr const &local_sap, int backlog = 20) override;
 
   /// Adopt a listener socket.
-  int open (const ACE_HANDLE &socket) override;
+  int open (ACE_HANDLE const &socket) override;
 
   int accept (ACE_SOCK_Stream &new_stream,
               ACE_Addr *remote_addr = nullptr,
@@ -106,10 +106,10 @@ public:
   JAWS_IO_Asynch_Acceptor &operator= (JAWS_IO_Asynch_Acceptor &&) = delete;
 
   /// Open an asynchronous passive listener.
-  int open (const ACE_INET_Addr &address, int backlog = 20) override;
+  int open (ACE_INET_Addr const &address, int backlog = 20) override;
 
   /// Adopt a listener socket.
-  int open (const ACE_HANDLE &socket) override;
+  int open (ACE_HANDLE const &socket) override;
 
   /// Initiate an asynchronous accept through AcceptEx.
   int accept (size_t bytes_to_read = 0, void const *act = nullptr) override;

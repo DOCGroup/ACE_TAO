@@ -82,7 +82,7 @@ JAWS_Parse_Headers::parse_headers (JAWS_Header_Info *info,
 }
 
 char *
-JAWS_Parse_Headers::skipset (const char *set, char *start, char *end)
+JAWS_Parse_Headers::skipset (char const *set, char *start, char *end)
 {
   char *p = start;
   while (p < end)
@@ -97,7 +97,7 @@ JAWS_Parse_Headers::skipset (const char *set, char *start, char *end)
 }
 
 char *
-JAWS_Parse_Headers::skipcset (const char *set, char *start, char *end)
+JAWS_Parse_Headers::skipcset (char const *set, char *start, char *end)
 {
   char *p = start;
   while (p < end)
@@ -360,7 +360,7 @@ JAWS_Header_Info::append_last_header_value ()
 }
 
 void
-JAWS_Header_Info::append_last_header_value (const char *begin, const char *end)
+JAWS_Header_Info::append_last_header_value (char const *begin, char const *end)
 {
   if (this->last_header_data_ == nullptr)
   {
@@ -458,13 +458,13 @@ JAWS_Header_Info::header_buf ()
   return this->header_buf_;
 }
 
-const char *
+char const *
 JAWS_Header_Info::last_header_name () const
 {
   return this->last_header_data_ ? this->last_header_data_->header_name () : nullptr;
 }
 
-const JAWS_Header_Data *
+JAWS_Header_Data const *
 JAWS_Header_Info::last_header_data () const
 {
   return this->last_header_data_;

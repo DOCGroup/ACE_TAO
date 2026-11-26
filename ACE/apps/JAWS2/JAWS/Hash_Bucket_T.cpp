@@ -7,7 +7,7 @@
 
 template <class EXT_ID, class INT_ID>
 JAWS_Hash_Bucket_Item<EXT_ID, INT_ID>
-::JAWS_Hash_Bucket_Item (const EXT_ID &ext_id, const INT_ID &int_id,
+::JAWS_Hash_Bucket_Item (EXT_ID const &ext_id, INT_ID const &int_id,
                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *next,
                         JAWS_Hash_Bucket_Item<EXT_ID, INT_ID> *prev)
   : ext_id_ (ext_id),
@@ -57,7 +57,7 @@ is_empty () const
 
 template <class EXT_ID, class INT_ID> JAWS_HASH_BUCKET_ITEM *
 JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::
-push (const EXT_ID &ext_id, const INT_ID &int_id)
+push (EXT_ID const &ext_id, INT_ID const &int_id)
 {
   size_t const malloc_size = sizeof (JAWS_HASH_BUCKET_ITEM);
   JAWS_HASH_BUCKET_ITEM *item;
@@ -170,7 +170,7 @@ JAWS_Hash_Bucket_DLCStack<EXT_ID, INT_ID>::remove (JAWS_HASH_BUCKET_ITEM *item)
 
 template <class EXT_ID, class INT_ID>
 JAWS_Hash_Bucket_DLCStack_Iterator<EXT_ID, INT_ID>::
-JAWS_Hash_Bucket_DLCStack_Iterator (const JAWS_HASH_BUCKET_DLCSTACK &dlcstack)
+JAWS_Hash_Bucket_DLCStack_Iterator (JAWS_HASH_BUCKET_DLCSTACK const &dlcstack)
   : dlcstack_ (dlcstack),
     next_ {},
     prev_ {},
@@ -328,7 +328,7 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::close ()
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC> JAWS_HASH_BUCKET_ITEM *
 JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>
-::find_i (const EXT_ID &ext_id) const
+::find_i (EXT_ID const &ext_id) const
 {
   JAWS_HASH_BUCKET_DLCSTACK_ITERATOR iter (this->dlcstack_);
   JAWS_HASH_BUCKET_ITEM *item {};
@@ -348,7 +348,7 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>
 }
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC> int
-JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::find (const EXT_ID &ext_id,
+JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::find (EXT_ID const &ext_id,
                                                       INT_ID &int_id) const
 {
   int result = -1;
@@ -365,15 +365,15 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::find (const EXT_ID &ext_id,
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC> int
 JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>
-::find (const EXT_ID &ext_id) const
+::find (EXT_ID const &ext_id) const
 {
   INT_ID dummy_id;
   return this->find (ext_id, dummy_id);
 }
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC> int
-JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::bind (const EXT_ID &ext_id,
-                                                      const INT_ID &int_id)
+JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::bind (EXT_ID const &ext_id,
+                                                      INT_ID const &int_id)
 {
   int result = 0;
 
@@ -393,7 +393,7 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::bind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC> int
-JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::trybind (const EXT_ID &ext_id,
+JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::trybind (EXT_ID const &ext_id,
                                                          INT_ID &int_id)
 {
   int result = 0;
@@ -414,8 +414,8 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::trybind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC> int
-JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::rebind (const EXT_ID &ext_id,
-                                                        const INT_ID &int_id,
+JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::rebind (EXT_ID const &ext_id,
+                                                        INT_ID const &int_id,
                                                         EXT_ID &old_ext_id,
                                                         INT_ID &old_int_id)
 {
@@ -439,7 +439,7 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::rebind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC> int
-JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::unbind (const EXT_ID &ext_id,
+JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::unbind (EXT_ID const &ext_id,
                                                         INT_ID &int_id)
 {
   int result = -1;
@@ -456,7 +456,7 @@ JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::unbind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class EQ_FUNC> int
-JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::unbind (const EXT_ID &ext_id)
+JAWS_Hash_Bucket_Manager<EXT_ID,INT_ID,EQ_FUNC>::unbind (EXT_ID const &ext_id)
 {
   INT_ID dummy_id;
   return this->unbind (ext_id, dummy_id);

@@ -3,7 +3,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include <cstring>
 
-Parse_HTTP_Response::Parse_HTTP_Response (const char *response)
+Parse_HTTP_Response::Parse_HTTP_Response (char const *response)
   : code_ (200),
     code_str_ {},
     major_version_ (0),
@@ -27,7 +27,7 @@ Parse_HTTP_Response::~Parse_HTTP_Response ()
 }
 
 void
-Parse_HTTP_Response::init (const char *response)
+Parse_HTTP_Response::init (char const *response)
 {
   this->response_ = ACE_OS::strdup (response);
   if (this->response_ == nullptr)

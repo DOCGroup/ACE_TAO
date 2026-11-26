@@ -29,7 +29,7 @@ HTTP_Base::status () const
   return this->status_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 HTTP_Base::line () const
 {
   return this->line_;

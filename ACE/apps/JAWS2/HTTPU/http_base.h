@@ -28,11 +28,11 @@ public:
   virtual int receive_payload (ACE_Message_Block &mb);
   virtual int receive_payload (ACE_Message_Block &mb, long length);
 
-  const char * payload ();
+  char const * payload ();
   unsigned long payload_size ();
 
   int status () const;
-  const char *line () const;
+  char const *line () const;
   HTTP_Headers *http_headers ();
   JAWS_Headers *headers ();
 

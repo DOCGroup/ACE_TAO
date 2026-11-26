@@ -19,15 +19,15 @@ public:
   Parse_HTTP_Response &operator= (Parse_HTTP_Response const &) = delete;
   Parse_HTTP_Response &operator= (Parse_HTTP_Response &&) = delete;
 
-  void init (const char *response);
+  void init (char const *response);
 
   int code () const;
-  const char *code_str () const;
+  char const *code_str () const;
 
   int major_version () const;
   int minor_version () const;
 
-  const char *version () const;
+  char const *version () const;
 
   enum { HTTPU_OK, NO_MEMORY, BAD_RESPONSE };
 

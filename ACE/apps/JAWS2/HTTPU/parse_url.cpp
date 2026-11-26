@@ -5,7 +5,7 @@
 #include <cstdlib>
 #include <cstring>
 
-HTTP_Parse_URL::HTTP_Parse_URL (const char *url)
+HTTP_Parse_URL::HTTP_Parse_URL (char const *url)
   : url_ {},
     scheme_ {},
     user_ {},
@@ -28,7 +28,7 @@ HTTP_Parse_URL::~HTTP_Parse_URL ()
 }
 
 void
-HTTP_Parse_URL::init( const char *url )
+HTTP_Parse_URL::init( char const *url )
 {
    // Should really reset completely and cleanly here before
    // doing anything else!
@@ -295,25 +295,25 @@ HTTP_Parse_URL::set_port_from_scheme ()
     }
 }
 
-const char *
+char const *
 HTTP_Parse_URL::scheme () const
 {
   return this->scheme_;
 }
 
-const char *
+char const *
 HTTP_Parse_URL::user () const
 {
   return this->user_;
 }
 
-const char *
+char const *
 HTTP_Parse_URL::passwd () const
 {
   return this->passwd_;
 }
 
-const char *
+char const *
 HTTP_Parse_URL::host () const
 {
   return this->host_;
@@ -325,14 +325,14 @@ HTTP_Parse_URL::port () const
   return this->port_;
 }
 
-const char *
+char const *
 HTTP_Parse_URL::url_path () const
 {
   return this->url_path_ != nullptr ? this->url_path_ : "";
 }
 
 void
-HTTP_Parse_URL::is_cgi (const char *path)
+HTTP_Parse_URL::is_cgi (char const *path)
 {
   bool yes;
 

@@ -3,19 +3,19 @@
 #include "ace/OS_NS_stdlib.h"
 #include <cstring>
 
-const char *
+char const *
 JAWS_HTTP_10_Request::method () const
 {
   return this->request_line ()->method_str ();
 }
 
-const char *
+char const *
 JAWS_HTTP_10_Request::uri () const
 {
   return this->request_line ()->url ();
 }
 
-const char *
+char const *
 JAWS_HTTP_10_Request::version () const
 {
   return this->request_line ()->version ();
@@ -27,7 +27,7 @@ JAWS_HTTP_10_Request::type () const
   return this->request_line ()->method ();
 }
 
-const char *
+char const *
 JAWS_HTTP_10_Request::path () const
 {
   if (this->path_.empty ())
@@ -44,7 +44,7 @@ JAWS_HTTP_10_Request::set_status (int s)
 }
 
 void
-JAWS_HTTP_10_Request::path (const char *uri_string)
+JAWS_HTTP_10_Request::path (char const *uri_string)
 {
   this->set_path (uri_string);
 }

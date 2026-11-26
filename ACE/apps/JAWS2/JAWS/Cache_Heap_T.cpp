@@ -139,7 +139,7 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert_i (Cache_Heap_Item *item)
 }
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN> int
-JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert (const EXT_ID &ext_id,
+JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::insert (EXT_ID const &ext_id,
                                                JAWS_Cache_Object *const &int_id)
 {
   if (this->is_full ())
@@ -288,7 +288,7 @@ JAWS_Cache_Heap<EXT_ID,FACT,H_FN,E_FN>::adjust (void *item)
 
 template <class EXT_ID, class FACT, class H_FN, class E_FN>
 JAWS_Cache_Heap_Item<EXT_ID,FACT,H_FN,E_FN>::
-JAWS_Cache_Heap_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id)
+JAWS_Cache_Heap_Item (EXT_ID const &ext_id, JAWS_Cache_Object *const &int_id)
   : ext_id_ (ext_id),
     int_id_ (int_id),
     heap_idx_ (0)

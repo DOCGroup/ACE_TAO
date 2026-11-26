@@ -17,7 +17,7 @@ HTTP_Request::request_line ()
   return &(this->request_);
 }
 
-ACE_INLINE const Parse_HTTP_Request *
+ACE_INLINE Parse_HTTP_Request const *
 HTTP_Request::request_line () const
 {
   return &(this->request_);

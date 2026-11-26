@@ -38,7 +38,7 @@ public:
   int maxsize (Cache_Manager *cm, size_t new_maxsize);
 
   /// Insert an object into the list.
-  int insert (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
+  int insert (EXT_ID const &ext_id, JAWS_Cache_Object *const &int_id);
 
   /// Remove the highest-priority object from the list.
   int remove (EXT_ID &ext_id, JAWS_Cache_Object *&int_id);
@@ -79,7 +79,7 @@ class JAWS_Cache_List_Item
 public:
   using Cache_List = JAWS_Cache_List<EXT_ID, FACT, H_FN, E_FN>;
 
-  JAWS_Cache_List_Item (const EXT_ID &ext_id, JAWS_Cache_Object *const &int_id);
+  JAWS_Cache_List_Item (EXT_ID const &ext_id, JAWS_Cache_Object *const &int_id);
   unsigned int priority () const;
 
 private:

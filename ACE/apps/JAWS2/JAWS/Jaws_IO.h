@@ -60,34 +60,34 @@ public:
   /// send header, filename, trailer to the handle.
   virtual void transmit_file (JAWS_IO_Handler *ioh,
                               ACE_HANDLE file,
-                              const char *header,
+                              char const *header,
                               unsigned int header_size,
-                              const char *trailer,
+                              char const *trailer,
                               unsigned int trailer_size) = 0;
 
   /// send header, filename, trailer to the handle.
   virtual void transmit_file (JAWS_IO_Handler *ioh,
-                              const char *filename,
-                              const char *header,
+                              char const *filename,
+                              char const *header,
                               unsigned int header_size,
-                              const char *trailer,
+                              char const *trailer,
                               unsigned int trailer_size) = 0;
 
   /// read data from the handle and store in filename.
   virtual void receive_file (JAWS_IO_Handler *ioh,
-                             const char *filename,
+                             char const *filename,
                              void *initial_data,
                              unsigned int initial_data_length,
                              unsigned int entire_length) = 0;
 
   /// send a confirmation message to the handle.
   virtual void send_confirmation_message (JAWS_IO_Handler *ioh,
-                                          const char *buffer,
+                                          char const *buffer,
                                           unsigned int length) = 0;
 
   /// send an error message to the handle.
   virtual void send_error_message (JAWS_IO_Handler *ioh,
-                                   const char *buffer,
+                                   char const *buffer,
                                    unsigned int length) = 0;
 
 protected:
@@ -124,35 +124,35 @@ public:
 
   void transmit_file (JAWS_IO_Handler *ioh,
                       ACE_HANDLE handle,
-                      const char *header,
+                      char const *header,
                       unsigned int header_size,
-                      const char *trailer,
+                      char const *trailer,
                       unsigned int trailer_size) override;
 
   void transmit_file (JAWS_IO_Handler *ioh,
-                      const char *filename,
-                      const char *header,
+                      char const *filename,
+                      char const *header,
                       unsigned int header_size,
-                      const char *trailer,
+                      char const *trailer,
                       unsigned int trailer_size) override;
 
   void receive_file (JAWS_IO_Handler *ioh,
-                     const char *filename,
+                     char const *filename,
                      void *initial_data,
                      unsigned int initial_data_length,
                      unsigned int entire_length) override;
 
   void send_confirmation_message (JAWS_IO_Handler *ioh,
-                                  const char *buffer,
+                                  char const *buffer,
                                   unsigned int length) override;
 
   void send_error_message (JAWS_IO_Handler *ioh,
-                           const char *buffer,
+                           char const *buffer,
                            unsigned int length) override;
 
 protected:
   virtual void send_message (JAWS_IO_Handler *ioh,
-                             const char *buffer,
+                             char const *buffer,
                              unsigned int length);
 };
 
@@ -187,30 +187,30 @@ public:
 
   void transmit_file (JAWS_IO_Handler *ioh,
                       ACE_HANDLE handle,
-                      const char *header,
+                      char const *header,
                       unsigned int header_size,
-                      const char *trailer,
+                      char const *trailer,
                       unsigned int trailer_size) override;
 
   void transmit_file (JAWS_IO_Handler *ioh,
-                      const char *filename,
-                      const char *header,
+                      char const *filename,
+                      char const *header,
                       unsigned int header_size,
-                      const char *trailer,
+                      char const *trailer,
                       unsigned int trailer_size) override;
 
   void receive_file (JAWS_IO_Handler *ioh,
-                     const char *filename,
+                     char const *filename,
                      void *initial_data,
                      unsigned int initial_data_length,
                      unsigned int entire_length) override;
 
   void send_confirmation_message (JAWS_IO_Handler *ioh,
-                                  const char *buffer,
+                                  char const *buffer,
                                   unsigned int length) override;
 
   void send_error_message (JAWS_IO_Handler *ioh,
-                           const char *buffer,
+                           char const *buffer,
                            unsigned int length) override;
 
 #ifdef ACE_LYNXOS_MAJOR
@@ -227,7 +227,7 @@ public:
 
 protected:
   virtual void send_message (JAWS_IO_Handler *ioh,
-                             const char *buffer,
+                             char const *buffer,
                              unsigned int length,
                              long act);
 };

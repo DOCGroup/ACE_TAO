@@ -9,7 +9,7 @@ Parse_HTTP_Response::code () const
   return this->code_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 Parse_HTTP_Response::code_str () const
 {
   return this->code_str_ ? this->code_str_ : "200";
@@ -27,7 +27,7 @@ Parse_HTTP_Response::minor_version () const
   return this->minor_version_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 Parse_HTTP_Response::version () const
 {
   return this->version_ ? this->version_ : "HTTP/0.9";

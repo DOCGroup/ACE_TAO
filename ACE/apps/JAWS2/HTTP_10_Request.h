@@ -15,12 +15,12 @@ public:
   JAWS_HTTP_10_Request &operator= (JAWS_HTTP_10_Request &&) = delete;
 
   int type () const;
-  const char * method () const;
-  const char * uri () const;
-  const char * version () const;
+  char const * method () const;
+  char const * uri () const;
+  char const * version () const;
 
-  const char * path () const;
-  void path (const char *);
+  char const * path () const;
+  void path (char const *);
   void set_status (int) override;
 
 private:

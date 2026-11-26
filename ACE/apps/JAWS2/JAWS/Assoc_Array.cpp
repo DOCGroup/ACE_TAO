@@ -22,13 +22,13 @@ JAWS_Assoc_Array<KEY,DATA>::~JAWS_Assoc_Array ()
 }
 
 template <class KEY, class DATA> int
-JAWS_Assoc_Array<KEY,DATA>::index (const KEY &k)
+JAWS_Assoc_Array<KEY,DATA>::index (KEY const &k)
 {
   return this->find_i (k);
 }
 
 template <class KEY, class DATA> DATA *
-JAWS_Assoc_Array<KEY,DATA>::find (const KEY &k)
+JAWS_Assoc_Array<KEY,DATA>::find (KEY const &k)
 {
   int const i = this->find_i (k);
 
@@ -42,7 +42,7 @@ JAWS_Assoc_Array<KEY,DATA>::find_by_index (int i)
 }
 
 template <class KEY, class DATA> DATA *
-JAWS_Assoc_Array<KEY,DATA>::insert (const KEY &k, const DATA &d)
+JAWS_Assoc_Array<KEY,DATA>::insert (KEY const &k, DATA const &d)
 {
   int const i = this->find_i (k);
 
@@ -63,7 +63,7 @@ JAWS_Assoc_Array<KEY,DATA>::insert (const KEY &k, const DATA &d)
 }
 
 template <class KEY, class DATA> int
-JAWS_Assoc_Array<KEY,DATA>::remove (const KEY &k)
+JAWS_Assoc_Array<KEY,DATA>::remove (KEY const &k)
 {
   int const i = this->find_i (k);
 
@@ -96,7 +96,7 @@ JAWS_Assoc_Array<KEY,DATA>::clear ()
 }
 
 template <class KEY, class DATA> int
-JAWS_Assoc_Array<KEY,DATA>::find_i (const KEY &k)
+JAWS_Assoc_Array<KEY,DATA>::find_i (KEY const &k)
 {
   int j = this->maxsize_;
 

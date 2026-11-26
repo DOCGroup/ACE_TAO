@@ -145,18 +145,18 @@ public:
 
   /// This method will be called when an asynchronous read completes on
   /// a stream.
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
   /// This method will be called when an asynchronous write completes
   /// on a stream.
-  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
   /// This method will be called when an asynchronous transmit file
   /// completes.
-  void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result) override;
+  void handle_transmit_file (ACE_Asynch_Transmit_File::Result const &result) override;
 
   /// This method will be called when an asynchronous accept completes.
-  void handle_accept (const ACE_Asynch_Accept::Result &result) override;
+  void handle_accept (ACE_Asynch_Accept::Result const &result) override;
 
   virtual void handler (JAWS_Asynch_IO_Handler *ioh);
   virtual JAWS_Asynch_IO_Handler * handler ();
@@ -167,7 +167,7 @@ public:
   void open (ACE_HANDLE h, ACE_Message_Block &mb) override;
 
   /// Receives the ACT.
-  void act (const void *act_ref) override;
+  void act (void const *act_ref) override;
 
   //virtual ACE_HANDLE handle () const;
 

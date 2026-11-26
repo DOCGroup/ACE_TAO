@@ -178,7 +178,7 @@ HTTP_Base::receive_payload (ACE_Message_Block &mb, long length)
   return this->payload_.length () == (unsigned long) length;
 }
 
-const char *
+char const *
 HTTP_Base::payload ()
 {
   return this->payload_.rd_ptr ();

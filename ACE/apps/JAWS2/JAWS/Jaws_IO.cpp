@@ -81,7 +81,7 @@ JAWS_Synch_IO::read (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
-                             const char *filename,
+                             char const *filename,
                              void *initial_data,
                              unsigned int initial_data_length,
                              unsigned int entire_length)
@@ -123,9 +123,9 @@ JAWS_Synch_IO::receive_file (JAWS_IO_Handler *ioh,
 void
 JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
                               ACE_HANDLE handle,
-                              const char *header,
+                              char const *header,
                               unsigned int header_size,
-                              const char *trailer,
+                              char const *trailer,
                               unsigned int trailer_size)
 {
   int result = 0;
@@ -179,10 +179,10 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
-                              const char *filename,
-                              const char *header,
+                              char const *filename,
+                              char const *header,
                               unsigned int header_size,
-                              const char *trailer,
+                              char const *trailer,
                               unsigned int trailer_size)
 {
   int result = 0;
@@ -283,7 +283,7 @@ JAWS_Synch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Synch_IO::send_confirmation_message (JAWS_IO_Handler *ioh,
-                                          const char *buffer,
+                                          char const *buffer,
                                           unsigned int length)
 {
   this->send_message (ioh, buffer, length);
@@ -292,7 +292,7 @@ JAWS_Synch_IO::send_confirmation_message (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Synch_IO::send_error_message (JAWS_IO_Handler *ioh,
-                                   const char *buffer,
+                                   char const *buffer,
                                    unsigned int length)
 {
   this->send_message (ioh, buffer, length);
@@ -301,7 +301,7 @@ JAWS_Synch_IO::send_error_message (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Synch_IO::send_message (JAWS_IO_Handler *ioh,
-                             const char *buffer,
+                             char const *buffer,
                              unsigned int length)
 {
   ACE_SOCK_Stream stream;
@@ -370,7 +370,7 @@ JAWS_Asynch_IO::read (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
-                              const char *filename,
+                              char const *filename,
                               void *initial_data,
                               unsigned int initial_data_length,
                               unsigned int entire_length)
@@ -426,9 +426,9 @@ JAWS_Asynch_IO::receive_file (JAWS_IO_Handler *ioh,
 void
 JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
                                ACE_HANDLE handle,
-                               const char *header,
+                               char const *header,
                                unsigned int header_size,
-                               const char *trailer,
+                               char const *trailer,
                                unsigned int trailer_size)
 {
   JAWS_TRACE ("JAWS_Asynch_IO::transmit_file");
@@ -479,10 +479,10 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
-                               const char *filename,
-                               const char *header,
+                               char const *filename,
+                               char const *header,
                                unsigned int header_size,
-                               const char *trailer,
+                               char const *trailer,
                                unsigned int trailer_size)
 {
   int result = 0;
@@ -532,7 +532,7 @@ JAWS_Asynch_IO::transmit_file (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Asynch_IO::send_confirmation_message (JAWS_IO_Handler *ioh,
-                                           const char *buffer,
+                                           char const *buffer,
                                            unsigned int length)
 {
   this->send_message (ioh, buffer, length, CONFIRMATION);
@@ -540,7 +540,7 @@ JAWS_Asynch_IO::send_confirmation_message (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Asynch_IO::send_error_message (JAWS_IO_Handler *ioh,
-                                    const char *buffer,
+                                    char const *buffer,
                                     unsigned int length)
 {
   this->send_message (ioh, buffer, length, ERROR_MESSAGE);
@@ -548,7 +548,7 @@ JAWS_Asynch_IO::send_error_message (JAWS_IO_Handler *ioh,
 
 void
 JAWS_Asynch_IO::send_message (JAWS_IO_Handler *ioh,
-                              const char *buffer,
+                              char const *buffer,
                               unsigned int length,
                               long act)
 {

@@ -211,7 +211,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>::close ()
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::GET_i (const KEY &key, JAWS_Cache_Object *&object)
+::GET_i (KEY const &key, JAWS_Cache_Object *&object)
 {
   int const result = this->hash_->find (key, object);
 
@@ -229,7 +229,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::PUT_i (const KEY &key, const void *data, size_t size, JAWS_Cache_Object *&obj)
+::PUT_i (KEY const &key, void const *data, size_t size, JAWS_Cache_Object *&obj)
 {
   int result = 0;
 
@@ -295,7 +295,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::FLUSH_i (const KEY &key)
+::FLUSH_i (KEY const &key)
 {
   JAWS_Cache_Object *temp_object;
 
@@ -376,7 +376,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::GET (const KEY &key, JAWS_Cache_Object *&object)
+::GET (KEY const &key, JAWS_Cache_Object *&object)
 {
   ACE_READ_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g,this->lock_, -1);
 
@@ -385,7 +385,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::PUT (const KEY &key, const void *data, size_t size, JAWS_Cache_Object *&obj)
+::PUT (KEY const &key, void const *data, size_t size, JAWS_Cache_Object *&obj)
 {
   ACE_WRITE_GUARD_RETURN (ACE_SYNCH_RW_MUTEX, g,this->lock_, -1);
 
@@ -394,7 +394,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class FACTORY, class HASH_FUNC, class EQ_FUNC> int
 JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
-::MAKE (const void *data, size_t size, JAWS_Cache_Object *&obj)
+::MAKE (void const *data, size_t size, JAWS_Cache_Object *&obj)
 {
   // verify object is within cacheable range
   if (size/1024 > this->maxobjsize_)
@@ -513,7 +513,7 @@ JAWS_Cache_Manager<KEY,FACTORY,HASH_FUNC,EQ_FUNC>
 
 template <class KEY, class DATA, class CACHE_MANAGER>
 JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
-::JAWS_Cache_Proxy (const KEY &key, Cache_Manager *manager)
+::JAWS_Cache_Proxy (KEY const &key, Cache_Manager *manager)
   : object_ (0),
     manager_ (manager)
 {
@@ -531,7 +531,7 @@ JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
 
 template <class KEY, class DATA, class CACHE_MANAGER>
 JAWS_Cache_Proxy<KEY, DATA, CACHE_MANAGER>
-::JAWS_Cache_Proxy (const KEY &key, DATA *data, size_t size,
+::JAWS_Cache_Proxy (KEY const &key, DATA *data, size_t size,
                    Cache_Manager *manager)
   : object_ (0),
     manager_ (manager)

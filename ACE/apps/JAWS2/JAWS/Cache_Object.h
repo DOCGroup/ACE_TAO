@@ -15,7 +15,7 @@ ACE_END_VERSIONED_NAMESPACE_DECL
 class JAWS_Cache_Object
 {
 public:
-  JAWS_Cache_Object (const void *, size_t);
+  JAWS_Cache_Object (void const *, size_t);
   virtual ~JAWS_Cache_Object ();
   JAWS_Cache_Object (JAWS_Cache_Object const &) = delete;
   JAWS_Cache_Object (JAWS_Cache_Object &&) = delete;
@@ -25,7 +25,7 @@ public:
   void *internal () const;
   void internal (void *);
 
-  const void *data () const;
+  void const *data () const;
   size_t size () const;
   unsigned int count () const;
 
@@ -52,7 +52,7 @@ protected:
 
 private:
   void *internal_;
-  const void *data_;
+  void const *data_;
   size_t size_;
 
   time_t last_access_;
@@ -65,7 +65,7 @@ private:
 class JAWS_Referenced_Cache_Object : public JAWS_Cache_Object
 {
 public:
-  JAWS_Referenced_Cache_Object (const void *, size_t);
+  JAWS_Referenced_Cache_Object (void const *, size_t);
   ~JAWS_Referenced_Cache_Object () override;
 
   ACE_Lock & lock () override;
@@ -84,7 +84,7 @@ private:
 class JAWS_Counted_Cache_Object : public JAWS_Cache_Object
 {
 public:
-  JAWS_Counted_Cache_Object (const void *, size_t);
+  JAWS_Counted_Cache_Object (void const *, size_t);
   ~JAWS_Counted_Cache_Object () override;
 
   ACE_Lock & lock () override;
@@ -110,7 +110,7 @@ public:
 
   int open (ACE_Allocator *alloc = nullptr);
 
-  virtual JAWS_Cache_Object * create (const void *, size_t) = 0;
+  virtual JAWS_Cache_Object * create (void const *, size_t) = 0;
   virtual void destroy (JAWS_Cache_Object *) = 0;
 
 protected:
@@ -123,7 +123,7 @@ public:
   explicit JAWS_Referenced_Cache_Object_Factory (ACE_Allocator *alloc = nullptr);
   ~JAWS_Referenced_Cache_Object_Factory () override;
 
-  JAWS_Cache_Object * create (const void *, size_t) override;
+  JAWS_Cache_Object * create (void const *, size_t) override;
   void destroy (JAWS_Cache_Object *) override;
 };
 
@@ -133,7 +133,7 @@ public:
   explicit JAWS_Counted_Cache_Object_Factory (ACE_Allocator *alloc = nullptr);
   ~JAWS_Counted_Cache_Object_Factory () override;
 
-  JAWS_Cache_Object * create (const void *, size_t) override;
+  JAWS_Cache_Object * create (void const *, size_t) override;
   void destroy (JAWS_Cache_Object *) override;
 };
 
