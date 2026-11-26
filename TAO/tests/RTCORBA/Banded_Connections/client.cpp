@@ -83,13 +83,13 @@ invocation_exception_test (Test_ptr obj,
       // should have been raised.
       ACE_DEBUG ((LM_DEBUG, "ERROR: no exception caught\n"));
     }
-  catch (const CORBA::INV_POLICY& )
+  catch (CORBA::INV_POLICY const& )
     {
       // Expected exception.
       ACE_DEBUG ((LM_DEBUG,
                   "INV_POLICY exception is caught as expected.\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Unexpected exception.
       ACE_DEBUG ((LM_DEBUG, "Error: unexpected exception caught\n"));
@@ -267,7 +267,7 @@ Task::svc ()
       // Testing over. Shut down Server ORB.
       server_declared_obj->shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in Banded_Connections test client:");
@@ -340,7 +340,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         "Unexpected exception in Banded_Connections test client:");

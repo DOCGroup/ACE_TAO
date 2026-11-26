@@ -372,7 +372,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::INTERNAL& ex)
+  catch (CORBA::INTERNAL const& ex)
     {
       if ((ex.minor() & 0x1F) == 9) {
         ACE_DEBUG ((LM_DEBUG, "You must be superuser to run "
@@ -384,7 +384,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         return -1;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught");
       return -1;

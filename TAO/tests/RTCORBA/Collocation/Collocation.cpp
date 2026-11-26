@@ -304,19 +304,19 @@ setup_test_parameters (Test_Object_And_Servant *test,
       current_thread_priority =
         current->the_priority ();
     }
-  catch (const CORBA::INITIALIZE&)
+  catch (CORBA::INITIALIZE const&)
     {
       try
         {
           current_thread_priority = get_implicit_thread_CORBA_priority (orb);
         }
-      catch (const CORBA::Exception &ex)
+      catch (CORBA::Exception const &ex)
         {
           ex._tao_print_exception ("Exception in ::setup_test_parameters calling ::get_implicit_thread_CORBA_priority: ");
           throw;
         }
     }
-  catch (const CORBA::Exception& dc)
+  catch (CORBA::Exception const& dc)
     {
       dc._tao_print_exception ("Exception in ::setup_test_parameters calling current->the_priority(): ");
       throw;
@@ -801,7 +801,7 @@ Task::svc ()
 
       server.shutdown ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;
@@ -865,7 +865,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         thread_manager.wait ();
       ACE_ASSERT (result != -1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return -1;

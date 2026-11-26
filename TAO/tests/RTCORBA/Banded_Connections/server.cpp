@@ -292,13 +292,13 @@ object_activation_exception_test (RTPortableServer::POA_ptr poa,
       // should have been raised.
       ACE_DEBUG ((LM_DEBUG, "ERROR: no exception caught\n"));
     }
-  catch (const CORBA::BAD_PARAM&)
+  catch (CORBA::BAD_PARAM const&)
     {
       // Expected exception.
       ACE_DEBUG ((LM_DEBUG,
                   "BAD_PARAM exception is caught as expected.\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Unexpected exception.
       ACE_DEBUG ((LM_DEBUG, "ERROR: unexpected exception caught\n"));
@@ -329,7 +329,7 @@ poa_creation_exception_test (PortableServer::POA_ptr root_poa,
       ACE_DEBUG ((LM_DEBUG,
                   "InvalidPolicy exception is caught as expected.\n"));
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Unexpected exception.
       ACE_DEBUG ((LM_DEBUG, "ERROR: unexpected exception\n"));
@@ -549,7 +549,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
       // Destroy ORB.
       orb->destroy ();
     }
-  catch (const CORBA::INTERNAL& exception)
+  catch (CORBA::INTERNAL const& exception)
     {
       const int minor_code =
         exception.minor ();
@@ -580,7 +580,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
           return -1;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         "Unexpected exception caught in Banded_Connections test server:");

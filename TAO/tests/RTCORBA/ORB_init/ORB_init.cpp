@@ -52,7 +52,7 @@ test_multiple_orbs (char const *test_name,
             }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Unexpected exception caught in ORB_init");
       return -1;
