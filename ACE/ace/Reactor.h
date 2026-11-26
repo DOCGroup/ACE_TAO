@@ -91,10 +91,10 @@ public:
   static void close_singleton ();
 
   /// Name of the dll in which the dll lives.
-  static const ACE_TCHAR *dll_name ();
+  static ACE_TCHAR const *dll_name ();
 
   /// Name of the component--ACE_Reactor in this case.
-  static const ACE_TCHAR *name ();
+  static ACE_TCHAR const *name ();
 
   /// @name Singleton reactor event loop methods
   /// @{

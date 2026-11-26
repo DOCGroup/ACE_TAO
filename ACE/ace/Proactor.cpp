@@ -427,13 +427,13 @@ ACE_Proactor::close_singleton ()
     }
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Proactor::dll_name ()
 {
   return ACE_TEXT ("ACE");
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Proactor::name ()
 {
   return ACE_TEXT ("ACE_Proactor");

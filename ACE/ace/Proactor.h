@@ -173,10 +173,10 @@ public:
   static void cleanup (void *instance, void *arg);
 
   /// Name of dll in which the singleton instance lives.
-  static const ACE_TCHAR *dll_name ();
+  static ACE_TCHAR const *dll_name ();
 
   /// Name of component--ACE_Proactor in this case.
-  static const ACE_TCHAR *name ();
+  static ACE_TCHAR const *name ();
 
   /// @name Proactor event loop management
   /// @{
