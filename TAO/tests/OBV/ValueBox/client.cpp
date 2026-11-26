@@ -347,7 +347,7 @@ int test_basic_invocations (Test * test_object)
         p1->_value(67);
         p2->_value(93);
 
-        const CORBA::Long lresult =
+        CORBA::Long const lresult =
           test_object->basic_op3(p1->_boxed_in(), p2->_boxed_inout(),
                                  p3->_boxed_out());
 

@@ -113,7 +113,7 @@ create_low_value_policy (CORBA::ORB_ptr orb)
   // Setting policy for minimum amount of bytes that needs to be
   // compressed. If a message is smaller than this, it doesn't get
   // compressed
-  const CORBA::ULong compression_low_value = 100;
+  CORBA::ULong const compression_low_value = 100;
   CORBA::Any low_value_any;
   low_value_any <<= compression_low_value;
 
@@ -124,7 +124,7 @@ CORBA::Policy_ptr
 create_compression_enabled_policy (CORBA::ORB_ptr orb)
 {
   // Setting policy whether compression is used.
-  const CORBA::Boolean compression_enabling = true;
+  CORBA::Boolean const compression_enabling = true;
   CORBA::Any compression_enabling_any;
   compression_enabling_any <<= CORBA::Any::from_boolean(compression_enabling);
 

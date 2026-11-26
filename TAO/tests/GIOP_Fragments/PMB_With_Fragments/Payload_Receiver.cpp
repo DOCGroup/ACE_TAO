@@ -11,7 +11,7 @@ Payload_Receiver::more_data (Test::Payload const &payload)
 {
   ++this->count_;
 
-  const CORBA::ULong length = payload.length ();
+  CORBA::ULong const length = payload.length ();
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       if (payload[i] != 'A')

@@ -416,7 +416,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         VERIFY (! std::strcmp (desc.in (),
                  "case8: multiple IN truncatable valuetype parameters"
                         " and return truncatable valuetype"));
-        const CORBA::ULong total = 5 * (v1->basic_data () + v2->basic_data () +
+        CORBA::ULong const total = 5 * (v1->basic_data () + v2->basic_data () +
                                   v3->basic_data () + v4->basic_data ());
         VERIFY (ov->basic_data () == total);
         if (verbose)
