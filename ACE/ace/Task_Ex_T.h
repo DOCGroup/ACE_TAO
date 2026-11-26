@@ -94,32 +94,33 @@ public: // Should be protected:
    * or the timeout expires (setting errno to EWOULDBLOCK).
    */
 
-  /// Insert message into the message queue.  Note that @a timeout uses
-  /// <{absolute}> time rather than <{relative}> time.
+  /// Insert message into the message queue.
+  /// @note @a timeout uses absolute time rather than relative time.
   int putq (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = nullptr);
 
   /**
-   * Extract the first message from the queue (blocking).  Note that
-   * @a timeout uses <{absolute}> time rather than <{relative}> time.
+   * Extract the first message from the queue (blocking).
    * Returns number of items in queue if the call succeeds or -1 otherwise.
+   *
+   * @note @a timeout uses absolute time rather than relative time.
    */
   int getq (ACE_MESSAGE_TYPE *&mb, ACE_Time_Value *timeout = nullptr);
 
-  /// Return a message to the queue.  Note that @a timeout uses
-  /// <{absolute}> time rather than <{relative}> time.
+  /// Return a message to the queue.
+  /// @note @a timeout uses absolute time rather than relative time.
   int ungetq (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = nullptr);
 
   /**
-   * Turn the message around and send it back down the Stream.  Note
-   * that @a timeout uses <{absolute}> time rather than <{relative}>
-   * time.
+   * Turn the message around and send it back down the Stream.
+   *
+   * @note @a timeout uses absolute time rather than relative time.
    */
   int reply (ACE_MESSAGE_TYPE *, ACE_Time_Value *timeout = nullptr);
 
   /**
-   * Transfer message to the adjacent ACE_Task_Ex in a ACE_Stream.  Note
-   * that @a timeout uses <{absolute}> time rather than <{relative}>
-   * time.
+   * Transfer message to the adjacent ACE_Task_Ex in an ACE_Stream.
+   *
+   * @note @a timeout uses absolute time rather than relative time.
    */
   int put_next (ACE_MESSAGE_TYPE *msg, ACE_Time_Value *timeout = nullptr);
 
