@@ -30,6 +30,7 @@ DAMAGES.
 -=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-*/
 
 #include <cstring>
+#include <memory>
 #include <utility>
 #include "ace/OS_main.h"
 #include "asnmp/octet.h"

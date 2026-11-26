@@ -31,6 +31,7 @@ DAMAGES.
 
 #include <array>
 #include <cstring>
+#include <memory>
 #include <utility>
 #include "ace/OS_main.h"
 #include "asnmp/oid.h"
