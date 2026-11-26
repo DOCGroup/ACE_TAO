@@ -36,7 +36,7 @@ public:
   };
 
   /// Human Readable operation name.
-  static const char * const opname[];
+  static char const * const opname[];
 
   /// Specifies how offers are selected.
   enum ACE_Selection_Criteria
@@ -47,7 +47,7 @@ public:
     INVALID_SELECTION           // Invalid.
   };
 
-  static const char * const selection_name[];
+  static char const * const selection_name[];
 
   /// Error codes reported through errno.
   enum ACE_URL_Locator_Error
@@ -62,7 +62,7 @@ public:
     MAX_URL_ERROR
   };
   /// Human readable error status.
-  static const char * const err_name[];
+  static char const * const err_name[];
 
   virtual ~ACE_URL_Locator () = 0;
 
@@ -73,7 +73,7 @@ public:
    * @c offer so users must deallocate it after use.
    */
   virtual int url_query (const ACE_Selection_Criteria how,
-                         const ACE_URL_Property_Seq *pseq,
+                         ACE_URL_Property_Seq const *pseq,
                          const size_t how_many,
                          size_t &num_query,
                          ACE_URL_Offer_Seq *offer) = 0;
@@ -83,20 +83,20 @@ public:
                             ACE_WString &offer_id) = 0;
 
   /// Withdraw an offer.  return 0 if succeed, -1 otherwise.
-  virtual int withdraw_offer (const ACE_WString &offer_id) = 0;
+  virtual int withdraw_offer (ACE_WString const &offer_id) = 0;
 
   /// Query a specific offer.
-  virtual int describe_offer (const ACE_WString &offer_id,
+  virtual int describe_offer (ACE_WString const &offer_id,
                               ACE_URL_Offer *offer) = 0;
 
   /// Modify a previously registered offer.
-  virtual int modify_offer (const ACE_WString &offer_id,
-                            const ACE_WString *url = nullptr,
-                            const ACE_URL_Property_Seq *del = nullptr,
-                            const ACE_URL_Property_Seq *modify = nullptr) = 0;
+  virtual int modify_offer (ACE_WString const &offer_id,
+                            ACE_WString const *url = nullptr,
+                            ACE_URL_Property_Seq const *del = nullptr,
+                            ACE_URL_Property_Seq const *modify = nullptr) = 0;
 
   /// Provide a human readable error status.
-  virtual const char *error_status ();
+  virtual char const *error_status ();
 };
 
 #endif /* ACE_WEB_LOCATOR_H */

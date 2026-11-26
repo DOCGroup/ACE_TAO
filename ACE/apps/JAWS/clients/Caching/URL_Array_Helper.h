@@ -13,10 +13,10 @@
 // You should find some way to avoid name space polution.
 
 template <class T>
-size_t ace_array_size (const T &x);
+size_t ace_array_size (T const &x);
 
 template <class T>
-size_t ace_array_encode (void *buf, const T &x);
+size_t ace_array_encode (void *buf, T const &x);
 
 template <class T>
 size_t ace_array_decode (void *buf, T &x);

@@ -51,23 +51,23 @@ public:
   virtual void read (ACE_Message_Block& mb, int size) = 0;
 
   /// send header, filename, trailer to the handle.
-  virtual void transmit_file (const char *filename,
-                              const char *header,
+  virtual void transmit_file (char const *filename,
+                              char const *header,
                               int header_size,
-                              const char *trailer,
+                              char const *trailer,
                               int trailer_size) = 0;
 
   /// read data from the handle and store in filename.
-  virtual void receive_file (const char *filename,
+  virtual void receive_file (char const *filename,
                              void *initial_data,
                              int initial_data_length,
                              int entire_length) = 0;
 
   /// send a confirmation message to the handle.
-  virtual void send_confirmation_message (const char *buffer, int length) = 0;
+  virtual void send_confirmation_message (char const *buffer, int length) = 0;
 
   /// send an error message to the handle.
-  virtual void send_error_message (const char *buffer, int length) = 0;
+  virtual void send_error_message (char const *buffer, int length) = 0;
 
 protected:
   JAWS_IO_Handler *handler_;
@@ -142,25 +142,25 @@ public:
 
   void read (ACE_Message_Block& mb, int size) override;
 
-  void transmit_file (const char *filename,
-                      const char *header,
+  void transmit_file (char const *filename,
+                      char const *header,
                       int header_size,
-                      const char *trailer,
+                      char const *trailer,
                       int trailer_size) override;
 
-  void receive_file (const char *filename,
+  void receive_file (char const *filename,
                      void *initial_data,
                      int initial_data_length,
                      int entire_length) override;
 
-  void send_confirmation_message (const char *buffer,
+  void send_confirmation_message (char const *buffer,
                                   int length) override;
 
-  void send_error_message (const char *buffer,
+  void send_error_message (char const *buffer,
                            int length) override;
 
 protected:
-  virtual void send_message (const char *buffer,
+  virtual void send_message (char const *buffer,
                              int length);
 
   ACE_HANDLE handle_;
@@ -190,21 +190,21 @@ public:
 
   void read (ACE_Message_Block& mb, int size) override;
 
-  void transmit_file (const char *filename,
-                      const char *header,
+  void transmit_file (char const *filename,
+                      char const *header,
                       int header_size,
-                      const char *trailer,
+                      char const *trailer,
                       int trailer_size) override;
 
-  void receive_file (const char *filename,
+  void receive_file (char const *filename,
                      void *initial_data,
                      int initial_data_length,
                      int entire_length) override;
 
-  void send_confirmation_message (const char *buffer,
+  void send_confirmation_message (char const *buffer,
                                   int length) override;
 
-  void send_error_message (const char *buffer,
+  void send_error_message (char const *buffer,
                            int length) override;
 
 protected:
@@ -214,7 +214,7 @@ protected:
     ERROR_MESSAGE
   };
 
-  virtual void send_message (const char *buffer,
+  virtual void send_message (char const *buffer,
                              int length,
                              int act);
 
@@ -263,25 +263,25 @@ public:
 
   void read (ACE_Message_Block& mb, int size) override;
 
-  void transmit_file (const char *filename,
-                      const char *header,
+  void transmit_file (char const *filename,
+                      char const *header,
                       int header_size,
-                      const char *trailer,
+                      char const *trailer,
                       int trailer_size) override;
 
-  void receive_file (const char *filename,
+  void receive_file (char const *filename,
                      void *initial_data,
                      int initial_data_length,
                      int entire_length) override;
 
-  void send_confirmation_message (const char *buffer,
+  void send_confirmation_message (char const *buffer,
                                   int length) override;
 
-  void send_error_message (const char *buffer,
+  void send_error_message (char const *buffer,
                            int length) override;
 
 protected:
-  virtual void send_message (const char *buffer, int length);
+  virtual void send_message (char const *buffer, int length);
 
   ACE_HANDLE handle_;
 };

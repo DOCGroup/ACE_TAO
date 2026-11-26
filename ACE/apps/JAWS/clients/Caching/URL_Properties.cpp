@@ -71,7 +71,7 @@ ACE_URL_Offer::url (ACE_UINT16 const *url)
 }
 
 size_t
-ACE_WString_Helper::encode (void *buf, const ACE_WString &wstr)
+ACE_WString_Helper::encode (void *buf, ACE_WString const &wstr)
 {
   char * const bytes = static_cast<char *> (buf);
   size_t const count = wstr.length () + 1;

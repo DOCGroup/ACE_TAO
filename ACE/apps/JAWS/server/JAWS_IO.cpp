@@ -67,7 +67,7 @@ JAWS_Synch_IO::read (ACE_Message_Block &mb,
 }
 
 void
-JAWS_Synch_IO::receive_file (const char *filename,
+JAWS_Synch_IO::receive_file (char const *filename,
                              void *initial_data,
                              int initial_data_length,
                              int entire_length)
@@ -105,10 +105,10 @@ JAWS_Synch_IO::receive_file (const char *filename,
 }
 
 void
-JAWS_Synch_IO::transmit_file (const char *filename,
-                              const char *header,
+JAWS_Synch_IO::transmit_file (char const *filename,
+                              char const *header,
                               int header_size,
-                              const char *trailer,
+                              char const *trailer,
                               int trailer_size)
 {
   ACE_Filecache_Handle cache_handle (ACE_TEXT_CHAR_TO_TCHAR (filename));
@@ -171,7 +171,7 @@ JAWS_Synch_IO::transmit_file (const char *filename,
 }
 
 void
-JAWS_Synch_IO::send_confirmation_message (const char *buffer,
+JAWS_Synch_IO::send_confirmation_message (char const *buffer,
                                           int length)
 {
   this->send_message (buffer, length);
@@ -179,7 +179,7 @@ JAWS_Synch_IO::send_confirmation_message (const char *buffer,
 }
 
 void
-JAWS_Synch_IO::send_error_message (const char *buffer,
+JAWS_Synch_IO::send_error_message (char const *buffer,
                                    int length)
 {
   this->send_message (buffer, length);
@@ -187,7 +187,7 @@ JAWS_Synch_IO::send_error_message (const char *buffer,
 }
 
 void
-JAWS_Synch_IO::send_message (const char *buffer,
+JAWS_Synch_IO::send_message (char const *buffer,
                              int length)
 {
   ACE_SOCK_Stream stream;
@@ -222,7 +222,7 @@ JAWS_Asynch_IO::read (ACE_Message_Block& mb,
 // stream.
 
 void
-JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+JAWS_Asynch_IO::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   // This callback is for this->receive_file()
   if (result.act () != nullptr)
@@ -280,7 +280,7 @@ JAWS_Asynch_IO::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result
 }
 
 void
-JAWS_Asynch_IO::receive_file (const char *filename,
+JAWS_Asynch_IO::receive_file (char const *filename,
                               void *initial_data,
                               int initial_data_length,
                               int entire_length)
@@ -325,10 +325,10 @@ JAWS_Asynch_IO::receive_file (const char *filename,
 }
 
 void
-JAWS_Asynch_IO::transmit_file (const char *filename,
-                               const char *header,
+JAWS_Asynch_IO::transmit_file (char const *filename,
+                               char const *header,
                                int header_size,
-                               const char *trailer,
+                               char const *trailer,
                                int trailer_size)
 {
   ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer {};
@@ -369,7 +369,7 @@ JAWS_Asynch_IO::transmit_file (const char *filename,
 
 // This method will be called when an asynchronous transmit file completes.
 void
-JAWS_Asynch_IO::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
+JAWS_Asynch_IO::handle_transmit_file (ACE_Asynch_Transmit_File::Result const &result)
 {
   if (result.success ())
     {
@@ -386,21 +386,21 @@ JAWS_Asynch_IO::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &re
 }
 
 void
-JAWS_Asynch_IO::send_confirmation_message (const char *buffer,
+JAWS_Asynch_IO::send_confirmation_message (char const *buffer,
                                            int length)
 {
   this->send_message (buffer, length, CONFORMATION);
 }
 
 void
-JAWS_Asynch_IO::send_error_message (const char *buffer,
+JAWS_Asynch_IO::send_error_message (char const *buffer,
                                     int length)
 {
   this->send_message (buffer, length, ERROR_MESSAGE);
 }
 
 void
-JAWS_Asynch_IO::send_message (const char *buffer,
+JAWS_Asynch_IO::send_message (char const *buffer,
                               int length,
                               int act)
 {
@@ -431,7 +431,7 @@ JAWS_Asynch_IO::send_message (const char *buffer,
 }
 
 void
-JAWS_Asynch_IO::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+JAWS_Asynch_IO::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   result.message_block ().release ();
 
@@ -488,7 +488,7 @@ JAWS_Synch_IO_No_Cache::read (ACE_Message_Block &mb, int size)
 }
 
 void
-JAWS_Synch_IO_No_Cache::receive_file (const char *,
+JAWS_Synch_IO_No_Cache::receive_file (char const *,
                                       void *,
                                       int,
                                       int)
@@ -498,10 +498,10 @@ JAWS_Synch_IO_No_Cache::receive_file (const char *,
 }
 
 void
-JAWS_Synch_IO_No_Cache::transmit_file (const char *filename,
-                                       const char *header,
+JAWS_Synch_IO_No_Cache::transmit_file (char const *filename,
+                                       char const *header,
                                        int header_size,
-                                       const char *trailer,
+                                       char const *trailer,
                                        int trailer_size)
 {
   // Can we access the file?
@@ -556,7 +556,7 @@ JAWS_Synch_IO_No_Cache::transmit_file (const char *filename,
 }
 
 void
-JAWS_Synch_IO_No_Cache::send_confirmation_message (const char *buffer,
+JAWS_Synch_IO_No_Cache::send_confirmation_message (char const *buffer,
                                                    int length)
 {
   this->send_message (buffer, length);
@@ -564,14 +564,14 @@ JAWS_Synch_IO_No_Cache::send_confirmation_message (const char *buffer,
 }
 
 void
-JAWS_Synch_IO_No_Cache::send_error_message (const char *buffer, int length)
+JAWS_Synch_IO_No_Cache::send_error_message (char const *buffer, int length)
 {
   this->send_message (buffer, length);
   this->handler_->error_message_complete ();
 }
 
 void
-JAWS_Synch_IO_No_Cache::send_message (const char *buffer, int length)
+JAWS_Synch_IO_No_Cache::send_message (char const *buffer, int length)
 {
   ACE_SOCK_Stream stream;
   stream.set_handle (this->handle_);

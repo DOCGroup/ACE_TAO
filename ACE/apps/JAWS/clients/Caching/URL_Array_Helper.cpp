@@ -8,7 +8,7 @@
 // Some helper functions for encoding/decoding
 
 template <class T>
-size_t ace_array_size (const T &x)
+size_t ace_array_size (T const &x)
 {
   size_t sum = sizeof (ACE_UINT32);
   for (size_t i = 0; i < x.size (); ++i)
@@ -17,7 +17,7 @@ size_t ace_array_size (const T &x)
 }
 
 template <class T>
-size_t ace_array_encode (void *buf, const T &x)
+size_t ace_array_encode (void *buf, T const &x)
 {
   size_t len {};
   char * const bytes = static_cast<char *> (buf);

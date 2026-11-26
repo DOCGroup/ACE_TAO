@@ -8,7 +8,7 @@
 #include <cstring>
 #include <string>
 
-const char *const
+char const *const
 HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS] =
 {
   "Date",
@@ -26,7 +26,7 @@ HTTP_Request::static_header_strings_[HTTP_Request::NUM_HEADER_STRINGS] =
   "Last-Modified"
 };
 
-const char *const
+char const *const
 HTTP_Request::static_method_strings_[HTTP_Request::NUM_METHOD_STRINGS] =
 {
   "GET",
@@ -186,25 +186,25 @@ HTTP_Request::init (char *const buffer,
   return 1;
 }
 
-const char *
+char const *
 HTTP_Request::method () const
 {
   return this->method_;
 }
 
-const char *
+char const *
 HTTP_Request::uri () const
 {
   return this->uri_;
 }
 
-const char *
+char const *
 HTTP_Request::version () const
 {
   return this->version_;
 }
 
-const char *
+char const *
 HTTP_Request::path () const
 {
   return this->path_;
@@ -222,19 +222,19 @@ HTTP_Request::cgi_env () const
   return this->cgi_env_.empty () ? nullptr : this->cgi_env_.data ();
 }
 
-const char *
+char const *
 HTTP_Request::cgi_args () const
 {
   return this->cgi_args_;
 }
 
-const char *
+char const *
 HTTP_Request::query_string () const
 {
   return this->query_string_;
 }
 
-const char *
+char const *
 HTTP_Request::path_info () const
 {
   return this->path_info_;
@@ -252,13 +252,13 @@ HTTP_Request::type () const
   return type_;
 }
 
-const Headers &
+Headers const &
 HTTP_Request::headers () const
 {
   return this->headers_;
 }
 
-const char *
+char const *
 HTTP_Request::header_strings (int index) const
 {
   if (0 <= index && index < NUM_HEADER_STRINGS)
@@ -269,7 +269,7 @@ HTTP_Request::header_strings (int index) const
   return nullptr;
 }
 
-const char *
+char const *
 HTTP_Request::header_values (int index) const
 {
   char const *hv {};
@@ -300,7 +300,7 @@ HTTP_Request::content_length ()
 {
   if (this->content_length_ == -1)
     {
-      const char * clv = this->headers_["Content-length"].value ();
+      char const * clv = this->headers_["Content-length"].value ();
       this->content_length_ = (clv ? ACE_OS::atoi (clv) : 0);
     }
 
@@ -313,7 +313,7 @@ HTTP_Request::status ()
   return this->status_;
 }
 
-const char *
+char const *
 HTTP_Request::status_string ()
 {
   return HTTP_Status_Code::instance ()[this->status_];
@@ -337,8 +337,8 @@ HTTP_Request::dump ()
               this->status_string ()));
 }
 
-const char *
-HTTP_Request::method (const char *method_string)
+char const *
+HTTP_Request::method (char const *method_string)
 {
   if (this->method_)
   {
@@ -358,7 +358,7 @@ HTTP_Request::method (const char *method_string)
   return this->method_;
 }
 
-const char *
+char const *
 HTTP_Request::uri (char *uri_string)
 {
   if (this->uri_)
@@ -381,8 +381,8 @@ HTTP_Request::uri (char *uri_string)
   return this->uri_;
 }
 
-const char *
-HTTP_Request::version (const char *version_string)
+char const *
+HTTP_Request::version (char const *version_string)
 {
   if (this->version_)
     {
@@ -402,7 +402,7 @@ HTTP_Request::version (const char *version_string)
 }
 
 int
-HTTP_Request::type (const char *type_string)
+HTTP_Request::type (char const *type_string)
 {
   this->type_ = HTTP_Request::NO_TYPE;
 
@@ -661,8 +661,8 @@ HTTP_Request::cgi_args_and_env (char *&extra_path_info)
     }
 }
 
-const char *
-HTTP_Request::path (const char *uri_string)
+char const *
+HTTP_Request::path (char const *uri_string)
 {
   char const *file_name = uri_string;
   std::string path;

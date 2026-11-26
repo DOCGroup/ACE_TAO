@@ -29,11 +29,11 @@ class ACE_Svc_Export ACE_WString_Helper
 public:
   /// Returns the actual size (in bytes) required to contain the
   /// ACE_WString.
-  static size_t size (const ACE_WString &wstr);
+  static size_t size (ACE_WString const &wstr);
 
   /// Encode @c wstr into @c buf for network communication.
   /// Return total octets consumed.
-  static size_t encode (void *buf, const ACE_WString &wstr);
+  static size_t encode (void *buf, ACE_WString const &wstr);
 
   /**
    * This function doesn't relate to ACE_WString directly.

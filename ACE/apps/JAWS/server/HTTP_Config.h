@@ -62,16 +62,16 @@ public:
 
 private:
   /// The directory root from which documents will be fetched
-  const char *document_root_ {};
+  char const *document_root_ {};
 
   /// The directories from which to expect CGI scripts
-  const char *cgi_path_ {};
+  char const *cgi_path_ {};
 
   /// Name of the sub-directory where user Web pages are
-  const char *user_dir_ {};
+  char const *user_dir_ {};
 
   /// Name of the Web page to present in place of a directory listing
-  const char *dir_index_ {};
+  char const *dir_index_ {};
 
   /// Should we support proxy requests?  Ignored for now.
   int proxy_flag_ {};

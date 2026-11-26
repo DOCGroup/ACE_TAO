@@ -34,29 +34,29 @@ public:
    * @c offer so users must deallocate it after use.
    */
   int url_query (const int how,
-                 const ACE_URL_Property_Seq &pseq,
+                 ACE_URL_Property_Seq const &pseq,
                  const int how_many);
 
   /// Export an offer to the locator.
-  int export_offer (const ACE_URL_Offer &offer);
+  int export_offer (ACE_URL_Offer const &offer);
 
   /// Withdraw an offer.  return 0 if succeed, -1 otherwise.
-  int withdraw_offer (const ACE_WString &offer_id);
+  int withdraw_offer (ACE_WString const &offer_id);
 
   /// Query a specific offer.
-  int describe_offer (const ACE_WString &offer_id);
+  int describe_offer (ACE_WString const &offer_id);
 
   /// Modify a previously registered offer.
-  int modify_offer (const ACE_WString &offer_id,
-                    const char *url = nullptr,
-                    const ACE_URL_Property_Seq &del = 0,
-                    const ACE_URL_Property_Seq &modify = 0);
+  int modify_offer (ACE_WString const &offer_id,
+                    char const *url = nullptr,
+                    ACE_URL_Property_Seq const &del = 0,
+                    ACE_URL_Property_Seq const &modify = 0);
 
   /// Modify a previously registered offer.
-  int modify_offer (const ACE_WString &offer_id,
-                    const ACE_WString *url = nullptr,
-                    const ACE_URL_Property_Seq &del = 0,
-                    const ACE_URL_Property_Seq &modify = 0);
+  int modify_offer (ACE_WString const &offer_id,
+                    ACE_WString const *url = nullptr,
+                    ACE_URL_Property_Seq const &del = 0,
+                    ACE_URL_Property_Seq const &modify = 0);
 
   /// Encode request for network communication.  If succeed,
   /// returns the size of the buffer, otherwise, return 0.
@@ -148,11 +148,11 @@ public:
 
   /// Setup a reply for QUERY operation.
   int query_reply (int result, size_t num,
-                   const ACE_URL_Offer_Seq &offers);
+                   ACE_URL_Offer_Seq const &offers);
 
   /// Construct a reply for DESCRIBE operation.
   int describe_reply (int result,
-                      const ACE_URL_Offer &offer);
+                      ACE_URL_Offer const &offer);
 
   /// Encode request for network communication.  If succeed,
   /// returns the size of the buffer, otherwise, return 0.

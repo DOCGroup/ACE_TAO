@@ -24,15 +24,15 @@ public:
   HTTP_Helper () = delete;
 
   /// Convert and HTTP-date into a time_t
-  static time_t HTTP_mktime (const char *httpdate);
+  static time_t HTTP_mktime (char const *httpdate);
 
   /// Create today's date
-  static const char *HTTP_date ();
-  static const char *HTTP_date (char *s);
+  static char const *HTTP_date ();
+  static char const *HTTP_date (char *s);
 
   /// Month conversions (ascii <--> numeric)
-  static int HTTP_month (const char *month);
-  static const char *HTTP_month (int month);
+  static int HTTP_month (char const *month);
+  static char const *HTTP_month (int month);
 
   static char *HTTP_decode_string (char *path);
 
@@ -44,7 +44,7 @@ private:
   static int fixyear (int year);
 
 private:
-  static const char *const months_[12];
+  static char const *const months_[12];
   static char const *alphabet_;
 
   /// Use this sometimes (e.g. HTTP_date)
@@ -67,7 +67,7 @@ public:
   HTTP_Status_Code () = delete;
 
   /// Singleton access point.
-  static const char **instance ();
+  static char const **instance ();
 
   enum STATUS_CODE
   {
@@ -96,7 +96,7 @@ public:
 
 private:
   /// Singleton pattern is afoot here.
-  static const char *Reason[MAX_STATUS_CODE + 1];
+  static char const *Reason[MAX_STATUS_CODE + 1];
   static int instance_;
   static ACE_SYNCH_MUTEX lock_;
 };

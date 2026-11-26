@@ -35,7 +35,7 @@ ace_url_wstring_from_buffer (char const *buffer)
 
 int
 ACE_URL_Locator_Request::url_query (const int how,
-                                    const ACE_URL_Property_Seq &pseq,
+                                    ACE_URL_Property_Seq const &pseq,
                                     const int how_many)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::url_query");
@@ -54,7 +54,7 @@ ACE_URL_Locator_Request::url_query (const int how,
 }
 
 int
-ACE_URL_Locator_Request::export_offer (const ACE_URL_Offer &offer)
+ACE_URL_Locator_Request::export_offer (ACE_URL_Offer const &offer)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::export_offer");
 
@@ -66,7 +66,7 @@ ACE_URL_Locator_Request::export_offer (const ACE_URL_Offer &offer)
 }
 
 int
-ACE_URL_Locator_Request::withdraw_offer (const ACE_WString &offer_id)
+ACE_URL_Locator_Request::withdraw_offer (ACE_WString const &offer_id)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::withdraw_offer");
 
@@ -76,7 +76,7 @@ ACE_URL_Locator_Request::withdraw_offer (const ACE_WString &offer_id)
 }
 
 int
-ACE_URL_Locator_Request::describe_offer (const ACE_WString &offer_id)
+ACE_URL_Locator_Request::describe_offer (ACE_WString const &offer_id)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::describe_offer");
 
@@ -86,10 +86,10 @@ ACE_URL_Locator_Request::describe_offer (const ACE_WString &offer_id)
 }
 
 int
-ACE_URL_Locator_Request::modify_offer (const ACE_WString &offer_id,
-                                       const ACE_WString *url,
-                                       const ACE_URL_Property_Seq &del,
-                                       const ACE_URL_Property_Seq &modify)
+ACE_URL_Locator_Request::modify_offer (ACE_WString const &offer_id,
+                                       ACE_WString const *url,
+                                       ACE_URL_Property_Seq const &del,
+                                       ACE_URL_Property_Seq const &modify)
 {
   ACE_TRACE ("ACE_URL_Locator_Request::modify_offer");
 
@@ -382,7 +382,7 @@ ACE_URL_Locator_Reply::status_reply (u_int op, int result)
 
 int
 ACE_URL_Locator_Reply::query_reply (int result, size_t num,
-                                    const ACE_URL_Offer_Seq &offers)
+                                    ACE_URL_Offer_Seq const &offers)
 {
   ACE_TRACE ("ACE_URL_Locator_Reply::query_reply");
 
@@ -397,7 +397,7 @@ ACE_URL_Locator_Reply::query_reply (int result, size_t num,
 
 int
 ACE_URL_Locator_Reply::describe_reply (int result,
-                                       const ACE_URL_Offer &offer)
+                                       ACE_URL_Offer const &offer)
 {
   ACE_TRACE ("ACE_URL_Locator_Reply::describe_reply");
 

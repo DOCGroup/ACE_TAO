@@ -44,10 +44,10 @@ public:
   ~ACE_URL_Record ();
 
   /// Two records are equal if they have the same offer id.
-  bool operator== (const ACE_URL_Record &rhs) const;
+  bool operator== (ACE_URL_Record const &rhs) const;
 
   /// Unequal, complement of equal.
-  bool operator!= (const ACE_URL_Record &rhs) const;
+  bool operator!= (ACE_URL_Record const &rhs) const;
 
 private:
   /// Default ctor.  This is put here to prevent users from
@@ -81,7 +81,7 @@ class ACE_Svc_Export ACE_URL_Local_Locator
    * @a offer so users must deallocate it after use.
    */
   virtual int url_query (const ACE_URL_Locator::ACE_Selection_Criteria how,
-                         const ACE_URL_Property_Seq *pseq,
+                         ACE_URL_Property_Seq const *pseq,
                          const size_t how_many,
                          size_t &num_query,
                          ACE_URL_Offer_Seq *offer);
@@ -91,17 +91,17 @@ class ACE_Svc_Export ACE_URL_Local_Locator
                             ACE_WString &offer_id);
 
   /// Withdraw an offer.  return 0 if succeed, -1 otherwise.
-  virtual int withdraw_offer (const ACE_WString &offer_id);
+  virtual int withdraw_offer (ACE_WString const &offer_id);
 
   /// Query a specific offer.
-  virtual int describe_offer (const ACE_WString &offer_id,
+  virtual int describe_offer (ACE_WString const &offer_id,
                               ACE_URL_Offer *offer);
 
   /// Modify a previously registered offer.
-  virtual int modify_offer (const ACE_WString &offer_id,
-                            const ACE_WString *url = nullptr,
-                            const ACE_URL_Property_Seq *del = nullptr,
-                            const ACE_URL_Property_Seq *modify = nullptr);
+  virtual int modify_offer (ACE_WString const &offer_id,
+                            ACE_WString const *url = nullptr,
+                            ACE_URL_Property_Seq const *del = nullptr,
+                            ACE_URL_Property_Seq const *modify = nullptr);
 
 protected:
   ACE_Unbounded_Set<ACE_URL_Record> repository_;

@@ -1,5 +1,5 @@
 ACE_INLINE size_t
-ACE_WString_Helper::size (const ACE_WString &wstr)
+ACE_WString_Helper::size (ACE_WString const &wstr)
 {
   return (wstr.length () + 1) * sizeof (ACE_UINT16);
 }

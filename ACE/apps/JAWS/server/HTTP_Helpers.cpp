@@ -22,10 +22,10 @@ ACE_SYNCH_MUTEX HTTP_Helper::mutex_;
 
 ACE_SYNCH_MUTEX HTTP_Status_Code::lock_;
 int HTTP_Status_Code::instance_ = 0;
-const char *HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE + 1];
+char const *HTTP_Status_Code::Reason[HTTP_Status_Code::MAX_STATUS_CODE + 1];
 
 time_t
-HTTP_Helper::HTTP_mktime (const char *httpdate)
+HTTP_Helper::HTTP_mktime (char const *httpdate)
 {
   if (httpdate == nullptr)
     {
@@ -39,7 +39,7 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   // Make spaces in the date be semi-colons so we can parse robustly
   // with sscanf.
 
-  const char *ptr1 = httpdate;
+  char const *ptr1 = httpdate;
   char *ptr2 = buf;
 
   do
@@ -126,7 +126,7 @@ HTTP_Helper::HTTP_mktime (const char *httpdate)
   }
 }
 
-const char *
+char const *
 HTTP_Helper::HTTP_date ()
 {
   if (HTTP_Helper::date_string_ == nullptr)
@@ -149,7 +149,7 @@ HTTP_Helper::HTTP_date ()
   return HTTP_Helper::date_string_;
 }
 
-const char *
+char const *
 HTTP_Helper::HTTP_date (char *s)
 {
   // Return the date-string formatted per HTTP standards.  Time must
@@ -162,9 +162,9 @@ HTTP_Helper::HTTP_date (char *s)
   if (ACE_OS::time (&tloc) != (time_t) -1
       && ACE_OS::gmtime_r (&tloc, &tms) != nullptr)
   {
-    static const char* months[] = {"Jan","Feb","Mar","Apr","May","Jun",
+    static char const * months[] = {"Jan","Feb","Mar","Apr","May","Jun",
                                    "Jul","Aug","Sep","Oct","Nov","Dec"};
-    static const char* days[] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
+    static char const * days[] = {"Sun","Mon","Tue","Wed","Thu","Fri","Sat"};
 
     ACE_OS::sprintf (date_string,
                      "%s, %2.2d %s %4.4d %2.2d:%2.2d:%2.2d GMT",
@@ -180,7 +180,7 @@ HTTP_Helper::HTTP_date (char *s)
 }
 
 int
-HTTP_Helper::HTTP_month (const char *month)
+HTTP_Helper::HTTP_month (char const *month)
 {
   for (size_t i = 0; i < 12; ++i)
     {
@@ -193,7 +193,7 @@ HTTP_Helper::HTTP_month (const char *month)
   return -1;
 }
 
-const char *
+char const *
 HTTP_Helper::HTTP_month (int month)
 {
   if (month < 0 || month >= 12)
@@ -424,7 +424,7 @@ HTTP_Helper::fixyear (int year)
   return year;
 }
 
-const char **
+char const **
 HTTP_Status_Code::instance ()
 {
   if (HTTP_Status_Code::instance_ == 0)

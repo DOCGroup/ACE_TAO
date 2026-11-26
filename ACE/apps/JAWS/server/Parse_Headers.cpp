@@ -13,7 +13,7 @@
 Headers::Headers () = default;
 
 void
-Headers::recognize (const char * const header)
+Headers::recognize (char const * const header)
 {
   (void)this->map_[header];
 }
@@ -129,13 +129,13 @@ Headers::end_of_headers () const
 }
 
 Headers_Map_Item &
-Headers::operator[] (const char * const header)
+Headers::operator[] (char const * const header)
 {
   return this->map_[header];
 }
 
-const Headers_Map_Item &
-Headers::operator[] (const char * const header) const
+Headers_Map_Item const &
+Headers::operator[] (char const * const header) const
 {
   return this->map_[header];
 }
@@ -191,7 +191,7 @@ Headers_Map_Item::operator= (char * value)
 }
 
 Headers_Map_Item &
-Headers_Map_Item::operator= (const char * value)
+Headers_Map_Item::operator= (char const * value)
 {
   ACE_OS::free (const_cast<char *> (this->value_));
   this->value_ = ACE_OS::strdup (value);
@@ -199,7 +199,7 @@ Headers_Map_Item::operator= (const char * value)
 }
 
 Headers_Map_Item &
-Headers_Map_Item::operator= (const Headers_Map_Item & mi)
+Headers_Map_Item::operator= (Headers_Map_Item const & mi)
 {
   ACE_OS::free (const_cast<char *> (this->value_));
   ACE_OS::free (const_cast<char *> (this->header_));
@@ -208,20 +208,20 @@ Headers_Map_Item::operator= (const Headers_Map_Item & mi)
   return *this;
 }
 
-const char *
+char const *
 Headers_Map_Item::header () const
 {
   return this->header_;
 }
 
-const char *
+char const *
 Headers_Map_Item::value () const
 {
   return this->value_;
 }
 
 Headers_Map_Item &
-Headers_Map::operator[] (const char * const header)
+Headers_Map::operator[] (char const * const header)
 {
   Headers_Map_Item *item_ptr;
 
@@ -235,8 +235,8 @@ Headers_Map::operator[] (const char * const header)
   return *item_ptr;
 }
 
-const Headers_Map_Item &
-Headers_Map::operator[] (const char * const header) const
+Headers_Map_Item const &
+Headers_Map::operator[] (char const * const header) const
 {
   Headers_Map_Item *item_ptr;
   Headers_Map *mutable_this = const_cast<Headers_Map *> (this);
@@ -252,7 +252,7 @@ Headers_Map::operator[] (const char * const header) const
 }
 
 int
-Headers_Map::mapped (const char * const header) const
+Headers_Map::mapped (char const * const header) const
 {
   int result = this->find (header) != nullptr;
 
@@ -260,7 +260,7 @@ Headers_Map::mapped (const char * const header) const
 }
 
 Headers_Map_Item *
-Headers_Map::find (const char * const header) const
+Headers_Map::find (char const * const header) const
 {
   Headers_Map *const mutable_this = const_cast<Headers_Map *> (this);
 
@@ -302,7 +302,7 @@ Headers_Map::find (const char * const header) const
 }
 
 Headers_Map_Item *
-Headers_Map::place (const char *const header)
+Headers_Map::place (char const *const header)
 {
   this->garbage_.header_ = ACE_OS::strdup (header);
 
@@ -338,8 +338,8 @@ Headers_Map::place (const char *const header)
 }
 
 int
-Headers_Map::compare (const void *item1,
-                      const void *item2)
+Headers_Map::compare (void const *item1,
+                      void const *item2)
 {
   Headers_Map_Item const *a, *b;
   int result;

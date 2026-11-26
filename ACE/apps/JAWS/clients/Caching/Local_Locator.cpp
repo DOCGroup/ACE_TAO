@@ -9,7 +9,7 @@
 
 int
 ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria how,
-                                  const ACE_URL_Property_Seq *pseq,
+                                  ACE_URL_Property_Seq const *pseq,
                                   const size_t how_many,
                                   size_t &num_query,
                                   ACE_URL_Offer_Seq *offer)
@@ -94,7 +94,7 @@ ACE_URL_Local_Locator::export_offer (ACE_URL_Offer *offer,
 }
 
 int
-ACE_URL_Local_Locator::withdraw_offer (const ACE_WString &offer_id)
+ACE_URL_Local_Locator::withdraw_offer (ACE_WString const &offer_id)
 {
   ACE_URL_Record *item {};
 
@@ -120,7 +120,7 @@ ACE_URL_Local_Locator::withdraw_offer (const ACE_WString &offer_id)
 }
 
 int
-ACE_URL_Local_Locator::describe_offer (const ACE_WString &offer_id,
+ACE_URL_Local_Locator::describe_offer (ACE_WString const &offer_id,
                                        ACE_URL_Offer *offer)
 {
   ACE_URL_Record *item {};
@@ -141,10 +141,10 @@ ACE_URL_Local_Locator::describe_offer (const ACE_WString &offer_id,
 }
 
 int
-ACE_URL_Local_Locator::modify_offer (const ACE_WString &offer_id,
-                                     const ACE_WString *url,
-                                     const ACE_URL_Property_Seq *del,
-                                     const ACE_URL_Property_Seq *modify)
+ACE_URL_Local_Locator::modify_offer (ACE_WString const &offer_id,
+                                     ACE_WString const *url,
+                                     ACE_URL_Property_Seq const *del,
+                                     ACE_URL_Property_Seq const *modify)
 {
   ACE_Unbounded_Set_Iterator<ACE_URL_Record> iter (this->repository_);
   ACE_URL_Record *item {};

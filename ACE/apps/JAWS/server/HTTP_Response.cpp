@@ -18,7 +18,7 @@
 #if defined (ACE_JAWS_BASELINE)
 static char EMPTY_HEADER[] = "";
 #else
-static const char * const EMPTY_HEADER = "";
+static char const * const EMPTY_HEADER = "";
 #endif /* ACE_JAWS_BASELINE */
 
 HTTP_Response::HTTP_Response (JAWS_IO &io, HTTP_Request &request)
@@ -86,7 +86,7 @@ HTTP_Response::process_request ()
 }
 
 void
-HTTP_Response::error_response (int status_code, const char *log_message)
+HTTP_Response::error_response (int status_code, char const *log_message)
 {
   ACE_DEBUG ((LM_DEBUG, "(%t) [%s %s %s] %s\n",
               this->request_.method () ? this->request_.method () : "-",
@@ -133,7 +133,7 @@ HTTP_Response::error_response (int status_code, const char *log_message)
                               status_code,
                               HTTP_Status_Code::instance ()[status_code],
                               log_message == nullptr ? "" : log_message);
-  const char *error_header = error_header1;
+  char const *error_header = error_header1;
 
   if (length < 0)
   {
@@ -235,7 +235,7 @@ HTTP_Response::normal_response ()
       else
         {
           ACE_Mem_Map mmapfile;
-          const char *hvv = hv + 6;
+          char const *hvv = hv + 6;
           // Skip past the string "Basic "
           std::unique_ptr<char[]> buf =
             std::make_unique<char[]> (std::strlen (hvv) + 1);
@@ -353,7 +353,7 @@ HTTP_Response::cgi_response ()
 
       *q = '\0';
 
-      const char *hv = this->request_.header_values (i);
+      char const *hv = this->request_.header_values (i);
 
       if (hv && *hv)
       {
