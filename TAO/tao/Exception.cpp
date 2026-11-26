@@ -27,8 +27,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-CORBA::Exception::Exception (const char * repository_id,
-                             const char * local_name)
+CORBA::Exception::Exception (char const *repository_id,
+                             char const *local_name)
   : id_ (CORBA::string_dup (repository_id)),
     name_ (CORBA::string_dup (local_name))
 {
@@ -56,20 +56,20 @@ CORBA::Exception::operator= (const CORBA::Exception &src)
   return *this;
 }
 
-const char *
+char const *
 CORBA::Exception::_rep_id () const
 {
   return this->id_.in ();
 }
 
-const char *
+char const *
 CORBA::Exception::_name () const
 {
   return this->name_.in ();
 }
 
 void
-CORBA::Exception::_tao_print_exception (const char *user_provided_info,
+CORBA::Exception::_tao_print_exception (char const *user_provided_info,
                                         FILE *) const
 {
   TAOLIB_ERROR ((LM_ERROR,

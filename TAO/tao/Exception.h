@@ -120,10 +120,10 @@ namespace CORBA
     /// @}
 
     /// Return the repository ID of the Exception.
-    virtual const char * _rep_id () const;
+    virtual char const *_rep_id () const;
 
     /// Return the name of the Exception.
-    virtual const char * _name () const;
+    virtual char const *_name () const;
 
     /// @name TAO-specific extensions
     /// @{
@@ -135,7 +135,7 @@ namespace CORBA
     /**
      * @note This method is TAO-specific.
      */
-    void _tao_print_exception (const char *info, FILE *f = stdout) const;
+    void _tao_print_exception (char const *info, FILE *f = stdout) const;
 
 #if defined (ACE_USES_WCHAR)
     /// ACE_WCHAR_T version of _tao_print_exception.
@@ -188,7 +188,7 @@ namespace CORBA
     Exception & operator = (const Exception & src);
 
     /// Construct from a repository id.
-    Exception (const char *repository_id, const char *local_name);
+    Exception (char const *repository_id, char const *local_name);
 
   private:
     /// Repository Id
@@ -213,7 +213,7 @@ namespace CORBA
 namespace TAO
 {
   /// Create a CORBA::SystemException given the interface repository ID.
-  TAO_Export CORBA::SystemException *create_system_exception (const char *id);
+  TAO_Export CORBA::SystemException *create_system_exception (char const *id);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

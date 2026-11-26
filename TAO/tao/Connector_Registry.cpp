@@ -109,7 +109,7 @@ TAO_Connector_Registry::close_all ()
 }
 
 int
-TAO_Connector_Registry::make_mprofile (const char *ior,
+TAO_Connector_Registry::make_mprofile (char const *ior,
                                        TAO_MProfile &mprofile)
 {
   if (!ior)
@@ -253,7 +253,7 @@ TAO_Connector_Registry::create_profile (TAO_InputCDR &cdr)
 }
 
 char
-TAO_Connector_Registry::object_key_delimiter (const char *ior)
+TAO_Connector_Registry::object_key_delimiter (char const *ior)
 {
   if (!ior)
     {
