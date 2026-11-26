@@ -145,7 +145,7 @@ public:
   /// method first; without one, start_conjunction_group is assumed.
   /// Insert the @a subscribe structure describing the event and
   /// receiving method into the current group.
-  int insert (const RtecEventChannelAdmin::Dependency &subscribe);
+  int insert (RtecEventChannelAdmin::Dependency const &subscribe);
 
   /**
    * Insert source/type dependency.  @a source of the event (may be
@@ -179,13 +179,13 @@ public:
   /// The Event Channel accepts ConsumerQOS objects.
   /// Allows conversions to ConsumerQOS, which is expected by the
   /// PushSupplierProxy::connect_push_consumer interface.
-  const RtecEventChannelAdmin::ConsumerQOS &get_ConsumerQOS ();
+  RtecEventChannelAdmin::ConsumerQOS const &get_ConsumerQOS ();
 
   /// Calls this->get_ConsumerQOS.
-  operator const RtecEventChannelAdmin::ConsumerQOS &();
+  operator RtecEventChannelAdmin::ConsumerQOS const &();
   /// @}
 
-  static void debug (const RtecEventChannelAdmin::ConsumerQOS& qos);
+  static void debug (RtecEventChannelAdmin::ConsumerQOS const& qos);
 
 private:
   /// The representation to be sent to the channel.
@@ -225,12 +225,12 @@ public:
 
   /// Allows conversions to SupplierQOS, which is expected by the
   /// PushSupplierProxy::connect_push_supplier interface.
-  const RtecEventChannelAdmin::SupplierQOS &get_SupplierQOS ();
+  RtecEventChannelAdmin::SupplierQOS const &get_SupplierQOS ();
 
   /// Calls this->get_SupplierQOS().
-  operator const RtecEventChannelAdmin::SupplierQOS &();
+  operator RtecEventChannelAdmin::SupplierQOS const &();
 
-  static void debug (const RtecEventChannelAdmin::SupplierQOS& qos);
+  static void debug (RtecEventChannelAdmin::SupplierQOS const& qos);
 
 private:
   /// Representation needed by channel.

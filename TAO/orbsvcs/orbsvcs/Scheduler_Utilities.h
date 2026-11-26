@@ -43,7 +43,7 @@ public:
                CORBA::Long threads);
 
   /// Construct a helper class instance from the IDL struct it wraps.
-  ACE_RT_Info (const RtecScheduler::RT_Info& rt_info);
+  ACE_RT_Info (RtecScheduler::RT_Info const& rt_info);
 
   /// Add a dependency of one RT_Info upon another.
   int add_dependency(RtecScheduler::handle_t dep,

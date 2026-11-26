@@ -73,15 +73,15 @@ public:
 
   /// Set characteristics of the RT_Infos corresponding to the passed handles.
   /// Tuples are added in the case of existing and/or multiple definitions.
-  void set_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void set_seq (RtecScheduler::RT_Info_Set const& infos) override;
 
   /// Replace characteristics of the RT_Infos corresponding to the
   /// passed handles.
-  void replace_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void replace_seq (RtecScheduler::RT_Info_Set const& infos) override;
 
   /// Reset characteristics of the RT_Infos corresponding to the passed handles.
   /// Tuples are replaced in the case of existing and/or multiple definitions.
-  void reset_seq (const RtecScheduler::RT_Info_Set& infos) override;
+  void reset_seq (RtecScheduler::RT_Info_Set const& infos) override;
 
   /// Returns the priority and subpriority values assigned to an RT_Info,
   /// based on its handle.
@@ -126,11 +126,11 @@ public:
 
   /// This method sets the enable state of a sequence of dependencies.
   void set_dependency_enable_state_seq (
-      const RtecScheduler::Dependency_Set & dependencies) override;
+      RtecScheduler::Dependency_Set const & dependencies) override;
 
   /// This method enables or disables a sequence of RT_Infos.
   void set_rt_info_enable_state_seq (
-      const RtecScheduler::RT_Info_Enable_State_Pair_Set & pair_set) override;
+      RtecScheduler::RT_Info_Enable_State_Pair_Set const & pair_set) override;
 
   /**
    * In the config run scheduler, this method causes scheduling information

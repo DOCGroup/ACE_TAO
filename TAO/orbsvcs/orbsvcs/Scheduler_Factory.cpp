@@ -299,10 +299,10 @@ static char end_configs_empty[] =
 "static int configs_size = 0;\n\n";
 
 int ACE_Scheduler_Factory::dump_schedule
-   (const RtecScheduler::RT_Info_Set& infos,
-    const RtecScheduler::Dependency_Set& dependencies,
-    const RtecScheduler::Config_Info_Set& configs,
-    const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
+   (RtecScheduler::RT_Info_Set const& infos,
+    RtecScheduler::Dependency_Set const& dependencies,
+    RtecScheduler::Config_Info_Set const& configs,
+    RtecScheduler::Scheduling_Anomaly_Set const& anomalies,
     ACE_TCHAR const *file_name,
     char const *rt_info_format,
     char const *dependency_format,
@@ -367,7 +367,7 @@ int ACE_Scheduler_Factory::dump_schedule
 
   for (i = 0; i < anomalies.length (); ++i)
     {
-      const RtecScheduler::Scheduling_Anomaly& anomaly = anomalies[i];
+      RtecScheduler::Scheduling_Anomaly const& anomaly = anomalies[i];
       switch (anomaly.severity)
         {
           case RtecScheduler::ANOMALY_FATAL:
@@ -409,7 +409,7 @@ int ACE_Scheduler_Factory::dump_schedule
        i < infos.length ();
        ++i)
     {
-      const RtecScheduler::RT_Info& info = infos[i];
+      RtecScheduler::RT_Info const& info = infos[i];
 
       if (dump_disabled_infos
           || info.enabled == RtecScheduler::RT_INFO_ENABLED
@@ -421,7 +421,7 @@ int ACE_Scheduler_Factory::dump_schedule
           ACE_OS::fprintf(file, ",\n");
         }
 
-      const RtecScheduler::RT_Info& info = infos[i];
+      RtecScheduler::RT_Info const& info = infos[i];
 
       // Put quotes around the entry point name, exactly as it is stored.
       ACE_OS::sprintf (entry_point,
@@ -479,7 +479,7 @@ int ACE_Scheduler_Factory::dump_schedule
        i < dependencies.length ();
        ++i)
     {
-      const RtecScheduler::Dependency_Info& dep = dependencies[i];
+      RtecScheduler::Dependency_Info const& dep = dependencies[i];
 
       if (dump_disabled_infos
           || dep.enabled == RtecBase::DEPENDENCY_ENABLED
@@ -526,7 +526,7 @@ int ACE_Scheduler_Factory::dump_schedule
           ACE_OS::fprintf (file, ",\n");
         }
 
-      const RtecScheduler::Config_Info& config = configs[i];
+      RtecScheduler::Config_Info const& config = configs[i];
       ACE_OS::fprintf (file,
                        config_info_format,
                        config.preemption_priority,

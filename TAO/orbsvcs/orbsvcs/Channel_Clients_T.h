@@ -32,7 +32,7 @@ public:
   explicit ACE_PushConsumer_Adapter (TARGET *target);
 
   /// Forwards to target_.
-  void push (const RtecEventComm::EventSet& events) override;
+  void push (RtecEventComm::EventSet const& events) override;
 
   /// Forwards to target_.
   void disconnect_push_consumer () override;

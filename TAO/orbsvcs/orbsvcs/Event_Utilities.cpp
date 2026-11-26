@@ -113,7 +113,7 @@ ACE_ConsumerQOS_Factory::start_bitmask (CORBA::ULong source_mask,
 }
 
 int
-ACE_ConsumerQOS_Factory::insert (const RtecEventChannelAdmin::Dependency &subscribe)
+ACE_ConsumerQOS_Factory::insert (RtecEventChannelAdmin::Dependency const &subscribe)
 {
   // Make sure that a designator is first.
   if (!designator_set_)
@@ -150,7 +150,7 @@ void event_debug (char const* p,
 }
 
 void
-ACE_ConsumerQOS_Factory::debug (const RtecEventChannelAdmin::ConsumerQOS& qos)
+ACE_ConsumerQOS_Factory::debug (RtecEventChannelAdmin::ConsumerQOS const& qos)
 {
   ORBSVCS_DEBUG ((LM_DEBUG, "ConsumerQOS {\n"));
   ORBSVCS_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));
@@ -210,7 +210,7 @@ ACE_SupplierQOS_Factory::insert (RtecEventComm::EventSourceID sid,
   return 0;
 }
 
-void ACE_SupplierQOS_Factory::debug (const RtecEventChannelAdmin::SupplierQOS& qos)
+void ACE_SupplierQOS_Factory::debug (RtecEventChannelAdmin::SupplierQOS const& qos)
 {
   ORBSVCS_DEBUG ((LM_DEBUG, "SupplierQOS {\n"));
   ORBSVCS_DEBUG ((LM_DEBUG, "  is_gateway: %d\n", qos.is_gateway));

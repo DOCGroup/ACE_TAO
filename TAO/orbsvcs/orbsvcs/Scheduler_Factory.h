@@ -131,10 +131,10 @@ public:
    * RtecScheduler::Scheduler into a file, the file can be compiled to
    * create an efficient local implementation of the Scheduler.
    */
-  static int dump_schedule (const RtecScheduler::RT_Info_Set& infos,
-                            const RtecScheduler::Dependency_Set& dependencies,
-                            const RtecScheduler::Config_Info_Set& configs,
-                            const RtecScheduler::Scheduling_Anomaly_Set& anomalies,
+  static int dump_schedule (RtecScheduler::RT_Info_Set const& infos,
+                            RtecScheduler::Dependency_Set const& dependencies,
+                            RtecScheduler::Config_Info_Set const& configs,
+                            RtecScheduler::Scheduling_Anomaly_Set const& anomalies,
                             ACE_TCHAR const *file_name = nullptr,
                             char const *rt_info_format = nullptr,
                             char const *dependency_format = nullptr,

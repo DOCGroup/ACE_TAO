@@ -143,7 +143,7 @@ ACE_Runtime_Scheduler::reset (RtecScheduler::handle_t handle,
 }
 
 void
-ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set& infos)
+ACE_Runtime_Scheduler::set_seq (RtecScheduler::RT_Info_Set const& infos)
 {
   for (u_int i = 0; i < infos.length (); ++i)
     {
@@ -162,7 +162,7 @@ ACE_Runtime_Scheduler::set_seq (const RtecScheduler::RT_Info_Set& infos)
 }
 
 void
-ACE_Runtime_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set& infos)
+ACE_Runtime_Scheduler::replace_seq (RtecScheduler::RT_Info_Set const& infos)
 {
   for (u_int i = 0; i < infos.length (); ++i)
     {
@@ -181,7 +181,7 @@ ACE_Runtime_Scheduler::replace_seq (const RtecScheduler::RT_Info_Set& infos)
 }
 
 void
-ACE_Runtime_Scheduler::reset_seq (const RtecScheduler::RT_Info_Set& infos)
+ACE_Runtime_Scheduler::reset_seq (RtecScheduler::RT_Info_Set const& infos)
 {
   // Just call the set sequence method
   this->set_seq (infos);
@@ -305,7 +305,7 @@ ACE_Runtime_Scheduler::set_rt_info_enable_state (RtecScheduler::handle_t handle,
   }
 }
 
-void ACE_Runtime_Scheduler::set_dependency_enable_state_seq (const RtecScheduler::Dependency_Set & dependencies)
+void ACE_Runtime_Scheduler::set_dependency_enable_state_seq (RtecScheduler::Dependency_Set const & dependencies)
   // This method sets the enable state of a sequence of dependencies.
 {
   ACE_UNUSED_ARG (dependencies);
@@ -314,7 +314,7 @@ void ACE_Runtime_Scheduler::set_dependency_enable_state_seq (const RtecScheduler
 }
 
 void ACE_Runtime_Scheduler::set_rt_info_enable_state_seq (
-                 const RtecScheduler::RT_Info_Enable_State_Pair_Set &)
+                 RtecScheduler::RT_Info_Enable_State_Pair_Set const &)
 // This method enables or disables a sequence of RT_Infos.
 {
 }

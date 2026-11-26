@@ -133,28 +133,28 @@ ACE_ConsumerQOS_Factory::insert_act (RtecEventComm::EventData act)
   return this->insert (dependency);
 }
 
-ACE_INLINE const RtecEventChannelAdmin::ConsumerQOS&
+ACE_INLINE RtecEventChannelAdmin::ConsumerQOS const&
 ACE_ConsumerQOS_Factory::get_ConsumerQOS ()
 {
   return qos_;
 }
 
 ACE_INLINE
-ACE_ConsumerQOS_Factory::operator const RtecEventChannelAdmin::ConsumerQOS& ()
+ACE_ConsumerQOS_Factory::operator RtecEventChannelAdmin::ConsumerQOS const& ()
 {
   return qos_;
 }
 
 // ************************************************************
 
-ACE_INLINE const RtecEventChannelAdmin::SupplierQOS&
+ACE_INLINE RtecEventChannelAdmin::SupplierQOS const&
 ACE_SupplierQOS_Factory::get_SupplierQOS ()
 {
   return qos_;
 }
 
 ACE_INLINE
-ACE_SupplierQOS_Factory::operator const RtecEventChannelAdmin::SupplierQOS& ()
+ACE_SupplierQOS_Factory::operator RtecEventChannelAdmin::SupplierQOS const& ()
 {
   return qos_;
 }
