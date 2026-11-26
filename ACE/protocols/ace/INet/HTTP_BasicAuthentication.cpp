@@ -2,6 +2,7 @@
 #include "ace/Codecs.h"
 
 #include <memory>
+#include <new>
 
 #if !defined (__ACE_INLINE__)
 #include "ace/INet/HTTP_BasicAuthentication.inl"
@@ -37,7 +38,11 @@ namespace ACE
               ACE_Base64::Buffer const safe_buf (ACE_Base64::decode (
                 reinterpret_cast<ACE_Byte const *> (info.c_str ()),
                 std::addressof (out_len)));
-              ACE_CString const credentials (reinterpret_cast<char *> (safe_buf.get ()), out_len);
+              if (!safe_buf)
+                {
+                  return;
+                }
+              ACE_CString const credentials (reinterpret_cast<char const *> (safe_buf.get ()), out_len);
               ACE_CString::size_type const pos = credentials.find (':');
               if (pos != ACE_CString::npos)
                 {
@@ -61,6 +66,10 @@ namespace ACE
                                 credentials.length (),
                                 std::addressof (out_len),
                                 false));
+        if (!safe_buf)
+          {
+            throw std::bad_alloc ();
+          }
         ACE_CString const enc_cred (reinterpret_cast<char const *> (safe_buf.get ()), out_len);
         request.set_credentials (SCHEME, enc_cred);
       }

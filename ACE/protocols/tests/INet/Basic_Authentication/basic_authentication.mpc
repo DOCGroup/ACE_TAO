@@ -1,0 +1,6 @@
+project(Basic_Auth_Test) : aceexe, inet {
+  exename = basic_authentication_test
+  Source_Files {
+    Basic_Authentication.cpp
+  }
+}
