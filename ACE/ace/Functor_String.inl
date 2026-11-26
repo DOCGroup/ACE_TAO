@@ -4,62 +4,62 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE unsigned long
-ACE_Hash<ACE_CString>::operator () (const ACE_CString &t) const
+ACE_Hash<ACE_CString>::operator () (ACE_CString const &t) const
 {
   return t.hash ();
 }
 
 ACE_INLINE int
-ACE_Equal_To<ACE_CString>::operator () (const ACE_CString &lhs,
-                                        const ACE_CString &rhs) const
+ACE_Equal_To<ACE_CString>::operator () (ACE_CString const &lhs,
+                                        ACE_CString const &rhs) const
 {
   return lhs == rhs;
 }
 
 ACE_INLINE int
-ACE_Less_Than<ACE_CString>::operator () (const ACE_CString &lhs,
-                                         const ACE_CString &rhs) const
+ACE_Less_Than<ACE_CString>::operator () (ACE_CString const &lhs,
+                                         ACE_CString const &rhs) const
 {
   return (lhs < rhs);
 }
 
 ACE_INLINE unsigned long
-ACE_Hash<std::string>::operator () (const std::string &t) const
+ACE_Hash<std::string>::operator () (std::string const &t) const
 {
   return ACE::hash_pjw (t.c_str (), t.length ());
 }
 
 ACE_INLINE int
-ACE_Equal_To<std::string>::operator () (const std::string &lhs,
-                                        const std::string &rhs) const
+ACE_Equal_To<std::string>::operator () (std::string const &lhs,
+                                        std::string const &rhs) const
 {
   return lhs == rhs;
 }
 
 ACE_INLINE int
-ACE_Less_Than<std::string>::operator () (const std::string &lhs,
-                                         const std::string &rhs) const
+ACE_Less_Than<std::string>::operator () (std::string const &lhs,
+                                         std::string const &rhs) const
 {
   return (lhs < rhs);
 }
 
 #if defined (ACE_USES_WCHAR)
 ACE_INLINE unsigned long
-ACE_Hash<ACE_WString>::operator () (const ACE_WString &t) const
+ACE_Hash<ACE_WString>::operator () (ACE_WString const &t) const
 {
   return t.hash ();
 }
 
 ACE_INLINE int
-ACE_Equal_To<ACE_WString>::operator () (const ACE_WString &lhs,
-                                        const ACE_WString &rhs) const
+ACE_Equal_To<ACE_WString>::operator () (ACE_WString const &lhs,
+                                        ACE_WString const &rhs) const
 {
   return lhs == rhs;
 }
 
 ACE_INLINE int
-ACE_Less_Than<ACE_WString>::operator () (const ACE_WString &lhs,
-                                         const ACE_WString &rhs) const
+ACE_Less_Than<ACE_WString>::operator () (ACE_WString const &lhs,
+                                         ACE_WString const &rhs) const
 {
   return (lhs < rhs);
 }

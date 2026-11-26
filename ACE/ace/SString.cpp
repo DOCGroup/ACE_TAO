@@ -21,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 ACE_OSTREAM_TYPE &
-operator<< (ACE_OSTREAM_TYPE &os, const ACE_CString &cs)
+operator<< (ACE_OSTREAM_TYPE &os, ACE_CString const &cs)
 {
   if (cs.fast_rep ())
     {
@@ -31,7 +31,7 @@ operator<< (ACE_OSTREAM_TYPE &os, const ACE_CString &cs)
 }
 
 ACE_OSTREAM_TYPE &
-operator<< (ACE_OSTREAM_TYPE &os, const ACE_WString &ws)
+operator<< (ACE_OSTREAM_TYPE &os, ACE_WString const &ws)
 {
   // @@ Need to figure out how to print the "wide" string
   //    on platforms that don't support "wide" strings.
@@ -45,7 +45,7 @@ operator<< (ACE_OSTREAM_TYPE &os, const ACE_WString &ws)
 }
 
 ACE_OSTREAM_TYPE &
-operator<< (ACE_OSTREAM_TYPE &os, const ACE_SString &ss)
+operator<< (ACE_OSTREAM_TYPE &os, ACE_SString const &ss)
 {
   if (ss.fast_rep ())
     {
@@ -153,7 +153,7 @@ ACE_NS_WString::ACE_NS_WString (char const *s,
 }
 
 #if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
-ACE_NS_WString::ACE_NS_WString (const ACE_UINT16 *s,
+ACE_NS_WString::ACE_NS_WString (ACE_UINT16 const *s,
                                 size_type len,
                                 ACE_Allocator *alloc)
   : ACE_WString (alloc)
@@ -197,7 +197,7 @@ ACE_SString::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_SString::ACE_SString (const ACE_SString &s)
+ACE_SString::ACE_SString (ACE_SString const &s)
   : allocator_ (s.allocator_),
     len_ (s.len_)
 {
@@ -321,7 +321,7 @@ ACE_SString::ACE_SString (char const *s,
 // Assignment operator (does copy memory).
 
 ACE_SString &
-ACE_SString::operator= (const ACE_SString &s)
+ACE_SString::operator= (ACE_SString const &s)
 {
   ACE_TRACE ("ACE_SString::operator=");
   // Check for identify.

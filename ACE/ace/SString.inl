@@ -18,7 +18,7 @@ ACE_NS_WString::ACE_NS_WString (ACE_Allocator *alloc)
 }
 
 ACE_INLINE
-ACE_NS_WString::ACE_NS_WString (const ACE_WSTRING_TYPE *s,
+ACE_NS_WString::ACE_NS_WString (ACE_WSTRING_TYPE const *s,
                                 size_type len,
                                 ACE_Allocator *alloc)
   : ACE_WString (s, len, alloc)
@@ -26,7 +26,7 @@ ACE_NS_WString::ACE_NS_WString (const ACE_WSTRING_TYPE *s,
 }
 
 ACE_INLINE
-ACE_NS_WString::ACE_NS_WString (const ACE_WSTRING_TYPE *s,
+ACE_NS_WString::ACE_NS_WString (ACE_WSTRING_TYPE const *s,
                                 ACE_Allocator *alloc)
   : ACE_WString (s, alloc)
 {
@@ -45,7 +45,7 @@ ACE_NS_WString::ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc)
 }
 
 ACE_INLINE ACE_NS_WString
-operator+ (const ACE_NS_WString &s, const ACE_NS_WString &t)
+operator+ (ACE_NS_WString const &s, ACE_NS_WString const &t)
 {
   ACE_NS_WString temp (s);
   temp += t;
@@ -107,7 +107,7 @@ ACE_SString::c_str () const
 /// Comparison operator.
 
 ACE_INLINE bool
-ACE_SString::operator== (const ACE_SString &s) const
+ACE_SString::operator== (ACE_SString const &s) const
 {
   ACE_TRACE ("ACE_SString::operator==");
   return this->len_ == s.len_
@@ -116,7 +116,7 @@ ACE_SString::operator== (const ACE_SString &s) const
 
 // Less than comparison operator.
 ACE_INLINE bool
-ACE_SString::operator < (const ACE_SString &s) const
+ACE_SString::operator < (ACE_SString const &s) const
 {
   ACE_TRACE ("ACE_SString::operator <");
 
@@ -128,7 +128,7 @@ ACE_SString::operator < (const ACE_SString &s) const
 // Greater than comparison operator.
 
 ACE_INLINE bool
-ACE_SString::operator > (const ACE_SString &s) const
+ACE_SString::operator > (ACE_SString const &s) const
 {
   ACE_TRACE ("ACE_SString::operator >");
 
@@ -140,14 +140,14 @@ ACE_SString::operator > (const ACE_SString &s) const
 // Comparison operator.
 
 ACE_INLINE bool
-ACE_SString::operator!= (const ACE_SString &s) const
+ACE_SString::operator!= (ACE_SString const &s) const
 {
   ACE_TRACE ("ACE_SString::operator!=");
   return !(*this == s);
 }
 
 ACE_INLINE int
-ACE_SString::compare (const ACE_SString &s) const
+ACE_SString::compare (ACE_SString const &s) const
 {
   ACE_TRACE ("ACE_SString::compare");
   return std::strcmp (this->rep_, s.rep_);
@@ -184,7 +184,7 @@ ACE_SString::find (char c, size_type pos) const
 }
 
 ACE_INLINE ACE_SString::size_type
-ACE_SString::strstr (const ACE_SString &s) const
+ACE_SString::strstr (ACE_SString const &s) const
 {
   ACE_TRACE ("ACE_SString::strstr");
 
@@ -192,7 +192,7 @@ ACE_SString::strstr (const ACE_SString &s) const
 }
 
 ACE_INLINE ACE_SString::size_type
-ACE_SString::find (const ACE_SString &str, size_type pos) const
+ACE_SString::find (ACE_SString const &str, size_type pos) const
 {
   return this->find (str.rep_, pos);
 }

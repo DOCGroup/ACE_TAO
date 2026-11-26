@@ -60,7 +60,7 @@ ACE_String_Base<ACE_CHAR_T>::substr (
 
 /// Return the <slot'th> character in the string.
 
-template <class ACE_CHAR_T> ACE_INLINE const ACE_CHAR_T &
+template <class ACE_CHAR_T> ACE_INLINE ACE_CHAR_T const &
 ACE_String_Base<ACE_CHAR_T>::operator[] (
   typename ACE_String_Base<ACE_CHAR_T>::size_type slot) const
 {
@@ -78,13 +78,13 @@ ACE_String_Base<ACE_CHAR_T>::operator[] (
   return this->rep_[slot];
 }
 
-template <class ACE_CHAR_T> ACE_INLINE const ACE_CHAR_T *
+template <class ACE_CHAR_T> ACE_INLINE ACE_CHAR_T const *
 ACE_String_Base<ACE_CHAR_T>::fast_rep () const
 {
   return this->rep_;
 }
 
-template <class ACE_CHAR_T> ACE_INLINE const ACE_CHAR_T *
+template <class ACE_CHAR_T> ACE_INLINE ACE_CHAR_T const *
 ACE_String_Base<ACE_CHAR_T>::c_str () const
 {
   return this->rep_;
@@ -102,7 +102,7 @@ ACE_String_Base<ACE_CHAR_T>::operator < (const ACE_String_Base<ACE_CHAR_T> &s) c
 // Greater than comparison operator.
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-ACE_String_Base<ACE_CHAR_T>::operator > (const ACE_String_Base &s) const
+ACE_String_Base<ACE_CHAR_T>::operator > (ACE_String_Base const &s) const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::operator >");
   return compare (s) > 0;
@@ -118,7 +118,7 @@ ACE_String_Base<ACE_CHAR_T>::operator!= (const ACE_String_Base<ACE_CHAR_T> &s) c
 }
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-ACE_String_Base<ACE_CHAR_T>::operator!= (const ACE_CHAR_T *s) const
+ACE_String_Base<ACE_CHAR_T>::operator!= (ACE_CHAR_T const *s) const
 {
   return !(*this == s);
 }
@@ -341,7 +341,7 @@ int ACE_String_Base_Const_Iterator <ACE_CHAR_T>::done () const
 }
 
 template <class ACE_CHAR_T> ACE_INLINE
-const ACE_CHAR_T & ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator * ()
+ACE_CHAR_T const & ACE_String_Base_Const_Iterator <ACE_CHAR_T>::operator * ()
 {
   ACE_TRACE ("ACE_String_Base_Const_Iterator<ACE_CHAR_T>::operator *");
 
@@ -451,13 +451,13 @@ operator <= (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & rhs) const
 }
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-operator== (const ACE_CHAR_T *s, const ACE_String_Base<ACE_CHAR_T> &t)
+operator== (ACE_CHAR_T const *s, const ACE_String_Base<ACE_CHAR_T> &t)
 {
   return t == s;
 }
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-operator!= (const ACE_CHAR_T *s, const ACE_String_Base<ACE_CHAR_T> &t)
+operator!= (ACE_CHAR_T const *s, const ACE_String_Base<ACE_CHAR_T> &t)
 {
   return !(t == s);
 }

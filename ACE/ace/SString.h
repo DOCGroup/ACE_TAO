@@ -23,8 +23,8 @@
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 #include "ace/iosfwd.h"
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
-ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_CString &);
-ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_WString &);
+ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, ACE_CString const &);
+ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, ACE_WString const &);
 ACE_END_VERSIONED_NAMESPACE_DECL
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
@@ -61,20 +61,20 @@ public:
                   ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
-  ACE_NS_WString (const ACE_WSTRING_TYPE *s,
+  ACE_NS_WString (ACE_WSTRING_TYPE const *s,
                   ACE_Allocator *alloc = nullptr);
 
 #if defined (ACE_WSTRING_HAS_USHORT_SUPPORT)
   /// Constructor that takes in a ushort16 string (mainly used by the
   /// ACE Name_Space classes)
-  ACE_NS_WString (const ACE_UINT16 *s,
+  ACE_NS_WString (ACE_UINT16 const *s,
                   size_type len,
                   ACE_Allocator *alloc = nullptr);
 #endif /* ACE_WSTRING_HAS_USHORT_SUPPORT */
 
   /// Constructor that copies @a len ACE_WSTRING_TYPE's of @a s into dynamically
   /// allocated memory (will NUL terminate the result).
-  ACE_NS_WString (const ACE_WSTRING_TYPE *s,
+  ACE_NS_WString (ACE_WSTRING_TYPE const *s,
                   size_type len,
                   ACE_Allocator *alloc = nullptr);
 
@@ -82,8 +82,8 @@ public:
   /// ACE_WSTRING_TYPE characters. The newly created memory is set memset to 0.
   ACE_NS_WString (size_type len, ACE_Allocator *alloc = nullptr);
 
-  ACE_NS_WString (const ACE_NS_WString &) = default;
-  ACE_NS_WString &operator= (const ACE_NS_WString&) = default;
+  ACE_NS_WString (ACE_NS_WString const &) = default;
+  ACE_NS_WString &operator= (ACE_NS_WString const &) = default;
 
   /// Constructor that copies @a c into dynamically allocated memory.
   ACE_NS_WString (ACE_WSTRING_TYPE c, ACE_Allocator *alloc = nullptr);
@@ -99,8 +99,8 @@ public:
 };
 
 ACE_Export
-ACE_NS_WString operator + (const ACE_NS_WString &,
-                           const ACE_NS_WString &);
+ACE_NS_WString operator + (ACE_NS_WString const &,
+                           ACE_NS_WString const &);
 
 /**
  * @class ACE_SString
@@ -138,7 +138,7 @@ public:
   /// allocated memory (will NUL terminate the result).
   ACE_SString (char const *s, size_type len, ACE_Allocator *alloc = nullptr);
 
-  ACE_SString (const ACE_SString &);
+  ACE_SString (ACE_SString const &);
 
   /// Constructor that copies @a c into dynamically allocated memory.
   ACE_SString (char c, ACE_Allocator *alloc = nullptr);
@@ -154,7 +154,7 @@ public:
   char &operator [] (size_type slot);
 
   /// Assignment operator (does copy memory).
-  ACE_SString &operator = (const ACE_SString &);
+  ACE_SString &operator = (ACE_SString const &);
 
   /**
    * Return a substring given an offset and length, if length == npos
@@ -187,11 +187,11 @@ public:
 
   /// Comparison operator that will match substrings.  Returns the
   /// slot of the first location that matches, else @c npos.
-  size_type strstr (const ACE_SString &s) const;
+  size_type strstr (ACE_SString const &s) const;
 
   /// Find @a str starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
-  size_type find (const ACE_SString &str, size_type pos = 0) const;
+  size_type find (ACE_SString const &str, size_type pos = 0) const;
 
   /// Find @a s starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
@@ -206,19 +206,19 @@ public:
   size_type rfind (char c, size_type pos = npos) const;
 
   /// Equality comparison operator (must match entire string).
-  bool operator == (const ACE_SString &s) const;
+  bool operator == (ACE_SString const &s) const;
 
   /// Less than comparison operator.
-  bool operator < (const ACE_SString &s) const;
+  bool operator < (ACE_SString const &s) const;
 
   /// Greater than comparison operator.
-  bool operator > (const ACE_SString &s) const;
+  bool operator > (ACE_SString const &s) const;
 
   /// Inequality comparison operator.
-  bool operator != (const ACE_SString &s) const;
+  bool operator != (ACE_SString const &s) const;
 
   /// Performs a strcmp()-style comparison.
-  int compare (const ACE_SString &s) const;
+  int compare (ACE_SString const &s) const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -238,7 +238,7 @@ private:
 };
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
-ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, const ACE_SString &);
+ACE_Export ACE_OSTREAM_TYPE &operator << (ACE_OSTREAM_TYPE &, ACE_SString const &);
 #endif /* ! ACE_LACKS_IOSTREAM_TOTALLY */
 
 // This allows one to use W or C String based on the Unicode
