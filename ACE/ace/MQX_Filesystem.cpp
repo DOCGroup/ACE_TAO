@@ -100,7 +100,7 @@ MQX_Filesystem::update_fs (MQX_FILE_PTR fs)
 }
 
 int
-MQX_Filesystem::open (const char *path, int mode)
+MQX_Filesystem::open (char const *path, int mode)
 {
   if (check_state ())
     {
@@ -271,7 +271,7 @@ MQX_Filesystem::getcwd (char *buf, size_t size)
 }
 
 MQX_FILE_PTR
-MQX_Filesystem::resolve_fs (const char *path, int *fs_name_len)
+MQX_Filesystem::resolve_fs (char const *path, int *fs_name_len)
 {
   if (check_state ())
     {
@@ -306,7 +306,7 @@ MQX_Filesystem::resolve_fs (const char *path, int *fs_name_len)
 }
 
 int
-MQX_Filesystem::mkdir (const char *path)
+MQX_Filesystem::mkdir (char const *path)
 {
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
@@ -326,7 +326,7 @@ MQX_Filesystem::mkdir (const char *path)
 }
 
 int
-MQX_Filesystem::chdir (const char *path)
+MQX_Filesystem::chdir (char const *path)
 {
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
@@ -349,7 +349,7 @@ MQX_Filesystem::chdir (const char *path)
 }
 
 int
-MQX_Filesystem::rmdir (const char *path)
+MQX_Filesystem::rmdir (char const *path)
 {
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
@@ -368,7 +368,7 @@ MQX_Filesystem::rmdir (const char *path)
 }
 
 int
-MQX_Filesystem::unlink (const char *path)
+MQX_Filesystem::unlink (char const *path)
 {
   int fs_name_len;
   MQX_FILE_PTR fs = resolve_fs (path, &fs_name_len);
@@ -387,7 +387,7 @@ MQX_Filesystem::unlink (const char *path)
 }
 
 int
-MQX_Filesystem::rename (const char *oldpath, const char *newpath)
+MQX_Filesystem::rename (char const *oldpath, char const *newpath)
 {
   // TODO: Handle Moving Directories?
   int old_fs_name_len;
@@ -496,7 +496,7 @@ mfs_file_attrs_to_stat_mode (int attributes)
 }
 
 int
-MQX_Filesystem::stat (const char * path, ACE_stat *statbuf)
+MQX_Filesystem::stat (char const * path, ACE_stat *statbuf)
 {
   if (statbuf == 0)
     {
@@ -582,7 +582,7 @@ MQX_Filesystem::fstat (int fd, ACE_stat *statbuf)
  */
 
 extern "C" {
-int __open (const char *filename, int mode)
+int __open (char const *filename, int mode)
 {
   return MQX_Filesystem::inst ().open (filename, mode);
 }

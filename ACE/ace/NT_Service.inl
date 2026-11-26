@@ -21,8 +21,8 @@ ACE_NT_Service::ACE_NT_Service (DWORD start_timeout,
 }
 
 ACE_INLINE
-ACE_NT_Service::ACE_NT_Service (const ACE_TCHAR *name,
-                                const ACE_TCHAR *desc,
+ACE_NT_Service::ACE_NT_Service (ACE_TCHAR const *name,
+                                ACE_TCHAR const *desc,
                                 DWORD start_timeout,
                                 DWORD service_type,
                                 DWORD controls_mask) :
@@ -48,21 +48,21 @@ ACE_NT_Service::svc ()
 }
 
 ACE_INLINE
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_NT_Service::name () const
 {
   return name_;
 }
 
 ACE_INLINE
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_NT_Service::desc () const
 {
   return desc_;
 }
 
 ACE_INLINE
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_NT_Service::host () const
 {
   return host_;

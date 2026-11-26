@@ -80,7 +80,7 @@ public:
    *    This is not perfected yet and is limited by the common denominator of
    *    what is supported by both systems.
    */
-  int open (const char *path, int mode);
+  int open (char const *path, int mode);
   int close (int fd);
   size_t read (int fd, unsigned char *buffer, size_t size);
   size_t write (int fd, const unsigned char *buffer, size_t size);
@@ -103,28 +103,28 @@ public:
    *
    * Returns -1 if an error occurred, otherwise 0.
    */
-  int mkdir (const char *path);
+  int mkdir (char const *path);
 
   /**
    * Change to the directory at path.
    *
    * Returns -1 if an error occurred, otherwise 0.
    */
-  int chdir (const char *path);
+  int chdir (char const *path);
 
   /**
    * Remove the empty directory at path.
    *
    * Returns -1 if an error occurred, otherwise 0.
    */
-  int rmdir (const char *path);
+  int rmdir (char const *path);
 
   /**
    * Unlink the file at path.
    *
    * Returns -1 if an error occurred, otherwise 0.
    */
-  int unlink (const char *path);
+  int unlink (char const *path);
 
   /**
    * Rename or move the file or rename the directory from newpath to oldpath.
@@ -141,7 +141,7 @@ public:
    *     the function, but would involve either manually copying the file tree
    *     or refusing to move nonempty directories.
    */
-  int rename (const char *oldpath, const char *newpath);
+  int rename (char const *oldpath, char const *newpath);
 
   /**
    * Get status of file given by path.
@@ -154,7 +154,7 @@ public:
    *     - S_IFDIR: file is a directory
    *     - S_IFREG: file is a regular file
    */
-  int stat (const char * path, ACE_stat *statbuf);
+  int stat (char const * path, ACE_stat *statbuf);
 
   /**
    * Get status of file given by file descriptor.
@@ -253,7 +253,7 @@ private:
    * is relative. Sets the fs_name_len to the length of the device name in the
    * path. This would be 0 if the path is relative.
    */
-  MQX_FILE_PTR resolve_fs (const char *path, int *fs_name_len);
+  MQX_FILE_PTR resolve_fs (char const *path, int *fs_name_len);
 };
 
 #endif // ACE_MQX

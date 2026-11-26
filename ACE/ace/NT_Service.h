@@ -100,8 +100,8 @@ public:
 
   /// Constructor primarily for use when inserting/removing/controlling
   /// the service.
-  ACE_NT_Service (const ACE_TCHAR *name,
-                  const ACE_TCHAR *desc = nullptr,
+  ACE_NT_Service (ACE_TCHAR const *name,
+                  ACE_TCHAR const *desc = nullptr,
                   DWORD start_timeout = ACE_NT_SERVICE_START_TIMEOUT,
                   DWORD service_type = SERVICE_WIN32_OWN_PROCESS,
                   DWORD controls_mask = SERVICE_ACCEPT_STOP);
@@ -156,19 +156,19 @@ public:
 
   /// Sets the name and description for the service.
   /// If @a desc is 0, it takes the same value as name.
-  void name (const ACE_TCHAR *name, const ACE_TCHAR *desc = nullptr);
+  void name (ACE_TCHAR const *name, ACE_TCHAR const *desc = nullptr);
 
   /// Get the service name.
-  const ACE_TCHAR *name () const;
+  ACE_TCHAR const *name () const;
 
   /// Get the service description.
-  const ACE_TCHAR *desc () const;
+  ACE_TCHAR const *desc () const;
 
   /// Sets the host machine
-  void host (const ACE_TCHAR *host);
+  void host (ACE_TCHAR const *host);
 
   /// Get the host machine.
-  const ACE_TCHAR *host () const;
+  ACE_TCHAR const *host () const;
 
   /**
    * Insert (create) the service in the NT Service Control Manager,
@@ -179,12 +179,12 @@ public:
    */
   int insert (DWORD start_type = SERVICE_DEMAND_START,
               DWORD error_control = SERVICE_ERROR_IGNORE,
-              const ACE_TCHAR *exe_path = nullptr,
-              const ACE_TCHAR *group_name = nullptr,
+              ACE_TCHAR const *exe_path = nullptr,
+              ACE_TCHAR const *group_name = nullptr,
               LPDWORD tag_id = 0,
-              const ACE_TCHAR *dependencies = nullptr,
-              const ACE_TCHAR *account_name = nullptr,
-              const ACE_TCHAR *password = nullptr,
+              ACE_TCHAR const *dependencies = nullptr,
+              ACE_TCHAR const *account_name = nullptr,
+              ACE_TCHAR const *password = nullptr,
               DWORD desired_access = SERVICE_ALL_ACCESS);
 
   /**
@@ -260,7 +260,7 @@ public:
    */
   int start_svc (ACE_Time_Value *wait_time = nullptr,
                  DWORD *svc_state = nullptr,
-                 DWORD argc = 0, const ACE_TCHAR **argv = nullptr);
+                 DWORD argc = 0, ACE_TCHAR const **argv = nullptr);
 
   /**
    * Requests the service to stop.  Will wait up to @a wait_time for

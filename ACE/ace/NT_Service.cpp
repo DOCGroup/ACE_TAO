@@ -137,7 +137,7 @@ ACE_NT_Service::interrogate_requested (DWORD)
 }
 
 void
-ACE_NT_Service::name (const ACE_TCHAR *name, const ACE_TCHAR *desc)
+ACE_NT_Service::name (ACE_TCHAR const *name, ACE_TCHAR const *desc)
 {
   delete [] this->desc_;
   delete [] this->name_;
@@ -152,7 +152,7 @@ ACE_NT_Service::name (const ACE_TCHAR *name, const ACE_TCHAR *desc)
 }
 
 void
-ACE_NT_Service::host (const ACE_TCHAR *host)
+ACE_NT_Service::host (ACE_TCHAR const *host)
 {
   delete [] this->host_;
 
@@ -175,12 +175,12 @@ ACE_NT_Service::host (const ACE_TCHAR *host)
 int
 ACE_NT_Service::insert (DWORD start_type,
                         DWORD error_control,
-                        const ACE_TCHAR *exe_path,
-                        const ACE_TCHAR *group_name,
+                        ACE_TCHAR const *exe_path,
+                        ACE_TCHAR const *group_name,
                         LPDWORD tag_id,
-                        const ACE_TCHAR *dependencies,
-                        const ACE_TCHAR *account_name,
-                        const ACE_TCHAR *password,
+                        ACE_TCHAR const *dependencies,
+                        ACE_TCHAR const *account_name,
+                        ACE_TCHAR const *password,
                         DWORD desired_access)
 {
   ACE_TCHAR this_exe[MAXPATHLEN + 2];
@@ -337,7 +337,7 @@ ACE_NT_Service::inherit_log_msg_attributes ()
 int
 ACE_NT_Service::start_svc (ACE_Time_Value *wait_time,
                            DWORD *svc_state,
-                           DWORD argc, const ACE_TCHAR **argv)
+                           DWORD argc, ACE_TCHAR const **argv)
 {
   SC_HANDLE svc = this->svc_sc_handle ();
   if (svc == 0)
