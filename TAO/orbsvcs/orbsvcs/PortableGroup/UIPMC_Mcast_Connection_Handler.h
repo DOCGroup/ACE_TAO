@@ -80,7 +80,8 @@ public:
   /// Add ourselves to Cache.
   int add_transport_to_cache ();
 
-  // UIPMC Additions - Begin
+  /// @name UIPMC additions
+  /// @{
   ACE_INET_Addr const &addr () const;
 
   void addr (ACE_INET_Addr const &addr);
@@ -95,6 +96,8 @@ public:
   /// Set this to specify ListenerInterfaces pairs
   /// (Same as -ORBPreferredInterfaces but for listeners)
   void listener_interfaces (char const *);
+
+  /// @}
 
   TAO_UIPMC_Mcast_Connection_Handler (
     TAO_UIPMC_Mcast_Connection_Handler const &) = delete;
@@ -117,7 +120,6 @@ protected:
 
   /// Which interfaces are to be listening for the group address
   ACE_CString listener_interfaces_;
-  // UIPMC Additions - End
 
   /// @{
   /**

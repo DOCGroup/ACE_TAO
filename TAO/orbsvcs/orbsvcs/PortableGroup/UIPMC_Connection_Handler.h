@@ -84,7 +84,8 @@ public:
   int set_dscp_codepoint (CORBA::Boolean set_network_priority) override;
   int set_dscp_codepoint (CORBA::Long dscp_codepoint) override;
 
-  // UIPMC Additions - Begin
+  /// @name UIPMC additions
+  /// @{
   ACE_INET_Addr const &addr () const;
 
   void addr (ACE_INET_Addr const &addr);
@@ -94,10 +95,11 @@ public:
   void local_addr (ACE_INET_Addr const &addr);
 
   u_long send_hi_water_mark () const;
-  // UIPMC Additions - End
+  /// @}
 
 protected:
-  // UIPMC Additions - Begin
+  /// @name UIPMC additions
+  /// @{
 
   /// This is always the remote address.
   ACE_INET_Addr addr_;
@@ -105,7 +107,7 @@ protected:
   /// This is always the local address for the connector.
   ACE_INET_Addr local_addr_;
 
-  // UIPMC Additions - End
+  /// @}
 
   /// @{
   /**
