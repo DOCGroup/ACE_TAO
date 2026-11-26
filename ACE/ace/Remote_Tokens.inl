@@ -9,7 +9,7 @@ ACE_Remote_Mutex::ACE_Remote_Mutex ()
 }
 
 ACE_INLINE
-ACE_Remote_Mutex::ACE_Remote_Mutex (const ACE_TCHAR *token_name,
+ACE_Remote_Mutex::ACE_Remote_Mutex (ACE_TCHAR const *token_name,
                                     int ignore_deadlock,
                                     int debug)
 {
@@ -20,7 +20,7 @@ ACE_Remote_Mutex::ACE_Remote_Mutex (const ACE_TCHAR *token_name,
 // ************************************************************
 
 ACE_INLINE
-ACE_Remote_RLock::ACE_Remote_RLock (const ACE_TCHAR *token_name,
+ACE_Remote_RLock::ACE_Remote_RLock (ACE_TCHAR const *token_name,
                                     int ignore_deadlock,
                                     int debug)
 {
@@ -31,7 +31,7 @@ ACE_Remote_RLock::ACE_Remote_RLock (const ACE_TCHAR *token_name,
 // ************************************************************
 
 ACE_INLINE
-ACE_Remote_WLock::ACE_Remote_WLock (const ACE_TCHAR *token_name,
+ACE_Remote_WLock::ACE_Remote_WLock (ACE_TCHAR const *token_name,
                                     int ignore_deadlock,
                                     int debug)
 {

@@ -11,7 +11,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Token_Collection::ACE_Token_Collection (bool debug,
-                                            const ACE_TCHAR *name)
+                                            ACE_TCHAR const *name)
 : debug_ (debug)
 {
   ACE_TRACE ("ACE_Token_Collection::ACE_Token_Collection");
@@ -53,7 +53,7 @@ ACE_Token_Collection::insert (ACE_Token_Proxy &new_token)
 }
 
 int
-ACE_Token_Collection::extract (const ACE_TCHAR *token_name, ACE_Token_Proxy *&proxy)
+ACE_Token_Collection::extract (ACE_TCHAR const *token_name, ACE_Token_Proxy *&proxy)
 {
   ACE_TRACE ("ACE_Token_Collection::extract");
   TOKEN_NAME const name (token_name);
@@ -61,7 +61,7 @@ ACE_Token_Collection::extract (const ACE_TCHAR *token_name, ACE_Token_Proxy *&pr
 }
 
 ACE_Token_Proxy *
-ACE_Token_Collection::is_member (const ACE_TCHAR *token_name)
+ACE_Token_Collection::is_member (ACE_TCHAR const *token_name)
 {
   ACE_TRACE ("ACE_Token_Collection::is_member");
   TOKEN_NAME const name (token_name);
@@ -112,7 +112,7 @@ ACE_Token_Collection::acquire (int notify,
 }
 
 int
-ACE_Token_Collection::acquire (const ACE_TCHAR *token_name,
+ACE_Token_Collection::acquire (ACE_TCHAR const *token_name,
                                int notify,
                                void (*sleep_hook)(void *),
                                ACE_Synch_Options &options)
@@ -132,7 +132,7 @@ ACE_Token_Collection::acquire (const ACE_TCHAR *token_name,
 }
 
 int
-ACE_Token_Collection::tryacquire (const ACE_TCHAR *token_name,
+ACE_Token_Collection::tryacquire (ACE_TCHAR const *token_name,
                                   void (*sleep_hook)(void *))
 {
   ACE_TRACE ("ACE_Token_Collection::tryacquire");
@@ -203,7 +203,7 @@ ACE_Token_Collection::renew (int requeue_position,
 }
 
 int
-ACE_Token_Collection::renew (const ACE_TCHAR *token_name,
+ACE_Token_Collection::renew (ACE_TCHAR const *token_name,
                              int requeue_position,
                              ACE_Synch_Options &options)
 {
@@ -248,7 +248,7 @@ ACE_Token_Collection::release (ACE_Synch_Options &)
 }
 
 int
-ACE_Token_Collection::release (const ACE_TCHAR *token_name,
+ACE_Token_Collection::release (ACE_TCHAR const *token_name,
                                ACE_Synch_Options &options)
 {
   ACE_TRACE ("ACE_Token_Collection::release");
@@ -290,7 +290,7 @@ ACE_Token_Collection::clone () const
 
 // This method doesn't mean anything for a collection.
 ACE_Tokens *
-ACE_Token_Collection::create_token (const ACE_TCHAR *)
+ACE_Token_Collection::create_token (ACE_TCHAR const *)
 {
   ACE_TRACE ("ACE_Token_Collection::create_token");
   return nullptr;

@@ -102,7 +102,7 @@ ACE_Remote_Token_Proxy::~ACE_Remote_Token_Proxy ()
 }
 
 int
-ACE_Remote_Token_Proxy::open (const ACE_TCHAR *name,
+ACE_Remote_Token_Proxy::open (ACE_TCHAR const *name,
                               int ignore_deadlock,
                               int debug)
 {
@@ -406,7 +406,7 @@ ACE_Remote_Token_Proxy::token_acquired (ACE_TPQ_Entry *)
   // ACE_Token_Proxy::token_acquired (vp);
 }
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 ACE_Remote_Token_Proxy::owner_id ()
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::owner_id");
@@ -443,7 +443,7 @@ ACE_Remote_Mutex::clone () const
 }
 
 ACE_Tokens *
-ACE_Remote_Mutex::create_token (const ACE_TCHAR *name)
+ACE_Remote_Mutex::create_token (ACE_TCHAR const *name)
 {
   ACE_Tokens *temp;
   ACE_NEW_RETURN (temp,
@@ -466,7 +466,7 @@ ACE_Remote_Mutex::dump () const
 }
 
 ACE_Tokens *
-ACE_Remote_RLock::create_token (const ACE_TCHAR *name)
+ACE_Remote_RLock::create_token (ACE_TCHAR const *name)
 {
   ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,
@@ -507,7 +507,7 @@ ACE_Remote_RLock::dump () const
 }
 
 ACE_Tokens *
-ACE_Remote_WLock::create_token (const ACE_TCHAR *name)
+ACE_Remote_WLock::create_token (ACE_TCHAR const *name)
 {
   ACE_Tokens *temp {};
   ACE_NEW_RETURN (temp,

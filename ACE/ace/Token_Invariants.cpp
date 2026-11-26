@@ -41,7 +41,7 @@ ACE_Token_Invariant_Manager::ACE_Token_Invariant_Manager ()
 }
 
 int
-ACE_Token_Invariant_Manager::mutex_acquired (const ACE_TCHAR *token_name)
+ACE_Token_Invariant_Manager::mutex_acquired (ACE_TCHAR const *token_name)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::mutex_acquired");
 
@@ -96,7 +96,7 @@ ACE_Token_Invariant_Manager::releasing (const ACE_Token_Proxy *proxy)
 }
 
 void
-ACE_Token_Invariant_Manager::mutex_releasing (const ACE_TCHAR *token_name)
+ACE_Token_Invariant_Manager::mutex_releasing (ACE_TCHAR const *token_name)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::mutex_releasing");
   ACE_GUARD (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_);
@@ -109,7 +109,7 @@ ACE_Token_Invariant_Manager::mutex_releasing (const ACE_TCHAR *token_name)
 }
 
 int
-ACE_Token_Invariant_Manager::reader_acquired (const ACE_TCHAR *token_name)
+ACE_Token_Invariant_Manager::reader_acquired (ACE_TCHAR const *token_name)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::reader_acquired");
   ACE_GUARD_RETURN (ACE_TOKEN_CONST::MUTEX, ace_mon, this->lock_, -1);
@@ -124,7 +124,7 @@ ACE_Token_Invariant_Manager::reader_acquired (const ACE_TCHAR *token_name)
 }
 
 int
-ACE_Token_Invariant_Manager::writer_acquired (const ACE_TCHAR *token_name)
+ACE_Token_Invariant_Manager::writer_acquired (ACE_TCHAR const *token_name)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::writer_acquired");
 
@@ -140,7 +140,7 @@ ACE_Token_Invariant_Manager::writer_acquired (const ACE_TCHAR *token_name)
 }
 
 void
-ACE_Token_Invariant_Manager::rwlock_releasing (const ACE_TCHAR *token_name)
+ACE_Token_Invariant_Manager::rwlock_releasing (ACE_TCHAR const *token_name)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::rwlock_releasing");
 
@@ -168,7 +168,7 @@ ACE_Token_Invariant_Manager::dump () const
 }
 
 int
-ACE_Token_Invariant_Manager::get_mutex (const ACE_TCHAR *token_name,
+ACE_Token_Invariant_Manager::get_mutex (ACE_TCHAR const *token_name,
                                         ACE_Mutex_Invariants *&inv)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::get_mutex");
@@ -198,7 +198,7 @@ ACE_Token_Invariant_Manager::get_mutex (const ACE_TCHAR *token_name,
 }
 
 int
-ACE_Token_Invariant_Manager::get_rwlock (const ACE_TCHAR *token_name,
+ACE_Token_Invariant_Manager::get_rwlock (ACE_TCHAR const *token_name,
                                          ACE_RWLock_Invariants *&inv)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::get_rwlock");

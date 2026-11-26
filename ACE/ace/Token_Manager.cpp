@@ -69,7 +69,7 @@ ACE_Token_Manager::instance ()
 
 void
 ACE_Token_Manager::get_token (ACE_Token_Proxy *proxy,
-                              const ACE_TCHAR *token_name)
+                              ACE_TCHAR const *token_name)
 {
   ACE_TRACE ("ACE_Token_Manager::get_token");
   // Hmm.  I think this makes sense.  We perform our own locking here
@@ -199,7 +199,7 @@ ACE_Token_Manager::check_deadlock (ACE_Tokens *token, ACE_Token_Proxy *proxy)
 }
 
 ACE_Tokens *
-ACE_Token_Manager::token_waiting_for (const ACE_TCHAR *client_id)
+ACE_Token_Manager::token_waiting_for (ACE_TCHAR const *client_id)
 {
   COLLECTION::ITERATOR iterator (collection_);
   for (COLLECTION::ENTRY *temp {};

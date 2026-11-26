@@ -53,7 +53,7 @@ public:
    * the token.  @a ignore_deadlock can be 1 to disable deadlock
    * notifications.  @a debug prints debug messages.
    */
-  int open (const ACE_TCHAR *name,
+  int open (ACE_TCHAR const *name,
             int ignore_deadlock = 0,
             int debug = 0) override;
 
@@ -164,7 +164,7 @@ public:
   ACE_Remote_Mutex ();
 
   /// Calls Remote_Token_Proxy::open for you.
-  ACE_Remote_Mutex (const ACE_TCHAR *token_name,
+  ACE_Remote_Mutex (ACE_TCHAR const *token_name,
                     int ignore_deadlock = 0,
                     int debug = 0);
 
@@ -177,7 +177,7 @@ public:
 protected:
   /// Make the correct type of ACE_Tokens.
   /// This is called by the ACE_Token_Manager.
-  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
+  ACE_Tokens *create_token (ACE_TCHAR const *name) override;
 };
 
 /**
@@ -198,7 +198,7 @@ class ACE_Export ACE_Remote_RLock : public ACE_Remote_Token_Proxy
 public:
   ACE_Remote_RLock ();
 
-  ACE_Remote_RLock (const ACE_TCHAR *token_name,
+  ACE_Remote_RLock (ACE_TCHAR const *token_name,
                     int ignore_deadlock = 0,
                     int debug = 0);
 
@@ -216,7 +216,7 @@ public:
 protected:
   /// Make the correct type of ACE_Tokens.  This is called by the Token
   /// Manager.
-  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
+  ACE_Tokens *create_token (ACE_TCHAR const *name) override;
 };
 
 /**
@@ -236,7 +236,7 @@ class ACE_Export ACE_Remote_WLock : public ACE_Remote_Token_Proxy
 public:
   ACE_Remote_WLock ();
 
-  ACE_Remote_WLock (const ACE_TCHAR *token_name,
+  ACE_Remote_WLock (ACE_TCHAR const *token_name,
                     int ignore_deadlock = 0,
                     int debug = 0);
 
@@ -254,7 +254,7 @@ public:
 protected:
   /// Make the correct type of ACE_Tokens.  This is called by the Token
   /// Manager.
-  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
+  ACE_Tokens *create_token (ACE_TCHAR const *name) override;
 };
 
 /**

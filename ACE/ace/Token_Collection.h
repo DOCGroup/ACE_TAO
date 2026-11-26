@@ -59,7 +59,7 @@ public:
    * are sometimes useful for debugging.
    */
   ACE_Token_Collection (bool debug = false,
-                        const ACE_TCHAR *name = nullptr);
+                        ACE_TCHAR const *name = nullptr);
   ACE_Token_Collection (ACE_Token_Collection const &) = delete;
   ACE_Token_Collection (ACE_Token_Collection &&) = delete;
   ACE_Token_Collection &operator= (ACE_Token_Collection const &) = delete;
@@ -89,10 +89,10 @@ public:
    * success, the state of the token found is copied into proxy.
    * The returned ACE_Token_Proxy* must be deleted by the user.
    */
-  int extract (const ACE_TCHAR *token_name, ACE_Token_Proxy *&proxy);
+  int extract (ACE_TCHAR const *token_name, ACE_Token_Proxy *&proxy);
 
   /// Returns the proxy if true.  0 otherwise.
-  ACE_Token_Proxy *is_member (const ACE_TCHAR *token_name);
+  ACE_Token_Proxy *is_member (ACE_TCHAR const *token_name);
 
   /**
    * Is the specified token in the collection?
@@ -129,7 +129,7 @@ public:
 
   /// Acquire the token corresponding to @a token_name.  The other
   /// parameters are passed to @c token::acquire.
-  virtual int acquire (const ACE_TCHAR *token_name,
+  virtual int acquire (ACE_TCHAR const *token_name,
                        int notify = 0,
                        void (*sleep_hook)(void *) = nullptr,
                        ACE_Synch_Options &options =
@@ -139,7 +139,7 @@ public:
   int tryacquire (void (*sleep_hook)(void *) = nullptr) override;
 
   /// Try to acquire @a token_name.
-  virtual int tryacquire (const ACE_TCHAR *token_name,
+  virtual int tryacquire (ACE_TCHAR const *token_name,
                           void (*sleep_hook)(void *) = nullptr);
 
   /**
@@ -155,7 +155,7 @@ public:
 
   /// Renew the token corresponding to @a token_name.  The other
   /// parameters are passed to @c token::renew.
-  virtual int renew (const ACE_TCHAR *token_name,
+  virtual int renew (ACE_TCHAR const *token_name,
                      int requeue_position = 0,
                      ACE_Synch_Options &options =
                      ACE_Synch_Options::defaults);
@@ -172,7 +172,7 @@ public:
 
   /// Release the token corresponding to @c token_name.  The other
   /// parameters are passed to @c token::release.
-  virtual int release (const ACE_TCHAR *token_name,
+  virtual int release (ACE_TCHAR const *token_name,
                        ACE_Synch_Options &options =
                        ACE_Synch_Options::defaults);
   /// @}
@@ -204,7 +204,7 @@ protected:
   /// Required implementations for pure virtual methods inherited from
   /// ACE_Token_Proxy.
   ACE_Token_Proxy *clone () const override;
-  ACE_Tokens *create_token (const ACE_TCHAR *name) override;
+  ACE_Tokens *create_token (ACE_TCHAR const *name) override;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

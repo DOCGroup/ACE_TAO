@@ -117,7 +117,7 @@ public:
   /// buffer.
   ACE_TCHAR *token_name () const;
   ACE_TCHAR *client_id () const;
-  void token_name (const ACE_TCHAR *token_name, const ACE_TCHAR *client_id);
+  void token_name (ACE_TCHAR const *token_name, ACE_TCHAR const *client_id);
 
   /// Encode the message before transmission.
   int encode (void *&);

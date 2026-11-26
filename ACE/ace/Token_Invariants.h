@@ -143,21 +143,21 @@ public:
   /// @{
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int mutex_acquired (const ACE_TCHAR *token_name);
+  int mutex_acquired (ACE_TCHAR const *token_name);
 
   /// Updates internal database.
-  void mutex_releasing (const ACE_TCHAR *token_name);
+  void mutex_releasing (ACE_TCHAR const *token_name);
 
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int reader_acquired (const ACE_TCHAR *token_name);
+  int reader_acquired (ACE_TCHAR const *token_name);
 
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int writer_acquired (const ACE_TCHAR *token_name);
+  int writer_acquired (ACE_TCHAR const *token_name);
 
   /// Updates internal database.
-  void rwlock_releasing (const ACE_TCHAR *token_name);
+  void rwlock_releasing (ACE_TCHAR const *token_name);
   /// @}
 
   /// Dump the state of the class.
@@ -172,11 +172,11 @@ public:
 
 protected:
   /// Return or create.
-  int get_mutex (const ACE_TCHAR *token_name,
+  int get_mutex (ACE_TCHAR const *token_name,
                  ACE_Mutex_Invariants *&inv);
 
   /// Return or create.
-  int get_rwlock (const ACE_TCHAR *token_name,
+  int get_rwlock (ACE_TCHAR const *token_name,
                   ACE_RWLock_Invariants *&inv);
 
   /// ACE_Mutex_Token used to lock internal data structures.

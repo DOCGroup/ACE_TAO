@@ -64,7 +64,7 @@ public:
    * finished, sets ACE_Token_Proxy::token_.  @a token_name uniquely
    * id's the token name.
    */
-  void get_token (ACE_Token_Proxy *, const ACE_TCHAR *token_name);
+  void get_token (ACE_Token_Proxy *, ACE_TCHAR const *token_name);
 
   /**
    * Check whether acquire will cause deadlock or not.
@@ -104,7 +104,7 @@ private:
   static ACE_Token_Manager *token_manager_;
 
   /// Return the token that the given client_id is waiting for, if any
-  ACE_Tokens *token_waiting_for (const ACE_TCHAR *client_id);
+  ACE_Tokens *token_waiting_for (ACE_TCHAR const *client_id);
 
   /// ACE_Mutex_Token used to lock internal data structures.
   ACE_TOKEN_CONST::MUTEX lock_;

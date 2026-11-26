@@ -171,7 +171,7 @@ ACE_Token::ACE_Token_Queue::insert_entry (ACE_Token::ACE_Token_Queue_Entry &entr
     }
 }
 
-ACE_Token::ACE_Token (const ACE_TCHAR *name, void *any)
+ACE_Token::ACE_Token (ACE_TCHAR const *name, void *any)
   : lock_ (name, (ACE_mutexattr_t *) any),
     owner_ (ACE_OS::NULL_thread),
     attributes_ (USYNC_THREAD),
