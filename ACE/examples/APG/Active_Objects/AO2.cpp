@@ -15,9 +15,9 @@ class HA_ControllerAgent
   // Proxy to the HA_Controller that is on the network.
 public:
   HA_ControllerAgent () = default;
-  HA_ControllerAgent (const HA_ControllerAgent &) = delete;
+  HA_ControllerAgent (HA_ControllerAgent const &) = delete;
   HA_ControllerAgent (HA_ControllerAgent &&) = delete;
-  HA_ControllerAgent &operator= (const HA_ControllerAgent &) = delete;
+  HA_ControllerAgent &operator= (HA_ControllerAgent const &) = delete;
   HA_ControllerAgent &operator= (HA_ControllerAgent &&) = delete;
 
   int status_update ()
@@ -45,9 +45,9 @@ private:
 class StatusUpdate : public ACE_Method_Request
 {
 public:
-  StatusUpdate (const StatusUpdate &) = delete;
+  StatusUpdate (StatusUpdate const &) = delete;
   StatusUpdate (StatusUpdate &&) = delete;
-  StatusUpdate &operator= (const StatusUpdate &) = delete;
+  StatusUpdate &operator= (StatusUpdate const &) = delete;
   StatusUpdate &operator= (StatusUpdate &&) = delete;
 
   StatusUpdate (HA_ControllerAgent &controller,
@@ -75,9 +75,9 @@ class ExitMethod : public ACE_Method_Request
 {
 public:
   ExitMethod () = default;
-  ExitMethod (const ExitMethod &) = delete;
+  ExitMethod (ExitMethod const &) = delete;
   ExitMethod (ExitMethod &&) = delete;
-  ExitMethod &operator= (const ExitMethod &) = delete;
+  ExitMethod &operator= (ExitMethod const &) = delete;
   ExitMethod &operator= (ExitMethod &&) = delete;
 
   int call () override
@@ -90,8 +90,8 @@ public:
 class Scheduler : public ACE_Task_Base
 {
 public:
-  Scheduler (const Scheduler &) = delete;
-  Scheduler &operator= (const Scheduler &) = delete;
+  Scheduler (Scheduler const &) = delete;
+  Scheduler &operator= (Scheduler const &) = delete;
   Scheduler (Scheduler &&) = delete;
   Scheduler &operator= (Scheduler &&) = delete;
 
@@ -140,8 +140,8 @@ class HA_ControllerAgentProxy
   // This acts as a Proxy to the controller impl object.
 public:
   HA_ControllerAgentProxy () = default;
-  HA_ControllerAgentProxy (const HA_ControllerAgentProxy &) = delete;
-  HA_ControllerAgentProxy &operator = (const HA_ControllerAgentProxy &) = delete;
+  HA_ControllerAgentProxy (HA_ControllerAgentProxy const &) = delete;
+  HA_ControllerAgentProxy &operator = (HA_ControllerAgentProxy const &) = delete;
   HA_ControllerAgentProxy (HA_ControllerAgentProxy &&) = delete;
   HA_ControllerAgentProxy &operator = (HA_ControllerAgentProxy &&) = delete;
 
@@ -181,8 +181,8 @@ public:
   {
   }
 
-  CompletionCallBack (const CompletionCallBack &) = delete;
-  CompletionCallBack &operator = (const CompletionCallBack &) = delete;
+  CompletionCallBack (CompletionCallBack const &) = delete;
+  CompletionCallBack &operator = (CompletionCallBack const &) = delete;
   CompletionCallBack (CompletionCallBack &&) = delete;
   CompletionCallBack &operator = (CompletionCallBack &&) = delete;
 

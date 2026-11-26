@@ -14,7 +14,7 @@ public:
   explicit CallerId (ACE_TString id) : id_ (id)
   { }
 
-  const ACE_TCHAR *string () const
+  ACE_TCHAR const *string () const
   {
     return this->id_.c_str ();
   }
@@ -54,7 +54,7 @@ public:
     LAST_CODEC
   };
 
-  MessageType (int codec, const ACE_FILE_Addr &addr)
+  MessageType (int codec, ACE_FILE_Addr const &addr)
     : codec_ (codec), addr_ (addr)
   { }
 

@@ -56,7 +56,7 @@ class TextListener : public RecordingDevice
 public:
   TextListener (TextListenerAcceptor *acceptor);
 
-  const ACE_TCHAR *get_name () const override;
+  ACE_TCHAR const *get_name () const override;
 
   int answer_call () override;
 

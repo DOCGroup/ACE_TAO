@@ -107,7 +107,7 @@ TextListener::TextListener (TextListenerAcceptor *acceptor)
 }
 // Listing 01
 
-const ACE_TCHAR *TextListener::get_name () const
+ACE_TCHAR const *TextListener::get_name () const
 {
   return ACE_TEXT ("TextListener");
 }

@@ -198,7 +198,7 @@ int handle_parent (ACE_TCHAR *cmdLine)
 
   ACE_Process processa, processb;
   ACE_Process_Options poptions;
-  const ACE_TCHAR *args[3];
+  ACE_TCHAR const *args[3];
   args[0] = cmdLine;
   args[1] = ACE_TEXT ("a");
   args[2] = nullptr;

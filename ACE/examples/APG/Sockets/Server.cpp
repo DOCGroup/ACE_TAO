@@ -28,7 +28,7 @@ int ACE_TMAIN (int, ACE_TCHAR *[])
    * The complete open signature:
    *
    // Listing 2 code/ch06
-  int open (const ACE_Addr &local_sap,
+  int open (ACE_Addr const &local_sap,
             int reuse_addr = 0,
             int protocol_family = PF_INET,
             int backlog = ACE_DEFAULT_BACKLOG,

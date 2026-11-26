@@ -34,7 +34,7 @@ public:
   // Listing 2
 
   // Listing 3 code/ch21
-  inline bool operator< (const Graphable_Element &other) const
+  inline bool operator< (Graphable_Element const &other) const
   {
     return this->when () < other.when ();
   }

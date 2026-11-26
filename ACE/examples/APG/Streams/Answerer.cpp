@@ -207,7 +207,7 @@ protected:
 
 private:
   //FUZZ: disable check_for_lack_ACE_OS
-  int write (ACE_FILE_IO &file, const char *str)
+  int write (ACE_FILE_IO &file, char const *str)
   {
   //FUZZ: enable check_for_lack_ACE_OS
     return file.send (str, std::strlen (str));

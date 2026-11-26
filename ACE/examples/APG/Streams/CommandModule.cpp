@@ -1,7 +1,7 @@
 #include "CommandModule.h"
 
 // Listing 01 code/ch18
-CommandModule::CommandModule (const ACE_TCHAR *module_name,
+CommandModule::CommandModule (ACE_TCHAR const *module_name,
                               CommandTask *writer,
                               CommandTask *reader,
                               ACE_SOCK_Stream *peer)

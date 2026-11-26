@@ -17,7 +17,7 @@ public:
 
   virtual ~RecordingDevice () = default;
 
-  virtual const ACE_TCHAR *get_name () const
+  virtual ACE_TCHAR const *get_name () const
   {
     return ACE_TEXT ("UNKNOWN");
   }
