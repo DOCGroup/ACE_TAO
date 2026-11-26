@@ -352,7 +352,7 @@ Sender::pace_data ()
         // Shut the orb down.
         TAO_AV_CORE::instance ()->orb ()->shutdown (true);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Sender::pace_data Failed\n");
       return -1;
@@ -400,7 +400,7 @@ ACE_TMAIN (int argc,
       // Start sending data.
       result = SENDER::instance ()->pace_data ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Sender Failed\n");
       return -1;

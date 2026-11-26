@@ -41,7 +41,7 @@ FTP_Server_Callback::handle_stop ()
 int
 FTP_Server_Callback::receive_frame (ACE_Message_Block *frame,
                                     TAO_AV_frame_info *,
-                                    const ACE_Addr &)
+                                    ACE_Addr const &)
 {
   ACE_DEBUG ((LM_DEBUG, "FTP_Server_Callback::receive_frame\n"));
   while (frame != nullptr)
