@@ -866,7 +866,7 @@ namespace { // helpers for vsnprintf_emulation
 # ifdef localeconv
 #  undef localeconv
 # endif
-      const std::lconv *const conv = std::localeconv ();
+      std::lconv const *const conv = std::localeconv ();
       char const thousands_sep =
         conv && *conv->thousands_sep ? *conv->thousands_sep : ',';
       char const *grouping = conv ? conv->grouping : "";
@@ -1002,7 +1002,7 @@ namespace { // helpers for vsnprintf_emulation
       static constexpr char radix = '.', thousands_sep = 0;
       static char const grouping[] = "";
 #else
-      const std::lconv *const conv = std::localeconv ();
+      std::lconv const *const conv = std::localeconv ();
       char const radix = conv ? *conv->decimal_point : '.';
       char const thousands_sep =
         conv && *conv->thousands_sep ? *conv->thousands_sep : ',';

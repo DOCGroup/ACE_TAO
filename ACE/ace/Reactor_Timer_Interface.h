@@ -37,8 +37,8 @@ public:
   template<class Rep1, class Period1, class Rep2 = int, class Period2 = std::ratio<1>>
   long schedule_timer (ACE_Event_Handler *event_handler,
                        void const *arg,
-                       const std::chrono::duration<Rep1, Period1>& delay,
-                       const std::chrono::duration<Rep2, Period2>& interval = std::chrono::duration<Rep2, Period2>::zero ())
+                       std::chrono::duration<Rep1, Period1> const & delay,
+                       std::chrono::duration<Rep2, Period2> const & interval = std::chrono::duration<Rep2, Period2>::zero ())
   {
     ACE_Time_Value const tv_delay (delay);
     ACE_Time_Value const tv_interval (interval);
@@ -50,7 +50,7 @@ public:
 
   template<class Rep, class Period>
   int reset_timer_interval (long timer_id,
-                            const std::chrono::duration<Rep, Period>& interval)
+                            std::chrono::duration<Rep, Period> const & interval)
   {
     ACE_Time_Value const tv_interval (interval);
     return this->reset_timer_interval (timer_id, tv_interval);

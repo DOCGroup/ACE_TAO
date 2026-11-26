@@ -246,7 +246,7 @@ public:
 
   /// @sa wait
   template<class Rep, class Period>
-  int wait (const std::chrono::duration<Rep, Period>& timeout)
+  int wait (std::chrono::duration<Rep, Period> const & timeout)
   {
     ACE_Time_Value const tv (timeout);
     return this->wait (tv);
@@ -272,7 +272,7 @@ public:
   /// @sa wait
   template<class Rep, class Period>
   pid_t wait (pid_t pid,
-              const std::chrono::duration<Rep, Period>& timeout,
+              std::chrono::duration<Rep, Period> const & timeout,
               ACE_exitcode *status = nullptr)
   {
     ACE_Time_Value const tv (timeout);
