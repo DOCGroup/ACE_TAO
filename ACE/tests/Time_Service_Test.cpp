@@ -58,7 +58,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_OS::unlink (backing_store);
 
-  const ACE_TCHAR *server_cl = APPLICATION ACE_TEXT ("server.conf");
+  ACE_TCHAR const *server_cl = APPLICATION ACE_TEXT ("server.conf");
   ACE_Process_Options server_options;
 #ifndef ACE_LACKS_VA_FUNCTIONS
   server_options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, server_cl);
@@ -82,7 +82,7 @@ run_main (int, ACE_TCHAR *[])
 
   ACE_OS::sleep (3);
 
-  const ACE_TCHAR *clerk_cl = APPLICATION ACE_TEXT ("clerk.conf");
+  ACE_TCHAR const *clerk_cl = APPLICATION ACE_TEXT ("clerk.conf");
   ACE_Process_Options clerk_options;
 #ifndef ACE_LACKS_VA_FUNCTIONS
   clerk_options.command_line (ACE_TEXT ("%") ACE_TEXT_PRIs, clerk_cl);

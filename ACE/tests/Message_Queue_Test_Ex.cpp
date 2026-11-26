@@ -28,7 +28,7 @@
 #include "ace/Barrier.h"
 #include "Message_Queue_Test_Ex.h"    // Declares User_Class
 
-const ACE_TCHAR usage[] =
+ACE_TCHAR const usage[] =
   ACE_TEXT ("usage: Message_Queue_Test_Ex <number of messages>\n");
 
 using QUEUE = ACE_Message_Queue_Ex<User_Class, ACE_NULL_SYNCH>;

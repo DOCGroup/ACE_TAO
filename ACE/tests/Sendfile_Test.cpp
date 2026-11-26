@@ -79,7 +79,7 @@ client (void *arg)
       buffer[i] = static_cast<u_char> (i);
     }
 
-  const ACE_TCHAR file[] = ACE_TEXT ("Sendfile_Test_File");
+  ACE_TCHAR const file[] = ACE_TEXT ("Sendfile_Test_File");
   static const size_t file_sz = sizeof (file) / sizeof (file[0]);
   ACE_TCHAR test_file[MAXPATHLEN + 1];
   ACE_HANDLE in_fd = ACE_INVALID_HANDLE;

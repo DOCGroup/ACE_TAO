@@ -14,7 +14,7 @@
 #include "ace/OS_NS_errno.h"
 #include "ace/OS_NS_string.h"
 
-static const ACE_TCHAR *usage = ACE_TEXT ("usage: %s [-d]\n");
+static ACE_TCHAR const *usage = ACE_TEXT ("usage: %s [-d]\n");
 
 #if defined (ACE_HAS_THREADS)
 

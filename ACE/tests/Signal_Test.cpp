@@ -272,7 +272,7 @@ worker_parent (void *arg)
 
   // We're going to create a new process that runs this program again,
   // so we need to indicate that it's the child.
-  const ACE_TCHAR *t = ACE_TEXT (".")
+  ACE_TCHAR const *t = ACE_TEXT (".")
                        ACE_DIRECTORY_SEPARATOR_STR
                        ACE_TEXT ("%sSignal_Test")
                        ACE_PLATFORM_EXE_SUFFIX

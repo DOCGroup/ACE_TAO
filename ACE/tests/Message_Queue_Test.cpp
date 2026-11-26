@@ -37,7 +37,7 @@
 
 #include <memory>
 
-const ACE_TCHAR usage[] = ACE_TEXT ("usage: Message_Queue_Test <number of messages>\n");
+ACE_TCHAR const usage[] = ACE_TEXT ("usage: Message_Queue_Test <number of messages>\n");
 
 using QUEUE = ACE_Message_Queue<ACE_NULL_SYNCH>;
 using ITERATOR = ACE_Message_Queue_Iterator<ACE_NULL_SYNCH>;
