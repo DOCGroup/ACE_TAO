@@ -187,7 +187,7 @@ ACE_SV_Semaphore_Complex::open (key_t k,
 }
 
 int
-ACE_SV_Semaphore_Complex::open (const char *name,
+ACE_SV_Semaphore_Complex::open (char const *name,
                                 short flags,
                                 int initial_value,
                                 u_short nsems,
@@ -268,7 +268,7 @@ ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (key_t k,
   }
 }
 
-ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (const char *name,
+ACE_SV_Semaphore_Complex::ACE_SV_Semaphore_Complex (char const *name,
                                                     short flags,
                                                     int initial_value,
                                                     u_short nsems,

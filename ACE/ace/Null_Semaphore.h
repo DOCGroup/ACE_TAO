@@ -42,7 +42,7 @@ class ACE_Null_Semaphore
 public:
   ACE_Null_Semaphore (unsigned int = 1,
                        int = 0,
-                       const ACE_TCHAR * = nullptr,
+                       ACE_TCHAR const *= nullptr,
                        void * = nullptr,
                        int = 0x7fffffff) {}
   ~ACE_Null_Semaphore () = default;

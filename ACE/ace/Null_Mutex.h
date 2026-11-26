@@ -30,7 +30,7 @@ class ACE_Time_Value;
 class ACE_Export ACE_Null_Mutex
 {
 public:
-  ACE_Null_Mutex (const ACE_TCHAR * = nullptr)
+  ACE_Null_Mutex (ACE_TCHAR const *= nullptr)
   {
   }
   ~ACE_Null_Mutex () = default;
@@ -177,7 +177,7 @@ template<>
 class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Null_Mutex>
 {
 public:
-  ACE_Null_Mutex * operator () (const ACE_TCHAR *name)
+  ACE_Null_Mutex * operator () (ACE_TCHAR const *name)
   {
     ACE_Null_Mutex *p;
     ACE_NEW_RETURN (p, ACE_Null_Mutex (name), nullptr);

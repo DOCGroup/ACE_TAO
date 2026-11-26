@@ -57,7 +57,7 @@ public:
                            int initial_value = 1,
                            u_short nsems = 1,
                            mode_t perms = ACE_DEFAULT_FILE_PERMS);
-  ACE_SV_Semaphore_Simple (const char *name,
+  ACE_SV_Semaphore_Simple (char const *name,
                            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
                            int initial_value = 1,
                            u_short nsems = 1,
@@ -72,7 +72,7 @@ public:
 
   ~ACE_SV_Semaphore_Simple ();
 
-  int open (const char *name,
+  int open (char const *name,
             short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,
@@ -185,7 +185,7 @@ protected:
             int i = -1);
 #endif
 
-  key_t name_2_key (const char *name);
+  key_t name_2_key (char const *name);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

@@ -146,7 +146,7 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (key_t k,
 // ACE::unique_name()-like strings.
 
 key_t
-ACE_SV_Semaphore_Simple::name_2_key (const char *name)
+ACE_SV_Semaphore_Simple::name_2_key (char const *name)
 {
   ACE_TRACE ("ACE_SV_Semaphore_Simple::name_2_key");
 
@@ -186,7 +186,7 @@ ACE_SV_Semaphore_Simple::name_2_key (const char *name)
 // 0.
 
 int
-ACE_SV_Semaphore_Simple::open (const char *name,
+ACE_SV_Semaphore_Simple::open (char const *name,
                                short flags,
                                int initial_value,
                                u_short n,
@@ -208,7 +208,7 @@ ACE_SV_Semaphore_Simple::open (const char *name,
   return this->open (key, flags, initial_value, n, perms);
 }
 
-ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const char *name,
+ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (char const *name,
                                                   short flags,
                                                   int initial_value,
                                                   u_short n,
