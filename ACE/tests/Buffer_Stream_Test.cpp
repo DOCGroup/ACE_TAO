@@ -121,7 +121,7 @@ Supplier::svc ()
 
   // Send one message for each letter of the alphabet, then send an empty
   // message to mark the end.
-  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       // Allocate a new message.
       char d[2];
@@ -168,7 +168,7 @@ Consumer::svc ()
 {
   ACE_Message_Block *mb {};
   int result;
-  const char *c = ACE_ALPHABET;
+  char const *c = ACE_ALPHABET;
   char *output {};
 
   // Keep looping, reading a message out of the queue, until we

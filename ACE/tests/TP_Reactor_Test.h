@@ -81,7 +81,7 @@ public:
   virtual ~Acceptor ();
 
   void stop ();
-  int start (const ACE_INET_Addr & addr);
+  int start (ACE_INET_Addr const & addr);
 
   /// Overrides ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>.
   int make_svc_handler (Receiver * & sh) override;
@@ -162,7 +162,7 @@ public:
   virtual ~Connector ();
 
   void stop ();
-  int  start (const ACE_INET_Addr & addr , int num);
+  int  start (ACE_INET_Addr const & addr , int num);
 
   /// Overrides ACE_Connector<>.
   int make_svc_handler (Sender * & sh) override;

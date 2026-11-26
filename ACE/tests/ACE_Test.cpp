@@ -40,7 +40,7 @@ ace_debug_test ()
 
   // Check if ACE::debug() is by default false when no ACE_DEBUG environment variable
   // is there
-  const char* debug = ACE_OS::getenv ("ACE_DEBUG");
+  char const * debug = ACE_OS::getenv ("ACE_DEBUG");
   if (debug == nullptr)
     {
       if (ACE::debug())
@@ -67,10 +67,10 @@ execname_test ()
 
   // This test is only interesting on Win32
 #if defined (ACE_WIN32)
-  const ACE_TCHAR *newname;
-  const ACE_TCHAR *prog1 = ACE_TEXT ("myprog.exe");
-  const ACE_TCHAR *prog2 = ACE_TEXT ("myprog.EXE");
-  const ACE_TCHAR *prog3 = ACE_TEXT ("myprog");
+  ACE_TCHAR const *newname;
+  ACE_TCHAR const *prog1 = ACE_TEXT ("myprog.exe");
+  ACE_TCHAR const *prog2 = ACE_TEXT ("myprog.EXE");
+  ACE_TCHAR const *prog3 = ACE_TEXT ("myprog");
 
   newname = ACE::execname (prog1);
   if (newname != prog1)   // Didn't find .exe correctly

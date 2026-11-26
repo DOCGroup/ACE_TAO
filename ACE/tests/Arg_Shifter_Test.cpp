@@ -12,7 +12,7 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Arg_Shifter_Test"));
   const int test_argc_size1 = 5;
   int argl (test_argc_size1);
-  const ACE_TCHAR *args1[test_argc_size1] = {
+  ACE_TCHAR const *args1[test_argc_size1] = {
     ACE_TEXT ("-known"),
     ACE_TEXT ("-huh"),
     ACE_TEXT ("-arg"),
@@ -41,7 +41,7 @@ run_main (int, ACE_TCHAR *[])
 
   const int test_argc_size2 = 4;
   int arg2 = test_argc_size2;
-  const ACE_TCHAR *args2[test_argc_size2] = {
+  ACE_TCHAR const *args2[test_argc_size2] = {
     ACE_TEXT ("-ORBDebugLevel"),
     ACE_TEXT ("-0"),
     ACE_TEXT ("-o"),
@@ -73,7 +73,7 @@ run_main (int, ACE_TCHAR *[])
     }
 
 #ifdef ACE_USES_WCHAR
-  const char *args3[] = {
+  char const *args3[] = {
     "-ORBDebugLevel 0",
     "-o",
     "server.ior",
