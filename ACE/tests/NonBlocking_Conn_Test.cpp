@@ -87,7 +87,7 @@ Svc_Handler::handle_close (ACE_HANDLE handle, ACE_Reactor_Mask mask)
 
 using CONNECTOR = ACE_Connector<Svc_Handler, ACE_SOCK_Connector>;
 
-static const char* hosts[] = {
+static char const * hosts[] = {
   "tweakers.net:80",
   "news.bbc.co.uk:80",
   "www.cnn.com:80",

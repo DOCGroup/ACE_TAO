@@ -28,9 +28,9 @@ int run_main (int argc, ACE_TCHAR *argv[])
   size_t i, j;
   sockaddr_in6 *pointer6;
 
-  const ACE_TCHAR *primary_ipv6 = ACE_TEXT("3ffe::123:4567:89ab:cdef");
+  ACE_TCHAR const *primary_ipv6 = ACE_TEXT("3ffe::123:4567:89ab:cdef");
 
-  const ACE_TCHAR *secondary_ipv6[] = {
+  ACE_TCHAR const *secondary_ipv6[] = {
     ACE_IPV6_LOCALHOST,
     ACE_TEXT("fe80::0123:4567:89ab:cdef"),
     ACE_TEXT("fec0::0123:4567:89ab:cdef"),

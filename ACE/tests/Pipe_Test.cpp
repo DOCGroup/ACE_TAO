@@ -68,7 +68,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 #ifdef ACE_HAS_PROCESS_SPAWN
 static void
 open_pipe (ACE_Pipe &pipe,
-      const char *name)
+      char const *name)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("opening %C\n"), name));
   int result = pipe.open ();
