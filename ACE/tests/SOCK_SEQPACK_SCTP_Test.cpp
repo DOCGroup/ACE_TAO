@@ -59,7 +59,7 @@ Server (void *arg)
 
   ACE_Handle_Set handle_set;
 
-  const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value const def_timeout (ACE_DEFAULT_TIMEOUT);
 
   ACE_Time_Value tv (def_timeout);
 

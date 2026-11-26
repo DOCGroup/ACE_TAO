@@ -129,7 +129,7 @@ server (void *arg)
   ACE_SOCK_Stream new_stream;
   ACE_INET_Addr cli_addr;
   ACE_Handle_Set handle_set;
-  const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value const def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
 
   char buf[BUFSIZ];

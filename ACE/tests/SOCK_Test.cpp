@@ -71,7 +71,7 @@ client (void *arg)
   }
 
   // Test Bug 3606
-  const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value const def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
   int const result = ACE::handle_ready (cli_stream.get_handle (), std::addressof (tv),
                                   true, // read_ready
@@ -130,7 +130,7 @@ server (void *arg)
   // calls...
   ACE_SOCK_Stream new_stream;
   ACE_INET_Addr cli_addr;
-  const ACE_Time_Value def_timeout (ACE_DEFAULT_TIMEOUT);
+  ACE_Time_Value const def_timeout (ACE_DEFAULT_TIMEOUT);
   ACE_Time_Value tv (def_timeout);
 
   char buf[BUFSIZ];
