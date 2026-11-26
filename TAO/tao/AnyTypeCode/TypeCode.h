@@ -471,8 +471,8 @@ namespace CORBA
     TypeCode &operator= (TypeCode &&) = delete;
 
   protected:
-    /// The kind of TypeCode.
-    TCKind const kind_;
+    /// The kind of TypeCode, resolved after construction for recursive types.
+    TCKind kind_;
   };
 }  // End namespace CORBA
 

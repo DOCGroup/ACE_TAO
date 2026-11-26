@@ -294,6 +294,12 @@ recursive_struct_typecodefactory_test (CORBA::ORB_ptr orb,
                            "RecursiveStruct",
                            members);
 
+  if (recursive_tc->kind () != CORBA::tk_struct)
+    {
+      ACE_ERROR ((LM_ERROR, "Recursive TypeCode has an incorrect kind\n"));
+      throw CORBA::INTERNAL ();
+    }
+
   // Reset the underlying TypeCode to the one we just created with the
   // TypeCodeFactory.
   the_any.type (struct_tc.in ());

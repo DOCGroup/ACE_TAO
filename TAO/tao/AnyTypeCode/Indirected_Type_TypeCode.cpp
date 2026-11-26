@@ -73,9 +73,7 @@ TAO::TypeCode::Indirected_Type::set_recursive_tc (CORBA::TypeCode_ptr tc)
       }
 
     // make sure we are the right kind
-    CORBA::TCKind & mutable_kind = const_cast<CORBA::TCKind &> (this->kind_);
-
-    mutable_kind = tc->kind ();
+    this->kind_ = tc->kind ();
 
     // for every reference beside the master reference (1)
     // increase the master tc's reference count to keep it
