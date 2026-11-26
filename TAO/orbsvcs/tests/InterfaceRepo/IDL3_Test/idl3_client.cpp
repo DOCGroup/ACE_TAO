@@ -790,6 +790,15 @@ IDL3_Client::component_inheritance_test (
       return -1;
     }
 
+  CORBA::InterfaceDefSeq empty;
+  comp_base->supported_interfaces (empty);
+  CORBA::InterfaceDefSeq_var cleared = comp_base->supported_interfaces ();
+
+  if (cleared->length () != 0)
+    {
+      return -1;
+    }
+
   comp_base->supported_interfaces (supported.in ());
   supported = comp_base->supported_interfaces ();
 
