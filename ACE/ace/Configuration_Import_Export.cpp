@@ -448,7 +448,7 @@ ACE_Ini_ImpExp::import_config (ACE_TCHAR const * filename)
   // @@ Make this a dynamic size!
   ACE_TCHAR buffer[4096];
   ACE_Configuration_Section_Key section;
-  while (ACE_OS::fgets (buffer, sizeof buffer, in.get ()))
+  while (ACE_OS::fgets (buffer, sizeof buffer / sizeof buffer[0], in.get ()))
     {
       ACE_TCHAR *line = this->squish (buffer);
       // Check for a comment and blank line
