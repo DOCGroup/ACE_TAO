@@ -42,7 +42,7 @@ public:
   Monitor::NameList* get_statistic_names () override;
 
   /// Get the data from a single statistic
-  Monitor::Data* get_statistic (const char* name) override;
+  Monitor::Data* get_statistic (char const *name) override;
 
   /// Get the data from multiple statistic instances
   Monitor::DataList* get_statistics (const Monitor::NameList& names) override;
@@ -55,28 +55,28 @@ public:
   void clear_statistics (const Monitor::NameList& names) override;
 
   /// Shut down an event channel by name
-  void shutdown_event_channel (const char* name) override;
+  void shutdown_event_channel (char const *name) override;
 
   /// Remove a consumer by name
-  void remove_consumer (const char* name) override;
+  void remove_consumer (char const *name) override;
 
   /// Remove a supplier by name
-  void remove_supplier (const char* name) override;
+  void remove_supplier (char const *name) override;
 
   /// Remove a consumer admin by name
-  void remove_consumeradmin (const char* name) override;
+  void remove_consumeradmin (char const *name) override;
 
   /// Remove a supplier admin by name
-  void remove_supplieradmin (const char* name) override;
+  void remove_supplieradmin (char const *name) override;
 
   /// Call shutdown() on the ORB if one was provided during construction
   void shutdown () override;
 
 private:
-  void send_control_command (const char* name, const char* cmd);
+  void send_control_command (char const *name, char const *cmd);
 
   void get_data (Monitor_Point_Registry* registry,
-                 const char* name,
+                 char const *name,
                  Monitor::Data& data);
 
   void get_invalid_names (Monitor_Point_Registry* registry,

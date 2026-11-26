@@ -21,7 +21,7 @@ public:
   /// the life of the TYPE object passed in is directly linked
   /// with the life of this object.
   TAO_Dynamic_Statistic (TYPE* interf,
-                         const char* name,
+                         char const *name,
                          Monitor_Control_Types::Information_Type type)
     : Monitor_Base (name, type),
       interf_ (interf)

@@ -48,7 +48,7 @@ NotificationServiceMonitor_i::get_statistic_names ()
 }
 
 Monitor::Data*
-NotificationServiceMonitor_i::get_statistic (const char* name)
+NotificationServiceMonitor_i::get_statistic (char const *name)
 {
   Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
 
@@ -159,38 +159,38 @@ NotificationServiceMonitor_i::clear_statistics (
 }
 
 void
-NotificationServiceMonitor_i::shutdown_event_channel (const char* name)
+NotificationServiceMonitor_i::shutdown_event_channel (char const *name)
 {
   this->send_control_command (name, TAO_NS_CONTROL_SHUTDOWN);
 }
 
 void
-NotificationServiceMonitor_i::remove_consumer (const char* name)
+NotificationServiceMonitor_i::remove_consumer (char const *name)
 {
   this->send_control_command (name, TAO_NS_CONTROL_REMOVE_CONSUMER);
 }
 
 void
-NotificationServiceMonitor_i::remove_supplier (const char* name)
+NotificationServiceMonitor_i::remove_supplier (char const *name)
 {
   this->send_control_command (name, TAO_NS_CONTROL_REMOVE_SUPPLIER);
 }
 
 void
-NotificationServiceMonitor_i::remove_consumeradmin (const char* name)
+NotificationServiceMonitor_i::remove_consumeradmin (char const *name)
 {
   this->send_control_command (name, TAO_NS_CONTROL_REMOVE_CONSUMERADMIN);
 }
 
 void
-NotificationServiceMonitor_i::remove_supplieradmin (const char* name)
+NotificationServiceMonitor_i::remove_supplieradmin (char const *name)
 {
   this->send_control_command (name, TAO_NS_CONTROL_REMOVE_SUPPLIERADMIN);
 }
 
 void
-NotificationServiceMonitor_i::send_control_command (const char* name,
-                                                    const char* cmd)
+NotificationServiceMonitor_i::send_control_command (char const *name,
+                                                    char const *cmd)
 {
   TAO_Control_Registry* instance = TAO_Control_Registry::instance ();
   TAO_NS_Control* control = instance->get (name);
@@ -221,7 +221,7 @@ NotificationServiceMonitor_i::shutdown ()
 void
 NotificationServiceMonitor_i::get_data (
    Monitor_Point_Registry* registry,
-   const char* name,
+   char const *name,
    Monitor::Data& data)
 {
   // Get the statistic by name.

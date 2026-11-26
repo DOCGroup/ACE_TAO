@@ -23,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_MC_Export Timestamp_Monitor : public Monitor_Base
 {
 public:
-  explicit Timestamp_Monitor (const char *name);
+  explicit Timestamp_Monitor (char const *name);
 
   Timestamp_Monitor (Timestamp_Monitor const&) = delete;
   Timestamp_Monitor (Timestamp_Monitor&&) = delete;

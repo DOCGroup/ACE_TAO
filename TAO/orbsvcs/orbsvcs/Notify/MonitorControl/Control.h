@@ -33,11 +33,11 @@ public:
 
   /// Execute the control object.  Only return false if the command
   /// specified is not supported.
-  virtual bool execute (const char* command) = 0;
+  virtual bool execute (char const *command) = 0;
 
 protected:
   /// Construct a control object.
-  explicit TAO_NS_Control (const char* name);
+  explicit TAO_NS_Control (char const *name);
 
 private:
   ACE_CString name_;
