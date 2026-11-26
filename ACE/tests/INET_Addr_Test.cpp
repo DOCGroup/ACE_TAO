@@ -20,7 +20,7 @@
 
 // Make sure that ACE_Addr::addr_type_ is the same
 // as the family of the inet_addr_.
-static int check_type_consistency (const ACE_INET_Addr &addr)
+static int check_type_consistency (ACE_INET_Addr const &addr)
 {
   int family = -1;
 
@@ -196,7 +196,7 @@ static bool test_port_names()
 }
 
 struct Address {
-  const char* name;
+  char const * name;
   bool loopback;
 };
 
@@ -247,7 +247,7 @@ int run_main (int, ACE_TCHAR *[])
 
   // Try to parse out a simple address:port string. Intentionally reuse
   // the ACE_INET_Addr to ensure resetting an address works.
-  const char *addr_ports[] =
+  char const *addr_ports[] =
     {
       "127.0.0.1:80", "www.dre.vanderbilt.edu:80", nullptr
     };
@@ -299,9 +299,9 @@ int run_main (int, ACE_TCHAR *[])
                     , (int)addr_port_in6->sin6_scope_id, (int)check_in6->sin6_scope_id));
 
                   ACE_ERROR((LM_DEBUG, ACE_TEXT ("  addr_port_in6->sin6_addr=")));
-                  ACE_HEX_DUMP((LM_DEBUG, reinterpret_cast<const char*>(&addr_port_in6->sin6_addr), sizeof(addr_port_in6->sin6_addr)));
+                  ACE_HEX_DUMP((LM_DEBUG, reinterpret_cast<char const *>(&addr_port_in6->sin6_addr), sizeof(addr_port_in6->sin6_addr)));
                   ACE_ERROR((LM_DEBUG, ACE_TEXT ("  check_in6->sin6_addr=")));
-                  ACE_HEX_DUMP((LM_DEBUG, reinterpret_cast<const char*>(&check_in6->sin6_addr), sizeof(check_in6->sin6_addr)));
+                  ACE_HEX_DUMP((LM_DEBUG, reinterpret_cast<char const *>(&check_in6->sin6_addr), sizeof(check_in6->sin6_addr)));
                 }
               }
 #endif
@@ -330,7 +330,7 @@ int run_main (int, ACE_TCHAR *[])
         }
     }
 
-  const char *ipv4_addresses[] =
+  char const *ipv4_addresses[] =
     {
       "127.0.0.1", "138.38.180.251", "64.219.54.121", "192.0.0.1", "10.0.0.1", nullptr
     };
@@ -380,7 +380,7 @@ int run_main (int, ACE_TCHAR *[])
         }
 
       // Now we check the operation of get_host_addr(char*,int)
-      const char* haddr = addr.get_host_addr (hostaddr, sizeof(hostaddr));
+      char const * haddr = addr.get_host_addr (hostaddr, sizeof(hostaddr));
       if (haddr != nullptr &&
           std::strcmp (hostaddr, haddr) != 0)
         {
@@ -462,7 +462,7 @@ int run_main (int, ACE_TCHAR *[])
     {
       char local_host_name[1024];
       ACE_OS::hostname(local_host_name, 1024);
-      const char* local_names[] = {"localhost", local_host_name};
+      char const * local_names[] = {"localhost", local_host_name};
 
       for (char const *local_name : local_names)
       {
@@ -483,7 +483,7 @@ int run_main (int, ACE_TCHAR *[])
          }
       }
 
-      const char *ipv6_addresses[] = {
+      char const *ipv6_addresses[] = {
         "1080::8:800:200c:417a", // unicast address
         "ff01::101",             // multicast address
         "::1",                   // loopback address
@@ -506,7 +506,7 @@ int run_main (int, ACE_TCHAR *[])
             }
         }
 
-      const char *ipv6_names[] = {
+      char const *ipv6_names[] = {
         "naboo.dre.vanderbilt.edu",
         "v6.ipv6-test.com",
         nullptr

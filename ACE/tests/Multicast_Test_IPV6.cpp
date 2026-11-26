@@ -137,7 +137,7 @@ public:
     return static_cast<ACE_SOCK_Dgram_Mcast::options> (this->sdm_opts_);
   }
 
-  int set_group (int port, const char *group);
+  int set_group (int port, char const *group);
 
 private:
   // Starting group address.
@@ -489,7 +489,7 @@ MCT_Config::dump () const
 }
 
 int
-MCT_Config::set_group (int port, const char *group)
+MCT_Config::set_group (int port, char const *group)
 {
   return group_start_.set (port, group);
 }
@@ -501,11 +501,11 @@ class MCT_Event_Handler : public ACE_Event_Handler
 public:
   MCT_Event_Handler (ACE_SOCK_Dgram_Mcast::options options
                       = ACE_SOCK_Dgram_Mcast::DEFOPTS);
-  int join (const ACE_INET_Addr &mcast_addr,
+  int join (ACE_INET_Addr const &mcast_addr,
             int reuse_addr = 1,
-            const ACE_TCHAR *net_if = nullptr);
-  int leave (const ACE_INET_Addr &mcast_addr,
-             const ACE_TCHAR *net_if = nullptr);
+            ACE_TCHAR const *net_if = nullptr);
+  int leave (ACE_INET_Addr const &mcast_addr,
+             ACE_TCHAR const *net_if = nullptr);
 
   /// @name Event Handler hooks
   /// @{
@@ -517,7 +517,7 @@ public:
 
 protected:
   ACE_SOCK_Dgram_Mcast *mcast ();
-  int find (const char *buf);
+  int find (char const *buf);
 
 private:
   ACE_SOCK_Dgram_Mcast mcast_;
@@ -547,7 +547,7 @@ MCT_Event_Handler::mcast ()
 }
 
 int
-MCT_Event_Handler::find (const char *buf)
+MCT_Event_Handler::find (char const *buf)
 {
   for (ACE_CString const &address : this->address_vec_)
     {
@@ -573,9 +573,9 @@ MCT_Event_Handler::find (const char *buf)
 }
 
 int
-MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
+MCT_Event_Handler::join (ACE_INET_Addr const &mcast_addr,
                          int reuse_addr,
-                         const ACE_TCHAR *net_if)
+                         ACE_TCHAR const *net_if)
 {
   char buf[MAX_STRING_SIZE];
   ACE_OS::snprintf (buf, MAX_STRING_SIZE, "%s/%d",
@@ -597,8 +597,8 @@ MCT_Event_Handler::join (const ACE_INET_Addr &mcast_addr,
 }
 
 int
-MCT_Event_Handler::leave (const ACE_INET_Addr &mcast_addr,
-                          const ACE_TCHAR *net_if)
+MCT_Event_Handler::leave (ACE_INET_Addr const &mcast_addr,
+                          ACE_TCHAR const *net_if)
 {
   if (this->mcast_.leave (mcast_addr, net_if) == 0)
     {
@@ -688,7 +688,7 @@ MCT_Event_Handler::get_handle () const
 class MCT_Task : public ACE_Task<ACE_NULL_SYNCH>
 {
 public:
-  MCT_Task (const MCT_Config &config,
+  MCT_Task (MCT_Config const &config,
             ACE_Reactor *reactor = ACE_Reactor::instance ());
   ~MCT_Task () override;
 
@@ -701,10 +701,10 @@ public:
   /// @}
 
 private:
-  const MCT_Config &config_;
+  MCT_Config const &config_;
 };
 
-MCT_Task::MCT_Task (const MCT_Config &config,
+MCT_Task::MCT_Task (MCT_Config const &config,
                     ACE_Reactor *reactor)
   : config_ (config)
 {
@@ -805,7 +805,7 @@ int send_dgram (ACE_SOCK_Dgram &socket, ACE_INET_Addr addr, int done = 0)
   // Send each message twice, once to the right port, and once to the "wrong"
   // port.  This helps generate noise and lets us see if port filtering is
   // working properly.
-  const char *address = addr.get_host_addr ();
+  char const *address = addr.get_host_addr ();
   int port = addr.get_port_number ();
 
   for (int i = 0; i < 2; ++i)
@@ -1018,7 +1018,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     return 1;
   }
 
-  const ACE_TCHAR *temp = ACE_TEXT ("Multicast_Test_IPV6");
+  ACE_TCHAR const *temp = ACE_TEXT ("Multicast_Test_IPV6");
   ACE_TString test = temp;
 
   u_long role = config.role ();

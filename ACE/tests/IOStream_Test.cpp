@@ -182,7 +182,7 @@ client (void *arg)
     }
 
   // Send a string to the server which it can interpret as a qchar[]
-  const char *str = "\"This is a test     string.\"";
+  char const *str = "\"This is a test     string.\"";
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT (" (%P|%t) Client Sending: (%C)\n"),
               str));
   server << str << endl;
@@ -408,7 +408,7 @@ spawn ()
   // Acceptor;
   ACE_SOCK_Acceptor acceptor;
 
-  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1)
+  if (acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &)) == -1)
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT (" (%P|%t) %p\n"),
