@@ -7,7 +7,7 @@
 using namespace ACE_VERSIONED_NAMESPACE_NAME::ACE::Monitor_Control;
 
 void
-error (const char* msg)
+error (char const *msg)
 {
 #if defined (ACE_NLOGGING)
   ACE_UNUSED_ARG (msg);

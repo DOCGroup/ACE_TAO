@@ -17,7 +17,7 @@ public:
   {
   }
 
-  bool execute (const char* cmd) override
+  bool execute (char const *cmd) override
   {
     command = cmd;
     return std::strcmp (cmd, TAO_NS_CONTROL_SHUTDOWN) == 0;
@@ -25,7 +25,7 @@ public:
 };
 
 void
-error (const char* msg)
+error (char const *msg)
 {
   ACE_ERROR ((LM_ERROR, "%s\n", msg));
   ACE_OS::exit (1);
