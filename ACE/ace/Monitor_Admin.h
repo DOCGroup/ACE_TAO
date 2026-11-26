@@ -46,8 +46,8 @@ namespace ACE
     {
     public:
       /// Override of ACE base class method.
-      int handle_timeout (const ACE_Time_Value& interval,
-                                  const void* monitor_point) override;
+      int handle_timeout (ACE_Time_Value const& interval,
+                                  void const* monitor_point) override;
     };
 
     /**
@@ -71,7 +71,7 @@ namespace ACE
       /// method.
 
       bool monitor_point (Monitor_Base* monitor_point,
-                          const ACE_Time_Value& time);
+                          ACE_Time_Value const& time);
       Monitor_Base* monitor_point (char const * name);
 
       /// Works similarly to monitor_point() above, but registers the
@@ -79,7 +79,7 @@ namespace ACE
       /// instead of our auto_updater_'s handle_timeout().
       void auto_query (ACE_Event_Handler* handler,
                        Monitor_Query* query,
-                       const ACE_Time_Value& time);
+                       ACE_Time_Value const& time);
 
       /// This mutator allows the application to create its own reactor
       /// and substitute it for the default reactor.

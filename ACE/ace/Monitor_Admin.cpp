@@ -15,8 +15,8 @@ namespace ACE
   {
     int
     Monitor_Point_Auto_Updater::handle_timeout (
-      const ACE_Time_Value& /* current_time */,
-      const void* monitor_point)
+      ACE_Time_Value const& /* current_time */,
+      void const* monitor_point)
     {
       Monitor_Base* const mp = const_cast<Monitor_Base*> (
         static_cast<Monitor_Base const*> (monitor_point));
@@ -47,7 +47,7 @@ namespace ACE
 
     bool
     Monitor_Admin::monitor_point (Monitor_Base* monitor_point,
-                                  const ACE_Time_Value& time)
+                                  ACE_Time_Value const& time)
     {
       if (monitor_point == nullptr)
         {
@@ -87,7 +87,7 @@ namespace ACE
     void
     Monitor_Admin::auto_query (ACE_Event_Handler* handler,
                                Monitor_Query* query,
-                               const ACE_Time_Value& time)
+                               ACE_Time_Value const& time)
     {
       this->reactor_->schedule_timer (handler,
                                       query,

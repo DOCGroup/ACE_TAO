@@ -62,7 +62,7 @@ namespace ACE
       virtual void receive (size_t data);
 
       /// Updates the monitor's data if it is a string type.
-      virtual void receive (const Monitor_Control_Types::NameList& data);
+      virtual void receive (Monitor_Control_Types::NameList const& data);
 
       /// Add a constraint, returns a unique constraint id.
       long add_constraint (char const * expression,
@@ -70,7 +70,7 @@ namespace ACE
 
       /// Remove a constraint and return the associated control action,
       /// which may be shared, for deletion or further use.
-      Control_Action* remove_constraint (const long constraint_id);
+      Control_Action* remove_constraint (long const constraint_id);
 
       /// Get all constraints
       CONSTRAINTS& constraints ();
@@ -85,7 +85,7 @@ namespace ACE
       /// Common to all monitors.
 
       void add_to_registry (
-        const ACE_Time_Value& time = ACE_Time_Value::zero);
+        ACE_Time_Value const& time = ACE_Time_Value::zero);
       void remove_from_registry ();
 
       char const * name () const;

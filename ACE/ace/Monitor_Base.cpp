@@ -107,7 +107,7 @@ namespace ACE
     }
 
     void
-    Monitor_Base::receive (const Monitor_Control_Types::NameList& data)
+    Monitor_Base::receive (Monitor_Control_Types::NameList const& data)
     {
       if (this->data_.type_ != Monitor_Control_Types::MC_LIST)
         {
@@ -162,7 +162,7 @@ namespace ACE
     }
 
     Control_Action*
-    Monitor_Base::remove_constraint (const long constraint_id)
+    Monitor_Base::remove_constraint (long const constraint_id)
     {
       Control_Action* retval {};
 
@@ -207,7 +207,7 @@ namespace ACE
     }
 
     void
-    Monitor_Base::add_to_registry (const ACE_Time_Value& time)
+    Monitor_Base::add_to_registry (ACE_Time_Value const& time)
     {
       MC_ADMINMANAGER *mgr =
         ACE_Dynamic_Service<MC_ADMINMANAGER>::instance ("MC_ADMINMANAGER");
