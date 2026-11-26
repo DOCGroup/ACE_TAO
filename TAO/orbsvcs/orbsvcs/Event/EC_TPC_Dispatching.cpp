@@ -70,7 +70,7 @@ TAO_EC_TPC_Dispatching::add_consumer (RtecEventComm::PushConsumer_ptr consumer)
       return -1;
     }
 
-  const int bindresult =
+  int const bindresult =
     this->consumer_task_map_.bind (RtecEventComm::PushConsumer::_duplicate(pc.in()),
                                    dtask);
   char const *explanation {};

@@ -216,7 +216,7 @@ TAO_ECG_CDR_Message_Receiver::Requests::get_request (CORBA::ULong request_id)
     }
 
   // Return array location for <request_id>.
-  const int index = request_id % this->size_;
+  int const index = request_id % this->size_;
   return this->fragmented_requests_.get () + index;
 }
 

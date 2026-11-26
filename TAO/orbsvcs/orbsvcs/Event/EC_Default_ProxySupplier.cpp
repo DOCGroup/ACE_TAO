@@ -76,7 +76,7 @@ TAO_EC_Default_ProxyPushSupplier::connect_push_consumer (
       {
         // Validate connection during connect.
         CORBA::PolicyList_var unused;
-        const int status = push_consumer->_validate_connection (unused);
+        int const status = push_consumer->_validate_connection (unused);
 #if TAO_EC_ENABLE_DEBUG_MESSAGES
         ORBSVCS_DEBUG ((LM_DEBUG, "Validated connection to PushConsumer on connect. Status[%d]\n", status));
 #else

@@ -67,7 +67,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const int priority =
+  int const priority =
     (ACE_Sched_Params::priority_min (ACE_SCHED_FIFO) +
      ACE_Sched_Params::priority_max (ACE_SCHED_FIFO)) / 2;
   this->dispatching_threads_priority_ =
@@ -119,7 +119,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
               ACE_TCHAR* priority_arg = ACE_OS::strtok_r (nullptr, ACE_TEXT(":"), &aux);
               if (priority_arg)
                 {
-                  const long prio = ACE_OS::strtol (priority_arg, nullptr, 0);
+                  long const prio = ACE_OS::strtol (priority_arg, nullptr, 0);
 
                   this->dispatching_threads_priority_ = prio;
                 }
@@ -532,7 +532,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
-              const unsigned long timeout = ACE_OS::strtoul(opt, nullptr, 10);
+              unsigned long const timeout = ACE_OS::strtoul(opt, nullptr, 10);
               this->consumer_control_timeout_.usec(timeout);
               arg_shifter.consume_arg ();
             }
@@ -545,7 +545,7 @@ TAO_EC_Default_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
-              const unsigned long timeout = ACE_OS::strtoul(opt, nullptr, 10);
+              unsigned long const timeout = ACE_OS::strtoul(opt, nullptr, 10);
               this->supplier_control_timeout_.usec(timeout);
               arg_shifter.consume_arg ();
             }

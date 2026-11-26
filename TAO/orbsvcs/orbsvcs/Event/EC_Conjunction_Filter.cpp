@@ -81,7 +81,7 @@ TAO_EC_Conjunction_Filter::filter (RtecEventComm::EventSet const &event,
        this->current_child_ != end;
        ++this->current_child_)
     {
-      const int n = (*this->current_child_)->filter (event, qos_info);
+      int const n = (*this->current_child_)->filter (event, qos_info);
       if (n != 0)
       {
         return n;
@@ -99,7 +99,7 @@ TAO_EC_Conjunction_Filter::filter_nocopy (RtecEventComm::EventSet& event,
        i != end;
        ++i)
     {
-      const int n = (*i)->filter_nocopy (event, qos_info);
+      int const n = (*i)->filter_nocopy (event, qos_info);
       if (n != 0)
       {
         return n;
@@ -113,8 +113,8 @@ TAO_EC_Conjunction_Filter::push (RtecEventComm::EventSet const &event,
                                  TAO_EC_QOS_Info& qos_info)
 {
   CORBA::Long const pos = this->current_child_ - this->begin ();
-  const int w = pos / bits_per_word;
-  const int b = pos % bits_per_word;
+  int const w = pos / bits_per_word;
+  int const b = pos % bits_per_word;
   if (ACE_BIT_ENABLED (this->bitvec_[w], 1<<b))
   {
     return;

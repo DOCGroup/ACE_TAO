@@ -50,7 +50,7 @@ TAO_EC_And_Filter::filter (RtecEventComm::EventSet const &event,
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin (); i != end; ++i)
     {
-      const int n = (*i)->filter (event, qos_info);
+      int const n = (*i)->filter (event, qos_info);
       if (n == 0)
       {
         return 0;
@@ -73,7 +73,7 @@ TAO_EC_And_Filter::filter_nocopy (RtecEventComm::EventSet& event,
   ChildrenIterator end = this->end ();
   for (ChildrenIterator i = this->begin (); i != end; ++i)
     {
-      const int n = (*i)->filter_nocopy (event, qos_info);
+      int const n = (*i)->filter_nocopy (event, qos_info);
       if (n == 0)
       {
         return 0;

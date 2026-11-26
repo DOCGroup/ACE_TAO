@@ -99,7 +99,7 @@ TAO_EC_Gateway_IIOP_Factory::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
-              const unsigned long timeout = ACE_OS::strtoul(opt, nullptr, 10);
+              unsigned long const timeout = ACE_OS::strtoul(opt, nullptr, 10);
               this->consumer_ec_control_timeout_.usec(timeout);
               arg_shifter.consume_arg ();
             }

@@ -103,7 +103,7 @@ TAO_EC_Basic_ObserverStrategy::create_observer_list (
   ACE_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_,
                  RtecEventChannelAdmin::EventChannel::SYNCHRONIZATION_ERROR());
 
-  const int size = static_cast<int> (this->observers_.current_size ());
+  int const size = static_cast<int> (this->observers_.current_size ());
   RtecEventChannelAdmin::Observer_var *tmp {};
   ACE_NEW_RETURN (tmp,
                   RtecEventChannelAdmin::Observer_var[size],
@@ -152,7 +152,7 @@ TAO_EC_Basic_ObserverStrategy::supplier_qos_update (
   this->fill_qos (s_qos);
 
   RtecEventChannelAdmin::Observer_var *tmp {};
-  const int size = this->create_observer_list (tmp);
+  int const size = this->create_observer_list (tmp);
   std::unique_ptr<RtecEventChannelAdmin::Observer_var[]> copy (tmp);
 
   for (int i {}; i != size; ++i)
@@ -196,7 +196,7 @@ TAO_EC_Basic_ObserverStrategy::consumer_qos_update (
   this->fill_qos (c_qos);
 
   RtecEventChannelAdmin::Observer_var *tmp {};
-  const int size = this->create_observer_list (tmp);
+  int const size = this->create_observer_list (tmp);
   std::unique_ptr<RtecEventChannelAdmin::Observer_var[]> copy (tmp);
 
   for (int i {}; i != size; ++i)

@@ -165,7 +165,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
           if (arg_shifter.is_parameter_next ())
             {
               ACE_TCHAR const *opt = arg_shifter.get_current ();
-              const unsigned long tmp = ACE_OS::strtoul (opt, nullptr, 0) & 0xff;
+              unsigned long const tmp = ACE_OS::strtoul (opt, nullptr, 0) & 0xff;
               this->ttl_value_ = static_cast<u_char> (tmp);
               arg_shifter.consume_arg ();
             }
