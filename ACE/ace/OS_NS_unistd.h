@@ -286,7 +286,7 @@ namespace ACE_OS
   int sleep (u_int seconds);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int sleep (const ACE_Time_Value &tv);
+  int sleep (ACE_Time_Value const &tv);
 
   // used by ARGV::string_to_argv
   extern ACE_Export
@@ -315,8 +315,8 @@ namespace ACE_OS
                      useconds_t interval = 0);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  useconds_t ualarm (const ACE_Time_Value &tv,
-                     const ACE_Time_Value &tv_interval = ACE_Time_Value::zero);
+  useconds_t ualarm (ACE_Time_Value const &tv,
+                     ACE_Time_Value const &tv_interval = ACE_Time_Value::zero);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int unlink (char const *path);

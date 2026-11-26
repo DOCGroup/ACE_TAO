@@ -963,7 +963,7 @@ ACE_OS::sleep (u_int seconds)
 }
 
 ACE_INLINE int
-ACE_OS::sleep (const ACE_Time_Value &tv)
+ACE_OS::sleep (ACE_Time_Value const &tv)
 {
   ACE_OS_TRACE ("ACE_OS::sleep");
 #if defined (ACE_WIN32)
@@ -1140,8 +1140,8 @@ ACE_OS::ualarm (useconds_t usecs, useconds_t interval)
 }
 
 ACE_INLINE useconds_t
-ACE_OS::ualarm (const ACE_Time_Value &tv,
-                const ACE_Time_Value &tv_interval)
+ACE_OS::ualarm (ACE_Time_Value const &tv,
+                ACE_Time_Value const &tv_interval)
 {
   ACE_OS_TRACE ("ACE_OS::ualarm");
 

@@ -2711,7 +2711,7 @@ namespace {
   }
 
   template <size_t N, size_t M>
-  void format_name (char (&str)[N], char const *name, const char (&suffix)[M])
+  void format_name (char (&str)[N], char const *name, char const (&suffix)[M])
   {
     ACE_OS::strsncpy (str, name, N - M + 1);
     ACE_OS::strcat (str, suffix);
