@@ -66,7 +66,7 @@ public:
                 long mtype = 0,
                 int mflags = 0);
 
-  int send (const ACE_SV_Message &mb,
+  int send (ACE_SV_Message const &mb,
             int length,
             int mflags = 0);
   /// @}

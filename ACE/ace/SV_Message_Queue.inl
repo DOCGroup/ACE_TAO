@@ -65,7 +65,7 @@ ACE_SV_Message_Queue::recv (ACE_SV_Message &mb,
 }
 
 ACE_INLINE int
-ACE_SV_Message_Queue::send (const ACE_SV_Message &mb,
+ACE_SV_Message_Queue::send (ACE_SV_Message const &mb,
                             int length,
                             int mflags)
 {

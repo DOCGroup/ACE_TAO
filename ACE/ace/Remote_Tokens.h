@@ -129,7 +129,7 @@ public:
    * checked for the server address.  If that is not specified, all
    * ACE_Remote_** operations will fail.
    */
-  static void set_server_address (const ACE_INET_Addr &server_address);
+  static void set_server_address (ACE_INET_Addr const &server_address);
 
   /// Dump the state of the class.
   void dump () const;
@@ -202,7 +202,7 @@ public:
                     int ignore_deadlock = 0,
                     int debug = 0);
 
-  ACE_Remote_RLock (const ACE_Remote_RLock &mutex);
+  ACE_Remote_RLock (ACE_Remote_RLock const &mutex);
 
   /// Dump the state of the class.
   void dump () const;
@@ -240,7 +240,7 @@ public:
                     int ignore_deadlock = 0,
                     int debug = 0);
 
-  ACE_Remote_WLock (const ACE_Remote_WLock &mutex);
+  ACE_Remote_WLock (ACE_Remote_WLock const &mutex);
 
   /// Dump the state of the class.
   void dump () const;
@@ -289,7 +289,7 @@ public:
   operator ACE_SOCK_Stream *();
 
   /// Set the server address.
-  static void set_server_address (const ACE_INET_Addr &server_address);
+  static void set_server_address (ACE_INET_Addr const &server_address);
 
   /// Dump the state of the class.
   void dump () const;

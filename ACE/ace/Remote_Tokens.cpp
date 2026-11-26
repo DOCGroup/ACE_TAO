@@ -25,7 +25,7 @@ ACE_INET_Addr ACE_TSS_Connection::server_address_;
 // ************************************************************
 
 void
-ACE_TSS_Connection::set_server_address (const ACE_INET_Addr &server_address)
+ACE_TSS_Connection::set_server_address (ACE_INET_Addr const &server_address)
 {
   ACE_TRACE ("ACE_TSS_Connection::set_server_address");
   server_address_ = server_address;
@@ -112,7 +112,7 @@ ACE_Remote_Token_Proxy::open (ACE_TCHAR const *name,
 }
 
 void
-ACE_Remote_Token_Proxy::set_server_address (const ACE_INET_Addr &server_address)
+ACE_Remote_Token_Proxy::set_server_address (ACE_INET_Addr const &server_address)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::set_server_address");
   ACE_Token_Connections::instance ()->set_server_address (server_address);
