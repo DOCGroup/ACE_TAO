@@ -231,6 +231,7 @@ public:
 
   /// @name Thread identity accessors
   /// @{
+
   /// Unique thread id.
   ACE_thread_t self () const;
 
@@ -776,6 +777,7 @@ public:
    * does not support these functions.
    */
   /// @{
+
   /// Suspend all threads
   int suspend_all ();
 
@@ -914,6 +916,7 @@ public:
   /// @name Thread and task queries
   /// Collected thread handles are only a snapshot.
   /// @{
+
   /// Check if the thread is managed by the thread manager.  Return true if
   /// the thread is found, false otherwise.
   int hthread_within (ACE_hthread_t handle);
@@ -1080,6 +1083,8 @@ public:
   /// Access function to determine whether the Thread_Manager will
   /// wait for its thread to exit or not when being closing down.
   void wait_on_exit (int dowait);
+  /// @}
+
   int wait_on_exit ();
 
   /// Dump the state of an object.
@@ -1087,7 +1092,6 @@ public:
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
-  /// @}
 
 protected:
   /// @name Thread descriptor accessors
