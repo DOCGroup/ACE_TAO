@@ -32,7 +32,7 @@ class TAO_Notify_Proxy_T : public SERVANT_TYPE, public virtual TAO_Notify_Proxy
 public:
   TAO_Notify_Proxy_T ();
 
-  ~TAO_Notify_Proxy_T ();
+  ~TAO_Notify_Proxy_T () override;
 
   /// Implements TAO_Notify_Object::servant method.
   virtual PortableServer::Servant servant ();
