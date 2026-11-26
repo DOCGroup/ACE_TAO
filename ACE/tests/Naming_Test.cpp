@@ -36,7 +36,7 @@ initialize_array (int * array, int size)
 
 static void
 print_time (ACE_Profile_Timer &timer,
-            const char *test)
+            char const *test)
 {
   ACE_Profile_Timer::ACE_Elapsed_Time et;
   timer.stop ();
@@ -241,7 +241,7 @@ run_main (int argc, ACE_TCHAR *argv[])
     }
   else
     {
-      const ACE_TCHAR* pname = ACE::basename (name_options->process_name (),
+      ACE_TCHAR const * pname = ACE::basename (name_options->process_name (),
                                               ACE_DIRECTORY_SEPARATOR_CHAR);
       // Allow the user to determine where the context file will be
       // located just in case the current directory is not suitable for

@@ -30,10 +30,10 @@ int run_main (int, ACE_TCHAR *[])
   u_short const port = 80;
 
   // The primary address will always be this
-  const char *primary_dotted_decimal = "138.38.180.251";
+  char const *primary_dotted_decimal = "138.38.180.251";
 
   // The secondary addresses will always be these...
-  const char *secondary_dotted_decimals[] = {
+  char const *secondary_dotted_decimals[] = {
     "64.219.54.121",
     "127.0.0.1",
     "21.242.14.51",
