@@ -431,7 +431,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_DIOP_Acceptor::open_i (const ACE_INET_Addr& addr,
+TAO_DIOP_Acceptor::open_i (ACE_INET_Addr const& addr,
                            ACE_Reactor *reactor)
 {
   unsigned short const requested_port = addr.get_port_number ();

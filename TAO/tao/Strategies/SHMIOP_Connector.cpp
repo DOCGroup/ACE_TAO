@@ -104,7 +104,7 @@ TAO_SHMIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     return -1;
   }
 
-   const ACE_INET_Addr &remote_address =
+   ACE_INET_Addr const &remote_address =
      shmiop_endpoint->object_addr ();
 
    // Verify that the remote ACE_INET_Addr was initialized properly.
@@ -153,7 +153,7 @@ TAO_SHMIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     return nullptr;
   }
 
-  const ACE_INET_Addr &remote_address =
+  ACE_INET_Addr const &remote_address =
     shmiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)

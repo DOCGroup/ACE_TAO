@@ -26,7 +26,7 @@ TAO_DIOP_Profile::object_key_delimiter () const
   return TAO_DIOP_Profile::object_key_delimiter_;
 }
 
-TAO_DIOP_Profile::TAO_DIOP_Profile (const ACE_INET_Addr &addr,
+TAO_DIOP_Profile::TAO_DIOP_Profile (ACE_INET_Addr const &addr,
                                     const TAO::ObjectKey &object_key,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
@@ -42,7 +42,7 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (const ACE_INET_Addr &addr,
 TAO_DIOP_Profile::TAO_DIOP_Profile (char const *host,
                                     CORBA::UShort port,
                                     const TAO::ObjectKey &object_key,
-                                    const ACE_INET_Addr &addr,
+                                    ACE_INET_Addr const &addr,
                                     const TAO_GIOP_Message_Version &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_DIOP_PROFILE,

@@ -26,7 +26,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
   this->set (addr.get_remote_addr (), use_dotted_decimal_addresses);
 }
 
-TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_INET_Addr &addr,
+TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (ACE_INET_Addr const &addr,
                                           int use_dotted_decimal_addresses)
   : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
     , host_ ()
@@ -37,7 +37,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_INET_Addr &addr,
 
 TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (char const *host,
                                           CORBA::UShort port,
-                                          const ACE_INET_Addr &addr,
+                                          ACE_INET_Addr const &addr,
                                           CORBA::Short priority)
   : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE, priority)
     , host_ ()
@@ -74,7 +74,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (char const *host,
 }
 
 int
-TAO_SHMIOP_Endpoint::set (const ACE_INET_Addr &addr,
+TAO_SHMIOP_Endpoint::set (ACE_INET_Addr const &addr,
                           int use_dotted_decimal_addresses)
 {
   char tmp_host[MAXHOSTNAMELEN + 1];
@@ -208,7 +208,7 @@ TAO_SHMIOP_Endpoint::hash ()
   return this->hash_val_;
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 TAO_SHMIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode

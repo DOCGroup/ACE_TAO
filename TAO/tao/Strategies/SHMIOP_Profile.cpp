@@ -42,7 +42,7 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
 TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (char const *host,
                                         CORBA::UShort port,
                                         const TAO::ObjectKey &object_key,
-                                        const ACE_INET_Addr &addr,
+                                        ACE_INET_Addr const &addr,
                                         const TAO_GIOP_Message_Version &version,
                                         TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SHMEM_PROFILE,
@@ -443,7 +443,7 @@ TAO_SHMIOP_Profile::encode_endpoints ()
   CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *iterator = out_cdr.begin ();
+  for (ACE_Message_Block const *iterator = out_cdr.begin ();
        iterator != nullptr;
        iterator = iterator->cont ())
     {

@@ -106,7 +106,7 @@ TAO_COIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 }
 
 int
-TAO_COIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+TAO_COIOP_Connection_Handler::handle_timeout (ACE_Time_Value const &,
                                               const void *)
 {
   // We don't use this upcall from the Reactor.  However, we should

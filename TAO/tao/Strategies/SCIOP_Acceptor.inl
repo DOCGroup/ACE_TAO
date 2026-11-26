@@ -1,6 +1,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_INET_Addr&
+ACE_INLINE ACE_INET_Addr const&
 TAO_SCIOP_Acceptor::address () const
 {
   ACE_ASSERT (this->addrs_ != nullptr);
@@ -13,7 +13,7 @@ TAO_SCIOP_Acceptor::address () const
   return this->addrs_[0];
 }
 
-ACE_INLINE const ACE_INET_Addr *
+ACE_INLINE ACE_INET_Addr const *
 TAO_SCIOP_Acceptor::endpoints ()
 {
   ACE_ASSERT (this->addrs_ != nullptr);

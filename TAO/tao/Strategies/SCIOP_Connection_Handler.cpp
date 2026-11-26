@@ -308,7 +308,7 @@ TAO_SCIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 }
 
 int
-TAO_SCIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+TAO_SCIOP_Connection_Handler::handle_timeout (ACE_Time_Value const &,
                                               const void *)
 {
   // Using this to ensure this instance will be deleted (if necessary)
@@ -482,7 +482,7 @@ TAO_SCIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_pri
 }
 
 int
-TAO_SCIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+TAO_SCIOP_Connection_Handler::handle_write_ready (ACE_Time_Value const *t)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }

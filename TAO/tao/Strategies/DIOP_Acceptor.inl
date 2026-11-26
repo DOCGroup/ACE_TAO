@@ -1,6 +1,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_INET_Addr&
+ACE_INLINE ACE_INET_Addr const&
 TAO_DIOP_Acceptor::address () const
 {
   ACE_ASSERT (this->addrs_ != nullptr);
@@ -13,7 +13,7 @@ TAO_DIOP_Acceptor::address () const
   return this->addrs_[0];
 }
 
-ACE_INLINE const ACE_INET_Addr *
+ACE_INLINE ACE_INET_Addr const *
 TAO_DIOP_Acceptor::endpoints ()
 {
   ACE_ASSERT (this->addrs_ != nullptr);
@@ -21,14 +21,14 @@ TAO_DIOP_Acceptor::endpoints ()
   return this->addrs_.get ();
 }
 
-ACE_INLINE const ACE_INET_Addr&
+ACE_INLINE ACE_INET_Addr const&
 TAO_DIOP_Acceptor::default_address () const
 {
   return this->default_address_;
 }
 
 ACE_INLINE void
-TAO_DIOP_Acceptor::set_default_address (const ACE_INET_Addr& addr)
+TAO_DIOP_Acceptor::set_default_address (ACE_INET_Addr const& addr)
 {
   this->default_address_.set (addr);
 }

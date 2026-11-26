@@ -66,26 +66,26 @@ TAO_DIOP_Connection_Handler::~TAO_DIOP_Connection_Handler ()
 }
 
 // DIOP Additions - Begin
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 TAO_DIOP_Connection_Handler::addr ()
 {
   return this->addr_;
 }
 
 void
-TAO_DIOP_Connection_Handler::addr (const ACE_INET_Addr &addr)
+TAO_DIOP_Connection_Handler::addr (ACE_INET_Addr const &addr)
 {
   this->addr_ = addr;
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 TAO_DIOP_Connection_Handler::local_addr ()
 {
   return this->local_addr_;
 }
 
 void
-TAO_DIOP_Connection_Handler::local_addr (const ACE_INET_Addr &addr)
+TAO_DIOP_Connection_Handler::local_addr (ACE_INET_Addr const &addr)
 {
   this->local_addr_ = addr;
 }
@@ -300,7 +300,7 @@ TAO_DIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 }
 
 int
-TAO_DIOP_Connection_Handler::handle_timeout (const ACE_Time_Value &,
+TAO_DIOP_Connection_Handler::handle_timeout (ACE_Time_Value const &,
                                              const void *)
 {
   // We don't use this upcall from the Reactor.  However, we should
@@ -446,7 +446,7 @@ TAO_DIOP_Connection_Handler::set_dscp_codepoint (CORBA::Boolean set_network_prio
 }
 
 int
-TAO_DIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+TAO_DIOP_Connection_Handler::handle_write_ready (ACE_Time_Value const *t)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }

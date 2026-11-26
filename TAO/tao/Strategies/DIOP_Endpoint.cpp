@@ -17,7 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
+TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (ACE_INET_Addr const &addr,
                                       int use_dotted_decimal_addresses)
 
   : TAO_Endpoint (TAO_TAG_DIOP_PROFILE)
@@ -29,7 +29,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
 
 TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (char const *host,
                                       CORBA::UShort port,
-                                      const ACE_INET_Addr &addr,
+                                      ACE_INET_Addr const &addr,
                                       CORBA::Short priority)
   : TAO_Endpoint (TAO_TAG_DIOP_PROFILE,
                   priority)
@@ -59,7 +59,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (char const *host,
 }
 
 int
-TAO_DIOP_Endpoint::set (const ACE_INET_Addr &addr,
+TAO_DIOP_Endpoint::set (ACE_INET_Addr const &addr,
                         int use_dotted_decimal_addresses)
 {
   char tmp_host[MAXHOSTNAMELEN + 1];
@@ -226,7 +226,7 @@ TAO_DIOP_Endpoint::hash ()
   return this->hash_val_;
 }
 
-const ACE_INET_Addr &
+ACE_INET_Addr const &
 TAO_DIOP_Endpoint::object_addr () const
 {
   // The object_addr_ is initialized here, rather than at IOR decode

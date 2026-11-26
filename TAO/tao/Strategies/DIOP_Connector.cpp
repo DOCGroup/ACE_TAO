@@ -57,7 +57,7 @@ TAO_DIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     return -1;
   }
 
-  const ACE_INET_Addr &remote_address =
+  ACE_INET_Addr const &remote_address =
     diop_endpoint->object_addr ();
 
   // Verify that the remote ACE_INET_Addr was initialized properly.
@@ -98,7 +98,7 @@ TAO_DIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *,
     return nullptr;
   }
 
-  const ACE_INET_Addr &remote_address =
+  ACE_INET_Addr const &remote_address =
     diop_endpoint->object_addr ();
 
 #if defined (ACE_HAS_IPV6) && !defined (ACE_HAS_IPV6_V6ONLY)
