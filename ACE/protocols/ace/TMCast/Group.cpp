@@ -3,6 +3,7 @@
 #include "Group.hpp"
 
 #include <cstring>
+#include <memory>
 #include <typeinfo>
 
 // OS primitives
@@ -22,7 +23,6 @@
 #include "LinkListener.hpp"
 #include "FaultDetector.hpp"
 #include "TransactionController.hpp"
-#include <memory>
 
 namespace ACE_TMCast
 {
@@ -82,8 +82,8 @@ namespace ACE_TMCast
       if (ACE_OS::thr_create (&thread_thunk,
                               this,
                               THR_JOINABLE,
-                              &unused,
-                              &thread_) != 0)
+                              std::addressof (unused),
+                              std::addressof (thread_)) != 0)
       {
         ACE_OS::abort ();
       }
@@ -121,7 +121,7 @@ namespace ACE_TMCast
     static ACE_THR_FUNC_RETURN
     thread_thunk (void* arg)
     {
-      Scheduler* obj = reinterpret_cast<Scheduler*> (arg);
+      Scheduler* obj = static_cast<Scheduler*> (arg);
       obj->execute ();
       return ACE_THR_FUNC_RETURN_NULL;
     }
@@ -144,7 +144,7 @@ namespace ACE_TMCast
 
           while (true)
           {
-            cond_.wait (&sync_schedule);
+            cond_.wait (std::addressof (sync_schedule));
 
             // "Loop of Fairness"
 
