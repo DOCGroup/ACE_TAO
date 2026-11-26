@@ -11,7 +11,7 @@ Mem_Map_Stream::stream ()
 }
 
 ssize_t
-Mem_Map_Stream::send_n (const void *buf, size_t size, const ACE_Time_Value *tv)
+Mem_Map_Stream::send_n (void const *buf, size_t size, ACE_Time_Value const *tv)
 {
   return svc_handler_->peer ().send_n (buf, size, 0, tv);
 }
@@ -59,13 +59,13 @@ Mem_Map_Stream::peek_char (size_t offset)
   return this->get_pos_[offset];
 }
 
-const char *
+char const *
 Mem_Map_Stream::recv () const
 {
   return this->recv_pos_;
 }
 
-const char *
+char const *
 Mem_Map_Stream::recv (size_t &len)
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
@@ -86,7 +86,7 @@ Mem_Map_Stream::recv_len () const
   return this->get_pos_ - this->recv_pos_;
 }
 
-const char *
+char const *
 Mem_Map_Stream::peek_str (size_t offset,
                           size_t size)
 {
@@ -147,7 +147,7 @@ Mem_Map_Stream::svc_handler ()
 
 int
 Mem_Map_Stream::open (STRAT_CONNECTOR *connector,
-                      const ACE_INET_Addr &addr)
+                      ACE_INET_Addr const &addr)
 {
   svc_handler_ = nullptr;
 

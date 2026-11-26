@@ -320,7 +320,7 @@ protected:
 
   /// Check to see if the reply status of this @a url_addr is in the
   /// cache.  Returns 1 if so, 0 if not.
-  int in_cache (const ACE_URL_Addr &url_addr);
+  int in_cache (ACE_URL_Addr const &url_addr);
 
   NULL_CREATION_STRATEGY creation_strategy_;
   NULL_ACTIVATION_STRATEGY activation_strategy_;

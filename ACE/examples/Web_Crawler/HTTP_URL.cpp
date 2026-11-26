@@ -8,13 +8,13 @@
 
 #include <cstring>
 
-const ACE_URL_Addr &
+ACE_URL_Addr const &
 HTTP_URL::url_addr () const
 {
   return this->url_addr_;
 }
 
-HTTP_URL::HTTP_URL (const ACE_URL_Addr &url_addr,
+HTTP_URL::HTTP_URL (ACE_URL_Addr const &url_addr,
                     HTTP_URL *cp)
   : url_addr_ (url_addr),
     containing_page_ (cp == nullptr ? this : cp)

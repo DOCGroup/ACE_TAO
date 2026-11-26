@@ -45,7 +45,7 @@ public:
   virtual ssize_t send_request () = 0;
 
   /// Returns the URL that we represent.
-  virtual const ACE_URL_Addr &url_addr () const = 0;
+  virtual ACE_URL_Addr const &url_addr () const = 0;
 
   /// Returns the @c Mem_Map_Stream.
   virtual Mem_Map_Stream &stream ();
@@ -53,16 +53,16 @@ public:
   /// @name Reply status
   /// @{
 
-  virtual const URL_Status &reply_status ();
-  virtual void reply_status (const URL_Status &);
+  virtual URL_Status const &reply_status ();
+  virtual void reply_status (URL_Status const &);
 
   /// @}
 
   /// @name Content type
   /// @{
 
-  virtual const ACE_CString &content_type ();
-  virtual void content_type (const ACE_CString &);
+  virtual ACE_CString const &content_type ();
+  virtual void content_type (ACE_CString const &);
 
   /// @}
 

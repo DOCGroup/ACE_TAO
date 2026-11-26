@@ -110,7 +110,7 @@ Options::recurse () const
   return this->recurse_;
 }
 
-const ACE_Time_Value *
+ACE_Time_Value const *
 Options::timeout () const
 {
   return std::addressof (this->timeout_);
@@ -128,24 +128,24 @@ Options::verbose () const
   return this->verbose_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Options::order () const
 {
   return this->order_;
 }
-const ACE_TCHAR *
+ACE_TCHAR const *
 Options::hostname () const
 {
   return this->hostname_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Options::path_name () const
 {
   return this->uri_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Options::url_filter () const
 {
   return this->url_filter_;

@@ -21,7 +21,7 @@ int
 HTML_Body_Iterator::next (ACE_CString &url)
 {
   size_t len = BUFSIZ;
-  const char *buf {};
+  char const *buf {};
   ACE_CString buffer;
   int href_index = 0;
 
@@ -157,7 +157,7 @@ URL_Download_Iterator::next (ACE_CString &buffer)
 {
   size_t len = BUFSIZ;
 
-  const char *buf = this->url_.stream ().recv (len);
+  char const *buf = this->url_.stream ().recv (len);
 
   if (buf == nullptr)
     {

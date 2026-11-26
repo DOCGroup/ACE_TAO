@@ -27,14 +27,14 @@ class ACE_URL_Addr : public ACE_INET_Addr
 public:
   ACE_URL_Addr ();
 
-  ACE_URL_Addr (const ACE_TCHAR *host_name,
-                const ACE_TCHAR *path_name,
+  ACE_URL_Addr (ACE_TCHAR const *host_name,
+                ACE_TCHAR const *path_name,
                 u_short port = ACE_DEFAULT_HTTP_PORT);
 
-  ACE_URL_Addr (const ACE_URL_Addr &addr);
+  ACE_URL_Addr (ACE_URL_Addr const &addr);
 
   /// Essentially the copy constructor.
-  int set (const ACE_URL_Addr &addr);
+  int set (ACE_URL_Addr const &addr);
 
   /**
    * Initializes an ACE_URL_Addr from the @a address, which can be
@@ -44,7 +44,7 @@ public:
    * the @a address it is assumed to be an ip-number or ip-address
    * number, with the port number ACE_DEFAULT_HTTP_PORT.
    */
-  int string_to_addr (const ACE_TCHAR *address,
+  int string_to_addr (ACE_TCHAR const *address,
                       int address_family = AF_UNSPEC) override;
 
   /**
@@ -70,9 +70,9 @@ public:
    * is allocated on demand and deallocated when the object is
    * destroyed.  Returns -1 if dynamic memory fails, else 0.
    */
-  virtual const ACE_TCHAR *addr_to_string (int ipaddr_format = 1) const;
+  virtual ACE_TCHAR const *addr_to_string (int ipaddr_format = 1) const;
 
-  void operator= (const ACE_URL_Addr &addr);
+  void operator= (ACE_URL_Addr const &addr);
 
   ~ACE_URL_Addr () = default;
 
@@ -81,16 +81,16 @@ public:
    * equal if they contain the same IP address, port number, and path
    * name.
    */
-  bool operator == (const ACE_URL_Addr &SAP) const;
+  bool operator == (ACE_URL_Addr const &SAP) const;
 
   /// Compare two addresses for inequality.
-  bool operator != (const ACE_URL_Addr &SAP) const;
+  bool operator != (ACE_URL_Addr const &SAP) const;
 
   /// Computes and returns hash value.
   u_long hash () const override;
 
   /// Return the path name.
-  const ACE_TCHAR *get_path_name () const;
+  ACE_TCHAR const *get_path_name () const;
 
   /// Commit suicide.
   int destroy ();

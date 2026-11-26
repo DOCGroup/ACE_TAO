@@ -38,13 +38,13 @@ public:
   bool recurse () const;
 
   /// Return the hostname of the initial Web server.
-  const ACE_TCHAR *hostname () const;
+  ACE_TCHAR const *hostname () const;
 
   /// Return the initial URI.
-  const ACE_TCHAR *path_name () const;
+  ACE_TCHAR const *path_name () const;
 
   /// String used to filter out which URLs to validate.
-  const ACE_TCHAR *url_filter () const;
+  ACE_TCHAR const *url_filter () const;
 
   /// Are we debugging?
   bool debug () const;
@@ -53,14 +53,14 @@ public:
   bool verbose () const;
 
   /// Which order? LIFO|FIFO??
-  const ACE_TCHAR *order () const;
+  ACE_TCHAR const *order () const;
 
   /// Port #
   int port_no () const;
 
   /// Return the timeout used to prevent hanging on @c recv and
   /// @c connect calls to broken servers.
-  const ACE_Time_Value *timeout () const;
+  ACE_Time_Value const *timeout () const;
 
   /// @name Command processor
   /// @{
@@ -85,10 +85,10 @@ private:
   bool recurse_ {};
 
   /// Initial Web server name.
-  const ACE_TCHAR *hostname_ {};
+  ACE_TCHAR const *hostname_ {};
 
   /// Initial URI name.
-  const ACE_TCHAR *uri_ {};
+  ACE_TCHAR const *uri_ {};
 
   /// Are we debugging?
   bool debug_ {};
@@ -97,13 +97,13 @@ private:
   bool verbose_ {};
 
   /// Whether the URLs are traversed in FIFO or LIFO order.
-  const ACE_TCHAR *order_ {};
+  ACE_TCHAR const *order_ {};
 
   /// Timeout on @c recv and @c connect to broken Web servers.
   ACE_Time_Value timeout_;
 
   /// String used to filter out which URLs to validate.
-  const ACE_TCHAR *url_filter_ {};
+  ACE_TCHAR const *url_filter_ {};
 
   /// Pointer to the Command_Processor.
   Command_Processor *command_processor_ {};

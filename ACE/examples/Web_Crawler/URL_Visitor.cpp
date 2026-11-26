@@ -278,7 +278,7 @@ URL_Validation_Visitor::url_cache ()
 }
 
 int
-URL_Validation_Visitor::in_cache (const ACE_URL_Addr &url_addr)
+URL_Validation_Visitor::in_cache (ACE_URL_Addr const &url_addr)
 {
   URL_Status reply_status (URL_Status::STATUS_CODE (1));
 

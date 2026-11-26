@@ -51,7 +51,7 @@ public:
 
   /// Initialize this object.
   virtual int open (STRAT_CONNECTOR *connector,
-                    const ACE_INET_Addr &);
+                    ACE_INET_Addr const &);
 
   virtual ~Mem_Map_Stream ();
 
@@ -68,9 +68,9 @@ public:
 
   /// Send @a size bytes in @a buf to the connected peer.  This is a
   /// completely unbuffered call.
-  virtual ssize_t send_n (const void *buf,
+  virtual ssize_t send_n (void const *buf,
                           size_t size,
-                          const ACE_Time_Value *tv = nullptr);
+                          ACE_Time_Value const *tv = nullptr);
 
   /**
    * Return the next character in the stream and advance the @c get
@@ -87,11 +87,11 @@ public:
    * @c recv positions are advanced by @a len.  Returns 0 if the @c recv
    * position is at the EOF.
    */
-  virtual const char *recv (size_t &len);
+  virtual char const *recv (size_t &len);
 
   /// Returns a pointer to array of characters starting at the @c recv
   /// position.
-  virtual const char *recv () const;
+  virtual char const *recv () const;
 
   /// Returns the length in bytes between the @c get position and the
   /// @c recv position.
@@ -119,7 +119,7 @@ public:
    * store if necessary.  Returns 0 if @a offset or <offset + size> is
    * past the end of the stream.
    */
-  virtual const char *peek_str (size_t offset, size_t size);
+  virtual char const *peek_str (size_t offset, size_t size);
 
   /**
    * Sets the @c get and @c recv positions as follows:

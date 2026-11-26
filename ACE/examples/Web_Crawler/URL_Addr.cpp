@@ -17,7 +17,7 @@ ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
                               size_t size,
                               int ipaddr_format) const
 {
-  const size_t total_len =
+  size_t const total_len =
     ACE_OS::strlen (ipaddr_format == 0 ?
                     this->get_host_name () :
                     this->get_host_addr ())
@@ -43,7 +43,7 @@ ACE_URL_Addr::addr_to_string (ACE_TCHAR *s,
     }
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_URL_Addr::addr_to_string (int ipaddr_format) const
 {
   size_t const size =
@@ -68,7 +68,7 @@ ACE_URL_Addr::addr_to_string (int ipaddr_format) const
                        this->get_path_name ());
       this->addr_string_.resize (size - 1);
     }
-  catch (const std::bad_alloc &)
+  catch (std::bad_alloc const &)
     {
       return nullptr;
     }
@@ -76,7 +76,7 @@ ACE_URL_Addr::addr_to_string (int ipaddr_format) const
 }
 
 int
-ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
+ACE_URL_Addr::string_to_addr (ACE_TCHAR const *s,
                               int /* address_family */)
 {
   if (s == nullptr)
@@ -123,13 +123,13 @@ ACE_URL_Addr::string_to_addr (const ACE_TCHAR *s,
 
       return result;
     }
-  catch (const std::bad_alloc &)
+  catch (std::bad_alloc const &)
     {
       return -1;
     }
 }
 
-ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr &addr)
+ACE_URL_Addr::ACE_URL_Addr (ACE_URL_Addr const &addr)
   : ACE_INET_Addr (),
     path_name_ {},
     addr_string_ {}
@@ -143,7 +143,7 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_URL_Addr &addr)
 }
 
 int
-ACE_URL_Addr::set (const ACE_URL_Addr &addr)
+ACE_URL_Addr::set (ACE_URL_Addr const &addr)
 {
   try
     {
@@ -157,14 +157,14 @@ ACE_URL_Addr::set (const ACE_URL_Addr &addr)
       this->addr_string_ = std::move (addr_string);
       return 0;
     }
-  catch (const std::bad_alloc &)
+  catch (std::bad_alloc const &)
     {
       return -1;
     }
 }
 
 void
-ACE_URL_Addr::operator= (const ACE_URL_Addr &addr)
+ACE_URL_Addr::operator= (ACE_URL_Addr const &addr)
 {
   if (this->set (addr) == -1)
   {
@@ -184,7 +184,7 @@ ACE_URL_Addr::hash () const
 }
 
 bool
-ACE_URL_Addr::operator== (const ACE_URL_Addr &addr) const
+ACE_URL_Addr::operator== (ACE_URL_Addr const &addr) const
 {
   return ACE_OS::strcmp (addr.get_path_name (),
                          this->get_path_name ()) == 0
@@ -193,13 +193,13 @@ ACE_URL_Addr::operator== (const ACE_URL_Addr &addr) const
 }
 
 bool
-ACE_URL_Addr::operator!= (const ACE_URL_Addr &addr) const
+ACE_URL_Addr::operator!= (ACE_URL_Addr const &addr) const
 {
   return !(*this == addr);
 }
 
-ACE_URL_Addr::ACE_URL_Addr (const ACE_TCHAR *host_name,
-                            const ACE_TCHAR *path_name,
+ACE_URL_Addr::ACE_URL_Addr (ACE_TCHAR const *host_name,
+                            ACE_TCHAR const *path_name,
                             u_short port)
   : ACE_INET_Addr (port, host_name),
     path_name_ (path_name == nullptr ? ACE_TEXT ("") : path_name),
@@ -207,7 +207,7 @@ ACE_URL_Addr::ACE_URL_Addr (const ACE_TCHAR *host_name,
 {
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_URL_Addr::get_path_name () const
 {
   return this->path_name_.c_str ();

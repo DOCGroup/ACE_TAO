@@ -30,7 +30,7 @@ public:
    * also keep track of the containing page, if any, which is used to
    * print out more meaningful messages.
    */
-  explicit HTTP_URL (const ACE_URL_Addr &url_addr,
+  explicit HTTP_URL (ACE_URL_Addr const &url_addr,
                      HTTP_URL *containing_page = nullptr);
 
   /**
@@ -45,7 +45,7 @@ public:
   ssize_t send_request () override;
 
   /// Returns the URL that we represent.
-  const ACE_URL_Addr &url_addr () const override;
+  ACE_URL_Addr const &url_addr () const override;
 
   /// Commit suicide
   int destroy ();
