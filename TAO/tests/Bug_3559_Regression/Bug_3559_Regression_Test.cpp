@@ -41,7 +41,7 @@ check_logging (ACE_TCHAR const *log_file)
       return 1;
     }
 
-  while (ACE_OS::fgets (buf, sizeof (buf), file.get ()) != nullptr)
+  while (ACE_OS::fgets (buf, sizeof buf / sizeof buf[0], file.get ()) != nullptr)
     {
       ///When verbose is on, a line contains a timestamp and a @ character
       if (ACE_OS::strchr (buf, ACE_TEXT('@')) != nullptr)
