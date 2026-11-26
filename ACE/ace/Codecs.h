@@ -98,19 +98,12 @@ private:
   ACE_Base64 (ACE_Base64 const &) = delete;
   ACE_Base64 & operator= (ACE_Base64 const &) = delete;
 
-  /// Initialize the tables for encoding/decoding.
-  static void init ();
-
-private:
   /// Alphabet used for decoding i.e decoder_[alphabet_[i = 0..63]] = i
-  static std::array<ACE_Byte, 256> decoder_;
+  static std::array<ACE_Byte, 256> const decoder_;
 
   /// Alphabet used to check valid range of encoded input i.e
   /// member_[alphabet_[0..63]] = 1
-  static std::array<ACE_Byte, 256> member_;
-
-  /// Boolean to denote whether initialization is complete
-  static bool init_;
+  static std::array<ACE_Byte, 256> const member_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

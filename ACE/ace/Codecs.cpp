@@ -30,11 +30,25 @@ namespace
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-bool ACE_Base64::init_ {};
+std::array<ACE_Byte, 256> const ACE_Base64::decoder_ = [] () constexpr
+{
+  std::array<ACE_Byte, 256> result {};
+  for (size_t i {}; i < sizeof (alphabet); ++i)
+    {
+      result[alphabet[i]] = static_cast<ACE_Byte> (i);
+    }
+  return result;
+} ();
 
-std::array<ACE_Byte, 256> ACE_Base64::decoder_ {};
-
-std::array<ACE_Byte, 256> ACE_Base64::member_ {};
+std::array<ACE_Byte, 256> const ACE_Base64::member_ = [] () constexpr
+{
+  std::array<ACE_Byte, 256> result {};
+  for (size_t i {}; i < sizeof (alphabet); ++i)
+    {
+      result[alphabet[i]] = 1;
+    }
+  return result;
+} ();
 
 ACE_Byte *
 ACE_Base64::encode (ACE_Byte const *input,
@@ -42,11 +56,6 @@ ACE_Base64::encode (ACE_Byte const *input,
                     size_t *output_len,
                     bool is_chunked)
 {
-  if (!ACE_Base64::init_)
-  {
-    ACE_Base64::init();
-  }
-
   if (input == nullptr)
   {
     return nullptr;
@@ -134,11 +143,6 @@ ACE_Base64::encode (ACE_Byte const *input,
 size_t
 ACE_Base64::length (ACE_Byte const *input)
 {
-  if (!ACE_Base64::init_)
-  {
-    ACE_Base64::init();
-  }
-
   ACE_Byte const *ptr = input;
   while (*ptr != 0 &&
          (member_[*ptr] == 1 || *ptr == pad
@@ -154,11 +158,6 @@ ACE_Base64::length (ACE_Byte const *input)
 ACE_Byte *
 ACE_Base64::decode (ACE_Byte const *input, size_t *output_len)
 {
-  if (!ACE_Base64::init_)
-  {
-    ACE_Base64::init();
-  }
-
   if (input == nullptr)
   {
     return nullptr;
@@ -266,21 +265,6 @@ ACE_Base64::free (ACE_Byte *buffer)
 #else
   delete[] buffer;
 #endif /* ACE_HAS_ALLOC_HOOKS */
-}
-
-void
-ACE_Base64::init ()
-{
-  if (!ACE_Base64::init_)
-    {
-      for (ACE_Byte i {}; i < sizeof (alphabet); ++i)
-        {
-          ACE_Base64::decoder_[alphabet[i]] = i;
-          ACE_Base64::member_ [alphabet[i]] = 1;
-        }
-      ACE_Base64::init_ = true;
-    }
-  return;
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

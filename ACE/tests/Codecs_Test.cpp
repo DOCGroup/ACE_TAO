@@ -10,6 +10,12 @@
 #include "ace/Codecs.h"
 #include "ace/ACE.h"
 
+#if defined (ACE_HAS_THREADS)
+# include <atomic>
+# include <cstring>
+# include <thread>
+#endif
+
 // Don't change the strings thinking that they are typos
 
 const ACE_Byte normal_stream[] = "This is a sample test stream, to test simple Base64 encoding";
@@ -83,6 +89,44 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_START_TEST (ACE_TEXT ("Codecs_Test"));
   int status = 0;
+
+#if defined (ACE_HAS_THREADS)
+  std::atomic<bool> start {false};
+  std::atomic<bool> failed {false};
+  std::thread workers[8];
+  for (std::thread &worker : workers)
+    {
+      worker = std::thread ([&start, &failed] ()
+        {
+          while (!start.load ())
+            {
+              std::this_thread::yield ();
+            }
+          ACE_Byte const input[] = "YWJj";
+          for (int i {}; i < 100; ++i)
+            {
+              size_t length {};
+              ACE_Base64::Buffer decoded (ACE_Base64::decode (input, std::addressof (length)));
+              if (!decoded || length != 3 || std::memcmp (decoded.get (), "abc", 3) != 0)
+                {
+                  failed = true;
+                  break;
+                }
+            }
+        });
+    }
+  start = true;
+  for (std::thread &worker : workers)
+    {
+      worker.join ();
+    }
+  if (failed)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Concurrent Base64 decoding failed\n")));
+      ACE_END_TEST;
+      return 1;
+    }
+#endif
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("This is ACE Version %u.%u.%u\n\n"),
