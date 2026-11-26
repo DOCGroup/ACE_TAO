@@ -69,9 +69,7 @@ namespace TAO_Notify
      */
     void complete ();
 
-    /**
-     * /brief Adjust the "allowed" value on-the-fly (not recommended, but it works.)
-     */
+    /// Adjust the "allowed" value on-the-fly (not recommended, but it works).
     void set_allowed (size_t allowed);
 
   private:
@@ -79,7 +77,7 @@ namespace TAO_Notify
     bool dispatch_one (Guard & guard);
 
   private:
-    // configuration setting
+    /// Configuration setting.
     size_t allowed_;
     /// Protection for internal information
     TAO_SYNCH_MUTEX internals_;

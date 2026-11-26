@@ -115,8 +115,7 @@ public:
   /// \brief The persistent storage has completed the last request.
   void persist_complete () override;
 
-  /////////////////////////////////////////////////////
-  // \brief Access the event associated with this routing slip
+  /// Access the event associated with this routing slip.
   TAO_Notify_Event::Ptr const & event () const;
 
   /// \brief Provide an identifying number for this Routing Slip

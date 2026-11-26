@@ -39,7 +39,7 @@ public:
   int execute () override;
 
 private:
-  // Task to shutdown
+  /// Task to shut down.
   TAO_Notify_ThreadPool_Task* task_;
 };
 

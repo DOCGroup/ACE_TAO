@@ -94,7 +94,7 @@ public:
   TAO_Notify_ProxyConsumer * find_proxy_consumer (TAO_Notify::IdVec & id_path, size_t position);
   TAO_Notify_ProxySupplier * find_proxy_supplier (TAO_Notify::IdVec & id_path, size_t position);
 
-  // cleanup any proxy resources held by the EC
+  /// Clean up proxy resources held by the event channel.
   virtual void cleanup_proxy (CosNotifyChannelAdmin::ProxyID id,
                               bool is_supplier,
                               bool experienced_timeout);

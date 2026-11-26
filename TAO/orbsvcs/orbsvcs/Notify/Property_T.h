@@ -49,7 +49,7 @@ public:
   /// Populate the Property Sequence with this valid value.
   void get (CosNotification::PropertySeq& prop_seq);
 
-  // assign a new value
+  /// Assign a new value.
   void assign (TYPE const& value);
 
   /// Return the value.

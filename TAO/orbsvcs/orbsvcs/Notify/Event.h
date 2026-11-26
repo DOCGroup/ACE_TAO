@@ -40,9 +40,11 @@ class TAO_Notify_Serv_Export TAO_Notify_Event
 public:
   using Ptr = TAO_Notify_Refcountable_Guard_T<TAO_Notify_Event>;
 
-  // Codes to distinguish marshaled events in persistent storage
+  /// @name Codes distinguishing marshaled events in persistent storage
+  /// @{
   static constexpr int MARSHAL_ANY = 1;
   static constexpr int MARSHAL_STRUCTURED = 2;
+  /// @}
 
   TAO_Notify_Event ();
 
