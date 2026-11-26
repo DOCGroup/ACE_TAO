@@ -1253,7 +1253,7 @@ CORBA::ORB_init (int &argc,
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
                  wchar_t *argv[],
-                 const wchar_t *orbid)
+                 wchar_t const *orbid)
 {
   return CORBA::ORB_init (argc, argv, ACE_TEXT_ALWAYS_CHAR (orbid));
 }
@@ -1610,7 +1610,7 @@ CORBA::ORB::string_to_object (char const *str)
 
 #if defined (ACE_USES_WCHAR)
 CORBA::Object_ptr
-CORBA::ORB::string_to_object (const wchar_t *str)
+CORBA::ORB::string_to_object (wchar_t const *str)
 {
   return this->string_to_object (ACE_TEXT_ALWAYS_CHAR (str));
 }

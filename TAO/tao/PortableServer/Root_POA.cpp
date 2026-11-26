@@ -407,7 +407,7 @@ TAO_Root_POA::complete_destruction_i ()
 
 #if ! defined (CORBA_E_MICRO)
 PortableServer::POA_ptr
-TAO_Root_POA::create_POA_i (const char *adapter_name,
+TAO_Root_POA::create_POA_i (char const *adapter_name,
                             PortableServer::POAManager_ptr poa_manager,
                             const CORBA::PolicyList &policies)
 {
@@ -589,7 +589,7 @@ TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
 
 #if ! defined (CORBA_E_MICRO)
 PortableServer::POA_ptr
-TAO_Root_POA::find_POA (const char *adapter_name,
+TAO_Root_POA::find_POA (char const *adapter_name,
                         CORBA::Boolean activate_it)
 {
   // Lock access for the duration of this transaction.
@@ -681,7 +681,7 @@ TAO_Root_POA::tao_poa_manager ()
 
 #if ! defined (CORBA_E_MICRO)
 PortableServer::POA_ptr
-TAO_Root_POA::create_POA (const char *adapter_name,
+TAO_Root_POA::create_POA (char const *adapter_name,
                           PortableServer::POAManager_ptr poa_manager,
                           const CORBA::PolicyList &policies)
 {
@@ -759,7 +759,7 @@ TAO_Root_POA::id_to_reference (const PortableServer::ObjectId &oid)
 #if ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 TAO_Root_POA::create_reference_with_id (const PortableServer::ObjectId &id,
-                                        const char *intf)
+                                        char const *intf)
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
@@ -1282,7 +1282,7 @@ TAO_Root_POA::is_persistent () const
 }
 
 CORBA::Object_ptr
-TAO_Root_POA::create_reference (const char *intf)
+TAO_Root_POA::create_reference (char const *intf)
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (CORBA::Object::_nil ());
@@ -1292,7 +1292,7 @@ TAO_Root_POA::create_reference (const char *intf)
 }
 
 CORBA::Object_ptr
-TAO_Root_POA::create_reference_i (const char *intf,
+TAO_Root_POA::create_reference_i (char const *intf,
                                   CORBA::Short priority)
 {
   if (!this->has_system_id ())
@@ -1305,7 +1305,7 @@ TAO_Root_POA::create_reference_i (const char *intf,
 }
 
 CORBA::Object_ptr
-TAO_Root_POA::invoke_key_to_object_helper_i (const char * repository_id,
+TAO_Root_POA::invoke_key_to_object_helper_i (char const *repository_id,
                                              const PortableServer::ObjectId & id)
 {
   const PortableInterceptor::ObjectId &user_oid =
@@ -1326,7 +1326,7 @@ TAO_Root_POA::invoke_key_to_object_helper_i (const char * repository_id,
 #if ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
 TAO_Root_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
-                                          const char *intf,
+                                          char const *intf,
                                           CORBA::Short priority)
 {
   // If the POA has the SYSTEM_ID policy and it detects that the
@@ -1547,7 +1547,7 @@ TAO_Root_POA::id ()
 }
 
 PortableServer::Servant
-TAO_Root_POA::locate_servant_i (const char *operation,
+TAO_Root_POA::locate_servant_i (char const *operation,
                                 const PortableServer::ObjectId &system_id,
                                 TAO::Portable_Server::Servant_Upcall &servant_upcall,
                                 TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
@@ -1906,7 +1906,7 @@ TAO_Root_POA::invoke_key_to_object ()
 
 CORBA::Object_ptr
 TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
-                             const char *type_id,
+                             char const *type_id,
                              TAO_ServantBase *servant,
                              CORBA::Boolean collocated,
                              CORBA::Short priority,
@@ -1967,7 +1967,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 
 TAO_Stub *
 TAO_Root_POA::key_to_stub (const TAO::ObjectKey &key,
-                           const char *type_id,
+                           char const *type_id,
                            CORBA::Short priority)
 {
   // Check if the ORB is still running, otherwise throw an exception.
@@ -1980,7 +1980,7 @@ TAO_Root_POA::key_to_stub (const TAO::ObjectKey &key,
 
 TAO_Stub *
 TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
-                             const char *type_id,
+                             char const *type_id,
                              CORBA::Short priority)
 {
   CORBA::PolicyList_var client_exposed_policies =
@@ -2072,7 +2072,7 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
 
 TAO_Stub *
 TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
-                                  const char *type_id,
+                                  char const *type_id,
                                   CORBA::PolicyList *policy_list,
                                   TAO_Acceptor_Filter *filter,
                                   TAO_Acceptor_Registry &acceptor_registry)
@@ -2498,7 +2498,7 @@ TAO_Root_POA::server_protocol ()
 
 void
 TAO_Root_POA::Key_To_Object_Params::set (PortableServer::ObjectId_var &system_id,
-                                         const char *type_id,
+                                         char const *type_id,
                                          TAO_ServantBase *servant,
                                          CORBA::Boolean collocated,
                                          CORBA::Short priority,
@@ -2520,7 +2520,7 @@ TAO_Root_POA::waiting_servant_deactivation () const
 }
 
 void
-TAO_Root_POA::ort_adapter_factory_name (const char *name)
+TAO_Root_POA::ort_adapter_factory_name (char const *name)
 {
   TAO_POA_Static_Resources::instance ()->ort_adapter_factory_name_ =
     name;
@@ -2538,19 +2538,19 @@ TAO_Root_POA::check_state ()
   this->active_policy_strategies_.lifespan_strategy ()->check_state ();
 }
 
-const char *
+char const *
 TAO_Root_POA::ort_adapter_factory_name ()
 {
   return TAO_POA_Static_Resources::instance ()->ort_adapter_factory_name_.c_str();
 }
 
 void
-TAO_Root_POA::imr_client_adapter_name (const char *name)
+TAO_Root_POA::imr_client_adapter_name (char const *name)
 {
   TAO_POA_Static_Resources::instance ()->imr_client_adapter_name_ = name;
 }
 
-const char *
+char const *
 TAO_Root_POA::imr_client_adapter_name ()
 {
   return TAO_POA_Static_Resources::instance ()->imr_client_adapter_name_.c_str();

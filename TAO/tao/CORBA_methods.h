@@ -40,7 +40,7 @@ namespace CORBA
 
   extern TAO_Export ORB_ptr ORB_init (int & argc,
                                       wchar_t * argv[],
-                                      const wchar_t * orb_name);
+                                      wchar_t const *orb_name);
 #endif
 
   template<typename T> inline Boolean is_nil (T x)

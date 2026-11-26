@@ -128,11 +128,11 @@ public:
 
 #if !defined (CORBA_E_MICRO)
   PortableServer::POA_ptr create_POA (
-      const char *adapter_name,
+      char const *adapter_name,
       PortableServer::POAManager_ptr poa_manager,
       const CORBA::PolicyList &policies) override;
 
-  PortableServer::POA_ptr find_POA (const char *adapter_name,
+  PortableServer::POA_ptr find_POA (char const *adapter_name,
                                     CORBA::Boolean activate_it) override;
 #endif
 
@@ -223,12 +223,12 @@ public:
 
   void deactivate_object (const PortableServer::ObjectId &oid) override;
 
-  CORBA::Object_ptr create_reference (const char *intf) override;
+  CORBA::Object_ptr create_reference (char const *intf) override;
 
 #if !defined (CORBA_E_MICRO)
   CORBA::Object_ptr create_reference_with_id (
       const PortableServer::ObjectId &oid,
-      const char *intf) override;
+      char const *intf) override;
 #endif
 
   PortableServer::ObjectId *servant_to_id (PortableServer::Servant p_servant) override;
@@ -309,7 +309,7 @@ public:
   /// Create the correct stub, properly initialized with the
   /// attributes and policies attached to the current POA.
   TAO_Stub* key_to_stub (const TAO::ObjectKey &key,
-                         const char *type_id,
+                         char const *type_id,
                          CORBA::Short priority);
 
   /// Accessor methods to POA state.
@@ -329,15 +329,15 @@ public:
 
   CORBA::Boolean waiting_destruction () const;
 
-  static void ort_adapter_factory_name (const char *name);
+  static void ort_adapter_factory_name (char const *name);
 
-  static const char *ort_adapter_factory_name ();
+  static char const *ort_adapter_factory_name ();
 
   /// Sets the value of TAO_POA_Static_Resources::imr_client_adapter_name_.
-  static void imr_client_adapter_name (const char *name);
+  static void imr_client_adapter_name (char const *name);
 
   /// Gets the value of TAO_POA_Static_Resources::imr_client_adapter_name_.
-  static const char *imr_client_adapter_name ();
+  static char const *imr_client_adapter_name ();
 
   CORBA::Object_ptr invoke_key_to_object ();
 
@@ -481,7 +481,7 @@ protected:
                             TAO_Object_Adapter *object_adapter);
 
   PortableServer::POA_ptr create_POA_i (
-      const char *adapter_name,
+      char const *adapter_name,
       PortableServer::POAManager_ptr poa_manager,
       const CORBA::PolicyList &policies);
 
@@ -524,7 +524,7 @@ protected:
   /// Wrapper for the ORB's key_to_object that will alter the object pointer
   /// if the ImplRepo is used.
   CORBA::Object_ptr key_to_object (const TAO::ObjectKey &key,
-                                   const char *type_id,
+                                   char const *type_id,
                                    TAO_ServantBase *servant,
                                    CORBA::Boolean collocated,
                                    CORBA::Short priority,
@@ -532,11 +532,11 @@ protected:
 
   /// Like key_to_stub() but assume that the ORB is not shutting down.
   virtual TAO_Stub* key_to_stub_i (const TAO::ObjectKey &key,
-                                   const char *type_id,
+                                   char const *type_id,
                                    CORBA::Short priority);
 
   TAO_Stub *create_stub_object (const TAO::ObjectKey &object_key,
-                                const char *type_id,
+                                char const *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
                                 TAO_Acceptor_Registry &acceptor_registry);
@@ -558,12 +558,12 @@ protected:
 
   void wait_for_completions (CORBA::Boolean wait_for_completion);
 
-  CORBA::Object_ptr create_reference_i (const char *intf,
+  CORBA::Object_ptr create_reference_i (char const *intf,
                                         CORBA::Short priority);
 
   CORBA::Object_ptr create_reference_with_id_i (
       const PortableServer::ObjectId &oid,
-      const char *intf,
+      char const *intf,
       CORBA::Short priority);
 
   PortableServer::Servant reference_to_servant_i (CORBA::Object_ptr reference);
@@ -619,7 +619,7 @@ protected:
                                          PortableServer::Servant &servant);
 
   PortableServer::Servant locate_servant_i (
-      const char *operation,
+      char const *operation,
       const PortableServer::ObjectId &id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
@@ -628,7 +628,7 @@ protected:
 public:
   /// @todo Temporarily for servant retention
   CORBA::Object_ptr
-  invoke_key_to_object_helper_i (const char * repository_id,
+  invoke_key_to_object_helper_i (char const *repository_id,
                                  const PortableServer::ObjectId & id);
 protected:
   /// Get the ORT adapter, in case there is no adapter yet, this method will
@@ -757,14 +757,14 @@ public:
     /// Borrowed arguments for the synchronous invoke_key_to_object path.
     /// The caller-owned values must remain valid until that call returns.
     PortableServer::ObjectId_var *system_id_ {};
-    const char *type_id_ {};
+    char const *type_id_ {};
     TAO_ServantBase *servant_ {};
     CORBA::Boolean collocated_ {};
     CORBA::Short priority_ {TAO_INVALID_PRIORITY};
     bool indirect_ {};
 
     void set (PortableServer::ObjectId_var &system_id,
-              const char *type_id,
+              char const *type_id,
               TAO_ServantBase *servant,
               CORBA::Boolean collocated,
               CORBA::Short priority,

@@ -201,7 +201,7 @@ namespace CORBA
      * object_to_string(), but not necessarily locally.
      * This is a TAO specific extension.
      */
-    CORBA::Object_ptr string_to_object (const wchar_t *str);
+    CORBA::Object_ptr string_to_object (wchar_t const *str);
 #endif
     /**
      * Turn an object reference into a string.  Each type of ORB,
