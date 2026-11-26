@@ -41,10 +41,8 @@ public:
     ACEXML_NON_UNICODE = -5
   } ACEXML_STATUS;
 
-  // The following functions translate a unicode characters
-  // into different encoding.  Return number of characters put into
-  // destination or consumed from src if success without
-  // error, otherwise, return corresponding error code.
+  /// @name Unicode character conversions
+  /// @{
   /**
    * Convert a UTF-16 character into a string in UTF-8 encoding.
    *
@@ -123,6 +121,7 @@ public:
   static int utf162ucs4 (ACEXML_UTF16 const *src,
                         size_t len,
                         ACEXML_UCS4 &dst);
+  /// @}
 
 //    static int utf82utf16 (ACEXML_UTF8 const *src,
 //                           size_t len,
