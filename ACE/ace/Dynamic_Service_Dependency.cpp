@@ -6,13 +6,13 @@
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_TCHAR *principal)
+ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (ACE_TCHAR const *principal)
 {
   this->init (ACE_Service_Config::current (), principal);
 }
 
 ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_Service_Gestalt *cfg,
-                                                                const ACE_TCHAR *principal)
+                                                                ACE_TCHAR const *principal)
 {
   this->init (cfg, principal);
 }
@@ -29,7 +29,7 @@ ACE_Dynamic_Service_Dependency::~ACE_Dynamic_Service_Dependency ()
 
 void
 ACE_Dynamic_Service_Dependency::init (const ACE_Service_Gestalt *cfg,
-                                      const ACE_TCHAR *principal)
+                                      ACE_TCHAR const *principal)
 {
   const ACE_Service_Type* st =
     ACE_Dynamic_Service_Base::find_i (cfg, principal,false);

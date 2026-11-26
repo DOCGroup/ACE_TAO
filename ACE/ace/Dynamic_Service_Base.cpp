@@ -23,7 +23,7 @@ ACE_Dynamic_Service_Base::dump () const
 // service configuration repository.
 
 void *
-ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name, bool no_global)
+ACE_Dynamic_Service_Base::instance (ACE_TCHAR const *name, bool no_global)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
   return instance (ACE_Service_Config::current (), name, no_global);
@@ -33,7 +33,7 @@ ACE_Dynamic_Service_Base::instance (const ACE_TCHAR *name, bool no_global)
 
 const ACE_Service_Type *
 ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
-                                  const ACE_TCHAR *name,
+                                  ACE_TCHAR const *name,
                                   bool no_global)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::find_i");
@@ -56,7 +56,7 @@ ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
 // Get the instance using <name> for specific configuration repository.
 void *
 ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
-                                    const ACE_TCHAR *name,
+                                    ACE_TCHAR const *name,
                                     bool no_global)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::instance");

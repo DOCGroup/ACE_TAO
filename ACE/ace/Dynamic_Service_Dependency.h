@@ -44,12 +44,12 @@ class ACE_Export ACE_Dynamic_Service_Dependency
 {
 public:
   ACE_Dynamic_Service_Dependency  (const ACE_Service_Gestalt *cfg,
-                                   const ACE_TCHAR *principal);
-  explicit ACE_Dynamic_Service_Dependency  (const ACE_TCHAR *principal);
+                                   ACE_TCHAR const *principal);
+  explicit ACE_Dynamic_Service_Dependency  (ACE_TCHAR const *principal);
   ~ACE_Dynamic_Service_Dependency ();
 
 private:
-  void init (const ACE_Service_Gestalt *cfg, const ACE_TCHAR *principal);
+  void init (const ACE_Service_Gestalt *cfg, ACE_TCHAR const *principal);
 
 private:
   ACE_DLL tracker_;
