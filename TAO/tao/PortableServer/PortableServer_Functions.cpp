@@ -45,7 +45,7 @@ namespace PortableServer
   }
 
   char *
-  ObjectId_to_string (const PortableServer::ObjectId &id)
+  ObjectId_to_string (PortableServer::ObjectId const &id)
   {
     // Create space
     char * string = CORBA::string_alloc (id.length ());

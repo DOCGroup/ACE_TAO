@@ -26,10 +26,10 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace PortableServer
 {
   extern TAO_PortableServer_Export CORBA::WChar* ObjectId_to_wstring (
-    const PortableServer::ObjectId &id);
+    PortableServer::ObjectId const &id);
 
   extern TAO_PortableServer_Export PortableServer::ObjectId *wstring_to_ObjectId (
-    const CORBA::WChar *id);
+    CORBA::WChar const *id);
 }
 
 TAO_END_VERSIONED_NAMESPACE_DECL

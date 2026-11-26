@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace PortableServer
 {
   PortableServer::ObjectId *
-  wstring_to_ObjectId (const CORBA::WChar *string)
+  wstring_to_ObjectId (CORBA::WChar const *string)
   {
     // Size of Id
     //
@@ -40,7 +40,7 @@ namespace PortableServer
   }
 
   CORBA::WChar *
-  ObjectId_to_wstring (const PortableServer::ObjectId &id)
+  ObjectId_to_wstring (PortableServer::ObjectId const &id)
   {
     // Compute resulting wide string's length.
     CORBA::ULong string_length =

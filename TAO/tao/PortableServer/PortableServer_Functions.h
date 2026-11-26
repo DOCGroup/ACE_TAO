@@ -27,7 +27,7 @@ namespace PortableServer
 {
   /// Utility functions for the other
   extern TAO_PortableServer_Export char* ObjectId_to_string (
-    const PortableServer::ObjectId &id);
+    PortableServer::ObjectId const &id);
 
   extern TAO_PortableServer_Export PortableServer::ObjectId *string_to_ObjectId (
     char const *id);
