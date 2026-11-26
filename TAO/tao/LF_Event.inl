@@ -34,7 +34,7 @@ TAO_LF_Event::keep_waiting_i () const
   return (!this->successful_i ()) && (!this->error_detected_i ());
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_LF_Event::state_name (LFS_STATE st)
 {
 #define TAO_LF_EVENT_ENTRY(X) case X: return #X

@@ -73,7 +73,7 @@ namespace TAO
     return val;
   }
 
-  template <typename TRANSPORT_TYPE> ACE_INLINE const char *
+  template <typename TRANSPORT_TYPE> ACE_INLINE char const *
   Cache_IntId_T<TRANSPORT_TYPE>::state_name (Cache_Entries_State st)
   {
 #define TAO_CACHE_INTID_ENTRY(X) case X: return #X

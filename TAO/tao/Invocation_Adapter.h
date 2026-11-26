@@ -101,7 +101,7 @@ namespace TAO
     Invocation_Adapter (CORBA::Object_ptr target,
                         Argument **args,
                         int arg_number,
-                        const char *operation,
+                        char const *operation,
                         size_t op_len,
                         int collocation_opportunity,
                         TAO::Invocation_Type type = TAO_TWOWAY_INVOCATION,

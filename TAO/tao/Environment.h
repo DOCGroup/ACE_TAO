@@ -113,14 +113,14 @@ namespace CORBA
     int exception_type () const;
 
     /// return the repository ID for the exception.
-    const char *exception_id () const;
+    char const *exception_id () const;
 
     /// Clear the exception.
     void clear ();
 
     /// Print the exception to output determined by f.  This function
     /// is not CORBA compliant.
-    void print_exception (const char *info, FILE *f=stdout) const;
+    void print_exception (char const *info, FILE *f=stdout) const;
 
     /// Obtain a default environment to use with TAO.
     static CORBA::Environment &default_environment ();

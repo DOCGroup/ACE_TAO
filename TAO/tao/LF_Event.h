@@ -111,7 +111,7 @@ public:
   /// Reset the state, irrespective of the previous states
   void reset_state (LFS_STATE new_state);
 
-  static const char *state_name (LFS_STATE st);
+  static char const *state_name (LFS_STATE st);
 
 protected:
   /// Validate the state change

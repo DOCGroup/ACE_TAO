@@ -106,7 +106,7 @@ namespace TAO
     /// Set the connected flag
     void is_connected (bool connected);
 
-    static const char *state_name (Cache_Entries_State st);
+    static char const *state_name (Cache_Entries_State st);
 
   private:
     /// The transport that needs to be cached.
