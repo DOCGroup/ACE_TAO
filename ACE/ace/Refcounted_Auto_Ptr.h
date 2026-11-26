@@ -140,11 +140,11 @@ private:
   /// @name Reference-counted representation management
   /// @{
 
-  /// Allocate a new ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> instance,
-  /// returning NULL if it cannot be created.
+  /// Allocate a new ACE_Refcounted_Auto_Ptr_Rep instance,
+  /// returning nullptr if it cannot be created.
   static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *internal_create (X *p);
 
-  /// Create a ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> and initialize
+  /// Create an ACE_Refcounted_Auto_Ptr_Rep and initialize
   /// the reference count.
   static ACE_Refcounted_Auto_Ptr_Rep<X, ACE_LOCK> *create (X *p);
 

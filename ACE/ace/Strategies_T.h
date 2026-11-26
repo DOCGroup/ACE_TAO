@@ -885,7 +885,8 @@ public:
    */
   int mark_as_closed_i (void const *recycling_act) override;
 
-  /// Cleanup hint and reset <*act_holder> to nullptr if <act_holder != nullptr>.
+  /// Clean up the hint and reset the value pointed to by @a act_holder to
+  /// nullptr if @a act_holder is not null.
   int cleanup_hint (void const *recycling_act,
                             void **act_holder = nullptr) override;
 
@@ -963,7 +964,8 @@ protected:
   /// Get @c recycle_state (non-locking version).
   virtual ACE_Recyclable_State recycle_state_i (void const *recycling_act) const;
 
-  /// Cleanup hint and reset <*act_holder> to nullptr if <act_holder != nullptr>.
+  /// Clean up the hint and reset the value pointed to by @a act_holder to
+  /// nullptr if @a act_holder is not null.
   virtual int cleanup_hint_i (void const *recycling_act,
                               void **act_holder);
 
