@@ -158,9 +158,9 @@ class TAO_Export TAO_ORB_Core
   friend struct TAO_ORB_Core_Decr_Refcnt;
   friend TAO_Export CORBA::ORB_ptr CORBA::ORB_init (int &,
                                          ACE_TCHAR *argv[],
-                                         const char *);
+                                         char const *);
 public:
-  TAO_ORB_Core (const char* id, ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> g);
+  TAO_ORB_Core (char const *id, ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> g);
 
   TAO_ORB_Core () = delete;
   TAO_ORB_Core (TAO_ORB_Core const &) = delete;
@@ -299,7 +299,7 @@ public:
   /// @}
 
   /// Sets the value of TAO_ORB_Core::resource_factory_
-  static void set_resource_factory (const char *resource_factory_name);
+  static void set_resource_factory (char const *resource_factory_name);
 
   /** Sets the value of TAO_ORB_Core::gui_resource_factory_.
    *
@@ -310,7 +310,7 @@ public:
 
   /// Sets the value of TAO_ORB_Core::network_priority_protocols_hooks_
   static void set_network_priority_protocols_hooks (
-    const char *network_priority_protocols_hooks_name);
+    char const *network_priority_protocols_hooks_name);
 
   /// Gets the value of TAO_ORB_Core::protocols_hooks__
   TAO_Protocols_Hooks * get_protocols_hooks ();
@@ -320,34 +320,34 @@ public:
     get_network_priority_protocols_hooks ();
 
   /// Sets the value of TAO_ORB_Core::dynamic_adapter_name_.
-  static void dynamic_adapter_name (const char *name);
+  static void dynamic_adapter_name (char const *name);
 
   /// Gets the value of TAO_ORB_Core::dynamic_adapter_name_.
-  static const char *dynamic_adapter_name ();
+  static char const *dynamic_adapter_name ();
 
   /// Sets the value of TAO_ORB_Core::ifr_client_adapter_name_.
-  static void ifr_client_adapter_name (const char *name);
+  static void ifr_client_adapter_name (char const *name);
 
   /// Gets the value of TAO_ORB_Core::ifr_client_adapter_name_.
-  static const char *ifr_client_adapter_name ();
+  static char const *ifr_client_adapter_name ();
 
   /// Sets the value of TAO_ORB_Core::typecodefactory_adapter_name_.
-  static void typecodefactory_adapter_name (const char *name);
+  static void typecodefactory_adapter_name (char const *name);
 
   /// Gets the value of TAO_ORB_Core::typecodefactory_adapter_name_.
-  static const char *typecodefactory_adapter_name ();
+  static char const *typecodefactory_adapter_name ();
 
   /// Sets the value of TAO_ORB_Core::iorinterceptor_adapter_factory_name_.
-  static void iorinterceptor_adapter_factory_name (const char *name);
+  static void iorinterceptor_adapter_factory_name (char const *name);
 
   /// Gets the value of TAO_ORB_Core::iorinterceptor_adapter_factory_name_.
-  static const char *iorinterceptor_adapter_factory_name ();
+  static char const *iorinterceptor_adapter_factory_name ();
 
   /// Sets the value of TAO_ORB_Core::valuetype_adapter_factory_name.
-  static void valuetype_adapter_factory_name (const char *name);
+  static void valuetype_adapter_factory_name (char const *name);
 
   /// Gets the value of TAO_ORB_Core::valuetype_adapter_factory_name.
-  static const char *valuetype_adapter_factory_name ();
+  static char const *valuetype_adapter_factory_name ();
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
@@ -598,14 +598,14 @@ public:
   /// Makes sure that the ORB is open and then creates a TAO_Stub
   /// based on the endpoint.
   TAO_Stub *create_stub_object (TAO_MProfile &mprofile,
-                                const char *type_id,
+                                char const *type_id,
                                 CORBA::PolicyList *policy_list);
 
   /// Factory method that create the "right" Stub depending on
   /// whether RTCORBA is loaded or not. The factory used to create
   /// the stub, is loaded at ORB initialization, and its type depends
   /// on the fact that RTCORBA is being used or not.
-  TAO_Stub *create_stub (const char *repository_id,
+  TAO_Stub *create_stub (char const *repository_id,
                          const TAO_MProfile &profiles);
 
   /// Create a new object, use the adapter registry to create a
@@ -628,7 +628,7 @@ public:
   CORBA::Long reinitialize_object (TAO_Stub *stub);
 
   /// Return ORBid string.
-  const char *orbid () const;
+  char const *orbid () const;
 
   /// Set/Get the IOR of the Implementation Repository service.
   /// @{
@@ -678,7 +678,7 @@ public:
 
   /// Resolve an initial reference via the -ORBInitRef and
   /// -ORBDefaultInitRef options.
-  CORBA::Object_ptr resolve_rir (const char *name);
+  CORBA::Object_ptr resolve_rir (char const *name);
 
 #if defined (TAO_HAS_CORBA_MESSAGING) && TAO_HAS_CORBA_MESSAGING != 0
   /// Resolve the RT ORB reference for this ORB.
@@ -687,7 +687,7 @@ public:
 
   /// Resolve the RT Current flyweight for this ORB.
   /// Return server_id string.
-  const char *server_id () const;
+  char const *server_id () const;
 
   /// List all the service known by the ORB
   CORBA::ORB_ObjectIdList *list_initial_references ();
@@ -825,16 +825,16 @@ public:
 #if !defined(CORBA_E_MICRO)
   /// Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
   CORBA::ValueFactory register_value_factory (
-    const char *repository_id,
+    char const *repository_id,
     CORBA::ValueFactory factory);
 #endif
 
 #if !defined(CORBA_E_MICRO)
-  void unregister_value_factory (const char * repository_id);
+  void unregister_value_factory (char const *repository_id);
 #endif
 
 #if !defined(CORBA_E_MICRO)
-  CORBA::ValueFactory lookup_value_factory (const char *repository_id);
+  CORBA::ValueFactory lookup_value_factory (char const *repository_id);
 #endif
 
   /// Get the IOR Interceptor adapter. If not created, this method will try
@@ -888,10 +888,10 @@ public:
 
   /// Set the ORB related to the orb_id as the default ORB and not the
   /// ORB that is first binded in the ORB Table
-  void set_default (const char * orb_id);
+  void set_default (char const *orb_id);
 
   /// Choose to be not a default ORB when there is more than one ORB.
-  void not_default (const char * orb_id);
+  void not_default (char const *orb_id);
 
   /// Verify condition for  permanent forward is given,
   /// both parameters must provide group attributes.

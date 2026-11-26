@@ -403,8 +403,8 @@ CORBA::ORB::poll_next_response ()
 
 CORBA::TypeCode_ptr
 CORBA::ORB::create_struct_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     const CORBA::StructMemberSeq & members)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
@@ -421,8 +421,8 @@ CORBA::ORB::create_struct_tc (
 
 CORBA::TypeCode_ptr
 CORBA::ORB::create_union_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TypeCode_ptr discriminator_type,
     const CORBA::UnionMemberSeq & members)
 {
@@ -443,8 +443,8 @@ CORBA::ORB::create_union_tc (
 
 CORBA::TypeCode_ptr
 CORBA::ORB::create_enum_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     const CORBA::EnumMemberSeq & members)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
@@ -461,8 +461,8 @@ CORBA::ORB::create_enum_tc (
 
 CORBA::TypeCode_ptr
 CORBA::ORB::create_alias_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TypeCode_ptr original_type)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
@@ -479,8 +479,8 @@ CORBA::ORB::create_alias_tc (
 
 CORBA::TypeCode_ptr
 CORBA::ORB::create_exception_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     const CORBA::StructMemberSeq & members)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
@@ -497,8 +497,8 @@ CORBA::ORB::create_exception_tc (
 
 CORBA::TypeCode_ptr
 CORBA::ORB::create_interface_tc (
-    const char *id,
-    const char *name)
+    char const *id,
+    char const *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -597,8 +597,8 @@ CORBA::ORB::create_array_tc (
 
 CORBA::TypeCode_ptr
 CORBA::ORB::create_value_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
     const CORBA::ValueMemberSeq & members)
@@ -620,8 +620,8 @@ CORBA::ORB::create_value_tc (
 
 CORBA::TypeCode_ptr
 CORBA::ORB::create_value_box_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::TypeCode_ptr boxed_type)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
@@ -637,7 +637,7 @@ CORBA::ORB::create_value_box_tc (
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_native_tc (const char *id, const char *name)
+CORBA::ORB::create_native_tc (char const *id, char const *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -652,7 +652,7 @@ CORBA::ORB::create_native_tc (const char *id, const char *name)
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_recursive_tc (const char *id)
+CORBA::ORB::create_recursive_tc (char const *id)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -667,7 +667,7 @@ CORBA::ORB::create_recursive_tc (const char *id)
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_abstract_interface_tc (const char *id, const char *name)
+CORBA::ORB::create_abstract_interface_tc (char const *id, char const *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -682,7 +682,7 @@ CORBA::ORB::create_abstract_interface_tc (const char *id, const char *name)
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_local_interface_tc (const char *id, const char *name)
+CORBA::ORB::create_local_interface_tc (char const *id, char const *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -697,7 +697,7 @@ CORBA::ORB::create_local_interface_tc (const char *id, const char *name)
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_component_tc (const char *id, const char *name)
+CORBA::ORB::create_component_tc (char const *id, char const *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -712,7 +712,7 @@ CORBA::ORB::create_component_tc (const char *id, const char *name)
 }
 
 CORBA::TypeCode_ptr
-CORBA::ORB::create_home_tc (const char *id, const char *name)
+CORBA::ORB::create_home_tc (char const *id, char const *name)
 {
   TAO_TypeCodeFactory_Adapter *adapter =
     ACE_Dynamic_Service<TAO_TypeCodeFactory_Adapter>::instance (
@@ -728,8 +728,8 @@ CORBA::ORB::create_home_tc (const char *id, const char *name)
 
 CORBA::TypeCode_ptr
 CORBA::ORB::create_event_tc (
-    const char *id,
-    const char *name,
+    char const *id,
+    char const *name,
     CORBA::ValueModifier type_modifier,
     CORBA::TypeCode_ptr concrete_base,
     const CORBA::ValueMemberSeq &members)
@@ -863,7 +863,7 @@ CORBA::ORB::resolve_service (TAO::MCAST_SERVICEID mcast_service_id)
 }
 
 CORBA::Object_ptr
-CORBA::ORB::resolve_initial_references (const char *name,
+CORBA::ORB::resolve_initial_references (char const *name,
                                         ACE_Time_Value *timeout)
 {
   // This method should not be called if the ORB has been shutdown.
@@ -1012,7 +1012,7 @@ CORBA::ORB::resolve_initial_references (const char *name,
 
 #if !defined(CORBA_E_MICRO)
 void
-CORBA::ORB::register_initial_reference (const char * id, CORBA::Object_ptr obj)
+CORBA::ORB::register_initial_reference (char const *id, CORBA::Object_ptr obj)
 {
   if (id == nullptr || std::strlen (id) == 0)
     {
@@ -1033,7 +1033,7 @@ CORBA::ORB::register_initial_reference (const char * id, CORBA::Object_ptr obj)
 }
 
 CORBA::Object_ptr
-CORBA::ORB::unregister_initial_reference (const char * id)
+CORBA::ORB::unregister_initial_reference (char const *id)
 {
   if (id == nullptr || std::strlen (id) == 0)
     {
@@ -1098,7 +1098,7 @@ namespace TAO
 {
   bool
   parse_orb_opt (ACE_Argv_Type_Converter& command_line,
-                 const ACE_TCHAR* orb_opt,
+                 ACE_TCHAR const *orb_opt,
                  ACE_TString& opt_arg)
   {
     if (opt_arg.length () > 0)
@@ -1114,7 +1114,7 @@ namespace TAO
     bool found {};
     while (arg_shifter.is_anything_left ())
       {
-        const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+        ACE_TCHAR const *current_arg = arg_shifter.get_current ();
 
         if (ACE_OS::strcasecmp (current_arg,
                                 orb_opt) == 0)
@@ -1153,7 +1153,7 @@ namespace TAO
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt>
   find_orb_context (const ACE_TString& orbconfig_string)
     {
-      const ACE_TCHAR *arg = orbconfig_string.c_str ();
+      ACE_TCHAR const *arg = orbconfig_string.c_str ();
 
       // Need a local repo? Make one which typically should not be as
       // big as the default repository
@@ -1185,7 +1185,7 @@ namespace TAO
         }
 
       // Someone else's context?
-      const ACE_TCHAR *shared = ACE_TEXT("ORB:");
+      ACE_TCHAR const *shared = ACE_TEXT("ORB:");
       size_t const shared_len = ACE_OS::strlen(shared);
       if (ACE_OS::strncmp (arg, shared, shared_len) == 0)
         {
@@ -1242,7 +1242,7 @@ namespace TAO
 CORBA::ORB_ptr
 CORBA::ORB_init (int &argc,
                  ACE_ANTI_TCHAR *argv[],
-                 const char *orbid)
+                 char const *orbid)
 {
   ACE_Argv_Type_Converter command_line (argc, argv);
   return CORBA::ORB_init (command_line.get_argc (),
@@ -1260,7 +1260,7 @@ CORBA::ORB_init (int &argc,
 #endif
 
 CORBA::ORB_ptr
-CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], const char *orbid)
+CORBA::ORB_init (int &argc, ACE_TCHAR *argv[], char const *orbid)
 {
   // It doesn't make sense for argc to be zero and argv to be
   // non-empty/zero, or for argc to be greater than zero and argv be
@@ -1508,7 +1508,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 
       for (const ACE_Message_Block *i = cdr.begin (); i != nullptr; i = i->cont ())
         {
-          const char *bytes = i->rd_ptr ();
+          char const *bytes = i->rd_ptr ();
           size_t len = i->length ();
 
           while (len--)
@@ -1575,7 +1575,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
 // Destringify arbitrary objrefs.  This method is called from
 // <resolve_name_service> with an IOR <multicast_to_service>.
 CORBA::Object_ptr
-CORBA::ORB::string_to_object (const char *str)
+CORBA::ORB::string_to_object (char const *str)
 {
   // This method should not be called if the ORB has been shutdown.
   this->check_shutdown ();
@@ -1669,7 +1669,7 @@ CORBA::ORB::_create_policy (CORBA::PolicyType type)
 // XXX there should be a simple way to reuse this code in other ORB
 // implementations ...
 CORBA::Object_ptr
-CORBA::ORB::ior_string_to_object (const char *str)
+CORBA::ORB::ior_string_to_object (char const *str)
 {
   // Unhex the bytes, and make a CDR deencapsulation stream from the
   // resulting data.
@@ -1679,7 +1679,7 @@ CORBA::ORB::ior_string_to_object (const char *str)
   ACE_CDR::mb_align (std::addressof (mb));
 
   char *buffer = mb.rd_ptr ();
-  const char *tmp = str;
+  char const *tmp = str;
   size_t len {};
 
   while (tmp [0] && tmp [1])
@@ -1727,7 +1727,7 @@ CORBA::ORB::ior_string_to_object (const char *str)
 
 // Convert an URL style IOR in an object
 CORBA::Object_ptr
-CORBA::ORB::url_ior_string_to_object (const char* str)
+CORBA::ORB::url_ior_string_to_object (char const *str)
 {
   TAO_MProfile mprofile;
   // It is safe to declare this on the stack since the contents of
@@ -1770,7 +1770,7 @@ CORBA::ORB::url_ior_string_to_object (const char* str)
 
 #if !defined(CORBA_E_MICRO)
 CORBA::ValueFactory
-CORBA::ORB::register_value_factory (const char *repository_id,
+CORBA::ORB::register_value_factory (char const *repository_id,
                                     CORBA::ValueFactory factory)
 {
   this->check_shutdown ();
@@ -1781,7 +1781,7 @@ CORBA::ORB::register_value_factory (const char *repository_id,
 
 #if !defined(CORBA_E_MICRO)
 void
-CORBA::ORB::unregister_value_factory (const char *repository_id)
+CORBA::ORB::unregister_value_factory (char const *repository_id)
 {
   this->check_shutdown ();
 
@@ -1791,7 +1791,7 @@ CORBA::ORB::unregister_value_factory (const char *repository_id)
 
 #if !defined(CORBA_E_MICRO)
 CORBA::ValueFactory
-CORBA::ORB::lookup_value_factory (const char *repository_id)
+CORBA::ORB::lookup_value_factory (char const *repository_id)
 {
   this->check_shutdown ();
 

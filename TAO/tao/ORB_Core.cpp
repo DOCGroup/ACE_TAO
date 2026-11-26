@@ -181,7 +181,7 @@ TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& ot
 
 // ****************************************************************
 
-TAO_ORB_Core::TAO_ORB_Core (const char *orbid,
+TAO_ORB_Core::TAO_ORB_Core (char const *orbid,
                             ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt> gestalt)
 #if TAO_USE_LOCAL_MEMORY_POOL == 1
   : use_local_memory_pool_ (true),
@@ -401,7 +401,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *current_arg {};
+      ACE_TCHAR const *current_arg {};
 
       ////////////////////////////////////////////////////////////////
       // begin with the 'parameterless' flags                       //
@@ -558,7 +558,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // objrefs, where the hostname and TCP port number are
           // explicit (and the whole objref is readable by mortals).
           // BEGIN COMMENTS FROM IIOP-1.4
-          const ACE_TCHAR *opt = current_arg;
+          ACE_TCHAR const *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, ACE_TEXT("URL")) == 0)
             {
               use_ior = false;
@@ -574,7 +574,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
                 (ACE_TEXT("-ORBCollocationStrategy"))))
         {
           // Specify which collocation policy we want to use.
-          const ACE_TCHAR *opt = current_arg;
+          ACE_TCHAR const *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, ACE_TEXT("thru_poa")) == 0)
             {
               this->collocation_strategy_ = TAO_COLLOCATION_THRU_POA;
@@ -597,7 +597,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // objects.  Valid arguments are: "global", "no", and "per-orb".
           // Default is global.
 
-          const ACE_TCHAR *opt = current_arg;
+          ACE_TCHAR const *opt = current_arg;
           if (ACE_OS::strcasecmp (opt, ACE_TEXT("global")) == 0)
             {
               this->opt_for_collocation_ = true;
@@ -700,7 +700,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
       else if (nullptr != (current_arg = arg_shifter.get_the_parameter
                 (ACE_TEXT("-ORBInitRef"))))
         {
-          const ACE_TCHAR *pos = ACE_OS::strchr (current_arg, '=');
+          ACE_TCHAR const *pos = ACE_OS::strchr (current_arg, '=');
           if (pos == nullptr)
             {
               TAOLIB_ERROR ((LM_ERROR,
@@ -771,7 +771,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
           // default: if <file> is present     = append
           //          if <file> is not present = create
 
-          const ACE_TCHAR *file_name = current_arg;
+          ACE_TCHAR const *file_name = current_arg;
           arg_shifter.consume_arg ();
 
           // would rather use ACE_OSTREAM_TYPE out here..
@@ -1216,7 +1216,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
         }
     }
 
-  const char *env_endpoint =
+  char const *env_endpoint =
     ACE_OS::getenv ("TAO_ORBENDPOINT");
 
   if (env_endpoint != nullptr)
@@ -1443,7 +1443,7 @@ TAO_ORB_Core::init (int &argc, char *argv[] )
   this->default_sync_scope_ = this->client_factory()->sync_scope ();
 
   // Look in the service repository for an instance of the Protocol Hooks.
-  const char *protocols_hooks_name = this->orb_params ()->protocols_hooks_name ();
+  char const *protocols_hooks_name = this->orb_params ()->protocols_hooks_name ();
 
   this->protocols_hooks_ =
     ACE_Dynamic_Service<TAO_Protocols_Hooks>::instance
@@ -1561,7 +1561,7 @@ TAO_ORB_Core::fini ()
 }
 
 void
-TAO_ORB_Core::set_resource_factory (const char *resource_factory_name)
+TAO_ORB_Core::set_resource_factory (char const *resource_factory_name)
 {
   TAO_ORB_Core_Static_Resources::instance ()->resource_factory_name_ =
     resource_factory_name;
@@ -1584,60 +1584,60 @@ TAO_ORB_Core::set_gui_resource_factory (TAO::GUIResource_Factory *gui_resource_f
 }
 
 void
-TAO_ORB_Core::dynamic_adapter_name (const char *name)
+TAO_ORB_Core::dynamic_adapter_name (char const *name)
 {
   TAO_ORB_Core_Static_Resources::instance ()->dynamic_adapter_name_ = name;
 }
 
-const char *
+char const *
 TAO_ORB_Core::dynamic_adapter_name ()
 {
   return TAO_ORB_Core_Static_Resources::instance ()->dynamic_adapter_name_.c_str();
 }
 
 void
-TAO_ORB_Core::ifr_client_adapter_name (const char *name)
+TAO_ORB_Core::ifr_client_adapter_name (char const *name)
 {
   TAO_ORB_Core_Static_Resources::instance ()->ifr_client_adapter_name_ = name;
 }
 
-const char *
+char const *
 TAO_ORB_Core::ifr_client_adapter_name ()
 {
   return TAO_ORB_Core_Static_Resources::instance ()->ifr_client_adapter_name_.c_str();
 }
 
 void
-TAO_ORB_Core::typecodefactory_adapter_name (const char *name)
+TAO_ORB_Core::typecodefactory_adapter_name (char const *name)
 {
   TAO_ORB_Core_Static_Resources::instance ()->typecodefactory_adapter_name_ = name;
 }
 
-const char *
+char const *
 TAO_ORB_Core::typecodefactory_adapter_name ()
 {
   return TAO_ORB_Core_Static_Resources::instance ()->typecodefactory_adapter_name_.c_str();
 }
 
 void
-TAO_ORB_Core::iorinterceptor_adapter_factory_name (const char *name)
+TAO_ORB_Core::iorinterceptor_adapter_factory_name (char const *name)
 {
   TAO_ORB_Core_Static_Resources::instance ()->iorinterceptor_adapter_factory_name_ = name;
 }
 
-const char *
+char const *
 TAO_ORB_Core::iorinterceptor_adapter_factory_name ()
 {
   return TAO_ORB_Core_Static_Resources::instance ()->iorinterceptor_adapter_factory_name_.c_str();
 }
 
 void
-TAO_ORB_Core::valuetype_adapter_factory_name (const char *name)
+TAO_ORB_Core::valuetype_adapter_factory_name (char const *name)
 {
   TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_factory_name_ = name;
 }
 
-const char *
+char const *
 TAO_ORB_Core::valuetype_adapter_factory_name ()
 {
   return TAO_ORB_Core_Static_Resources::instance ()->valuetype_adapter_factory_name_.c_str();
@@ -1680,7 +1680,7 @@ TAO_ORB_Core::thread_lane_resources_manager ()
     }
 
   // If not, lookup the corresponding factory and ask it to make one.
-  const char *thread_lane_resources_manager_factory_name =
+  char const *thread_lane_resources_manager_factory_name =
     this->orb_params ()->thread_lane_resources_manager_factory_name ();
 
   TAO_Thread_Lane_Resources_Manager_Factory *factory =
@@ -1803,7 +1803,7 @@ TAO_ORB_Core::stub_factory ()
     }
 
   // If not, look in the service repository for an instance.
-  const char *stub_factory_name =
+  char const *stub_factory_name =
     this->orb_params ()->stub_factory_name ();
 
   this->stub_factory_ =
@@ -1824,7 +1824,7 @@ TAO_ORB_Core::endpoint_selector_factory ()
     }
 
   // If not, look in the service repository for an instance.
-  const char* endpoint_selector_factory_name =
+  char const *endpoint_selector_factory_name =
     this->orb_params ()->endpoint_selector_factory_name ();
 
   this->endpoint_selector_factory_ =
@@ -1837,7 +1837,7 @@ TAO_ORB_Core::endpoint_selector_factory ()
 
 void
 TAO_ORB_Core::set_network_priority_protocols_hooks (
-  const char *network_priority_protocols_hooks_name)
+  char const *network_priority_protocols_hooks_name)
 {
   // Is synchronization necessary?
   TAO_ORB_Core_Static_Resources::instance ()->
@@ -1988,7 +1988,7 @@ TAO_ORB_Core::poa_adapter ()
 }
 
 TAO_Stub *
-TAO_ORB_Core::create_stub (const char *repository_id,
+TAO_ORB_Core::create_stub (char const *repository_id,
                            const TAO_MProfile &profiles)
 {
   TAO_Stub *retval =
@@ -2007,7 +2007,7 @@ TAO_ORB_Core::request_dispatcher (TAO_Request_Dispatcher *request_dispatcher)
 
 TAO_Stub *
 TAO_ORB_Core::create_stub_object (TAO_MProfile &mprofile,
-                                  const char *type_id,
+                                  char const *type_id,
                                   CORBA::PolicyList *policy_list)
 {
   // Add the Polices contained in "policy_list" to each profile so
@@ -2855,7 +2855,7 @@ TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
 }
 
 CORBA::Object_ptr
-TAO_ORB_Core::resolve_rir (const char *name)
+TAO_ORB_Core::resolve_rir (char const *name)
 {
   // Get the table of initial references specified through
   // -ORBInitRef.
@@ -2917,7 +2917,7 @@ CORBA::ORB::ObjectIdList *
 TAO_ORB_Core::list_initial_references ()
 {
   // Unsupported initial services should NOT be included in the below list!
-  static const char *initial_services[] = { TAO_LIST_OF_INITIAL_SERVICES };
+  static char const *initial_services[] = { TAO_LIST_OF_INITIAL_SERVICES };
   // Make sure the "terminating" zero is the last array element so
   // that there is a stop condition when iterating through the list.
 
@@ -3619,7 +3619,7 @@ TAO_ORB_Core::valuetype_adapter ()
 
 #if !defined(CORBA_E_MICRO)
 CORBA::ValueFactory
-TAO_ORB_Core::register_value_factory (const char *repository_id,
+TAO_ORB_Core::register_value_factory (char const *repository_id,
                                       CORBA::ValueFactory factory)
 {
   if (this->valuetype_adapter ())
@@ -3652,7 +3652,7 @@ TAO_ORB_Core::register_value_factory (const char *repository_id,
 
 #if !defined(CORBA_E_MICRO)
 void
-TAO_ORB_Core::unregister_value_factory (const char *repository_id)
+TAO_ORB_Core::unregister_value_factory (char const *repository_id)
 {
   if (this->valuetype_adapter ())
     {
@@ -3671,7 +3671,7 @@ TAO_ORB_Core::unregister_value_factory (const char *repository_id)
 
 #if !defined(CORBA_E_MICRO)
 CORBA::ValueFactory
-TAO_ORB_Core::lookup_value_factory (const char *repository_id)
+TAO_ORB_Core::lookup_value_factory (char const *repository_id)
 {
   if (this->valuetype_adapter ())
     {

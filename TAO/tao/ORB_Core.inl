@@ -188,14 +188,14 @@ TAO_ORB_Core::init_ref_map ()
 }
 
 ACE_INLINE void
-TAO_ORB_Core::set_default (const char * orb_id)
+TAO_ORB_Core::set_default (char const *orb_id)
 {
   TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
   table->set_default (orb_id);
 }
 
 ACE_INLINE void
-TAO_ORB_Core::not_default (const char * orb_id)
+TAO_ORB_Core::not_default (char const *orb_id)
 {
   TAO::ORB_Table * const table = TAO::ORB_Table::instance ();
   table->not_default (orb_id);
@@ -349,7 +349,7 @@ TAO_ORB_Core::thread_per_connection_timeout (ACE_Time_Value &timeout) const
   return this->thread_per_connection_use_timeout_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_ORB_Core::orbid () const
 {
   return this->orbid_.c_str ();
@@ -425,7 +425,7 @@ TAO_ORB_Core::resolve_compression_manager ()
   return CORBA::Object::_duplicate (this->compression_manager_);
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_ORB_Core::server_id () const
 {
   return this->server_id_.c_str();

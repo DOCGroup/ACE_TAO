@@ -192,7 +192,7 @@ namespace CORBA
      * pointer.  Typically these strings are created using
      * object_to_string(), but not necessarily locally.
      */
-    CORBA::Object_ptr string_to_object (const char *str);
+    CORBA::Object_ptr string_to_object (char const *str);
 
 #if defined (ACE_USES_WCHAR)
     /**
@@ -215,16 +215,16 @@ namespace CORBA
 #if !defined(CORBA_E_MICRO)
     // Value factory operations  (CORBA 2.3 ptc/98-10-05 Ch. 4.2 p.4-7)
     CORBA::ValueFactory register_value_factory (
-        const char *repository_id,
+        char const *repository_id,
         CORBA::ValueFactory factory);
 #endif
 
 #if !defined(CORBA_E_MICRO)
-    void unregister_value_factory (const char * repository_id);
+    void unregister_value_factory (char const *repository_id);
 #endif
 
 #if !defined(CORBA_E_MICRO)
-    CORBA::ValueFactory lookup_value_factory (const char *repository_id);
+    CORBA::ValueFactory lookup_value_factory (char const *repository_id);
 #endif
 
 #if (TAO_HAS_MINIMUM_CORBA == 0) && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO)
@@ -262,32 +262,32 @@ namespace CORBA
     /// The ORB TypeCode creation functions.
 
     CORBA::TypeCode_ptr create_struct_tc (
-        const char *id,
-        const char *name,
+        char const *id,
+        char const *name,
         const CORBA::StructMemberSeq &members);
 
     CORBA::TypeCode_ptr create_union_tc (
-        const char *id,
-        const char *name,
+        char const *id,
+        char const *name,
         CORBA::TypeCode_ptr discriminator_type,
         const CORBA::UnionMemberSeq &members);
 
     CORBA::TypeCode_ptr create_enum_tc (
-        const char *id,
-        const char *name,
+        char const *id,
+        char const *name,
         const CORBA::EnumMemberSeq &members);
 
     CORBA::TypeCode_ptr create_alias_tc (
-        const char *id,
-        const char *name,
+        char const *id,
+        char const *name,
         CORBA::TypeCode_ptr original_type);
 
     CORBA::TypeCode_ptr create_exception_tc (
-        const char *id,
-        const char *name,
+        char const *id,
+        char const *name,
         const CORBA::StructMemberSeq &members);
 
-    CORBA::TypeCode_ptr create_interface_tc (const char *id, const char *name);
+    CORBA::TypeCode_ptr create_interface_tc (char const *id, char const *name);
 
     CORBA::TypeCode_ptr create_string_tc (CORBA::ULong bound);
 
@@ -306,40 +306,40 @@ namespace CORBA
         CORBA::TypeCode_ptr element_type);
 
     CORBA::TypeCode_ptr create_value_tc (
-        const char *id,
-        const char *name,
+        char const *id,
+        char const *name,
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
         const CORBA::ValueMemberSeq &members);
 
     CORBA::TypeCode_ptr create_value_box_tc (
-        const char *id,
-        const char *name,
+        char const *id,
+        char const *name,
         CORBA::TypeCode_ptr boxed_type);
 
-    CORBA::TypeCode_ptr create_native_tc (const char *id, const char *name);
+    CORBA::TypeCode_ptr create_native_tc (char const *id, char const *name);
 
-    CORBA::TypeCode_ptr create_recursive_tc (const char *id);
+    CORBA::TypeCode_ptr create_recursive_tc (char const *id);
 
     CORBA::TypeCode_ptr create_abstract_interface_tc (
-        const char *id,
-        const char *name);
+        char const *id,
+        char const *name);
 
     CORBA::TypeCode_ptr create_local_interface_tc (
-        const char *id,
-        const char *name);
+        char const *id,
+        char const *name);
 
     CORBA::TypeCode_ptr create_component_tc (
-        const char *id,
-        const char *name);
+        char const *id,
+        char const *name);
 
     CORBA::TypeCode_ptr create_home_tc (
-        const char *id,
-        const char *name);
+        char const *id,
+        char const *name);
 
     CORBA::TypeCode_ptr create_event_tc (
-        const char *id,
-        const char *name,
+        char const *id,
+        char const *name,
         CORBA::ValueModifier type_modifier,
         CORBA::TypeCode_ptr concrete_base,
         const CORBA::ValueMemberSeq &members);
@@ -450,15 +450,15 @@ namespace CORBA
      *       resolve_initial_references() specification.
      */
     CORBA::Object_ptr resolve_initial_references (
-      const char *name,
+      char const *name,
       ACE_Time_Value *timeout = nullptr);
 
 #if !defined(CORBA_E_MICRO)
     /// Register an object reference with the ORB.
-    void register_initial_reference (const char * id, CORBA::Object_ptr obj);
+    void register_initial_reference (char const *id, CORBA::Object_ptr obj);
 
     /// Unregister an object reference with the ORB.
-    CORBA::Object_ptr unregister_initial_reference (const char * id);
+    CORBA::Object_ptr unregister_initial_reference (char const *id);
 #endif
 
     /// Returns a sequence of ObjectIds that lists which objects have
@@ -527,10 +527,10 @@ namespace CORBA
     void resolve_service (TAO::MCAST_SERVICEID service_id);
 
     /// Convert an OMG IOR into an object reference.
-    CORBA::Object_ptr ior_string_to_object (const char* ior);
+    CORBA::Object_ptr ior_string_to_object (char const *ior);
 
     /// Convert an URL style IOR into an object reference.
-    CORBA::Object_ptr url_ior_string_to_object (const char* ior);
+    CORBA::Object_ptr url_ior_string_to_object (char const *ior);
 
     /// Check if ORB has shutdown.  If it has, throw the appropriate
     /// exception.
