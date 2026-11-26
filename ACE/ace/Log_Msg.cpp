@@ -1199,8 +1199,7 @@ ACE_Log_Msg::log (ACE_TCHAR const *format_str,
           ACE_TCHAR const *abort_str = ACE_TEXT ("Aborting...");
           ACE_TCHAR const *start_format = format_str;
           size_t fspace = 128;
-          ACE_TCHAR format[128]; // Converted format string
-          ACE_OS::memset (format, '\0', 128); // Set this string to known values.
+          ACE_TCHAR format[128] {}; // Converted format string
           ACE_TCHAR *fp {};         // Current format pointer
           int       wp = 0;      // Width/precision extracted from args
           bool      done = false;
@@ -1217,7 +1216,6 @@ ACE_Log_Msg::log (ACE_TCHAR const *format_str,
           *fp++ = *format_str++;   // Copy in the %
           --fspace;
 
-          // Initialization to satisfy VC6
           int tmp_indent = 0;
           // Work through the format string to copy in the format
           // from the caller. While it's going across, extract ints

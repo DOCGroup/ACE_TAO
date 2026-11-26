@@ -76,14 +76,6 @@ namespace CORBA
   class TAO_Export SystemException : public Exception
   {
   public:
-    /**
-     * @note This constructor should be protected, but VC7.1 at
-     *       warning level 4 complains about the inaccessible copy
-     *       constructor preventing it from being caught.  However,
-     *       that probably isn't true for most cases since CORBA
-     *       exceptions are typically caught by reference, not by
-     *       copy.
-     */
     SystemException (SystemException const & src);
 
     ~SystemException () override = default;

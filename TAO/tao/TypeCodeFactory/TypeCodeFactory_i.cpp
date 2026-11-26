@@ -553,7 +553,6 @@ TAO_TypeCodeFactory_i::create_union_tc (
       element->type (member.type.in ());
     }
 
-  // @@ Blame this on MSVC++ 6 workarounds.  *sigh*
   CORBA::TypeCode_var const duped_disc_type (
     CORBA::TypeCode::_duplicate (discriminator_type));
 
