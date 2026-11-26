@@ -134,7 +134,7 @@ EC_Master::run (int argc, ACE_TCHAR* argv[])
 
       this->orb_->destroy ();
    }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("EC_Driver::run");
     }
@@ -356,7 +356,7 @@ EC_Observer::connect_consumer (
 
 void
 EC_Observer::consumer_push (void*,
-                            const RtecEventComm::EventSet&)
+                            RtecEventComm::EventSet const &)
 {
   unsigned int x = ACE_OS::rand_r (&this->seed_);
   if (x < (RAND_MAX / 64))

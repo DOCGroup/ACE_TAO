@@ -30,7 +30,7 @@ public:
 
   /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
+                RtecEventChannelAdmin::ConsumerQOS const &qos);
   void disconnect ();
   void deactivate ();
 
@@ -41,7 +41,7 @@ public:
   /// @name RtecEventComm::PushConsumer operations
   /// @{
   /// The skeleton methods.
-  void push (const RtecEventComm::EventSet& events) override;
+  void push (RtecEventComm::EventSet const & events) override;
   void disconnect_push_consumer () override;
   /// @}
 

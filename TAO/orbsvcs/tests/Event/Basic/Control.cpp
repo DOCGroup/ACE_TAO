@@ -133,7 +133,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       consumer0.dump_results (100, 5);
       consumer1.dump_results (200, 5);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -151,7 +151,7 @@ Consumer::Consumer (char const *name,
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const & events)
 {
   if (events.length () == 0)
     {

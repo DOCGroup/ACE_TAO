@@ -256,7 +256,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Random");
       return 1;
@@ -265,7 +265,7 @@ RND_Driver::run (int argc, ACE_TCHAR *argv[])
 }
 
 void
-RND_Driver::timer (const RtecEventComm::Event &e)
+RND_Driver::timer (RtecEventComm::Event const &e)
 {
   int const n = ACE_OS::rand () % 20;
 
@@ -346,7 +346,7 @@ RND_Driver::timer (const RtecEventComm::Event &e)
 }
 
 void
-RND_Driver::event (const RtecEventComm::Event &e)
+RND_Driver::event (RtecEventComm::Event const &e)
 {
   this->timer (e);
 }
@@ -354,13 +354,13 @@ RND_Driver::event (const RtecEventComm::Event &e)
 // ****************************************************************
 
 void
-RND_Timer::push (const RtecEventComm::EventSet &event)
+RND_Timer::push (RtecEventComm::EventSet const &event)
 {
   try
     {
       this->driver_->timer (event[0]);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
 }
@@ -369,7 +369,7 @@ RND_Timer::push (const RtecEventComm::EventSet &event)
 
 void
 RND_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
-                       const RtecEventChannelAdmin::ConsumerQOS &qos)
+                       RtecEventChannelAdmin::ConsumerQOS const &qos)
 {
   RtecEventChannelAdmin::ProxyPushSupplier_var proxy;
   {
@@ -403,7 +403,7 @@ RND_Consumer::disconnect ()
 }
 
 void
-RND_Consumer::push (const RtecEventComm::EventSet &event)
+RND_Consumer::push (RtecEventComm::EventSet const &event)
 {
   this->driver_->event (event[0]);
 }
@@ -417,7 +417,7 @@ RND_Consumer::disconnect_push_consumer ()
 
 void
 RND_Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
-                       const RtecEventChannelAdmin::SupplierQOS &qos)
+                       RtecEventChannelAdmin::SupplierQOS const &qos)
 {
   RtecEventChannelAdmin::ProxyPushConsumer_var proxy;
   {
@@ -501,7 +501,7 @@ RND_Supplier::svc ()
 
           this->push_new_event ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
         }
       if (this->verbose_

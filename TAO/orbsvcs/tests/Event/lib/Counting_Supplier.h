@@ -46,11 +46,11 @@ public:
                 int event_source,
                 int event_type);
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                const RtecEventChannelAdmin::SupplierQOS &qos);
+                RtecEventChannelAdmin::SupplierQOS const &qos);
   void disconnect ();
 
   /// The Consumer side methods.
-  void push (const RtecEventComm::EventSet& events);
+  void push (RtecEventComm::EventSet const & events);
   void disconnect_push_consumer ();
 
   /// The skeleton methods.

@@ -39,7 +39,7 @@ public:
   /// ConsumerAdmin, we do the rest.
   virtual void connect (
       RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-      const RtecEventChannelAdmin::ConsumerQOS& qos,
+      RtecEventChannelAdmin::ConsumerQOS const & qos,
       int shutdown_event_type);
 
   /**
@@ -48,7 +48,7 @@ public:
    * tests).
    */
   virtual void connect (
-      const RtecEventChannelAdmin::ConsumerQOS& qos,
+      RtecEventChannelAdmin::ConsumerQOS const & qos,
       int shutdown_event_type);
 
   /// returns 0 if it is not connected
@@ -72,7 +72,7 @@ public:
   /// @name RtecEventComm::PushConsumer operations
   /// @{
   /// The skeleton methods.
-  void push (const RtecEventComm::EventSet& events) override;
+  void push (RtecEventComm::EventSet const & events) override;
   void disconnect_push_consumer () override;
   /// @}
 

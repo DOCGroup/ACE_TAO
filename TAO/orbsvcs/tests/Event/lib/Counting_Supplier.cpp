@@ -73,7 +73,7 @@ EC_Counting_Supplier::connect (
 void
 EC_Counting_Supplier::connect (
     RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-    const RtecEventChannelAdmin::SupplierQOS &qos)
+    RtecEventChannelAdmin::SupplierQOS const &qos)
 {
   RtecEventComm::PushSupplier_var supplier =
     this->_this ();
@@ -107,7 +107,7 @@ EC_Counting_Supplier::disconnect ()
 }
 
 void
-EC_Counting_Supplier::push (const RtecEventComm::EventSet&)
+EC_Counting_Supplier::push (RtecEventComm::EventSet const &)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
   {
@@ -154,7 +154,7 @@ EC_Counting_Supplier_Task::svc ()
     {
       this->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }

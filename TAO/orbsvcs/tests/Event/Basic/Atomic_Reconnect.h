@@ -36,7 +36,7 @@ public:
 
   /// @name RtecEventComm::PushConsumer operations
   /// @{
-  void push (const RtecEventComm::EventSet& events) override;
+  void push (RtecEventComm::EventSet const & events) override;
   /// @}
 
   /// Number of events of type @c event_base_type_ received.

@@ -50,11 +50,11 @@ public:
   void send_event (int event_number);
 
   /// Send @a event to the EC.
-  void send_event (const RtecEventComm::EventSet& event);
+  void send_event (RtecEventComm::EventSet const & event);
 
   /// Set the event type and source in @a event.
   void send_event (int event_number,
-                   const RtecEventComm::Event& event);
+                   RtecEventComm::Event const & event);
 
   /// Send a shutdown event.
   void send_shutdown ();
@@ -63,12 +63,12 @@ public:
   /// computed by the user
   virtual void connect (
         RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-        const RtecEventChannelAdmin::SupplierQOS& qos,
+        RtecEventChannelAdmin::SupplierQOS const & qos,
         int shutdown_event_type);
 
   /// Connect using the current consumer_proxy (useful for reconnect test)
   virtual void connect (
-        const RtecEventChannelAdmin::SupplierQOS& qos,
+        RtecEventChannelAdmin::SupplierQOS const & qos,
         int shutdown_event_type);
 
   /// Disconnect from the EC, also deactivates the object

@@ -244,7 +244,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         + supplier.event_count;
       regular_consumer.dump_results (expected, 5);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Service");
       return 1;

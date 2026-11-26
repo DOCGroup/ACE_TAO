@@ -133,11 +133,11 @@ EC_Reconnect::execute_consumer_test ()
 
           ACE_DEBUG ((LM_ERROR, "Expected exception\n"));
         }
-      catch (const RtecEventChannelAdmin::AlreadyConnected&)
+      catch (RtecEventChannelAdmin::AlreadyConnected const &)
         {
           /* do nothing */
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception ("Expected AlreadyConnected exception");
         }
@@ -187,11 +187,11 @@ EC_Reconnect::execute_supplier_test ()
 
           ACE_DEBUG ((LM_ERROR, "Expected exception\n"));
         }
-      catch (const RtecEventChannelAdmin::AlreadyConnected&)
+      catch (RtecEventChannelAdmin::AlreadyConnected const &)
         {
           /* do nothing */
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception ("Expected AlreadyConnected exception");
         }

@@ -168,7 +168,7 @@ public:
 
   /// One of the consumers in the test has received an event
   virtual void consumer_push (void* consumer_cookie,
-                              const RtecEventComm::EventSet& event);
+                              RtecEventComm::EventSet const & event);
 
   /// One of the consumers has received a shutdown event
   virtual void consumer_shutdown (void* consumer_cookie);

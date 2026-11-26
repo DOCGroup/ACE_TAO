@@ -17,7 +17,7 @@ EC_Consumer::EC_Consumer (EC_Driver *driver,
 void
 EC_Consumer::connect (
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-    const RtecEventChannelAdmin::ConsumerQOS& qos,
+    RtecEventChannelAdmin::ConsumerQOS const & qos,
     int shutdown_event_type)
 {
   this->supplier_proxy_ =
@@ -28,7 +28,7 @@ EC_Consumer::connect (
 
 void
 EC_Consumer::connect (
-    const RtecEventChannelAdmin::ConsumerQOS& qos,
+    RtecEventChannelAdmin::ConsumerQOS const & qos,
     int shutdown_event_type)
 {
   if (CORBA::is_nil (this->supplier_proxy_.in ()))
@@ -100,7 +100,7 @@ EC_Consumer::accumulate (ACE_Throughput_Stats& throughput) const
 }
 
 void
-EC_Consumer::push (const RtecEventComm::EventSet& events)
+EC_Consumer::push (RtecEventComm::EventSet const & events)
 {
   this->driver_->consumer_push (this->cookie_, events);
 
@@ -129,7 +129,7 @@ EC_Consumer::push (const RtecEventComm::EventSet& events)
 
   for (u_int i = 0; i < events.length (); ++i)
     {
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const & e = events[i];
 
       ACE_hrtime_t creation;
       ORBSVCS_Time::TimeT_to_hrtime (creation,

@@ -159,7 +159,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       conjunction_consumer.dump_results (25, 5);
       deadline_consumer.dump_results (100, 5);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Service");
       return 1;

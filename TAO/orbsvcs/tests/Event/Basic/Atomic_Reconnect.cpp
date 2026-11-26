@@ -181,7 +181,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                                task1.push_count (),
                                1);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Service");
       return 1;
@@ -250,7 +250,7 @@ Consumer::dump_results (int base_count,
 }
 
 void
-Consumer::push (const RtecEventComm::EventSet& events)
+Consumer::push (RtecEventComm::EventSet const & events)
 {
   if (events.length () == 0)
     {

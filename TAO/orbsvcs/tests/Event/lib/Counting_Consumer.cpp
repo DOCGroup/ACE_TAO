@@ -9,7 +9,7 @@ EC_Counting_Consumer::EC_Counting_Consumer (char const *name)
 
 void
 EC_Counting_Consumer::connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
-                   const RtecEventChannelAdmin::ConsumerQOS &qos)
+                   RtecEventChannelAdmin::ConsumerQOS const &qos)
 {
   // The canonical protocol to connect to the EC
 
@@ -71,7 +71,7 @@ EC_Counting_Consumer::dump_results (int expected_count, int tolerance)
 }
 
 void
-EC_Counting_Consumer::push (const RtecEventComm::EventSet& events)
+EC_Counting_Consumer::push (RtecEventComm::EventSet const & events)
 {
   if (events.length () == 0)
     {

@@ -30,11 +30,11 @@ public:
   RND_Consumer (RND_Consumer &&) = delete;
   RND_Consumer &operator= (RND_Consumer &&) = delete;
 
-  void push (const RtecEventComm::EventSet &event) override;
+  void push (RtecEventComm::EventSet const &event) override;
   void disconnect_push_consumer () override;
 
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr admin,
-                const RtecEventChannelAdmin::ConsumerQOS &qos);
+                RtecEventChannelAdmin::ConsumerQOS const &qos);
   void disconnect ();
 
 protected:
@@ -65,7 +65,7 @@ public:
   RND_Timer (RND_Timer &&) = delete;
   RND_Timer &operator= (RND_Timer &&) = delete;
 
-  void push (const RtecEventComm::EventSet &event) override;
+  void push (RtecEventComm::EventSet const &event) override;
 };
 
 inline
@@ -91,7 +91,7 @@ public:
   RND_Supplier &operator= (RND_Supplier &&) = delete;
 
   void connect (RtecEventChannelAdmin::SupplierAdmin_ptr admin,
-                const RtecEventChannelAdmin::SupplierQOS &qos);
+                RtecEventChannelAdmin::SupplierQOS const &qos);
   void disconnect ();
 
   /// Push a single event...
@@ -135,10 +135,10 @@ public:
   int run (int argc, ACE_TCHAR *argv[]);
 
   /// The main timer has expired
-  void timer (const RtecEventComm::Event &e);
+  void timer (RtecEventComm::Event const &e);
 
   /// One of the consumers has received an event
-  void event (const RtecEventComm::Event &e);
+  void event (RtecEventComm::Event const &e);
 
 private:
   /// The main timer

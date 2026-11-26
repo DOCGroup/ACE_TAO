@@ -103,7 +103,7 @@ public:
     RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
     int i) override;
   void consumer_push (void*,
-                      const RtecEventComm::EventSet&) override;
+                      RtecEventComm::EventSet const &) override;
   /// @}
 
 private:

@@ -47,7 +47,7 @@ EC_Supplier::send_event (int event_number)
 }
 
 void
-EC_Supplier::send_event (const RtecEventComm::EventSet& event)
+EC_Supplier::send_event (RtecEventComm::EventSet const & event)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 
@@ -105,7 +105,7 @@ EC_Supplier::event_type (int event_number,
 
 void
 EC_Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
-                      const RtecEventChannelAdmin::SupplierQOS& qos,
+                      RtecEventChannelAdmin::SupplierQOS const & qos,
                       int shutdown_event_type)
 {
   this->consumer_proxy_ =
@@ -115,7 +115,7 @@ EC_Supplier::connect (RtecEventChannelAdmin::SupplierAdmin_ptr supplier_admin,
 }
 
 void
-EC_Supplier::connect (const RtecEventChannelAdmin::SupplierQOS& qos,
+EC_Supplier::connect (RtecEventChannelAdmin::SupplierQOS const & qos,
                       int shutdown_event_type)
 {
   if (CORBA::is_nil (this->consumer_proxy_.in ()))
@@ -246,11 +246,11 @@ EC_Supplier_Task::svc ()
 
               this->supplier_->send_event (event);
             }
-          catch (const CORBA::SystemException& sys_ex)
+          catch (CORBA::SystemException const & sys_ex)
             {
               sys_ex._tao_print_exception ("SYS_EX");
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const & ex)
             {
               ex._tao_print_exception ("SYS_EX");
             }
@@ -267,11 +267,11 @@ EC_Supplier_Task::svc ()
                                      now);
       this->supplier_->send_event (event);
     }
-  catch (const CORBA::SystemException& sys_ex)
+  catch (CORBA::SystemException const & sys_ex)
     {
       sys_ex._tao_print_exception ("SYS_EX");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("SYS_EX");
     }

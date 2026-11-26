@@ -51,7 +51,7 @@ EC_Consumer::EC_Consumer (CORBA::ORB_var orb,
 }
 
 void
-EC_Consumer::push (const RtecEventComm::EventSet &events)
+EC_Consumer::push (RtecEventComm::EventSet const &events)
 {
   for (CORBA::ULong i {}; i < events.length (); ++i)
     {

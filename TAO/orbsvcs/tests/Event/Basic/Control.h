@@ -30,7 +30,7 @@ public:
 
   /// @name RtecEventComm::PushConsumer operations
   /// @{
-  void push (const RtecEventComm::EventSet& events) override;
+  void push (RtecEventComm::EventSet const & events) override;
   /// @}
 
 private:

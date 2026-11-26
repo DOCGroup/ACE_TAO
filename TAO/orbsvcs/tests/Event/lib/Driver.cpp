@@ -70,7 +70,7 @@ EC_Driver::run (int argc, ACE_TCHAR* argv[])
 
       this->run_cleanup ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("EC_Driver::run");
       ++retval;
@@ -999,7 +999,7 @@ EC_Driver::decode_supplier_cookie (void* cookie) const
 
 void
 EC_Driver::consumer_push (void*,
-                          const RtecEventComm::EventSet&)
+                          RtecEventComm::EventSet const &)
 {
 }
 
