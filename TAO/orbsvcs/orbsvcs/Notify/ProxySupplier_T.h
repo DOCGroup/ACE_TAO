@@ -38,22 +38,22 @@ public:
   ~TAO_Notify_ProxySupplier_T () override = default;
 
   /// Notification of subscriptions set at the admin.
-  void admin_types_changed (const CosNotification::EventTypeSeq & added,
-                            const CosNotification::EventTypeSeq & removed) override;
+  void admin_types_changed (CosNotification::EventTypeSeq const &added,
+                            CosNotification::EventTypeSeq const &removed) override;
 
   /// @name POA_Notify_Internal event-forwarding methods
   /// @{
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_structured (const CosNotification::StructuredEvent & event);
+  virtual void forward_structured (CosNotification::StructuredEvent const &event);
 
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_structured_no_filtering (const CosNotification::StructuredEvent & event);
+  virtual void forward_structured_no_filtering (CosNotification::StructuredEvent const &event);
 
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_any (const CORBA::Any & event);
+  virtual void forward_any (CORBA::Any const &event);
 
   /// POA_Notify_Internal::Event_Forwarder method
-  virtual void forward_any_no_filtering (const CORBA::Any & event);
+  virtual void forward_any_no_filtering (CORBA::Any const &event);
   /// @}
 
 protected:

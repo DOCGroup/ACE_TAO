@@ -34,7 +34,7 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::_remove_ref ()
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy_T<SERVANT_TYPE>::validate_event_qos (const CosNotification::QoSProperties & /*required_qos*/, CosNotification::NamedPropertyRangeSeq_out /*available_qos*/)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::validate_event_qos (CosNotification::QoSProperties const &/*required_qos*/, CosNotification::NamedPropertyRangeSeq_out /*available_qos*/)
 {
   throw CORBA::NO_IMPLEMENT ();
 }
@@ -49,7 +49,7 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::get_qos ()
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_Proxy_T<SERVANT_TYPE>::set_qos (const CosNotification::QoSProperties & qos)
+TAO_Notify_Proxy_T<SERVANT_TYPE>::set_qos (CosNotification::QoSProperties const &qos)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -59,7 +59,7 @@ TAO_Notify_Proxy_T<SERVANT_TYPE>::set_qos (const CosNotification::QoSProperties 
 
 template <class SERVANT_TYPE> void
 TAO_Notify_Proxy_T<SERVANT_TYPE>::validate_qos (
-                                            const CosNotification::QoSProperties & /*required_qos*/,
+                                            CosNotification::QoSProperties const &/*required_qos*/,
                                             CosNotification::NamedPropertyRangeSeq_out /*available_qos*/)
 {
   throw CORBA::NO_IMPLEMENT ();
