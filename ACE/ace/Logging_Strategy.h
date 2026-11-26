@@ -89,7 +89,7 @@ public:
    * size exceeds @c max_size_, the current logfile is closed, saved to
    * logfile.old, and a new logfile is reopened.
    */
-  int handle_timeout (const ACE_Time_Value& tv, const void* arg) override;
+  int handle_timeout (ACE_Time_Value const& tv, void const* arg) override;
   /**
    * This function helps to cancel timer events for this logging strategy
    * in reactor during shutdown.

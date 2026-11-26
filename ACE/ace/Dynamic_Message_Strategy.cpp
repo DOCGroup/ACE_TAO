@@ -27,7 +27,7 @@ ACE_Dynamic_Message_Strategy::ACE_Dynamic_Message_Strategy (unsigned long static
 
 ACE_Dynamic_Message_Strategy::Priority_Status
 ACE_Dynamic_Message_Strategy::priority_status (ACE_Message_Block & mb,
-                                               const ACE_Time_Value & tv)
+                                               ACE_Time_Value const & tv)
 {
   // default the message to have pending priority status
   Priority_Status status = ACE_Dynamic_Message_Strategy::PENDING;
@@ -119,7 +119,7 @@ ACE_Deadline_Message_Strategy::ACE_Deadline_Message_Strategy (unsigned long stat
 /// Dynamic priority conversion function based on time to deadline.
 void
 ACE_Deadline_Message_Strategy::convert_priority (ACE_Time_Value & priority,
-                                                 const ACE_Message_Block & mb)
+                                                 ACE_Message_Block const & mb)
 {
   // Convert absolute time passed in tv to negative time
   // to deadline of mb with respect to that absolute time.
@@ -157,7 +157,7 @@ ACE_Laxity_Message_Strategy::ACE_Laxity_Message_Strategy (unsigned long static_b
 /// Dynamic priority conversion function based on laxity.
 void
 ACE_Laxity_Message_Strategy::convert_priority (ACE_Time_Value & priority,
-                                               const ACE_Message_Block & mb)
+                                               ACE_Message_Block const & mb)
 {
   // Convert absolute time passed in tv to negative
   // laxity of mb with respect to that absolute time.

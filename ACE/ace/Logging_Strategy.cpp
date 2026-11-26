@@ -471,7 +471,7 @@ ACE_Logging_Strategy::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-ACE_Logging_Strategy::handle_timeout (const ACE_Time_Value &, const void *)
+ACE_Logging_Strategy::handle_timeout (ACE_Time_Value const &, void const *)
 {
 #if defined (ACE_LACKS_IOSTREAM_TOTALLY)
   if ((size_t) ACE_OS::ftell (this->log_msg_->msg_ostream ()) > this->max_size_)

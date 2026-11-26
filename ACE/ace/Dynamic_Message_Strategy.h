@@ -66,7 +66,7 @@ public:
 
   /// Updates the message's priority and returns its priority status.
   Priority_Status priority_status (ACE_Message_Block &mb,
-                                   const ACE_Time_Value &tv);
+                                   ACE_Time_Value const &tv);
 
   /// Get static bit field mask.
   unsigned long static_bit_field_mask () const;
@@ -98,7 +98,7 @@ public:
 protected:
   /// Hook method for dynamic priority conversion.
   virtual void convert_priority (ACE_Time_Value &priority,
-                                 const ACE_Message_Block &mb) = 0;
+                                 ACE_Message_Block const &mb) = 0;
 
   /// This is a bit mask with all ones in the static bit field.
   unsigned long static_bit_field_mask_;
@@ -157,7 +157,7 @@ public:
 
   /// Dynamic priority conversion function based on time to deadline.
   void convert_priority (ACE_Time_Value &priority,
-                         const ACE_Message_Block &mb) override;
+                         ACE_Message_Block const &mb) override;
 
   /// Dump the state of the strategy.
   void dump () const override;
@@ -195,7 +195,7 @@ public:
 
   /// Dynamic priority conversion function based on laxity.
   void convert_priority (ACE_Time_Value &priority,
-                         const ACE_Message_Block &mb) override;
+                         ACE_Message_Block const &mb) override;
 
   /// Dump the state of the strategy.
   void dump () const override;
