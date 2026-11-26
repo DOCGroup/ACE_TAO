@@ -44,7 +44,6 @@ class TAO_PortableGroup_Export TAO_GOA :
     public virtual TAO_Regular_POA
 {
 public:
-  // Methods added by the
   /// @name MIOP specification methods
   /// @{
   PortableServer::ObjectId * create_id_for_reference (
@@ -62,7 +61,8 @@ public:
       PortableServer::ObjectId const & oid) override;
   /// @}
 
-  // Standard POA interface methods
+  /// @name Standard POA interface methods
+  /// @{
   PortableServer::POA_ptr create_POA (char const *adapter_name,
                                       PortableServer::POAManager_ptr poa_manager,
                                       CORBA::PolicyList const &policies) override;
@@ -152,7 +152,7 @@ public:
 
   CORBA::OctetSeq *id () override;
 
-  // End standard POA interface methods.
+  /// @}
 
   TAO_GOA (String const &name,
            PortableServer::POAManager_ptr poa_manager,
