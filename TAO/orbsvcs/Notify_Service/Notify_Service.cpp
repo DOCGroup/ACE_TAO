@@ -357,7 +357,7 @@ TAO_Notify_Service_Driver::resolve_naming_service ()
 
       this->naming_ = CosNaming::NamingContextExt::_narrow (naming_obj.in ());
     }
-  catch (const CORBA::Exception &)
+  catch (CORBA::Exception const &)
     {
         ORBSVCS_ERROR_RETURN ((LM_ERROR,
                            " (%P|%t) Unable to resolve the Naming Service.\n"),
@@ -805,7 +805,7 @@ Worker::svc ()
           this->orb_->run ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
   return 0;

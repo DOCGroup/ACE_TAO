@@ -247,7 +247,7 @@ TAO_NT_Notify_Service::svc ()
       report_status (SERVICE_RUNNING);
       notify_service.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (ACE_TEXT ("TAO NT Notify Service"));
       return -1;

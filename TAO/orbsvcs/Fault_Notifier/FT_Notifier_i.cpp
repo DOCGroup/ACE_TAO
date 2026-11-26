@@ -200,7 +200,7 @@ int TAO::FT_FaultNotifier_i::fini ()
         "FaultNotifier unregistered from ReplicationManager.\n"
         ));
     }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const&)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
         "FaultNotifier Can't unregister from ReplicationManager.\n"
@@ -366,7 +366,7 @@ int TAO::FT_FaultNotifier_i::init (CORBA::ORB_ptr orb )
         ORBSVCS_ERROR ((LM_ERROR,"FaultNotifier: Can't resolve ReplicationManager, It will not be registered.\n" ));
       }
     }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         "FaultNotifier: Exception resolving ReplicationManager.  Notifier will not be registered.\n");
