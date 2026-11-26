@@ -85,8 +85,8 @@ public:
                     ACE_Reactor *reactor,
                     int version_major,
                     int version_minor,
-                    const char *address,
-                    const char *options = nullptr) = 0;
+                    char const *address,
+                    char const *options = nullptr) = 0;
 
   /**
    * Open an acceptor with the given protocol version on a default
@@ -96,7 +96,7 @@ public:
                             ACE_Reactor *reactor,
                             int version_major,
                             int version_minor,
-                            const char *options = nullptr) = 0;
+                            char const *options = nullptr) = 0;
 
   /// Closes the acceptor
   virtual int close () = 0;

@@ -60,34 +60,34 @@ public:
   ~TAO_TypeCodeFactory_Adapter () override;
 
   virtual CORBA::TypeCode_ptr create_struct_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       const CORBA::StructMemberSeq &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_union_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr discriminator_type,
       const CORBA::UnionMemberSeq &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_enum_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       const CORBA::EnumMemberSeq &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_alias_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr original_type) = 0;
 
   virtual CORBA::TypeCode_ptr create_exception_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       const CORBA::StructMemberSeq &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_interface_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_string_tc (
       CORBA::ULong bound) = 0;
@@ -108,42 +108,42 @@ public:
       CORBA::TypeCode_ptr element_type) = 0;
 
   virtual CORBA::TypeCode_ptr create_value_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
       const CORBA::ValueMemberSeq &members) = 0;
 
   virtual CORBA::TypeCode_ptr create_value_box_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::TypeCode_ptr boxed_type) = 0;
 
   virtual CORBA::TypeCode_ptr create_native_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
-  virtual CORBA::TypeCode_ptr create_recursive_tc (const char *id) = 0;
+  virtual CORBA::TypeCode_ptr create_recursive_tc (char const *id) = 0;
 
   virtual CORBA::TypeCode_ptr create_abstract_interface_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_local_interface_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_component_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_home_tc (
-      const char *id,
-      const char *name) = 0;
+      char const *id,
+      char const *name) = 0;
 
   virtual CORBA::TypeCode_ptr create_event_tc (
-      const char *id,
-      const char *name,
+      char const *id,
+      char const *name,
       CORBA::ValueModifier type_modifier,
       CORBA::TypeCode_ptr concrete_base,
       const CORBA::ValueMemberSeq &members) = 0;
