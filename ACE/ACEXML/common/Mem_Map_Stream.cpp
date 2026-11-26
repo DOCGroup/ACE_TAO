@@ -6,12 +6,7 @@
 
 #include "ACEXML/common/Mem_Map_Stream.h"
 
-ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream ()
-  : recv_pos_ (nullptr),
-    get_pos_ (nullptr),
-    end_of_mapping_plus1_ (nullptr)
-{
-}
+ACEXML_Mem_Map_Stream::ACEXML_Mem_Map_Stream () = default;
 
 ACE_SOCK_Stream &
 ACEXML_Mem_Map_Stream::stream ()
