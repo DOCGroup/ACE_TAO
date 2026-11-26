@@ -1,6 +1,8 @@
 #include "orbsvcs/Log_Macros.h"
 #include "orbsvcs/CosEvent/CEC_MT_Dispatching.h"
 
+#include <memory>
+
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_CEC_MT_Dispatching::TAO_CEC_MT_Dispatching (int nthreads,
@@ -12,7 +14,7 @@ TAO_CEC_MT_Dispatching::TAO_CEC_MT_Dispatching (int nthreads,
      thread_creation_flags_ (thread_creation_flags),
      thread_priority_ (thread_priority),
      force_activate_ (force_activate),
-     task_ (&this->thread_manager_),
+     task_ (std::addressof (this->thread_manager_)),
      wait_for_shutdown_thread_completion_(shutdown_completion)
 {
 }
