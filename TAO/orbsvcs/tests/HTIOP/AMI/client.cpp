@@ -13,7 +13,7 @@
 #include "ami_testC.h"
 #include "ami_testS.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int nthreads = 5;
 int niterations = 5;
 int debug = 0;

@@ -62,11 +62,11 @@ ACE_Test_Output::output_file ()
 }
 
 int
-ACE_Test_Output::set_output (const ACE_TCHAR *filename, int append)
+ACE_Test_Output::set_output (ACE_TCHAR const *filename, int append)
 {
   ACE_TCHAR temp[MAXPATHLEN];
   // Ignore the error value since the directory may already exist.
-  const ACE_TCHAR *test_dir {};
+  ACE_TCHAR const *test_dir {};
 
 #  if defined (ACE_WIN32) || !defined (ACE_USES_WCHAR)
   test_dir = ACE_OS::getenv (ACE_TEXT ("ACE_TEST_DIR"));
@@ -178,13 +178,13 @@ ACE_Test_Output::instance ()
   return ACE_Test_Output::instance_;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Test_Output::dll_name ()
 {
   return ACE_TEXT ("Test_Output");
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Test_Output::name ()
 {
   return ACE_TEXT ("ACE_Test_Output");
