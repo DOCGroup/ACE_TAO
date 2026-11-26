@@ -80,7 +80,7 @@ client (void *arg)
     }
 
   ACE_TCHAR const file[] = ACE_TEXT ("Sendfile_Test_File");
-  static const size_t file_sz = sizeof (file) / sizeof (file[0]);
+  static size_t const file_sz = sizeof (file) / sizeof (file[0]);
   ACE_TCHAR test_file[MAXPATHLEN + 1];
   ACE_HANDLE in_fd = ACE_INVALID_HANDLE;
   if (ACE::get_temp_dir (test_file, MAXPATHLEN - file_sz) == -1

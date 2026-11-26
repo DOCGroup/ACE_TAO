@@ -180,7 +180,7 @@ namespace {
   struct IovecGuard
   {
     IovecGuard(const int count, const int slot, const buffer_len max);
-    char* getBufferAtOffset(const ssize_t offset);
+    char* getBufferAtOffset(ssize_t const offset);
 
     const int iovcnt_;
     buffer_len totalBytes_;
@@ -258,7 +258,7 @@ IovecGuard::IovecGuard(const int count, const int slot, const buffer_len max)
 }
 
 char*
-IovecGuard::getBufferAtOffset(const ssize_t offset)
+IovecGuard::getBufferAtOffset(ssize_t const offset)
 {
   return this->buffer_.get () + offset;
 }
@@ -298,7 +298,7 @@ Svc_Handler::send_data ()
     {
       buffer_len tryThreshold = 0x7fff;
       ssize_t thresholdActualSend = -1;
-      const ssize_t MAX =
+      ssize_t const MAX =
         static_cast<ssize_t>(
           (static_cast<unsigned long long>(1) <<
             (static_cast<unsigned long long>(sizeof(ssize_t) * 8) -
@@ -591,8 +591,8 @@ Svc_Handler::send_data ()
 ssize_t
 Svc_Handler::send (IovecGuard& iovec_array,
                    ACE_TCHAR const * const send_desc,
-                   const bool use_sendv,
-                   const bool test_message)
+                   bool const use_sendv,
+                   bool const test_message)
 {
   ++expected_num_messages;
   ACE_TCHAR const * const send_func_name =
@@ -729,7 +729,7 @@ Svc_Handler::send (IovecGuard& iovec_array,
   ssize_t send_status;
   while (send_remainder > 0)
     {
-      const ssize_t sendSize =
+      ssize_t const sendSize =
         (send_remainder < 10000) ? send_remainder : 10000;
       ACE_OS::sleep(0);
       send_status = this->peer ().send (offset, sendSize, &DEFAULT_TIME_VALUE);

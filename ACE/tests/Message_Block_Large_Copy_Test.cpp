@@ -11,9 +11,9 @@
 #include "ace/OS_NS_string.h"
 
 size_t
-run_duplicate_test (const size_t msg_block_count,
+run_duplicate_test (size_t const msg_block_count,
                     char const * block,
-                    const size_t msg_block_size)
+                    size_t const msg_block_size)
 {
     size_t rc = 0;
 
@@ -52,9 +52,9 @@ run_duplicate_test (const size_t msg_block_count,
 }
 
 size_t
-run_clone_test (const size_t msg_block_count,
+run_clone_test (size_t const msg_block_count,
                 char const * block,
-                const size_t msg_block_size)
+                size_t const msg_block_size)
 {
     size_t rc = 0;
 
@@ -100,9 +100,9 @@ run_main (int , ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Message_Block_Large_Copy_Test"));
   {
     // Message_Block size() and Length() of 24,000,000
-    const size_t MSG_BLOCK_COUNT = 8000;
-    const size_t MSG_BLOCK_SIZE  = 3000;
-    const size_t MSG_BLOCK_TOTAL = MSG_BLOCK_COUNT * MSG_BLOCK_SIZE;
+    size_t const MSG_BLOCK_COUNT = 8000;
+    size_t const MSG_BLOCK_SIZE  = 3000;
+    size_t const MSG_BLOCK_TOTAL = MSG_BLOCK_COUNT * MSG_BLOCK_SIZE;
 
     ACE_ERROR ((LM_DEBUG,
                 ACE_TEXT ("(%P|%t) %B blocks %B bytes each, total %B\n"),
