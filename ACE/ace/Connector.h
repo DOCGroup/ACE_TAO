@@ -361,6 +361,7 @@ protected:
 
   /// @name Dynamic linking hooks
   /// @{
+
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int init (int argc, ACE_TCHAR *argv[]) override;
@@ -368,12 +369,13 @@ protected:
   /// Calls handle_close() to shutdown the Connector gracefully.
   int fini () override;
 
-  /// Default version returns address info in @a buf.
+  /// Default version returns address info in @a strp.
   int info (ACE_TCHAR **strp, size_t length) const override;
   /// @}
 
   /// @name Service management hooks
   /// @{
+
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int suspend () override;

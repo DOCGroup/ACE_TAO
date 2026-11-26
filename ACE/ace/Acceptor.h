@@ -210,6 +210,7 @@ protected:
 
   /// @name Demultiplexing hooks
   /// @{
+
   /// Perform termination activities when {this} is removed from the
   /// {reactor}.
   int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
@@ -222,6 +223,7 @@ protected:
 
   /// @name Dynamic linking hooks
   /// @{
+
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int init (int argc, ACE_TCHAR *argv[]) override;
@@ -236,6 +238,7 @@ protected:
 public:
   /// @name Service management hooks
   /// @{
+
   /// This method calls {Reactor::suspend}.
   int suspend () override;
 
@@ -455,6 +458,7 @@ protected:
 
   /// @name Demultiplexing hooks
   /// @{
+
   /// Perform termination activities when {this} is removed from the
   /// {Reactor}.
   int handle_close (ACE_HANDLE = ACE_INVALID_HANDLE,
@@ -583,6 +587,7 @@ public:
 
   /// @name Explicit factory operation
   /// @{
+
   /// Create a {SVC_HANDLER}, accept the connection into the
   /// {SVC_HANDLER}, and activate the {SVC_HANDLER}.
   virtual int accept (SVC_HANDLER * = nullptr,
@@ -631,6 +636,7 @@ protected:
 
   /// @name Demultiplexing hooks
   /// @{
+
   /// Returns the listening acceptor's {ACE_HANDLE}.
   ACE_HANDLE get_handle () const override;
 
@@ -650,6 +656,7 @@ protected:
 
   /// @name Dynamic linking hooks
   /// @{
+
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int init (int argc, ACE_TCHAR *argv[]) override;
@@ -664,6 +671,7 @@ protected:
 
   /// @name Service management hooks
   /// @{
+
   /// Default version does no work and returns -1.  Must be overloaded
   /// by application developer to do anything meaningful.
   int suspend () override;
