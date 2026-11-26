@@ -16,12 +16,12 @@ using DATA = size_t;
 using VECTOR = ACE_Vector<DATA>;
 using ITERATOR = ACE_Vector<DATA>::Iterator;
 
-const size_t TOP = 100;
-const size_t LEFT = 10;
-const size_t RESIZE = 20;
+size_t const TOP = 100;
+size_t const LEFT = 10;
+size_t const RESIZE = 20;
 
-const size_t FILLER1 = 1;
-const size_t FILLER2 = 2;
+size_t const FILLER1 = 1;
+size_t const FILLER2 = 2;
 
 int run_main (int, ACE_TCHAR *[])
 {
@@ -182,8 +182,8 @@ int run_main (int, ACE_TCHAR *[])
   // Assert that vector standard iterators work
   {
     VECTOR standard_vector;
-    const size_t size = 200;
-    const size_t offset = 5;
+    size_t const size = 200;
+    size_t const offset = 5;
 
     ACE_TEST_ASSERT (standard_vector.begin () == standard_vector.end ());
 

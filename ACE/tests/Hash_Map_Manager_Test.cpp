@@ -126,7 +126,7 @@ using HASH_STRING_ENTRY = ACE_Hash_Map_Entry<ACE_TCHAR const *, ACE_TCHAR const 
 // @@ The following requires too much internal implementation
 // information about the <ACE_Hash_Map_Manager>.  We need to figure
 // out how to simplify this.
-static const size_t STRING_TABLE_SIZE =
+static size_t const STRING_TABLE_SIZE =
   sizeof (HASH_STRING_ENTRY) * (STRING_TABLE_ENTRIES + MAX_HASH);
 
 static ACE_Static_Allocator<STRING_TABLE_SIZE> ace_test_allocator;

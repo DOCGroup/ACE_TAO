@@ -42,10 +42,10 @@ public:
   int operator() (KEY &key)
     {
       // Keep original information in the key intact.
-      const size_t original_size = key.size ();
+      size_t const original_size = key.size ();
 
       // Size of this counter key.
-      const size_t counter_key_size = sizeof this->counter_;
+      size_t const counter_key_size = sizeof this->counter_;
 
       // Resize to accommodate both the original data and the new key.
       key.size (counter_key_size + original_size);
@@ -87,10 +87,10 @@ public:
     {
       // Keep original information in the key intact.
       modified_key = original_key;
-      const size_t original_size = modified_key.size ();
+      size_t const original_size = modified_key.size ();
 
       // Size of active key.
-      const size_t active_key_size = active_key.size ();
+      size_t const active_key_size = active_key.size ();
 
       // Resize to accommodate both the original data and the new active key.
       modified_key.size (active_key_size + original_size);
@@ -106,8 +106,8 @@ public:
               ACE_Active_Map_Manager_Key &active_key)
     {
       // Read the active key data from the back of the key.
-      const size_t active_key_size = active_key.size ();
-      const size_t original_size = modified_key.size () - active_key_size;
+      size_t const active_key_size = active_key.size ();
+      size_t const original_size = modified_key.size () - active_key_size;
 
       // Read off value of index and generation.
       active_key.decode (std::addressof (modified_key[original_size]));
