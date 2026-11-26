@@ -31,12 +31,12 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 namespace ACE_OS
 {
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct hostent *gethostbyaddr (const char *addr,
+  struct hostent *gethostbyaddr (char const *addr,
                                  int length,
                                  int type);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct hostent *gethostbyaddr_r (const char *addr,
+  struct hostent *gethostbyaddr_r (char const *addr,
                                    int length,
                                    int type,
                                    struct hostent *result,
@@ -44,20 +44,20 @@ namespace ACE_OS
                                    int *h_errnop);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct hostent *gethostbyname (const char *name);
+  struct hostent *gethostbyname (char const *name);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct hostent *gethostbyname_r (const char *name,
+  struct hostent *gethostbyname_r (char const *name,
                                    struct hostent *result,
                                    ACE_HOSTENT_DATA buffer,
                                    int *h_errnop);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct hostent *getipnodebyaddr (const void *src, size_t len,
+  struct hostent *getipnodebyaddr (void const *src, size_t len,
                                    int family);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct hostent *getipnodebyname (const char *name, int family,
+  struct hostent *getipnodebyname (char const *name, int family,
                                    int flags = 0);
 
   /**
@@ -72,10 +72,10 @@ namespace ACE_OS
   int getmacaddress (struct macaddr_node_t *node);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct protoent *getprotobyname (const char *name);
+  struct protoent *getprotobyname (char const *name);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct protoent *getprotobyname_r (const char *name,
+  struct protoent *getprotobyname_r (char const *name,
                                      struct protoent *result,
                                      ACE_PROTOENT_DATA buffer);
 
@@ -88,24 +88,24 @@ namespace ACE_OS
                                        ACE_PROTOENT_DATA buffer);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct servent *getservbyname (const char *svc,
-                                 const char *proto);
+  struct servent *getservbyname (char const *svc,
+                                 char const *proto);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  struct servent *getservbyname_r (const char *svc,
-                                   const char *proto,
+  struct servent *getservbyname_r (char const *svc,
+                                   char const *proto,
                                    struct servent *result,
                                    ACE_SERVENT_DATA buf);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int getaddrinfo (const char *name, const char *service,
+  int getaddrinfo (char const *name, char const *service,
                    const addrinfo *hints, addrinfo **result);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   void freeaddrinfo (addrinfo *result);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  const ACE_TCHAR *gai_strerror (int errcode);
+  ACE_TCHAR const *gai_strerror (int errcode);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int getnameinfo (const sockaddr *addr, ACE_SOCKET_LEN addr_len,
@@ -115,7 +115,7 @@ namespace ACE_OS
 
 #ifdef ACE_LACKS_GETADDRINFO
   extern ACE_Export
-  int getaddrinfo_emulation (const char *name, addrinfo **result);
+  int getaddrinfo_emulation (char const *name, addrinfo **result);
 
   extern ACE_Export
   void freeaddrinfo_emulation (addrinfo *result);

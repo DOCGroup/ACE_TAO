@@ -43,7 +43,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyaddr (const char *addr, int length, int type)
+ACE_OS::gethostbyaddr (char const *addr, int length, int type)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyaddr");
 # if defined (ACE_LACKS_GETHOSTBYADDR)
@@ -87,7 +87,7 @@ ACE_OS::gethostbyaddr (const char *addr, int length, int type)
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyaddr_r (const char *addr,
+ACE_OS::gethostbyaddr_r (char const *addr,
                          int length,
                          int type,
                          struct hostent *result,
@@ -227,7 +227,7 @@ ACE_OS::gethostbyaddr_r (const char *addr,
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyname (const char *name)
+ACE_OS::gethostbyname (char const *name)
 {
   ACE_OS_TRACE ("ACE_OS::gethostbyname");
 # if defined (ACE_LACKS_GETHOSTBYNAME)
@@ -267,7 +267,7 @@ ACE_OS::gethostbyname (const char *name)
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::gethostbyname_r (const char *name,
+ACE_OS::gethostbyname_r (char const *name,
                          struct hostent *result,
                          ACE_HOSTENT_DATA buffer,
                          int *h_errnop)
@@ -404,7 +404,7 @@ ACE_OS::gethostbyname_r (const char *name,
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
+ACE_OS::getipnodebyaddr (void const *src, size_t len, int family)
 {
 #if defined (ACE_HAS_IPV6) && !defined (ACE_WIN32)
 #  if defined (ACE_LACKS_GETIPNODEBYADDR)
@@ -427,7 +427,7 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
   // IPv4-only implementation
   if (family == AF_INET)
     {
-      return ACE_OS::gethostbyaddr (static_cast<const char *> (src),
+      return ACE_OS::gethostbyaddr (static_cast<char const *> (src),
                                     static_cast<int> (len),
                                     family);
     }
@@ -437,7 +437,7 @@ ACE_OS::getipnodebyaddr (const void *src, size_t len, int family)
 }
 
 ACE_INLINE struct hostent *
-ACE_OS::getipnodebyname (const char *name, int family, int flags)
+ACE_OS::getipnodebyname (char const *name, int family, int flags)
 {
   ACE_OS_TRACE ("ACE_OS::getipnodebyname");
 # if defined (ACE_HAS_IPV6) && !defined (ACE_LACKS_GETIPNODEBYNAME_IPV6)
@@ -475,7 +475,7 @@ ACE_OS::getipnodebyname (const char *name, int family, int flags)
 }
 
 ACE_INLINE struct protoent *
-ACE_OS::getprotobyname (const char *name)
+ACE_OS::getprotobyname (char const *name)
 {
 #if defined (ACE_LACKS_GETPROTOBYNAME)
   ACE_UNUSED_ARG (name);
@@ -496,7 +496,7 @@ ACE_OS::getprotobyname (const char *name)
 }
 
 ACE_INLINE struct protoent *
-ACE_OS::getprotobyname_r (const char *name,
+ACE_OS::getprotobyname_r (char const *name,
                           struct protoent *result,
                           ACE_PROTOENT_DATA buffer)
 {
@@ -627,7 +627,7 @@ ACE_OS::getprotobynumber_r (int proto,
 }
 
 ACE_INLINE struct servent *
-ACE_OS::getservbyname (const char *svc, const char *proto)
+ACE_OS::getservbyname (char const *svc, char const *proto)
 {
   ACE_OS_TRACE ("ACE_OS::getservbyname");
 #if defined (ACE_LACKS_GETSERVBYNAME)
@@ -652,8 +652,8 @@ ACE_OS::getservbyname (const char *svc, const char *proto)
 }
 
 ACE_INLINE struct servent *
-ACE_OS::getservbyname_r (const char *svc,
-                         const char *proto,
+ACE_OS::getservbyname_r (char const *svc,
+                         char const *proto,
                          struct servent *result,
                          ACE_SERVENT_DATA buf)
 {
@@ -722,7 +722,7 @@ ACE_OS::getservbyname_r (const char *svc,
 }
 
 ACE_INLINE int
-ACE_OS::getaddrinfo (const char *name, const char *service,
+ACE_OS::getaddrinfo (char const *name, char const *service,
                      const addrinfo *hints, addrinfo **result)
 {
   ACE_OS_TRACE ("ACE_OS::getaddrinfo");
@@ -746,7 +746,7 @@ ACE_OS::freeaddrinfo (addrinfo *result)
 #endif
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_OS::gai_strerror (int errcode)
 {
   ACE_OS_TRACE ("ACE_OS::gai_strerror");

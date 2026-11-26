@@ -342,7 +342,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 
 #ifdef ACE_LACKS_GETADDRINFO
 int
-ACE_OS::getaddrinfo_emulation (const char *name, addrinfo **result)
+ACE_OS::getaddrinfo_emulation (char const *name, addrinfo **result)
 {
   hostent entry;
   ACE_HOSTENT_DATA buffer;
@@ -446,12 +446,12 @@ ACE_OS::getnameinfo_emulation (const sockaddr *saddr, ACE_SOCKET_LEN saddr_len,
 
   sockaddr_in const *const sin
     = reinterpret_cast<sockaddr_in const *> (saddr);
-  const void *addr = &sin->sin_addr;
+  void const *addr = &sin->sin_addr;
   int h_error;
   hostent hentry;
   ACE_HOSTENT_DATA buf;
   hostent *const hp =
-    ACE_OS::gethostbyaddr_r (static_cast<const char *> (addr),
+    ACE_OS::gethostbyaddr_r (static_cast<char const *> (addr),
 # ifdef ACE_LACKS_IN_ADDR_T
                              4,
 # else
