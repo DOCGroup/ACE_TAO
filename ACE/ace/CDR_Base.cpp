@@ -614,17 +614,17 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
       static constexpr size_t byte_zero = 1;
       static constexpr size_t byte_one = 0;
       char rhs_ptr[16];
-      ACE_CDR::swap_8 (reinterpret_cast<const char*> (&rhs), rhs_ptr);
+      ACE_CDR::swap_8 (reinterpret_cast<char const *> (&rhs), rhs_ptr);
 #else
       static constexpr size_t byte_zero = 0;
       static constexpr size_t byte_one = 1;
-      const char* rhs_ptr = reinterpret_cast<const char*> (&rhs);
+      char const *rhs_ptr = reinterpret_cast<char const *> (&rhs);
 #endif
       ACE_INT16 sign  = static_cast<ACE_INT16> (
                           static_cast<signed char> (rhs_ptr[0])) & 0x8000;
       ACE_INT16 exponent = ((rhs_ptr[0] & 0x7f) << 4) |
                            ((rhs_ptr[1] >> 4) & 0xf);
-      const char* exp_ptr = reinterpret_cast<const char*> (&exponent);
+      char const *exp_ptr = reinterpret_cast<char const *> (&exponent);
 
       // Infinity and NaN have an exponent of 0x7ff in 64-bit IEEE
       if (exponent == 0x7ff)
@@ -668,7 +668,7 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
     }
   else
     {
-      std::memcpy (this->ld, reinterpret_cast<const char*> (&rhs), sizeof (rhs));
+      std::memcpy (this->ld, reinterpret_cast<char const *> (&rhs), sizeof (rhs));
     }
   return *this;
 }
@@ -710,7 +710,7 @@ ACE_CDR::LongDouble::operator ACE_CDR::LongDouble::NativeImpl () const
 #else
       static constexpr size_t byte_zero = 0;
       static constexpr size_t byte_one = 1;
-      const char* copy = this->ld;
+      char const *copy = this->ld;
 #endif
       ACE_INT16 exponent = 0;
       char* exp_ptr = reinterpret_cast<char*> (&exponent);
@@ -950,7 +950,7 @@ void ACE_CDR::Fixed::normalize (UShort min_scale)
   this->digits_ -= nibbles;
 }
 
-ACE_CDR::Fixed ACE_CDR::Fixed::from_string (const char *str)
+ACE_CDR::Fixed ACE_CDR::Fixed::from_string (char const *str)
 {
   const bool negative = *str == '-';
   if (negative || *str == '+')

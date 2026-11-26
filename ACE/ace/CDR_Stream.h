@@ -466,7 +466,7 @@ public:
    * method only returns a pointer to the first block in the
    * chain.
    */
-  const char *buffer () const;
+  char const *buffer () const;
 
   /**
    * Return the size of first message block in the block chain. @note This
@@ -547,7 +547,7 @@ public:
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   /// Register and unregister our buffer size monitor.
-  void register_monitor (const char* id);
+  void register_monitor (char const *id);
   void unregister_monitor ();
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 
@@ -699,7 +699,7 @@ public:
    * instructions on how to align a pointer properly and use
    * ACE_CDR::MAX_ALIGNMENT for the correct alignment.
    */
-  ACE_InputCDR (const char *buf,
+  ACE_InputCDR (char const *buf,
                 size_t bufsiz,
                 int byte_order = ACE_CDR::BYTE_ORDER_NATIVE,
                 ACE_CDR::Octet major_version = ACE_CDR_GIOP_MAJOR_VERSION,
@@ -1098,7 +1098,7 @@ public:
 
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
   /// Register and unregister our buffer size monitor.
-  void register_monitor (const char* id);
+  void register_monitor (char const *id);
   void unregister_monitor ();
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 

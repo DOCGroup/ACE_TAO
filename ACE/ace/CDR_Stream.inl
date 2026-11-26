@@ -645,7 +645,7 @@ ACE_OutputCDR::total_length () const
   return ACE_CDR::total_length (this->begin (), this->end ());
 }
 
-ACE_INLINE const char*
+ACE_INLINE char const *
 ACE_OutputCDR::buffer () const
 {
   return this->start_.rd_ptr ();

@@ -490,7 +490,7 @@ ACE_OutputCDR::write_2 (const ACE_CDR::UShort *x)
         }
       else
         {
-          ACE_CDR::swap_2 (reinterpret_cast<const char*> (x), buf);
+          ACE_CDR::swap_2 (reinterpret_cast<char const *> (x), buf);
           return true;
         }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
@@ -516,7 +516,7 @@ ACE_OutputCDR::write_4 (const ACE_CDR::ULong *x)
         }
       else
         {
-          ACE_CDR::swap_4 (reinterpret_cast<const char*> (x), buf);
+          ACE_CDR::swap_4 (reinterpret_cast<char const *> (x), buf);
           return true;
         }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
@@ -543,7 +543,7 @@ ACE_OutputCDR::write_8 (const ACE_CDR::ULongLong *x)
         }
       else
         {
-          ACE_CDR::swap_8 (reinterpret_cast<const char*> (x), buf);
+          ACE_CDR::swap_8 (reinterpret_cast<char const *> (x), buf);
           return true;
         }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
@@ -571,7 +571,7 @@ ACE_OutputCDR::write_16 (const ACE_CDR::LongDouble *x)
         }
       else
         {
-          ACE_CDR::swap_16 (reinterpret_cast<const char*> (x), buf);
+          ACE_CDR::swap_16 (reinterpret_cast<char const *> (x), buf);
           return true;
         }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
@@ -651,7 +651,7 @@ ACE_OutputCDR::write_array (const void *x,
         }
       else
         {
-          const char *source = reinterpret_cast<const char *> (x);
+          char const *source = reinterpret_cast<char const *> (x);
           switch (size)
             {
             case 2:
@@ -836,7 +836,7 @@ ACE_OutputCDR::replace (ACE_CDR::Long x, char* loc)
     }
   else
   {
-    ACE_CDR::swap_4 (reinterpret_cast<const char*> (&x), loc);
+    ACE_CDR::swap_4 (reinterpret_cast<char const *> (&x), loc);
   }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
@@ -860,7 +860,7 @@ ACE_OutputCDR::replace (ACE_CDR::ULong x, char* loc)
     }
   else
   {
-    ACE_CDR::swap_4 (reinterpret_cast<const char*> (&x), loc);
+    ACE_CDR::swap_4 (reinterpret_cast<char const *> (&x), loc);
   }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
@@ -884,7 +884,7 @@ ACE_OutputCDR::replace (ACE_CDR::Short x, char* loc)
     }
   else
   {
-    ACE_CDR::swap_2 (reinterpret_cast<const char*> (&x), loc);
+    ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x), loc);
   }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
@@ -908,7 +908,7 @@ ACE_OutputCDR::replace (ACE_CDR::UShort x, char* loc)
     }
   else
   {
-    ACE_CDR::swap_2 (reinterpret_cast<const char*> (&x), loc);
+    ACE_CDR::swap_2 (reinterpret_cast<char const *> (&x), loc);
   }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
@@ -971,7 +971,7 @@ ACE_OutputCDR::replace (ACE_CDR::LongLong x, char* loc)
     }
   else
   {
-    ACE_CDR::swap_8 (reinterpret_cast<const char*> (&x), loc);
+    ACE_CDR::swap_8 (reinterpret_cast<char const *> (&x), loc);
   }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
@@ -995,7 +995,7 @@ ACE_OutputCDR::replace (ACE_CDR::ULongLong x, char* loc)
     }
   else
   {
-    ACE_CDR::swap_8 (reinterpret_cast<const char*> (&x), loc);
+    ACE_CDR::swap_8 (reinterpret_cast<char const *> (&x), loc);
   }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
@@ -1019,7 +1019,7 @@ ACE_OutputCDR::replace (ACE_CDR::Float x, char* loc)
     }
   else
   {
-    ACE_CDR::swap_4 (reinterpret_cast<const char*> (&x), loc);
+    ACE_CDR::swap_4 (reinterpret_cast<char const *> (&x), loc);
   }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
@@ -1043,7 +1043,7 @@ ACE_OutputCDR::replace (ACE_CDR::Double x, char* loc)
     }
   else
   {
-    ACE_CDR::swap_8 (reinterpret_cast<const char*> (&x), loc);
+    ACE_CDR::swap_8 (reinterpret_cast<char const *> (&x), loc);
   }
 #endif /* ACE_ENABLE_SWAP_ON_WRITE */
 
@@ -1112,7 +1112,7 @@ ACE_OutputCDR::find (char* loc)
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
 
 void
-ACE_OutputCDR::register_monitor (const char *id)
+ACE_OutputCDR::register_monitor (char const *id)
 {
   this->monitor_->name (id);
   this->monitor_->add_to_registry ();
@@ -1128,7 +1128,7 @@ ACE_OutputCDR::unregister_monitor ()
 
 // ****************************************************************
 
-ACE_InputCDR::ACE_InputCDR (const char *buf,
+ACE_InputCDR::ACE_InputCDR (char const *buf,
                             size_t bufsiz,
                             int byte_order,
                             ACE_CDR::Octet major_version,
@@ -2446,7 +2446,7 @@ ACE_InputCDR::reset_contents ()
 #if defined (ACE_HAS_MONITOR_POINTS) && (ACE_HAS_MONITOR_POINTS == 1)
 
 void
-ACE_InputCDR::register_monitor (const char *id)
+ACE_InputCDR::register_monitor (char const *id)
 {
   this->monitor_->name (id);
   this->monitor_->add_to_registry ();

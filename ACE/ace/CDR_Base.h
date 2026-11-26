@@ -319,7 +319,7 @@ public:
          static Fixed from_integer (LongLong val = 0);
          static Fixed from_integer (ULongLong val);
          static Fixed from_floating (LongDouble val);
-         static Fixed from_string (const char *str);
+         static Fixed from_string (char const *str);
          static Fixed from_octets (const Octet *array, int len,
                                    unsigned int scale = 0);
 

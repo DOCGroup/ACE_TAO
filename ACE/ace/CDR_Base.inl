@@ -58,7 +58,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 //
 
 ACE_INLINE void
-ACE_CDR::swap_2 (const char *orig, char* target)
+ACE_CDR::swap_2 (char const *orig, char* target)
 {
 #if defined (ACE_HAS_INTRINSIC_BYTESWAP)
   // Take advantage of MSVC++ compiler intrinsic byte swapping
@@ -95,7 +95,7 @@ ACE_CDR::swap_2 (const char *orig, char* target)
 }
 
 ACE_INLINE void
-ACE_CDR::swap_4 (const char* orig, char* target)
+ACE_CDR::swap_4 (char const *orig, char* target)
 {
 #if defined (ACE_HAS_INTRINSIC_BYTESWAP)
   // Take advantage of MSVC++ compiler intrinsic byte swapping
@@ -133,7 +133,7 @@ ACE_CDR::swap_4 (const char* orig, char* target)
 }
 
 ACE_INLINE void
-ACE_CDR::swap_8 (const char* orig, char* target)
+ACE_CDR::swap_8 (char const *orig, char* target)
 {
 #if defined (ACE_HAS_INTRINSIC_BYTESWAP)
   // Take advantage of MSVC++ compiler intrinsic byte swapping
@@ -195,7 +195,7 @@ ACE_CDR::swap_8 (const char* orig, char* target)
 }
 
 ACE_INLINE void
-ACE_CDR::swap_16 (const char* orig, char* target)
+ACE_CDR::swap_16 (char const *orig, char* target)
 {
   swap_8 (orig + 8, target);
   swap_8 (orig, target + 8);
