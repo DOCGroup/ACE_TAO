@@ -1,8 +1,9 @@
-// file      : XSCRT/XMLSchema.hpp
-// author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
+/// @file XSCRT/XMLSchema.hpp
+/// @author Boris Kolpackov <boris@dre.vanderbilt.edu>
 #ifndef XSCRT_XMLSCHEMA_HPP
 #define XSCRT_XMLSCHEMA_HPP
 
+#include <memory>
 #include <string>
 
 #include "ace/XML_Utils/XSCRT/Elements.hpp"
@@ -63,7 +64,7 @@ namespace XMLSchema
     {
     }
 
-    string (Base__ const &x)
+    explicit string (Base__ const &x)
       : Base__ (x)
     {
     }
@@ -94,7 +95,7 @@ namespace XMLSchema
     {
     }
 
-    normalizedString (Base__ const &x)
+    explicit normalizedString (Base__ const &x)
       : string<C> (x)
     {
     }
@@ -125,7 +126,7 @@ namespace XMLSchema
     {
     }
 
-    token (Base__ const &x)
+    explicit token (Base__ const &x)
       : normalizedString<C> (x)
     {
     }
@@ -156,7 +157,7 @@ namespace XMLSchema
     {
     }
 
-    NMTOKEN (Base__ const &x)
+    explicit NMTOKEN (Base__ const &x)
       : token<C> (x)
     {
     }
@@ -187,7 +188,7 @@ namespace XMLSchema
     {
     }
 
-    Name (Base__ const &x)
+    explicit Name (Base__ const &x)
       : token<C> (x)
     {
     }
@@ -218,7 +219,7 @@ namespace XMLSchema
     {
     }
 
-    NCName (Base__ const &x)
+    explicit NCName (Base__ const &x)
       : Name<C> (x)
     {
     }
@@ -249,7 +250,7 @@ namespace XMLSchema
     {
     }
 
-    QName (Base__ const &x)
+    explicit QName (Base__ const &x)
       : Name<C> (x)
     {
     }
@@ -319,7 +320,7 @@ namespace XMLSchema
     {
     }
 
-    ID (Base__ const &x)
+    explicit ID (Base__ const &x)
       : NCName<C> (x)
       , id_provider_ (*this)
     {
@@ -334,9 +335,14 @@ namespace XMLSchema
     ID &operator= (ID const &x)
     {
       if (this != std::addressof (x))
+      {
         assign_id_ (static_cast<Base__ const &> (x));
+      }
       return *this;
     }
+
+    ID (ID &&) = delete;
+    ID &operator= (ID &&) = delete;
 
   public:
     using NCName<C>::container;
@@ -386,9 +392,6 @@ namespace XMLSchema
     {
       if (container () != this && !empty ())
       {
-        // std::wcerr << "registering " << container ()
-        //            << " as '" << *this
-        //            << "' on " << container () << std::endl;
         container ()->register_id (id_provider_, container ());
         registered_ = true;
       }
@@ -398,9 +401,6 @@ namespace XMLSchema
     {
       if (registered_)
       {
-        // std::wcerr << "un-registering " << container ()
-        //            << " as '" << *this
-        //            << "' on " << container () << std::endl;
         container ()->unregister_id (id_provider_);
         registered_ = false;
       }
@@ -447,7 +447,7 @@ namespace XMLSchema
     {
     }
 
-    IDREF (std::basic_string<C> const &id)
+    explicit IDREF (std::basic_string<C> const &id)
       : id_ (id)
       , id_provider_ (id_)
     {
@@ -464,6 +464,9 @@ namespace XMLSchema
       id_ = x;
       return *this;
     }
+
+    IDREF (IDREF &&) = delete;
+    IDREF &operator= (IDREF &&) = delete;
 
   public:
     XSCRT::Type *operator->() const
@@ -499,7 +502,8 @@ namespace XMLSchema
   };
 }
 
-// Traversal
+/// @name XML Schema traversal
+/// @{
 
 #include "ace/XML_Utils/XSCRT/Traversal.hpp"
 
@@ -516,8 +520,11 @@ namespace XMLSchema
 
       void traverse (XMLSchema::IDREF_Base &r) override
       {
-        if (r.get ())
-          dispatch (*(r.get ()));
+        XSCRT::Type *const referenced (r.get ());
+        if (referenced != nullptr)
+        {
+          dispatch (*referenced);
+        }
       }
     };
 
@@ -549,8 +556,10 @@ namespace XMLSchema
     };
   }
 }
+/// @}
 
-// ExtendedTypeInfo for XML Schema types
+/// @name XML Schema type information
+/// @{
 
 #include "ace/XML_Utils/XSCRT/ExtendedTypeInfo.hpp"
 
@@ -562,6 +571,7 @@ namespace XMLSchema
     explicit TypeInfoInitializer (XSCRT::ExtendedTypeInfoMap &);
   };
 }
+/// @}
 
 #include "ace/XML_Utils/XMLSchema/TypeInfo.tpp"
 
