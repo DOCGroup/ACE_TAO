@@ -90,7 +90,7 @@ write_ior_to_file (CORBA::ORB_ptr orb,
 
 int
 create_POA_and_register_servant (CORBA::Policy_ptr threadpool_policy,
-                                 const char *poa_name,
+                                 char const *poa_name,
                                  PortableServer::POAManager_ptr poa_manager,
                                  PortableServer::POA_ptr root_poa,
                                  CORBA::ORB_ptr orb,

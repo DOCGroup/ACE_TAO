@@ -6,7 +6,7 @@
 #include "ace/OS_NS_stdio.h"
 
 int
-test_multiple_orbs (const char *test_name,
+test_multiple_orbs (char const *test_name,
                     int argc,
                     ACE_TCHAR *argv[],
                     int iterations,

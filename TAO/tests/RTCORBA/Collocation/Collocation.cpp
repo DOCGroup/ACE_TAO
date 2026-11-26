@@ -59,7 +59,7 @@ public:
 
   void serviced_by_rt_tp (int);
 
-  void thread_info (const char *method_name);
+  void thread_info (char const *method_name);
 
   void invocation_pool_and_lane (CORBA::ULong pool,
                                  CORBA::ULong lane);
@@ -240,7 +240,7 @@ test_i::start ()
 }
 
 void
-test_i::thread_info (const char *method_name)
+test_i::thread_info (char const *method_name)
 {
   // Get the ORB_Core's TSS resources.
   TAO_ORB_Core_TSS_Resources *tss =
@@ -379,10 +379,10 @@ public:
   Server (CORBA::ORB_ptr orb);
 
   void create_servant_in_root_poa ();
-  void create_poa_and_servant_with_tp_policy (const char *poa_name,
+  void create_poa_and_servant_with_tp_policy (char const *poa_name,
                                               int set_priority_model,
                                               RTCORBA::PriorityModel priority_model);
-  void create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
+  void create_poa_and_servant_with_tp_with_lanes_policy (char const *poa_name,
                                                          RTCORBA::PriorityModel priority_model);
   void test ();
   void start_testing ();
@@ -469,7 +469,7 @@ Server::create_servant_in_root_poa ()
 }
 
 void
-Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
+Server::create_poa_and_servant_with_tp_policy (char const *poa_name,
                                                int set_priority_model,
                                                RTCORBA::PriorityModel priority_model)
 {
@@ -593,7 +593,7 @@ Server::create_poa_and_servant_with_tp_policy (const char *poa_name,
 }
 
 void
-Server::create_poa_and_servant_with_tp_with_lanes_policy (const char *poa_name,
+Server::create_poa_and_servant_with_tp_with_lanes_policy (char const *poa_name,
                                                           RTCORBA::PriorityModel priority_model)
 {
   RTCORBA::ThreadpoolLanes lanes (2);
