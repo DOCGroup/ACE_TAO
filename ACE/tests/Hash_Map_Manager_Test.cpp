@@ -14,6 +14,8 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
+#include <cerrno>
+#include <limits>
 #include <stdexcept>
 
 class Throwing_Value
@@ -55,6 +57,63 @@ test_throwing_value ()
   if (!bind_failed || !trybind_failed || map.current_size () != 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Hash map failed to handle a throwing entry\n")), -1);
+    }
+  return 0;
+}
+
+class Throwing_Default_Value
+{
+public:
+  Throwing_Default_Value ()
+  {
+    if (remaining_ == 0)
+      {
+        throw std::runtime_error ("test default construction failure");
+      }
+    if (remaining_ > 0)
+      {
+        --remaining_;
+      }
+    ++live_;
+  }
+  ~Throwing_Default_Value () { --live_; }
+  static int remaining_;
+  static int live_;
+};
+
+int Throwing_Default_Value::remaining_ {-1};
+int Throwing_Default_Value::live_ {};
+
+static int
+test_bucket_construction_failure ()
+{
+  using Map = ACE_Hash_Map_Manager_Ex<int, Throwing_Default_Value, ACE_Hash<int>,
+                                      ACE_Equal_To<int>, ACE_Null_Mutex>;
+  Map map (4);
+  Throwing_Default_Value::remaining_ = 2;
+  bool caught {};
+  try
+    {
+      map.open (4);
+    }
+  catch (std::runtime_error const &)
+    {
+      caught = true;
+    }
+  if (!caught || Throwing_Default_Value::live_ != 0 || map.total_size () != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Hash map leaked partially constructed buckets\n")), -1);
+    }
+  Throwing_Default_Value::remaining_ = -1;
+  if (map.open (4) != 0 || Throwing_Default_Value::live_ != 4)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Hash map could not reopen after bucket construction failed\n")), -1);
+    }
+  errno = 0;
+  if (map.open ((std::numeric_limits<size_t>::max) ()) != -1
+      || errno != ENOMEM || map.total_size () != 0 || Throwing_Default_Value::live_ != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Hash map bucket size overflow was not rejected\n")), -1);
     }
   return 0;
 }
@@ -394,8 +453,9 @@ run_main (int, ACE_TCHAR *[])
   run_test ();
 
   int const exception_test_result = test_throwing_value ();
+  int const bucket_test_result = test_bucket_construction_failure ();
 
   ACE_END_TEST;
 
-  return exception_test_result;
+  return exception_test_result != 0 || bucket_test_result != 0 ? 1 : 0;
 }

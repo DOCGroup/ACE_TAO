@@ -19,6 +19,8 @@
 
 #include "ace/Malloc_Base.h"
 
+#include <cerrno>
+#include <limits>
 #include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
@@ -106,27 +108,46 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::dump 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
 ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::create_buckets (size_t size)
 {
-  size_t bytes = size * sizeof (ACE_Hash_Map_Entry<EXT_ID, INT_ID>);
+  using Entry = ACE_Hash_Map_Entry<EXT_ID, INT_ID>;
+  if (size > (std::numeric_limits<size_t>::max) () / sizeof (Entry))
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+  size_t const bytes = size * sizeof (Entry);
   void *ptr {};
 
   ACE_ALLOCATOR_RETURN (ptr,
                         this->table_allocator_->malloc (bytes),
                         -1);
 
-  this->table_ = (ACE_Hash_Map_Entry<EXT_ID, INT_ID> *) ptr;
-
-  this->total_size_ = size;
+  Entry *const table = static_cast<Entry *> (ptr);
 
   // Initialize each entry in the hash table to be a circular linked
   // list with the dummy node in the front serving as the anchor of
   // the list.
-  for (size_t i {}; i < size; ++i)
+  size_t constructed {};
+  try
     {
-      new (std::addressof (this->table_[i]))
-        ACE_Hash_Map_Entry<EXT_ID, INT_ID> (
-          std::addressof (this->table_[i]),
-          std::addressof (this->table_[i]));
+      for (; constructed < size; ++constructed)
+        {
+          new (std::addressof (table[constructed]))
+            Entry (std::addressof (table[constructed]),
+                   std::addressof (table[constructed]));
+        }
     }
+  catch (...)
+    {
+      while (constructed > 0)
+        {
+          --constructed;
+          table[constructed].~Entry ();
+        }
+      this->table_allocator_->free (ptr);
+      throw;
+    }
+  this->table_ = table;
+  this->total_size_ = size;
   return 0;
 }
 
