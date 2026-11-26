@@ -262,26 +262,26 @@ namespace ACE_TMCast
     {
       char buf[Protocol::MAX_MESSAGE_SIZE];
 
-      Protocol::MessageHeader* hdr =
-        reinterpret_cast<Protocol::MessageHeader*> (buf);
+      Protocol::MessageHeader hdr {};
 
       void* data = buf + sizeof (Protocol::MessageHeader);
 
-      hdr->length = sizeof (Protocol::MessageHeader);
-      hdr->check_sum = 0;
+      hdr.length = sizeof (Protocol::MessageHeader);
+      hdr.check_sum = 0;
 
-      std::strcpy (hdr->member_id.id, id_);
+      std::strcpy (hdr.member_id.id, id_);
 
       size_t size (0);
 
-      transaction_controller_.outsync (hdr->current, data, size);
+      transaction_controller_.outsync (hdr.current, data, size);
 
-      hdr->length += size;
+      hdr.length += size;
+      std::memcpy (buf, std::addressof (hdr), sizeof (hdr));
 
       fault_detector_.outsync ();
 
-      // sock_.send (buf, hdr->length, addr_);
-      sock_.send (buf, hdr->length);
+      // sock_.send (buf, hdr.length, addr_);
+      sock_.send (buf, hdr.length);
     }
 
     void

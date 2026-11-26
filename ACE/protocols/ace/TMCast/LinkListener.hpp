@@ -21,8 +21,8 @@ namespace ACE_TMCast
   class LinkData : public virtual Message
   {
   public:
-    LinkData (Protocol::MessageHeader const* header,
-              void* payload,
+    LinkData (void const* header,
+              void const* payload,
               size_t size)
         : size_ (size)
     {
@@ -147,12 +147,9 @@ namespace ACE_TMCast
                 throw false;
               }
 
-            Protocol::MessageHeader* header =
-              reinterpret_cast<Protocol::MessageHeader*> (msg);
-
             MessageQueueAutoLock lock (out_);
 
-            out_.push (MessagePtr (new LinkData (header,
+            out_.push (MessagePtr (new LinkData (msg,
                                                  msg + header_size,
                                                  n - header_size)));
           }
