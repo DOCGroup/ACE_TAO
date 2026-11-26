@@ -1,5 +1,6 @@
 #include "ace/Token_Request_Reply.h"
 #include <cstring>
+#include <memory>
 
 #if defined (ACE_HAS_TOKENS_LIBRARY)
 
@@ -35,7 +36,7 @@ ACE_Token_Request::ACE_Token_Request (int token_type,
 int
 ACE_Token_Request::encode (void *&buf)
 {
-  buf = &this->transfer_;
+  buf = std::addressof (this->transfer_);
   return this->length ();
 }
 
@@ -61,8 +62,10 @@ ACE_Token_Request::decode ()
       return -1;
     }
   else // Skip this->tokenName_ + '\0' + ':'.
-    this->client_id_ =
-      &this->token_name_[(token_len + 2) * sizeof (ACE_TCHAR)];
+    {
+      this->client_id_ =
+        std::addressof (this->token_name_[(token_len + 2) * sizeof (ACE_TCHAR)]);
+    }
 
   // Fixed size header
   // token_name_ plus '\0'
@@ -156,7 +159,7 @@ ACE_Token_Reply::ACE_Token_Reply () // Type of reply.
 int
 ACE_Token_Reply::encode (void *&buf)
 {
-  buf = &this->transfer_;
+  buf = std::addressof (this->transfer_);
   return this->length ();
 }
 
