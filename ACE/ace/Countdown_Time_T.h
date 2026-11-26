@@ -33,13 +33,15 @@ template <typename TIME_POLICY = ACE_Default_Time_Policy>
 class ACE_Countdown_Time_T
 {
 public:
+  ACE_Countdown_Time_T () = delete;
+
   /// Cache the @a max_wait_time and call @c start().
   explicit ACE_Countdown_Time_T (ACE_Time_Value *max_wait_time,
                                  TIME_POLICY const & time_policy = TIME_POLICY {});
 
-  ACE_Countdown_Time_T (const ACE_Countdown_Time_T &) = delete;
+  ACE_Countdown_Time_T (ACE_Countdown_Time_T const &) = delete;
   ACE_Countdown_Time_T (ACE_Countdown_Time_T &&) = delete;
-  ACE_Countdown_Time_T &operator= (const ACE_Countdown_Time_T &) = delete;
+  ACE_Countdown_Time_T &operator= (ACE_Countdown_Time_T const &) = delete;
   ACE_Countdown_Time_T &operator= (ACE_Countdown_Time_T &&) = delete;
   /// Destructor, makes sure the max_wait_time that got passed as pointer
   /// to the constructor is updated with the time elapsed.

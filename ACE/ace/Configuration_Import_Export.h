@@ -40,6 +40,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Config_ImpExp_Base
 {
 public:
+  ACE_Config_ImpExp_Base () = delete;
   ACE_Config_ImpExp_Base (ACE_Config_ImpExp_Base const &) = delete;
   ACE_Config_ImpExp_Base (ACE_Config_ImpExp_Base &&) = delete;
   ACE_Config_ImpExp_Base &operator= (ACE_Config_ImpExp_Base const &) = delete;
@@ -84,6 +85,7 @@ protected:
 class ACE_Export ACE_Registry_ImpExp : public ACE_Config_ImpExp_Base
 {
 public:
+  ACE_Registry_ImpExp () = delete;
   ACE_Registry_ImpExp (ACE_Registry_ImpExp const &) = delete;
   ACE_Registry_ImpExp (ACE_Registry_ImpExp &&) = delete;
   ACE_Registry_ImpExp &operator= (ACE_Registry_ImpExp const &) = delete;
@@ -149,6 +151,7 @@ private:
 class ACE_Export ACE_Ini_ImpExp  : public ACE_Config_ImpExp_Base
 {
 public:
+  ACE_Ini_ImpExp () = delete;
   ACE_Ini_ImpExp (ACE_Ini_ImpExp const &) = delete;
   ACE_Ini_ImpExp (ACE_Ini_ImpExp &&) = delete;
   ACE_Ini_ImpExp &operator= (ACE_Ini_ImpExp const &) = delete;
