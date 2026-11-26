@@ -55,6 +55,13 @@ template <class ALLOCATOR>
 class ACE_Name_Space_Map : public MAP_MANAGER
 {
 public:
+  ACE_Name_Space_Map () = delete;
+  ACE_Name_Space_Map (ACE_Name_Space_Map const &) = delete;
+  ACE_Name_Space_Map (ACE_Name_Space_Map &&) = delete;
+  ACE_Name_Space_Map &operator= (ACE_Name_Space_Map const &) = delete;
+  ACE_Name_Space_Map &operator= (ACE_Name_Space_Map &&) = delete;
+  ~ACE_Name_Space_Map () = default;
+
   explicit ACE_Name_Space_Map (ALLOCATOR *alloc);
 
   /** @name Map operation proxies
