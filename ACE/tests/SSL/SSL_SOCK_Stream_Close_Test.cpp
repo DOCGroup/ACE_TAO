@@ -15,6 +15,32 @@
 #if defined (ACE_HAS_THREADS)
 namespace
 {
+  long force_write_retry (BIO *bio, int operation, long result)
+  {
+    if (operation == BIO_CB_WRITE)
+      {
+        int *count = reinterpret_cast<int *> (::BIO_get_callback_arg (bio));
+        ++*count;
+        BIO_set_retry_write (bio);
+        return -1;
+      }
+    return result;
+  }
+
+#if OPENSSL_VERSION_NUMBER >= 0x10101000L && !defined (LIBRESSL_VERSION_NUMBER)
+  long write_retry_callback (BIO *bio, int operation, char const *, size_t,
+                             int, long, int result, size_t *)
+  {
+    return force_write_retry (bio, operation, result);
+  }
+#else
+  long write_retry_callback (BIO *bio, int operation, char const *, int,
+                             long, long result)
+  {
+    return force_write_retry (bio, operation, result);
+  }
+#endif
+
   struct Server_State
   {
     explicit Server_State (ACE_SSL_SOCK_Acceptor &listener)
@@ -35,13 +61,13 @@ namespace
     ACE_Time_Value timeout (5);
     state.accept_result_ = state.listener_.accept (stream, nullptr, std::addressof (timeout));
     state.ready_.release ();
-    state.release_.acquire ();
     if (state.accept_result_ == 0)
       {
         if (state.check_data_)
           {
             char data[32768];
-            ssize_t const received = stream.recv_n (data, sizeof (data));
+            ACE_Time_Value const read_timeout (5);
+            ssize_t const received = stream.recv_n (data, sizeof (data), std::addressof (read_timeout));
             state.data_received_ = received == static_cast<ssize_t> (sizeof (data));
             for (size_t i {}; state.data_received_ && i < sizeof (data); ++i)
               {
@@ -49,6 +75,10 @@ namespace
               }
 
           }
+      }
+    state.release_.acquire ();
+    if (state.accept_result_ == 0)
+      {
         stream.close ();
       }
     return ACE_THR_FUNC_RETURN_NULL;
@@ -103,6 +133,8 @@ int run_main (int, ACE_TCHAR *[])
         }
       else
         {
+          int retry_count {};
+          BIO *retry_bio {};
           if (test == 1)
             {
               int send_buffer_size = 4096;
@@ -133,23 +165,67 @@ int run_main (int, ACE_TCHAR *[])
                       ACE_ERROR ((LM_ERROR, ACE_TEXT ("Could not fill the send buffer\n")));
                       result = 1;
                     }
+                  else
+                    {
+                      // Force a retry in the TLS write itself, even if the
+                      // kernel has freed space since the raw send blocked.
+                      retry_bio = ::SSL_get_wbio (client.ssl ());
+                      if (retry_bio == nullptr)
+                        {
+                          ACE_ERROR ((LM_ERROR, ACE_TEXT ("TLS write BIO is missing\n")));
+                          result = 1;
+                        }
+                      else
+                        {
+                          ::BIO_set_callback_arg (retry_bio, reinterpret_cast<char *> (std::addressof (retry_count)));
+#if OPENSSL_VERSION_NUMBER >= 0x10101000L && !defined (LIBRESSL_VERSION_NUMBER)
+                          ::BIO_set_callback_ex (retry_bio, write_retry_callback);
+#else
+                          ::BIO_set_callback (retry_bio, write_retry_callback);
+#endif
+                        }
+                    }
                 }
             }
 
           if (test == 2)
             {
+              int send_buffer_size = 4096;
+              if (client.set_option (SOL_SOCKET, SO_SNDBUF,
+                                     std::addressof (send_buffer_size),
+                                     sizeof (send_buffer_size)) != 0)
+                {
+                  ACE_ERROR ((LM_ERROR, ACE_TEXT ("Cannot constrain the send buffer\n")));
+                  result = 1;
+                }
               char data[32768];
               for (size_t i {}; i < sizeof (data); ++i)
                 {
                   data[i] = 'x';
                 }
-              if (client.send_n (data, sizeof (data)) != static_cast<ssize_t> (sizeof (data)))
+              ACE_Time_Value const send_timeout (5);
+              if (client.send_n (data, sizeof (data), std::addressof (send_timeout))
+                    != static_cast<ssize_t> (sizeof (data)))
                 {
                   ACE_ERROR ((LM_ERROR, ACE_TEXT ("TLS send failed\n")));
                   result = 1;
                 }
             }
           int const close_result = client.close ();
+          if (retry_bio != nullptr && ::SSL_get_wbio (client.ssl ()) == retry_bio)
+            {
+#if OPENSSL_VERSION_NUMBER >= 0x10101000L && !defined (LIBRESSL_VERSION_NUMBER)
+              ::BIO_set_callback_ex (retry_bio, nullptr);
+#else
+              ::BIO_set_callback (retry_bio, nullptr);
+#endif
+              ::BIO_set_callback_arg (retry_bio, nullptr);
+            }
+          if (test == 1 && retry_count == 0)
+            {
+              ACE_ERROR ((LM_ERROR, ACE_TEXT ("TLS shutdown did not encounter the write retry\n")));
+              result = 1;
+            }
           ACE_HANDLE const handle = client.get_handle ();
           int const shutdown_state = ::SSL_get_shutdown (client.ssl ());
           if (close_result != 0 || handle != ACE_INVALID_HANDLE || shutdown_state != 0)
