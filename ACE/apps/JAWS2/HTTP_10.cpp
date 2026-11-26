@@ -1,6 +1,6 @@
 #include "HTTP_10.h"
 
-#include "JAWS/JAWS.h"
+#include "JAWS/Export.h"
 
 char *
 JAWS_HTTP_10_Helper::HTTP_decode_string (char *path)

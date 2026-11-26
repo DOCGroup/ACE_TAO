@@ -1,5 +1,5 @@
-#include "JAWS/JAWS.h"
-#include "JAWS/IO.h"
+#include "JAWS/Export.h"
+#include "JAWS/Jaws_IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
 
@@ -10,9 +10,7 @@
 
 // --------------- WRITE TASK ----------------------
 
-JAWS_HTTP_10_Write_Task::JAWS_HTTP_10_Write_Task ()
-{
-}
+JAWS_HTTP_10_Write_Task::JAWS_HTTP_10_Write_Task () = default;
 
 JAWS_HTTP_10_Write_Task::~JAWS_HTTP_10_Write_Task () = default;
 

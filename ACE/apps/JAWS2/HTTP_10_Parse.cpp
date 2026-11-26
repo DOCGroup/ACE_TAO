@@ -1,7 +1,7 @@
 #include "HTTP_10.h"
 
-#include "JAWS/JAWS.h"
-#include "JAWS/IO.h"
+#include "JAWS/Export.h"
+#include "JAWS/Jaws_IO.h"
 #include "JAWS/IO_Handler.h"
 #include "JAWS/Policy.h"
 
@@ -9,9 +9,7 @@
 
 // --------------- PARSE TASK ----------------------
 
-JAWS_HTTP_10_Parse_Task::JAWS_HTTP_10_Parse_Task ()
-{
-}
+JAWS_HTTP_10_Parse_Task::JAWS_HTTP_10_Parse_Task () = default;
 
 JAWS_HTTP_10_Parse_Task::~JAWS_HTTP_10_Parse_Task () = default;
 
