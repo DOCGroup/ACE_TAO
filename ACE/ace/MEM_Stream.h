@@ -64,17 +64,21 @@ public:
 
   /// @name send_n and recv_n using write and read system calls
   /// @{
+
   /// Send n bytes, keep trying until n are sent.
-  /// Recv n bytes, keep trying until n are received.
   ssize_t send_n (void const *buf, size_t n);
+
+  /// Recv n bytes, keep trying until n are received.
   ssize_t recv_n (void *buf, size_t n);
   /// @}
 
   /// @name send_n and recv_n using send and recv system calls
   /// @{
+
   /// Send n bytes, keep trying until n are sent.
-  /// Recv n bytes, keep trying until n are received.
   ssize_t send_n (void const *buf, size_t n, int flags);
+
+  /// Recv n bytes, keep trying until n are received.
   ssize_t recv_n (void *buf, size_t n, int flags);
   /// @}
 

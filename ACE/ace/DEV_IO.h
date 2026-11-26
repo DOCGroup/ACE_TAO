@@ -40,6 +40,7 @@ public:
 
   /// @name Send and receive operations
   /// @{
+
   /// send upto @a n bytes in @a buf.
   ssize_t send (void const *buf, size_t n) const;
 
@@ -49,15 +50,16 @@ public:
   /// Send n bytes, keep trying until n are sent.
   ssize_t send_n (void const *buf,
                   size_t n) const;
+  /// @}
 
   /**
-   * @name I/O operations
+   * I/O operations.
    *
    * @note Common parameters:
    *
    * @a buf is the buffer to write from or receive into.
    *
-   * @a len is the number of bytes to transfer.
+   * @a n is the number of bytes to transfer.
    *
    * The @a timeout parameter in the following methods indicates how
    * long to blocking trying to transfer data.  If @a timeout == 0,
@@ -92,6 +94,9 @@ public:
                   size_t n,
                   ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
+
+  /// @name I/O operations
+  /// @{
 
 #if defined (ACE_HAS_STREAM_PIPES)
   /// Recv bytes via STREAM pipes using "band" mode.
@@ -154,6 +159,7 @@ public:
   /// @name Connector compatibility accessors
   /// These methods are no-ops to keep ACE_Connector happy.
   /// @{
+
   /// Return the local endpoint address.
   int get_local_addr (ACE_DEV_Addr &) const;
 

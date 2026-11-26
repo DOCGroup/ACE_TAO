@@ -73,6 +73,7 @@ public:
 
   /// @name Position manipulators
   /// @{
+
   /// Returns the current location associated with the directory
   /// stream.
   long tell ();

@@ -59,6 +59,7 @@ public:
 
   /// @name Address comparison
   /// @{
+
   /// Check for address equality.
   bool operator == (ACE_Addr const &sap) const;
 
