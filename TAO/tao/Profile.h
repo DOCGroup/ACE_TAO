@@ -58,6 +58,7 @@ public:
    * @name Non virtual methods for the profile classes.
   */
   /// @{
+
   /// The tag, each concrete class will have a specific tag value.
   CORBA::ULong tag () const;
 
@@ -109,6 +110,7 @@ public:
    * under specila circumstances.
    */
   /// @{
+
   /// Encode this profile in a stream, i.e. marshal it.
   virtual int encode (TAO_OutputCDR &stream) const;
 
@@ -273,6 +275,7 @@ protected:
    * @name Protected template methods.
    */
   /// @{
+
   /// Decode the protocol specific profile details.
   virtual int decode_profile (TAO_InputCDR &cdr) = 0;
 
