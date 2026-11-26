@@ -32,7 +32,7 @@ ACE_Active_Map_Manager_Key::slot_generation () const
 }
 
 ACE_INLINE bool
-ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs) const
+ACE_Active_Map_Manager_Key::operator== (ACE_Active_Map_Manager_Key const &rhs) const
 {
   return
     this->key_data_.slot_index_ == rhs.key_data_.slot_index_ &&
@@ -40,7 +40,7 @@ ACE_Active_Map_Manager_Key::operator== (const ACE_Active_Map_Manager_Key &rhs) c
 }
 
 ACE_INLINE bool
-ACE_Active_Map_Manager_Key::operator!= (const ACE_Active_Map_Manager_Key &rhs) const
+ACE_Active_Map_Manager_Key::operator!= (ACE_Active_Map_Manager_Key const &rhs) const
 {
   return !this->operator== (rhs);
 }
@@ -71,7 +71,7 @@ ACE_Active_Map_Manager_Key::size ()
 }
 
 ACE_INLINE void
-ACE_Active_Map_Manager_Key::decode (const void *data)
+ACE_Active_Map_Manager_Key::decode (void const *data)
 {
   // Copy the information from the user buffer into the key.
   std::memcpy (&this->key_data_, data, sizeof this->key_data_);

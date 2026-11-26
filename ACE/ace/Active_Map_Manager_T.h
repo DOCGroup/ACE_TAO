@@ -74,12 +74,12 @@ public:
 
   /// Add @a value to the map, and the corresponding key produced by the
   /// Active_Map_Manager is returned through @a key.
-  int bind (const T &value,
+  int bind (T const &value,
             ACE_Active_Map_Manager_Key &key);
 
   /// Add @a value to the map.  The user does not care about the
   /// corresponding key produced by the Active_Map_Manager.
-  int bind (const T &value);
+  int bind (T const &value);
 
   /**
    * Reserves a slot in the internal structure and returns the key and
@@ -95,16 +95,16 @@ public:
 
   /// Reassociate @a key with @a value. The function fails if @a key is
   /// not in the map.
-  int rebind (const ACE_Active_Map_Manager_Key &key,
-              const T &value);
+  int rebind (ACE_Active_Map_Manager_Key const &key,
+              T const &value);
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
    * "out" parameter @a old_value.  The function fails if @a key is not
    * in the map.
    */
-  int rebind (const ACE_Active_Map_Manager_Key &key,
-              const T &value,
+  int rebind (ACE_Active_Map_Manager_Key const &key,
+              T const &value,
               T &old_value);
 
   /**
@@ -112,17 +112,17 @@ public:
    * into the "out" parameter @a old_key and @a old_value.  The function
    * fails if @a key is not in the map.
    */
-  int rebind (const ACE_Active_Map_Manager_Key &key,
-              const T &value,
+  int rebind (ACE_Active_Map_Manager_Key const &key,
+              T const &value,
               ACE_Active_Map_Manager_Key &old_key,
               T &old_value);
 
   /// Locate @a value associated with @a key.
-  int find (const ACE_Active_Map_Manager_Key &key,
+  int find (ACE_Active_Map_Manager_Key const &key,
             T &value) const;
 
   /// Is @a key in the map?
-  int find (const ACE_Active_Map_Manager_Key &key) const;
+  int find (ACE_Active_Map_Manager_Key const &key) const;
 
   /**
    * Locate @a value associated with @a key.  The value is returned via
@@ -131,15 +131,15 @@ public:
    * the map resizes.  Therefore, the user should use the pointer
    * immediately and not hold on to it.
    */
-  int find (const ACE_Active_Map_Manager_Key &key,
+  int find (ACE_Active_Map_Manager_Key const &key,
             T *&internal_value) const;
 
   /// Remove @a key from the map.
-  int unbind (const ACE_Active_Map_Manager_Key &key);
+  int unbind (ACE_Active_Map_Manager_Key const &key);
 
   /// Remove @a key from the map, and return the @a value associated with
   /// @a key.
-  int unbind (const ACE_Active_Map_Manager_Key &key,
+  int unbind (ACE_Active_Map_Manager_Key const &key,
               T &value);
 
   /**
@@ -149,7 +149,7 @@ public:
    * the map resizes or when this slot is reused.  Therefore, the user
    * should use the pointer immediately and not hold on to it.
    */
-  int unbind (const ACE_Active_Map_Manager_Key &key,
+  int unbind (ACE_Active_Map_Manager_Key const &key,
               T *&internal_value);
 
   /// Return the current size of the map.

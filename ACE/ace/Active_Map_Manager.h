@@ -57,15 +57,15 @@ public:
 
   /// Recover state of active key from @a data.  User must make sure
   /// that @a data encoded using the encode() method.
-  void decode (const void *data);
+  void decode (void const *data);
 
   /// Encode state of the active key into @a data.  @a data must be as
   /// big as the value returned from size().
   void encode (void *data) const;
 
   /// Compare keys.
-  bool operator== (const ACE_Active_Map_Manager_Key &rhs) const;
-  bool operator!= (const ACE_Active_Map_Manager_Key &rhs) const;
+  bool operator== (ACE_Active_Map_Manager_Key const &rhs) const;
+  bool operator!= (ACE_Active_Map_Manager_Key const &rhs) const;
 
   /// These methods are public because the template friend declarations
   /// require it.
