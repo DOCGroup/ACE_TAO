@@ -27,7 +27,7 @@ ACE_POSIX_Asynch_Result::set_bytes_transferred (size_t nbytes)
   this->bytes_transferred_= nbytes;
 }
 
-const void *
+void const *
 ACE_POSIX_Asynch_Result::act () const
 {
   return this->act_;
@@ -39,7 +39,7 @@ ACE_POSIX_Asynch_Result::success () const
   return this->success_;
 }
 
-const void *
+void const *
 ACE_POSIX_Asynch_Result::completion_key () const
 {
   return this->completion_key_;
@@ -107,8 +107,8 @@ ACE_POSIX_Asynch_Result::post_completion (ACE_Proactor_Impl *proactor_impl)
 ACE_POSIX_Asynch_Result::~ACE_POSIX_Asynch_Result () = default;
 
 ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
-   const void* act,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
+   void const * act,
    ACE_HANDLE /* event */,      // Event is not used on POSIX.
    u_long offset,
    u_long offset_high,
@@ -133,9 +133,9 @@ ACE_POSIX_Asynch_Result::ACE_POSIX_Asynch_Result
 // ****************************************************************
 
 int
-ACE_POSIX_Asynch_Operation::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_POSIX_Asynch_Operation::open (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                   ACE_HANDLE handle,
-                                  const void * /* completion_key */,
+                                  void const * /* completion_key */,
                                   ACE_Proactor *proactor)
 {
   this->proactor_ = proactor;
@@ -226,11 +226,11 @@ ACE_POSIX_Asynch_Read_Stream_Result::handle () const
 }
 
 ACE_POSIX_Asynch_Read_Stream_Result::ACE_POSIX_Asynch_Read_Stream_Result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -246,7 +246,7 @@ ACE_POSIX_Asynch_Read_Stream_Result::ACE_POSIX_Asynch_Read_Stream_Result
 void
 ACE_POSIX_Asynch_Read_Stream_Result::complete (size_t bytes_transferred,
                                                int success,
-                                               const void *completion_key,
+                                               void const *completion_key,
                                                u_long error)
 {
   this->bytes_transferred_ = bytes_transferred;
@@ -283,7 +283,7 @@ ACE_POSIX_Asynch_Read_Stream::ACE_POSIX_Asynch_Read_Stream (ACE_POSIX_Proactor  
 int
 ACE_POSIX_Asynch_Read_Stream::read (ACE_Message_Block &message_block,
                                     size_t bytes_to_read,
-                                    const void *act,
+                                    void const *act,
                                     int priority,
                                     int signal_number)
 {
@@ -346,11 +346,11 @@ ACE_POSIX_Asynch_Write_Stream_Result::handle () const
 }
 
 ACE_POSIX_Asynch_Write_Stream_Result::ACE_POSIX_Asynch_Write_Stream_Result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_write,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -366,7 +366,7 @@ ACE_POSIX_Asynch_Write_Stream_Result::ACE_POSIX_Asynch_Write_Stream_Result
 void
 ACE_POSIX_Asynch_Write_Stream_Result::complete (size_t bytes_transferred,
                                                 int success,
-                                                const void *completion_key,
+                                                void const *completion_key,
                                                 u_long error)
 {
   // Get all the data copied.
@@ -404,7 +404,7 @@ ACE_POSIX_Asynch_Write_Stream::ACE_POSIX_Asynch_Write_Stream (ACE_POSIX_Proactor
 int
 ACE_POSIX_Asynch_Write_Stream::write (ACE_Message_Block &message_block,
                                       size_t bytes_to_write,
-                                      const void *act,
+                                      void const *act,
                                       int priority,
                                       int signal_number)
 {
@@ -451,11 +451,11 @@ ACE_POSIX_Asynch_Write_Stream::~ACE_POSIX_Asynch_Write_Stream () = default;
 // *********************************************************************
 
 ACE_POSIX_Asynch_Read_File_Result::ACE_POSIX_Asynch_Read_File_Result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
-   const void* act,
+   void const * act,
    u_long offset,
    u_long offset_high,
    ACE_HANDLE event,
@@ -480,7 +480,7 @@ ACE_POSIX_Asynch_Read_File_Result::ACE_POSIX_Asynch_Read_File_Result
 void
 ACE_POSIX_Asynch_Read_File_Result::complete (size_t bytes_transferred,
                                              int success,
-                                             const void *completion_key,
+                                             void const *completion_key,
                                              u_long error)
 {
   // Copy all the data.
@@ -520,7 +520,7 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                   size_t bytes_to_read,
                                   u_long offset,
                                   u_long offset_high,
-                                  const void *act,
+                                  void const *act,
                                   int priority,
                                   int signal_number)
 {
@@ -569,7 +569,7 @@ ACE_POSIX_Asynch_Read_File::~ACE_POSIX_Asynch_Read_File () = default;
 int
 ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
                                   size_t bytes_to_read,
-                                  const void *act,
+                                  void const *act,
                                   int priority,
                                   int signal_number)
 {
@@ -583,11 +583,11 @@ ACE_POSIX_Asynch_Read_File::read (ACE_Message_Block &message_block,
 // ************************************************************
 
 ACE_POSIX_Asynch_Write_File_Result::ACE_POSIX_Asynch_Write_File_Result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_write,
-   const void* act,
+   void const * act,
    u_long offset,
    u_long offset_high,
    ACE_HANDLE event,
@@ -612,7 +612,7 @@ ACE_POSIX_Asynch_Write_File_Result::ACE_POSIX_Asynch_Write_File_Result
 void
 ACE_POSIX_Asynch_Write_File_Result::complete (size_t bytes_transferred,
                                               int success,
-                                              const void *completion_key,
+                                              void const *completion_key,
                                               u_long error)
 {
   // Copy the data.
@@ -652,7 +652,7 @@ ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                     size_t bytes_to_write,
                                     u_long offset,
                                     u_long offset_high,
-                                    const void *act,
+                                    void const *act,
                                     int priority,
                                     int signal_number)
 {
@@ -701,7 +701,7 @@ ACE_POSIX_Asynch_Write_File::~ACE_POSIX_Asynch_Write_File () = default;
 int
 ACE_POSIX_Asynch_Write_File::write (ACE_Message_Block &message_block,
                                     size_t bytes_to_write,
-                                    const void *act,
+                                    void const *act,
                                     int priority,
                                     int signal_number)
 {
@@ -739,12 +739,12 @@ ACE_POSIX_Asynch_Accept_Result::accept_handle () const
 }
 
 ACE_POSIX_Asynch_Accept_Result::ACE_POSIX_Asynch_Accept_Result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE listen_handle,
    ACE_HANDLE accept_handle,
    ACE_Message_Block &message_block,
    size_t bytes_to_read,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -761,7 +761,7 @@ ACE_POSIX_Asynch_Accept_Result::ACE_POSIX_Asynch_Accept_Result
 void
 ACE_POSIX_Asynch_Accept_Result::complete (size_t bytes_transferred,
                                           int success,
-                                          const void *completion_key,
+                                          void const *completion_key,
                                           u_long error)
 {
   // Copy the data.
@@ -813,9 +813,9 @@ ACE_POSIX_Asynch_Accept::set_handle (ACE_HANDLE handle)
 }
 
 int
-ACE_POSIX_Asynch_Accept::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_POSIX_Asynch_Accept::open (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                ACE_HANDLE handle,
-                               const void *completion_key,
+                               void const *completion_key,
                                ACE_Proactor *proactor)
 {
   ACE_TRACE ("ACE_POSIX_Asynch_Accept::open");
@@ -860,7 +860,7 @@ int
 ACE_POSIX_Asynch_Accept::accept (ACE_Message_Block &message_block,
                                  size_t bytes_to_read,
                                  ACE_HANDLE accept_handle,
-                                 const void *act,
+                                 void const *act,
                                  int priority,
                                  int signal_number,
                                  int addr_family)
@@ -1212,9 +1212,9 @@ void ACE_POSIX_Asynch_Connect_Result::connect_handle (ACE_HANDLE handle)
 }
 
 ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE connect_handle,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1228,7 +1228,7 @@ ACE_POSIX_Asynch_Connect_Result::ACE_POSIX_Asynch_Connect_Result
 void
 ACE_POSIX_Asynch_Connect_Result::complete (size_t bytes_transferred,
                                            int success,
-                                           const void *completion_key,
+                                           void const *completion_key,
                                            u_long error)
 {
   // Copy the data.
@@ -1277,9 +1277,9 @@ ACE_POSIX_Asynch_Connect::set_handle (ACE_HANDLE)
 }
 
 int
-ACE_POSIX_Asynch_Connect::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+ACE_POSIX_Asynch_Connect::open (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                 ACE_HANDLE handle,
-                                const void *completion_key,
+                                void const *completion_key,
                                 ACE_Proactor *proactor)
 {
   ACE_TRACE ("ACE_POSIX_Asynch_Connect::open");
@@ -1306,10 +1306,10 @@ ACE_POSIX_Asynch_Connect::open (const ACE_Handler::Proxy_Ptr &handler_proxy,
 
 int
 ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
-                                   const ACE_Addr & remote_sap,
-                                   const ACE_Addr & local_sap,
+                                   ACE_Addr const & remote_sap,
+                                   ACE_Addr const & local_sap,
                                    int reuse_addr,
-                                   const void *act,
+                                   void const *act,
                                    int priority,
                                    int signal_number)
 {
@@ -1449,8 +1449,8 @@ int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * res
 
 int
 ACE_POSIX_Asynch_Connect::connect_i (ACE_POSIX_Asynch_Connect_Result *result,
-                                     const ACE_Addr & remote_sap,
-                                     const ACE_Addr & local_sap,
+                                     ACE_Addr const & remote_sap,
+                                     ACE_Addr const & local_sap,
                                      int  reuse_addr)
 {
   result->set_bytes_transferred (0);
@@ -1759,7 +1759,7 @@ ACE_POSIX_Asynch_Transmit_File_Result::flags () const
 }
 
 ACE_POSIX_Asynch_Transmit_File_Result::ACE_POSIX_Asynch_Transmit_File_Result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE socket,
    ACE_HANDLE file,
    ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -1768,7 +1768,7 @@ ACE_POSIX_Asynch_Transmit_File_Result::ACE_POSIX_Asynch_Transmit_File_Result
    u_long offset_high,
    size_t bytes_per_send,
    u_long flags,
-   const void *act,
+   void const *act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -1786,7 +1786,7 @@ ACE_POSIX_Asynch_Transmit_File_Result::ACE_POSIX_Asynch_Transmit_File_Result
 void
 ACE_POSIX_Asynch_Transmit_File_Result::complete (size_t bytes_transferred,
                                                  int success,
-                                                 const void *completion_key,
+                                                 void const *completion_key,
                                                  u_long error)
 {
   // Copy the data.
@@ -1885,10 +1885,10 @@ protected:
   size_t bytes_transferred_ {};
 
   /// This is called when asynchronous writes from the socket complete.
-  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
   /// This is called when asynchronous reads from the file complete.
-  void handle_read_file (const ACE_Asynch_Read_File::Result &result) override;
+  void handle_read_file (ACE_Asynch_Read_File::Result const &result) override;
 
   void complete_failure (u_long error);
 
@@ -1992,7 +1992,7 @@ ACE_POSIX_Asynch_Transmit_Handler::transmit ()
 }
 
 void
-ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   // Update bytes transferred so far.
   this->bytes_transferred_ += result.bytes_transferred ();
@@ -2083,7 +2083,7 @@ ACE_POSIX_Asynch_Transmit_Handler::handle_write_stream (const ACE_Asynch_Write_S
 }
 
 void
-ACE_POSIX_Asynch_Transmit_Handler::handle_read_file (const ACE_Asynch_Read_File::Result &result)
+ACE_POSIX_Asynch_Transmit_Handler::handle_read_file (ACE_Asynch_Read_File::Result const &result)
 {
   // Failure.
   if (result.success () == 0)
@@ -2175,7 +2175,7 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                u_long offset_high,
                                                size_t bytes_per_send,
                                                u_long flags,
-                                               const void *act,
+                                               void const *act,
                                                int priority,
                                                int signal_number)
 {
@@ -2311,13 +2311,13 @@ ACE_POSIX_Asynch_Read_Dgram_Result::message_block () const
 }
 
 ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_read,
    int flags,
    int protocol_family,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -2340,7 +2340,7 @@ ACE_POSIX_Asynch_Read_Dgram_Result::ACE_POSIX_Asynch_Read_Dgram_Result
 void
 ACE_POSIX_Asynch_Read_Dgram_Result::complete (size_t bytes_transferred,
                                               int success,
-                                              const void *completion_key,
+                                              void const *completion_key,
                                               u_long error)
 {
   // Copy the data which was returned by GetQueuedCompletionStatus
@@ -2396,12 +2396,12 @@ ACE_POSIX_Asynch_Write_Dgram_Result::message_block () const
 }
 
 ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result
-  (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  (ACE_Handler::Proxy_Ptr const &handler_proxy,
    ACE_HANDLE handle,
    ACE_Message_Block *message_block,
    size_t bytes_to_write,
    int flags,
-   const void* act,
+   void const * act,
    ACE_HANDLE event,
    int priority,
    int signal_number)
@@ -2421,7 +2421,7 @@ ACE_POSIX_Asynch_Write_Dgram_Result::ACE_POSIX_Asynch_Write_Dgram_Result
 void
 ACE_POSIX_Asynch_Write_Dgram_Result::complete (size_t bytes_transferred,
                                                int success,
-                                               const void *completion_key,
+                                               void const *completion_key,
                                                u_long error)
 {
   // Copy the data which was returned by GetQueuedCompletionStatus
@@ -2457,7 +2457,7 @@ ACE_POSIX_Asynch_Read_Dgram::recv (ACE_Message_Block *message_block,
                                    size_t & /*number_of_bytes_recvd*/,
                                    int flags,
                                    int protocol_family,
-                                   const void *act,
+                                   void const *act,
                                    int priority,
                                    int signal_number)
 {
@@ -2501,8 +2501,8 @@ ssize_t
 ACE_POSIX_Asynch_Write_Dgram::send (ACE_Message_Block *message_block,
                                     size_t &/*number_of_bytes_sent*/,
                                     int flags,
-                                    const ACE_Addr &/*addr*/,
-                                    const void *act,
+                                    ACE_Addr const &/*addr*/,
+                                    void const *act,
                                     int priority,
                                     int signal_number)
 {

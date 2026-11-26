@@ -101,7 +101,7 @@ public:
   size_t bytes_transferred () const;
 
   /// ACT associated with the operation.
-  const void *act () const;
+  void const *act () const;
 
   /// Did the operation succeed?
   bool success () const;
@@ -115,7 +115,7 @@ public:
    *
    * @@ This is not implemented for POSIX4 platforms. Returns 0.
    */
-  const void *completion_key () const;
+  void const *completion_key () const;
 
   /// Error value if the operation fails.
   unsigned long error () const;
@@ -199,7 +199,7 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor);
 
   /**
@@ -307,7 +307,7 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
-            const void *completion_key = nullptr,
+            void const *completion_key = nullptr,
             ACE_Proactor *proactor = nullptr);
 
   /**
@@ -336,7 +336,7 @@ public:
    */
   int read (ACE_Message_Block &message_block,
             size_t num_bytes_to_read,
-            const void *act = nullptr,
+            void const *act = nullptr,
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
 
@@ -347,7 +347,7 @@ public:
   */
   int readv (ACE_Message_Block &message_block,
              size_t num_bytes_to_read,
-             const void *act = nullptr,
+             void const *act = nullptr,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
 #endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) */
@@ -454,7 +454,7 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
-            const void *completion_key = nullptr,
+            void const *completion_key = nullptr,
             ACE_Proactor *proactor = nullptr);
 
   /**
@@ -489,7 +489,7 @@ public:
    */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
-             const void *act = nullptr,
+             void const *act = nullptr,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
 
@@ -500,7 +500,7 @@ public:
   */
   int writev (ACE_Message_Block &message_block,
               size_t bytes_to_write,
-              const void *act = nullptr,
+              void const *act = nullptr,
               int priority = 0,
               int signal_number = ACE_SIGRTMIN);
 #endif /* defined (ACE_HAS_WIN32_OVERLAPPED_IO) */
@@ -611,7 +611,7 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
-            const void *completion_key = nullptr,
+            void const *completion_key = nullptr,
             ACE_Proactor *proactor = nullptr);
 
   /**
@@ -631,7 +631,7 @@ public:
             size_t bytes_to_read,
             unsigned long offset = 0,
             unsigned long offset_high = 0,
-            const void *act = nullptr,
+            void const *act = nullptr,
             int priority = 0,
             int signal_number = ACE_SIGRTMIN);
 
@@ -646,7 +646,7 @@ public:
              size_t bytes_to_read,
              unsigned long offset = 0,
              unsigned long offset_high = 0,
-             const void *act = nullptr,
+             void const *act = nullptr,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
 #endif /* defined (ACE_WIN32) */
@@ -745,7 +745,7 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
-            const void *completion_key = nullptr,
+            void const *completion_key = nullptr,
             ACE_Proactor *proactor = nullptr);
 
   /**
@@ -766,7 +766,7 @@ public:
              size_t bytes_to_write,
              unsigned long offset = 0,
              unsigned long offset_high = 0,
-             const void *act = nullptr,
+             void const *act = nullptr,
              int priority = 0,
              int signal_number = ACE_SIGRTMIN);
 
@@ -781,7 +781,7 @@ public:
               size_t bytes_to_write,
               unsigned long offset = 0,
               unsigned long offset_high = 0,
-              const void *act = nullptr,
+              void const *act = nullptr,
               int priority = 0,
               int signal_number = ACE_SIGRTMIN);
 #endif /* defined (ACE_WIN32) */
@@ -877,7 +877,7 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
-            const void *completion_key = nullptr,
+            void const *completion_key = nullptr,
             ACE_Proactor *proactor = nullptr);
 
   /**
@@ -917,7 +917,7 @@ public:
   int accept (ACE_Message_Block &message_block,
               size_t bytes_to_read,
               ACE_HANDLE accept_handle = ACE_INVALID_HANDLE,
-              const void *act = nullptr,
+              void const *act = nullptr,
               int priority = 0,
               int signal_number = ACE_SIGRTMIN,
               int addr_family = AF_INET);
@@ -1011,17 +1011,17 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
-            const void *completion_key = nullptr,
+            void const *completion_key = nullptr,
             ACE_Proactor *proactor = nullptr);
 
   /**
    * This starts off an asynchronous Connect.
    */
   int connect (ACE_HANDLE connect_handle,
-               const ACE_Addr & remote_sap,
-               const ACE_Addr & local_sap,
+               ACE_Addr const & remote_sap,
+               ACE_Addr const & local_sap,
                int  reuse_addr,
-               const void *act = nullptr,
+               void const *act = nullptr,
                int priority = 0,
                int signal_number = ACE_SIGRTMIN);
 
@@ -1116,7 +1116,7 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
-            const void *completion_key = nullptr,
+            void const *completion_key = nullptr,
             ACE_Proactor *proactor = nullptr);
 
   /**
@@ -1145,7 +1145,7 @@ public:
                      unsigned long offset_high = 0,
                      size_t bytes_per_send = 0,
                      unsigned long flags = 0,
-                     const void *act = nullptr,
+                     void const *act = nullptr,
                      int priority = 0,
                      int signal_number = ACE_SIGRTMIN);
 
@@ -1317,7 +1317,7 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
-            const void *completion_key = nullptr,
+            void const *completion_key = nullptr,
             ACE_Proactor *proactor = nullptr);
 
   /** This starts off an asynchronous read.  Upto
@@ -1350,7 +1350,7 @@ public:
                 size_t &number_of_bytes_recvd,
                 int flags,
                 int protocol_family = PF_INET,
-                const void *act = nullptr,
+                void const *act = nullptr,
                 int priority = 0,
                 int signal_number = ACE_SIGRTMIN);
 
@@ -1449,7 +1449,7 @@ public:
    */
   int open (ACE_Handler &handler,
             ACE_HANDLE handle = ACE_INVALID_HANDLE,
-            const void *completion_key = nullptr,
+            void const *completion_key = nullptr,
             ACE_Proactor *proactor = nullptr);
 
   /** This starts off an asynchronous send.  Upto
@@ -1481,8 +1481,8 @@ public:
   ssize_t send (ACE_Message_Block *message_block,
                 size_t &number_of_bytes_sent,
                 int flags,
-                const ACE_Addr& remote_addr,
-                const void *act = nullptr,
+                ACE_Addr const & remote_addr,
+                void const *act = nullptr,
                 int priority = 0,
                 int signal_number = ACE_SIGRTMIN);
 
@@ -1567,41 +1567,41 @@ public:
 
   /// This method will be called when an asynchronous read completes on
   /// a stream.
-  virtual void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result);
+  virtual void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result);
 
   /// This method will be called when an asynchronous write completes
   /// on a UDP socket.
-  virtual void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result);
+  virtual void handle_write_dgram (ACE_Asynch_Write_Dgram::Result const &result);
 
   /// This method will be called when an asynchronous read completes on
   /// a UDP socket.
-  virtual void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result);
+  virtual void handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result);
 
   /// This method will be called when an asynchronous write completes
   /// on a stream.
-  virtual void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result);
+  virtual void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result);
 
   /// This method will be called when an asynchronous read completes on
   /// a file.
-  virtual void handle_read_file (const ACE_Asynch_Read_File::Result &result);
+  virtual void handle_read_file (ACE_Asynch_Read_File::Result const &result);
 
   /// This method will be called when an asynchronous write completes
   /// on a file.
-  virtual void handle_write_file (const ACE_Asynch_Write_File::Result &result);
+  virtual void handle_write_file (ACE_Asynch_Write_File::Result const &result);
 
   /// This method will be called when an asynchronous accept completes.
-  virtual void handle_accept (const ACE_Asynch_Accept::Result &result);
+  virtual void handle_accept (ACE_Asynch_Accept::Result const &result);
 
   /// This method will be called when an asynchronous connect completes.
-  virtual void handle_connect (const ACE_Asynch_Connect::Result &result);
+  virtual void handle_connect (ACE_Asynch_Connect::Result const &result);
 
   /// This method will be called when an asynchronous transmit file
   /// completes.
-  virtual void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result);
+  virtual void handle_transmit_file (ACE_Asynch_Transmit_File::Result const &result);
 
   /// Called when timer expires.  {tv} was the requested time value and
   /// {act} is the ACT passed when scheduling the timer.
-  virtual void handle_time_out (const ACE_Time_Value &tv, const void *act = nullptr);
+  virtual void handle_time_out (ACE_Time_Value const &tv, void const *act = nullptr);
 
   /**
    * This is method works with the {run_event_loop} of the
@@ -1704,11 +1704,11 @@ public:
 
   /// Called by ACE_Asynch_Acceptor to pass the addresses of the new
   /// connections.
-  virtual void addresses (const ACE_INET_Addr &remote_address,
-                          const ACE_INET_Addr &local_address);
+  virtual void addresses (ACE_INET_Addr const &remote_address,
+                          ACE_INET_Addr const &local_address);
 
   /// Called by ACE_Asynch_Acceptor to pass the act.
-  virtual void act (const void *);
+  virtual void act (void const *);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

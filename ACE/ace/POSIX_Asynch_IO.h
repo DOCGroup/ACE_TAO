@@ -58,7 +58,7 @@ public:
   size_t bytes_transferred () const override;
 
   /// ACT associated with the operation.
-  const void *act () const override;
+  void const *act () const override;
 
   /// Did the operation succeed?
   bool success () const override;
@@ -69,7 +69,7 @@ public:
    *
    * @note This is not implemented for POSIX4 platforms.
    */
-  const void *completion_key () const override;
+  void const *completion_key () const override;
 
   /// Error value if the operation fails.
   u_long error () const override;
@@ -110,8 +110,8 @@ public:
 
 protected:
   /// Constructor. The @a event argument is not used on POSIX.
-  ACE_POSIX_Asynch_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
-                           const void* act,
+  ACE_POSIX_Asynch_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
+                           void const * act,
                            ACE_HANDLE event,
                            u_long offset,
                            u_long offset_high,
@@ -127,7 +127,7 @@ protected:
    * this. But it doesnot provide the constness, so this may be
    * better.
    */
-  const void *act_;
+  void const *act_;
 
   /// Bytes transferred by this operation.
   size_t bytes_transferred_ {};
@@ -136,7 +136,7 @@ protected:
   bool success_ {};
 
   /// ACT associated with handle.
-  const void *completion_key_ {};
+  void const *completion_key_ {};
 
   /// Error if operation failed.
   u_long error_ {};
@@ -161,9 +161,9 @@ public:
    * Operation class itself was created by the correct implementation
    * Proactor class.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor = nullptr) override;
 
   /// Check the documentation for ACE_Asynch_Operation::cancel.
@@ -238,11 +238,11 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_Stream factory.
-  ACE_POSIX_Asynch_Read_Stream_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Read_Stream_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block &message_block,
                                        size_t bytes_to_read,
-                                       const void* act,
+                                       void const * act,
                                        ACE_HANDLE event,
                                        int priority,
                                        int signal_number);
@@ -251,7 +251,7 @@ protected:
   /// handler.
   void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error) override;
 
   ~ACE_POSIX_Asynch_Read_Stream_Result () override;
@@ -282,7 +282,7 @@ public:
   /// be read and stored in the @a message_block.
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
-            const void *act,
+            void const *act,
             int priority,
             int signal_number = 0) override;
 
@@ -322,11 +322,11 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
-  ACE_POSIX_Asynch_Write_Stream_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Write_Stream_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                         ACE_HANDLE handle,
                                         ACE_Message_Block &message_block,
                                         size_t bytes_to_write,
-                                        const void* act,
+                                        void const * act,
                                         ACE_HANDLE event,
                                         int priority,
                                         int signal_number);
@@ -334,7 +334,7 @@ protected:
   /// ACE_Proactor will call this method when the write completes.
   void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error) override;
 
   ~ACE_POSIX_Asynch_Write_Stream_Result () override;
@@ -367,7 +367,7 @@ public:
   /// will be written from the @a message_block.
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number = 0) override;
 
@@ -392,11 +392,11 @@ class ACE_Export ACE_POSIX_Asynch_Read_File_Result : public virtual ACE_Asynch_R
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_File factory.
-  ACE_POSIX_Asynch_Read_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Read_File_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                      ACE_HANDLE handle,
                                      ACE_Message_Block &message_block,
                                      size_t bytes_to_read,
-                                     const void* act,
+                                     void const * act,
                                      u_long offset,
                                      u_long offset_high,
                                      ACE_HANDLE event,
@@ -406,7 +406,7 @@ protected:
   /// ACE_Proactor will call this method when the read completes.
   void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error) override;
 
   ~ACE_POSIX_Asynch_Read_File_Result () override;
@@ -443,7 +443,7 @@ public:
             size_t bytes_to_read,
             u_long offset,
             u_long offset_high,
-            const void *act,
+            void const *act,
             int priority,
             int signal_number = 0) override;
 
@@ -457,7 +457,7 @@ private:
    */
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
-            const void *act,
+            void const *act,
             int priority,
             int signal_number = 0) override;
 };
@@ -491,11 +491,11 @@ class ACE_Export ACE_POSIX_Asynch_Write_File_Result : public virtual ACE_Asynch_
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_File factory.
-  ACE_POSIX_Asynch_Write_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Write_File_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block &message_block,
                                       size_t bytes_to_write,
-                                      const void* act,
+                                      void const * act,
                                       u_long offset,
                                       u_long offset_high,
                                       ACE_HANDLE event,
@@ -505,7 +505,7 @@ protected:
   /// ACE_Proactor will call this method when the write completes.
   void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error) override;
 
   ~ACE_POSIX_Asynch_Write_File_Result () override;
@@ -534,7 +534,7 @@ public:
              size_t bytes_to_write,
              u_long offset,
              u_long offset_high,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number = 0) override;
 
@@ -549,7 +549,7 @@ private:
    */
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number = 0) override;
 };
@@ -590,12 +590,12 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Accept factory.
-  ACE_POSIX_Asynch_Accept_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Accept_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                   ACE_HANDLE listen_handle,
                                   ACE_HANDLE accept_handle,
                                   ACE_Message_Block &message_block,
                                   size_t bytes_to_read,
-                                  const void* act,
+                                  void const * act,
                                   ACE_HANDLE event,
                                   int priority,
                                   int signal_number);
@@ -603,7 +603,7 @@ protected:
   /// ACE_Proactor will call this method when the accept completes.
   void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error) override;
 
   ~ACE_POSIX_Asynch_Accept_Result () override;
@@ -636,9 +636,9 @@ public:
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor = nullptr) override;
 
   /**
@@ -655,7 +655,7 @@ public:
   int accept (ACE_Message_Block &message_block,
               size_t bytes_to_read,
               ACE_HANDLE accept_handle,
-              const void *act,
+              void const *act,
               int priority,
               int signal_number = 0,
               int addr_family = AF_INET) override;
@@ -736,9 +736,9 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Connect factory.
-  ACE_POSIX_Asynch_Connect_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Connect_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                    ACE_HANDLE  connect_handle,
-                                   const void* act,
+                                   void const * act,
                                    ACE_HANDLE  event,
                                    int priority,
                                    int signal_number);
@@ -746,7 +746,7 @@ protected:
   /// ACE_Proactor will call this method when the accept completes.
   void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error) override;
 
   ~ACE_POSIX_Asynch_Connect_Result () override;
@@ -774,9 +774,9 @@ public:
    * this call to that method. We have put this here to avoid the
    * compiler warnings.
    */
-  int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
             ACE_HANDLE handle,
-            const void *completion_key,
+            void const *completion_key,
             ACE_Proactor *proactor = nullptr) override;
 
   /**
@@ -787,10 +787,10 @@ public:
    *                       handle will be created.
    */
   int connect (ACE_HANDLE connect_handle,
-               const ACE_Addr &remote_sap,
-               const ACE_Addr &local_sap,
+               ACE_Addr const &remote_sap,
+               ACE_Addr const &local_sap,
                int reuse_addr,
-               const void *act,
+               void const *act,
                int priority,
                int signal_number = 0) override;
 
@@ -822,8 +822,8 @@ public:
 
 private:
   int connect_i (ACE_POSIX_Asynch_Connect_Result *result,
-                 const ACE_Addr & remote_sap,
-                 const ACE_Addr & local_sap,
+                 ACE_Addr const & remote_sap,
+                 ACE_Addr const & local_sap,
                  int reuse_addr);
 
   int post_result (ACE_POSIX_Asynch_Connect_Result *result, bool flg_post);
@@ -900,7 +900,7 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Transmit_File factory.
-  ACE_POSIX_Asynch_Transmit_File_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Transmit_File_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                          ACE_HANDLE socket,
                                          ACE_HANDLE file,
                                          ACE_Asynch_Transmit_File::Header_And_Trailer *header_and_trailer,
@@ -909,7 +909,7 @@ protected:
                                          u_long offset_high,
                                          size_t bytes_per_send,
                                          u_long flags,
-                                         const void *act,
+                                         void const *act,
                                          ACE_HANDLE event,
                                          int priority,
                                          int signal_number);
@@ -917,7 +917,7 @@ protected:
   /// ACE_Proactor will call this method when the write completes.
   void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error) override;
 
   ~ACE_POSIX_Asynch_Transmit_File_Result () override;
@@ -973,7 +973,7 @@ public:
                      u_long offset_high,
                      size_t bytes_per_send,
                      u_long flags,
-                     const void *act,
+                     void const *act,
                      int priority,
                      int signal_number = 0) override;
 
@@ -1024,7 +1024,7 @@ public:
                         size_t &number_of_bytes_recvd,
                         int flags,
                         int protocol_family,
-                        const void *act,
+                        void const *act,
                         int priority,
                         int signal_number) override;
 
@@ -1065,12 +1065,12 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Write_Stream factory.
-  ACE_POSIX_Asynch_Write_Dgram_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Write_Dgram_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                        ACE_HANDLE handle,
                                        ACE_Message_Block *message_block,
                                        size_t bytes_to_write,
                                        int flags,
-                                       const void* act,
+                                       void const * act,
                                        ACE_HANDLE event,
                                        int priority,
                                        int signal_number);
@@ -1078,7 +1078,7 @@ protected:
   /// ACE_Proactor will call this method when the write completes.
   void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error) override;
 
   ~ACE_POSIX_Asynch_Write_Dgram_Result () override;
@@ -1143,8 +1143,8 @@ public:
   ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,
                         int flags,
-                        const ACE_Addr &addr,
-                        const void *act,
+                        ACE_Addr const &addr,
+                        void const *act,
                         int priority,
                         int signal_number) override;
 
@@ -1192,13 +1192,13 @@ public:
 protected:
   /// Constructor is protected since creation is limited to
   /// ACE_Asynch_Read_Dgram factory.
-  ACE_POSIX_Asynch_Read_Dgram_Result (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  ACE_POSIX_Asynch_Read_Dgram_Result (ACE_Handler::Proxy_Ptr const &handler_proxy,
                                       ACE_HANDLE handle,
                                       ACE_Message_Block *message_block,
                                       size_t bytes_to_read,
                                       int flags,
                                       int protocol_family,
-                                      const void* act,
+                                      void const * act,
                                       ACE_HANDLE event,
                                       int priority,
                                       int signal_number = 0);
@@ -1206,7 +1206,7 @@ protected:
   /// Proactor will call this method when the read completes.
   void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error) override;
 
   ~ACE_POSIX_Asynch_Read_Dgram_Result () override;
