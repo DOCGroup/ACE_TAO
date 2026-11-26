@@ -2,7 +2,7 @@
 
 #if !defined (ACE_LACKS_UNIX_DOMAIN_SOCKETS)
 
-const ACE_TCHAR *Handle_L_Dgram::DEFAULT_RENDEZVOUS =
+ACE_TCHAR const *Handle_L_Dgram::DEFAULT_RENDEZVOUS =
   ACE_TEXT ("/tmp/foo_dgram");
 
 #if !defined (__ACE_INLINE__)

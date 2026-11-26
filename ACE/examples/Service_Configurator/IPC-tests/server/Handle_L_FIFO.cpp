@@ -1,6 +1,6 @@
 #include "Handle_L_FIFO.h"
 
-const ACE_TCHAR *Handle_L_FIFO::DEFAULT_RENDEZVOUS = ACE_TEXT("/tmp/foo_fifo");
+ACE_TCHAR const *Handle_L_FIFO::DEFAULT_RENDEZVOUS = ACE_TEXT("/tmp/foo_fifo");
 
 #if !defined (__ACE_INLINE__)
 #include "Handle_L_FIFO.inl"

@@ -30,13 +30,13 @@ public:
   int fini () override;
 
 private:
-  int open (const ACE_UNIX_Addr &suad, int async = 0);
+  int open (ACE_UNIX_Addr const &suad, int async = 0);
   int get_handle () const override;
   int handle_input (int fd) override;
   int handle_close (int fd, ACE_Reactor_Mask) override;
 
   ACE_TCHAR rendezvous[MAXPATHLEN + 1] {};
-  static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
+  static ACE_TCHAR const *DEFAULT_RENDEZVOUS;
 };
 
 extern ACE_Service_Object_Type ld;

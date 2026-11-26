@@ -30,12 +30,12 @@ public:
   int fini () override;
 
 private:
-  int open (const ACE_SPIPE_Addr &rendezvous_spipe);
+  int open (ACE_SPIPE_Addr const &rendezvous_spipe);
   int get_handle () const override;
   int handle_input (int fd) override;
   int handle_close (int fd, ACE_Reactor_Mask) override;
 
-  static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
+  static ACE_TCHAR const *DEFAULT_RENDEZVOUS;
 };
 
 extern ACE_Service_Object_Type lsp;

@@ -32,7 +32,7 @@ public:
   int fini () override;
 
 private:
-  int open (const ACE_UNIX_Addr &suap, int async = 0);
+  int open (ACE_UNIX_Addr const &suap, int async = 0);
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE fd) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask) override;
@@ -40,7 +40,7 @@ private:
   char *upper_case (char s[], int n);
 
   ACE_TCHAR rendezvous[MAXPATHLEN + 1] {};
-  static const ACE_TCHAR *DEFAULT_RENDEZVOUS;
+  static ACE_TCHAR const *DEFAULT_RENDEZVOUS;
 };
 
 extern ACE_Service_Object_Type lp;

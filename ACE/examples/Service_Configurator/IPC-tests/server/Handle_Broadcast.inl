@@ -13,7 +13,7 @@ Handle_Broadcast::Handle_Broadcast ()
 }
 
 ACE_INLINE int
-Handle_Broadcast::open (const ACE_INET_Addr &r, int async)
+Handle_Broadcast::open (ACE_INET_Addr const &r, int async)
 {
   if (this->ACE_SOCK_Dgram::open (r) == -1)
     {

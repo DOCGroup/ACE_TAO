@@ -172,7 +172,7 @@ CLI_Stream<PR_ST_2>::svc ()
   ACE_OS::sprintf (buf,
                    "user %s %s",
                    login_name,
-                   ACE_TEXT_ALWAYS_CHAR (ACE_OS::ctime ((const time_t *) &t)));
+                   ACE_TEXT_ALWAYS_CHAR (ACE_OS::ctime ((time_t const *) &t)));
 
   if (this->peer ().send_n (buf, std::strlen (buf) + 1) == -1)
   {

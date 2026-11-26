@@ -28,7 +28,7 @@ public:
   int fini () override;
 
 private:
-  int open (const ACE_INET_Addr &r, int async = 0);
+  int open (ACE_INET_Addr const &r, int async = 0);
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE fd) override;
   int handle_close (ACE_HANDLE fd, ACE_Reactor_Mask) override;

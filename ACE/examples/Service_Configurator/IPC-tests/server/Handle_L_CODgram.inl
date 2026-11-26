@@ -9,7 +9,7 @@ Handle_L_CODgram::Handle_L_CODgram ()
 }
 
 ACE_INLINE int
-Handle_L_CODgram::open (const ACE_UNIX_Addr &suad, int async)
+Handle_L_CODgram::open (ACE_UNIX_Addr const &suad, int async)
 {
   if (this->ACE_LSOCK_CODgram::open (ACE_Addr::sap_any, suad) == -1)
     {
@@ -59,7 +59,7 @@ Handle_L_CODgram::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr  sucd;
   ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT ("r:"), 0);
-  const ACE_TCHAR *r = Handle_L_CODgram::DEFAULT_RENDEZVOUS;
+  ACE_TCHAR const *r = Handle_L_CODgram::DEFAULT_RENDEZVOUS;
 
   for (int c; (c = get_opt ()) != -1; )
     switch (c)

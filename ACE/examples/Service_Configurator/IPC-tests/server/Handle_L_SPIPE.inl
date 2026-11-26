@@ -14,7 +14,7 @@ Handle_L_SPIPE::Handle_L_SPIPE ()
 }
 
 ACE_INLINE int
-Handle_L_SPIPE::open (const ACE_SPIPE_Addr &rendezvous_spipe)
+Handle_L_SPIPE::open (ACE_SPIPE_Addr const &rendezvous_spipe)
 {
   if (this->ACE_SPIPE_Acceptor::open (rendezvous_spipe) == -1)
     {
@@ -59,7 +59,7 @@ ACE_INLINE int
 Handle_L_SPIPE::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_SPIPE_Addr susp;
-  const ACE_TCHAR *rendezvous = Handle_L_SPIPE::DEFAULT_RENDEZVOUS;
+  ACE_TCHAR const *rendezvous = Handle_L_SPIPE::DEFAULT_RENDEZVOUS;
   ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )

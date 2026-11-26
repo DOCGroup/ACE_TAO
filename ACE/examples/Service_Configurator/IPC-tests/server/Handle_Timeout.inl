@@ -77,8 +77,8 @@ Handle_Timeout::get_handle () const
 }
 
 ACE_INLINE int
-Handle_Timeout::handle_timeout (const ACE_Time_Value &tv,
-                                const void *arg)
+Handle_Timeout::handle_timeout (ACE_Time_Value const &tv,
+                                void const *arg)
 {
   if (this->count >= 10)
     {

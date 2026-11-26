@@ -22,7 +22,7 @@ Handle_L_Stream::Handle_L_Stream ()
 }
 
 ACE_INLINE int
-Handle_L_Stream::open (const ACE_UNIX_Addr &suas,
+Handle_L_Stream::open (ACE_UNIX_Addr const &suas,
                        int async)
 {
   if (this->ACE_LSOCK_Acceptor::open (suas) == -1)
@@ -72,7 +72,7 @@ ACE_INLINE int
 Handle_L_Stream::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr sus;
-  const ACE_TCHAR *r = Handle_L_Stream::DEFAULT_RENDEZVOUS;
+  ACE_TCHAR const *r = Handle_L_Stream::DEFAULT_RENDEZVOUS;
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )

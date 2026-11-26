@@ -12,7 +12,7 @@ Handle_L_Pipe::Handle_L_Pipe ()
 }
 
 ACE_INLINE int
-Handle_L_Pipe::open (const ACE_UNIX_Addr &suap, int async)
+Handle_L_Pipe::open (ACE_UNIX_Addr const &suap, int async)
 {
   if (this->ACE_LSOCK_Acceptor::open (suap) == -1)
     {
@@ -61,7 +61,7 @@ ACE_INLINE int
 Handle_L_Pipe::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_UNIX_Addr sup;
-  const ACE_TCHAR *r = Handle_L_Pipe::DEFAULT_RENDEZVOUS;
+  ACE_TCHAR const *r = Handle_L_Pipe::DEFAULT_RENDEZVOUS;
   ACE_Get_Opt get_opt (argc, argv, ACE_TEXT ("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )

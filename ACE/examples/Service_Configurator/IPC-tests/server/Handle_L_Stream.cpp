@@ -4,7 +4,7 @@
 
 // Static variables.
 
-const ACE_TCHAR *Handle_L_Stream::DEFAULT_RENDEZVOUS = ACE_TEXT ("/tmp/foo_stream");
+ACE_TCHAR const *Handle_L_Stream::DEFAULT_RENDEZVOUS = ACE_TEXT ("/tmp/foo_stream");
 char *Handle_L_Stream::login_name {};
 char Handle_L_Stream::login[ACE_MAX_USERID];
 

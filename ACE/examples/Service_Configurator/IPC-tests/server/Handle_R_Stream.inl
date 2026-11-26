@@ -22,7 +22,7 @@ Handle_R_Stream::Handle_R_Stream ()
 }
 
 ACE_INLINE int
-Handle_R_Stream::open (const ACE_INET_Addr &sia, int async)
+Handle_R_Stream::open (ACE_INET_Addr const &sia, int async)
 {
   if (this->ACE_SOCK_Acceptor::open (sia) == -1)
     {

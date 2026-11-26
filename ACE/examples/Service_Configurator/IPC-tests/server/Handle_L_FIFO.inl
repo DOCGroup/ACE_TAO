@@ -11,7 +11,7 @@ Handle_L_FIFO::Handle_L_FIFO ()
 }
 
 ACE_INLINE int
-Handle_L_FIFO::open (const ACE_TCHAR *rendezvous_fifo)
+Handle_L_FIFO::open (ACE_TCHAR const *rendezvous_fifo)
 {
   if (this->ACE_FIFO_Recv_Msg::open (rendezvous_fifo) == -1)
     {
@@ -27,7 +27,7 @@ ACE_INLINE int
 Handle_L_FIFO::info (ACE_TCHAR **strp, size_t length) const
 {
   ACE_TCHAR buf[BUFSIZ];
-  const ACE_TCHAR *rendezvous_fifo;
+  ACE_TCHAR const *rendezvous_fifo;
 
   this->get_local_addr (rendezvous_fifo);
 
@@ -53,7 +53,7 @@ Handle_L_FIFO::info (ACE_TCHAR **strp, size_t length) const
 ACE_INLINE int
 Handle_L_FIFO::init (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *rendezvous_fifo = Handle_L_FIFO::DEFAULT_RENDEZVOUS;
+  ACE_TCHAR const *rendezvous_fifo = Handle_L_FIFO::DEFAULT_RENDEZVOUS;
   ACE_Get_Opt    get_opt (argc, argv, ACE_TEXT("r:"), 0);
 
   for (int c; (c = get_opt ()) != -1; )

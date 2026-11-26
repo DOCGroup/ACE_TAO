@@ -28,7 +28,7 @@ public:
 
 private:
   ACE_HANDLE get_handle () const override;
-  int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg) override;
 
   int count {};
 };
