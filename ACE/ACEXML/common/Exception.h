@@ -39,7 +39,7 @@ public:
   static ACEXML_Exception* _downcast (ACEXML_Exception* ex);
 
   /// Return the exception type.  (for safe downcast.)
-  virtual const ACEXML_Char *id () const ;
+  virtual ACEXML_Char const *id () const ;
 
   /// Dynamically create a copy of this exception.
   virtual ACEXML_Exception *duplicate () const = 0;
@@ -55,10 +55,10 @@ protected:
 
   /// All exceptions have names.  This name is used to identify the
   /// type of an exception.
-  static const ACEXML_Char *exception_name_;
+  static ACEXML_Char const *exception_name_;
 
   /// A null string that we return when there is no exception.
-  static const ACEXML_Char *null_;
+  static ACEXML_Char const *null_;
 };
 
 #if defined (__ACEXML_INLINE__)

@@ -43,7 +43,7 @@ using ACEXML_NS_CONTEXT_REVERSE_ITER =
                                    ACE_Equal_To<ACEXML_String>,
                                    ACE_Null_Mutex>;
 
-using ACEXML_STR_LIST = ACE_Unbounded_Queue<const ACEXML_Char *>;
+using ACEXML_STR_LIST = ACE_Unbounded_Queue<ACEXML_Char const *>;
 
 /**
  * @class ACEXML_Namespace_Context_Stack
@@ -140,16 +140,16 @@ public:
   /**
    * XMLNS default prefix and URI strings.
    */
-  static const ACEXML_Char *XMLNS_PREFIX;
-  static const ACEXML_Char *XMLNS;
+  static ACEXML_Char const *XMLNS_PREFIX;
+  static ACEXML_Char const *XMLNS;
 
   /**
    * Declare a Namespace prefix.  Return -1 if the prefix was illegal
    * or an internal error occurred.  Return 0 if the prefix gets declared
    * successfully, 1 if the prefix replaces an existing prefix definition.
    */
-  int declarePrefix (const ACEXML_Char *prefix,
-                     const ACEXML_Char *uri);
+  int declarePrefix (ACEXML_Char const *prefix,
+                     ACEXML_Char const *uri);
 
   /**
    * Return all prefixes declared in current context in
@@ -161,7 +161,7 @@ public:
   /**
    * Return one of the prefixes mapped to a Namespace URI.
    */
-  const ACEXML_Char *getPrefix (const ACEXML_Char *uri) const;
+  ACEXML_Char const *getPrefix (ACEXML_Char const *uri) const;
 
   /**
    * Return all prefixes currently declared in the user-supplied list.
@@ -173,13 +173,13 @@ public:
    * Return all prefixes currently declared for a URI in the
    * user-supplied list.
    */
-  int getPrefixes (const ACEXML_Char *uri,
+  int getPrefixes (ACEXML_Char const *uri,
                    ACEXML_STR_LIST &prefixes) const;
 
   /**
    * Look up a prefix and get the currently-mapped Namespace URI.
    */
-  const ACEXML_Char *getURI (const ACEXML_Char *prefix) const;
+  ACEXML_Char const *getURI (ACEXML_Char const *prefix) const;
 
   /**
    * Revert to the previous namespace context.

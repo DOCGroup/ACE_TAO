@@ -24,11 +24,11 @@ ACEXML_AttributesImpl::ACEXML_AttributesImpl (
 ACEXML_AttributesImpl::~ACEXML_AttributesImpl () = default;
 
 int
-ACEXML_AttributesImpl::addAttribute (const ACEXML_Char *uri,
-                                     const ACEXML_Char *localName,
-                                     const ACEXML_Char *qName,
-                                     const ACEXML_Char *type,
-                                     const ACEXML_Char *value)
+ACEXML_AttributesImpl::addAttribute (ACEXML_Char const *uri,
+                                     ACEXML_Char const *localName,
+                                     ACEXML_Char const *qName,
+                                     ACEXML_Char const *type,
+                                     ACEXML_Char const *value)
 {
   if (this->isDuplicate (uri, localName, qName))
   {
@@ -54,9 +54,9 @@ ACEXML_AttributesImpl::addAttribute (const ACEXML_Attribute &att)
 }
 
 int
-ACEXML_AttributesImpl::isDuplicate (const ACEXML_Char *uri,
-                                    const ACEXML_Char *localName,
-                                    const ACEXML_Char *qName)
+ACEXML_AttributesImpl::isDuplicate (ACEXML_Char const *uri,
+                                    ACEXML_Char const *localName,
+                                    ACEXML_Char const *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     {
@@ -93,7 +93,7 @@ ACEXML_AttributesImpl::removeAttribute (size_t index)
 }
 
 int
-ACEXML_AttributesImpl::getIndex (const ACEXML_Char *qName)
+ACEXML_AttributesImpl::getIndex (ACEXML_Char const *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     {
@@ -107,8 +107,8 @@ ACEXML_AttributesImpl::getIndex (const ACEXML_Char *qName)
 }
 
 int
-ACEXML_AttributesImpl::getIndex (const ACEXML_Char *uri,
-                                 const ACEXML_Char *localPart)
+ACEXML_AttributesImpl::getIndex (ACEXML_Char const *uri,
+                                 ACEXML_Char const *localPart)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     {
@@ -128,7 +128,7 @@ ACEXML_AttributesImpl::getLength ()
   return this->attrs_.size ();
 }
 
-const ACEXML_Char *
+ACEXML_Char const *
 ACEXML_AttributesImpl::getLocalName (size_t index)
 {
   if (index < this->attrs_.size ())
@@ -138,7 +138,7 @@ ACEXML_AttributesImpl::getLocalName (size_t index)
   return nullptr;
 }
 
-const ACEXML_Char *
+ACEXML_Char const *
 ACEXML_AttributesImpl::getQName (size_t index)
 {
   if (index < this->attrs_.size ())
@@ -148,7 +148,7 @@ ACEXML_AttributesImpl::getQName (size_t index)
   return nullptr;
 }
 
-const ACEXML_Char *
+ACEXML_Char const *
 ACEXML_AttributesImpl::getType (size_t index)
 {
   if (index < this->attrs_.size ())
@@ -158,8 +158,8 @@ ACEXML_AttributesImpl::getType (size_t index)
   return nullptr;
 }
 
-const ACEXML_Char *
-ACEXML_AttributesImpl::getType (const ACEXML_Char *qName)
+ACEXML_Char const *
+ACEXML_AttributesImpl::getType (ACEXML_Char const *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     {
@@ -172,9 +172,9 @@ ACEXML_AttributesImpl::getType (const ACEXML_Char *qName)
   return nullptr;
 }
 
-const ACEXML_Char *
-ACEXML_AttributesImpl::getType (const ACEXML_Char *uri,
-                                const ACEXML_Char *localPart)
+ACEXML_Char const *
+ACEXML_AttributesImpl::getType (ACEXML_Char const *uri,
+                                ACEXML_Char const *localPart)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     {
@@ -188,7 +188,7 @@ ACEXML_AttributesImpl::getType (const ACEXML_Char *uri,
   return nullptr;
 }
 
-const ACEXML_Char *
+ACEXML_Char const *
 ACEXML_AttributesImpl::getURI (size_t index)
 {
   if (index < this->attrs_.size ())
@@ -198,7 +198,7 @@ ACEXML_AttributesImpl::getURI (size_t index)
   return nullptr;
 }
 
-const ACEXML_Char *
+ACEXML_Char const *
 ACEXML_AttributesImpl::getValue (size_t index)
 {
   if (index < this->attrs_.size ())
@@ -208,8 +208,8 @@ ACEXML_AttributesImpl::getValue (size_t index)
   return nullptr;
 }
 
-const ACEXML_Char *
-ACEXML_AttributesImpl::getValue (const ACEXML_Char *qName)
+ACEXML_Char const *
+ACEXML_AttributesImpl::getValue (ACEXML_Char const *qName)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     {
@@ -222,9 +222,9 @@ ACEXML_AttributesImpl::getValue (const ACEXML_Char *qName)
   return nullptr;
 }
 
-const ACEXML_Char *
-ACEXML_AttributesImpl::getValue (const ACEXML_Char *uri,
-                                 const ACEXML_Char *localPart)
+ACEXML_Char const *
+ACEXML_AttributesImpl::getValue (ACEXML_Char const *uri,
+                                 ACEXML_Char const *localPart)
 {
   for (size_t i = 0; i < this->attrs_.size (); ++i)
     {
@@ -240,11 +240,11 @@ ACEXML_AttributesImpl::getValue (const ACEXML_Char *uri,
 
 int
 ACEXML_AttributesImpl::setAttribute (size_t index,
-                                     const ACEXML_Char *uri,
-                                     const ACEXML_Char *localName,
-                                     const ACEXML_Char *qName,
-                                     const ACEXML_Char *type,
-                                     const ACEXML_Char *value)
+                                     ACEXML_Char const *uri,
+                                     ACEXML_Char const *localName,
+                                     ACEXML_Char const *qName,
+                                     ACEXML_Char const *type,
+                                     ACEXML_Char const *value)
 {
   if (index < this->attrs_.size ())
     {
@@ -261,7 +261,7 @@ ACEXML_AttributesImpl::setAttribute (size_t index,
 
 int
 ACEXML_AttributesImpl::setLocalName (size_t index,
-                                     const ACEXML_Char *localName)
+                                     ACEXML_Char const *localName)
 {
   if (index < this->attrs_.size ())
     {
@@ -273,7 +273,7 @@ ACEXML_AttributesImpl::setLocalName (size_t index,
 
 int
 ACEXML_AttributesImpl::setQName (size_t index,
-                                 const ACEXML_Char *qName)
+                                 ACEXML_Char const *qName)
 {
   if (index < this->attrs_.size ())
     {
@@ -285,7 +285,7 @@ ACEXML_AttributesImpl::setQName (size_t index,
 
 int
 ACEXML_AttributesImpl::setURI (size_t index,
-                               const ACEXML_Char *uri)
+                               ACEXML_Char const *uri)
 {
   if (index < this->attrs_.size ())
     {
@@ -297,7 +297,7 @@ ACEXML_AttributesImpl::setURI (size_t index,
 
 int
 ACEXML_AttributesImpl::setType (size_t index,
-                                const ACEXML_Char *type)
+                                ACEXML_Char const *type)
 {
   if (index < this->attrs_.size ())
     {
@@ -309,7 +309,7 @@ ACEXML_AttributesImpl::setType (size_t index,
 
 int
 ACEXML_AttributesImpl::setValue (size_t index,
-                                 const ACEXML_Char *value)
+                                 ACEXML_Char const *value)
 {
   if (index < this->attrs_.size ())
     {

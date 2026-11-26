@@ -6,14 +6,14 @@
 
 constexpr ACEXML_Char ACEXML_XMLNS_PREFIX_name[] = ACE_TEXT ("xmlns");
 
-const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS_PREFIX = ACEXML_XMLNS_PREFIX_name;
+ACEXML_Char const *ACEXML_NamespaceSupport::XMLNS_PREFIX = ACEXML_XMLNS_PREFIX_name;
 
 constexpr ACEXML_Char ACEXML_DEFAULT_NS_PREFIX[] = {0};
 
 constexpr ACEXML_Char ACEXML_TABOO_NS_PREFIX[] = ACE_TEXT ("xml");
 
 constexpr ACEXML_Char ACEXML_XMLNS_URI_name[] = ACE_TEXT ("http://www.w3.org/XML/1998/namespace");
-const ACEXML_Char *ACEXML_NamespaceSupport::XMLNS = ACEXML_XMLNS_URI_name;
+ACEXML_Char const *ACEXML_NamespaceSupport::XMLNS = ACEXML_XMLNS_URI_name;
 
 ACEXML_Namespace_Context_Stack::ACEXML_Namespace_Context_Stack ()
 = default;
@@ -113,8 +113,8 @@ ACEXML_NamespaceSupport::~ACEXML_NamespaceSupport ()
 }
 
 int
-ACEXML_NamespaceSupport::declarePrefix (const ACEXML_Char *prefix,
-                                        const ACEXML_Char *uri)
+ACEXML_NamespaceSupport::declarePrefix (ACEXML_Char const *prefix,
+                                        ACEXML_Char const *uri)
 {
   if (prefix == nullptr || uri == nullptr)
   {
@@ -151,8 +151,8 @@ ACEXML_NamespaceSupport::getDeclaredPrefixes (ACEXML_STR_LIST &prefixes) const
   return 0;
 }
 
-const ACEXML_Char *
-ACEXML_NamespaceSupport::getPrefix (const ACEXML_Char *uri) const
+ACEXML_Char const *
+ACEXML_NamespaceSupport::getPrefix (ACEXML_Char const *uri) const
 {
   if (uri == nullptr || *uri == 0)
   {
@@ -191,7 +191,7 @@ ACEXML_NamespaceSupport::getPrefixes (ACEXML_STR_LIST &prefixes) const
 }
 
 int
-ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
+ACEXML_NamespaceSupport::getPrefixes (ACEXML_Char const *uri,
                                       ACEXML_STR_LIST &prefixes) const
 {
   if (uri == nullptr)
@@ -219,8 +219,8 @@ ACEXML_NamespaceSupport::getPrefixes (const ACEXML_Char *uri,
   return 0;                     // Nothing found.
 }
 
-const ACEXML_Char *
-ACEXML_NamespaceSupport::getURI (const ACEXML_Char *prefix) const
+ACEXML_Char const *
+ACEXML_NamespaceSupport::getURI (ACEXML_Char const *prefix) const
 {
   if (prefix == nullptr)
   {

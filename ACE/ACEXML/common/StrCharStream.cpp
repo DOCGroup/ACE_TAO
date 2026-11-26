@@ -72,7 +72,7 @@ ACEXML_StrCharStream::determine_encoding ()
     {
       input[i] = *sptr;
     }
-  const ACEXML_Char* temp = ACEXML_Encoding::get_encoding (input);
+  ACEXML_Char const * temp = ACEXML_Encoding::get_encoding (input);
   if (temp == nullptr)
     {
       return -1;

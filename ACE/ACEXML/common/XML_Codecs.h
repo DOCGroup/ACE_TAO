@@ -43,7 +43,7 @@ public:
    *         cannot be encoded.
    */
 
-  static ACEXML_Char* encode (const ACEXML_Char* input,
+  static ACEXML_Char* encode (ACEXML_Char const * input,
                               size_t* output_len);
   /**
    * Decodes a stream of Base64 to octets data
@@ -53,7 +53,7 @@ public:
    * @return Binary data in ACEXML_Char stream or NULL if input data cannot
    *         be encoded.
    */
-  static ACEXML_Char* decode (const ACEXML_Char* input,
+  static ACEXML_Char* decode (ACEXML_Char const * input,
                               size_t* output_len);
 
   /// @}

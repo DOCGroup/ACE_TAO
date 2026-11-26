@@ -82,13 +82,13 @@ public:
    *  EOF, and both positions are advanced by that amount. Returns 0 if the
    *  receive position is at EOF.
    */
-  virtual const char *recv (size_t &len);
+  virtual char const *recv (size_t &len);
 
   /**
    *  Returns a pointer to an array of characters starting at the receive
    *  position.
    */
-  virtual const char *recv () const;
+  virtual char const *recv () const;
 
   /**
    *  Returns the number of bytes between the read and receive positions.
@@ -122,7 +122,7 @@ public:
    *  @a offset or @c offset + size is past the
    *  end of the stream.
    */
-  virtual const char *peek_str (size_t offset, size_t size);
+  virtual char const *peek_str (size_t offset, size_t size);
 
   /**
    *  Sets the read and receive positions as follows:

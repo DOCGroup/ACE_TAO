@@ -5,7 +5,7 @@
 #include <new>
 
 ACEXML_Char*
-ACEXML_Base64::encode (const ACEXML_Char* input,
+ACEXML_Base64::encode (ACEXML_Char const * input,
                        size_t* output_len)
 {
   if (input == nullptr)
@@ -52,7 +52,7 @@ ACEXML_Base64::encode (const ACEXML_Char* input,
 }
 
 ACEXML_Char*
-ACEXML_Base64::decode (const ACEXML_Char* input,
+ACEXML_Base64::decode (ACEXML_Char const * input,
                        size_t* output_len)
 {
   if (input == nullptr)

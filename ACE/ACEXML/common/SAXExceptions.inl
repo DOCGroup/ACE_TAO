@@ -1,4 +1,4 @@
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_SAXException::message () const
 {
   return (this->message_ == nullptr ?
@@ -30,25 +30,25 @@ ACEXML_SAXParseException::_raise ()
   throw *this;
 }
 
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_SAXException::id () const
 {
   return ACEXML_SAXException::exception_name_;
 }
 
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_SAXNotSupportedException::id () const
 {
   return ACEXML_SAXNotSupportedException::exception_name_;
 }
 
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_SAXNotRecognizedException::id () const
 {
   return ACEXML_SAXNotRecognizedException::exception_name_;
 }
 
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_SAXParseException::id () const
 {
   return ACEXML_SAXParseException::exception_name_;

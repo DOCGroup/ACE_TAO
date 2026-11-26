@@ -31,7 +31,7 @@ public:
   ACEXML_SAXException ();
 
   /// Constructor initializing the exception message.
-  explicit ACEXML_SAXException (const ACEXML_Char *msg);
+  explicit ACEXML_SAXException (ACEXML_Char const *msg);
 
   ACEXML_SAXException& operator= (const ACEXML_SAXException& src);
 
@@ -46,10 +46,10 @@ public:
   static ACEXML_SAXException* _downcast (ACEXML_Exception* ex);
 
   /// Return the name of the exception.
-  const ACEXML_Char *id () const override;
+  ACEXML_Char const *id () const override;
 
   /// Return the extra message accompanying the exception.
-  const ACEXML_Char *message () const;
+  ACEXML_Char const *message () const;
 
   ACEXML_Exception *duplicate () const override;
 
@@ -58,7 +58,7 @@ public:
   void print () const override;
 
 protected:
-  static const ACEXML_Char * exception_name_;
+  static ACEXML_Char const * exception_name_;
 
   /// A message providing more information about the exception being thrown.
   std::unique_ptr<ACEXML_Char[]> message_;
@@ -80,7 +80,7 @@ public:
   ACEXML_SAXNotSupportedException& operator= (const ACEXML_SAXNotSupportedException &ex);
 
   /// Constructor which accepts an informational message
-  explicit ACEXML_SAXNotSupportedException (const ACEXML_Char* msg);
+  explicit ACEXML_SAXNotSupportedException (ACEXML_Char const * msg);
 
   ~ACEXML_SAXNotSupportedException () override;
 
@@ -90,7 +90,7 @@ public:
   /// Static narrow operation.
   static ACEXML_SAXNotSupportedException* _downcast (ACEXML_Exception* ex);
 
-  const ACEXML_Char *id () const override;
+  ACEXML_Char const *id () const override;
 
   ACEXML_Exception *duplicate () const override;
 
@@ -114,7 +114,7 @@ public:
   ACEXML_SAXNotRecognizedException ();
 
   /// Constructor with an initializing exception message.
-  explicit ACEXML_SAXNotRecognizedException (const ACEXML_Char *msg);
+  explicit ACEXML_SAXNotRecognizedException (ACEXML_Char const *msg);
 
   ACEXML_SAXNotRecognizedException (const ACEXML_SAXNotRecognizedException &ex);
 
@@ -128,7 +128,7 @@ public:
   /// Static narrow operation.
   static ACEXML_SAXNotRecognizedException* _downcast (ACEXML_Exception* ex);
 
-  const ACEXML_Char *id () const override;
+  ACEXML_Char const *id () const override;
 
   ACEXML_Exception *duplicate () const override;
 
@@ -152,7 +152,7 @@ public:
   ACEXML_SAXParseException ();
 
   /// Constructor with an initializing exception message.
-  explicit ACEXML_SAXParseException (const ACEXML_Char *msg);
+  explicit ACEXML_SAXParseException (ACEXML_Char const *msg);
 
   ACEXML_SAXParseException (const ACEXML_SAXParseException &ex);
 
@@ -166,7 +166,7 @@ public:
   /// Static narrow operation.
   static ACEXML_SAXParseException* _downcast (ACEXML_Exception* ex);
 
-  const ACEXML_Char *id () const override;
+  ACEXML_Char const *id () const override;
 
   ACEXML_Exception *duplicate () const override;
 

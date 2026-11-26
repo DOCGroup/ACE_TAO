@@ -1,4 +1,4 @@
-ACEXML_INLINE const ACEXML_Char *
+ACEXML_INLINE ACEXML_Char const *
 ACEXML_Exception::id () const
 {
   return ACEXML_Exception::exception_name_;

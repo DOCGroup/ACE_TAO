@@ -7,7 +7,7 @@
 #include "ace/OS_Memory.h"
 #include "ace/OS_NS_string.h"
 
-const ACEXML_Char * ACEXML_SAXException::exception_name_ = ACE_TEXT ("ACEXML_SAXException");
+ACEXML_Char const * ACEXML_SAXException::exception_name_ = ACE_TEXT ("ACEXML_SAXException");
 
 const ACEXML_Char ACEXML_SAXNotSupportedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotSupportedException");
 
@@ -21,7 +21,7 @@ const ACEXML_Char ACEXML_SAXParseException::exception_name_[] = ACE_TEXT ("ACEXM
 
 ACEXML_SAXException::ACEXML_SAXException () = default;
 
-ACEXML_SAXException::ACEXML_SAXException (const ACEXML_Char *msg)
+ACEXML_SAXException::ACEXML_SAXException (ACEXML_Char const *msg)
   : message_ (ACE::strnew (msg))
 {
 }
@@ -96,7 +96,7 @@ ACEXML_SAXNotSupportedException::_downcast (ACEXML_Exception* ex)
   return dynamic_cast<ACEXML_SAXNotSupportedException*> (ex);
 }
 
-ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (const ACEXML_Char* msg)
+ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (ACEXML_Char const * msg)
   : ACEXML_SAXException (msg)
 {
 }
@@ -130,7 +130,7 @@ ACEXML_SAXNotSupportedException::print () const
 ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException ()
 = default;
 
-ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (const ACEXML_Char *msg)
+ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (ACEXML_Char const *msg)
   : ACEXML_SAXException (msg)
 {
 }
@@ -182,7 +182,7 @@ ACEXML_SAXNotRecognizedException::print () const
 ACEXML_SAXParseException::ACEXML_SAXParseException ()
 = default;
 
-ACEXML_SAXParseException::ACEXML_SAXParseException (const ACEXML_Char *msg)
+ACEXML_SAXParseException::ACEXML_SAXParseException (ACEXML_Char const *msg)
   : ACEXML_SAXException (msg)
 {
 }

@@ -2,7 +2,7 @@
 
 #include <cstring>
 
-const ACEXML_Char* ACEXML_Encoding::encoding_names_[8] = {
+ACEXML_Char const * ACEXML_Encoding::encoding_names_[8] = {
   ACE_TEXT ("UCS-4BE"),
   ACE_TEXT ("UCS-4LE"),
   ACE_TEXT ("UCS-4_2143"),
@@ -33,8 +33,8 @@ const ACEXML_UTF8 ACEXML_Encoding::magic_values_[][4] = {
   { '\x3c', '\x3f', '\x78', '\x6d' }, // UTF-8
 };
 
-const ACEXML_Char*
-ACEXML_Encoding::get_encoding (const char* input)
+ACEXML_Char const *
+ACEXML_Encoding::get_encoding (char const * input)
 {
   if ((std::memcmp (&ACEXML_Encoding::byte_order_mark_[ACEXML_Encoding::UTF16BE][0], input, 2) == 0)
       && (input[2] != 0 || input[3] != 0)) // 3 & 4 should not be both zero

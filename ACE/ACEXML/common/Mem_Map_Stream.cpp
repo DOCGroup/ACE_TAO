@@ -65,13 +65,13 @@ ACEXML_Mem_Map_Stream::peek_char (size_t offset)
   return this->get_pos_[offset];
 }
 
-const char *
+char const *
 ACEXML_Mem_Map_Stream::recv () const
 {
   return this->recv_pos_;
 }
 
-const char *
+char const *
 ACEXML_Mem_Map_Stream::recv (size_t &len)
 {
   if (this->eof () && this->grow_file_and_remap () == -1)
@@ -79,7 +79,7 @@ ACEXML_Mem_Map_Stream::recv (size_t &len)
       len = 0;
       return nullptr;
     }
-  const char *s = this->recv_pos_;
+  char const *s = this->recv_pos_;
   this->seek (static_cast<ACE_OFF_T> (len), SEEK_CUR);
   len = this->get_pos_ - s;
   return s;
@@ -91,7 +91,7 @@ ACEXML_Mem_Map_Stream::recv_len () const
   return this->get_pos_ - this->recv_pos_;
 }
 
-const char *
+char const *
 ACEXML_Mem_Map_Stream::peek_str (size_t offset,
                                  size_t size)
 {
