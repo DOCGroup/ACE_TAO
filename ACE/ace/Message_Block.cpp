@@ -19,7 +19,7 @@ ACE_ALLOC_HOOK_DEFINE (ACE_Message_Block)
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *ACE_MB_Timeprobe_Description[] =
+static char const *ACE_MB_Timeprobe_Description[] =
 {
   "Message_Block::init_i - enter",
   "Message_Block::init_i - leave",
@@ -73,7 +73,7 @@ ACE_Message_Block::data_block (ACE_Data_Block *db)
 }
 
 int
-ACE_Message_Block::copy (const char *buf, size_t n)
+ACE_Message_Block::copy (char const *buf, size_t n)
 {
   ACE_TRACE ("ACE_Message_Block::copy");
 
@@ -95,7 +95,7 @@ ACE_Message_Block::copy (const char *buf, size_t n)
 }
 
 int
-ACE_Message_Block::copy (const char *buf)
+ACE_Message_Block::copy (char const *buf)
 {
   ACE_TRACE ("ACE_Message_Block::copy");
 

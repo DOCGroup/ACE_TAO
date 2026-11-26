@@ -384,7 +384,7 @@ public:
    *            in the block is less than @arg n. Free space can be checked
    *            by calling space().
    */
-  int copy (const char *buf, size_t n);
+  int copy (char const *buf, size_t n);
 
   /**
    * Copies a 0-terminated character string into this ACE_Message_Block.
@@ -399,7 +399,7 @@ public:
    *            in the block is less than required to hold the entire string.
    *            Free space can be checked by calling space().
    */
-  int copy (const char *buf);
+  int copy (char const *buf);
 
   /// Normalizes data in the top-level Message_Block to align with the base,
   /// i.e., it "shifts" the data pointed to by @c rd_ptr down to the @c base and
