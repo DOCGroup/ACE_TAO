@@ -125,8 +125,8 @@ namespace TAO
     }
 
   private:
-    Drain_Constraints (const Drain_Constraints &) = delete;
-    Drain_Constraints &operator= (const Drain_Constraints &) = delete;
+    Drain_Constraints (Drain_Constraints const &) = delete;
+    Drain_Constraints &operator= (Drain_Constraints const &) = delete;
 
     ACE_Time_Value * timeout_;
     bool block_on_io_;

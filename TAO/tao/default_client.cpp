@@ -574,7 +574,7 @@ TAO_Default_Client_Strategy_Factory::use_cleanup_options () const
   return this->use_cleanup_options_;
 }
 
-const TAO::Invocation_Retry_Params &
+TAO::Invocation_Retry_Params const &
 TAO_Default_Client_Strategy_Factory::invocation_retry_params () const
 {
   return this->invocation_retry_params_;

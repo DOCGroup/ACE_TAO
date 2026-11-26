@@ -8,7 +8,7 @@ TAO_Condition<MUTEX>::wait ()
 
 template <class MUTEX> ACE_INLINE int
 TAO_Condition<MUTEX>::wait (MUTEX &mutex,
-                            const ACE_Time_Value *abstime)
+                            ACE_Time_Value const *abstime)
 {
   return this->cond_->wait (mutex,
                            abstime);
@@ -18,7 +18,7 @@ TAO_Condition<MUTEX>::wait (MUTEX &mutex,
 /// do a regular @c cond_wait(); otherwise, we do a timed wait up to
 /// @a abstime.
 template <class MUTEX> ACE_INLINE int
-TAO_Condition<MUTEX>::wait (const ACE_Time_Value *abstime)
+TAO_Condition<MUTEX>::wait (ACE_Time_Value const *abstime)
 {
   return this->wait (*this->mutex_, abstime);
 }

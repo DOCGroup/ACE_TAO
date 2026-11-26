@@ -73,7 +73,7 @@ CORBA::Object::steal_ior ()
   return this->ior_._retn ();
 }
 
-ACE_INLINE const IOP::IOR &
+ACE_INLINE IOP::IOR const &
 CORBA::Object::ior () const
 {
   return this->ior_.in ();

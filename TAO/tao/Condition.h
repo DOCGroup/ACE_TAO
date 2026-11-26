@@ -65,7 +65,7 @@ public:
    * if @a abstime is not null and the call times out before the
    * condition is signaled, @c wait() returns -1 and sets errno to ETIME.
    */
-  int wait (const ACE_Time_Value *abstime);
+  int wait (ACE_Time_Value const *abstime);
 
   /// Block on condition.
   int wait ();
@@ -78,7 +78,7 @@ public:
    * out before the condition is signaled, @c wait() returns -1 and
    * sets errno to ETIME.
    */
-  int wait (MUTEX &mutex, const ACE_Time_Value *abstime = nullptr);
+  int wait (MUTEX &mutex, ACE_Time_Value const *abstime = nullptr);
 
   /// Signal one waiting thread.
   int signal ();
