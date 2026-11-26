@@ -18,7 +18,7 @@
 static ACE_THR_FUNC_RETURN
 invoke_service_config (void *arg)
 {
-  const ACE_TCHAR *directive = reinterpret_cast<const ACE_TCHAR *> (arg);
+  ACE_TCHAR const *directive = reinterpret_cast<ACE_TCHAR const *> (arg);
 
   // Process a Service Configurator directive in the current thread.
   if (ACE_Service_Config::process_directive (directive) != 0)

@@ -127,7 +127,7 @@ Test_Singleton::~Test_Singleton ()
 void
 testFailedServiceInit (int, ACE_TCHAR *[])
 {
-  static const ACE_TCHAR *refuse_svc =
+  static ACE_TCHAR const *refuse_svc =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Refuses_Svc Service_Object * ")
     ACE_TEXT ("  Service_Config_DLL:_make_Refuses_Init() \"\"")
@@ -360,7 +360,7 @@ testLoadingServiceConfFile (int argc, ACE_TCHAR *argv[])
 void
 testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 {
-  static const ACE_TCHAR *load_logger =
+  static ACE_TCHAR const *load_logger =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Logger Service_Object * ")
     ACE_TEXT ("  ACE:_make_ACE_Logging_Strategy() \"\"")
@@ -372,7 +372,7 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
     ;
 
-  static const ACE_TCHAR *unload_logger =
+  static ACE_TCHAR const *unload_logger =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("remove Logger")
 #else
@@ -413,7 +413,7 @@ testUnloadingACELoggingStrategy (int, ACE_TCHAR *[])
 void
 testLimits (int , ACE_TCHAR *[])
 {
-  static const ACE_TCHAR *svc_desc1 =
+  static ACE_TCHAR const *svc_desc1 =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Test_Object_1_More Service_Object * ")
     ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_1_More\"")
@@ -424,7 +424,7 @@ testLimits (int , ACE_TCHAR *[])
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
     ;
 
-  static const ACE_TCHAR *svc_desc2 =
+  static ACE_TCHAR const *svc_desc2 =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Test_Object_2_More Service_Object * ")
     ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_2_More\"")
@@ -465,7 +465,7 @@ testLimits (int , ACE_TCHAR *[])
     ACE_Service_Repository_Iterator sri (*one.current_service_repository (), false);
 
     size_t index = 0;
-    for (const ACE_Service_Type *sr;
+    for (ACE_Service_Type const *sr;
         sri.next (sr) != 0;
         sri.advance ())
       {
@@ -661,7 +661,7 @@ testNonACEThread ()
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Beginning non-ACE thread lookup test\n")));
 
-  static const ACE_TCHAR *svc_desc =
+  static ACE_TCHAR const *svc_desc =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("dynamic Test_Object_1_Thr Service_Object * ")
     ACE_TEXT ("  Service_Config_DLL:_make_Service_Config_DLL() \"Test_Object_1_Thr\"")
@@ -672,7 +672,7 @@ testNonACEThread ()
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
     ;
 
-  static const ACE_TCHAR *svc_remove =
+  static ACE_TCHAR const *svc_remove =
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
     ACE_TEXT ("remove Test_Object_1_Thr")
 #else
