@@ -102,13 +102,13 @@ public:
   void set_data( char const *dotted_oid_string);
 
   /// reset the data from raw 4byte integer format
-  void set_data( unsigned long const *raw_oid, const size_t oid_len);
+  void set_data( unsigned long const *raw_oid, size_t const oid_len);
 
   /// return the len of the oid
   size_t length() const;
 
   /// trim off the n rightmost values of an oid
-  void trim( const size_t how_many = 1);
+  void trim( size_t const how_many = 1);
 
   /// the equivalent of a substr(new_str, 0, 1)
   int suboid(Oid& oid, size_t start = 0, size_t how_many = size_t (-1));

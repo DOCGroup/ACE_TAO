@@ -69,7 +69,7 @@ ACE::HTBP::Inside_Squid_Filter::make_request_header (ACE::HTBP::Channel *ch,
                         -1);
     }
 
-  const size_t size =
+  size_t const size =
     std::strlen (format)
     - 12    // subtract out the size of the format specifiers
     + std::strlen (cmd)

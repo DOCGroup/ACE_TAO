@@ -229,7 +229,7 @@ Oid& Oid::operator+=( char const *a)
   {
     ++a;
   }
-  const size_t sz = std::strlen (a);
+  size_t const sz = std::strlen (a);
 
   if (valid()) {
     unsigned long const n = (smival.value.oid.len *SNMPCHARSIZE) + smival.value.oid.len + 1 + sz;
@@ -369,7 +369,7 @@ SmiLPOID Oid::oidval()
 }
 
 /// Set this OID from raw integer values.
-void Oid::set_data( unsigned long const *raw_oid, const size_t oid_len)
+void Oid::set_data( unsigned long const *raw_oid, size_t const oid_len)
 {
   if (smival.value.oid.len < oid_len) {
     if ( smival.value.oid.ptr) {
@@ -387,7 +387,7 @@ size_t Oid::length() const
 
 /// Trim the requested number of leftmost sub-identifiers.
 /// The allocated storage is retained for speed.
-void Oid::trim( const size_t n)
+void Oid::trim( size_t const n)
 {
   // verify that n is legal
   if ((n<=smival.value.oid.len)&&(n>0)) {
