@@ -25,7 +25,7 @@ Simple_Service::~Simple_Service ()
   FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::~Simple_Service");
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 Simple_Service::name ()
 {
   FRAMEWORK_COMPONENT_DLL_TRACE ("Simple_Service::dll_name");

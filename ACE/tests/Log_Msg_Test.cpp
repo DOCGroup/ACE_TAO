@@ -208,7 +208,7 @@ test_callbacks ()
 }
 
 static void
-test_log_msg_features (const ACE_TCHAR *program)
+test_log_msg_features (ACE_TCHAR const *program)
 {
   // Note that the default behavior is to log to STDERR...
 
@@ -235,7 +235,7 @@ test_log_msg_features (const ACE_TCHAR *program)
                   ACE_TEXT ("op_status and errnum failed!\n")));
     }
 
-  const char *badname = "badname";
+  char const *badname = "badname";
 
   // We use the DEBUG messages instead of error messages. This is to
   // help the scripts. If we print out error messages the scripts
@@ -265,7 +265,7 @@ test_log_msg_features (const ACE_TCHAR *program)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("This is too big:%l %s\n"), big));
 
   ACE_HEX_DUMP ((LM_INFO,
-                 reinterpret_cast<const char *> (big),
+                 reinterpret_cast<char const *> (big),
                  ACE_Log_Record::MAXLOGMSGLEN));
 
   // Exercise many different combinations of OSTREAM.
@@ -338,7 +338,7 @@ test_log_msg_features (const ACE_TCHAR *program)
 
   // Print out the binary bytes of the array in hex form.
   ACE_LOG_MSG->log_hexdump (LM_DEBUG,
-                            reinterpret_cast<const char *> (array),
+                            reinterpret_cast<char const *> (array),
                             sizeof array);
 
   // Disable the LM_DEBUG and LM_INFO messages.
@@ -492,7 +492,7 @@ test_ostream ()
 
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
   // Create a persistent store.
-  const ACE_TCHAR *filename = ACE_TEXT ("output");
+  ACE_TCHAR const *filename = ACE_TEXT ("output");
   ofstream myostream (ACE_TEXT_ALWAYS_CHAR (filename), ios::out | ios::trunc);
 
   // Check for errors.
@@ -604,8 +604,8 @@ class Log_Spec_Verify : public ACE_Log_Msg_Callback
 public:
   explicit Log_Spec_Verify (bool be_recursive = true) : fail_ (0), tests_ (0), recursive_ (be_recursive) {};
 
-  void expected_handles (const ACE_TCHAR *handle,
-                         const ACE_TCHAR *invalid_handle)
+  void expected_handles (ACE_TCHAR const *handle,
+                         ACE_TCHAR const *invalid_handle)
   {
     this->expected_handle_ = handle;
     this->expected_invalid_handle_ = invalid_handle;
@@ -625,8 +625,8 @@ private:
 
   bool recursive_;
 
-  const ACE_TCHAR *expected_handle_ {};
-  const ACE_TCHAR *expected_invalid_handle_ {};
+  ACE_TCHAR const *expected_handle_ {};
+  ACE_TCHAR const *expected_invalid_handle_ {};
 };
 
 void
@@ -650,8 +650,8 @@ Log_Spec_Verify::log (ACE_Log_Record &log_record)
     }
   else
     {
-      const ACE_TCHAR *b = log_record.msg_data ();
-      const ACE_TCHAR *expect {};
+      ACE_TCHAR const *b = log_record.msg_data ();
+      ACE_TCHAR const *expect {};
       ACE_TCHAR integer_expected[64];
 
       ++this->tests_;

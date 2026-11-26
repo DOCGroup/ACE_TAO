@@ -22,7 +22,7 @@ public:
 
   virtual ~Simple_Service ();
 
-  virtual const ACE_TCHAR *name ();
+  virtual ACE_TCHAR const *name ();
 };
 
 // Adapter that contains the required dll_name() method and
@@ -31,7 +31,7 @@ template <class TYPE>
 class FWCT_DLL_Singleton_Adapter_T : public TYPE
 {
 public:
-  const ACE_TCHAR *dll_name ()
+  ACE_TCHAR const *dll_name ()
   {
     FRAMEWORK_COMPONENT_DLL_TRACE ("FWCT_DLL_Singleton_Adapter_T::dll_name");
     return ACE_TEXT("Framework_Component_DLL");
