@@ -80,7 +80,7 @@ ACE_SString::operator[] (size_type slot)
 
 /// Get the underlying pointer (does not make a copy, so beware!).
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 ACE_SString::rep () const
 {
   ACE_TRACE ("ACE_SString::rep");
@@ -89,7 +89,7 @@ ACE_SString::rep () const
 
 /// Get the underlying pointer (does not make a copy, so beware!).
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 ACE_SString::fast_rep () const
 {
   ACE_TRACE ("ACE_SString::fast_rep");
@@ -98,7 +98,7 @@ ACE_SString::fast_rep () const
 
 /// Get the underlying pointer (does not make a copy, so beware!).
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 ACE_SString::c_str () const
 {
   ACE_TRACE ("ACE_SString::c_str");
@@ -155,7 +155,7 @@ ACE_SString::compare (const ACE_SString &s) const
 }
 
 ACE_INLINE ACE_SString::size_type
-ACE_SString::find (const char *s, size_type pos) const
+ACE_SString::find (char const *s, size_type pos) const
 {
   char *substr = this->rep_ + pos;
   char *pointer = std::strstr (substr, s);

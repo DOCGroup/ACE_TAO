@@ -57,7 +57,7 @@ public:
   ACE_NS_WString (ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
-  ACE_NS_WString (const char *s,
+  ACE_NS_WString (char const *s,
                   ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
@@ -133,11 +133,11 @@ public:
   ACE_SString (ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a s into dynamically allocated memory.
-  ACE_SString (const char *s, ACE_Allocator *alloc = nullptr);
+  ACE_SString (char const *s, ACE_Allocator *alloc = nullptr);
 
   /// Constructor that copies @a len chars of @a s into dynamically
   /// allocated memory (will NUL terminate the result).
-  ACE_SString (const char *s, size_type len, ACE_Allocator *alloc = nullptr);
+  ACE_SString (char const *s, size_type len, ACE_Allocator *alloc = nullptr);
 
   ACE_SString (const ACE_SString &);
 
@@ -178,13 +178,13 @@ public:
   void rep (char *s);
 
   /// Get the underlying pointer.
-  const char *rep () const;
+  char const *rep () const;
 
   /// Get the underlying pointer.
-  const char *fast_rep () const;
+  char const *fast_rep () const;
 
   /// Same as STL String's c_str() and fast_rep().
-  const char *c_str () const;
+  char const *c_str () const;
 
   /// Comparison operator that will match substrings.  Returns the
   /// slot of the first location that matches, else @c npos.
@@ -196,7 +196,7 @@ public:
 
   /// Find @a s starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.
-  size_type find (const char *s, size_type pos = 0) const;
+  size_type find (char const *s, size_type pos = 0) const;
 
   /// Find @a c starting at pos.  Returns the slot of the first
   /// location that matches (will be >= pos), else npos.

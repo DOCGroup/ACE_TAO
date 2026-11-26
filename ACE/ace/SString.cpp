@@ -125,7 +125,7 @@ ACE_NS_WString::ushort_rep () const
     }
 }
 
-ACE_NS_WString::ACE_NS_WString (const char *s,
+ACE_NS_WString::ACE_NS_WString (char const *s,
                                 ACE_Allocator *alloc)
   : ACE_WString (alloc)
 {
@@ -247,7 +247,7 @@ ACE_SString::rep (char *s)
 
 /// Constructor that actually copies memory.
 
-ACE_SString::ACE_SString (const char *s,
+ACE_SString::ACE_SString (char const *s,
                           ACE_Allocator *alloc)
   : allocator_ (alloc)
 {
@@ -291,7 +291,7 @@ ACE_SString::ACE_SString (char c,
 
 /// Constructor that actually copies memory.
 
-ACE_SString::ACE_SString (const char *s,
+ACE_SString::ACE_SString (char const *s,
                           size_type len,
                           ACE_Allocator *alloc)
   : allocator_ (alloc)
