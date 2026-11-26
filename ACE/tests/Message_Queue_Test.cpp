@@ -421,7 +421,7 @@ static int
 chained_block_test ()
 {
   QUEUE q;
-  const char * s = "123456789";      // Will be length 10 when copied to block
+  char const * s = "123456789";      // Will be length 10 when copied to block
   const size_t slen = 10;
   const size_t num_blks = 10;
   ACE_Message_Block b[num_blks];
@@ -515,7 +515,7 @@ single_thread_performance_test (int queue_type = 0)
 {
   const char test_message[] =
     "ACE_Message_Queue Test Message";
-  const ACE_TCHAR *message =
+  ACE_TCHAR const *message =
     ACE_TEXT ("ACE_Message_Queue<ACE_NULL_SYNCH>, single thread");
   int i = 0;
 
@@ -715,7 +715,7 @@ int
 performance_test (int queue_type = 0)
 {
   Queue_Wrapper queue_wrapper;
-  const ACE_TCHAR *message =
+  ACE_TCHAR const *message =
     ACE_TEXT ("ACE_Message_Queue<ACE_SYNCH>");
   int i = 0;
 

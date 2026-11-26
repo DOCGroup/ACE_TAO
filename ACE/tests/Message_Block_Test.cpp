@@ -367,7 +367,7 @@ ACE_Cached_Allocator<MEMORY_CHUNK,
 struct alloc_struct_type
 {
   ACE_Allocator *strategy_;
-  const ACE_TCHAR *name_;
+  ACE_TCHAR const *name_;
   ACE_Profile_Timer::ACE_Elapsed_Time et_;
 };
 

@@ -26,7 +26,7 @@ public:
 
   ~User_Class () { delete [] this->message_; }
 
-  const char *message () const
+  char const *message () const
   {
     return this->message_;
   }
