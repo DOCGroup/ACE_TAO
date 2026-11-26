@@ -314,23 +314,22 @@ protected:
   /// Flags indicating stability conditions of schedule.
   enum Stability_Flags
   {
-    // This should always be zero.
+    /// This should always be zero.
     SCHED_ALL_STABLE = 0x00UL,
 
     // Individual stability flags, each of
     // which should have a distinct bit value.
 
-    // Utilization may need to be recomputed.
+    /// Utilization may need to be recomputed.
     SCHED_UTILIZATION_NOT_STABLE = 0x01UL,
 
-    // Priorities may need to be recomputed.
+    /// Priorities may need to be recomputed.
     SCHED_PRIORITY_NOT_STABLE = 0x02UL,
 
-    // Characteristics may need to be repropagated.
+    /// Characteristics may need to be repropagated.
     SCHED_PROPAGATION_NOT_STABLE = 0x04UL,
 
-    // This should be the disjunction of
-    // all the individual stability flags.
+    /// This should be the disjunction of all individual stability flags.
     SCHED_NONE_STABLE =
       SCHED_UTILIZATION_NOT_STABLE |
       SCHED_PRIORITY_NOT_STABLE |
