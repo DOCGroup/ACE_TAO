@@ -53,15 +53,14 @@ TAO_CORBALOC_Parser::make_stub_from_mprofile (CORBA::ORB_ptr orb,
 
   if (!CORBA::is_nil (obj.in ()))
     {
-      /// All is well, so release the stub object from its
-      /// auto_ptr.
+      // The object now owns the stub; release the guard.
       (void) safe_data.release ();
 
-      /// Return the object reference to the application.
+      // Return the object reference to the application.
       return obj._retn ();
     }
 
-  /// Shouldnt come here: if so, return nil reference.
+  // Return a nil reference if the object could not be created.
   return CORBA::Object::_nil ();
 }
 
