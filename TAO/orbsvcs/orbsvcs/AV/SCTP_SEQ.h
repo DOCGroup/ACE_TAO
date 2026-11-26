@@ -189,17 +189,20 @@ protected:
 class TAO_AV_SCTP_SEQ_Connector;
 
 /**
- * @class TAO_AV_Base_Connector
+ * @class TAO_AV_SCTP_SEQ_Base_Connector
  */
 class TAO_AV_SCTP_SEQ_Base_Connector  : public ACE_Connector <TAO_AV_SCTP_SEQ_Flow_Handler,ACE_SOCK_SEQPACK_CONNECTOR>
 {
 public:
-  // To avoid warnings of open and connect hiding the base class functions these have to renamed.
+  /// @name Connector operations
+  /// These names avoid hiding the base class open and connect functions.
+  /// @{
   int connector_open (TAO_AV_SCTP_SEQ_Connector *connector,
                       ACE_Reactor *reactor);
   int connector_connect (TAO_AV_SCTP_SEQ_Flow_Handler *&handler,
                          ACE_Multihomed_INET_Addr const &remote_addr,
                          ACE_Multihomed_INET_Addr const &local_addr);
+  /// @}
   int make_svc_handler (TAO_AV_SCTP_SEQ_Flow_Handler *&handler) override;
 protected:
   TAO_AV_SCTP_SEQ_Connector *connector_ {};

@@ -166,17 +166,20 @@ protected:
 class TAO_AV_TCP_Connector;
 
 /**
- * @class TAO_AV_Base_Connector
+ * @class TAO_AV_TCP_Base_Connector
  * @brief
  */
 class TAO_AV_TCP_Base_Connector : public ACE_Connector <TAO_AV_TCP_Flow_Handler,ACE_SOCK_CONNECTOR>
 {
 public:
-  // To avoid warnings of open and connect hiding the base class functions these have to renamed.
+  /// @name Connector operations
+  /// These names avoid hiding the base class open and connect functions.
+  /// @{
   int connector_open (TAO_AV_TCP_Connector *connector,
                       ACE_Reactor *reactor);
   int connector_connect (TAO_AV_TCP_Flow_Handler *&handler,
                          ACE_INET_Addr const &remote_addr);
+  /// @}
   int make_svc_handler (TAO_AV_TCP_Flow_Handler *&handler) override;
 protected:
   TAO_AV_TCP_Connector *connector_ {};
