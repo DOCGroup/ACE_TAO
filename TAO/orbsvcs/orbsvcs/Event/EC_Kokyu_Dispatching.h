@@ -103,7 +103,7 @@ public:
   int execute () override;
 
 protected:
-  //Protected so can't be put on stack; must be dynamically allocated
+  /// Protected to require dynamic allocation.
   ~TAO_EC_Kokyu_Shutdown_Command () override = default;
 };
 
@@ -121,7 +121,7 @@ public:
   int execute () override;
 
 protected:
-  //Protected so can't be put on stack; must be dynamically allocated
+  /// Protected to require dynamic allocation.
   ~TAO_EC_Kokyu_Push_Command () override;
 
 private:

@@ -92,7 +92,7 @@ public:
   void update_consumer (RtecEventChannelAdmin::ConsumerQOS const &sub) override;
   void update_supplier (RtecEventChannelAdmin::SupplierQOS const &pub) override;
 
-  // Let the gateway reconnect itself to the consumer ec given exisiting QoS
+  /// Reconnect the gateway to the consumer event channel using the existing QoS.
   void reconnect_consumer_ec();
 
   /// Check whether the consumer event channel is non existent or not

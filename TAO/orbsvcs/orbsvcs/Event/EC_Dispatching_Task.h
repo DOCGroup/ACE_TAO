@@ -48,7 +48,7 @@ public:
     SILENTLY_DISCARD = -1
   };
 
-  // Called when
+  /// Called when the dispatch queue is full.
   virtual int queue_full_action (TAO_EC_Dispatching_Task *task,
                                  TAO_EC_ProxyPushSupplier *proxy,
                                  RtecEventComm::PushConsumer_ptr consumer,
