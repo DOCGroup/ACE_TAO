@@ -6,25 +6,25 @@ namespace ACE
   {
 
     ACE_INLINE
-    void BasicAuthentication::user (const ACE_CString& usr)
+    void BasicAuthentication::user (ACE_CString const& usr)
       {
         this->user_ = usr;
       }
 
     ACE_INLINE
-    const ACE_CString& BasicAuthentication::user () const
+    ACE_CString const& BasicAuthentication::user () const
       {
         return this->user_;
       }
 
     ACE_INLINE
-    void BasicAuthentication::password (const ACE_CString& passwd)
+    void BasicAuthentication::password (ACE_CString const& passwd)
       {
         this->passwd_ = passwd;
       }
 
     ACE_INLINE
-    const ACE_CString& BasicAuthentication::password () const
+    ACE_CString const& BasicAuthentication::password () const
       {
         return this->passwd_;
       }

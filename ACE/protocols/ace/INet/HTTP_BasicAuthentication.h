@@ -36,24 +36,24 @@ namespace ACE
               BasicAuthentication();
 
               /// Constructor. Sets user id and password.
-              BasicAuthentication(const ACE_CString& user, const ACE_CString& passwd);
+              BasicAuthentication(ACE_CString const& user, ACE_CString const& passwd);
 
               /// Constructor. Decodes cedentials from request (if any).
-              explicit BasicAuthentication(const Request& request);
+              explicit BasicAuthentication(Request const& request);
 
               virtual ~BasicAuthentication();
 
               /// Set user id.
-              void user (const ACE_CString& user);
+              void user (ACE_CString const& user);
 
               /// Get user id.
-              const ACE_CString& user () const;
+              ACE_CString const& user () const;
 
               /// Set password.
-              void password (const ACE_CString& passwd);
+              void password (ACE_CString const& passwd);
 
               /// Get password.
-              const ACE_CString& password () const;
+              ACE_CString const& password () const;
 
               /// Add authentication header with encoded credentials to request.
               void set_credentials (Request& request) const;

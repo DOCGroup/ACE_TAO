@@ -19,12 +19,12 @@ namespace ACE
       {
       }
 
-    BasicAuthentication::BasicAuthentication(const ACE_CString& user, const ACE_CString& passwd)
+    BasicAuthentication::BasicAuthentication(ACE_CString const& user, ACE_CString const& passwd)
       : user_ (user), passwd_ (passwd)
       {
       }
 
-    BasicAuthentication::BasicAuthentication(const Request& request)
+    BasicAuthentication::BasicAuthentication(Request const& request)
       {
         if (request.has_credentials ())
         {
@@ -57,11 +57,11 @@ namespace ACE
         credentials += this->passwd_;
         size_t out_len = 0;
         std::unique_ptr<ACE_Byte[]> const safe_buf (
-            ACE_Base64::encode ((const ACE_Byte*)credentials.c_str (),
+            ACE_Base64::encode (reinterpret_cast<ACE_Byte const *> (credentials.c_str ()),
                                 credentials.length (),
                                 std::addressof (out_len),
                                 false));
-        ACE_CString const enc_cred ((char*)safe_buf.get (), out_len);
+        ACE_CString const enc_cred (reinterpret_cast<char const *> (safe_buf.get ()), out_len);
         request.set_credentials (SCHEME, enc_cred);
       }
   }
