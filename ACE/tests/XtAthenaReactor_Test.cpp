@@ -164,7 +164,7 @@ inc_tmo (void *w,XtIntervalId *)
 class EV_handler : public ACE_Event_Handler
 {
 public:
-  int handle_timeout (const ACE_Time_Value &,
+  int handle_timeout (ACE_Time_Value const &,
                               const void *arg) override
   {
     char new_string[80];

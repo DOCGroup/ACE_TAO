@@ -126,7 +126,7 @@ public:
   ACE_HANDLE get_handle () const override;
   int handle_input (ACE_HANDLE handle) override;
   int handle_close (ACE_HANDLE handle,ACE_Reactor_Mask close_mask) override;
-  int handle_timeout (const ACE_Time_Value &current_time, const void *act=nullptr) override;
+  int handle_timeout (ACE_Time_Value const &current_time, const void *act=nullptr) override;
   int         dgramsSent () const;
   int         dgramsReceived () const;
   int         timeoutsTriggered () const;
@@ -183,7 +183,7 @@ class HandlersRegister
 public:
   HandlersRegister (ACE_Reactor *p_reactor);
   virtual ~HandlersRegister ();
-  int scheduleTimers (const ACE_Time_Value &p_TestTime); //!< schedule ace timers
+  int scheduleTimers (ACE_Time_Value const &p_TestTime); //!< schedule ace timers
   int registerDgramHandlers (); //!< open dgrams socket and register in reactor
   int registerTCPHandlers ();  //!< creates TCP acceptors and connector
   int analyze () const; //!< analyze results
@@ -279,7 +279,7 @@ int DgramHandler::handle_input (ACE_HANDLE)
   return 0;
 }
 
-int DgramHandler::handle_timeout (const ACE_Time_Value &current_time, const void *act)
+int DgramHandler::handle_timeout (ACE_Time_Value const &current_time, const void *act)
 {
   ACE_UNUSED_ARG (current_time);
   ACE_UNUSED_ARG (act);
@@ -631,7 +631,7 @@ int HandlersRegister::TCPServersNo () const
   return TCPServersNo_;
 }
 
-int HandlersRegister::scheduleTimers (const ACE_Time_Value &p_TestTime)
+int HandlersRegister::scheduleTimers (ACE_Time_Value const &p_TestTime)
 {
   int i;
 
