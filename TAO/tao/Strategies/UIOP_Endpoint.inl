@@ -2,7 +2,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_UNIX_Addr &
+ACE_INLINE ACE_UNIX_Addr const &
 TAO_UIOP_Endpoint::object_addr () const
 {
   return this->object_addr_;

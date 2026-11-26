@@ -25,9 +25,9 @@ TAO_UIOP_Profile::object_key_delimiter () const
   return TAO_UIOP_Profile::object_key_delimiter_;
 }
 
-TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
-                                    const TAO::ObjectKey &object_key,
-                                    const TAO_GIOP_Message_Version &version,
+TAO_UIOP_Profile::TAO_UIOP_Profile (ACE_UNIX_Addr const &addr,
+                                    TAO::ObjectKey const &object_key,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_UIOP_PROFILE,
                  orb_core,
@@ -38,9 +38,9 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
 }
 
 TAO_UIOP_Profile::TAO_UIOP_Profile (char const *,
-                                    const TAO::ObjectKey &object_key,
-                                    const ACE_UNIX_Addr &addr,
-                                    const TAO_GIOP_Message_Version &version,
+                                    TAO::ObjectKey const &object_key,
+                                    ACE_UNIX_Addr const &addr,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_UIOP_PROFILE,
                  orb_core,
@@ -169,10 +169,10 @@ TAO_UIOP_Profile::parse_string_i (char const *string)
 }
 
 CORBA::Boolean
-TAO_UIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_UIOP_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
-  const TAO_UIOP_Profile *op =
-    dynamic_cast <const TAO_UIOP_Profile *> (other_profile);
+  TAO_UIOP_Profile const *op =
+    dynamic_cast <TAO_UIOP_Profile const *> (other_profile);
 
   if (op == nullptr)
   {
@@ -180,7 +180,7 @@ TAO_UIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
   }
 
   // Check endpoints equivalence.
-  const TAO_UIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  TAO_UIOP_Endpoint const *other_endp = std::addressof (op->endpoint_);
   for (TAO_UIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
@@ -213,7 +213,7 @@ TAO_UIOP_Profile::hash (CORBA::ULong max)
   hashval += this->version_.minor;
   hashval += this->tag ();
 
-  const TAO::ObjectKey &ok =
+  TAO::ObjectKey const &ok =
     this->ref_object_key_->object_key ();
 
   if (ok.length () >= 4)

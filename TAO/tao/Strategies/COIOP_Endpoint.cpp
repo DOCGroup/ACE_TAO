@@ -66,7 +66,7 @@ TAO_COIOP_Endpoint::duplicate ()
 }
 
 CORBA::Boolean
-TAO_COIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+TAO_COIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
 {
   TAO_COIOP_Endpoint const * const endpoint =
     dynamic_cast<TAO_COIOP_Endpoint const *> (other_endpoint);

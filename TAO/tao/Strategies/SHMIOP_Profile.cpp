@@ -26,9 +26,9 @@ TAO_SHMIOP_Profile::object_key_delimiter () const
   return TAO_SHMIOP_Profile::object_key_delimiter_;
 }
 
-TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
-                                        const TAO::ObjectKey &object_key,
-                                        const TAO_GIOP_Message_Version &version,
+TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (ACE_MEM_Addr const &addr,
+                                        TAO::ObjectKey const &object_key,
+                                        TAO_GIOP_Message_Version const &version,
                                         TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SHMEM_PROFILE,
                  orb_core,
@@ -41,9 +41,9 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
 
 TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (char const *host,
                                         CORBA::UShort port,
-                                        const TAO::ObjectKey &object_key,
+                                        TAO::ObjectKey const &object_key,
                                         ACE_INET_Addr const &addr,
-                                        const TAO_GIOP_Message_Version &version,
+                                        TAO_GIOP_Message_Version const &version,
                                         TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SHMEM_PROFILE,
                  orb_core,
@@ -260,10 +260,10 @@ TAO_SHMIOP_Profile::parse_string_i (char const *string)
 }
 
 CORBA::Boolean
-TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_SHMIOP_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
-  const TAO_SHMIOP_Profile *op =
-    dynamic_cast <const TAO_SHMIOP_Profile *> (other_profile);
+  TAO_SHMIOP_Profile const *op =
+    dynamic_cast <TAO_SHMIOP_Profile const *> (other_profile);
 
   if (op == nullptr)
   {
@@ -271,7 +271,7 @@ TAO_SHMIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
   }
 
   // Check endpoints equivalence.
-  const TAO_SHMIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  TAO_SHMIOP_Endpoint const *other_endp = std::addressof (op->endpoint_);
   for (TAO_SHMIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
@@ -304,7 +304,7 @@ TAO_SHMIOP_Profile::hash (CORBA::ULong max)
   hashval += this->version_.minor;
   hashval += this->tag ();
 
-  const TAO::ObjectKey &ok =
+  TAO::ObjectKey const &ok =
     this->ref_object_key_->object_key ();
 
   if (ok.length () >= 4)

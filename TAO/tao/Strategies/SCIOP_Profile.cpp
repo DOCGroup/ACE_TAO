@@ -27,8 +27,8 @@ TAO_SCIOP_Profile::object_key_delimiter () const
 }
 
 TAO_SCIOP_Profile::TAO_SCIOP_Profile (ACE_INET_Addr const &addr,
-                                    const TAO::ObjectKey &object_key,
-                                    const TAO_GIOP_Message_Version &version,
+                                    TAO::ObjectKey const &object_key,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SCIOP_PROFILE,
                  orb_core,
@@ -41,9 +41,9 @@ TAO_SCIOP_Profile::TAO_SCIOP_Profile (ACE_INET_Addr const &addr,
 
 TAO_SCIOP_Profile::TAO_SCIOP_Profile (char const *host,
                                     CORBA::UShort port,
-                                    const TAO::ObjectKey &object_key,
+                                    TAO::ObjectKey const &object_key,
                                     ACE_INET_Addr const &addr,
-                                    const TAO_GIOP_Message_Version &version,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_SCIOP_PROFILE,
                  orb_core,
@@ -238,10 +238,10 @@ TAO_SCIOP_Profile::parse_string_i (char const *ior)
 }
 
 CORBA::Boolean
-TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_SCIOP_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
-  const TAO_SCIOP_Profile *op =
-    dynamic_cast<const TAO_SCIOP_Profile *> (other_profile);
+  TAO_SCIOP_Profile const *op =
+    dynamic_cast<TAO_SCIOP_Profile const *> (other_profile);
 
   if (op == nullptr)
     {
@@ -249,7 +249,7 @@ TAO_SCIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
     }
 
   // Check endpoints equivalence.
-  const TAO_SCIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  TAO_SCIOP_Endpoint const *other_endp = std::addressof (op->endpoint_);
   for (TAO_SCIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
@@ -282,7 +282,7 @@ TAO_SCIOP_Profile::hash (CORBA::ULong max)
   hashval += this->version_.minor;
   hashval += this->tag ();
 
-  const TAO::ObjectKey &ok =
+  TAO::ObjectKey const &ok =
     this->ref_object_key_->object_key ();
 
   if (ok.length () >= 4)
@@ -376,7 +376,7 @@ TAO_SCIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
   CORBA::StringSeq strseq;
   strseq.length(this->count_);
 
-  const TAO_SCIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
+  TAO_SCIOP_Endpoint const *endpoint = std::addressof (this->endpoint_);
   for (CORBA::ULong i {};
        i < this->count_;
        ++i)
@@ -415,7 +415,7 @@ TAO_SCIOP_Profile::encode_endpoints ()
 {
   CORBA::ULong actual_count {};
 
-  const TAO_SCIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
+  TAO_SCIOP_Endpoint const *endpoint = std::addressof (this->endpoint_);
 
   // Count the number of endpoints that needs to be encoded
   for (CORBA::ULong c {};

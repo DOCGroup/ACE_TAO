@@ -186,7 +186,7 @@ TAO_DIOP_Endpoint::duplicate ()
 }
 
 CORBA::Boolean
-TAO_DIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+TAO_DIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
 {
   TAO_Endpoint *endpt = const_cast<TAO_Endpoint *> (other_endpoint);
 

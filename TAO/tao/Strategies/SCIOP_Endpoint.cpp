@@ -64,7 +64,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (char const *host,
   this->priority (priority);
 }
 
-TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const TAO_SCIOP_Endpoint &rhs)
+TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (TAO_SCIOP_Endpoint const &rhs)
   : TAO_Endpoint (rhs.tag_,
                   rhs.priority_)
   , host_ (rhs.host_)
@@ -161,7 +161,7 @@ TAO_SCIOP_Endpoint::duplicate ()
 }
 
 CORBA::Boolean
-TAO_SCIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+TAO_SCIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
 {
   TAO_Endpoint *endpt =
     const_cast<TAO_Endpoint *> (other_endpoint);

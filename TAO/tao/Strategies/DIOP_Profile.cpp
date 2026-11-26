@@ -27,8 +27,8 @@ TAO_DIOP_Profile::object_key_delimiter () const
 }
 
 TAO_DIOP_Profile::TAO_DIOP_Profile (ACE_INET_Addr const &addr,
-                                    const TAO::ObjectKey &object_key,
-                                    const TAO_GIOP_Message_Version &version,
+                                    TAO::ObjectKey const &object_key,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_DIOP_PROFILE,
                  orb_core,
@@ -41,9 +41,9 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (ACE_INET_Addr const &addr,
 
 TAO_DIOP_Profile::TAO_DIOP_Profile (char const *host,
                                     CORBA::UShort port,
-                                    const TAO::ObjectKey &object_key,
+                                    TAO::ObjectKey const &object_key,
                                     ACE_INET_Addr const &addr,
-                                    const TAO_GIOP_Message_Version &version,
+                                    TAO_GIOP_Message_Version const &version,
                                     TAO_ORB_Core *orb_core)
   : TAO_Profile (TAO_TAG_DIOP_PROFILE,
                  orb_core,
@@ -301,10 +301,10 @@ TAO_DIOP_Profile::parse_string_i (char const *ior)
 }
 
 CORBA::Boolean
-TAO_DIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
+TAO_DIOP_Profile::do_is_equivalent (TAO_Profile const *other_profile)
 {
-  const TAO_DIOP_Profile *op =
-    dynamic_cast<const TAO_DIOP_Profile *> (other_profile);
+  TAO_DIOP_Profile const *op =
+    dynamic_cast<TAO_DIOP_Profile const *> (other_profile);
 
   // Make sure we have a TAO_DIOP_Profile.
   if (op == nullptr)
@@ -313,7 +313,7 @@ TAO_DIOP_Profile::do_is_equivalent (const TAO_Profile *other_profile)
   }
 
   // Check endpoints equivalence.
-  const TAO_DIOP_Endpoint *other_endp = std::addressof (op->endpoint_);
+  TAO_DIOP_Endpoint const *other_endp = std::addressof (op->endpoint_);
   for (TAO_DIOP_Endpoint *endp = std::addressof (this->endpoint_);
        endp != nullptr;
        endp = endp->next_)
@@ -346,7 +346,7 @@ TAO_DIOP_Profile::hash (CORBA::ULong max)
   hashval += this->version_.minor;
   hashval += this->tag ();
 
-  const TAO::ObjectKey &ok =
+  TAO::ObjectKey const &ok =
     this->ref_object_key_->object_key ();
 
   if (ok.length () >= 4)
@@ -542,7 +542,7 @@ TAO_DIOP_Profile::encode_endpoints ()
   TAO::IIOPEndpointSequence endpoints;
   endpoints.length (this->count_);
 
-  const TAO_DIOP_Endpoint *endpoint = std::addressof (this->endpoint_);
+  TAO_DIOP_Endpoint const *endpoint = std::addressof (this->endpoint_);
   for (CORBA::ULong i {};
        i < this->count_;
        ++i)

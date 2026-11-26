@@ -11,7 +11,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (const ACE_UNIX_Addr &addr,
+TAO_UIOP_Endpoint::TAO_UIOP_Endpoint (ACE_UNIX_Addr const &addr,
                                       CORBA::Short priority)
   : TAO_Endpoint (TAO_TAG_UIOP_PROFILE, priority)
     , object_addr_ (addr)
@@ -58,7 +58,7 @@ TAO_UIOP_Endpoint::duplicate ()
 }
 
 CORBA::Boolean
-TAO_UIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+TAO_UIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
 {
   TAO_UIOP_Endpoint const * const endpoint =
     dynamic_cast<TAO_UIOP_Endpoint const *> (other_endpoint);

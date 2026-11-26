@@ -111,7 +111,7 @@ TAO_UIOP_Connector::set_validate_endpoint (TAO_Endpoint *endpoint)
     return -1;
   }
 
-   const ACE_UNIX_Addr &remote_address = uiop_endpoint->object_addr ();
+   ACE_UNIX_Addr const &remote_address = uiop_endpoint->object_addr ();
 
    // @@ Note, POSIX.1g renames AF_UNIX to AF_LOCAL.
    // Verify that the remote ACE_UNIX_Addr was initialized properly.
@@ -154,7 +154,7 @@ TAO_UIOP_Connector::make_connection (TAO::Profile_Transport_Resolver *r,
     return nullptr;
   }
 
-  const ACE_UNIX_Addr &remote_address =
+  ACE_UNIX_Addr const &remote_address =
     uiop_endpoint->object_addr ();
 
   if (TAO_debug_level > 2)

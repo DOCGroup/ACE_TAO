@@ -46,7 +46,7 @@ TAO_SCIOP_Acceptor::~TAO_SCIOP_Acceptor ()
 }
 
 int
-TAO_SCIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
+TAO_SCIOP_Acceptor::create_profile (TAO::ObjectKey const &object_key,
                                    TAO_MProfile &mprofile,
                                    CORBA::Short priority)
 {
@@ -71,7 +71,7 @@ TAO_SCIOP_Acceptor::create_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO_SCIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
+TAO_SCIOP_Acceptor::create_new_profile (TAO::ObjectKey const &object_key,
                                         TAO_MProfile &mprofile,
                                         CORBA::Short priority)
 {
@@ -117,7 +117,7 @@ TAO_SCIOP_Acceptor::create_new_profile (const TAO::ObjectKey &object_key,
 }
 
 int
-TAO_SCIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
+TAO_SCIOP_Acceptor::create_shared_profile (TAO::ObjectKey const &object_key,
                                            TAO_MProfile &mprofile,
                                            CORBA::Short priority)
 {
@@ -175,10 +175,10 @@ TAO_SCIOP_Acceptor::create_shared_profile (const TAO::ObjectKey &object_key,
 }
 
 bool
-TAO_SCIOP_Acceptor::is_collocated (const TAO_Endpoint *endpoint)
+TAO_SCIOP_Acceptor::is_collocated (TAO_Endpoint const *endpoint)
 {
-  const TAO_SCIOP_Endpoint *endp =
-    dynamic_cast<const TAO_SCIOP_Endpoint *> (endpoint);
+  TAO_SCIOP_Endpoint const *endp =
+    dynamic_cast<TAO_SCIOP_Endpoint const *> (endpoint);
 
   // Make sure the dynamically cast pointer is valid.
   if (endp == nullptr)

@@ -76,13 +76,13 @@ protected:
 
   /// Helper method to add a new profile to the mprofile for
   /// each endpoint.
-  int create_new_profile (const TAO::ObjectKey &object_key,
+  int create_new_profile (TAO::ObjectKey const &object_key,
                           TAO_MProfile &mprofile,
                           CORBA::Short priority);
 
   /// Helper method to create a profile that contains all of
   /// our endpoints.
-  int create_shared_profile (const TAO::ObjectKey &object_key,
+  int create_shared_profile (TAO::ObjectKey const &object_key,
                              TAO_MProfile &mprofile,
                              CORBA::Short priority);
 protected:

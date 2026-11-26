@@ -183,7 +183,7 @@ TAO_UIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 
 int
 TAO_UIOP_Connection_Handler::handle_timeout (ACE_Time_Value const &,
-                                             const void *)
+                                             void const *)
 {
   // Using this to ensure this instance will be deleted (if necessary)
   // only after reset_state(). Without this, when this refcount==1 -

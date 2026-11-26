@@ -17,7 +17,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_MEM_Addr &addr,
+TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (ACE_MEM_Addr const &addr,
                                           int use_dotted_decimal_addresses)
   : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
     , host_ ()
@@ -167,9 +167,9 @@ TAO_SHMIOP_Endpoint::duplicate ()
 }
 
 CORBA::Boolean
-TAO_SHMIOP_Endpoint::is_equivalent (const TAO_Endpoint *other_endpoint)
+TAO_SHMIOP_Endpoint::is_equivalent (TAO_Endpoint const *other_endpoint)
 {
-  const TAO_SHMIOP_Endpoint *endpoint = dynamic_cast <const TAO_SHMIOP_Endpoint *>
+  TAO_SHMIOP_Endpoint const *endpoint = dynamic_cast <TAO_SHMIOP_Endpoint const *>
                                                      (other_endpoint);
 
   if (endpoint == nullptr)

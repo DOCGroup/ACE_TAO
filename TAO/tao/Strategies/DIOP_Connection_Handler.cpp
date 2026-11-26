@@ -301,7 +301,7 @@ TAO_DIOP_Connection_Handler::handle_output (ACE_HANDLE handle)
 
 int
 TAO_DIOP_Connection_Handler::handle_timeout (ACE_Time_Value const &,
-                                             const void *)
+                                             void const *)
 {
   // We don't use this upcall from the Reactor.  However, we should
   // override this since the base class returns -1 which will result
