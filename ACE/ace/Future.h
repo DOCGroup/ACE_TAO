@@ -56,7 +56,7 @@ public:
 /**
  * @class ACE_Future_Observer
  *
- * @brief ACE_Future_Observer<T>
+ * @brief ACE_Future_Observer&lt;T&gt;
  *
  * An ACE_Future_Observer object implements an object that is
  * subscribed with an ACE_Future object so that it may be notified
@@ -85,11 +85,11 @@ protected:
  *
  * @internal
  *
- * @brief ACE_Future_Rep<T>
+ * @brief ACE_Future_Rep&lt;T&gt;
  *
- * An ACE_Future_Rep<T> object encapsulates a pointer to an object
+ * An ACE_Future_Rep&lt;T&gt; object encapsulates a pointer to an object
  * of class T which is the result of an asynchronous method
- * invocation. It is pointed to by ACE_Future<T> object[s] and
+ * invocation. It is pointed to by ACE_Future&lt;T&gt; objects and
  * only accessible through them.
  */
 template <class T>

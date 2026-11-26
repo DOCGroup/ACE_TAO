@@ -387,8 +387,8 @@ namespace ACE_Utils
    * @brief No-op truncation.
    *
    * This structure/functor performs no truncation since it assumes
-   * that @c sizeof(FROM) @c < @c sizeof(TO), meaning that
-   * @c numeric_limits<FROM>::max() @c < @c numeric_limits<TO>::max().
+   * that @c sizeof(FROM) is less than @c sizeof(TO), meaning that the
+   * maximum value of FROM is less than the maximum value of TO.
    */
   template<typename FROM, typename TO>
   struct Noop_Truncator

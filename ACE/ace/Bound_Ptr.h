@@ -24,7 +24,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /**
  * @class ACE_Bound_Ptr_Counter
  *
- * @brief An ACE_Bound_Ptr_Counter<ACE_LOCK> object encapsulates an
+ * @brief An ACE_Bound_Ptr_Counter&lt;ACE_LOCK&gt; object encapsulates an
  *        object reference count.
  *
  * Do not use this class directly, use ACE_Strong_Bound_Ptr or
