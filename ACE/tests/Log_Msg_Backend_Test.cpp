@@ -24,7 +24,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (const ACE_TCHAR *logger_key) override;
+  int open (ACE_TCHAR const *logger_key) override;
 
   int reset () override;
 
@@ -46,7 +46,7 @@ private:
 };
 
 int
-Backend::open (const ACE_TCHAR *)
+Backend::open (ACE_TCHAR const *)
 {
   this->open_ = true;
   return 0;
@@ -77,8 +77,8 @@ bool
 Backend::hooks_ok () const
 {
   // Close should not have been called yet.
-  const ACE_TCHAR *yes = ACE_TEXT ("yes");
-  const ACE_TCHAR *no = ACE_TEXT ("no");
+  ACE_TCHAR const *yes = ACE_TEXT ("yes");
+  ACE_TCHAR const *no = ACE_TEXT ("no");
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Open: %s, Reset: %s, Close: %s\n"),
               this->open_ ? yes : no,

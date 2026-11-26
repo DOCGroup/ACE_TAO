@@ -306,7 +306,7 @@ test (ACE_Configuration *config,
 static int
 test (ACE_Configuration *config)
 {
-  const ACE_Configuration_Section_Key& root = config->root_section ();
+  ACE_Configuration_Section_Key const & root = config->root_section ();
 
   {
     // Scope this so the testsection key is closed before trying to
@@ -453,7 +453,7 @@ run_tests ()
       int somekey_seen = 0, someotherkey_seen = 0;
       int index;
       ACE_TString sect_name;
-      const ACE_Configuration_Section_Key &root = cf.root_section ();
+      ACE_Configuration_Section_Key const &root = cf.root_section ();
       for (index = 0;
            (status = cf.enumerate_sections (root, index, sect_name)) == 0;
            ++index) {
@@ -1246,8 +1246,8 @@ iniCompare (ACE_Configuration_Heap& fromFile, ACE_Configuration_Heap& original)
   int         sectionIndex = 0;
   ACE_TString sectionName;
 
-  const ACE_Configuration_Section_Key& fromFileRoot  = fromFile.root_section ();
-  const ACE_Configuration_Section_Key& originalRoot = original.root_section ();
+  ACE_Configuration_Section_Key const & fromFileRoot  = fromFile.root_section ();
+  ACE_Configuration_Section_Key const & originalRoot = original.root_section ();
   ACE_Configuration_Section_Key originalSection;
   ACE_Configuration_Section_Key fromFileSection;
 
@@ -1785,7 +1785,7 @@ Config_Test::testRegFormat ()
 void
 Config_Test::get_section_string (ACE_Configuration&             config,
                                  ACE_Configuration_Section_Key& SectionKey,
-                                 const ACE_TCHAR*               pszName,
+                                 ACE_TCHAR const *               pszName,
                                  ACE_TCHAR*                     pszVariable,
                                  int                            nMaxLength)
 {
@@ -1810,7 +1810,7 @@ Config_Test::get_section_string (ACE_Configuration&             config,
 void
 Config_Test::get_section_integer (ACE_Configuration&             config,
                                   ACE_Configuration_Section_Key& SectionKey,
-                                  const ACE_TCHAR*               pszName,
+                                  ACE_TCHAR const *               pszName,
                                   int*                           nVariable,
                                   int                            nMinValue,
                                   int                            nMaxValue)
@@ -1845,7 +1845,7 @@ Config_Test::get_section_integer (ACE_Configuration&             config,
 void
 Config_Test::get_section_boolean (ACE_Configuration&             config,
                                   ACE_Configuration_Section_Key& SectionKey,
-                                  const ACE_TCHAR*               pszName,
+                                  ACE_TCHAR const *               pszName,
                                   int*                           pVariable)
 {
   ACE_TString StringValue;

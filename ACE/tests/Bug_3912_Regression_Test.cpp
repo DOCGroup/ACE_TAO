@@ -78,7 +78,7 @@ run_test (int argc, ACE_TCHAR *argv[])
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test module\n")));
 
-  const ACE_Service_Type* st {};
+  ACE_Service_Type const * st {};
   status = asr->find (ACE_TEXT ("Close_Test_Module"), &st);
   if (status != 0)
     {
@@ -110,8 +110,8 @@ run_test (int argc, ACE_TCHAR *argv[])
   // by getting the close methods called so user shutdown hooks can fire.
   //
 
-  const ACE_Module_Type* module_type =
-    static_cast<const ACE_Module_Type*>(st->type ());
+  ACE_Module_Type const * module_type =
+    static_cast<ACE_Module_Type const *>(st->type ());
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Finding close test stream\n")));
 
@@ -123,8 +123,8 @@ run_test (int argc, ACE_TCHAR *argv[])
                        ACE_TEXT ("ACE_Service_Repository::find")),
                        status);
   }
-  const ACE_Stream_Type* close_test_stream =
-    static_cast<const ACE_Stream_Type*> (st->type ());
+  ACE_Stream_Type const * close_test_stream =
+    static_cast<ACE_Stream_Type const *> (st->type ());
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Removing module\n")));
 
