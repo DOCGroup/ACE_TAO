@@ -204,10 +204,10 @@ namespace CORBA
     Any *operator-> ();
 
     /// Cast.
-    operator Any const *() const;
+    operator CORBA::Any const *() const;
 
     /// Cast.
-    operator Any *&();
+    operator CORBA::Any *&();
 
     /// For in Any parameter.
     Any const &in () const;
@@ -252,7 +252,7 @@ namespace CORBA
     Any_out &operator= (Any *);
 
     /// Cast.
-    operator Any *&();
+    operator CORBA::Any *&();
 
     /// Return underlying instance.
     Any *& ptr ();
