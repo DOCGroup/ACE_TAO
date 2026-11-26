@@ -580,7 +580,7 @@ TAO_Container_i::contents_i (CORBA::DefinitionKind limit_type,
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (next_kind,
-                                              next_path.c_str (),
+                                              ACE_TEXT_ALWAYS_CHAR (next_path.c_str ()),
                                               this->repo_);
 
       CORBA::Contained_var next_cont =
@@ -646,7 +646,7 @@ TAO_Container_i::lookup_name_i (char const *search_name,
 
       CORBA::Object_var obj =
         TAO_IFR_Service_Utils::create_objref (next_kind,
-                                              next_path.c_str (),
+                                              ACE_TEXT_ALWAYS_CHAR (next_path.c_str ()),
                                               this->repo_);
 
       CORBA::Contained_var next_cont =
@@ -711,7 +711,7 @@ TAO_Container_i::describe_contents_i (CORBA::DefinitionKind limit_type,
   for (CORBA::ULong i {}; i < ret_len; ++i)
     {
       ACE_TString contained_path (
-          TAO_IFR_Service_Utils::reference_to_path (contents[i])
+          ACE_TEXT_CHAR_TO_TCHAR (TAO_IFR_Service_Utils::reference_to_path (contents[i]))
         );
       impl = TAO_IFR_Service_Utils::path_to_contained (contained_path,
                                                        this->repo_);
@@ -765,7 +765,7 @@ TAO_Container_i::create_module_i (char const *id,
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Module,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::ComponentIR::ModuleDef::_narrow (obj.in ());
@@ -815,7 +815,7 @@ TAO_Container_i::create_constant_i (char const *id,
 
   this->repo_->config ()->set_string_value (new_key,
                                             ACE_TEXT ("type_path"),
-                                            type_path);
+                                            ACE_TEXT_CHAR_TO_TCHAR (type_path));
 
   // Store the value.
   ACE_Message_Block *mb {};
@@ -868,7 +868,7 @@ TAO_Container_i::create_constant_i (char const *id,
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Constant,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::ConstantDef::_narrow (obj.in ());
@@ -935,14 +935,14 @@ TAO_Container_i::create_struct_i (char const *id,
 
       this->repo_->config ()->set_string_value (member_key,
                                                 ACE_TEXT ("name"),
-                                                members[i].name.in ());
+                                                ACE_TEXT_CHAR_TO_TCHAR (members[i].name.in ()));
 
       char * const member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
                                                 ACE_TEXT ("path"),
-                                                member_path);
+                                                ACE_TEXT_CHAR_TO_TCHAR (member_path));
     }
 
   CORBA::DefinitionKind def_kind =
@@ -952,14 +952,14 @@ TAO_Container_i::create_struct_i (char const *id,
       || def_kind == CORBA::dk_Union
       || def_kind == CORBA::dk_Exception)
     {
-      this->update_refs (path.c_str (),
+      this->update_refs (ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                          name);
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Struct,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::StructDef::_narrow (obj.in ());
