@@ -17,7 +17,6 @@
 #include "ace/Default_Constants.h"
 #include "ace/INET_Addr.h"
 #include "ACEXML/common/XML_Types.h"
-#include "ACEXML/common/ACEXML_Export.h"
 #include <memory>
 
 /**
@@ -31,14 +30,14 @@ public:
   /// Initialization and termination methods.
   ACEXML_URL_Addr ();
 
-  ACEXML_URL_Addr (const ACEXML_Char *host_name,
-                   const ACEXML_Char *path_name,
+  ACEXML_URL_Addr (ACEXML_Char const *host_name,
+                   ACEXML_Char const *path_name,
                    unsigned short port = ACE_DEFAULT_HTTP_PORT);
 
-  ACEXML_URL_Addr (const ACEXML_URL_Addr &addr);
+  ACEXML_URL_Addr (ACEXML_URL_Addr const &addr);
 
   /// Essentially the copy constructor.
-  int set (const ACEXML_URL_Addr &addr);
+  int set (ACEXML_URL_Addr const &addr);
 
   /**
    *  Initializes an @c ACEXML_URL_Addr from @a address, which can be
@@ -49,16 +48,15 @@ public:
    *  @c ACE_DEFAULT_HTTP_PORT.
    */
 #if defined (ACE_USES_WCHAR)
-  virtual int string_to_addr (const ACEXML_Char* address,
+  virtual int string_to_addr (ACEXML_Char const* address,
                               int address_family = AF_UNSPEC);
 #else
-  int string_to_addr (const ACEXML_Char* address,
+  int string_to_addr (ACEXML_Char const* address,
                       int address_family = AF_UNSPEC) override;
 #endif
 
-  //  Function to shut up Borland C++
 #if defined (ACE_USES_WCHAR)
-  int string_to_addr (const char* addresss,
+  int string_to_addr (char const* addresss,
                       int address_family = AF_UNSPEC) override;
 #endif
 
@@ -85,9 +83,9 @@ public:
    *  allocated on demand and deallocated when the object is destroyed.
    *  Returns -1 if dynamic memory fails, else 0.
    */
-  virtual const ACEXML_Char *addr_to_string (int ipaddr_format = 1);
+  virtual ACEXML_Char const *addr_to_string (int ipaddr_format = 1);
 
-  void operator= (const ACEXML_URL_Addr &addr);
+  void operator= (ACEXML_URL_Addr const &addr);
 
   ~ACEXML_URL_Addr () override;
 
@@ -95,16 +93,16 @@ public:
    *  Compare two addresses for equality.  The addresses are considered
    *  equal if they contain the same IP address, port number, and path name.
    */
-  bool operator == (const ACEXML_URL_Addr &SAP) const;
+  bool operator == (ACEXML_URL_Addr const &SAP) const;
 
   /// Compare two addresses for inequality.
-  bool operator != (const ACEXML_URL_Addr &SAP) const;
+  bool operator != (ACEXML_URL_Addr const &SAP) const;
 
   /// Computes and returns hash value.
   u_long hash () const override;
 
   /// Return the path name.
-  const ACEXML_Char *get_path_name () const;
+  ACEXML_Char const *get_path_name () const;
 
   /// Commit suicide.
   int destroy ();

@@ -16,7 +16,7 @@ ACEXML_URL_Addr::calculate_length (int ipaddr_format) const
 }
 
 ACE_INLINE void
-ACEXML_URL_Addr::operator= (const ACEXML_URL_Addr &addr)
+ACEXML_URL_Addr::operator= (ACEXML_URL_Addr const &addr)
 {
   if (this->set (addr) == -1)
     {
@@ -35,7 +35,7 @@ ACEXML_URL_Addr::hash () const
 }
 
 ACE_INLINE bool
-ACEXML_URL_Addr::operator== (const ACEXML_URL_Addr &addr) const
+ACEXML_URL_Addr::operator== (ACEXML_URL_Addr const &addr) const
 {
   return ACE_OS::strcmp (addr.get_path_name (), this->get_path_name ()) == 0
     && addr.get_port_number () == this->get_port_number ()
@@ -43,12 +43,12 @@ ACEXML_URL_Addr::operator== (const ACEXML_URL_Addr &addr) const
 }
 
 ACE_INLINE bool
-ACEXML_URL_Addr::operator!= (const ACEXML_URL_Addr &addr) const
+ACEXML_URL_Addr::operator!= (ACEXML_URL_Addr const &addr) const
 {
   return !(*this == addr);
 }
 
-ACE_INLINE const ACEXML_Char *
+ACE_INLINE ACEXML_Char const *
 ACEXML_URL_Addr::get_path_name () const
 {
   return this->path_name_.get ();

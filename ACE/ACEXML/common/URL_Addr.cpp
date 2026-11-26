@@ -47,7 +47,7 @@ ACEXML_URL_Addr::addr_to_string (ACEXML_Char *s,
     }
 }
 
-const ACEXML_Char *
+ACEXML_Char const *
 ACEXML_URL_Addr::addr_to_string (int ipaddr_format)
 {
   size_t const size = this->calculate_length (ipaddr_format);
@@ -76,7 +76,7 @@ ACEXML_URL_Addr::addr_to_string (int ipaddr_format)
 
 #if defined (ACE_USES_WCHAR)
 int
-ACEXML_URL_Addr::string_to_addr (const char* s,
+ACEXML_URL_Addr::string_to_addr (char const* s,
                                  int address_family)
 {
   return this->string_to_addr (ACE_TEXT_CHAR_TO_TCHAR (s), address_family);
@@ -84,7 +84,7 @@ ACEXML_URL_Addr::string_to_addr (const char* s,
 #endif /* ACE_USES_WCHAR */
 
 int
-ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
+ACEXML_URL_Addr::string_to_addr (ACEXML_Char const* s,
                                  int /*address_family */)
 {
   if (s == nullptr)
@@ -92,7 +92,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
     return -1;
   }
 
-  const ACEXML_Char* http = ACE_TEXT ("http://");
+  ACEXML_Char const* http = ACE_TEXT ("http://");
   const size_t http_len = ACE_OS::strlen (http);
 
   // Check validity of URL
@@ -161,7 +161,7 @@ ACEXML_URL_Addr::string_to_addr (const ACEXML_Char* s,
   return result;
 }
 
-ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_URL_Addr &addr)
+ACEXML_URL_Addr::ACEXML_URL_Addr (ACEXML_URL_Addr const &addr)
   : ACE_INET_Addr (),
     addr_string_len_ (0)
 {
@@ -174,7 +174,7 @@ ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_URL_Addr &addr)
 }
 
 int
-ACEXML_URL_Addr::set (const ACEXML_URL_Addr &addr)
+ACEXML_URL_Addr::set (ACEXML_URL_Addr const &addr)
 {
   if (this == std::addressof (addr))
   {
@@ -215,8 +215,8 @@ ACEXML_URL_Addr::set (const ACEXML_URL_Addr &addr)
     }
 }
 
-ACEXML_URL_Addr::ACEXML_URL_Addr (const ACEXML_Char *host_name,
-                            const ACEXML_Char *path_name,
+ACEXML_URL_Addr::ACEXML_URL_Addr (ACEXML_Char const *host_name,
+                            ACEXML_Char const *path_name,
                             unsigned short port)
   : ACE_INET_Addr (port, host_name),
     addr_string_len_ (0)
