@@ -8,12 +8,12 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (const char* name)
+TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (char const *name)
   : name_ (name)
 {
 }
 
-TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (const char* name, CORBA::Boolean initial)
+TAO_Notify_Property_Boolean::TAO_Notify_Property_Boolean (char const *name, CORBA::Boolean initial)
   :name_ (name), value_ (initial), valid_ (true)
 {
 }

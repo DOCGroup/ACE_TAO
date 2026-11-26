@@ -32,7 +32,7 @@ TAO_Notify_POA_Helper::get_unique_id ()
 }
 
 void
-TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name)
+TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa, char const *poa_name)
 {
   CORBA::PolicyList policy_list (2);
 
@@ -43,7 +43,7 @@ TAO_Notify_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa
 
 #if !defined (CORBA_E_MICRO)
 void
-TAO_Notify_POA_Helper::init_persistent (PortableServer::POA_ptr parent_poa, const char* poa_name)
+TAO_Notify_POA_Helper::init_persistent (PortableServer::POA_ptr parent_poa, char const *poa_name)
 {
   CORBA::PolicyList policy_list (2);
 
@@ -90,7 +90,7 @@ TAO_Notify_POA_Helper::set_persistent_policy (PortableServer::POA_ptr parent_poa
 void
 TAO_Notify_POA_Helper::create_i (
   PortableServer::POA_ptr parent_poa,
-  const char* poa_name,
+  char const *poa_name,
   CORBA::PolicyList &policy_list)
 {
   PortableServer::POAManager_var manager =

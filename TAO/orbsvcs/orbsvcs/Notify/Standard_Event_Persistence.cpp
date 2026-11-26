@@ -110,7 +110,7 @@ Standard_Event_Persistence_Factory::Standard_Event_Persistence_Factory ()
 }
 
 bool
-Standard_Event_Persistence_Factory::open (const ACE_TCHAR* filename,
+Standard_Event_Persistence_Factory::open (ACE_TCHAR const *filename,
                                           ACE_UINT32 block_size)
 {
   bool result {};

@@ -129,7 +129,7 @@ public:
   Persistent_File_Allocator& operator= (const Persistent_File_Allocator&) = delete;
   Persistent_File_Allocator& operator= (Persistent_File_Allocator&&) = delete;
 
-  bool open (const ACE_TCHAR* filename,
+  bool open (ACE_TCHAR const *filename,
     const size_t block_size = 512);
 
   /// \brief Wait for pending I/O and terminate our work thread.

@@ -31,7 +31,7 @@ public:
 
   /// Create a new PortableServer::POA.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread pool policy is applied to the new POA.
-  void init (PortableServer::POA_ptr parent_poa, const char* poa_name, const NotifyExt::ThreadPoolParams& tp_params);
+  void init (PortableServer::POA_ptr parent_poa, char const *poa_name, const NotifyExt::ThreadPoolParams& tp_params);
 
   /// Create a new PortableServer::POA. The name is chosen at random.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread pool policy is applied to the new POA.
@@ -39,7 +39,7 @@ public:
 
   /// Create a new PortableServer::POA.
   /// The UNIQUE_ID, USER_ID , CLIENT_PROPAGATED and thread lane policy is applied to the new POA.
-  void init (PortableServer::POA_ptr parent_poa, const char* poa_name,
+  void init (PortableServer::POA_ptr parent_poa, char const *poa_name,
              const NotifyExt::ThreadPoolLanesParams& tpl_params);
 
   /// Create a new PortableServer::POA. The name is chosen at random.

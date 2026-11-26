@@ -130,7 +130,7 @@ TAO_Notify_Proxy::save_persistent (TAO_Notify::Topology_Saver& saver)
     TAO_Notify::NVPList attrs;
     this->save_attrs(attrs);
 
-    const char * type_name = this->get_proxy_type_name ();
+    char const *type_name = this->get_proxy_type_name ();
     bool want_all_children = saver.begin_object(this->id(), type_name, attrs, changed);
 
     if (want_all_children || this->filter_admin_.is_changed ())

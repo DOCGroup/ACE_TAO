@@ -16,13 +16,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 /*****************************************************************************/
 
 template <class TYPE>
-TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (const char* name)
+TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (char const *name)
   : name_ (name)
 {
 }
 
 template <class TYPE>
-TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (const char* name, const TYPE& initial)
+TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (char const *name, const TYPE& initial)
   : name_ (name), value_ (initial), valid_ (true)
 {
 }
@@ -48,13 +48,13 @@ TAO_Notify_PropertyBase_T<TYPE>::get (CosNotification::PropertySeq& prop_seq)
 /*******************************************************************************/
 
 template <class TYPE>
-TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (const char* name)
+TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (char const *name)
   :TAO_Notify_PropertyBase_T <TYPE> (name)
 {
 }
 
 template <class TYPE>
-TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (const char* name, const TYPE& initial)
+TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (char const *name, const TYPE& initial)
   :TAO_Notify_PropertyBase_T <TYPE> (name, initial)
 {
 }
@@ -89,13 +89,13 @@ TAO_Notify_Property_T<TYPE>::set(const CosNotification::PropertyValue &value)
 /*******************************************************************************/
 
 template <class TYPE>
-TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (const char* name)
+TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (char const *name)
   :name_ (name)
 {
 }
 
 template <class TYPE>
-TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (const char* name, const TYPE& initial)
+TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (char const *name, const TYPE& initial)
   :name_ (name), value_ (initial), valid_ (true)
 {
 }

@@ -32,7 +32,7 @@ class TAO_Notify_Serv_Export TAO_Notify_EventType : public TAO_Notify::Topology_
 {
 public:
   TAO_Notify_EventType ();
-  TAO_Notify_EventType (const char* domain_name, const char* type_name);
+  TAO_Notify_EventType (char const *domain_name, char const *type_name);
   explicit TAO_Notify_EventType (const CosNotification::EventType& event_type);
   TAO_Notify_EventType (const TAO_Notify_EventType& event_type);
 
@@ -77,13 +77,13 @@ protected:
   friend class TAO_Notify_Constraint_Interpreter;
 
   /// Init this object.
-  void init_i (const char* domain_name, const char* type_name);
+  void init_i (char const *domain_name, char const *type_name);
 
   /// Recompute the hash value.
   void recompute_hash ();
 
-  bool domain_is_wildcard (const char* domain) const;
-  bool type_is_wildcard (const char* type) const;
+  bool domain_is_wildcard (char const *domain) const;
+  bool type_is_wildcard (char const *type) const;
 
   /// @name Data members
   /// @{

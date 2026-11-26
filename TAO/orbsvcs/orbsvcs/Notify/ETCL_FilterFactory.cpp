@@ -81,7 +81,7 @@ TAO_Notify_ETCL_FilterFactory::destroy ()
 }
 
 CosNotifyFilter::Filter_ptr
-TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
+TAO_Notify_ETCL_FilterFactory::create_filter (char const *constraint_grammar)
 {
   // @@: change to "ExTCL" later.
   if (std::strcmp (constraint_grammar, "TCL") != 0 &&
@@ -98,7 +98,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (const char *constraint_grammar)
 
 CosNotifyFilter::Filter_ptr
 TAO_Notify_ETCL_FilterFactory::create_filter (
-  const char *constraint_grammar,
+  char const *constraint_grammar,
   const TAO_Notify_Object::ID& id,
   TAO_Notify_ETCL_Filter*& filter)
 {
@@ -142,7 +142,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (
 }
 
 CosNotifyFilter::MappingFilter_ptr
-TAO_Notify_ETCL_FilterFactory::create_mapping_filter (const char * /*constraint_grammar*/,
+TAO_Notify_ETCL_FilterFactory::create_mapping_filter (char const */*constraint_grammar*/,
                                                       const CORBA::Any & /*default_value*/)
 {
   throw CORBA::NO_IMPLEMENT ();
@@ -220,7 +220,7 @@ TAO_Notify_ETCL_FilterFactory::load_child (ACE_CString const &type,
   TAO_Notify::Topology_Object* result = this;
   if (type == "filter")
   {
-    const char* value {};
+    char const *value {};
     if (attrs.find ("FilterId", value))
     {
       TAO_Notify_Object::ID const id = std::atoi (value);

@@ -44,7 +44,7 @@ public:
   int init (const CosNotification::PropertySeq& prop_seq);
 
   /// Find the @a value for property @a name. Returns 0 on success.
-  int find (const char* name, CosNotification::PropertyValue& value) const;
+  int find (char const *name, CosNotification::PropertyValue& value) const;
 
   /// Return -1 on error.
   int populate (CosNotification::PropertySeq_var& prop_seq) const;

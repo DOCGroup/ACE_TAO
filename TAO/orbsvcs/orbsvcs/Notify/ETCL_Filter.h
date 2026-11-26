@@ -77,7 +77,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ETCL_Filter
 {
 public:
   TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,
-                          const char *constraint_grammar,
+                          char const *constraint_grammar,
                           const TAO_Notify_Object::ID& id);
 
   ~TAO_Notify_ETCL_Filter () override;

@@ -25,7 +25,7 @@ TAO_Notify_EventType::TAO_Notify_EventType ()
 = default;
 
 void
-TAO_Notify_EventType::init_i (const char* domain_name, const char* type_name)
+TAO_Notify_EventType::init_i (char const *domain_name, char const *type_name)
 {
   this->event_type_.domain_name = domain_name;
   this->event_type_.type_name = type_name;
@@ -39,8 +39,8 @@ TAO_Notify_EventType::init_i (const char* domain_name, const char* type_name)
   this->recompute_hash ();
 }
 
-TAO_Notify_EventType::TAO_Notify_EventType (const char* domain_name,
-                                            const char* type_name)
+TAO_Notify_EventType::TAO_Notify_EventType (char const *domain_name,
+                                            char const *type_name)
 {
   this->init_i (domain_name, type_name);
 }

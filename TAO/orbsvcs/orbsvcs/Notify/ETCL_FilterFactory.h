@@ -59,10 +59,10 @@ public:
   /// @name CosNotifyFilter::FilterFactory methods
   /// @{
   CosNotifyFilter::Filter_ptr create_filter (
-      const char * constraint_grammar) override;
+      char const *constraint_grammar) override;
 
   CosNotifyFilter::MappingFilter_ptr create_mapping_filter (
-      const char * constraint_grammar,
+      char const *constraint_grammar,
       const CORBA::Any & default_value) override;
 
   void remove_filter (CosNotifyFilter::Filter_ptr filter) override;
@@ -83,7 +83,7 @@ public:
 
 protected:
   CosNotifyFilter::Filter_ptr
-    create_filter (const char *constraint_grammar,
+    create_filter (char const *constraint_grammar,
                    const TAO_Notify_Object::ID& id,
                    TAO_Notify_ETCL_Filter*& filter);
 

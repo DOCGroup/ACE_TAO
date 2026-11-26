@@ -317,7 +317,7 @@ TAO_Notify_Object::get_qos ()
 
 bool
 TAO_Notify_Object::find_qos_property_value (
-  const char * name,
+  char const *name,
   CosNotification::PropertyValue & value) const
 {
   // qos_properties_ is essentially a map and the find() method returns

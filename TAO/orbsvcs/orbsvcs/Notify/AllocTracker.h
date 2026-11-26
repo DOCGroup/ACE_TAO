@@ -29,7 +29,7 @@ namespace CRT{
 class CrtHeapDumper
 {
 public:
-  CrtHeapDumper(const char * name, bool verbose = false)
+  CrtHeapDumper(char const *name, bool verbose = false)
     : name_ (name)
     , verbose_ (verbose)
   {

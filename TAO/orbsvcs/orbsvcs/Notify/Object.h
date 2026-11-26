@@ -77,7 +77,7 @@ public:
   CosNotification::QoSProperties* get_qos ();
 
   bool find_qos_property_value (
-    const char * name,
+    char const *name,
     CosNotification::PropertyValue & value)const;
 
   /// Obtain the Timer manager associated with this object.

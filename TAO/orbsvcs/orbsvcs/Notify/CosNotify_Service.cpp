@@ -25,7 +25,7 @@ TAO_CosNotify_Service::init (int argc, ACE_TCHAR *argv[])
 {
   ACE_Arg_Shifter arg_shifter (argc, argv);
 
-  const ACE_TCHAR *current_arg {};
+  ACE_TCHAR const *current_arg {};
 
   // Default to an all reactive system.
   int ec_threads {};
@@ -504,7 +504,7 @@ TAO_CosNotify_Service::create_builder ()
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_CosNotify_Service::create (PortableServer::POA_ptr poa,
-                               const char* factory_name)
+                               char const *factory_name)
 {
   return this->builder().build_event_channel_factory (poa, factory_name);
 }

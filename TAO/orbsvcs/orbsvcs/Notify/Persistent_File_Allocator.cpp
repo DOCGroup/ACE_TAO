@@ -173,7 +173,7 @@ Persistent_File_Allocator::~Persistent_File_Allocator()
 }
 
 bool
-Persistent_File_Allocator::open (const ACE_TCHAR* filename,
+Persistent_File_Allocator::open (ACE_TCHAR const *filename,
   const size_t block_size)
 {
   bool file_opened = this->pstore_.open(filename, block_size);

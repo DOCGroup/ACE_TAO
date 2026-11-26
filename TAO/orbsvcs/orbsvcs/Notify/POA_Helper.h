@@ -37,12 +37,12 @@ public:
   TAO_Notify_POA_Helper &operator= (TAO_Notify_POA_Helper &&) = delete;
 
   /// Create a new PortableServer::POA.
-  void init (PortableServer::POA_ptr parent_poa, const char* poa_name);
+  void init (PortableServer::POA_ptr parent_poa, char const *poa_name);
 
 #if !defined (CORBA_E_MICRO)
   /// Create a new persistent PortableServer::POA.
   void init_persistent (PortableServer::POA_ptr parent_poa,
-                        const char* poa_name);
+                        char const *poa_name);
 #endif /* !CORBA_E_MICRO */
 
   /// Create a new PortableServer::POA. The name is chosen at random.
@@ -90,7 +90,7 @@ protected:
 
   /// Apply the polices and create child POA.
   void create_i (PortableServer::POA_ptr parent_poa,
-                 const char* poa_name,
+                 char const *poa_name,
                  CORBA::PolicyList &policy_list);
 
   /// Convert id to ObjectID

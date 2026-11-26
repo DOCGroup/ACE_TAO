@@ -29,9 +29,9 @@ class TAO_Notify_PropertySeq;
 class TAO_Notify_Serv_Export TAO_Notify_Property_Boolean
 {
 public:
-  TAO_Notify_Property_Boolean (const char* name, CORBA::Boolean initial);
+  TAO_Notify_Property_Boolean (char const *name, CORBA::Boolean initial);
 
-  explicit TAO_Notify_Property_Boolean (const char* name);
+  explicit TAO_Notify_Property_Boolean (char const *name);
 
   /// Assignment from TAO_Notify_Property_Boolean
   TAO_Notify_Property_Boolean& operator= (const TAO_Notify_Property_Boolean& rhs);
@@ -50,7 +50,7 @@ public:
   void get (CosNotification::PropertySeq& prop_seq);
 
   /// Return the name
-  const char * name () const;
+  char const *name () const;
 
   /// Return the value.
   CORBA::Boolean value () const;
@@ -60,7 +60,7 @@ public:
 
 protected:
   /// The Property name.
-  const char* name_;
+  char const *name_;
 
   /// The value
   CORBA::Boolean value_ {};

@@ -29,7 +29,7 @@ public:
   /// Also creates a resource factory and assigns it this default_POA.
   static CosNotifyChannelAdmin::EventChannelFactory_ptr
     create (PortableServer::POA_ptr default_POA,
-            const char* factory_name = "EventChannelFactory");
+            char const *factory_name = "EventChannelFactory");
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

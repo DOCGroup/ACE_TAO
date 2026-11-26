@@ -29,7 +29,7 @@ using TAO_Notify_Proxy_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy>;
 
 TAO_Notify_SupplierAdmin::TAO_Notify_SupplierAdmin () = default;
 
-const char *
+char const *
 TAO_Notify_SupplierAdmin::get_admin_type_name () const
 {
   return "supplier_admin";

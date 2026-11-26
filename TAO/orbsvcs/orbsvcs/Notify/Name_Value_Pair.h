@@ -44,11 +44,11 @@ namespace TAO_Notify
     explicit NVP(const TAO_Notify_Property_Boolean& p);
 
     /// Construct from name and long value.
-    NVP(const char * n, CORBA::Long v);
+    NVP(char const *n, CORBA::Long v);
     /// Construct from name and string value.
-    NVP(const char * n, const char * v);
+    NVP(char const *n, char const *v);
     /// Construct from name and string value.
-    NVP(const char * n, const ACE_CString & v);
+    NVP(char const *n, const ACE_CString & v);
 
     /// Equality comparison operator.
     bool operator==(const NVP& rhs) const;
@@ -72,9 +72,9 @@ namespace TAO_Notify
     /// Find the NVP with the same name as the property, copy the value.
     void load(TAO_Notify_Property_Boolean& p) const;
     /// Find the NVP with specified name, copy the value to a string.
-    bool load(const char * n, CORBA::Long& v) const;
+    bool load(char const *n, CORBA::Long& v) const;
     /// Find the NVP with specified name, copy the value to a long.
-    bool load(const char * n, ACE_CString& v) const;
+    bool load(char const *n, ACE_CString& v) const;
     /// add a new name/value pair.
     void push_back(const NVP& v);
     /// size of the collection.
@@ -82,9 +82,9 @@ namespace TAO_Notify
     /// access NVP via numeric index.
     const NVP& operator[](size_t ndx) const;
     /// low level access: find
-    bool find (const char * name, ACE_CString& val) const;
+    bool find (char const *name, ACE_CString& val) const;
     /// low level access:  use this when you don't need a CString
-    bool find (const char * name, const char *& val) const;
+    bool find (char const *name, char const *& val) const;
 
   private:
     std::vector<NVP> list_;

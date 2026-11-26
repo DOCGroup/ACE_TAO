@@ -41,7 +41,7 @@ TAO_Notify_Constraint_Expr::load_attrs(
   TAO_Notify::NVPList const &attrs)
 {
   TAO_Notify_Object::load_attrs (attrs);
-  const char* expr {};
+  char const *expr {};
   if (attrs.find ("Expression", expr))
   {
     this->constr_expr.constraint_expr = CORBA::string_dup (expr);
@@ -58,8 +58,8 @@ TAO_Notify_Constraint_Expr::load_child (
   TAO_Notify::Topology_Object* result = this;
   if (type == "EventType")
   {
-    const char* domain {};
-    const char* type {};
+    char const *domain {};
+    char const *type {};
     attrs.find ("Domain", domain);
     attrs.find ("Type", type);
 
@@ -89,7 +89,7 @@ TAO_Notify_Constraint_Expr::release ()
 }
 
 TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,
-                                                const char *constraint_grammar,
+                                                char const *constraint_grammar,
                                                 const TAO_Notify_Object::ID& id)
   : poa_ (PortableServer::POA::_duplicate (poa)),
    id_ (id),
@@ -565,7 +565,7 @@ TAO_Notify_ETCL_Filter::release ()
 void
 TAO_Notify_ETCL_Filter::load_attrs(TAO_Notify::NVPList const &attrs)
 {
-  const char* value {};
+  char const *value {};
   TAO_Notify_Object::load_attrs (attrs);
   if (attrs.find ("FilterId", value))
   {
@@ -585,7 +585,7 @@ TAO_Notify_ETCL_Filter::load_child (ACE_CString const &type,
   TAO_Notify::Topology_Object* result = this;
   if (type == "constraint")
   {
-    const char* value {};
+    char const *value {};
     if (attrs.find ("ConstraintId", value))
     {
       TAO_Notify_Object::ID id = std::atoi (value);

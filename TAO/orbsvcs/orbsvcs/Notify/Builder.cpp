@@ -175,7 +175,7 @@ TAO_Notify_Builder::build_filter_factory (PortableServer::POA_ptr poa, TAO_Notif
 
 CosNotifyChannelAdmin::EventChannelFactory_ptr
 TAO_Notify_Builder::build_event_channel_factory (PortableServer::POA_ptr poa,
-                                                 const char* name)
+                                                 char const *name)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
@@ -193,7 +193,7 @@ TAO_Notify_Builder::build_event_channel (
   const CosNotification::QoSProperties & initial_qos,
   const CosNotification::AdminProperties & initial_admin,
   CosNotifyChannelAdmin::ChannelID_out id,
-  const char* ec_name)
+  char const *ec_name)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 
@@ -217,7 +217,7 @@ TAO_Notify_EventChannel *
 TAO_Notify_Builder::build_event_channel (
   TAO_Notify_EventChannelFactory* ecf,
   const CosNotifyChannelAdmin::ChannelID id,
-  const char* ec_name)
+  char const *ec_name)
 {
   TAO_Notify_Factory* factory = TAO_Notify_PROPERTIES::instance ()->factory ();
 

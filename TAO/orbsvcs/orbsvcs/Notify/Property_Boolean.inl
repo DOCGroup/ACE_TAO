@@ -41,7 +41,7 @@ TAO_Notify_Property_Boolean::operator!= (const CORBA::Boolean &rhs) const
 }
 
 ACE_INLINE
-const char *
+char const *
 TAO_Notify_Property_Boolean::name () const
 {
   return this->name_;

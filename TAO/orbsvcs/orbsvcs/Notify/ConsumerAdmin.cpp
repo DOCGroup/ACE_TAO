@@ -33,7 +33,7 @@ using TAO_Notify_Proxy_Seq_Worker = TAO_Notify_Seq_Worker_T<TAO_Notify_Proxy>;
 
 TAO_Notify_ConsumerAdmin::TAO_Notify_ConsumerAdmin () = default;
 
-const char *
+char const *
 TAO_Notify_ConsumerAdmin::get_admin_type_name () const
 {
   return "consumer_admin";

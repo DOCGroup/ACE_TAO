@@ -48,7 +48,7 @@ namespace TAO_Notify
     ///        persistent information.
     /// /param block_size the size of a physical block on the device containing
     ///        the file.
-    bool open (const ACE_TCHAR* filename, ACE_UINT32 block_size = 512);
+    bool open (ACE_TCHAR const *filename, ACE_UINT32 block_size = 512);
 
     //////////////////////////////////////////////////////
     // Implement Event_Persistence_Factory virtual methods.

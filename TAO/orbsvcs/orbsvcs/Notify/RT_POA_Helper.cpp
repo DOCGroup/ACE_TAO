@@ -19,7 +19,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const Notify
 }
 
 void
-TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, char const *poa_name
                                  , const NotifyExt::ThreadPoolParams& tp_params)
 {
   CORBA::PolicyList policy_list (4);
@@ -79,7 +79,7 @@ TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const Notify
 }
 
 void
-TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, const char* poa_name
+TAO_Notify_RT_POA_Helper::init (PortableServer::POA_ptr parent_poa, char const *poa_name
                                  , const NotifyExt::ThreadPoolLanesParams& tpl_params)
 {
   CORBA::PolicyList policy_list (4);

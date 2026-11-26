@@ -8,7 +8,7 @@ TAO_Notify_Service::~TAO_Notify_Service () = default;
 TAO_Notify_Service*
 TAO_Notify_Service::load_default ()
 {
-  static constexpr const char* services[] = { TAO_MC_NOTIFICATION_SERVICE_NAME,
+  static constexpr char const *services[] = { TAO_MC_NOTIFICATION_SERVICE_NAME,
                                               TAO_NOTIFICATION_SERVICE_NAME,
                                               TAO_COS_NOTIFICATION_SERVICE_NAME,
                                               nullptr

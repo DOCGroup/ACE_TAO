@@ -156,7 +156,7 @@ int
 TAO_Notify_Constraint_Visitor::visit_identifier (ETCL_Identifier *ident)
 {
   int return_value = -1;
-  const char *name = ident->value ();
+  char const *name = ident->value ();
   ACE_CString key (name, 0, false);
 
   CORBA::Any any;
@@ -291,14 +291,14 @@ TAO_Notify_Constraint_Visitor::visit_union_pos (
           }
         case ETCL_STRING:
           {
-            const char *name = static_cast<const char *> (disc_val);
+            char const *name = static_cast<char const *> (disc_val);
             CORBA::ULong count = tc->member_count ();
 
             CORBA::ULong i {};
 
             for (i = 0; i < count; ++i)
               {
-                const char *member_name = tc->member_name (i);
+                char const *member_name = tc->member_name (i);
 
                 if (std::strcmp (name, member_name) == 0)
                   {
@@ -610,7 +610,7 @@ TAO_Notify_Constraint_Visitor::visit_special (ETCL_Special *special)
       }
     case ETCL_TYPE_ID:
       {
-        const char *name = tc->name ();
+        char const *name = tc->name ();
 
         TAO_ETCL_Literal_Constraint lit (name);
         this->queue_.enqueue_head (lit);
@@ -618,7 +618,7 @@ TAO_Notify_Constraint_Visitor::visit_special (ETCL_Special *special)
       }
     case ETCL_REPOS_ID:
       {
-        const char *id = tc->id ();
+        char const *id = tc->id ();
 
         TAO_ETCL_Literal_Constraint lit (id);
         this->queue_.enqueue_head (lit);
@@ -800,7 +800,7 @@ TAO_Notify_Constraint_Visitor::visit_exist (ETCL_Exist *exist)
 
   if (component->accept (this) == 0)
     {
-      const char *value {};
+      char const *value {};
       CORBA::Boolean result {};
 
       // For the two cases below, we don't want the item at the top of
@@ -1114,8 +1114,8 @@ TAO_Notify_Constraint_Visitor::visit_twiddle (ETCL_Binary_Expr *binary)
           TAO_ETCL_Literal_Constraint right;
           this->queue_.dequeue_head (right);
           CORBA::Boolean result =
-            (std::strstr (static_cast<const char *> (right),
-                          static_cast<const char *> (left)) != nullptr);
+            (std::strstr (static_cast<char const *> (right),
+                          static_cast<char const *> (left)) != nullptr);
           this->queue_.enqueue_head (TAO_ETCL_Literal_Constraint (result));
           return_value = 0;
         }

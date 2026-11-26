@@ -128,7 +128,7 @@ TAO_Notify_Admin::save_persistent (TAO_Notify::Topology_Saver& saver)
       TAO_Notify::NVPList attrs;
       this->save_attrs(attrs);
 
-      const char* type = this->get_admin_type_name();
+      char const *type = this->get_admin_type_name();
 
       bool want_all_children =
         saver.begin_object(this->id(), type, attrs, changed);
@@ -166,7 +166,7 @@ void
 TAO_Notify_Admin::load_attrs(TAO_Notify::NVPList const &attrs)
 {
   TAO_Notify_Object::load_attrs (attrs);
-  const char* value {};
+  char const *value {};
   if (attrs.find ("InterFilterGroupOperator", value))
     {
       this->filter_operator_ = static_cast <CosNotifyChannelAdmin::InterFilterGroupOperator> (

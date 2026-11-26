@@ -55,7 +55,7 @@ public:
   CORBA::Boolean evaluate (TAO_Notify_Constraint_Visitor &evaluator);
 
 private:
-  void build_tree (const char* constraints);
+  void build_tree (char const *constraints);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

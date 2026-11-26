@@ -8,7 +8,7 @@
 
 namespace
 {
-  ACE_UINT64 string_to_uint64 (const char * s)
+  ACE_UINT64 string_to_uint64 (char const *s)
   {
     size_t const len = std::strlen (s);
     if (len == 0)
@@ -67,19 +67,19 @@ namespace TAO_Notify
     value = p.value() ? "true" : "false";
   }
 
-  NVP::NVP(const char * n, CORBA::Long v)
+  NVP::NVP(char const *n, CORBA::Long v)
     : name(n)
   {
     const std::string string_value = std::to_string (static_cast<long> (v));
     value = string_value.c_str ();
   }
 
-  NVP::NVP(const char * n, const char * v)
+  NVP::NVP(char const *n, char const *v)
     : name(n), value(v)
   {
   }
 
-  NVP::NVP(const char * n, const ACE_CString & v)
+  NVP::NVP(char const *n, const ACE_CString & v)
     : name(n), value(v)
   {
   }
@@ -94,7 +94,7 @@ namespace TAO_Notify
     return ! (rhs == *this);
   }
 
-  bool NVPList::find (const char * name, ACE_CString& val) const
+  bool NVPList::find (char const *name, ACE_CString& val) const
   {
     for (size_t i {}; i < list_.size(); ++i)
     {
@@ -107,7 +107,7 @@ namespace TAO_Notify
     return false;
   }
 
-  bool NVPList::find (const char * name, const char *& val) const
+  bool NVPList::find (char const *name, char const *& val) const
   {
     for (size_t i {}; i < list_.size(); ++i)
     {
@@ -122,7 +122,7 @@ namespace TAO_Notify
 
   void NVPList::load(TAO_Notify_Property_Short& p) const
   {
-    const char * v;
+    char const *v;
     if (find(p.name(), v))
     {
       p.assign (static_cast<CORBA::Short> (std::atoi (v)));
@@ -131,7 +131,7 @@ namespace TAO_Notify
 
   void NVPList::load(TAO_Notify_Property_Long& p) const
   {
-    const char * v;
+    char const *v;
     if (find(p.name(), v))
     {
       p.assign (static_cast<CORBA::Long> (std::atoi (v)));
@@ -140,7 +140,7 @@ namespace TAO_Notify
 
   void NVPList::load(TAO_Notify_Property_Time& p) const
   {
-    const char * v;
+    char const *v;
     if (find(p.name (), v))
     {
       p.assign (static_cast<TimeBase::TimeT> (string_to_uint64(v)));
@@ -163,9 +163,9 @@ namespace TAO_Notify
     }
   }
 
-  bool NVPList::load(const char * n, CORBA::Long& v) const
+  bool NVPList::load(char const *n, CORBA::Long& v) const
   {
-    const char * val;
+    char const *val;
     if (find(n, val))
     {
       v = static_cast<CORBA::Long> (std::atoi (val));
@@ -174,7 +174,7 @@ namespace TAO_Notify
     return false;
   }
 
-  bool NVPList::load(const char * n, ACE_CString& v) const
+  bool NVPList::load(char const *n, ACE_CString& v) const
   {
     return find(n, v);
   }

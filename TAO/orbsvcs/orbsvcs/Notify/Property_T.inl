@@ -7,7 +7,7 @@ TAO_Notify_PropertyBase_T<TYPE>::value () const
 }
 
 template <class TYPE> ACE_INLINE
-const char *
+char const *
 TAO_Notify_PropertyBase_T<TYPE>::name () const
 {
   return this->name_;
@@ -48,7 +48,7 @@ TAO_Notify_PropertyBase_T<TYPE>:: assign (const TYPE& value)
 /******************************************************************************/
 
 template <class TYPE> ACE_INLINE
-const char *
+char const *
 TAO_Notify_StructProperty_T<TYPE>::name () const
 {
   return this->name_;

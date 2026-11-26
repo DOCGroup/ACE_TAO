@@ -12,7 +12,7 @@ TAO_Notify_Constraint_Interpreter::~TAO_Notify_Constraint_Interpreter () = defau
 
 void
 TAO_Notify_Constraint_Interpreter::build_tree (
-    const char *constraints)
+    char const *constraints)
 {
   if (ETCL_Interpreter::is_empty_string (constraints))
     {
