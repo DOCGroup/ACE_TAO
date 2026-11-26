@@ -44,7 +44,7 @@ using ACCEPTOR = ACE_Strategy_Acceptor<Request_Handler, ACE_SOCK_Acceptor>;
 // Accepting end point.  This is actually "localhost:10010", but some
 // platform couldn't resolve the name so we use the IP address
 // directly here.
-static const ACE_TCHAR *rendezvous = ACE_TEXT ("127.0.0.1:10010");
+static ACE_TCHAR const *rendezvous = ACE_TEXT ("127.0.0.1:10010");
 
 // Total number of server threads.
 static size_t svr_thrno = ACE_MAX_THREADS;
@@ -289,7 +289,7 @@ static ACE_THR_FUNC_RETURN
 worker (void *)
 {
   ACE_OS::sleep (3);
-  const ACE_TCHAR *msg = ACE_TEXT ("Message from Connection worker");
+  ACE_TCHAR const *msg = ACE_TEXT ("Message from Connection worker");
   ACE_TCHAR buf [BUFSIZ];
   buf[0] = static_cast<ACE_TCHAR> ((ACE_OS::strlen (msg) + 1));
   ACE_OS::strcpy (&buf[1], msg);
@@ -317,7 +317,7 @@ worker (void *)
                   ACE_TEXT ("(%t) Error while connecting: %m\n")));
     }
 
-  const ACE_TCHAR *sbuf = ACE_TEXT ("\011shutdown");
+  ACE_TCHAR const *sbuf = ACE_TEXT ("\011shutdown");
 
   ACE_DEBUG ((LM_DEBUG,
               "shutdown stream handle = %H\n",
