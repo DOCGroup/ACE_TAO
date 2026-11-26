@@ -6,5 +6,8 @@ unsigned short Handle_R_Dgram::DEFAULT_PORT = ACE_DEFAULT_SERVER_PORT;
 #include "Handle_R_Dgram.inl"
 #endif /* __ACE_INLINE__ */
 
-Handle_R_Dgram remote_dgram;
+extern "C"
+{
+  ACE_Svc_Export Handle_R_Dgram remote_dgram;
+}
 ACE_Service_Object_Type rd (&remote_dgram, ACE_TEXT ("Remote_Dgram"));
