@@ -78,14 +78,14 @@ TAO_UIOP_Connector::close ()
 }
 
 TAO_Profile *
-TAO_UIOP_Connector::corbaloc_scan (const char *str, size_t &len)
+TAO_UIOP_Connector::corbaloc_scan (char const *str, size_t &len)
 {
   if (this->check_prefix (str) != 0)
   {
     return nullptr;
   }
 
-  const char *separator = std::strchr (str,'|');
+  char const *separator = std::strchr (str,'|');
   if (separator == nullptr)
     {
       if (TAO_debug_level)
@@ -345,7 +345,7 @@ TAO_UIOP_Connector::make_profile ()
 }
 
 int
-TAO_UIOP_Connector::check_prefix (const char *endpoint)
+TAO_UIOP_Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
@@ -353,7 +353,7 @@ TAO_UIOP_Connector::check_prefix (const char *endpoint)
     return -1;  // Failure
   }
 
-  static const char *protocol[] = { "uiop", "uioploc" };
+  static char const *protocol[] = { "uiop", "uioploc" };
 
   size_t const slot = std::strchr (endpoint, ':') - endpoint;
 

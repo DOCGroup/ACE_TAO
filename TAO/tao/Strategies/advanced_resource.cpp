@@ -689,8 +689,8 @@ TAO_Advanced_Resource_Factory::create_lf_strategy ()
 }
 
 void
-TAO_Advanced_Resource_Factory::report_option_value_error (const ACE_TCHAR *option_name,
-                                                          const ACE_TCHAR *option_value)
+TAO_Advanced_Resource_Factory::report_option_value_error (ACE_TCHAR const *option_name,
+                                                          ACE_TCHAR const *option_value)
 {
   TAOLIB_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("Advanced_Resource_Factory - unknown argument")
@@ -700,7 +700,7 @@ TAO_Advanced_Resource_Factory::report_option_value_error (const ACE_TCHAR *optio
 }
 
 void
-TAO_Advanced_Resource_Factory::report_unsupported_error (const ACE_TCHAR *option_name)
+TAO_Advanced_Resource_Factory::report_unsupported_error (ACE_TCHAR const *option_name)
 {
   TAOLIB_DEBUG ((LM_DEBUG,
                  ACE_TEXT ("Advanced_Resource_Factory - <%s>")

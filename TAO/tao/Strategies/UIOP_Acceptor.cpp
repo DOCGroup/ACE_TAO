@@ -206,8 +206,8 @@ TAO_UIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          ACE_Reactor *reactor,
                          int major,
                          int minor,
-                         const char *address,
-                         const char *options)
+                         char const *address,
+                         char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -238,7 +238,7 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  ACE_Reactor *reactor,
                                  int major,
                                  int minor,
-                                 const char *options)
+                                 char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -266,7 +266,7 @@ TAO_UIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_UIOP_Acceptor::open_i (const char *rendezvous,
+TAO_UIOP_Acceptor::open_i (char const *rendezvous,
                            ACE_Reactor *reactor)
 {
   TAO_UIOP_CREATION_STRATEGY *creation_strategy {};
@@ -335,7 +335,7 @@ TAO_UIOP_Acceptor::open_i (const char *rendezvous,
 
 void
 TAO_UIOP_Acceptor::rendezvous_point (ACE_UNIX_Addr &addr,
-                                     const char *rendezvous)
+                                     char const *rendezvous)
 {
   // To guarantee portability, local IPC rendezvous points (including
   // the path and filename) should not be longer than 99 characters
@@ -435,7 +435,7 @@ TAO_UIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 }
 
 int
-TAO_UIOP_Acceptor::parse_options (const char *str)
+TAO_UIOP_Acceptor::parse_options (char const *str)
 {
   if (str == nullptr)
     {

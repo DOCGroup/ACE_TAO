@@ -98,10 +98,10 @@ protected:
   /// Obtain the reactor implementation
   ACE_Reactor_Impl *allocate_reactor_impl () const override;
 
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 
-  void report_unsupported_error (const ACE_TCHAR* option_name);
+  void report_unsupported_error (ACE_TCHAR const *option_name);
 
   /// List of loaded protocol factories.
   TAO_ProtocolFactorySet protocol_factories_;

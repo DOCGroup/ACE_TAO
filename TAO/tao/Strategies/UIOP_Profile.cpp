@@ -37,7 +37,7 @@ TAO_UIOP_Profile::TAO_UIOP_Profile (const ACE_UNIX_Addr &addr,
 {
 }
 
-TAO_UIOP_Profile::TAO_UIOP_Profile (const char *,
+TAO_UIOP_Profile::TAO_UIOP_Profile (char const *,
                                     const TAO::ObjectKey &object_key,
                                     const ACE_UNIX_Addr &addr,
                                     const TAO_GIOP_Message_Version &version,
@@ -87,7 +87,7 @@ TAO_UIOP_Profile::endpoint_count () const
 }
 
 void
-TAO_UIOP_Profile::parse_string_i (const char *string)
+TAO_UIOP_Profile::parse_string_i (char const *string)
 {
   if (!string || !*string)
     {
@@ -270,7 +270,7 @@ TAO_UIOP_Profile::to_string () const
   return buf;
 }
 
-const char *
+char const *
 TAO_UIOP_Profile::prefix ()
 {
   return ::prefix_;
@@ -388,7 +388,7 @@ TAO_UIOP_Profile::decode_endpoints ()
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast <const char*>(buf),
+      TAO_InputCDR in_cdr (reinterpret_cast <char const *>(buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.
