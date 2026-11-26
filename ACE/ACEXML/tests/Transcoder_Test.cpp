@@ -109,6 +109,30 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       return 1;
     }
 
+  std::array<std::array<unsigned char, 4>, 5> const malformed {{
+    {{0xc0, 0x80, 0, 0}},
+    {{0xe0, 0x80, 0x80, 0}},
+    {{0xed, 0xa0, 0x80, 0}},
+    {{0xf4, 0x90, 0x80, 0x80}},
+    {{0xe2, 0x28, 0xa1, 0}}
+  }};
+  for (std::array<unsigned char, 4> const &bytes : malformed)
+    {
+      ACEXML_UCS4 result = 0x1234;
+      if (ACEXML_Transcoder::utf82ucs4 (
+            reinterpret_cast<ACEXML_UTF8 const *> (bytes.data ()),
+            bytes.size (), result) != ACEXML_Transcoder::ACEXML_NON_UNICODE ||
+          result != 0x1234)
+        {
+          return 1;
+        }
+    }
+  if (ACEXML_Transcoder::utf82ucs4 (face.data (), 3, invalid_scalar) !=
+      ACEXML_Transcoder::ACEXML_END_OF_SOURCE)
+    {
+      return 1;
+    }
+
   ACE_DEBUG ((LM_DEBUG, "Restored UTF16 string:\n"));
   dump_utf16 (after.data (), x);
   ACE_DEBUG ((LM_DEBUG, "\n\n"));

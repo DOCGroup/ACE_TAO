@@ -173,91 +173,65 @@ ACEXML_Transcoder::utf82ucs4 (ACEXML_UTF8 const *the_src,
       return ACEXML_INVALID_ARGS;
     }
 
-  unsigned char const *src = reinterpret_cast<unsigned char const *> (the_src);
-
-  size_t forward = 1;
-
-  if (forward > len)
+  if (len == 0)
     {
       return ACEXML_END_OF_SOURCE;
     }
 
-  if (static_cast<unsigned char> (*src) < 0x80)
+  unsigned char const *src = reinterpret_cast<unsigned char const *> (the_src);
+  size_t count {};
+  ACEXML_UCS4 value {};
+  ACEXML_UCS4 minimum {};
+
+  if (src[0] < 0x80)
     {
-      dst = *src;
+      count = 1;
+      value = src[0];
     }
-  else if ((*src & 0xE0) == 0xC0)
+  else if ((src[0] & 0xe0) == 0xc0)
     {
-      dst = (*(src++) & 0x1f) * 0x40;
-      if (++forward > len)
-      {
-        return ACEXML_END_OF_SOURCE;
-      }
-      if ((*src & 0xC0) != 0x80)
-      {
-        return ACEXML_NON_UNICODE;     // Error transcoding unicode scalar
-      }
-      dst += *src & 0x3f;
+      count = 2;
+      value = src[0] & 0x1f;
+      minimum = 0x80;
     }
-  else if ((*src & 0xF0) == 0xE0)
+  else if ((src[0] & 0xf0) == 0xe0)
     {
-      dst = (*src++ & 0x0f) * 0x40;
-      if (++forward > len)
-      {
-        return ACEXML_END_OF_SOURCE;
-      }
-      if ((*src & 0xC0) != 0x80)
-      {
-        return ACEXML_NON_UNICODE;
-      }
-      dst = (dst + (*src++ & 0x3f)) * 0x40;
-      if (++forward > len)
-      {
-        return ACEXML_END_OF_SOURCE;
-      }
-      if ((*src & 0xC0) != 0x80)
-      {
-        return ACEXML_NON_UNICODE;
-      }
-      dst += *src & 0x3f;
+      count = 3;
+      value = src[0] & 0x0f;
+      minimum = 0x800;
     }
-  else if ((*src & 0xF8) == 0xF0)
+  else if ((src[0] & 0xf8) == 0xf0)
     {
-      dst = (*src++ & 0x0f) * 0x40;
-      if (++forward > len)
-      {
-        return ACEXML_END_OF_SOURCE;
-      }
-      if ((*src & 0xC0) != 0x80)
-      {
-        return ACEXML_NON_UNICODE;
-      }
-      dst = (dst + (*src++ & 0x3f)) * 0x40;
-      if (++forward > len)
-      {
-        return ACEXML_END_OF_SOURCE;
-      }
-      if ((*src & 0xC0) != 0x80)
-      {
-        return ACEXML_NON_UNICODE;
-      }
-      dst = (dst + (*src++ & 0x3f)) * 0x40;
-      if (++forward > len)
-      {
-        return ACEXML_END_OF_SOURCE;
-      }
-      if ((*src & 0xC0) != 0x80)
-      {
-        return ACEXML_NON_UNICODE;
-      }
-      dst += *src & 0x3f;
+      count = 4;
+      value = src[0] & 0x07;
+      minimum = 0x10000;
     }
   else
     {
       return ACEXML_NON_UNICODE;
     }
 
-  return ACE_Utils::truncate_cast<int> (forward);
+  for (size_t i = 1; i < count; ++i)
+    {
+      if (i >= len)
+        {
+          return ACEXML_END_OF_SOURCE;
+        }
+      if ((src[i] & 0xc0) != 0x80)
+        {
+          return ACEXML_NON_UNICODE;
+        }
+      value = (value << 6) | (src[i] & 0x3f);
+    }
+
+  if (value < minimum || value >= 0x110000 ||
+      (value >= 0xd800 && value < 0xe000))
+    {
+      return ACEXML_NON_UNICODE;
+    }
+
+  dst = value;
+  return ACE_Utils::truncate_cast<int> (count);
 }
 
 int
