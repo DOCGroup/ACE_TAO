@@ -28,7 +28,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
-  (ACE_Service_Repository &r, const ACE_TCHAR *name)
+  (ACE_Service_Repository &r, ACE_TCHAR const *name)
     : repo_ (r)
     // Relocation starts where the next service will be inserted (if any)
     , repo_begin_ (r.current_size ())
@@ -301,7 +301,7 @@ ACE_Service_Gestalt::load_static_svcs ()
 
 /// Find a static service descriptor by name
 int
-ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
+ACE_Service_Gestalt::find_static_svc_descriptor (ACE_TCHAR const * name,
                                                  ACE_Static_Svc_Descriptor **ssd) const
 {
   ACE_TRACE ("ACE_Service_Gestalt::find_static_svc_descriptor");
@@ -332,7 +332,7 @@ ACE_Service_Gestalt::find_static_svc_descriptor (const ACE_TCHAR* name,
 
 /// @brief
 const ACE_Static_Svc_Descriptor*
-ACE_Service_Gestalt::find_processed_static_svc (const ACE_TCHAR* name)
+ACE_Service_Gestalt::find_processed_static_svc (ACE_TCHAR const * name)
 {
   if (this->processed_static_svcs_ == nullptr || name == nullptr)
     {
@@ -437,8 +437,8 @@ ACE_Service_Gestalt::dump () const
 }
 
 int
-ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
-                                 const ACE_TCHAR *parameters)
+ACE_Service_Gestalt::initialize (ACE_TCHAR const *svc_name,
+                                 ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Gestalt_Base::initialize (repo)");
   ACE_ARGV args (parameters);
@@ -504,7 +504,7 @@ ACE_Service_Gestalt::initialize (const ACE_TCHAR *svc_name,
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 int
 ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
-                                 const ACE_TCHAR *parameters)
+                                 ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Gestalt::initialize");
 
@@ -603,7 +603,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 /// is the same as the dynamic service being loaded. You should be so lucky! ..
 int
 ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
-                                 const ACE_TCHAR *parameters)
+                                 ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Gestalt::initialize");
 
@@ -637,7 +637,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
 /// the designated shared object in this file.
 int
 ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
-                                   const ACE_TCHAR *parameters)
+                                   ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Gestalt::initialize_i");
   ACE_ARGV args (parameters);
@@ -1034,7 +1034,7 @@ ACE_Service_Gestalt::init_svc_conf_file_queue ()
 
 int
 ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
-                             const ACE_TCHAR* logger_key,
+                             ACE_TCHAR const * logger_key,
                              bool ignore_static_svcs,
                              bool ignore_default_svc_conf_file,
                              bool ignore_debug_flag)
@@ -1083,7 +1083,7 @@ ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
       flags = (u_long) ACE_Log_Msg::STDERR;
     }
 
-  const ACE_TCHAR *key = logger_key;
+  ACE_TCHAR const *key = logger_key;
 
   if (key == nullptr || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
     {

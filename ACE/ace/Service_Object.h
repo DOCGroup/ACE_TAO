@@ -92,11 +92,11 @@ public:
       INVALID_TYPE = -1
     };
 
-  ACE_Service_Type (const ACE_TCHAR *n,
+  ACE_Service_Type (ACE_TCHAR const *n,
                     ACE_Service_Type_Impl *o,
                     const ACE_DLL &dll,
                     bool active);
-  ACE_Service_Type (const ACE_TCHAR *n,
+  ACE_Service_Type (ACE_TCHAR const *n,
                     ACE_Service_Type_Impl *o,
                     ACE_SHLIB_HANDLE handle,
                     bool active);
@@ -107,8 +107,8 @@ public:
   ACE_Service_Type &operator= (ACE_Service_Type const &) = delete;
   ACE_Service_Type &operator= (ACE_Service_Type &&) = delete;
 
-  const ACE_TCHAR *name () const;
-  void name (const ACE_TCHAR *);
+  ACE_TCHAR const *name () const;
+  void name (ACE_TCHAR const *);
 
   const ACE_Service_Type_Impl *type () const;
   void type (const ACE_Service_Type_Impl *, bool active = true);

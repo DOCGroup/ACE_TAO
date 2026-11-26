@@ -100,7 +100,7 @@ public:
    * ACE_Log_Msg::priority_mask appropriately.
    */
   int open (const ACE_TCHAR program_name[],
-            const ACE_TCHAR *logger_key = nullptr,
+            ACE_TCHAR const *logger_key = nullptr,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
@@ -173,7 +173,7 @@ public:
    */
   int open (int argc,
             ACE_TCHAR *argv[],
-            const ACE_TCHAR *logger_key = nullptr,
+            ACE_TCHAR const *logger_key = nullptr,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
             bool ignore_debug_flag = false);
@@ -264,7 +264,7 @@ public:
   /// subordinate static services. Thus avoiding any finalization order
   /// problems.
   int initialize (const ACE_Service_Type_Factory *,
-                  const ACE_TCHAR *parameters);
+                  ACE_TCHAR const *parameters);
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
 
   /// Dynamically link the shared object file and retrieve a pointer to
@@ -280,11 +280,11 @@ public:
   /// instance, when the first static service to register is the same
   /// as the dynamic service being loaded. You should be so lucky!
   int initialize (const ACE_Service_Type *,
-                  const ACE_TCHAR *parameters);
+                  ACE_TCHAR const *parameters);
 
   /// Initialize and activate a statically @a svc_name service.
-  int initialize (const ACE_TCHAR *svc_name,
-                  const ACE_TCHAR *parameters);
+  int initialize (ACE_TCHAR const *svc_name,
+                  ACE_TCHAR const *parameters);
 
   /// Resume a @a svc_name that was previously suspended or has not yet
   /// been resumed (e.g., a static service).
@@ -308,7 +308,7 @@ public:
    * Using the supplied name, finds and (if needed) returns a pointer to a
    * static service descriptor. Returns 0 for success and -1 for failure
    */
-  int find_static_svc_descriptor (const ACE_TCHAR* name,
+  int find_static_svc_descriptor (ACE_TCHAR const * name,
                                   ACE_Static_Svc_Descriptor **ssd = nullptr) const;
 
   struct Processed_Static_Svc
@@ -339,7 +339,7 @@ protected:
    * errors that occurred on failure and 0 otherwise.
    */
   int open_i (const ACE_TCHAR program_name[],
-              const ACE_TCHAR *logger_key = nullptr,
+              ACE_TCHAR const *logger_key = nullptr,
               bool ignore_static_svcs = true,
               bool ignore_default_svc_conf_file = false,
               bool ignore_debug_flag = false);
@@ -374,9 +374,9 @@ protected:
 
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file.
-  int initialize_i (const ACE_Service_Type *sr, const ACE_TCHAR *parameters);
+  int initialize_i (const ACE_Service_Type *sr, ACE_TCHAR const *parameters);
 
-  const ACE_Static_Svc_Descriptor* find_processed_static_svc (const ACE_TCHAR*);
+  const ACE_Static_Svc_Descriptor* find_processed_static_svc (ACE_TCHAR const *);
   void add_processed_static_svc (const ACE_Static_Svc_Descriptor *);
 
   /// Performs the common initialization tasks for a new or previously
@@ -422,7 +422,7 @@ protected:
 
   /// Indicates where to write the logging output.  This is typically
   /// either a STREAM pipe or a socket
-  const ACE_TCHAR *logger_key_;
+  ACE_TCHAR const *logger_key_;
 
   /// Should we avoid loading the static services?
   bool no_static_svcs_;

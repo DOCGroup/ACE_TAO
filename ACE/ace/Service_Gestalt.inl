@@ -5,7 +5,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
 ACE_Service_Gestalt::open (const ACE_TCHAR program_name[],
-                           const ACE_TCHAR *logger_key,
+                           ACE_TCHAR const *logger_key,
                            bool ignore_static_svcs,
                            bool ignore_default_svc_conf,
                            bool ignore_debug_flag)
@@ -23,7 +23,7 @@ ACE_Service_Gestalt::open (const ACE_TCHAR program_name[],
 ACE_INLINE int
 ACE_Service_Gestalt::open (int argc,
                           ACE_TCHAR *argv[],
-                          const ACE_TCHAR *logger_key,
+                          ACE_TCHAR const *logger_key,
                           bool ignore_static_svcs,
                           bool ignore_default_svc_conf,
                           bool ignore_debug_flag)

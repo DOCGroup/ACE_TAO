@@ -55,7 +55,7 @@ ACE_Service_Type::dump () const
 #endif
 }
 
-ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
+ACE_Service_Type::ACE_Service_Type (ACE_TCHAR const *n,
                                     ACE_Service_Type_Impl *t,
                                     const ACE_DLL &dll,
                                     bool active)
@@ -67,7 +67,7 @@ ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
   this->name (n);
 }
 
-ACE_Service_Type::ACE_Service_Type (const ACE_TCHAR *n,
+ACE_Service_Type::ACE_Service_Type (ACE_TCHAR const *n,
                                     ACE_Service_Type_Impl *t,
                                     ACE_SHLIB_HANDLE handle,
                                     bool active)
@@ -166,7 +166,7 @@ ACE_Service_Object::resume ()
 }
 
 void
-ACE_Service_Type::name (const ACE_TCHAR *n)
+ACE_Service_Type::name (ACE_TCHAR const *n)
 {
   ACE_TRACE ("ACE_Service_Type::name");
 

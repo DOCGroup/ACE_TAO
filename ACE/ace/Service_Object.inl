@@ -11,7 +11,7 @@ ACE_Service_Object_Ptr::operator-> () const
   return this->service_object_.get ();
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Service_Type::name () const
 {
   ACE_TRACE ("ACE_Service_Type::name");
