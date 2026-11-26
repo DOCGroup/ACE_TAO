@@ -24,6 +24,10 @@ public:
   }
   int write_to_stream (void const *buffer, size_t length, size_t)
   {
+    if (fail_write_)
+      {
+        return -1;
+      }
     if (length > 0)
       {
         written_ = *static_cast<char const *> (buffer);
@@ -32,6 +36,7 @@ public:
   }
   int references_ {};
   char written_ {};
+  bool fail_write_ {};
 };
 
 int
@@ -73,17 +78,26 @@ ACE_TMAIN (int, ACE_TCHAR *[])
 
   {
     ACE::IOS::BufferedStreamBuffer input (5, std::ios::in);
+    ACE::IOS::BufferedStreamBuffer output (5, std::ios::out);
     ACE::IOS::BasicBidirStreamBuffer<char, Test_Handler> bidirectional (
       std::addressof (handler), 5, std::ios::in | std::ios::out);
     if (handler.references_ != 1)
       {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Stream handler was not retained\n")), 1);
       }
-    if (bidirectional.sputc ('w') == std::char_traits<char>::eof ()
-        || bidirectional.pubsync () != 0 || handler.written_ != 'w'
+    if (output.overflow (std::char_traits<char>::eof ()) == std::char_traits<char>::eof ()
+        || bidirectional.sputc ('w') == std::char_traits<char>::eof ()
+        || bidirectional.overflow (std::char_traits<char>::eof ()) == std::char_traits<char>::eof ()
+        || handler.written_ != 'w'
         || bidirectional.sgetc () != 'r')
       {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Minimum-size stream buffer failed\n")), 1);
+      }
+    handler.fail_write_ = true;
+    if (bidirectional.sputc ('x') == std::char_traits<char>::eof ()
+        || bidirectional.overflow (std::char_traits<char>::eof ()) != std::char_traits<char>::eof ())
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Stream buffer failed to report a write error\n")), 1);
       }
   }
   if (handler.references_ != 0)

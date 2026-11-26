@@ -54,7 +54,7 @@ namespace ACE
             return char_traits::eof ();
           }
 
-        return c;
+        return char_traits::not_eof (c);
       }
 
     template <class ACE_CHAR_T, class TR>
