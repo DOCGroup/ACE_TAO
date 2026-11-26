@@ -74,12 +74,12 @@ namespace ACE
         {
           // Retrieve the pointer to the SSL of the connection currently treated
           void* ex_data = ::X509_STORE_CTX_get_ex_data (cert_ctx, ::SSL_get_ex_data_X509_STORE_CTX_idx());
-          ::SSL* ssl = reinterpret_cast<::SSL*> (ex_data);
+          ::SSL* ssl = static_cast<::SSL*> (ex_data);
           // Retrieve SSL_CTX pointer of the connection currently treated
           ::SSL_CTX* ssl_ctx = ::SSL_get_SSL_CTX (ssl);
           // Retrieve our SSL_CallbackManager
           ex_data = ::SSL_CTX_get_ex_data (ssl_ctx, SSL_CallbackManager::ssl_ctx_mngr_index_);
-          SSL_CallbackManager* cbmngr = reinterpret_cast<SSL_CallbackManager*> (ex_data);
+          SSL_CallbackManager* cbmngr = static_cast<SSL_CallbackManager*> (ex_data);
 
           SSL_CertificateCallbackArg arg (cbmngr->context(), cert_ctx);
           ok = cbmngr->verify_certificate_callback (arg);
@@ -95,7 +95,7 @@ namespace ACE
           return 0;
         }
 
-        SSL_CallbackManager* cbmngr = reinterpret_cast<SSL_CallbackManager*> (user_data);
+        SSL_CallbackManager* cbmngr = static_cast<SSL_CallbackManager*> (user_data);
 
         ACE_CString pwd;
         cbmngr->passwd_callback (pwd);
