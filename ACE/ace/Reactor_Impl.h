@@ -162,8 +162,9 @@ public:
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
-   * returning.  It will return earlier if events occur.  Note that
-   * @a max_wait_time can be 0, in which case this method blocks
+   * returning.  It will return earlier if events occur.
+   *
+   * @note @a max_wait_time can be 0, in which case this method blocks
    * indefinitely until events occur.
    *
    * @a max_wait_time is decremented to reflect how much time this call

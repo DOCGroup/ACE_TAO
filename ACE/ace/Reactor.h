@@ -117,8 +117,10 @@ public:
    * Run the event loop until the ACE_Reactor::handle_events() or
    * @c ACE_Reactor::alertable_handle_events methods returns -1, the
    * end_event_loop() method is invoked, or the ACE_Time_Value
-   * expires.  Note that this method can only be used by the singleton
-   * ACE_Reactor::instance().  Thus, to run another reactor use
+   * expires.
+   *
+   * @note This method can only be used by the singleton
+   * ACE_Reactor::instance().  To run another reactor use
    * @c ACE_Reactor::run_reactor_event_loop.
    *
    * @deprecated Use ACE_Reactor::instance()->run_reactor_event_loop() instead
@@ -129,8 +131,10 @@ public:
   /**
    * Instruct the ACE_Reactor::instance() to terminate its event loop
    * and notifies the ACE_Reactor::instance() so that it can wake up
-   * and close down gracefully.  Note that this method can only be
-   * used by the singleton ACE_Reactor::instance().  Thus, to
+   * and close down gracefully.
+   *
+   * @note This method can only be used by the singleton
+   * ACE_Reactor::instance().  To
    * terminate another reactor, use
    * @c ACE_Reactor::end_reactor_event_loop.
    *
@@ -140,7 +144,7 @@ public:
 
   /**
    * Report if the ACE_Reactor::instance()'s event loop is finished.
-   * @note this method can only be used by the singleton
+   * @note This method can only be used by the singleton
    * ACE_Reactor::instance().  Thus, to check another reactor use
    * @c ACE_Reactor::reactor_event_loop_done.
    *
@@ -150,9 +154,11 @@ public:
 
   /**
    * Resets the ACE_Reactor::end_event_loop_  static so that the
-   * run_event_loop() method can be restarted.  Note that this method
-   * can only be used by the singleton ACE_Reactor::instance().  Thus,
-   * to reset another reactor use ACE_Reactor::reset_reactor_event_loop().
+   * run_event_loop() method can be restarted.
+   *
+   * @note This method can only be used by the singleton
+   * ACE_Reactor::instance(). To reset another reactor use
+   * ACE_Reactor::reset_reactor_event_loop().
    *
    * @deprecated Use ACE_Reactor::instance()->reset_reactor_event_loop()
    * instead
@@ -267,8 +273,9 @@ public:
 
   /**
    * This event loop driver blocks for up to @a max_wait_time before
-   * returning.  It will return earlier if events occur.  Note that
-   * @a max_wait_time can be 0, in which case this method blocks
+   * returning.  It will return earlier if events occur.
+   *
+   * @note @a max_wait_time can be 0, in which case this method blocks
    * indefinitely until events occur.
    *
    * @a max_wait_time is decremented to reflect how much time this call
