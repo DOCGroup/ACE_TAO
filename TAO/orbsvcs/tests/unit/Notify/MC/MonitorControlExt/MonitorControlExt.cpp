@@ -55,7 +55,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       notify_service->init_service (orb.in ());
       ACE_OS::sleep (1);
 
-      const ACE_CString ecf_name ("MonitoringEventChannelFactory");
+      ACE_CString const ecf_name ("MonitoringEventChannelFactory");
       CosNotifyChannelAdmin::EventChannelFactory_var ecf =
          notify_service->create (poa.in (), ecf_name.c_str ());
       NotifyMonitoringExt::EventChannelFactory_var monitor_ec_factory =
@@ -69,7 +69,7 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
       CosNotification::QoSProperties qos_prop;
       CosNotification::AdminProperties admin_prop;
       CosNotifyChannelAdmin::ChannelID id;
-      const ACE_CString ec_name ("test1");
+      ACE_CString const ec_name ("test1");
 
       CosNotifyChannelAdmin::EventChannel_var ec =
         monitor_ec_factory->create_named_channel (qos_prop,

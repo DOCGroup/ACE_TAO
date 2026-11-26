@@ -19,7 +19,7 @@ Test_i::~Test_i ()
 }
 
 CORBA::Short
-Test_i::get_server_num (const CORBA::Short delay_secs)
+Test_i::get_server_num (CORBA::Short const delay_secs)
 {
   ACE_OS::sleep (delay_secs);
   return this->server_num_;

@@ -135,7 +135,7 @@ EC_Consumer::push (RtecEventComm::EventSet const & events)
       ORBSVCS_Time::TimeT_to_hrtime (creation,
                                      e.header.creation_time);
 
-      const ACE_hrtime_t now = ACE_OS::gethrtime ();
+      ACE_hrtime_t const now = ACE_OS::gethrtime ();
       this->throughput_.sample (now - this->throughput_start_,
                                 now - creation);
 
