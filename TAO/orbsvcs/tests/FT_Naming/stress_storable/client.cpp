@@ -8,7 +8,7 @@
 
 #include <memory>
 
-const ACE_TCHAR *group_names[] =
+ACE_TCHAR const *group_names[] =
   {ACE_TEXT("C++ Group"), ACE_TEXT("FORTRAN Group"), ACE_TEXT("Groovy Group"), ACE_TEXT("Basic Group"),
    ACE_TEXT("Java Group"), ACE_TEXT("Forth Group"), ACE_TEXT("COBOL Group"), ACE_TEXT("Ruby Group"),
    ACE_TEXT("wrong answer dude"), ACE_TEXT("Scala Group"), ACE_TEXT("R Group"), 0};
@@ -56,7 +56,7 @@ public:
   }
 };
 
-const ACE_TCHAR *ior = ACE_TEXT("file://obj.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://obj.ior");
 int hammers = 10;
 
 int

@@ -52,8 +52,8 @@ LB_server::naming_manager ()
 }
 
 int
-LB_server::write_ior_to_file (const ACE_TCHAR *file_name,
-                              const char *ior)
+LB_server::write_ior_to_file (ACE_TCHAR const *file_name,
+                              char const *ior)
 {
   FILE *output_file =
     ACE_OS::fopen (file_name, "w");
@@ -157,7 +157,7 @@ LB_server::start_orb_and_poa ()
 }
 
 int
-LB_server::create_object_group (const char *group_name)
+LB_server::create_object_group (char const *group_name)
 {
   try
     {
@@ -212,7 +212,7 @@ LB_server::create_object_group (const char *group_name)
 }
 
 int
-LB_server::register_servant (Basic *servant, const char *loc)
+LB_server::register_servant (Basic *servant, char const *loc)
 {
   try
     {
@@ -253,7 +253,7 @@ LB_server::register_servant (Basic *servant, const char *loc)
 }
 
 int
-LB_server::remove_servant (const char *loc)
+LB_server::remove_servant (char const *loc)
 {
   PortableGroup::Location location (1);
   location.length (1);

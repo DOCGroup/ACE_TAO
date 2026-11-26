@@ -6,12 +6,12 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      const char *location1 = "MyLocation 1";
-      const char *location2 = "MyLocation 2";
-      const char *location3 = "MyLocation 3";
-      const char *location4 = "MyLocation 4";
-      const char *location5 = "MyLocation 5";
-      const char *location6 = "MyLocation 6";
+      char const *location1 = "MyLocation 1";
+      char const *location2 = "MyLocation 2";
+      char const *location3 = "MyLocation 3";
+      char const *location4 = "MyLocation 4";
+      char const *location5 = "MyLocation 5";
+      char const *location6 = "MyLocation 6";
 
       LB_server lb_server (argc, argv);
 

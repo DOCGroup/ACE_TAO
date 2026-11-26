@@ -243,7 +243,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             break;
           case 0:   // A long option was found
             {
-              const ACE_TCHAR * long_option = get_opts.long_option ();
+              ACE_TCHAR const *long_option = get_opts.long_option ();
               if (ACE_OS::strcmp (long_option,
                                   ACE_TEXT ("failover")) == 0)
                 {
@@ -1053,8 +1053,8 @@ do_failover_objectgroup_test (
                           RC_ERROR);
     }
 
-    const ACE_TCHAR * test_group = ACE_TEXT ("test_group");
-    const ACE_TCHAR * policy     = ACE_TEXT ("round");
+    ACE_TCHAR const *test_group = ACE_TEXT ("test_group");
+    ACE_TCHAR const *policy     = ACE_TEXT ("round");
 
     if (RC_SUCCESS != svc.group_create (test_group, policy))
     {
@@ -1373,7 +1373,7 @@ do_persistence_objectgroup_test (
     }
 
     /// get BasicGroup member object and verify that it reports the same location
-    const ACE_TCHAR * basic_group_name = ACE_TEXT ("BasicGroup");
+    ACE_TCHAR const *basic_group_name = ACE_TEXT ("BasicGroup");
 
     if (false == group_svc.group_exist(basic_group_name))
     {
@@ -2344,9 +2344,9 @@ do_equivalence_objectgroup_test (
     }
 
     /// Now validate seamless operations between the two instances of NS_group
-    const ACE_TCHAR * policy       = ACE_TEXT ("round");
-    const ACE_TCHAR * test_group_1 = ACE_TEXT ("test_group_1");
-    const ACE_TCHAR * test_group_2 = ACE_TEXT ("test_group_2");
+    ACE_TCHAR const *policy       = ACE_TEXT ("round");
+    ACE_TCHAR const *test_group_1 = ACE_TEXT ("test_group_1");
+    ACE_TCHAR const *test_group_2 = ACE_TEXT ("test_group_2");
 
     if (RC_SUCCESS != svc1.group_create (test_group_1, policy))
     {

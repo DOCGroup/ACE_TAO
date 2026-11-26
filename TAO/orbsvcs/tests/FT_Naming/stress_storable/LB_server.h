@@ -45,7 +45,7 @@ public:
   int create_object_group ();
 
   /// register the servants with the object group.
-  int register_servant (Basic *servant, const char *loc);
+  int register_servant (Basic *servant, char const *loc);
 
   /// obtain the name service facade
   TAO_Naming_Client& name_svc ();
@@ -76,12 +76,12 @@ private:
   static int called_once_;
 
   /// write the IOR to a file so that it can be read later.
-  int write_ior_to_file (const char *);
+  int write_ior_to_file (char const *);
 
   CORBA::ORB_var orb_;
   int argc_;
   ACE_TCHAR **argv_;
   PortableServer::POA_var root_poa_;
-  const ACE_TCHAR *ior_output_file_;
+  ACE_TCHAR const *ior_output_file_;
   TAO_Naming_Client name_svc_;
 };

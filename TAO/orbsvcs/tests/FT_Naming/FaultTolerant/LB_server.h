@@ -45,13 +45,13 @@ public:
   /// Returns 0 on successful creation. Returns 1 if object
   /// group already exists. Returns -1 if object group cannot
   /// be created for some reason.
-  int create_object_group (const char *group_name);
+  int create_object_group (char const *group_name);
 
   /// register the servants with the object group.
-  int register_servant (Basic *servant, const char *loc);
+  int register_servant (Basic *servant, char const *loc);
 
   /// remove a servant from the object group.
-  int remove_servant (const char *loc);
+  int remove_servant (char const *loc);
 
   /// obtain the name service facade
   TAO_Naming_Client& name_svc ();
@@ -82,13 +82,13 @@ private:
   static int called_once_;
 
   /// write the IOR to a file so that it can be read later.
-  int write_ior_to_file (const ACE_TCHAR *filename,
-                         const char *ior);
+  int write_ior_to_file (ACE_TCHAR const *filename,
+                         char const *ior);
 
   CORBA::ORB_var orb_;
   int argc_;
   ACE_TCHAR **argv_;
   PortableServer::POA_var root_poa_;
-  const ACE_TCHAR *ior_output_file_;
+  ACE_TCHAR const *ior_output_file_;
   TAO_Naming_Client name_svc_;
 };

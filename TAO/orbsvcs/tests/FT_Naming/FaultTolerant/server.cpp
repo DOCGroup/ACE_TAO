@@ -8,13 +8,13 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 {
   try
     {
-      const char *group_name = "BasicGroup";
-      const char *location1 = "location1";
-      const char *location2 = "location2";
-      const char *location3 = "location3";
-      const char *location4 = "location4";
-      const char *location5 = "location5";
-      const char *location6 = "location6";
+      char const *group_name = "BasicGroup";
+      char const *location1 = "location1";
+      char const *location2 = "location2";
+      char const *location3 = "location3";
+      char const *location4 = "location4";
+      char const *location5 = "location5";
+      char const *location6 = "location6";
 
       LB_server lb_server (argc, argv);
 

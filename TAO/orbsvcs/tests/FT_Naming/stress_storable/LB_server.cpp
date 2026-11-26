@@ -50,7 +50,7 @@ LB_server::naming_manager ()
 }
 
 int
-LB_server::write_ior_to_file (const char *ior)
+LB_server::write_ior_to_file (char const *ior)
 {
   FILE *output_file =
     ACE_OS::fopen (this->ior_output_file_, ACE_TEXT ("w"));
@@ -175,7 +175,7 @@ LB_server::create_object_group ()
         PortableGroup::MEMB_APP_CTRL;
       mem_style.val <<= msv;
 
-      const char *group_names[] = {"C++ Group", "FORTRAN Group", "Groovy Group",
+      char const *group_names[] = {"C++ Group", "FORTRAN Group", "Groovy Group",
                                  "Basic Group", "Java Group", "Forth Group",
                                  "COBOL Group", "Ruby Group", "Scala Group",
                                  "R Group", 0};
@@ -229,7 +229,7 @@ LB_server::create_object_group ()
 }
 
 int
-LB_server::register_servant (Basic *servant, const char *loc)
+LB_server::register_servant (Basic *servant, char const *loc)
 {
   try
     {
