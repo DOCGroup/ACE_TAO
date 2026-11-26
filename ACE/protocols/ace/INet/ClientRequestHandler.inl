@@ -6,7 +6,7 @@ namespace ACE
   {
 
     ACE_INLINE
-    const ACE_CString& ClientINetRequestHandler::INetConnectionKey::host () const
+    ACE_CString const& ClientINetRequestHandler::INetConnectionKey::host () const
       {
         return this->host_;
       }

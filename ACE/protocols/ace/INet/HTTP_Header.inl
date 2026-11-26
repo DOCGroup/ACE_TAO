@@ -6,13 +6,13 @@ namespace ACE
   {
 
     ACE_INLINE
-    void Header::set_version(const ACE_CString& version)
+    void Header::set_version(ACE_CString const& version)
       {
         this->version_ = version;
       }
 
     ACE_INLINE
-    const ACE_CString& Header::get_version() const
+    ACE_CString const& Header::get_version() const
       {
         return this->version_;
       }

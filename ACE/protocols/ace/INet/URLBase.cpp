@@ -60,13 +60,13 @@ namespace ACE
       {
       }
 
-    const ACE_CString URL_Base::empty_;
+    ACE_CString const URL_Base::empty_;
 
     URL_Base::URL_Base () = default;
 
     URL_Base::~URL_Base () = default;
 
-    bool URL_Base::parse (const ACE_CString& url_string)
+    bool URL_Base::parse (ACE_CString const& url_string)
       {
         static int const eof =
           std::char_traits<ACE::IOS::CString_OStream::char_type>::eof ();
@@ -163,7 +163,7 @@ namespace ACE
         return URLStream (rh);
       }
 
-    URL_Base* URL_Base::create_from_string (const ACE_CString& url_string)
+    URL_Base* URL_Base::create_from_string (ACE_CString const& url_string)
       {
         ACE_CString::size_type const pos = url_string.find (':');
         if (pos >0 )
@@ -410,7 +410,7 @@ namespace ACE
         return ch;
       }
 
-    bool URL_INetAuthBase::add_authenticator (const ACE_CString& auth_id,
+    bool URL_INetAuthBase::add_authenticator (ACE_CString const& auth_id,
                                              AuthenticatorBase* authenticator)
       {
         if (URL_INetAuthBase::authenticators_.find (auth_id) == -1)
@@ -421,12 +421,12 @@ namespace ACE
         return false;
       }
 
-    bool URL_INetAuthBase::has_authenticator (const ACE_CString& auth_id)
+    bool URL_INetAuthBase::has_authenticator (ACE_CString const& auth_id)
       {
         return (URL_INetAuthBase::authenticators_.find (auth_id) == 0);
       }
 
-    AuthenticatorBase* URL_INetAuthBase::remove_authenticator (const ACE_CString& auth_id)
+    AuthenticatorBase* URL_INetAuthBase::remove_authenticator (ACE_CString const& auth_id)
       {
         authenticator_ptr auth;
         if (URL_INetAuthBase::authenticators_.unbind (auth_id, auth) == 0)

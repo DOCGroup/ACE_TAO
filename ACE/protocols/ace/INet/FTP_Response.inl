@@ -39,7 +39,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    Response& Response::operator <<(const ACE_CString& line)
+    Response& Response::operator <<(ACE_CString const& line)
       {
         ACE_Array<ACE_CString>::size_type n =
             this->response_.size ();

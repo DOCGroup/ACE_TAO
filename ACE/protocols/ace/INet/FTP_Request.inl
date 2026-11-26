@@ -13,7 +13,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    Request& Request::operator ()(const ACE_CString& cmd)
+    Request& Request::operator ()(ACE_CString const& cmd)
       {
         this->reset ();
         this->command (cmd);
@@ -21,19 +21,19 @@ namespace ACE
       }
 
     ACE_INLINE
-    void Request::command (const ACE_CString& cmd)
+    void Request::command (ACE_CString const& cmd)
       {
         this->command_ = cmd;
       }
 
     ACE_INLINE
-    const ACE_CString& Request::command () const
+    ACE_CString const& Request::command () const
       {
         return this->command_;
       }
 
     ACE_INLINE
-    Request& Request::operator <<(const ACE_CString& arg)
+    Request& Request::operator <<(ACE_CString const& arg)
       {
         if (!arg.empty ())
           {
@@ -47,7 +47,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_CString& Request::arguments () const
+    ACE_CString const& Request::arguments () const
       {
         return this->args_;
       }

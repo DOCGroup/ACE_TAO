@@ -51,7 +51,7 @@ namespace ACE
       }
 
     ClientRequestHandler::Authentication::Authentication (
-        const ACE_CString& realm,
+        ACE_CString const& realm,
         ACE_CString& user,
         ACE_CString& pw)
       : ACE::INet::AuthenticationBase (),
@@ -63,38 +63,38 @@ namespace ACE
 
     ClientRequestHandler::Authentication::~Authentication () = default;
 
-    const ACE_CString& ClientRequestHandler::Authentication::scheme () const
+    ACE_CString const& ClientRequestHandler::Authentication::scheme () const
       {
         return URL::protocol ();
       }
 
-    const ACE_CString& ClientRequestHandler::Authentication::realm () const
+    ACE_CString const& ClientRequestHandler::Authentication::realm () const
       {
         return this->realm_;
       }
 
-    const ACE_CString& ClientRequestHandler::Authentication::user () const
+    ACE_CString const& ClientRequestHandler::Authentication::user () const
       {
         return this->user_;
       }
 
-    void ClientRequestHandler::Authentication::user (const ACE_CString& usr)
+    void ClientRequestHandler::Authentication::user (ACE_CString const& usr)
       {
         this->user_ = usr;
       }
 
-    const ACE_CString& ClientRequestHandler::Authentication::password () const
+    ACE_CString const& ClientRequestHandler::Authentication::password () const
       {
         return this->password_;
       }
 
-    void ClientRequestHandler::Authentication::password (const ACE_CString& pw)
+    void ClientRequestHandler::Authentication::password (ACE_CString const& pw)
       {
         this->password_ = pw;
       }
 
-    const ACE_CString ClientRequestHandler::anonymous_user_ = "anonymous";
-    const ACE_CString ClientRequestHandler::empty_;
+    ACE_CString const ClientRequestHandler::anonymous_user_ = "anonymous";
+    ACE_CString const ClientRequestHandler::empty_;
 
     ClientRequestHandler::ClientRequestHandler (bool passive_mode)
       : session_ (nullptr),
@@ -198,7 +198,7 @@ namespace ACE
         this->finish_transfer ();
       }
 
-    bool ClientRequestHandler::initialize_connection (const ACE_CString& host,
+    bool ClientRequestHandler::initialize_connection (ACE_CString const& host,
                                                       u_short port)
       {
         static const SessionFactory session_factory;
@@ -285,8 +285,8 @@ namespace ACE
         return rc;
       }
 
-    bool ClientRequestHandler::login (const ACE_CString& user,
-                                      const ACE_CString& password)
+    bool ClientRequestHandler::login (ACE_CString const& user,
+                                      ACE_CString const& password)
       {
         // read startup message
         this->session ()->receive_response (this->response_);
@@ -302,18 +302,18 @@ namespace ACE
         return this->response_.is_completed_ok ();
       }
 
-    bool ClientRequestHandler::is_valid_path (const ACE_CString& path)
+    bool ClientRequestHandler::is_valid_path (ACE_CString const& path)
       {
         return this->process_command (Request::FTP_STAT, path) == Response::COMPLETED_OK;
       }
 
-    bool ClientRequestHandler::is_file (const ACE_CString& path)
+    bool ClientRequestHandler::is_file (ACE_CString const& path)
       {
         return (this->is_valid_path (path) &&
                     this->process_command (Request::FTP_CWD, path) != Response::COMPLETED_OK);
       }
 
-    bool ClientRequestHandler::is_dir (const ACE_CString& path)
+    bool ClientRequestHandler::is_dir (ACE_CString const& path)
       {
         return (this->is_valid_path (path) &&
                     this->process_command (Request::FTP_CWD, path) == Response::COMPLETED_OK);
@@ -325,7 +325,7 @@ namespace ACE
       }
 
     ClientRequestHandler::stream_type*
-    ClientRequestHandler::start_download (const ACE_CString& path, bool binary)
+    ClientRequestHandler::start_download (ACE_CString const& path, bool binary)
       {
         if (path.empty () || this->is_dir (path))
           {
@@ -345,7 +345,7 @@ namespace ACE
       }
 
     ClientRequestHandler::stream_type*
-    ClientRequestHandler::start_upload (const ACE_CString& path, bool binary)
+    ClientRequestHandler::start_upload (ACE_CString const& path, bool binary)
       {
         if (this->set_filetype (binary))
           {
@@ -421,8 +421,8 @@ namespace ACE
       }
 
     Response::StatusType
-    ClientRequestHandler::process_command (const ACE_CString& cmd,
-                                           const ACE_CString& arg)
+    ClientRequestHandler::process_command (ACE_CString const& cmd,
+                                           ACE_CString const& arg)
       {
         if (this->session ()->send_request (this->request_(cmd) << arg))
           {
@@ -436,8 +436,8 @@ namespace ACE
       }
 
     ClientRequestHandler::stream_type*
-    ClientRequestHandler::open_data_connection (const ACE_CString& cmd,
-                                                const ACE_CString& arg)
+    ClientRequestHandler::open_data_connection (ACE_CString const& cmd,
+                                                ACE_CString const& arg)
       {
         if (this->use_passive_mode_)
           {
@@ -601,7 +601,7 @@ namespace ACE
       }
 
     bool
-    ClientRequestHandler::parse_address (const ACE_CString& str, ACE_INET_Addr& addr)
+    ClientRequestHandler::parse_address (ACE_CString const& str, ACE_INET_Addr& addr)
       {
         static int const eof_ = std::char_traits<char>::eof ();
 
@@ -644,7 +644,7 @@ namespace ACE
       }
 
     bool
-    ClientRequestHandler::parse_ext_address (const ACE_CString& str, ACE_INET_Addr& addr)
+    ClientRequestHandler::parse_ext_address (ACE_CString const& str, ACE_INET_Addr& addr)
       {
         static int const eof_ = std::char_traits<char>::eof ();
 

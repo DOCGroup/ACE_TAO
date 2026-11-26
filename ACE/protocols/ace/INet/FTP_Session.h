@@ -58,13 +58,13 @@ namespace ACE
 
               bool is_new_connection () const;
 
-              void set_host (const ACE_CString& host, u_short port);
+              void set_host (ACE_CString const& host, u_short port);
 
-              void set_host (const ACE_CString& host);
+              void set_host (ACE_CString const& host);
 
               void set_port (u_short port);
 
-              const ACE_CString& get_host () const;
+              ACE_CString const& get_host () const;
 
               u_short get_port () const;
 

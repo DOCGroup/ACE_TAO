@@ -52,7 +52,7 @@ namespace ACE
               const ACE_Array<ACE_CString>& response () const;
 
               /// adds a response line
-              Response& operator <<(const ACE_CString& line);
+              Response& operator <<(ACE_CString const& line);
 
               /// Writes the FTP response to the given stream
               void write(std::ostream& str) const;

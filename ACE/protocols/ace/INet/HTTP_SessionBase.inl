@@ -17,7 +17,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void SessionBase::set_host (const ACE_CString& host, u_short port)
+    void SessionBase::set_host (ACE_CString const& host, u_short port)
       {
         if (!this->is_connected ())
           {
@@ -28,7 +28,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void SessionBase::set_host (const ACE_CString& host)
+    void SessionBase::set_host (ACE_CString const& host)
       {
         if (!this->is_connected ())
           {
@@ -47,7 +47,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void SessionBase::set_proxy_target (const ACE_CString& host, u_short port)
+    void SessionBase::set_proxy_target (ACE_CString const& host, u_short port)
       {
         if (!this->is_connected ())
           {
@@ -58,7 +58,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_CString& SessionBase::get_host () const
+    ACE_CString const& SessionBase::get_host () const
       {
         return this->host_;
       }
@@ -76,7 +76,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_CString& SessionBase::get_proxy_target_host () const
+    ACE_CString const& SessionBase::get_proxy_target_host () const
       {
         return this->proxy_target_host_;
       }

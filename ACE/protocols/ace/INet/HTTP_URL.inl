@@ -6,44 +6,44 @@ namespace ACE
   {
 
     ACE_INLINE
-    const ACE_CString& URL::get_scheme () const
+    ACE_CString const& URL::get_scheme () const
       {
         return protocol ();
       }
 
     ACE_INLINE
-    const ACE_CString& URL::get_query () const
+    ACE_CString const& URL::get_query () const
       {
         return this->query_;
       }
 
     ACE_INLINE
-    const ACE_CString& URL::get_fragment () const
+    ACE_CString const& URL::get_fragment () const
       {
         return this->fragment_;
       }
 
     ACE_INLINE
-    void URL::set_query (const ACE_CString& query)
+    void URL::set_query (ACE_CString const& query)
       {
         this->query_ = query;
       }
 
     ACE_INLINE
-    void URL::set_fragment (const ACE_CString& fragment)
+    void URL::set_fragment (ACE_CString const& fragment)
       {
         this->fragment_ = fragment;
       }
 
     ACE_INLINE
-    void URL::set_proxy (const ACE_CString& proxy_host, u_short proxy_port)
+    void URL::set_proxy (ACE_CString const& proxy_host, u_short proxy_port)
       {
         this->proxy_host_ = proxy_host;
         this->proxy_port_ = proxy_port;
       }
 
     ACE_INLINE
-    const ACE_CString& URL::get_proxy_host () const
+    ACE_CString const& URL::get_proxy_host () const
       {
         return this->proxy_host_;
       }

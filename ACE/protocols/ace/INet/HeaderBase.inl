@@ -17,7 +17,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void HeaderBase::set_content_type(const ACE_CString& mime_type)
+    void HeaderBase::set_content_type(ACE_CString const& mime_type)
       {
         if (mime_type == UNKNOWN_CONTENT_TYPE)
           {
@@ -44,19 +44,19 @@ namespace ACE
       }
 
     ACE_INLINE
-    void HeaderBase::add (const ACE_CString& name, const ACE_CString& value)
+    void HeaderBase::add (ACE_CString const& name, ACE_CString const& value)
       {
         this->header_values_.insert (NVPair (name, value));
       }
 
     ACE_INLINE
-    void HeaderBase::remove (const ACE_CString& name)
+    void HeaderBase::remove (ACE_CString const& name)
       {
         this->header_values_.remove (NVPair (name, EMPTY));
       }
 
     ACE_INLINE
-    bool HeaderBase::get (const ACE_CString& name, ACE_CString& value) const
+    bool HeaderBase::get (ACE_CString const& name, ACE_CString& value) const
       {
         TNVMap::ITERATOR it (const_cast<TNVMap&> (this->header_values_));
         if (this->header_values_.find (NVPair (name), it) == 0)
@@ -68,7 +68,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    bool HeaderBase::has (const ACE_CString& name) const
+    bool HeaderBase::has (ACE_CString const& name) const
       {
         TNVMap::ITERATOR it (const_cast<TNVMap&> (this->header_values_));
         if (this->header_values_.find (NVPair (name), it) == 0)
@@ -123,25 +123,25 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_CString& NVPair::first () const
+    ACE_CString const& NVPair::first () const
       {
         return this->first_;
       }
 
     ACE_INLINE
-    void NVPair::first (const ACE_CString& t1)
+    void NVPair::first (ACE_CString const& t1)
       {
         this->first_ = t1;
       }
 
     ACE_INLINE
-    const ACE_CString& NVPair::second () const
+    ACE_CString const& NVPair::second () const
       {
         return this->second_;
       }
 
     ACE_INLINE
-    void NVPair::second (const ACE_CString& t2)
+    void NVPair::second (ACE_CString const& t2)
       {
         this->second_ = t2;
       }

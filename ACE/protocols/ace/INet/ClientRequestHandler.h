@@ -75,7 +75,7 @@ namespace ACE
                 : public ConnectionKey
                 {
                   public:
-                    INetConnectionKey (const ACE_CString& host,
+                    INetConnectionKey (ACE_CString const& host,
                                        u_short port);
                     virtual ~INetConnectionKey ();
 
@@ -83,7 +83,7 @@ namespace ACE
 
                     ConnectionKey* duplicate () const override;
 
-                    const ACE_CString& host () const;
+                    ACE_CString const& host () const;
 
                     u_short port () const;
 

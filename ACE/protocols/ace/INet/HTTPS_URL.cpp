@@ -15,9 +15,9 @@ namespace ACE
   {
     char const * URL::PROTOCOL = "https";
 
-    const ACE_CString& URL::protocol ()
+    ACE_CString const& URL::protocol ()
       {
-        static const ACE_CString protocol_ (PROTOCOL);
+        static ACE_CString const protocol_ (PROTOCOL);
         return protocol_;
       }
 
@@ -26,7 +26,7 @@ namespace ACE
       {
       }
 
-    URL::URL (const ACE_CString& url_string)
+    URL::URL (ACE_CString const& url_string)
       : ACE::HTTP::URL (HTTPS_PORT)
       {
         this->parse (url_string);
@@ -91,12 +91,12 @@ namespace ACE
 
     URL::Factory::~Factory () = default;
 
-    const ACE_CString& URL::Factory::protocol ()
+    ACE_CString const& URL::Factory::protocol ()
       {
         return URL::protocol ();
       }
 
-    ACE::INet::URL_Base* URL::Factory::create_from_string (const ACE_CString& url_string)
+    ACE::INet::URL_Base* URL::Factory::create_from_string (ACE_CString const& url_string)
       {
         URL* purl {};
         ACE_NEW_NORETURN (purl, URL (url_string));

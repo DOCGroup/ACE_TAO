@@ -19,7 +19,7 @@ namespace ACE
     SessionFactoryRegistry::~SessionFactoryRegistry () = default;
 
     void SessionFactoryRegistry::register_session_factory (
-        const ACE_CString& scheme,
+        ACE_CString const& scheme,
         SessionFactory* factory)
       {
         if (factory == nullptr)
@@ -33,7 +33,7 @@ namespace ACE
       }
 
     SessionFactory*
-    SessionFactoryRegistry::find_session_factory (const ACE_CString& scheme)
+    SessionFactoryRegistry::find_session_factory (ACE_CString const& scheme)
       {
         SessionFactory* factory {};
         this->factory_map_.find (scheme, factory);
@@ -106,7 +106,7 @@ namespace ACE
       }
 
     ClientRequestHandler::HttpConnectionKey::HttpConnectionKey (
-        const ACE_CString& host,
+        ACE_CString const& host,
         u_short port)
       : INetConnectionKey (host, port),
         proxy_connection_ (false),
@@ -115,9 +115,9 @@ namespace ACE
       }
 
     ClientRequestHandler::HttpConnectionKey::HttpConnectionKey (
-        const ACE_CString& proxy_host,
+        ACE_CString const& proxy_host,
         u_short proxy_port,
-        const ACE_CString& host,
+        ACE_CString const& host,
         u_short port)
       : INetConnectionKey (proxy_host, proxy_port),
         proxy_connection_ (true),
@@ -253,11 +253,11 @@ namespace ACE
         this->release_connection ();
       }
 
-    bool ClientRequestHandler::initialize_connection (const ACE_CString& scheme,
-                                                      const ACE_CString& host,
+    bool ClientRequestHandler::initialize_connection (ACE_CString const& scheme,
+                                                      ACE_CString const& host,
                                                       u_short port,
                                                       bool proxy_conn,
-                                                      const ACE_CString& proxy_host,
+                                                      ACE_CString const& proxy_host,
                                                       u_short proxy_port)
       {
         SessionFactory* session_factory =

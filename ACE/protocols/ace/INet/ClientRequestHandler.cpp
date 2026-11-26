@@ -25,7 +25,7 @@ namespace ACE
     ClientINetRequestHandler::~ClientINetRequestHandler () = default;
 
     ClientINetRequestHandler::INetConnectionKey::INetConnectionKey (
-        const ACE_CString& host,
+        ACE_CString const& host,
         u_short port)
       : ConnectionKey (),
         host_ (host),

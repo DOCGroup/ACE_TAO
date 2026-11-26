@@ -39,20 +39,20 @@ namespace ACE
 
               /// resets the request object and sets
               /// new command
-              Request& operator ()(const ACE_CString& cmd);
+              Request& operator ()(ACE_CString const& cmd);
 
               /// sets the current command
-              void command (const ACE_CString& cmd);
+              void command (ACE_CString const& cmd);
 
               /// returns the current command
-              const ACE_CString& command () const;
+              ACE_CString const& command () const;
 
               /// adds a command argument
               /// separates multiple arguments with a space
-              Request& operator <<(const ACE_CString& arg);
+              Request& operator <<(ACE_CString const& arg);
 
               /// returns the arguments string
-              const ACE_CString& arguments () const;
+              ACE_CString const& arguments () const;
 
               /// retrieves the arguments
               void arguments (ACE_Array<ACE_CString> & args) const;
@@ -64,29 +64,29 @@ namespace ACE
               /// given stream.
               bool read(std::istream& str);
 
-              static const ACE_CString FTP_USER;
-              static const ACE_CString FTP_PASS;
-              static const ACE_CString FTP_QUIT;
-              static const ACE_CString FTP_TYPE;
-              static const ACE_CString FTP_SYST;
-              static const ACE_CString FTP_PWD;
-              static const ACE_CString FTP_CWD;
-              static const ACE_CString FTP_CDUP;
-              static const ACE_CString FTP_RNFR;
-              static const ACE_CString FTP_RNTO;
-              static const ACE_CString FTP_DELE;
-              static const ACE_CString FTP_MKD;
-              static const ACE_CString FTP_RMD;
-              static const ACE_CString FTP_RETR;
-              static const ACE_CString FTP_STOR;
-              static const ACE_CString FTP_LIST;
-              static const ACE_CString FTP_NLST;
-              static const ACE_CString FTP_ABOR;
-              static const ACE_CString FTP_EPRT;
-              static const ACE_CString FTP_PORT;
-              static const ACE_CString FTP_EPSV;
-              static const ACE_CString FTP_PASV;
-              static const ACE_CString FTP_STAT;
+              static ACE_CString const FTP_USER;
+              static ACE_CString const FTP_PASS;
+              static ACE_CString const FTP_QUIT;
+              static ACE_CString const FTP_TYPE;
+              static ACE_CString const FTP_SYST;
+              static ACE_CString const FTP_PWD;
+              static ACE_CString const FTP_CWD;
+              static ACE_CString const FTP_CDUP;
+              static ACE_CString const FTP_RNFR;
+              static ACE_CString const FTP_RNTO;
+              static ACE_CString const FTP_DELE;
+              static ACE_CString const FTP_MKD;
+              static ACE_CString const FTP_RMD;
+              static ACE_CString const FTP_RETR;
+              static ACE_CString const FTP_STOR;
+              static ACE_CString const FTP_LIST;
+              static ACE_CString const FTP_NLST;
+              static ACE_CString const FTP_ABOR;
+              static ACE_CString const FTP_EPRT;
+              static ACE_CString const FTP_PORT;
+              static ACE_CString const FTP_EPSV;
+              static ACE_CString const FTP_PASV;
+              static ACE_CString const FTP_STAT;
 
             private:
               static int const eof_;

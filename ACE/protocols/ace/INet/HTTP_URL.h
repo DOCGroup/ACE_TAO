@@ -35,27 +35,27 @@ namespace ACE
           {
             public:
               URL ();
-              explicit URL (const ACE_CString& url_string);
+              explicit URL (ACE_CString const& url_string);
               URL (const URL& url);
               ~URL () override;
 
               URL& operator =(const URL& url);
 
-              const ACE_CString& get_scheme () const override;
+              ACE_CString const& get_scheme () const override;
 
-              const ACE_CString& get_query () const override;
+              ACE_CString const& get_query () const override;
 
-              const ACE_CString& get_fragment () const override;
+              ACE_CString const& get_fragment () const override;
 
               virtual ACE_CString get_request_uri () const;
 
-              void set_query (const ACE_CString& query) override;
+              void set_query (ACE_CString const& query) override;
 
-              void set_fragment (const ACE_CString& fargment) override;
+              void set_fragment (ACE_CString const& fargment) override;
 
-              void set_proxy (const ACE_CString& proxy_host, u_short proxy_port = HTTP_PROXY_PORT);
+              void set_proxy (ACE_CString const& proxy_host, u_short proxy_port = HTTP_PROXY_PORT);
 
-              const ACE_CString& get_proxy_host () const;
+              ACE_CString const& get_proxy_host () const;
 
               u_short get_proxy_port () const;
 
@@ -67,7 +67,7 @@ namespace ACE
 
               static char const * PROTOCOL;
 
-              static const ACE_CString& protocol ();
+              static ACE_CString const& protocol ();
 
               enum
               {
@@ -93,8 +93,8 @@ namespace ACE
                   public:
                     Factory ();
                     ~Factory () override;
-                    const ACE_CString& protocol () override;
-                    ACE::INet::URL_Base* create_from_string (const ACE_CString& url_string) override;
+                    ACE_CString const& protocol () override;
+                    ACE::INet::URL_Base* create_from_string (ACE_CString const& url_string) override;
                 };
 
               using TURLFactorySingleton = ACE_Singleton<Factory, ACE_Null_Mutex>;

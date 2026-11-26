@@ -14,10 +14,10 @@ namespace ACE
   namespace INet
   {
     int const         HeaderBase::UNKNOWN_CONTENT_LENGTH     = -1;
-    const ACE_CString HeaderBase::UNKNOWN_CONTENT_TYPE;
-    const ACE_CString HeaderBase::CONTENT_LENGTH             = "Content-Length";
-    const ACE_CString HeaderBase::CONTENT_TYPE               = "Content-Type";
-    const ACE_CString HeaderBase::EMPTY;
+    ACE_CString const HeaderBase::UNKNOWN_CONTENT_TYPE;
+    ACE_CString const HeaderBase::CONTENT_LENGTH             = "Content-Length";
+    ACE_CString const HeaderBase::CONTENT_TYPE               = "Content-Type";
+    ACE_CString const HeaderBase::EMPTY;
 
     int const HeaderBase::eof_ = std::char_traits<char>::eof();
 
@@ -120,7 +120,7 @@ namespace ACE
         return true;
       }
 
-    void HeaderBase::set (const ACE_CString& name, const ACE_CString& value)
+    void HeaderBase::set (ACE_CString const& name, ACE_CString const& value)
       {
         TNVMap::ITERATOR it (this->header_values_);
         if (this->header_values_.find (NVPair (name), it) == 0)
@@ -133,7 +133,7 @@ namespace ACE
           }
       }
 
-    void HeaderBase::get_values(const ACE_CString& name, ACE_Array<ACE_CString> & values) const
+    void HeaderBase::get_values(ACE_CString const& name, ACE_Array<ACE_CString> & values) const
       {
         TNVMap::ITERATOR it (const_cast<TNVMap&> (this->header_values_));
         if (this->header_values_.find (name, it) == 0)
@@ -150,12 +150,12 @@ namespace ACE
 
     NVPair::NVPair () = default;
 
-    NVPair::NVPair (const ACE_CString& first)
+    NVPair::NVPair (ACE_CString const& first)
       : first_ (first)
       {
       }
 
-    NVPair::NVPair (const ACE_CString& first, const ACE_CString& second)
+    NVPair::NVPair (ACE_CString const& first, ACE_CString const& second)
       : first_ (first), second_ (second)
       {
       }

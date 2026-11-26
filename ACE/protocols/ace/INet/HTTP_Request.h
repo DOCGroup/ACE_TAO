@@ -34,41 +34,41 @@ namespace ACE
               Request();
 
               /// Constructor; creates a GET request with given version.
-              explicit Request(const ACE_CString& version);
+              explicit Request(ACE_CString const& version);
 
               /// Constructor; creates a HTTP/1.0 request with given method and URI.
-              Request(const ACE_CString& method, const ACE_CString& uri);
+              Request(ACE_CString const& method, ACE_CString const& uri);
 
               /// Constructor; creates an HTTP request with given method, URI and version.
-              Request(const ACE_CString& method, const ACE_CString& uri, const ACE_CString& version);
+              Request(ACE_CString const& method, ACE_CString const& uri, ACE_CString const& version);
 
               ~Request () override;
 
               /// Reset the request object
               void reset ();
 
-              void reset (const ACE_CString& version);
+              void reset (ACE_CString const& version);
 
-              void reset (const ACE_CString& method, const ACE_CString& uri);
+              void reset (ACE_CString const& method, ACE_CString const& uri);
 
-              void reset (const ACE_CString& method, const ACE_CString& uri, const ACE_CString& version);
+              void reset (ACE_CString const& method, ACE_CString const& uri, ACE_CString const& version);
 
               /// Set the method.
-              void set_method(const ACE_CString& method);
+              void set_method(ACE_CString const& method);
 
               /// Return the method.
-              const ACE_CString& get_method() const;
+              ACE_CString const& get_method() const;
 
               /// Set the request URI.
-              void set_URI(const ACE_CString& uri);
+              void set_URI(ACE_CString const& uri);
 
               /// Return the request URI.
-              const ACE_CString& get_URI() const;
+              ACE_CString const& get_URI() const;
 
               /// Set the Host header field.
-              void set_host(const ACE_CString& host);
+              void set_host(ACE_CString const& host);
 
-              void set_host(const ACE_CString& host, u_short port);
+              void set_host(ACE_CString const& host, u_short port);
 
               /// Returns true if Host header field has been set.
               bool has_host () const;
@@ -77,7 +77,7 @@ namespace ACE
               ACE_CString get_host() const;
 
               /// Adds a Cookie header.
-              void add_cookie(const ACE_CString & cookie);
+              void add_cookie(ACE_CString const & cookie);
 
               /// Get cookies from Cookie header(s).
               void get_cookies(ACE_Array<ACE_CString> & cookies) const;
@@ -90,7 +90,7 @@ namespace ACE
               void get_credentials(ACE_CString& scheme, ACE_CString& auth_info) const;
 
               /// Set the authentication scheme and information
-              void set_credentials(const ACE_CString& scheme, const ACE_CString& auth_info);
+              void set_credentials(ACE_CString const& scheme, ACE_CString const& auth_info);
 
               /// Writes the HTTP request to the given stream
               void write (std::ostream& str) const override;
@@ -99,18 +99,18 @@ namespace ACE
               /// given stream.
               bool read (std::istream& str) override;
 
-              static const ACE_CString HTTP_GET;
-              static const ACE_CString HTTP_HEAD;
-              static const ACE_CString HTTP_PUT;
-              static const ACE_CString HTTP_POST;
-              static const ACE_CString HTTP_OPTIONS;
-              static const ACE_CString HTTP_DELETE;
-              static const ACE_CString HTTP_TRACE;
-              static const ACE_CString HTTP_CONNECT;
+              static ACE_CString const HTTP_GET;
+              static ACE_CString const HTTP_HEAD;
+              static ACE_CString const HTTP_PUT;
+              static ACE_CString const HTTP_POST;
+              static ACE_CString const HTTP_OPTIONS;
+              static ACE_CString const HTTP_DELETE;
+              static ACE_CString const HTTP_TRACE;
+              static ACE_CString const HTTP_CONNECT;
 
-              static const ACE_CString HOST;
-              static const ACE_CString COOKIE;
-              static const ACE_CString AUTHORIZATION;
+              static ACE_CString const HOST;
+              static ACE_CString const COOKIE;
+              static ACE_CString const AUTHORIZATION;
 
             private:
               enum Limits

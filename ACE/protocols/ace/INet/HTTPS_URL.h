@@ -35,13 +35,13 @@ namespace ACE
           {
             public:
               URL ();
-              explicit URL (const ACE_CString& url_string);
+              explicit URL (ACE_CString const& url_string);
               URL (const URL& url);
               ~URL () override;
 
               URL& operator =(const URL& url);
 
-              const ACE_CString& get_scheme () const override;
+              ACE_CString const& get_scheme () const override;
 
               ACE_CString get_request_uri () const override;
 
@@ -49,7 +49,7 @@ namespace ACE
 
               static char const * PROTOCOL;
 
-              static const ACE_CString& protocol ();
+              static ACE_CString const& protocol ();
 
               enum
               {
@@ -66,8 +66,8 @@ namespace ACE
                   public:
                     Factory ();
                     ~Factory () override;
-                    const ACE_CString& protocol () override;
-                    ACE::INet::URL_Base* create_from_string (const ACE_CString& url_string) override;
+                    ACE_CString const& protocol () override;
+                    ACE::INet::URL_Base* create_from_string (ACE_CString const& url_string) override;
                 };
 
               using TURLFactorySingleton = ACE_Singleton<Factory, ACE_Null_Mutex>;

@@ -119,10 +119,10 @@ namespace ACE
               friend class ACE_Singleton<SessionFactoryRegistry, ACE_SYNCH::MUTEX>;
 
             public:
-              void register_session_factory (const ACE_CString& scheme,
+              void register_session_factory (ACE_CString const& scheme,
                                              SessionFactory* factory);
 
-              SessionFactory* find_session_factory (const ACE_CString& scheme);
+              SessionFactory* find_session_factory (ACE_CString const& scheme);
 
               static SessionFactoryRegistry& instance ();
 
@@ -177,11 +177,11 @@ namespace ACE
                 : public INetConnectionKey
                 {
                   public:
-                    HttpConnectionKey (const ACE_CString& host,
+                    HttpConnectionKey (ACE_CString const& host,
                                        u_short port);
-                    HttpConnectionKey (const ACE_CString& proxy_host,
+                    HttpConnectionKey (ACE_CString const& proxy_host,
                                        u_short proxy_port,
-                                       const ACE_CString& target_host,
+                                       ACE_CString const& target_host,
                                        u_short target_port);
                     ~HttpConnectionKey () override;
 
@@ -191,7 +191,7 @@ namespace ACE
 
                     bool is_proxy_connection () const;
 
-                    const ACE_CString& proxy_target_host () const;
+                    ACE_CString const& proxy_target_host () const;
 
                     u_short proxy_target_port () const;
 
@@ -211,11 +211,11 @@ namespace ACE
 
               void session (SessionHolder* session);
 
-              virtual bool initialize_connection (const ACE_CString& scheme,
-                                                  const ACE_CString& host,
+              virtual bool initialize_connection (ACE_CString const& scheme,
+                                                  ACE_CString const& host,
                                                   u_short port,
                                                   bool proxy_conn = false,
-                                                  const ACE_CString& proxy_host = Request::EMPTY,
+                                                  ACE_CString const& proxy_host = Request::EMPTY,
                                                   u_short proxy_port = 0);
 
               virtual void initialize_request (const URL& url, Request& request);

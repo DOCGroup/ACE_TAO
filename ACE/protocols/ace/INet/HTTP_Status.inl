@@ -17,13 +17,13 @@ namespace ACE
       }
 
     ACE_INLINE
-    void Status::set_reason(const ACE_CString& reason)
+    void Status::set_reason(ACE_CString const& reason)
       {
         this->reason_ = reason;
       }
 
     ACE_INLINE
-    const ACE_CString& Status::get_reason() const
+    ACE_CString const& Status::get_reason() const
       {
         return this->reason_;
       }

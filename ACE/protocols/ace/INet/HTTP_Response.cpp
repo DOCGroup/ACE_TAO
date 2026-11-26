@@ -15,7 +15,7 @@ namespace ACE
 {
   namespace HTTP
   {
-    const ACE_CString Response::COOKIE = "Set-Cookie";
+    ACE_CString const Response::COOKIE = "Set-Cookie";
 
     Response::Response()
       {
@@ -26,14 +26,14 @@ namespace ACE
       {
       }
 
-    Response::Response(const ACE_CString& version, const Status& status)
+    Response::Response(ACE_CString const& version, const Status& status)
       : Header (version), status_ (status)
       {
       }
 
     Response::~Response() = default;
 
-    void Response::add_cookie(const ACE_CString & cookie)
+    void Response::add_cookie(ACE_CString const & cookie)
       {
         this->add (COOKIE, cookie);
       }

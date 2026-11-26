@@ -22,7 +22,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void Response::reset (const ACE_CString& version, const Status& status)
+    void Response::reset (ACE_CString const& version, const Status& status)
       {
         this->clear ();
         this->set_version (version);

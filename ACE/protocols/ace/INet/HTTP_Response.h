@@ -41,7 +41,7 @@ namespace ACE
 
               explicit Response(const Status& status);
 
-              Response(const ACE_CString& version, const Status& status = Status());
+              Response(ACE_CString const& version, const Status& status = Status());
 
               ~Response () override;
 
@@ -50,7 +50,7 @@ namespace ACE
 
               void reset (const Status& status);
 
-              void reset (const ACE_CString& version, const Status& status = Status());
+              void reset (ACE_CString const& version, const Status& status = Status());
 
               /// Set the status.
               void set_status(const Status& status);
@@ -59,7 +59,7 @@ namespace ACE
               const Status& get_status() const;
 
               /// Adds a Cookie header.
-              void add_cookie(const ACE_CString& cookie);
+              void add_cookie(ACE_CString const& cookie);
 
               /// Get cookies from Cookie header(s)).
               void get_cookies(ACE_Array<ACE_CString> & cookies) const;
@@ -72,7 +72,7 @@ namespace ACE
               /// 100 Continue responses are ignored.
               bool read (std::istream& str) override;
 
-              static const ACE_CString COOKIE;
+              static ACE_CString const COOKIE;
 
             private:
               enum Limits

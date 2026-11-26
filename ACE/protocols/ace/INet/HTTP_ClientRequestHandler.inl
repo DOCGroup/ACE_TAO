@@ -25,7 +25,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_CString& ClientRequestHandler::HttpConnectionKey::proxy_target_host () const
+    ACE_CString const& ClientRequestHandler::HttpConnectionKey::proxy_target_host () const
       {
         return this->proxy_target_host_;
       }

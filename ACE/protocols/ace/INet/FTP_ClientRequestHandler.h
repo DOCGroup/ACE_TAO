@@ -85,10 +85,10 @@ namespace ACE
 */
               void quit_connection ();
 
-              static const ACE_CString anonymous_user_;
+              static ACE_CString const anonymous_user_;
 
             protected:
-              static const ACE_CString empty_;
+              static ACE_CString const empty_;
 
               using connection_type = typename Session_T<ACE_SYNCH>::connection_type;
               using stream_type = ACE::IOS::Sock_IOStreamBase<ACE_SYNCH>;
@@ -99,26 +99,26 @@ namespace ACE
                 : public ACE::INet::AuthenticationBase
                 {
                   public:
-                    Authentication (const ACE_CString& realm,
+                    Authentication (ACE_CString const& realm,
                                     ACE_CString& user,
                                     ACE_CString& pw);
 
                     ~Authentication () override;
 
-                    const ACE_CString& scheme () const override;
+                    ACE_CString const& scheme () const override;
 
-                    const ACE_CString& realm () const override;
+                    ACE_CString const& realm () const override;
 
-                    const ACE_CString& user () const override;
+                    ACE_CString const& user () const override;
 
-                    void user (const ACE_CString& usr) override;
+                    void user (ACE_CString const& usr) override;
 
-                    const ACE_CString& password () const override;
+                    ACE_CString const& password () const override;
 
-                    void password (const ACE_CString& pw) override;
+                    void password (ACE_CString const& pw) override;
 
                   private:
-                    const ACE_CString& realm_;
+                    ACE_CString const& realm_;
                     ACE_CString& user_;
                     ACE_CString& password_;
                 };
@@ -154,7 +154,7 @@ namespace ACE
 
               void session (SessionHolder* session);
 
-              virtual bool initialize_connection (const ACE_CString& host,
+              virtual bool initialize_connection (ACE_CString const& host,
                                                   u_short port);
 
               virtual bool handle_credentials (const URL& url,
@@ -173,37 +173,37 @@ namespace ACE
                * FTP protocol helpers
                */
 
-              bool login (const ACE_CString& user, const ACE_CString& password);
+              bool login (ACE_CString const& user, ACE_CString const& password);
 
               bool logout ();
 
-              bool is_valid_path (const ACE_CString& path);
+              bool is_valid_path (ACE_CString const& path);
 
-              bool is_file (const ACE_CString& path);
+              bool is_file (ACE_CString const& path);
 
-              bool is_dir (const ACE_CString& path);
+              bool is_dir (ACE_CString const& path);
 
               bool set_filetype (bool binary);
 
-              stream_type* start_download (const ACE_CString& path, bool binary);
+              stream_type* start_download (ACE_CString const& path, bool binary);
 
-              stream_type* start_upload (const ACE_CString& path, bool binary);
+              stream_type* start_upload (ACE_CString const& path, bool binary);
 
               bool finish_transfer ();
 
               bool abort_transfer ();
 
-              Response::StatusType process_command (const ACE_CString& cmd,
-                                                    const ACE_CString& arg = empty_);
+              Response::StatusType process_command (ACE_CString const& cmd,
+                                                    ACE_CString const& arg = empty_);
 
-              stream_type* open_data_connection (const ACE_CString& cmd,
-                                                 const ACE_CString& arg);
+              stream_type* open_data_connection (ACE_CString const& cmd,
+                                                 ACE_CString const& arg);
 
               bool get_passive_address (ACE_INET_Addr& addr);
 
-              bool parse_address (const ACE_CString& str, ACE_INET_Addr& addr);
+              bool parse_address (ACE_CString const& str, ACE_INET_Addr& addr);
 
-              bool parse_ext_address (const ACE_CString& str, ACE_INET_Addr& addr);
+              bool parse_ext_address (ACE_CString const& str, ACE_INET_Addr& addr);
 
               bool send_active_address (const ACE_INET_Addr& addr);
 

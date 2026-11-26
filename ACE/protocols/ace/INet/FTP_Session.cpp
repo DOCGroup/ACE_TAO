@@ -63,7 +63,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    void Session_T<ACE_SYNCH_USE>::set_host (const ACE_CString& host, u_short port)
+    void Session_T<ACE_SYNCH_USE>::set_host (ACE_CString const& host, u_short port)
       {
         if (!this->is_connected ())
           {
@@ -73,7 +73,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    void Session_T<ACE_SYNCH_USE>::set_host (const ACE_CString& host)
+    void Session_T<ACE_SYNCH_USE>::set_host (ACE_CString const& host)
       {
         if (!this->is_connected ())
           {
@@ -91,7 +91,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    const ACE_CString& Session_T<ACE_SYNCH_USE>::get_host () const
+    ACE_CString const& Session_T<ACE_SYNCH_USE>::get_host () const
       {
         return this->host_;
       }
