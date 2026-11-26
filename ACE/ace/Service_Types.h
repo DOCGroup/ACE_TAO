@@ -36,7 +36,7 @@ class ACE_Export ACE_Service_Type_Impl
 {
 public:
   ACE_Service_Type_Impl (void *object,
-                         const ACE_TCHAR *s_name,
+                         ACE_TCHAR const *s_name,
                          u_int flags = 0,
                          ACE_Service_Object_Exterminator gobbler = nullptr,
                          int stype = ACE_Service_Type::INVALID_TYPE);
@@ -60,10 +60,10 @@ public:
   void *object () const;
 
   /// Get the name of the service.
-  const ACE_TCHAR *name () const;
+  ACE_TCHAR const *name () const;
 
   /// Set the name of the service.
-  void name (const ACE_TCHAR *);
+  void name (ACE_TCHAR const *);
 
   /// Dump the state of an object.
   void dump () const;
@@ -112,7 +112,7 @@ class ACE_Export ACE_Service_Object_Type : public ACE_Service_Type_Impl
 {
 public:
   ACE_Service_Object_Type (void *so,
-                           const ACE_TCHAR *name,
+                           ACE_TCHAR const *name,
                            u_int flags = 0,
                            ACE_Service_Object_Exterminator gobbler = nullptr,
                            int stype = ACE_Service_Type::SERVICE_OBJECT);
@@ -143,7 +143,7 @@ class ACE_Export ACE_Module_Type : public ACE_Service_Type_Impl
 {
 public:
   ACE_Module_Type (void *m, // Really an ACE_Module *.
-                   const ACE_TCHAR *identifier,
+                   ACE_TCHAR const *identifier,
                    u_int flags = 0,
                    int stype = ACE_Service_Type::MODULE);
 
@@ -185,7 +185,7 @@ class ACE_Export ACE_Stream_Type : public ACE_Service_Type_Impl
 {
 public:
   ACE_Stream_Type (void *s, // Really an ACE_Stream *.
-                   const ACE_TCHAR *identifier,
+                   ACE_TCHAR const *identifier,
                    u_int flags = 0,
                    int stype = ACE_Service_Type::STREAM);
 
@@ -207,7 +207,7 @@ public:
   int remove (ACE_Module_Type *module);
 
   /// Locate the ACE_Module with @a mod_name.
-  ACE_Module_Type *find (const ACE_TCHAR *module_name) const;
+  ACE_Module_Type *find (ACE_TCHAR const *module_name) const;
 
   /// Dump the state of an object.
   void dump () const;

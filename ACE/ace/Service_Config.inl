@@ -6,7 +6,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /// constructor just handles simple initializations).
 ACE_INLINE int
 ACE_Service_Config::open (const ACE_TCHAR program_name[],
-                          const ACE_TCHAR *logger_key,
+                          ACE_TCHAR const *logger_key,
                           bool ignore_static_svcs,
                           bool ignore_default_svc_conf,
                           bool ignore_debug_flag)
@@ -31,7 +31,7 @@ ACE_Service_Config::open (const ACE_TCHAR program_name[],
 ACE_INLINE int
 ACE_Service_Config::open (int argc,
                           ACE_TCHAR *argv[],
-                          const ACE_TCHAR *logger_key,
+                          ACE_TCHAR const *logger_key,
                           bool ignore_static_svcs,
                           bool ignore_default_svc_conf,
                           bool ignore_debug_flag)
@@ -122,8 +122,8 @@ ACE_Service_Config::signal_handler (ACE_Sig_Adapter *signal_handler)
 
 /// Initialize and activate a statically linked service.
 ACE_INLINE int
-ACE_Service_Config::initialize (const ACE_TCHAR *svc_name,
-                                const ACE_TCHAR *parameters)
+ACE_Service_Config::initialize (ACE_TCHAR const *svc_name,
+                                ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   return ACE_Service_Config::current ()->initialize (svc_name,
@@ -134,7 +134,7 @@ ACE_Service_Config::initialize (const ACE_TCHAR *svc_name,
 /// the designated shared object in this file.
 ACE_INLINE int
 ACE_Service_Config::initialize (const ACE_Service_Type *sr,
-                                const ACE_TCHAR *parameters)
+                                ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
   return ACE_Service_Config::current ()->initialize (sr, parameters);

@@ -220,7 +220,7 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
 
 int
 ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
-                            const ACE_TCHAR *logger_key,
+                            ACE_TCHAR const *logger_key,
                             bool ,
                             bool ,
                             bool )
@@ -282,7 +282,7 @@ ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
     flags = (u_long) ACE_Log_Msg::STDERR;
   }
 
-  const ACE_TCHAR *key = logger_key;
+  ACE_TCHAR const *key = logger_key;
 
   if (key == nullptr || ACE_OS::strcmp (key, ACE_DEFAULT_LOGGER_KEY) == 0)
     {
@@ -465,7 +465,7 @@ ACE_Service_Config::current (ACE_Service_Gestalt* newcurrent)
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 0)
 ACE_Service_Type *
-ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
+ACE_Service_Config::create_service_type  (ACE_TCHAR const *n,
                                           ACE_Service_Type_Impl *o,
                                           ACE_DLL &dll,
                                           int active)
@@ -479,7 +479,7 @@ ACE_Service_Config::create_service_type  (const ACE_TCHAR *n,
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 0 */
 
 ACE_Service_Type_Impl *
-ACE_Service_Config::create_service_type_impl (const ACE_TCHAR *name,
+ACE_Service_Config::create_service_type_impl (ACE_TCHAR const *name,
                                               int type,
                                               void *symbol,
                                               u_int flags,

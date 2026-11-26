@@ -40,7 +40,7 @@ ACE_Service_Type_Impl::Name_Deleter::operator() (ACE_TCHAR *name) const
 }
 
 ACE_Service_Type_Impl::ACE_Service_Type_Impl (void *so,
-                                              const ACE_TCHAR *s_name,
+                                              ACE_TCHAR const *s_name,
                                               u_int f,
                                               ACE_Service_Object_Exterminator gobbler,
                                               int stype)
@@ -59,7 +59,7 @@ ACE_Service_Type_Impl::~ACE_Service_Type_Impl ()
 }
 
 void
-ACE_Service_Type_Impl::name (const ACE_TCHAR *name)
+ACE_Service_Type_Impl::name (ACE_TCHAR const *name)
 {
   ACE_TRACE ("ACE_Service_Type_Impl::name");
   this->name_.reset (ACE::strnew (name));
@@ -95,7 +95,7 @@ ACE_Service_Type_Impl::fini () const
 }
 
 ACE_Service_Object_Type::ACE_Service_Object_Type (void *so,
-                                                  const ACE_TCHAR *s_name,
+                                                  ACE_TCHAR const *s_name,
                                                   u_int f,
                                                   ACE_Service_Object_Exterminator gobbler,
                                                   int stype)
@@ -183,7 +183,7 @@ ACE_Module_Type::dump () const
 }
 
 ACE_Module_Type::ACE_Module_Type (void *m,
-                                  const ACE_TCHAR *m_name,
+                                  ACE_TCHAR const *m_name,
                                   u_int f,
                                   int stype)
   : ACE_Service_Type_Impl (m, m_name, f, nullptr, stype)
@@ -376,7 +376,7 @@ ACE_Stream_Type::resume () const
 }
 
 ACE_Stream_Type::ACE_Stream_Type (void *s,
-                                  const ACE_TCHAR *s_name,
+                                  ACE_TCHAR const *s_name,
                                   u_int f,
                                   int stype)
   : ACE_Service_Type_Impl (s, s_name, f, nullptr, stype)
@@ -495,7 +495,7 @@ ACE_Stream_Type::push (ACE_Module_Type *new_module)
 }
 
 ACE_Module_Type *
-ACE_Stream_Type::find (const ACE_TCHAR *module_name) const
+ACE_Stream_Type::find (ACE_TCHAR const *module_name) const
 {
   ACE_TRACE ("ACE_Stream_Type::find");
 

@@ -9,7 +9,7 @@ ACE_Service_Type_Impl::object () const
   return this->obj_;
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Service_Type_Impl::name () const
 {
   ACE_TRACE ("ACE_Service_Type_Impl::name");
