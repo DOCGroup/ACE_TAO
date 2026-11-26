@@ -112,7 +112,7 @@ public:
    * is already full, 0 if the stack is not already full, and -1 if
    * failure occurs.
    */
-  int push (const T &new_item);
+  int push (T const &new_item);
 
   ///Remove an item from the top of stack.
   /**
@@ -241,7 +241,7 @@ public:
    * is already full, 0 if the stack is not already full, and -1 if
    * failure occurs.
    */
-  int push (const T &new_item);
+  int push (T const &new_item);
 
   ///Constant time removal of top of stack.
   /**
@@ -322,7 +322,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 private:
-  ACE_DNode (const T &i, ACE_DNode<T> *n = nullptr, ACE_DNode<T> *p = nullptr);
+  ACE_DNode (T const &i, ACE_DNode<T> *n = nullptr, ACE_DNode<T> *p = nullptr);
 
   /// Pointer to next element in the list of {ACE_DNode}s.
   ACE_DNode<T> *next_;
@@ -415,7 +415,7 @@ public:
    * is already full, 0 if the stack is not already full, and -1 if
    * failure occurs.
    */
-  int push (const T &new_item);
+  int push (T const &new_item);
 
   ///Pop the top element of the stack.
   /**
@@ -459,20 +459,20 @@ public:
    * duplicates).  Returns -1 if failures occur, 1 if item is already
    * present (i.e., no duplicates are allowed), else 0.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   /// Remove @a item from the Stack.  Returns 0 if it removes the item,
   /// -1 if it can't find the item, and -1 if a failure occurs.
   /**
    * Linear remove operation.
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   /// Finds if @a item occurs the set.  Returns 0 if finds, else -1.
   /**
    * Linear find operation.
    */
-  int find (const T &item) const;
+  int find (T const &item) const;
 
   /// The number of items in the stack.
   /**
@@ -1347,14 +1347,14 @@ public:
 
   /// Pass back the {next_item} that hasn't been seen in the Set.
   /// Returns 0 when all items have been seen, else 1.
-  int next (const T *&next_item);
+  int next (T const *&next_item);
 
   /// Dump the state of an object.
   void dump () const;
 
   /// STL-like iterator dereference operator: returns a reference
   /// to the node underneath the iterator.
-  const T & operator* () const ;
+  T const & operator* () const ;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -1450,7 +1450,7 @@ public:
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   ///Linear time removal operation of an item.
   /**
@@ -1458,13 +1458,13 @@ public:
    * it removes the item, -1 if it can't find the item, and -1 if a
    * failure occurs.  Removal doesn't reclaim memory for the @a item.
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   /// Finds if @a item occurs in the set.  Returns 0 if finds, else -1.
   /**
    * Performs a linear find operation for the specified @a item.
    */
-  int find (const T &item) const;
+  int find (T const &item) const;
 
   /// Size of the set.
   /**
@@ -1656,7 +1656,7 @@ public:
    * Returns -1 if failures occur, 1 if item is already present, else
    * 0.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   ///Finds the specified element and removes it from the set.
   /**
@@ -1665,14 +1665,14 @@ public:
    * failure occurs.  The linear remove operation does not reclaim the
    * memory associated with the removed item.
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   /// Finds if @a item occurs in the set.  Returns 0 if finds, else -1.
   /**
    * find preforms a linear search for {item} and returns 0 on successful
    * find and -1 otherwise.
    */
-  int find (const T &item) const;
+  int find (T const &item) const;
 
   /// Size of the set.
   /**
@@ -1856,7 +1856,7 @@ public:
   /**
    * Linear time, order preserving insert into the set beginning at the head.
    */
-  int insert (const T &new_item);
+  int insert (T const &new_item);
 
   ///Linear time insert beginning at the point specified by the provided iterator.
   /**
@@ -1865,14 +1865,14 @@ public:
    * updates the iterator to point to the newly inserted node.
    * Returns -1 if failures occur, else 0.
    */
-  int insert (const T &new_item, ITERATOR &iter);
+  int insert (T const &new_item, ITERATOR &iter);
 
   /// Remove first occurrence of @a item from the set.  Returns 0 if
   /// it removes the item, -1 if it can't find the item.
   /**
    * Linear time search operation which removes the item from the set if found .
    */
-  int remove (const T &item);
+  int remove (T const &item);
 
   ///Linear find operation.
   /**
@@ -1881,7 +1881,7 @@ public:
    * it positions the iterator at that node and returns 0, or if it cannot
    * locate the node, it leaves the iterator alone and just returns -1.
    */
-  int find (const T &item, ITERATOR &iter) const;
+  int find (T const &item, ITERATOR &iter) const;
 
   /// Reset the ACE_Ordered_MultiSet to be empty.
   /**
@@ -1902,7 +1902,7 @@ private:
    * and if successful updates the passed pointer to point to
    * the newly inserted item's node.
    */
-  int insert_from (const T &item, ACE_DNode<T> *start_position,
+  int insert_from (T const &item, ACE_DNode<T> *start_position,
                    ACE_DNode<T> **new_position);
 
   /**
@@ -1916,7 +1916,7 @@ private:
    * new_position pointer to point to this node (or 0 if there is no such
    * node) and returns 1;
    */
-  int locate (const T &item, ACE_DNode<T> *start_position,
+  int locate (T const &item, ACE_DNode<T> *start_position,
               ACE_DNode<T> *&new_position) const;
 
   /// Delete all the nodes in the Set.
@@ -1994,7 +1994,7 @@ public:
    * Initialize an array the given size placing the default_value in each index.
    */
   ACE_Array (size_t size,
-             const T &default_value,
+             T const &default_value,
              ACE_Allocator* alloc = nullptr);
 
   /**

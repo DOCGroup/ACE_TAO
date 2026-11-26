@@ -246,7 +246,7 @@ ACE_Unbounded_Stack<T>::~ACE_Unbounded_Stack ()
 }
 
 template<class T> int
-ACE_Unbounded_Stack<T>::push (const T &new_item)
+ACE_Unbounded_Stack<T>::push (T const &new_item)
 {
   //  ACE_TRACE ("ACE_Unbounded_Stack<T>::push");
 
@@ -286,7 +286,7 @@ ACE_Unbounded_Stack<T>::pop (T &item)
 }
 
 template <class T> int
-ACE_Unbounded_Stack<T>::find (const T &item) const
+ACE_Unbounded_Stack<T>::find (T const &item) const
 {
   // ACE_TRACE ("ACE_Unbounded_Stack<T>::find");
   // Set <item> into the dummy node.
@@ -306,7 +306,7 @@ ACE_Unbounded_Stack<T>::find (const T &item) const
 }
 
 template <class T> int
-ACE_Unbounded_Stack<T>::insert (const T &item)
+ACE_Unbounded_Stack<T>::insert (T const &item)
 {
   // ACE_TRACE ("ACE_Unbounded_Stack<T>::insert");
 
@@ -321,7 +321,7 @@ ACE_Unbounded_Stack<T>::insert (const T &item)
 }
 
 template <class T> int
-ACE_Unbounded_Stack<T>::remove (const T &item)
+ACE_Unbounded_Stack<T>::remove (T const &item)
 {
   // ACE_TRACE ("ACE_Unbounded_Stack<T>::remove");
 
@@ -966,7 +966,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::ACE_Fixed_Set ()
 }
 
 template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set<T, ACE_SIZE>::find (const T &item) const
+ACE_Fixed_Set<T, ACE_SIZE>::find (T const &item) const
 {
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::find");
 
@@ -986,7 +986,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::find (const T &item) const
 }
 
 template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
+ACE_Fixed_Set<T, ACE_SIZE>::insert (T const &item)
 {
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::insert");
   ssize_t first_free = -1;   // Keep track of first free slot.
@@ -1027,7 +1027,7 @@ ACE_Fixed_Set<T, ACE_SIZE>::insert (const T &item)
 }
 
 template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set<T, ACE_SIZE>::remove (const T &item)
+ACE_Fixed_Set<T, ACE_SIZE>::remove (T const &item)
 {
   ACE_TRACE ("ACE_Fixed_Set<T, ACE_SIZE>::remove");
 
@@ -1212,14 +1212,14 @@ ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::ACE_Fixed_Set_Const_Iterator (const A
 }
 
 template <class T, size_t ACE_SIZE> int
-ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::next (const T *&item)
+ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::next (T const *&item)
 {
   ACE_TRACE ("ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::next");
 
   return this->next_i (item);
 }
 
-template <class T, size_t ACE_SIZE> const T&
+template <class T, size_t ACE_SIZE> T const &
 ACE_Fixed_Set_Const_Iterator<T, ACE_SIZE>::operator* () const
 {
   T const *retv {};
@@ -1317,7 +1317,7 @@ ACE_Bounded_Set<T>::ACE_Bounded_Set (size_t size)
 }
 
 template <class T> int
-ACE_Bounded_Set<T>::find (const T &item) const
+ACE_Bounded_Set<T>::find (T const &item) const
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::find");
 
@@ -1334,7 +1334,7 @@ ACE_Bounded_Set<T>::find (const T &item) const
 }
 
 template <class T> int
-ACE_Bounded_Set<T>::insert (const T &item)
+ACE_Bounded_Set<T>::insert (T const &item)
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::insert");
   int first_free = -1;   // Keep track of first free slot.
@@ -1375,7 +1375,7 @@ ACE_Bounded_Set<T>::insert (const T &item)
 }
 
 template <class T> int
-ACE_Bounded_Set<T>::remove (const T &item)
+ACE_Bounded_Set<T>::remove (T const &item)
 {
   ACE_TRACE ("ACE_Bounded_Set<T>::remove");
   for (size_t i = 0; i < this->cur_size_; ++i)
@@ -1479,7 +1479,7 @@ ACE_Bounded_Set_Iterator<T>::next (T *&item)
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_DNode)
 
   template <class T>
-ACE_DNode<T>::ACE_DNode (const T &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
+ACE_DNode<T>::ACE_DNode (T const &i, ACE_DNode<T> *n, ACE_DNode<T> *p)
   : next_ (n), prev_ (p), item_ (i)
 {
 }
@@ -1590,7 +1590,7 @@ ACE_Ordered_MultiSet<T>::operator= (const ACE_Ordered_MultiSet<T> &us)
 }
 
 template <class T> int
-ACE_Ordered_MultiSet<T>::insert (const T &item)
+ACE_Ordered_MultiSet<T>::insert (T const &item)
 {
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert");
 
@@ -1598,7 +1598,7 @@ ACE_Ordered_MultiSet<T>::insert (const T &item)
 }
 
 template <class T> int
-ACE_Ordered_MultiSet<T>::insert (const T &new_item,
+ACE_Ordered_MultiSet<T>::insert (T const &new_item,
                                  ITERATOR &iter)
 {
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert using iterator");
@@ -1607,7 +1607,7 @@ ACE_Ordered_MultiSet<T>::insert (const T &new_item,
 }
 
 template <class T> int
-ACE_Ordered_MultiSet<T>::remove (const T &item)
+ACE_Ordered_MultiSet<T>::remove (T const &item)
 {
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::remove");
 
@@ -1649,7 +1649,7 @@ ACE_Ordered_MultiSet<T>::remove (const T &item)
 }
 
 template <class T> int
-ACE_Ordered_MultiSet<T>::find (const T &item,
+ACE_Ordered_MultiSet<T>::find (T const &item,
                                ITERATOR &iter) const
 {
   // search an occurrence of item, using iterator's current position as a hint
@@ -1698,7 +1698,7 @@ ACE_Ordered_MultiSet<T>::dump () const
 }
 
 template <class T> int
-ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
+ACE_Ordered_MultiSet<T>::insert_from (T const &item, ACE_DNode<T> *position,
                                       ACE_DNode<T> **new_position)
 {
   // ACE_TRACE ("ACE_Ordered_MultiSet<T>::insert_from");
@@ -1783,7 +1783,7 @@ ACE_Ordered_MultiSet<T>::insert_from (const T &item, ACE_DNode<T> *position,
 }
 
 template <class T> int
-ACE_Ordered_MultiSet<T>::locate (const T &item, ACE_DNode<T> *start_position,
+ACE_Ordered_MultiSet<T>::locate (T const &item, ACE_DNode<T> *start_position,
                                  ACE_DNode<T> *&new_position) const
 {
   if (! start_position)

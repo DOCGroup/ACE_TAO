@@ -16,7 +16,7 @@ ACE_Bounded_Stack<T>::is_full () const
 }
 
 template <class T> ACE_INLINE int
-ACE_Bounded_Stack<T>::push (const T &new_item)
+ACE_Bounded_Stack<T>::push (T const &new_item)
 {
   ACE_TRACE ("ACE_Bounded_Stack<T>::push");
   if (!this->is_full ())
@@ -82,7 +82,7 @@ ACE_Fixed_Stack<T, ACE_SIZE>::is_full () const
 }
 
 template <class T, size_t ACE_SIZE> ACE_INLINE int
-ACE_Fixed_Stack<T, ACE_SIZE>::push (const T &new_item)
+ACE_Fixed_Stack<T, ACE_SIZE>::push (T const &new_item)
 {
   ACE_TRACE ("ACE_Fixed_Stack<T, ACE_SIZE>::push");
   if (!this->is_full ())
@@ -280,7 +280,7 @@ ACE_Array<T>::ACE_Array (size_t size,
 
 template <class T> ACE_INLINE
 ACE_Array<T>::ACE_Array (size_t size,
-                         const T &default_value,
+                         T const &default_value,
                          ACE_Allocator *alloc)
   : ACE_Array_Base<T> (size, default_value, alloc)
 {
