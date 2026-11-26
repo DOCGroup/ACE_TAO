@@ -264,8 +264,8 @@ TAO_UIPMC_Connection_Handler::open (void*)
       result =
         this->peer ().get_option (SOL_SOCKET,
                                   SO_SNDBUF,
-                                  static_cast<void *> (&this->send_hi_water_mark_),
-                                  &size);
+                                  std::addressof (this->send_hi_water_mark_),
+                                  std::addressof (size));
       if (!result)
         {
           // Note unix kernals double the value that is set (to hold the
