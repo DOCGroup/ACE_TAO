@@ -24,7 +24,7 @@ namespace ACE
      */
     int
     SSL_Proxy_Connector::ssl_connect (ACE_SSL_SOCK_Stream &new_stream,
-                                      const ACE_Time_Value *timeout)
+                                      ACE_Time_Value const *timeout)
       {
         SSL *ssl = new_stream.ssl ();
 
@@ -202,7 +202,7 @@ namespace ACE
     int
     SSL_Proxy_Connector::connect (ACE_SSL_SOCK_Stream &new_stream,
                                   ACE_HANDLE proxy_handle,
-                                  const ACE_Time_Value *timeout)
+                                  ACE_Time_Value const *timeout)
       {
         INET_TRACE ("SSL_Proxy_Connector::connect");
 

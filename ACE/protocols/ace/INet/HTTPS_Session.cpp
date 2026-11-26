@@ -38,9 +38,9 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    Session_T<ACE_SYNCH_USE>::Session_T (const ACE_Time_Value& timeout,
+    Session_T<ACE_SYNCH_USE>::Session_T (ACE_Time_Value const& timeout,
                                          bool keep_alive,
-                                         const ACE_Time_Value* alive_timeout
+                                         ACE_Time_Value const* alive_timeout
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
                                          , Context* ctx
 #endif

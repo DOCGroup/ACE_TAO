@@ -59,7 +59,7 @@ namespace ACE
 
               ACE_SSL_Context& ssl_context ();
 
-              const ACE_SSL_Context& ssl_context () const;
+              ACE_SSL_Context const& ssl_context () const;
 
               bool use_default_ca ();
 

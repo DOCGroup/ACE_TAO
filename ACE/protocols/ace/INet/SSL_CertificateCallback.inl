@@ -6,7 +6,7 @@ namespace ACE
   {
 
     ACE_INLINE
-    const ACE_SSL_Context& SSL_CertificateCallbackArg::context () const
+    ACE_SSL_Context const& SSL_CertificateCallbackArg::context () const
       {
         return *this->ssl_ctx_;
       }

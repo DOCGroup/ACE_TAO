@@ -37,9 +37,9 @@ namespace ACE
                            bool keep_alive = false);
 
               SessionBase (u_short port,
-                           const ACE_Time_Value& timeout,
+                           ACE_Time_Value const& timeout,
                            bool keep_alive = false,
-                           const ACE_Time_Value* alive_timeout = nullptr);
+                           ACE_Time_Value const* alive_timeout = nullptr);
 
               SessionBase (SessionBase const&) = delete;
               SessionBase& operator= (SessionBase const&) = delete;

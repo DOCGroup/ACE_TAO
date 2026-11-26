@@ -64,7 +64,7 @@ namespace ACE
 
               void initialize_callbacks (ACE_SSL_Context* ssl_ctx = ACE_SSL_Context::instance ());
 
-              const ACE_SSL_Context* context () const;
+              ACE_SSL_Context const* context () const;
 
               void set_certificate_callback (ACE::INet::SSL_CertificateCallback* cb);
               void set_password_callback (ACE::INet::SSL_PasswordCallback* cb);

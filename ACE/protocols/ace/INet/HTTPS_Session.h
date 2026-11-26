@@ -53,9 +53,9 @@ namespace ACE
               Session_T (Session_T&&) = delete;
               Session_T& operator= (Session_T&&) = delete;
 
-              Session_T (const ACE_Time_Value& timeout,
+              Session_T (ACE_Time_Value const& timeout,
                          bool keep_alive = true,
-                         const ACE_Time_Value* alive_timeout = nullptr
+                         ACE_Time_Value const* alive_timeout = nullptr
 #if defined (SSL_HAS_SSL_set_SSL_CTX) && (SSL_HAS_SSL_set_SSL_CTX == 1)
                          , Context* ctx = nullptr
 #endif

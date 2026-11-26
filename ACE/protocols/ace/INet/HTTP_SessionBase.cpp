@@ -34,9 +34,9 @@ namespace ACE
       }
 
     SessionBase::SessionBase (u_short port,
-                              const ACE_Time_Value& timeout,
+                              ACE_Time_Value const& timeout,
                               bool keep_alive,
-                              const ACE_Time_Value* alive_timeout)
+                              ACE_Time_Value const* alive_timeout)
       : port_ (port),
         http_timeout_ (timeout),
         keep_alive_timeout_ (DEFAULT_KEEP_ALIVE_TIMEOUT),

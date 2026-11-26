@@ -30,11 +30,11 @@ namespace ACE
         class ACE_INET_SSL_Export SSL_CertificateCallbackArg
           {
             public:
-              SSL_CertificateCallbackArg (const ACE_SSL_Context* ssl_ctx,
+              SSL_CertificateCallbackArg (ACE_SSL_Context const* ssl_ctx,
                                           ::X509_STORE_CTX* cert_ctx);
               ~SSL_CertificateCallbackArg ();
 
-              const ACE_SSL_Context& context () const;
+              ACE_SSL_Context const& context () const;
 
               SSL_X509Cert& certificate ();
 
@@ -49,7 +49,7 @@ namespace ACE
               void ignore_error (bool f);
 
             private:
-              const ACE_SSL_Context* ssl_ctx_;
+              ACE_SSL_Context const* ssl_ctx_;
               SSL_X509Cert ssl_cert_;
               int err_depth_;
               int err_code_;

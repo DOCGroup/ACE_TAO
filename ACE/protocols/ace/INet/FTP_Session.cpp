@@ -32,7 +32,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    Session_T<ACE_SYNCH_USE>::Session_T (const ACE_Time_Value& timeout)
+    Session_T<ACE_SYNCH_USE>::Session_T (ACE_Time_Value const& timeout)
       : port_ (FTP_PORT),
         reactive_ (false),
         ftp_timeout_ (timeout),
@@ -295,7 +295,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    const ACE_Time_Value& Session_T<ACE_SYNCH_USE>::timeout () const
+    ACE_Time_Value const& Session_T<ACE_SYNCH_USE>::timeout () const
       {
         return this->ftp_timeout_;
       }

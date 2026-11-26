@@ -24,7 +24,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const ACE_SSL_Context& Context::ssl_context () const
+    ACE_SSL_Context const& Context::ssl_context () const
       {
         return *this->ssl_ctx_;
       }

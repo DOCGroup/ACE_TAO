@@ -45,7 +45,7 @@ namespace ACE
 
               Session_T ();
 
-              explicit Session_T (const ACE_Time_Value& timeout);
+              explicit Session_T (ACE_Time_Value const& timeout);
 
               Session_T (Session_T const&) = delete;
               Session_T& operator= (Session_T const&) = delete;
@@ -86,7 +86,7 @@ namespace ACE
 
               bool is_reactive () const;
 
-              const ACE_Time_Value& timeout () const;
+              ACE_Time_Value const& timeout () const;
 
               void get_local_addr (ACE_INET_Addr& loc_addr) const;
 

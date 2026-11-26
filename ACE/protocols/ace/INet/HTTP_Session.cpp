@@ -26,9 +26,9 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    Session_T<ACE_SYNCH_USE>::Session_T (const ACE_Time_Value& timeout,
+    Session_T<ACE_SYNCH_USE>::Session_T (ACE_Time_Value const& timeout,
                                          bool keep_alive,
-                                         const ACE_Time_Value* alive_timeout)
+                                         ACE_Time_Value const* alive_timeout)
       : SessionBase (URL::HTTP_PORT, timeout, keep_alive, alive_timeout)
       {
         INET_TRACE ("ACE_HTTP_Session - ctor");
