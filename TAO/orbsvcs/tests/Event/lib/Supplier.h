@@ -79,7 +79,7 @@ public:
 
   /// Dump the results...
   virtual void dump_results (
-    const ACE_TCHAR* name,
+    ACE_TCHAR const *name,
     ACE_High_Res_Timer::global_scale_factor_type global_scale_factor);
 
   /// Add our statistics to @a stats.

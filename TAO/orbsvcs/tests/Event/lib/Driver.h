@@ -269,7 +269,7 @@ protected:
   int supplier_type_shift_;
 
   /// The name of a file where the process stores its pid
-  const ACE_TCHAR* pid_file_name_;
+  ACE_TCHAR const *pid_file_name_;
 
   /// Verbosity flag
   int verbose_;
@@ -291,7 +291,7 @@ protected:
   int use_remote_ec_;
 
   /// The name of the remote event service
-  const ACE_TCHAR *event_service_name_;
+  ACE_TCHAR const *event_service_name_;
 
   /// The event channel implementation
   POA_RtecEventChannelAdmin::EventChannel *ec_impl_;

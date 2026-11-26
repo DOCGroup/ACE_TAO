@@ -729,7 +729,7 @@ EC_Driver::parse_args (int &argc, ACE_TCHAR *argv [])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcmp (arg, ACE_TEXT("-verbose")) == 0)
         {

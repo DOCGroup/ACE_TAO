@@ -191,7 +191,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Consumer::Consumer (const char* name,
+Consumer::Consumer (char const *name,
                     int base_type)
   : EC_Counting_Consumer (name),
     event_base_count (0),

@@ -21,7 +21,7 @@
 class Consumer : public EC_Counting_Consumer
 {
 public:
-  Consumer (const char* name,
+  Consumer (char const *name,
             int event_base_type);
   Consumer (Consumer const &) = delete;
   Consumer &operator= (Consumer const &) = delete;

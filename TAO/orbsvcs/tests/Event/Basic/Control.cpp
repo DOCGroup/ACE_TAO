@@ -143,7 +143,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
 // ****************************************************************
 
-Consumer::Consumer (const char* name,
+Consumer::Consumer (char const *name,
                     int shutdown_count)
   : EC_Counting_Consumer (name),
     shutdown_count_ (shutdown_count)

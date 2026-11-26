@@ -87,7 +87,7 @@ EC_Consumer::shutdown ()
 }
 
 void
-EC_Consumer::dump_results (const ACE_TCHAR* name,
+EC_Consumer::dump_results (ACE_TCHAR const *name,
                            ACE_High_Res_Timer::global_scale_factor_type gsf)
 {
   this->throughput_.dump_results (name, gsf);

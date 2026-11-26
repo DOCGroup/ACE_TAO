@@ -1,6 +1,6 @@
 #include "Counting_Consumer.h"
 
-EC_Counting_Consumer::EC_Counting_Consumer (const char* name)
+EC_Counting_Consumer::EC_Counting_Consumer (char const *name)
   : event_count (0),
     disconnect_count (0),
     name_ (name)

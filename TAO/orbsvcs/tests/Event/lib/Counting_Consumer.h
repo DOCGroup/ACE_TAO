@@ -26,7 +26,7 @@
 class EC_Test_Export EC_Counting_Consumer : public POA_RtecEventComm::PushConsumer
 {
 public:
-  EC_Counting_Consumer (const char* name);
+  EC_Counting_Consumer (char const *name);
 
   /// Simple connect/disconnect methods..
   void connect (RtecEventChannelAdmin::ConsumerAdmin_ptr consumer_admin,
@@ -56,7 +56,7 @@ protected:
   RtecEventChannelAdmin::ProxyPushSupplier_var supplier_proxy_;
 
   /// The name
-  const char* name_;
+  char const *name_;
 };
 
 #endif /* ECT_CONSUMER_H */
