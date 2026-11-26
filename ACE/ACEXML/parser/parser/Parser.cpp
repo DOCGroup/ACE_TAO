@@ -19,16 +19,16 @@
 static constexpr ACEXML_Char default_attribute_type[] = ACE_TEXT ("CDATA");
 static constexpr ACEXML_Char empty_string[] = { 0 };
 
-const ACEXML_Char
+ACEXML_Char const
 ACEXML_Parser::simple_parsing_feature_[] = ACE_TEXT ("Simple");
 
-const ACEXML_Char
+ACEXML_Char const
 ACEXML_Parser::namespaces_feature_[] = ACE_TEXT ("http://xml.org/sax/features/namespaces");
 
-const ACEXML_Char
+ACEXML_Char const
 ACEXML_Parser::namespace_prefixes_feature_[] = ACE_TEXT ("http://xml.org/sax/features/namespace-prefixes");
 
-const ACEXML_Char
+ACEXML_Char const
 ACEXML_Parser::validation_feature_[] = ACE_TEXT ("http://xml.org/sax/features/validation");
 
 ACEXML_Parser::ACEXML_Parser ()
@@ -2455,7 +2455,7 @@ ACEXML_Parser::parse_version_num (ACEXML_Char*& str)
 int
 ACEXML_Parser::parse_system_literal (ACEXML_Char*& str)
 {
-  const ACEXML_Char quote = this->get();
+  ACEXML_Char const quote = this->get();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
     {
       return -1;
@@ -2490,7 +2490,7 @@ ACEXML_Parser::parse_system_literal (ACEXML_Char*& str)
 int
 ACEXML_Parser::parse_pubid_literal (ACEXML_Char*& str)
 {
-  const ACEXML_Char quote = this->get();
+  ACEXML_Char const quote = this->get();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
     {
       return -1;
@@ -2517,7 +2517,7 @@ ACEXML_Parser::parse_pubid_literal (ACEXML_Char*& str)
 int
 ACEXML_Parser::parse_encname (ACEXML_Char*& str)
 {
-  const ACEXML_Char quote = this->get ();
+  ACEXML_Char const quote = this->get ();
   if (quote != '\'' && quote != '"')  // Not a quoted string.
     {
       return -1;

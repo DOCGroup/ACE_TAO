@@ -69,7 +69,7 @@ public:
 
 #endif /* ACE_USES_WCHAR */
 
-  static const ACEXML_Char base_char_table_[256];
+  static ACEXML_Char const base_char_table_[256];
 
   static ACEXML_Char const *predef_ent_[];
 

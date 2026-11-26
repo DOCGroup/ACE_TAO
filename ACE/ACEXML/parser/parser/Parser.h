@@ -708,7 +708,7 @@ private:
    * to parse a simple XML stream without mandated XML prolog
    * and no DTD definition.
    */
-  static const ACEXML_Char simple_parsing_feature_[];
+  static ACEXML_Char const simple_parsing_feature_[];
 
   /**
    * @var namespaces_feature_
@@ -717,7 +717,7 @@ private:
    * feature is enabled, ACEXML parser allows access by namespace qualified
    * names.
    */
-  static const ACEXML_Char namespaces_feature_[];
+  static ACEXML_Char const namespaces_feature_[];
 
   /**
    *  @var namespace_prefixes_feature_
@@ -728,7 +728,7 @@ private:
    *  feature is enabled, the list of attributes contains the namespace
    *  declarations also.
    */
-  static const ACEXML_Char namespace_prefixes_feature_[];
+  static ACEXML_Char const namespace_prefixes_feature_[];
 
   /**
    *  @var validation_feature_
@@ -737,7 +737,7 @@ private:
    *  this feature is enabled, the parser validates the document in
    *  addition to checking for well-formedness.
    */
-  static const ACEXML_Char validation_feature_[];
+  static ACEXML_Char const validation_feature_[];
 
   /* @} */
 

@@ -19,7 +19,7 @@ ACEXML_Char const *ACEXML_ParserInt::predef_val_[] = {
 // Optimize away the most common cases. Any compiler worth it's salt should
 // give generate a single memory access.
 
-const ACEXML_Char ACEXML_ParserInt::base_char_table_[] = {
+ACEXML_Char const ACEXML_ParserInt::base_char_table_[] = {
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* 0x0000 - 0x000F */
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* 0x0010 - 0x001F */
   0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, /* 0x0020 - 0x002F */
