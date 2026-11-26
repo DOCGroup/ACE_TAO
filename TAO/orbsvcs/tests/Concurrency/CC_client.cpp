@@ -375,7 +375,7 @@ CC_Client::init_naming_service ()
 
       this->naming_service_->Init (this->orb_.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }
@@ -440,7 +440,7 @@ CC_Client::init (int argc, ACE_TCHAR **argv)
       ACE_DEBUG ((LM_DEBUG,
                   "Factory received OK\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("CC_Client::init");
       return -1;

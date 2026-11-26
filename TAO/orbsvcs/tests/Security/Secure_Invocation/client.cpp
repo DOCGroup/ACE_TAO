@@ -54,7 +54,7 @@ insecure_invocation_test (CORBA::ORB_ptr orb,
       // exception.
       server->baz ();
     }
-  catch (const CORBA::NO_PERMISSION&)
+  catch (CORBA::NO_PERMISSION const &)
     {
       ACE_DEBUG ((LM_INFO,
                   "(%P|%t) Received CORBA::NO_PERMISSION from "
@@ -149,7 +149,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

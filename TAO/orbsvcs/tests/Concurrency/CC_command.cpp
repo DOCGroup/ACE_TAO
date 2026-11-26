@@ -61,7 +61,7 @@ CC_Command::GetLockSet (char const* lock_set_name)
           }
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       throw;
     }
@@ -139,7 +139,7 @@ int CC_CreateLockSet_Cmd::execute()
           cc_lockset_ = lock_set;
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("CC_CreateLockSet_Cmd::execute()");
     }
@@ -175,7 +175,7 @@ int CC_Lock_Cmd::execute()
         GetLockSet (name_.c_str ());
       ccls->lock (mode_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("CC_Lock_Cmd::execute()");
       return 0;
@@ -211,7 +211,7 @@ int CC_UnLock_Cmd::execute()
 
       ccls->unlock (mode_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("CC_UnLock_Cmd::execute()");
       return 0;
@@ -262,7 +262,7 @@ int CC_TryLock_Cmd::execute()
                       CC_TestUtils::get_lock_mode_name (mode_)));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("CC_TryLock_Cmd::execute()");
       return 0;
@@ -305,7 +305,7 @@ int CC_ChangeMode_Cmd::execute()
 
       ccls->change_mode (held_mode_, new_mode_);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("CC_ChangeMode_Cmd::execute()");
     }
@@ -459,7 +459,7 @@ CC_Lookup_Cmd::execute()
 
           cc_lockset_ = ccls;
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception ("CC_UnLock_Cmd::execute()");
         }
