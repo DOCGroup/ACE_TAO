@@ -48,13 +48,13 @@ TAO_ValueDef_i::destroy_i ()
   // destroy the attribute's anonymous type, if any.
 
   TAO_IFR_Generic_Utils<TAO_AttributeDef_i>::destroy_special (
-      "attrs",
+      ACE_TEXT ("attrs"),
       this->repo_,
       this->section_key_
     );
 
   TAO_IFR_Generic_Utils<TAO_OperationDef_i>::destroy_special (
-      "ops",
+      ACE_TEXT ("ops"),
       this->repo_,
       this->section_key_
     );
@@ -135,7 +135,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
   ACE_Configuration_Section_Key supported_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "supported",
+                                          ACE_TEXT ("supported"),
                                           false,
                                           supported_key);
 
@@ -147,7 +147,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (supported_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
   seq->length (count);
   ACE_TString holder;
@@ -155,7 +155,7 @@ TAO_ValueDef_i::supported_interfaces_i ()
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->get_string_value (supported_key,
                                                 stringified,
                                                 holder);
@@ -187,16 +187,16 @@ TAO_ValueDef_i::supported_interfaces_i (
     CORBA::InterfaceDefSeq const &supported_interfaces)
 {
   this->repo_->config ()->remove_section (this->section_key_,
-                                          "supported",
+                                          ACE_TEXT ("supported"),
                                           false);
   ACE_Configuration_Section_Key supported_key;
   this->repo_->config ()->open_section (this->section_key_,
-                                        "supported",
+                                        ACE_TEXT ("supported"),
                                         true,
                                         supported_key);
   CORBA::ULong count = supported_interfaces.length ();
   this->repo_->config ()->set_integer_value (supported_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
   CORBA::ULong kind = 0;
   bool concrete_seen = false;
@@ -213,12 +213,12 @@ TAO_ValueDef_i::supported_interfaces_i (
       // the name clash checker for base interfaces is static, and has
       // no other way to know about a specific key.
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                           supported_path,
+                                           ACE_TEXT_CHAR_TO_TCHAR (supported_path),
                                            TAO_IFR_Service_Utils::tmp_key_,
                                            false);
       this->repo_->config ()->get_integer_value (
                                   TAO_IFR_Service_Utils::tmp_key_,
-                                  "def_kind",
+                                  ACE_TEXT ("def_kind"),
                                   kind
                                 );
       def_kind = static_cast<CORBA::DefinitionKind> (kind);
@@ -243,12 +243,12 @@ TAO_ValueDef_i::supported_interfaces_i (
                                           this->repo_,
                                           CORBA::dk_Value);
 
-      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       char const * const supported_id =
         supported_interfaces[i]->_interface_repository_id ();
       this->repo_->config ()->set_string_value (supported_key,
                                                 stringified,
-                                                supported_id);
+                                                ACE_TEXT_CHAR_TO_TCHAR (supported_id));
     }
 }
 
