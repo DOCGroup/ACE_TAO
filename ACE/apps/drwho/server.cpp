@@ -91,7 +91,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   Options::set_options (argc, argv);
   Options::set_opt (Options::STAND_ALONE_SERVER);
 
-  const bool inetd_controlled = started_by_inetd ();
+  bool const inetd_controlled = started_by_inetd ();
 
   if (!inetd_controlled && Options::get_opt (Options::BE_A_DAEMON))
   {

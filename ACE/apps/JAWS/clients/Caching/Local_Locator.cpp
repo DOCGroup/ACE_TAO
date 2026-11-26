@@ -10,7 +10,7 @@
 int
 ACE_URL_Local_Locator::url_query (const ACE_URL_Locator::ACE_Selection_Criteria how,
                                   ACE_URL_Property_Seq const *pseq,
-                                  const size_t how_many,
+                                  size_t const how_many,
                                   size_t &num_query,
                                   ACE_URL_Offer_Seq *offer)
 {

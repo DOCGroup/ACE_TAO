@@ -82,7 +82,7 @@ class ACE_Svc_Export ACE_URL_Local_Locator
    */
   virtual int url_query (const ACE_URL_Locator::ACE_Selection_Criteria how,
                          ACE_URL_Property_Seq const *pseq,
-                         const size_t how_many,
+                         size_t const how_many,
                          size_t &num_query,
                          ACE_URL_Offer_Seq *offer);
 
