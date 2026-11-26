@@ -1391,12 +1391,12 @@ TAO_Container_i::create_value_box_i (char const *id,
 
   this->repo_->config ()->set_string_value (new_key,
                                             ACE_TEXT ("boxed_type"),
-                                            boxed_path);
+                                            ACE_TEXT_CHAR_TO_TCHAR (boxed_path));
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_ValueBox,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::ValueBoxDef::_narrow (obj.in ());
@@ -1463,20 +1463,20 @@ TAO_Container_i::create_exception_i (char const *id,
 
       this->repo_->config ()->set_string_value (member_key,
                                                 ACE_TEXT ("name"),
-                                                members[i].name.in ());
+                                                ACE_TEXT_CHAR_TO_TCHAR (members[i].name.in ()));
 
       member_path =
         TAO_IFR_Service_Utils::reference_to_path (members[i].type_def.in ());
 
       this->repo_->config ()->set_string_value (member_key,
                                                 ACE_TEXT ("path"),
-                                                member_path);
+                                                ACE_TEXT_CHAR_TO_TCHAR (member_path));
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Exception,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::ExceptionDef::_narrow (obj.in ());
@@ -1518,7 +1518,7 @@ TAO_Container_i::create_native_i (char const *id,
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Native,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::NativeDef::_narrow (obj.in ());
@@ -1584,14 +1584,14 @@ TAO_Container_i::create_abstract_interface_i (
           ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (inherited_key,
                                                     stringified,
-                                                    inherited_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR (inherited_path));
         }
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_AbstractInterface,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::AbstractInterfaceDef::_narrow (obj.in ());
