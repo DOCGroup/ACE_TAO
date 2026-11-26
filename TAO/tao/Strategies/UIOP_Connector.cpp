@@ -319,7 +319,7 @@ TAO_UIOP_Connector::create_profile (TAO_InputCDR& cdr)
                   TAO_UIOP_Profile (this->orb_core ()),
                   nullptr);
 
-  const int r = pfile->decode (cdr);
+  int const r = pfile->decode (cdr);
   if (r == -1)
     {
       pfile->_decr_refcnt ();

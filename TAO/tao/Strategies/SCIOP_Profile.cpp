@@ -16,7 +16,7 @@
 #include <cstring>
 #include <memory>
 
-static const char prefix_[] = "sciop";
+static char const prefix_[] = "sciop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -340,7 +340,7 @@ TAO_SCIOP_Profile::to_string () const
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
-  static const char digits [] = "0123456789";
+  static char const digits [] = "0123456789";
 
   std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s:%d%c%s",
@@ -478,7 +478,7 @@ TAO_SCIOP_Profile::decode_endpoints ()
 
   if (this->tagged_components_.get_component (tagged_component))
     {
-      const CORBA::Octet *buf =
+      CORBA::Octet const *buf =
         tagged_component.component_data.get_buffer ();
 
       TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),

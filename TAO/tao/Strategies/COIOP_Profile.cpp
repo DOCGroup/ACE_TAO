@@ -13,7 +13,7 @@
 #include <cstring>
 #include <memory>
 
-static const char the_prefix[] = "niop";
+static char const the_prefix[] = "niop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -227,7 +227,7 @@ TAO_COIOP_Profile::to_string () const
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
-  static const char digits [] = "0123456789";
+  static char const digits [] = "0123456789";
 
   std::sprintf (buf,
                    "corbaloc:%s:%c.%c@%s%c%s",
@@ -346,7 +346,7 @@ TAO_COIOP_Profile::decode_endpoints ()
 
   if (this->tagged_components_.get_component (tagged_component))
     {
-      const CORBA::Octet *buf =
+      CORBA::Octet const *buf =
         tagged_component.component_data.get_buffer ();
 
       TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),

@@ -16,7 +16,7 @@
 #include <cstdio>
 #include <cstdlib>
 
-static const char the_prefix[] = "diop";
+static char const the_prefix[] = "diop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -420,7 +420,7 @@ TAO_DIOP_Profile::to_string () const
 #endif /* ACE_HAS_IPV6 */
    }
 
-  static const char digits [] = "0123456789";
+  static char const digits [] = "0123456789";
 
   char * buf = CORBA::string_alloc (static_cast<CORBA::ULong> (buflen));
 
@@ -596,7 +596,7 @@ TAO_DIOP_Profile::decode_endpoints ()
 
   if (this->tagged_components_.get_component (tagged_component))
     {
-      const CORBA::Octet *buf =
+      CORBA::Octet const *buf =
         tagged_component.component_data.get_buffer ();
 
       TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),

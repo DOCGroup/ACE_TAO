@@ -7,7 +7,7 @@
 #include "tao/ORB_Constants.h"
 #include "ace/OS_NS_strings.h"
 
-static const char prefix_[] = "uiop";
+static char const prefix_[] = "uiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

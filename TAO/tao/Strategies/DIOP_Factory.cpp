@@ -9,7 +9,7 @@
 
 #include "ace/OS_NS_strings.h"
 
-static const char the_prefix[] = "diop";
+static char const the_prefix[] = "diop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

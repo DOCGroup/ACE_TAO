@@ -298,7 +298,7 @@ TAO_COIOP_Acceptor::parse_options (char const *str)
 
   size_t const len = options.length ();
 
-  const char option_delimiter = '&';
+  char const option_delimiter = '&';
 
   // Count the number of options.
 

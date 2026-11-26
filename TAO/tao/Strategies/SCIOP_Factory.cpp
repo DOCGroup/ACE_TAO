@@ -7,7 +7,7 @@
 
 #include "tao/IOPC.h"
 
-static const char prefix_[] = "sciop";
+static char const prefix_[] = "sciop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
