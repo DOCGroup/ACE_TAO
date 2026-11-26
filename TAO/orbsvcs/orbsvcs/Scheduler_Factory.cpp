@@ -163,7 +163,7 @@ static_server ()
       ORBSVCS_DEBUG ((LM_DEBUG,
                   ACE_TEXT("ACE_Scheduler_Factory - configured static server\n")));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         ACE_TEXT("ACE_Scheduler_Factory::config_runtime - ")
@@ -202,7 +202,7 @@ ACE_Scheduler_Factory::use_config (CosNaming::NamingContext_ptr naming,
       server_ =
         RtecScheduler::Scheduler::_narrow(objref.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       server_ = nullptr;
       ex._tao_print_exception (
@@ -721,7 +721,7 @@ ACE_Scheduler_Factory::log_scheduling_tuples(
       }
     }
 
-   static const char subset_tuple_format[] =
+   static char const subset_tuple_format[] =
      "             {\n"
      "%13d, /* handle */\n"
      "%13lu, /* rate_index */\n"

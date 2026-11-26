@@ -144,8 +144,8 @@ TAO_IOR_Multicast::common_init (char const *ior,
 }
 
 int
-TAO_IOR_Multicast::handle_timeout (const ACE_Time_Value &,
-                                   const void *)
+TAO_IOR_Multicast::handle_timeout (ACE_Time_Value const &,
+                                   void const *)
 {
   return 0;
 }
