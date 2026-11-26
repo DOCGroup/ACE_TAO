@@ -93,7 +93,7 @@ public:
    * @param mode optional, the protection mode for either the backing store
    * file (for ACE_Mutex use) or the ACE_SV_Semaphore_Complex that's created.
    */
-  ACE_Process_Mutex (const char *name = nullptr,
+  ACE_Process_Mutex (char const *name = nullptr,
                      void *arg = nullptr,
                      mode_t mode = ACE_DEFAULT_FILE_PERMS);
 
@@ -195,11 +195,11 @@ public:
 #endif /* !_ACE_USE_SV_SEM */
 
   /// Get the name used for the lock, or null if no name is used.
-  const ACE_TCHAR *name () const;
+  ACE_TCHAR const *name () const;
 
   /// If a file was created as the underlying storage for the mutex,
   /// remove it from the filesystem.
-  static int unlink (const ACE_TCHAR *name);
+  static int unlink (ACE_TCHAR const *name);
 
   /// Dump the state of an object.
   void dump () const;
@@ -213,7 +213,7 @@ private:
   ACE_TCHAR name_[ACE_UNIQUE_NAME_LEN];
 
   /// Create and return the unique name.
-  const ACE_TCHAR *unique_name ();
+  ACE_TCHAR const *unique_name ();
 
 #if defined (_ACE_USE_SV_SEM)
   /// We need this to get the right semantics...

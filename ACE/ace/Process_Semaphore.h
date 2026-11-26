@@ -38,7 +38,7 @@ public:
   /// Initialize the semaphore, with an initial value of @a count and a
   /// maximum value of @a max.
   ACE_Process_Semaphore (u_int count = 1, // By default make this unlocked.
-                         const ACE_TCHAR *name = nullptr,
+                         ACE_TCHAR const *name = nullptr,
                          void * = nullptr,
                          int max = 0x7FFFFFFF);
 
@@ -139,7 +139,7 @@ template<>
 class ACE_Export ACE_Malloc_Lock_Adapter_T<ACE_Process_Semaphore>
 {
 public:
-  ACE_Process_Semaphore * operator () (const ACE_TCHAR *name);
+  ACE_Process_Semaphore * operator () (ACE_TCHAR const *name);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

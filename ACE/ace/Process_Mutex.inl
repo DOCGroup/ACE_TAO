@@ -111,7 +111,7 @@ ACE_Process_Mutex::tryacquire_write_upgrade ()
   return 0;
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Process_Mutex::name () const
 {
 #if defined _ACE_USE_SV_SEM || !defined ACE_MUTEX_USE_PROCESS_LOCK
