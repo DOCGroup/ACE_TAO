@@ -40,19 +40,19 @@ protected:
   /// repo.
   static void* instance (ACE_TCHAR const *name, bool no_global = false);
 
-  static void* instance (const ACE_Service_Gestalt* repo,
+  static void* instance (ACE_Service_Gestalt const* repo,
                          ACE_TCHAR const *name,
                          bool no_global = false);
 
   /// No need to create, or assign instances of this class
   ACE_Dynamic_Service_Base ();
   ~ACE_Dynamic_Service_Base ();
-  const ACE_Dynamic_Service_Base& operator= (const ACE_Dynamic_Service_Base&);
+  ACE_Dynamic_Service_Base const& operator= (ACE_Dynamic_Service_Base const&);
 
 private:
   /// Implement the service search policy, i.e. "look for the service first
   /// locally and then globally"
-  static const ACE_Service_Type *find_i (const ACE_Service_Gestalt* &repo,
+  static ACE_Service_Type const *find_i (ACE_Service_Gestalt const* &repo,
                                          ACE_TCHAR const *name,
                                          bool no_global);
 

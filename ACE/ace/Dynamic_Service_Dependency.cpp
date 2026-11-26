@@ -11,7 +11,7 @@ ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (ACE_TCHAR const 
   this->init (ACE_Service_Config::current (), principal);
 }
 
-ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (const ACE_Service_Gestalt *cfg,
+ACE_Dynamic_Service_Dependency::ACE_Dynamic_Service_Dependency (ACE_Service_Gestalt const *cfg,
                                                                 ACE_TCHAR const *principal)
 {
   this->init (cfg, principal);
@@ -28,10 +28,10 @@ ACE_Dynamic_Service_Dependency::~ACE_Dynamic_Service_Dependency ()
 }
 
 void
-ACE_Dynamic_Service_Dependency::init (const ACE_Service_Gestalt *cfg,
+ACE_Dynamic_Service_Dependency::init (ACE_Service_Gestalt const *cfg,
                                       ACE_TCHAR const *principal)
 {
-  const ACE_Service_Type* st =
+  ACE_Service_Type const* st =
     ACE_Dynamic_Service_Base::find_i (cfg, principal,false);
   if (ACE::debug ())
     {

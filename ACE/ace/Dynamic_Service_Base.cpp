@@ -31,13 +31,13 @@ ACE_Dynamic_Service_Base::instance (ACE_TCHAR const *name, bool no_global)
 
 // Find a service registration
 
-const ACE_Service_Type *
-ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
+ACE_Service_Type const *
+ACE_Dynamic_Service_Base::find_i (ACE_Service_Gestalt const* &repo,
                                   ACE_TCHAR const *name,
                                   bool no_global)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::find_i");
-  const ACE_Service_Type *svc_rec {};
+  ACE_Service_Type const *svc_rec {};
 
   ACE_Service_Gestalt* global = ACE_Service_Config::global ();
 
@@ -55,17 +55,17 @@ ACE_Dynamic_Service_Base::find_i (const ACE_Service_Gestalt* &repo,
 
 // Get the instance using <name> for specific configuration repository.
 void *
-ACE_Dynamic_Service_Base::instance (const ACE_Service_Gestalt* repo,
+ACE_Dynamic_Service_Base::instance (ACE_Service_Gestalt const* repo,
                                     ACE_TCHAR const *name,
                                     bool no_global)
 {
   ACE_TRACE ("ACE_Dynamic_Service_Base::instance");
 
   void *obj {};
-  const ACE_Service_Type_Impl *type {};
+  ACE_Service_Type_Impl const *type {};
 
-  const ACE_Service_Gestalt* repo_found = repo;
-  const ACE_Service_Type *svc_rec = find_i (repo_found, name, no_global);
+  ACE_Service_Gestalt const* repo_found = repo;
+  ACE_Service_Type const *svc_rec = find_i (repo_found, name, no_global);
   if (svc_rec != nullptr)
     {
       type = svc_rec->type ();
