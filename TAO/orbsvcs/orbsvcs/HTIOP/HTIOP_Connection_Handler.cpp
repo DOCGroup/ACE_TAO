@@ -324,7 +324,7 @@ TAO::HTIOP::Connection_Handler::set_dscp_codepoint (
 }
 
 int
-TAO::HTIOP::Connection_Handler::handle_write_ready (const ACE_Time_Value *t)
+TAO::HTIOP::Connection_Handler::handle_write_ready (ACE_Time_Value const *t)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), t);
 }

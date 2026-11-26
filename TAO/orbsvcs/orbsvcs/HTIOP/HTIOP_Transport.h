@@ -79,7 +79,7 @@ namespace TAO
 
       ssize_t recv (char *buf,
                             size_t len,
-                            const ACE_Time_Value *s = nullptr) override;
+                            ACE_Time_Value const *s = nullptr) override;
 
       int register_handler () override;
 

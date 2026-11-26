@@ -104,7 +104,7 @@ namespace TAO
       /// @name TAO_Connection_Handler overloads
       /// @{
       int release_os_resources () override;
-      int handle_write_ready (const ACE_Time_Value *timeout) override;
+      int handle_write_ready (ACE_Time_Value const *timeout) override;
       /// @}
 
     private:

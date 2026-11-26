@@ -18,7 +18,7 @@ static constexpr char the_prefix[] = "htiop";
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-const char TAO::HTIOP::Profile::object_key_delimiter_ = '/';
+char const TAO::HTIOP::Profile::object_key_delimiter_ = '/';
 
 char
 TAO::HTIOP::Profile::object_key_delimiter () const
@@ -414,7 +414,7 @@ TAO::HTIOP::Profile::encode_endpoints ()
   CORBA::Octet *buf =
     tagged_component.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *iterator = out_cdr.begin ();
+  for (ACE_Message_Block const *iterator = out_cdr.begin ();
        iterator != nullptr;
        iterator = iterator->cont ())
     {
@@ -439,7 +439,7 @@ TAO::HTIOP::Profile::decode_endpoints ()
 
   if (this->tagged_components_.get_component (tagged_component))
     {
-      const CORBA::Octet *buf =
+      CORBA::Octet const *buf =
         tagged_component.component_data.get_buffer ();
 
       TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),

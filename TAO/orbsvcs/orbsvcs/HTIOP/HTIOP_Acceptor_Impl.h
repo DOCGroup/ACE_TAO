@@ -61,7 +61,7 @@ namespace TAO
 
       /// Initialize @c peer_acceptor_ with @a local_addr.  If the
       /// process runs out of handles, purge some "old" connections.
-      int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+      int open (ACE_PEER_ACCEPTOR_ADDR const &local_addr,
                 bool restart = false) override;
 
       /// Delegates to the @c accept() method of the peer acceptor. If the

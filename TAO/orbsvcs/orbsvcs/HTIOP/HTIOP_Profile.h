@@ -44,7 +44,7 @@ namespace TAO
     {
     public:
       /// The object key delimiter that HTIOP uses or expects.
-      static const char object_key_delimiter_;
+      static char const object_key_delimiter_;
       char object_key_delimiter () const override;
 
       /// Return the char string prefix.

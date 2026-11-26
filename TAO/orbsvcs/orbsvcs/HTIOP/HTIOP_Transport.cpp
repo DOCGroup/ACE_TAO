@@ -47,7 +47,7 @@ TAO::HTIOP::Transport::connection_handler_i ()
 ssize_t
 TAO::HTIOP::Transport::send (iovec *iov, int iovcnt,
                             size_t &bytes_transferred,
-                            const ACE_Time_Value *max_wait_time)
+                            ACE_Time_Value const *max_wait_time)
 {
   ssize_t retval = this->connection_handler_->peer ().sendv (iov, iovcnt,
                                                              max_wait_time);
@@ -62,7 +62,7 @@ TAO::HTIOP::Transport::send (iovec *iov, int iovcnt,
 ssize_t
 TAO::HTIOP::Transport::recv (char *buf,
                              size_t len,
-                             const ACE_Time_Value *max_wait_time)
+                             ACE_Time_Value const *max_wait_time)
 {
   ssize_t n = this->connection_handler_->peer ().recv (buf,
                                                        len,
