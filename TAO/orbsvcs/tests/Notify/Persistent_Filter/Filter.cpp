@@ -453,8 +453,8 @@ FilterClient::get_consumeradmin ()
 
 void
 FilterClient::verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
-                             const char* constraint_expr,
-                             const char* mod_constraint_expr)
+                             char const *constraint_expr,
+                             char const *mod_constraint_expr)
 {
   ACE_UNUSED_ARG (constraint_expr);
   // only used to validate assert, which is
@@ -601,7 +601,7 @@ FilterClient::send_events ()
     }
 }
 
-Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (FilterClient* filter, const char* my_name)
+Filter_StructuredPushConsumer::Filter_StructuredPushConsumer (FilterClient* filter, char const *my_name)
   :filter_ (filter),
    my_name_ (my_name)
 {
@@ -681,7 +681,7 @@ Filter_StructuredPushConsumer::disconnect_structured_push_consumer ()
 
 /*****************************************************************/
 
-Filter_StructuredPushSupplier::Filter_StructuredPushSupplier  (const char* my_name)
+Filter_StructuredPushSupplier::Filter_StructuredPushSupplier  (char const *my_name)
     :my_name_ (my_name)
 {
 }

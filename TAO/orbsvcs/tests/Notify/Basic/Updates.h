@@ -83,7 +83,7 @@ protected:
   void create_EC ();
 
   /// Helper to add types.
-  void add_type (CosNotification::EventTypeSeq& type_seq, const char* type);
+  void add_type (CosNotification::EventTypeSeq& type_seq, char const *type);
 
   // test subscription_change
   void test_subscription_change ();

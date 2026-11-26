@@ -87,8 +87,8 @@ class FilterClient
   void wait_consumer_complete ();
 
   void verify_filter (CosNotifyFilter::FilterAdmin_var& admin,
-                      const char* constraint_expr,
-                      const char* mod_constraint_expr);
+                      char const *constraint_expr,
+                      char const *mod_constraint_expr);
 
   /// @name Data members
   /// @{
@@ -160,7 +160,7 @@ class FilterClient
 class Filter_StructuredPushConsumer : public POA_CosNotifyComm::StructuredPushConsumer
 {
 public:
-  Filter_StructuredPushConsumer (FilterClient* filter, const char *my_name);
+  Filter_StructuredPushConsumer (FilterClient* filter, char const *my_name);
 
   /// Connect the Consumer to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
@@ -216,7 +216,7 @@ protected:
 class Filter_StructuredPushSupplier : public POA_CosNotifyComm::StructuredPushSupplier
 {
 public:
-  Filter_StructuredPushSupplier (const char* my_name);
+  Filter_StructuredPushSupplier (char const *my_name);
 
   /// Connect the Supplier to the EventChannel.
   /// Creates a new proxy supplier and connects to it.
