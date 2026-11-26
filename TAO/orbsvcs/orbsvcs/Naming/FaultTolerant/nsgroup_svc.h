@@ -33,23 +33,23 @@ public:
    * The naming service shall provide a command line utility for creating
    * object groups.
    *
-   * @param group    group name
+   * @param group_name group name
    * @param policy   round
    *
    * @return 0 on success, -1 on failure, -2 on bad argument.
    */
- int group_create (ACE_TCHAR const *group, ACE_TCHAR const *policy);
+ int group_create (ACE_TCHAR const *group_name, ACE_TCHAR const *policy);
 
   /**
    *  The naming service shall provide a command line utility for binding an
    *  object group to a path in the naming service.
    *
-   *  @param group    group name
+   *  @param group_name group name
    *  @param path     stringified name in the naming service
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_bind (ACE_TCHAR const *group, ACE_TCHAR const *path);
+  int group_bind (ACE_TCHAR const *group_name, ACE_TCHAR const *path);
 
   /**
    *  @param path     stringified name in the naming service
@@ -70,34 +70,34 @@ public:
    *  The naming service shall provide a command line utility to modify the load
    *  balancing strategy for a specified object group.
    *
-   *  @param group    group name
+   *  @param group_name group name
    *  @param policy   round
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_modify (ACE_TCHAR const *group, ACE_TCHAR const *policy);
+  int group_modify (ACE_TCHAR const *group_name, ACE_TCHAR const *policy);
 
   /**
    *  The naming service shall provide a command line utility to remove a
    *  specified object group from the naming service.
    *
-   *  @param group    group name
+   *  @param group_name group name
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int group_remove (ACE_TCHAR const *group);
+  int group_remove (ACE_TCHAR const *group_name);
 
   /**
    *  The naming service shall provide a command line utility for adding object
    *  references to an object group.
    *
-   *  @param group    group name
+   *  @param group_name group name
    *  @param location member location string
    *  @param ior      member stringified ior
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int member_add (ACE_TCHAR const *group,
+  int member_add (ACE_TCHAR const *group_name,
                   ACE_TCHAR const *location,
                   ACE_TCHAR const *ior);
 
@@ -105,33 +105,33 @@ public:
    *  The naming service shall provide a command line utility for displaying all
    *  members (object references) for a specified object group.
    *
-   *  @param group    group name
+   *  @param group_name group name
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int member_list (ACE_TCHAR const *group);
+  int member_list (ACE_TCHAR const *group_name);
 
   /**
    *  The naming service shall provide a command line utility for removing
    *  object references from an object group.
    *
-   *  @param group    group name
+   *  @param group_name group name
    *  @param location member location string
    *
    *  @return 0 on success, -1 on failure, -2 on bad argument.
    */
-  int member_remove (ACE_TCHAR const *group, ACE_TCHAR const *location);
+  int member_remove (ACE_TCHAR const *group_name, ACE_TCHAR const *location);
 
   /**
    *  The naming service shall provide a command line utility to display an
    *  object reference from a specified object group.
    *
-   *  @param group    group name
+   *  @param group_name group name
    *  @param location member location string
    *
    *  @return zero for success; nonzero for failure.
    */
-  int member_show (ACE_TCHAR const *group, ACE_TCHAR const *location);
+  int member_show (ACE_TCHAR const *group_name, ACE_TCHAR const *location);
 
   /**
    *  @param group_name group name
