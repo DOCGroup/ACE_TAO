@@ -89,10 +89,10 @@ namespace ACE_OS {
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int fattach (int handle,
-               const char *path);
+               char const *path);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int fdetach (const char *file);
+  int fdetach (char const *file);
 
   /// UNIX-style @c ioctl
   ACE_NAMESPACE_INLINE_FUNCTION

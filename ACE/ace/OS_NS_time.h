@@ -234,7 +234,7 @@ namespace ACE_OS
   ACE_NAMESPACE_INLINE_FUNCTION
   size_t strftime (char *s,
                    size_t maxsize,
-                   const char *format,
+                   char const *format,
                    const struct tm *timeptr)
     ACE_GCC_FORMAT_ATTRIBUTE (strftime, 3, 0);
 
@@ -244,18 +244,18 @@ namespace ACE_OS
    * @note The struct @a tm will always be set to zero.
    */
   ACE_NAMESPACE_INLINE_FUNCTION
-  char *strptime (const char *buf,
-                  const char *format,
+  char *strptime (char const *buf,
+                  char const *format,
                   struct tm *tm);
 
 #if defined (ACE_LACKS_STRPTIME)
   extern ACE_Export
-  char *strptime_emulation (const char *buf,
-                            const char *format,
+  char *strptime_emulation (char const *buf,
+                            char const *format,
                             struct tm *tm);
 
   extern ACE_Export
-  int strptime_getnum (const char *buf, int *num, int *bi,
+  int strptime_getnum (char const *buf, int *num, int *bi,
                        int *fi, int min, int max);
 #endif /* ACE_LACKS_STRPTIME  */
 

@@ -53,7 +53,7 @@ ACE_OS::mktime (struct tm *t)
 
 #if defined (ACE_LACKS_STRPTIME)
 char *
-ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
+ACE_OS::strptime_emulation (char const *buf, char const *format, struct tm *tm)
 {
   int bi = 0;
   int fi = 0;
@@ -352,7 +352,7 @@ ACE_OS::strptime_emulation (const char *buf, const char *format, struct tm *tm)
 }
 
 int
-ACE_OS::strptime_getnum (const char *buf,
+ACE_OS::strptime_getnum (char const *buf,
                          int *num,
                          int *bi,
                          int *fi,

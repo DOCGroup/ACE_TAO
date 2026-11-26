@@ -77,7 +77,7 @@ ACE_OS::getpmsg (ACE_HANDLE handle,
 }
 
 ACE_INLINE int
-ACE_OS::fattach (int handle, const char *path)
+ACE_OS::fattach (int handle, char const *path)
 {
   ACE_OS_TRACE ("ACE_OS::fattach");
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -91,7 +91,7 @@ ACE_OS::fattach (int handle, const char *path)
 }
 
 ACE_INLINE int
-ACE_OS::fdetach (const char *file)
+ACE_OS::fdetach (char const *file)
 {
   ACE_OS_TRACE ("ACE_OS::fdetach");
 #if defined (ACE_HAS_STREAM_PIPES)

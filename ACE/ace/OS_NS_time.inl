@@ -402,7 +402,7 @@ ACE_OS::nanosleep (const struct timespec *requested,
 }
 
 ACE_INLINE size_t
-ACE_OS::strftime (char *s, size_t maxsize, const char *format,
+ACE_OS::strftime (char *s, size_t maxsize, char const *format,
                   const struct tm *timeptr)
 {
 #if defined (ACE_LACKS_STRFTIME)
@@ -424,7 +424,7 @@ ACE_OS::strftime (char *s, size_t maxsize, const char *format,
 }
 
 ACE_INLINE char *
-ACE_OS::strptime (const char *buf, const char *format, struct tm *tm)
+ACE_OS::strptime (char const *buf, char const *format, struct tm *tm)
 {
   ACE_OS::memset (tm, 0, sizeof (struct tm));
 #if defined (ACE_LACKS_STRPTIME)
