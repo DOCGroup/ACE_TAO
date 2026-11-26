@@ -39,7 +39,7 @@ namespace TAO
 //   namespace SSLIOP
 //   {
     /**
-     * @class Endpoint
+     * @class TAO_SSLIOP_Endpoint
      *
      * @brief SSLIOP-specific implementation of PP Framework Endpoint
      *        interface.

@@ -28,7 +28,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 //   namespace SSLIOP
 //   {
     /**
-     * @class Profile
+     * @class TAO_SSLIOP_Profile
      *
      * @brief This class defines the protocol specific attributes
      *        required for locating ORBs over a TCP/IP network, using
