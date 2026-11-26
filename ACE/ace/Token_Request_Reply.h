@@ -67,7 +67,7 @@ public:
                      ACE_UINT32 operation,
                      const ACE_TCHAR token_name[],
                      const ACE_TCHAR client_id[],
-                     const ACE_Synch_Options &options);
+                     ACE_Synch_Options const &options);
 
   /// Get the length of the encoded/decoded message.
   ACE_UINT32 length () const;
@@ -111,7 +111,7 @@ public:
   ACE_Synch_Options &options () const;
 
   /// Set the timeout.
-  void options (const ACE_Synch_Options &options);
+  void options (ACE_Synch_Options const &options);
 
   /// Get the token name and client ID, or set both names in one contiguous
   /// buffer.

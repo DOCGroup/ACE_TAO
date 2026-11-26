@@ -57,7 +57,7 @@ ACE_Token_Invariant_Manager::mutex_acquired (ACE_TCHAR const *token_name)
 }
 
 int
-ACE_Token_Invariant_Manager::acquired (const ACE_Token_Proxy *proxy)
+ACE_Token_Invariant_Manager::acquired (ACE_Token_Proxy const *proxy)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::acquired");
 
@@ -80,7 +80,7 @@ ACE_Token_Invariant_Manager::acquired (const ACE_Token_Proxy *proxy)
 }
 
 void
-ACE_Token_Invariant_Manager::releasing (const ACE_Token_Proxy *proxy)
+ACE_Token_Invariant_Manager::releasing (ACE_Token_Proxy const *proxy)
 {
   ACE_TRACE ("ACE_Token_Invariant_Manager::releasing");
 

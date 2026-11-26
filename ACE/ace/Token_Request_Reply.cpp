@@ -16,7 +16,7 @@ ACE_Token_Request::ACE_Token_Request (int token_type,
                                       ACE_UINT32 operation_type,
                                       const ACE_TCHAR token_name[],
                                       const ACE_TCHAR client_id[],
-                                      const ACE_Synch_Options &options)
+                                      ACE_Synch_Options const &options)
 {
   this->token_type (token_type);
   this->proxy_type (proxy_type);

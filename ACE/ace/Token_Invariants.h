@@ -49,10 +49,10 @@ public:
   /// @name Copy operations
   /// @{
   /// Copy construction.
-  ACE_Mutex_Invariants (const ACE_Mutex_Invariants &rhs) = default;
+  ACE_Mutex_Invariants (ACE_Mutex_Invariants const &rhs) = default;
 
   /// Copy.
-  ACE_Mutex_Invariants &operator= (const ACE_Mutex_Invariants &rhs) = default;
+  ACE_Mutex_Invariants &operator= (ACE_Mutex_Invariants const &rhs) = default;
   /// @}
 
   /// Dump the state of the class.
@@ -92,10 +92,10 @@ public:
   /// @name Copy operations
   /// @{
   /// Copy construction.
-  ACE_RWLock_Invariants (const ACE_RWLock_Invariants &rhs) = default;
+  ACE_RWLock_Invariants (ACE_RWLock_Invariants const &rhs) = default;
 
   /// Copy.
-  ACE_RWLock_Invariants &operator= (const ACE_RWLock_Invariants &rhs) = default;
+  ACE_RWLock_Invariants &operator= (ACE_RWLock_Invariants const &rhs) = default;
   /// @}
 
   /// Dump the state of the class.
@@ -132,10 +132,10 @@ public:
   /// @{
   /// Returns 1 on success, 0 when an invariant has been violated and
   /// -1 on error.
-  int acquired (const ACE_Token_Proxy *proxy);
+  int acquired (ACE_Token_Proxy const *proxy);
 
   /// Updates internal database.
-  void releasing (const ACE_Token_Proxy *proxy);
+  void releasing (ACE_Token_Proxy const *proxy);
   /// @}
 
   /// @name Explicit operations

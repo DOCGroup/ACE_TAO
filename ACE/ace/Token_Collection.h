@@ -99,7 +99,7 @@ public:
    * Is the specified token in the collection?
    * Returns true when the specified token is in the collection.
    */
-  bool is_member (const ACE_Token_Proxy &token);
+  bool is_member (ACE_Token_Proxy const &token);
   /// @}
 
   /// @name Collective operations

@@ -84,7 +84,7 @@ ACE_Token_Request::options () const
 }
 
 ACE_INLINE void
-ACE_Token_Request::options (const ACE_Synch_Options &opt)
+ACE_Token_Request::options (ACE_Synch_Options const &opt)
 {
   transfer_.use_timeout_ = opt[ACE_Synch_Options::USE_TIMEOUT];
   if (transfer_.use_timeout_ == 1)

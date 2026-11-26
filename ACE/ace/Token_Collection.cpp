@@ -71,7 +71,7 @@ ACE_Token_Collection::is_member (ACE_TCHAR const *token_name)
 }
 
 bool
-ACE_Token_Collection::is_member (const ACE_Token_Proxy &token)
+ACE_Token_Collection::is_member (ACE_Token_Proxy const &token)
 {
   ACE_TRACE ("ACE_Token_Collection::is_member");
   TOKEN_NAME const token_name (token.name ());
