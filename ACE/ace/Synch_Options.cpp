@@ -32,8 +32,8 @@ ACE_Synch_Options ACE_Synch_Options::synch;
 ACE_Synch_Options ACE_Synch_Options::asynch (ACE_Synch_Options::USE_REACTOR);
 
 ACE_Synch_Options::ACE_Synch_Options (unsigned long options,
-                                      const ACE_Time_Value &timeout,
-                                      const void *arg)
+                                      ACE_Time_Value const &timeout,
+                                      void const *arg)
 {
   // ACE_TRACE ("ACE_Synch_Options::ACE_Synch_Options");
   this->set (options, timeout, arg);
@@ -41,8 +41,8 @@ ACE_Synch_Options::ACE_Synch_Options (unsigned long options,
 
 void
 ACE_Synch_Options::set (unsigned long options,
-                        const ACE_Time_Value &timeout,
-                        const void *arg)
+                        ACE_Time_Value const &timeout,
+                        void const *arg)
 {
   // ACE_TRACE ("ACE_Synch_Options::set");
   this->options_ = options;
@@ -75,7 +75,7 @@ ACE_Synch_Options::operator= (unsigned long option)
   this->options_ |= option;
 }
 
-const ACE_Time_Value &
+ACE_Time_Value const &
 ACE_Synch_Options::timeout () const
 {
   ACE_TRACE ("ACE_Synch_Options::timeout");
@@ -83,20 +83,20 @@ ACE_Synch_Options::timeout () const
 }
 
 void
-ACE_Synch_Options::timeout (const ACE_Time_Value &tv)
+ACE_Synch_Options::timeout (ACE_Time_Value const &tv)
 {
   ACE_TRACE ("ACE_Synch_Options::timeout");
   this->timeout_ = tv;
 }
 
-const ACE_Time_Value *
+ACE_Time_Value const *
 ACE_Synch_Options::time_value () const
 {
   ACE_TRACE ("ACE_Synch_Options::time_value");
   return (*this)[USE_TIMEOUT] ? &this->timeout_ : nullptr;
 }
 
-const void *
+void const *
 ACE_Synch_Options::arg () const
 {
   ACE_TRACE ("ACE_Synch_Options::arg");
@@ -104,7 +104,7 @@ ACE_Synch_Options::arg () const
 }
 
 void
-ACE_Synch_Options::arg (const void *a)
+ACE_Synch_Options::arg (void const *a)
 {
   ACE_TRACE ("ACE_Synch_Options::arg");
   this->arg_ = a;

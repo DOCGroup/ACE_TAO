@@ -107,7 +107,7 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
 }
 
 ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
-                                const ACE_Sig_Set &sig_mask,
+                                ACE_Sig_Set const &sig_mask,
                                 int sig_flags)
 {
   // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
@@ -141,7 +141,7 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
 
 ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
                                 int signum,
-                                const ACE_Sig_Set &sig_mask,
+                                ACE_Sig_Set const &sig_mask,
                                 int sig_flags)
 {
   // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
@@ -153,9 +153,9 @@ ACE_Sig_Action::ACE_Sig_Action (ACE_SignalHandler sig_handler,
   ACE_OS::sigaction (signum, &this->sa_, nullptr);
 }
 
-ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
+ACE_Sig_Action::ACE_Sig_Action (ACE_Sig_Set const &signals,
                                 ACE_SignalHandler sig_handler,
-                                const ACE_Sig_Set &sig_mask,
+                                ACE_Sig_Set const &sig_mask,
                                 int sig_flags)
 {
   // ACE_TRACE ("ACE_Sig_Action::ACE_Sig_Action");
@@ -178,7 +178,7 @@ ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
 #endif /* ACE_NSIG <= 0  */
 }
 
-ACE_Sig_Action::ACE_Sig_Action (const ACE_Sig_Set &signals,
+ACE_Sig_Action::ACE_Sig_Action (ACE_Sig_Set const &signals,
                                 ACE_SignalHandler sig_handler,
                                 sigset_t *sig_mask,
                                 int sig_flags)

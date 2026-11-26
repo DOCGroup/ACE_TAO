@@ -107,7 +107,7 @@ public:
   /// Assigns the various fields of a @c sigaction struct but doesn't
   /// register for signal handling via the @c sigaction function.
   ACE_Sig_Action (ACE_SignalHandler handler,
-                  const ACE_Sig_Set &sigmask,
+                  ACE_Sig_Set const &sigmask,
                   int flags = 0);
 
   /**
@@ -127,7 +127,7 @@ public:
    */
   ACE_Sig_Action (ACE_SignalHandler handler,
                   int signum,
-                  const ACE_Sig_Set &sigmask,
+                  ACE_Sig_Set const &sigmask,
                   int flags = 0);
 
   /**
@@ -135,9 +135,9 @@ public:
    * the @a handler to process all @a signalss via the @c sigaction
    * function.
    */
-  ACE_Sig_Action (const ACE_Sig_Set &signalss,
+  ACE_Sig_Action (ACE_Sig_Set const &signalss,
                   ACE_SignalHandler handler,
-                  const ACE_Sig_Set &sigmask,
+                  ACE_Sig_Set const &sigmask,
                   int flags = 0);
 
   /**
@@ -145,12 +145,12 @@ public:
    * the @a handler to process all @a signalss via the @c sigaction
    * function.
    */
-  ACE_Sig_Action (const ACE_Sig_Set &signalss,
+  ACE_Sig_Action (ACE_Sig_Set const &signalss,
                   ACE_SignalHandler handler,
                   sigset_t *sigmask = nullptr,
                   int flags = 0);
 
-  ACE_Sig_Action (const ACE_Sig_Action&) = default;
+  ACE_Sig_Action (ACE_Sig_Action const&) = default;
   ACE_Sig_Action (ACE_Sig_Action&&) = default;
   ACE_Sig_Action& operator = (ACE_Sig_Action const &) = default;
   ACE_Sig_Action &operator = (ACE_Sig_Action&&)  = default;

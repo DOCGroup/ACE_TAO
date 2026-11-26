@@ -80,13 +80,13 @@ public:
    *                ACE_Synch_Options makes no use of it internally.
    */
   ACE_Synch_Options (unsigned long options = 0,
-                     const ACE_Time_Value &timeout = ACE_Time_Value(),
-                     const void *arg = nullptr);
+                     ACE_Time_Value const &timeout = ACE_Time_Value(),
+                     void const *arg = nullptr);
 
   /// Initialize the object; arguments are the same as for the
   void set (unsigned long options = 0,
-            const ACE_Time_Value &timeout = ACE_Time_Value::zero,
-            const void *arg = nullptr);
+            ACE_Time_Value const &timeout = ACE_Time_Value::zero,
+            void const *arg = nullptr);
 
   /// Returns true if the specified option(s) are enabled, false otherwise.
   bool operator[] (unsigned long option) const;
@@ -95,26 +95,26 @@ public:
   void operator= (unsigned long option);
 
   /// Returns the "magic cookie" argument.
-  const void *arg () const;
+  void const *arg () const;
 
   /// Set the "magic cookie" argument.
-  void arg (const void *);
+  void arg (void const *);
 
   /// Returns a reference to the ACE_Time_Value.  This value only makes
   /// sense if (*this)[USE_TIMEOUT] is true.
-  const ACE_Time_Value &timeout () const;
+  ACE_Time_Value const &timeout () const;
 
   /// Set the timeout value. This method does not alter the options; in
   /// particular, it doesn't add USE_TIMEOUT to the options when a non-zero
   /// timeout is specified as the constructor and set() do.
-  void timeout (const ACE_Time_Value &tv);
+  void timeout (ACE_Time_Value const &tv);
 
   /**
    * Returns a timeout pointer if (*this)[USE_TIMEOUT] is true, else 0.
    * This should be used with care, e.g., the timeout pointer should not
    * be stored in a manner that will lead to dangling pointers.
    */
-  const ACE_Time_Value *time_value () const;
+  ACE_Time_Value const *time_value () const;
 
   /// @name Common settings
   /// @{
@@ -148,7 +148,7 @@ private:
    * schedule_timer() method.  Used to communicate values for
    * asynchronous programming.
    */
-  const void *arg_;
+  void const *arg_;
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL
