@@ -100,7 +100,7 @@ Session::validate_connections ()
 }
 
 void
-Session::start (const Test::Session_List &other_sessions)
+Session::start (Test::Session_List const &other_sessions)
 {
   if (other_sessions.length () == 0)
   {

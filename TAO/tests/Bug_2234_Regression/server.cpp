@@ -536,14 +536,14 @@ public:
   // the any that we defined for this test.
   static void display_any (CORBA::Any const & arg)
   {
-    const CORBA::Any           *holding {};
-    const Test::MyVarStruct    *vS {};
-    const Test::MyNonVarStruct *fS {};
+    CORBA::Any const           *holding {};
+    Test::MyVarStruct const    *vS {};
+    Test::MyNonVarStruct const *fS {};
     char const *pString {};
     CORBA::Long                theLong {};
-    const Test::MyVarUnion     *vU {};
-    const Test::MyNonVarUnion  *fU {};
-    const Test::MySeqOfLong    *sL {};
+    Test::MyVarUnion const     *vU {};
+    Test::MyNonVarUnion const  *fU {};
+    Test::MySeqOfLong const    *sL {};
     Test::MyArray_forany       arr;
     CORBA::Object_var          obj;
 
