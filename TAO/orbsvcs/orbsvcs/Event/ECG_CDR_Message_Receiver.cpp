@@ -416,7 +416,7 @@ TAO_ECG_CDR_Message_Receiver::mark_received (ACE_INET_Addr const &from,
 int
 TAO_ECG_CDR_Message_Receiver::process_fragment (
                                    ACE_INET_Addr const &from,
-                                   const Mcast_Header &header,
+                                   Mcast_Header const &header,
                                    char * data_buf,
                                    TAO_ECG_CDR_Processor *cdr_processor)
 {

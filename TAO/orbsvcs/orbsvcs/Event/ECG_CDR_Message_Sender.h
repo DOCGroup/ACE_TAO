@@ -122,7 +122,7 @@ public:
    * bytes per-second, sleeping before sending more or queueing them
    * to send later via the reactor.
    */
-  void send_message (const TAO_OutputCDR &cdr,
+  void send_message (TAO_OutputCDR const &cdr,
                      ACE_INET_Addr const &addr);
 
 private:

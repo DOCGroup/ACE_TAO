@@ -37,9 +37,9 @@ class TAO_RTEvent_Serv_Export TAO_EC_Queue_Full_Service_Object : public ACE_Serv
 {
 public:
   TAO_EC_Queue_Full_Service_Object () = default;
-  TAO_EC_Queue_Full_Service_Object (const TAO_EC_Queue_Full_Service_Object&) = delete;
+  TAO_EC_Queue_Full_Service_Object (TAO_EC_Queue_Full_Service_Object const&) = delete;
   TAO_EC_Queue_Full_Service_Object (TAO_EC_Queue_Full_Service_Object&&) = delete;
-  TAO_EC_Queue_Full_Service_Object& operator= (const TAO_EC_Queue_Full_Service_Object&) = delete;
+  TAO_EC_Queue_Full_Service_Object& operator= (TAO_EC_Queue_Full_Service_Object const&) = delete;
   TAO_EC_Queue_Full_Service_Object& operator= (TAO_EC_Queue_Full_Service_Object&&) = delete;
 
   enum QueueFullActionReturnValue
@@ -60,9 +60,9 @@ class TAO_RTEvent_Serv_Export TAO_EC_Simple_Queue_Full_Action :
 {
 public:
   TAO_EC_Simple_Queue_Full_Action ();
-  TAO_EC_Simple_Queue_Full_Action (const TAO_EC_Simple_Queue_Full_Action&) = delete;
+  TAO_EC_Simple_Queue_Full_Action (TAO_EC_Simple_Queue_Full_Action const&) = delete;
   TAO_EC_Simple_Queue_Full_Action (TAO_EC_Simple_Queue_Full_Action&&) = delete;
-  TAO_EC_Simple_Queue_Full_Action& operator= (const TAO_EC_Simple_Queue_Full_Action&) = delete;
+  TAO_EC_Simple_Queue_Full_Action& operator= (TAO_EC_Simple_Queue_Full_Action const&) = delete;
   TAO_EC_Simple_Queue_Full_Action& operator= (TAO_EC_Simple_Queue_Full_Action&&) = delete;
 
   /// Helper function to register the default action into the service
@@ -90,9 +90,9 @@ public:
   TAO_EC_Queue (size_t high_water_mark = ACE_Message_Queue_Base::DEFAULT_HWM,
                 size_t low_water_mark = ACE_Message_Queue_Base::DEFAULT_LWM,
                 ACE_Notification_Strategy * = nullptr);
-  TAO_EC_Queue (const TAO_EC_Queue&) = delete;
+  TAO_EC_Queue (TAO_EC_Queue const&) = delete;
   TAO_EC_Queue (TAO_EC_Queue&&) = delete;
-  TAO_EC_Queue& operator= (const TAO_EC_Queue&) = delete;
+  TAO_EC_Queue& operator= (TAO_EC_Queue const&) = delete;
   TAO_EC_Queue& operator= (TAO_EC_Queue&&) = delete;
 
 protected:
@@ -121,9 +121,9 @@ public:
     ACE_Thread_Manager *thr_manager = nullptr,
     TAO_EC_Queue_Full_Service_Object *queue_full_service_object = nullptr);
 #endif
-  TAO_EC_Dispatching_Task (const TAO_EC_Dispatching_Task&) = delete;
+  TAO_EC_Dispatching_Task (TAO_EC_Dispatching_Task const&) = delete;
   TAO_EC_Dispatching_Task (TAO_EC_Dispatching_Task&&) = delete;
-  TAO_EC_Dispatching_Task& operator= (const TAO_EC_Dispatching_Task&) = delete;
+  TAO_EC_Dispatching_Task& operator= (TAO_EC_Dispatching_Task const&) = delete;
   TAO_EC_Dispatching_Task& operator= (TAO_EC_Dispatching_Task&&) = delete;
 
   /// Process the events in the queue.
@@ -158,9 +158,9 @@ public:
   explicit TAO_EC_Dispatch_Command (ACE_Data_Block*,
                                     ACE_Allocator *mb_allocator = nullptr);
 
-  TAO_EC_Dispatch_Command (const TAO_EC_Dispatch_Command&) = delete;
+  TAO_EC_Dispatch_Command (TAO_EC_Dispatch_Command const&) = delete;
   TAO_EC_Dispatch_Command (TAO_EC_Dispatch_Command&&) = delete;
-  TAO_EC_Dispatch_Command& operator= (const TAO_EC_Dispatch_Command&) = delete;
+  TAO_EC_Dispatch_Command& operator= (TAO_EC_Dispatch_Command const&) = delete;
   TAO_EC_Dispatch_Command& operator= (TAO_EC_Dispatch_Command&&) = delete;
 
   ~TAO_EC_Dispatch_Command () override = default;
@@ -175,9 +175,9 @@ class TAO_RTEvent_Serv_Export TAO_EC_Shutdown_Task_Command : public TAO_EC_Dispa
 {
 public:
   TAO_EC_Shutdown_Task_Command (ACE_Allocator *mb_allocator = nullptr);
-  TAO_EC_Shutdown_Task_Command (const TAO_EC_Shutdown_Task_Command&) = delete;
+  TAO_EC_Shutdown_Task_Command (TAO_EC_Shutdown_Task_Command const&) = delete;
   TAO_EC_Shutdown_Task_Command (TAO_EC_Shutdown_Task_Command&&) = delete;
-  TAO_EC_Shutdown_Task_Command& operator= (const TAO_EC_Shutdown_Task_Command&) = delete;
+  TAO_EC_Shutdown_Task_Command& operator= (TAO_EC_Shutdown_Task_Command const&) = delete;
   TAO_EC_Shutdown_Task_Command& operator= (TAO_EC_Shutdown_Task_Command&&) = delete;
 
   /// Command callback
@@ -194,9 +194,9 @@ public:
                        RtecEventComm::EventSet& event,
                        ACE_Data_Block* data_block,
                        ACE_Allocator *mb_allocator);
-  TAO_EC_Push_Command (const TAO_EC_Push_Command&) = delete;
+  TAO_EC_Push_Command (TAO_EC_Push_Command const&) = delete;
   TAO_EC_Push_Command (TAO_EC_Push_Command&&) = delete;
-  TAO_EC_Push_Command& operator= (const TAO_EC_Push_Command&) = delete;
+  TAO_EC_Push_Command& operator= (TAO_EC_Push_Command const&) = delete;
   TAO_EC_Push_Command& operator= (TAO_EC_Push_Command&&) = delete;
 
   ~TAO_EC_Push_Command () override;

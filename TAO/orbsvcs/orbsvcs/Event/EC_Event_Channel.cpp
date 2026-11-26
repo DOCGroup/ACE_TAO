@@ -5,7 +5,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Event_Channel::
-TAO_EC_Event_Channel (const TAO_EC_Event_Channel_Attributes& attr,
+TAO_EC_Event_Channel (TAO_EC_Event_Channel_Attributes const& attr,
                       TAO_EC_Factory* factory,
                       int own_factory)
   : TAO_EC_Event_Channel_Base (attr, factory, own_factory)

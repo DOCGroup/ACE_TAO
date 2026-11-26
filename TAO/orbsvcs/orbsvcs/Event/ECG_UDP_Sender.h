@@ -73,10 +73,10 @@ public:
               RtecEventChannelAdmin::ProxyPushSupplier_ptr proxy);
 
   TAO_ECG_UDP_Sender_Disconnect_Command (
-              const TAO_ECG_UDP_Sender_Disconnect_Command & rhs);
+              TAO_ECG_UDP_Sender_Disconnect_Command const & rhs);
 
   TAO_ECG_UDP_Sender_Disconnect_Command &
-   operator= (const TAO_ECG_UDP_Sender_Disconnect_Command & rhs);
+   operator= (TAO_ECG_UDP_Sender_Disconnect_Command const & rhs);
 
   void execute ();
 

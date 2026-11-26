@@ -194,7 +194,7 @@ public:
   /// TAO_ECG_Mcast_Gateway.  See class documentation above for more
   /// info.
   int init (char const *address_server_arg,
-            const Attributes & attributes = Attributes());
+            Attributes const & attributes = Attributes());
 
   /// Same as the method above, but also gives the client an opportunity to
   /// specify consumer qos, i.e., which EC traffic should get multicasted.
@@ -207,7 +207,7 @@ public:
    */
   int init (RtecEventChannelAdmin::ConsumerQOS const & consumer_qos,
             char const *address_server_arg,
-            const Attributes & attributes = Attributes());
+            Attributes const & attributes = Attributes());
 
   /// The main method - create, configure and run federation
   /// components according to the specified configuration.

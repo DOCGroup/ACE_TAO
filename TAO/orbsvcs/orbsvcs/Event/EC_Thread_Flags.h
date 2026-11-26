@@ -61,7 +61,7 @@ public:
 
     @note The \a sched value only gets set if the scheduler is specified using symbols.
   */
-  const TAO_EC_Thread_Flags& operator= (char const *symbolic_flags)
+  TAO_EC_Thread_Flags const& operator= (char const *symbolic_flags)
     { this->parse_symbols(symbolic_flags); return *this; }
 
   /*!

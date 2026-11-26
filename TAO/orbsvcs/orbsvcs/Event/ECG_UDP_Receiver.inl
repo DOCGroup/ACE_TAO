@@ -20,7 +20,7 @@ TAO_ECG_UDP_Receiver_Disconnect_Command (
 ACE_INLINE
 TAO_ECG_UDP_Receiver_Disconnect_Command::
 TAO_ECG_UDP_Receiver_Disconnect_Command (
-                          const TAO_ECG_UDP_Receiver_Disconnect_Command & rhs)
+                          TAO_ECG_UDP_Receiver_Disconnect_Command const & rhs)
   : proxy_ (RtecEventChannelAdmin::ProxyPushConsumer::_duplicate
             (rhs.proxy_.in ()))
 {
@@ -29,7 +29,7 @@ TAO_ECG_UDP_Receiver_Disconnect_Command (
 ACE_INLINE
 TAO_ECG_UDP_Receiver_Disconnect_Command &
 TAO_ECG_UDP_Receiver_Disconnect_Command::operator= (
-                         const TAO_ECG_UDP_Receiver_Disconnect_Command & rhs)
+                         TAO_ECG_UDP_Receiver_Disconnect_Command const & rhs)
 {
   this->proxy_ =
     RtecEventChannelAdmin::ProxyPushConsumer::_duplicate (rhs.proxy_.in ());

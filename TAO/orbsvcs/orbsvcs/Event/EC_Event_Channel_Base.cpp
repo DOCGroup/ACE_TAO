@@ -15,7 +15,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Event_Channel_Base::
-TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attr,
+TAO_EC_Event_Channel_Base (TAO_EC_Event_Channel_Attributes const& attr,
                            TAO_EC_Factory* factory,
                            int own_factory)
   : supplier_poa_ (PortableServer::POA::_duplicate (attr.supplier_poa)),

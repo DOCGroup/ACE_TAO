@@ -12,7 +12,7 @@ TAO_EC_Auto_Command<T>::TAO_EC_Auto_Command ()
 
 template <class T>
 ACE_INLINE
-TAO_EC_Auto_Command<T>::TAO_EC_Auto_Command (const T & command)
+TAO_EC_Auto_Command<T>::TAO_EC_Auto_Command (T const & command)
   : command_ (command)
   , allow_command_ (true)
 {
@@ -27,7 +27,7 @@ TAO_EC_Auto_Command<T>::~TAO_EC_Auto_Command ()
 
 template <class T>
 ACE_INLINE void
-TAO_EC_Auto_Command<T>::set_command (const T & command)
+TAO_EC_Auto_Command<T>::set_command (T const & command)
 {
   this->command_ = command;
   this->allow_command_ = true;

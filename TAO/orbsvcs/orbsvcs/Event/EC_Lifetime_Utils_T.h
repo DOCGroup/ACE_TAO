@@ -51,18 +51,18 @@ class TAO_EC_Auto_Command
 {
 public:
   TAO_EC_Auto_Command ();
-  explicit TAO_EC_Auto_Command (const T & command);
+  explicit TAO_EC_Auto_Command (T const & command);
   ~TAO_EC_Auto_Command ();
-  void set_command (const T & command);
+  void set_command (T const & command);
   void set_command (TAO_EC_Auto_Command<T> & auto_command);
   void execute ();
   void allow_command ();
   void disallow_command ();
 
 private:
-  TAO_EC_Auto_Command (const TAO_EC_Auto_Command&) = delete;
+  TAO_EC_Auto_Command (TAO_EC_Auto_Command const&) = delete;
   TAO_EC_Auto_Command (TAO_EC_Auto_Command&&) = delete;
-  TAO_EC_Auto_Command& operator= (const TAO_EC_Auto_Command&) = delete;
+  TAO_EC_Auto_Command& operator= (TAO_EC_Auto_Command const&) = delete;
   TAO_EC_Auto_Command& operator= (TAO_EC_Auto_Command&&) = delete;
 
   T command_;

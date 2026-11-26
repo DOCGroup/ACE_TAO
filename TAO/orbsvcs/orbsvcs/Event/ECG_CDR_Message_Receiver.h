@@ -65,9 +65,9 @@ public:
                              CORBA::ULong fragment_count);
 
   ~TAO_ECG_UDP_Request_Entry ();
-  TAO_ECG_UDP_Request_Entry (const TAO_ECG_UDP_Request_Entry&) = delete;
+  TAO_ECG_UDP_Request_Entry (TAO_ECG_UDP_Request_Entry const&) = delete;
   TAO_ECG_UDP_Request_Entry (TAO_ECG_UDP_Request_Entry&&) = delete;
-  TAO_ECG_UDP_Request_Entry& operator= (const TAO_ECG_UDP_Request_Entry&) = delete;
+  TAO_ECG_UDP_Request_Entry& operator= (TAO_ECG_UDP_Request_Entry const&) = delete;
   TAO_ECG_UDP_Request_Entry& operator= (TAO_ECG_UDP_Request_Entry&&) = delete;
 
   /// Validate a fragment, it should be rejected if it is invalid..
@@ -199,7 +199,7 @@ private:
   /// populated, 0 if request has only partially been received or is a
   /// duplicate, and -1 on error.
   int process_fragment (ACE_INET_Addr const &from,
-                        const Mcast_Header &header,
+                        Mcast_Header const &header,
                         char * data_buf,
                         TAO_ECG_CDR_Processor *cdr_processor);
 
@@ -256,9 +256,9 @@ class TAO_ECG_CDR_Message_Receiver::Requests
 public:
   Requests () = default;
   ~Requests ();
-  Requests (const Requests&) = delete;
+  Requests (Requests const&) = delete;
   Requests (Requests&&) = delete;
-  Requests& operator= (const Requests&) = delete;
+  Requests& operator= (Requests const&) = delete;
   Requests& operator= (Requests&&) = delete;
 
   /// Allocates and initializes @c fragmented_requests_.

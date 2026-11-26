@@ -229,7 +229,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 
 int
 TAO_ECG_Mcast_Gateway::init (char const *address_server_arg,
-                             const Attributes & attr)
+                             Attributes const & attr)
 {
   this->address_server_arg_.set (address_server_arg);
 
@@ -248,7 +248,7 @@ int
 TAO_ECG_Mcast_Gateway::init (
     RtecEventChannelAdmin::ConsumerQOS const & consumer_qos,
     char const *address_server_arg,
-    const Attributes & attributes)
+    Attributes const & attributes)
 {
   this->consumer_qos_ = consumer_qos;
   return this->init (address_server_arg,

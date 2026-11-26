@@ -242,7 +242,7 @@ protected:
    * If the @a factory is nil it uses the Service_Configurator to load
    * the Factory, if not found it uses TAO_EC_Default_Resource_Factory
    */
-  TAO_EC_Event_Channel_Base (const TAO_EC_Event_Channel_Attributes& attributes,
+  TAO_EC_Event_Channel_Base (TAO_EC_Event_Channel_Attributes const& attributes,
                              TAO_EC_Factory* factory = nullptr,
                              int own_factory = 0);
 

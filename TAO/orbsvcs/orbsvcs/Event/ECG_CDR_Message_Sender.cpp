@@ -27,7 +27,7 @@ TAO_ECG_CDR_Message_Sender::init (
 }
 
 void
-TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
+TAO_ECG_CDR_Message_Sender::send_message  (TAO_OutputCDR const &cdr,
                                            ACE_INET_Addr const &addr)
 {
   if (this->endpoint_rptr_.get () == nullptr)
