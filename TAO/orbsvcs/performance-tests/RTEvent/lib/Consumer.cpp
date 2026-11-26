@@ -78,7 +78,7 @@ Consumer::disconnect ()
 
   try{
     proxy->disconnect_push_supplier ();
-  } catch (const CORBA::Exception&) {
+  } catch (CORBA::Exception const&) {
   }
 }
 

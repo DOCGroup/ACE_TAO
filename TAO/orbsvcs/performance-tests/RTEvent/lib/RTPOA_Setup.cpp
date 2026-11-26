@@ -26,12 +26,12 @@ RTPOA_Setup::RTPOA_Setup (CORBA::ORB_ptr orb,
     RIR_Narrow<RTCORBA::RTORB>::resolve (orb,
                                          "RTORB");
 
-  const CORBA::ULong stacksize = 1024 * 1024; // 1 Mb
+  CORBA::ULong const stacksize = 1024 * 1024; // 1 Mb
   const RTCORBA::ThreadpoolLanes &threadpool_lanes = rtcorba_setup.lanes ();
-  const CORBA::Boolean allow_borrowing = false;
-  const CORBA::Boolean allow_request_buffering = false;
-  const CORBA::ULong max_buffered_requests   = 0; // dummy value
-  const CORBA::ULong max_request_buffer_size = 0; // dummy value
+  CORBA::Boolean const allow_borrowing = false;
+  CORBA::Boolean const allow_request_buffering = false;
+  CORBA::ULong const max_buffered_requests   = 0; // dummy value
+  CORBA::ULong const max_request_buffer_size = 0; // dummy value
 
   RTCORBA::ThreadpoolId pool_id =
     rtorb->create_threadpool_with_lanes (stacksize,

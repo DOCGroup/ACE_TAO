@@ -18,6 +18,6 @@ ORB_Task_Activator::~ORB_Task_Activator ()
   }
   try{
     (*this->task_)->shutdown (false);
-  } catch (const CORBA::Exception&) {
+  } catch (CORBA::Exception const&) {
   }
 }

@@ -20,7 +20,7 @@ ORB_Holder::~ORB_Holder ()
 {
   try{
     this->orb_->destroy ();
-  } catch (const CORBA::Exception&) {
+  } catch (CORBA::Exception const&) {
     // @@ TODO Log this event, check the Servant_var.cpp comments for
     // details.
   }

@@ -72,7 +72,7 @@ Supplier::disconnect ()
     {
       proxy->disconnect_push_consumer ();
     }
-  catch (const CORBA::Exception&){}
+  catch (CORBA::Exception const&){}
 }
 
 void

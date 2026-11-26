@@ -11,5 +11,5 @@ Shutdown<Client>::operator () (Client *client)
     {
       client->shutdown ();
     }
-  catch (const CORBA::Exception&){ };
+  catch (CORBA::Exception const&){ };
 }

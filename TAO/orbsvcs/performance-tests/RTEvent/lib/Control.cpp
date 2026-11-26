@@ -135,7 +135,7 @@ Control::join (Federated_Test::Peer_ptr peer)
 
       // We use a fake scale factor because the peer already converted
       // to microseconds...
-      const ACE_UINT32 fake_scale_factor = 1;
+      ACE_UINT32 const fake_scale_factor = 1;
 
       ACE_Basic_Stats stats;
       history.collect_basic_stats (stats);

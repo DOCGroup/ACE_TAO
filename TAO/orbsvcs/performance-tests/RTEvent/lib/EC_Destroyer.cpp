@@ -15,7 +15,7 @@ EC_Destroyer::~EC_Destroyer ()
 {
   try{
     this->ec_->destroy ();
-  } catch (const CORBA::Exception&) {
+  } catch (CORBA::Exception const&) {
     // @@ TODO Log this event, check the Servant_var.cpp comments for
     // details.
   }

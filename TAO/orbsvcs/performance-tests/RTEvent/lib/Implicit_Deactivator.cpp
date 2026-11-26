@@ -52,7 +52,7 @@ Implicit_Deactivator::~Implicit_Deactivator ()
   {
     this->poa_->deactivate_object (this->id_.in ());
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
   {
     // @@ TODO This event should be logged. Cannot throw because that
     //    would make it impossible to use this class effectively.

@@ -101,7 +101,7 @@ Send_Task::svc ()
           // push one event...
           this->supplier_->push (event);
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("Caught exception:");
         }
