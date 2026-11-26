@@ -4,6 +4,8 @@
 #include "ace/OS_NS_ctype.h"
 
 #include <array>
+#include <cerrno>
+#include <limits>
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
@@ -63,8 +65,21 @@ ACE_Base64::encode (ACE_Byte const *input,
 
   ACE_Byte *result {};
 
-  size_t length = ((input_len + 2) / 3) * 4;
+  size_t const max_size = (std::numeric_limits<size_t>::max) ();
+  size_t const groups = input_len / 3 + (input_len % 3 != 0);
+  if (groups > max_size / 4)
+    {
+      errno = ENOMEM;
+      return nullptr;
+    }
+
+  size_t length = groups * 4;
   size_t const num_lines = length / max_columns + 1;
+  if (length > max_size - num_lines - 1)
+    {
+      errno = ENOMEM;
+      return nullptr;
+    }
   length += num_lines + 1;
 #if defined (ACE_HAS_ALLOC_HOOKS)
   ACE_ALLOCATOR_RETURN (

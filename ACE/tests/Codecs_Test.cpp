@@ -9,6 +9,8 @@
 #include "test_config.h"
 #include "ace/Codecs.h"
 #include "ace/ACE.h"
+#include <cerrno>
+#include <limits>
 
 #if defined (ACE_HAS_THREADS)
 # include <atomic>
@@ -89,6 +91,28 @@ run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_START_TEST (ACE_TEXT ("Codecs_Test"));
   int status = 0;
+
+  size_t overflow_length {};
+  ACE_Byte const input[] = "x";
+  errno = 0;
+  ACE_Base64::Buffer const overflow (ACE_Base64::encode (
+    input, (std::numeric_limits<size_t>::max) (), std::addressof (overflow_length)));
+  if (overflow || errno != ENOMEM)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Base64 input length overflow was not rejected\n")));
+      ACE_END_TEST;
+      return 1;
+    }
+  errno = 0;
+  size_t const large_input = ((std::numeric_limits<size_t>::max) () / 4) * 3;
+  ACE_Base64::Buffer const line_overflow (ACE_Base64::encode (
+    input, large_input, std::addressof (overflow_length)));
+  if (line_overflow || errno != ENOMEM)
+    {
+      ACE_ERROR ((LM_ERROR, ACE_TEXT ("Base64 line length overflow was not rejected\n")));
+      ACE_END_TEST;
+      return 1;
+    }
 
 #if defined (ACE_HAS_THREADS)
   std::atomic<bool> start {false};
