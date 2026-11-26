@@ -41,7 +41,7 @@ TAO_ExtValueDef_i::ext_initializers_i ()
   ACE_Configuration_Section_Key initializers_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "initializers",
+                                          ACE_TEXT ("initializers"),
                                           false,
                                           initializers_key);
 
@@ -53,7 +53,7 @@ TAO_ExtValueDef_i::ext_initializers_i ()
 
   CORBA::ULong count = 0;
   this->repo_->config ()->get_integer_value (initializers_key,
-                                             "count",
+                                             ACE_TEXT ("count"),
                                              count);
   iseq->length (count);
   ACE_Configuration_Section_Key initializer_key, params_key, arg_key;
@@ -62,18 +62,18 @@ TAO_ExtValueDef_i::ext_initializers_i ()
 
   for (CORBA::ULong i {}; i < count; ++i)
     {
-      char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+      ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
       this->repo_->config ()->open_section (initializers_key,
                                             stringified,
                                             false,
                                             initializer_key);
       this->repo_->config ()->get_string_value (initializer_key,
-                                                "name",
+                                                ACE_TEXT ("name"),
                                                 holder);
-      retval[i].name = holder.fast_rep ();
+      retval[i].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
       status =
         this->repo_->config ()->open_section (initializer_key,
-                                              "params",
+                                              ACE_TEXT ("params"),
                                               false,
                                               params_key);
 
@@ -84,24 +84,24 @@ TAO_ExtValueDef_i::ext_initializers_i ()
         }
 
       this->repo_->config ()->get_integer_value (params_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  arg_count);
       retval[i].members.length (arg_count);
       CORBA::Object_var obj;
 
       for (CORBA::ULong j {}; j < arg_count; ++j)
         {
-          char * const stringified = TAO_IFR_Service_Utils::int_to_string (j);
+          ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (j);
           this->repo_->config ()->open_section (params_key,
                                                 stringified,
                                                 false,
                                                 arg_key);
           this->repo_->config ()->get_string_value (arg_key,
-                                                    "arg_name",
+                                                    ACE_TEXT ("arg_name"),
                                                     holder);
-          retval[i].members[j].name = holder.fast_rep ();
+          retval[i].members[j].name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
           this->repo_->config ()->get_string_value (arg_key,
-                                                    "arg_path",
+                                                    ACE_TEXT ("arg_path"),
                                                     holder);
           TAO_IDLType_i *impl =
             TAO_IFR_Service_Utils::path_to_idltype (holder,
@@ -142,7 +142,7 @@ TAO_ExtValueDef_i::ext_initializers_i (
 {
   ACE_Configuration *config = this->repo_->config ();
   config->remove_section (this->section_key_,
-                          "initializers",
+                          ACE_TEXT ("initializers"),
                           true);
 
   /// This does not handle the initializer exceptions, so we do that below.
@@ -157,10 +157,10 @@ TAO_ExtValueDef_i::ext_initializers_i (
   if (length > 0)
     {
       ACE_Configuration_Section_Key initializers_key, initializer_key;
-      char *stringified {};
+      ACE_TCHAR *stringified {};
 
       this->repo_->config ()->open_section (this->section_key_,
-                                            "initializers",
+                                            ACE_TEXT ("initializers"),
                                             false,
                                             initializers_key);
 
