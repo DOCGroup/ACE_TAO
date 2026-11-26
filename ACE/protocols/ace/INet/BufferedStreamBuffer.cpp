@@ -4,7 +4,6 @@
 #include "ace/INet/BufferedStreamBuffer.h"
 
 #include <cstring>
-#include <new>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -17,15 +16,10 @@ namespace ACE
         std::streamsize bufsz,
         typename std::basic_ios<ACE_CHAR_T, TR>::openmode mode)
       : bufsize_ (bufsz),
+        buffer_ (std::make_unique<char_type[]> (bufsz)),
         mode_ (mode),
         interceptor_ (nullptr)
       {
-        this->buffer_.reset (new (std::nothrow) char_type [bufsz]);
-        if (!this->buffer_)
-          {
-            throw std::bad_alloc ();
-          }
-
         this->setg (this->buffer_.get () + 4,
                     this->buffer_.get () + 4,
                     this->buffer_.get () + 4);

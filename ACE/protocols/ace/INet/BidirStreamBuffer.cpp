@@ -4,7 +4,6 @@
 #include "ace/INet/BidirStreamBuffer.h"
 
 #include <cstring>
-#include <new>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -18,21 +17,12 @@ namespace ACE
         std::streamsize bufsz,
         openmode mode)
       : bufsize_ (bufsz),
+        read_buffer_ (std::make_unique<char_type[]> (bufsz)),
+        write_buffer_ (std::make_unique<char_type[]> (bufsz)),
         mode_ (mode),
         stream_ (sh),
         interceptor_ (nullptr)
       {
-        this->read_buffer_.reset (new (std::nothrow) char_type [bufsz]);
-        if (!this->read_buffer_)
-          {
-            throw std::bad_alloc ();
-          }
-        this->write_buffer_.reset (new (std::nothrow) char_type [bufsz]);
-        if (!this->write_buffer_)
-          {
-            throw std::bad_alloc ();
-          }
-
         this->stream_->add_reference ();
 
         this->reset_buffers ();
