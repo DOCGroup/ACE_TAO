@@ -118,8 +118,8 @@ Time_Handler::svc ()
 }
 
 int
-Time_Handler::handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg)
+Time_Handler::handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg)
 {
   long const time_tag = static_cast <long> (reinterpret_cast <size_t> (arg));
   ACE_UNUSED_ARG(tv);
@@ -234,8 +234,8 @@ Dispatch_Count_Handler::handle_exception (ACE_HANDLE h)
 }
 
 int
-Dispatch_Count_Handler::handle_timeout (const ACE_Time_Value &tv,
-                                        const void *arg)
+Dispatch_Count_Handler::handle_timeout (ACE_Time_Value const &tv,
+                                        void const *arg)
 {
   ACE_UNUSED_ARG (tv);
 
@@ -300,7 +300,7 @@ run_main (int, ACE_TCHAR *[])
     {
       // Schedule a timeout to expire immediately.
       if (r->schedule_timer (std::addressof (callback),
-                             reinterpret_cast <const void *> (static_cast <size_t> (i)),
+                             reinterpret_cast <void const *> (static_cast <size_t> (i)),
                              ACE_Time_Value (0)) == -1)
         {
           ACE_ERROR_RETURN ((LM_ERROR,

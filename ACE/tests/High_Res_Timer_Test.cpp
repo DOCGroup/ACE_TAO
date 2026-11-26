@@ -77,7 +77,7 @@ check_micro_nano (ACE_hrtime_t microinterval, ACE_hrtime_t nanointerval)
 
 static
 ACE_Time_Value
-time_interval (const ACE_Time_Value &interval,
+time_interval (ACE_Time_Value const &interval,
                ACE_hrtime_t& nanoseconds,
                ACE_hrtime_t& microseconds)
 {

@@ -37,8 +37,8 @@ public:
   /// Run by a daemon thread to handle deferred processing.
   int svc () override;
 
-  int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg) override;
 
 private:
   enum
@@ -79,8 +79,8 @@ public:
                     ACE_Reactor_Mask m) override;
 
   /// Keep track of the number of timeouts.
-  int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg) override;
 
   /// Keep track of the number of I/O events.
   int handle_input (ACE_HANDLE) override;
