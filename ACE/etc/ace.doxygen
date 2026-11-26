@@ -2303,6 +2303,7 @@ PREDEFINED             = __ACE_INLINE__= \
                          ACE_PEER_CONNECTOR_2=_ACE_PEER_CONNECTOR \
                          "ACE_ALLOC_HOOK_DEFINE(X)=" \
                          "ACE_ALLOC_HOOK_DEFINE_Tc(X)=" \
+                         "ACE_TSS_TYPE(T)=ACE_TSS<T>" \
                          ACE_INLINE=inline \
                          ACE_NAMESPACE_INLINE_FUNCTION=inline \
                          ACE_Export= \
