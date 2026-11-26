@@ -229,7 +229,7 @@ namespace Test {
 
         this->push_request_info (requestID);
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const &)
       {
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT ("%C (%P|%t) Service context")

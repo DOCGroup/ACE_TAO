@@ -31,7 +31,7 @@ Client_Task::svc ()
           }
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       return -1;
     }

@@ -62,7 +62,7 @@ send_echo (TO_TYPE ctype, CORBA::ORB_ptr orb,
 
       ++in_time_count[static_cast<int> (ctype)];
     }
-  catch (const CORBA::TIMEOUT& )
+  catch (CORBA::TIMEOUT const & )
     {
       ++timeout_count[static_cast<int> (ctype)];
 
