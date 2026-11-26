@@ -73,7 +73,7 @@ bool walkapp::valid () const
   return this->valid_;
 }
 
-walkapp::walkapp (int argc, char *argv[])
+walkapp::walkapp (int argc, char **argv)
 {
   Oid req {};
   Oid const def_oid ("1.3.6.1.2.1.1.1.0"); // default begin walk with MIBII

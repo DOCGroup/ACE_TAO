@@ -73,7 +73,7 @@ bool nextapp::valid () const
 {
   return this->valid_;
 }
-nextapp::nextapp (int argc, char *argv[])
+nextapp::nextapp (int argc, char **argv)
 {
    Oid req {};
    Oid const def_oid ("1.3.6.1.2.1.1.1.0"); // default is sysDescr

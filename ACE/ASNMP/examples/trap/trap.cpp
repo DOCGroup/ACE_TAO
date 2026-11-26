@@ -73,7 +73,7 @@ bool trapapp::valid () const
 {
   return this->valid_;
 }
-trapapp::trapapp (int argc, char *argv[])
+trapapp::trapapp (int argc, char **argv)
 {
    Oid const def_ent_oid ("1.3.6.1.2.1.1.1.2.0.1"); // default enterprise OID
    Oid ent {}, trap {}; // user-specified values

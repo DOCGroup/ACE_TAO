@@ -75,7 +75,7 @@ set::valid () const
   return this->valid_;
 }
 
-set::set (int argc, char *argv[])
+set::set (int argc, char **argv)
 {
    Vb vb {}; // construct a Vb object
    Oid req {};
