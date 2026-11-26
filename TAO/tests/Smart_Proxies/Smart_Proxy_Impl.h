@@ -23,7 +23,7 @@ public:
   /// "Smartify" the method call!
   CORBA::Short method (CORBA::Short boo) override;
 
-  static const ACE_CString& fake_ior ();
+  static ACE_CString const & fake_ior ();
 
   // Don't need to add any extra functionality into <shutdown>, hence
   // we don't define it.

@@ -63,7 +63,7 @@ Smart_Test_Proxy::method (CORBA::Short boo)
   return retval;
 }
 
-const ACE_CString&
+ACE_CString const &
 Smart_Test_Proxy::fake_ior ()
 {
   return fake_ior_;

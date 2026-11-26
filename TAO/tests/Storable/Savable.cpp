@@ -15,7 +15,7 @@ public:
 
   ~Savable_File_Guard () override;
 
-  void set_object_last_changed (const time_t & time) override;
+  void set_object_last_changed (time_t const & time) override;
 
   time_t get_object_last_changed () override;
 
@@ -50,7 +50,7 @@ Savable_File_Guard::~Savable_File_Guard ()
 }
 
 void
-Savable_File_Guard::set_object_last_changed (const time_t & time)
+Savable_File_Guard::set_object_last_changed (time_t const & time)
 {
   savable_.last_changed_ = time;
 }
