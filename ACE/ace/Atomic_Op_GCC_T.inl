@@ -18,7 +18,7 @@ ACE_Atomic_Op_GCC<T>::ACE_Atomic_Op_GCC (T c)
 template <typename T>
 ACE_INLINE
 ACE_Atomic_Op_GCC<T>::ACE_Atomic_Op_GCC (
-  const ACE_Atomic_Op_GCC<T> &rhs)
+  ACE_Atomic_Op_GCC<T> const &rhs)
   : value_ (rhs.value_)
 {
 }
@@ -118,7 +118,7 @@ ACE_Atomic_Op_GCC<T>::operator= (T rhs)
 template <typename T>
 ACE_INLINE ACE_Atomic_Op_GCC<T> &
 ACE_Atomic_Op_GCC<T>::operator= (
-   const ACE_Atomic_Op_GCC<T> &rhs)
+   ACE_Atomic_Op_GCC<T> const &rhs)
 {
   __atomic_store_n (&value_, __atomic_load_n (&rhs.value_, __ATOMIC_CONSUME), __ATOMIC_RELEASE);
   return *this;

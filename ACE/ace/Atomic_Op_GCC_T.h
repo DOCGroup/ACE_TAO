@@ -85,7 +85,7 @@ protected:
   ACE_Atomic_Op_GCC<T> &operator= (T rhs);
 
   /// Atomically assign @a rhs to @c value_.
-  ACE_Atomic_Op_GCC<T> &operator= (const ACE_Atomic_Op_GCC<T> &rhs);
+  ACE_Atomic_Op_GCC<T> &operator= (ACE_Atomic_Op_GCC<T> const &rhs);
 
   /// Initialize @c value_ to 0.
   ACE_Atomic_Op_GCC ();
@@ -94,7 +94,7 @@ protected:
   explicit ACE_Atomic_Op_GCC (T c);
 
   /// Manage copying...
-  ACE_Atomic_Op_GCC (const ACE_Atomic_Op_GCC<T> &c);
+  ACE_Atomic_Op_GCC (ACE_Atomic_Op_GCC<T> const &c);
 
 private:
   // This function cannot be supported by this template specialization.
