@@ -38,10 +38,10 @@
 
 static_assert (std::is_abstract_v<OBV_Supports_Inherited_Operation>,
                "A valuetype that supports an inherited operation is abstract");
-static_assert (std::is_move_constructible_v<CORBA::Any>
-               && std::is_move_assignable_v<CORBA::Any>
-               && std::is_move_constructible_v<CORBA::Any_var>
-               && std::is_move_assignable_v<CORBA::Any_var>
+static_assert (std::is_nothrow_move_constructible_v<CORBA::Any>
+               && std::is_nothrow_move_assignable_v<CORBA::Any>
+               && std::is_nothrow_move_constructible_v<CORBA::Any_var>
+               && std::is_nothrow_move_assignable_v<CORBA::Any_var>
                && std::is_move_constructible_v<CORBA::Any_out>
                && std::is_move_assignable_v<CORBA::Any_out>,
                "Any and its wrappers accept rvalues");
