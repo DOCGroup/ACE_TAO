@@ -58,7 +58,7 @@ public:
 
   void insert_double (CORBA::Double value) override;
 
-  void insert_string (const char * value) override;
+  void insert_string (char const *value) override;
 
   void insert_reference (CORBA::Object_ptr value) override;
 

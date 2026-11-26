@@ -461,7 +461,7 @@ TAO_AMH_DSI_Response_Handler::gateway_exception_reply (
 }
 
 void *
-TAO_AMH_DSI_Response_Handler::_downcast (const char *)
+TAO_AMH_DSI_Response_Handler::_downcast (char const *)
 {
   return this;
 }

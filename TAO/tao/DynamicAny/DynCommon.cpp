@@ -118,7 +118,7 @@ TAO_DynCommon::insert_double (CORBA::Double value)
 }
 
 void
-TAO_DynCommon::insert_string (const char * value)
+TAO_DynCommon::insert_string (char const *value)
 {
   if (this->destroyed_)
     {
@@ -185,11 +185,11 @@ TAO_DynCommon::insert_reference (CORBA::Object_ptr value)
         }
       else if (!CORBA::is_nil (value))
         {
-          const char *value_id = value->_interface_repository_id ();
+          char const *value_id = value->_interface_repository_id ();
 
           if (std::strcmp (value_id, "IDL:omg.org/CORBA/Object:1.0") != 0)
             {
-              const char *my_id =
+              char const *my_id =
                 this->type_->id ();
 
               if (std::strcmp (value_id, my_id) != 0)
@@ -348,8 +348,8 @@ TAO_DynCommon::insert_val (CORBA::ValueBase *value)
       // null value correctly.
       if (value != nullptr)
         {
-          const char *value_id = value->_tao_obv_repository_id ();
-          const char *my_id =
+          char const *value_id = value->_tao_obv_repository_id ();
+          char const *my_id =
             this->type_->id ();
 
           // Valuetypes, unlike interfaces, don't have a virtual
@@ -832,13 +832,13 @@ TAO_DynCommon::insert_abstract (CORBA::AbstractBase_ptr value)
         }
       else if (!CORBA::is_nil (value))
         {
-          const char *value_id = value->_interface_repository_id ();
+          char const *value_id = value->_interface_repository_id ();
           int const cmp =
             std::strcmp (value_id, "IDL:omg.org/CORBA/AbstractBase:1.0");
 
           if (cmp != 0)
             {
-              const char *my_id =
+              char const *my_id =
                 this->type_->id ();
 
               if (std::strcmp (value_id, my_id) != 0)

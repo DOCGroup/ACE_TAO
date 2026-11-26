@@ -151,7 +151,7 @@ public:
   static CORBA::Boolean _tao_unmarshal ( TAO_InputCDR &,
                                          TAO_AMH_DSI_Exception_Holder *& );
   char const* _tao_obv_repository_id () const override;
-  static const char* _tao_obv_static_repository_id ();
+  static char const *_tao_obv_static_repository_id ();
 
   static void _tao_any_destructor (void *);
 
@@ -252,7 +252,7 @@ protected:
   char const* _interface_repository_id () const override;
 
   /// Simply returns "this"
-  virtual void *_downcast (const char *repository_id);
+  virtual void *_downcast (char const *repository_id);
 
 private:
   TAO_ORB_Core *orb_core_ {};
