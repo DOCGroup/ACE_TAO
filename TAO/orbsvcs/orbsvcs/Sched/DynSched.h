@@ -238,9 +238,11 @@ public:
   static void export_to_file (RT_Info*, FILE* file);
   static void export_to_file (RT_Info&, FILE* file);
 
-  // accessors for the minimal and maximal dispatch entry id in the schedule
+  /// @name Dispatch entry ID bounds in the schedule
+  /// @{
   u_long min_dispatch_id () const;
   u_long max_dispatch_id () const;
+  /// @}
 
   /// provide the thread priority and queue type for the given priority level
   virtual int dispatch_configuration (Preemption_Priority const &p_priority,
@@ -390,19 +392,19 @@ private:
   /// dependencies of the underlying RT_Infos
   status_t relate_task_entries ();
 
-  // recursively traverse dependency graph, relating
-  // task entries and performing DFS start/end marking
+  /// Recursively traverse the dependency graph, relating task entries and
+  /// performing DFS start/end marking.
   status_t relate_task_entries_recurse (long &time, Task_Entry &entry);
 
-  // identify thread delimiters
+  /// Identify thread delimiters.
   status_t
     identify_threads (ACE_CString & unresolved_locals,
                       ACE_CString & unresolved_remotes);
 
-  // checks for cycles in the dependency graph
+  /// Check for cycles in the dependency graph.
   status_t check_dependency_cycles ();
 
-  // recursion used to check for cycles in the dependency graph
+  /// Recursion used to check for cycles in the dependency graph.
   status_t check_dependency_cycles_recurse (Task_Entry &entry);
 
   /// Aggregate the scheduling parameters of the threads
@@ -414,7 +416,7 @@ private:
   /// recursion over twoway dependencies used to aggregate thread parameters
   status_t aggregate_twoways_recurse (Task_Entry &entry);
 
-  // update the scheduling parameters for the previous priority level
+  /// Update the scheduling parameters for the previous priority level.
   void update_priority_level_params ();
 
   /// propagate the dispatch information from the
