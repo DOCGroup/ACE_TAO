@@ -502,7 +502,7 @@ Annotation_Test::print_idl_with_line_numbers ()
     {
       ++line_number;
       const size_t end = idl_.find ('\n', start);
-      const std::string line = idl_.substr (start, end - start);
+      std::string const line = idl_.substr (start, end - start);
       const bool mark_line = line_number == marked_line;
       ACE_DEBUG ((LM_DEBUG,
         ACE_TEXT ("%C%4q: %C%C\n"),
