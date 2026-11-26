@@ -66,8 +66,6 @@ namespace TAO
     using RegistryType_Iterator = ACE_Hash_Map_Iterator<ACE_CString, RoleInfo *, MapMutex>;
 
   public:
-    /// @name Non-CORBA interface
-    /// @{
     explicit PG_FactoryRegistry (char const * name = "FactoryRegistry");
 
     ~PG_FactoryRegistry () override;
@@ -77,6 +75,8 @@ namespace TAO
     PG_FactoryRegistry & operator= (PG_FactoryRegistry const &) = delete;
     PG_FactoryRegistry & operator= (PG_FactoryRegistry &&) = delete;
 
+    /// @name Non-CORBA interface
+    /// @{
     /**
      * Parse command line arguments.
      * @param argc traditional C argc
