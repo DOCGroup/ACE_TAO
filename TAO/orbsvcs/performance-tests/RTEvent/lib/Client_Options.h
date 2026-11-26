@@ -26,7 +26,7 @@ class TAO_RTEC_Perf_Export Client_Options
 public:
   Client_Options (int &argc, ACE_TCHAR *argv[]);
 
-  const ACE_TCHAR *ior;
+  ACE_TCHAR const *ior;
   int iterations;
   int nthreads;
   int high_priority_period;
@@ -44,11 +44,11 @@ public:
 
 private:
   int option (ACE_Arg_Shifter &arg_shifter,
-              const ACE_TCHAR *option_name,
+              ACE_TCHAR const *option_name,
               int &option_value);
 
   int boolean_option (ACE_Arg_Shifter &arg_shifter,
-                      const ACE_TCHAR *option_name,
+                      ACE_TCHAR const *option_name,
                       int &option_value);
 };
 

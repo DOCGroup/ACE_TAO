@@ -23,7 +23,7 @@ class TAO_RTEC_Perf_Export ORB_Holder
 {
 public:
   ORB_Holder (int &argc, ACE_TCHAR *argv[],
-              const char *orb_id = nullptr);
+              char const *orb_id = nullptr);
 
   /**
    * @todo This method could benefit from the error logging described

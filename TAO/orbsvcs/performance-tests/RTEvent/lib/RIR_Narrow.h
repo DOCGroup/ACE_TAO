@@ -24,7 +24,7 @@ public:
   using Interface_var = typename Interface::_var_type;
 
   static Interface_ptr resolve (CORBA::ORB_ptr orb,
-                                const char *object_id);
+                                char const *object_id);
 };
 
 #include "RIR_Narrow.cpp"

@@ -15,7 +15,7 @@
 
 template<class Interface> typename RIR_Narrow<Interface>::Interface_ptr
 RIR_Narrow<Interface>::resolve (CORBA::ORB_ptr orb,
-                                const char *object_id)
+                                char const *object_id)
 {
   Interface_var intface;
 

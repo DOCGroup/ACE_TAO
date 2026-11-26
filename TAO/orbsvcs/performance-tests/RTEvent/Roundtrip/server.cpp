@@ -16,7 +16,7 @@
 #include "tao/Messaging/Messaging.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("test.ior");
 bool use_rt_corba {};
 int nthreads {};
 

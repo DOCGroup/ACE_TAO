@@ -11,7 +11,7 @@
 #endif /* __ACE_INLINE__ */
 
 ORB_Holder::ORB_Holder (int &argc, ACE_TCHAR *argv[],
-                        const char *orb_id)
+                        char const *orb_id)
   :  orb_ (CORBA::ORB_init (argc, argv, orb_id))
 {
 }
