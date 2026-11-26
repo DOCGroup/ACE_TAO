@@ -4,13 +4,13 @@
 #include "orbsvcs/PortableGroup/MIOP.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 
-static const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+static ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 // Use a multicast address in the administrative "site local" range, 239.255.0.0 to
 // 239.255.255.255.  The range 224.255.0.0 to 238.255.255.255 should also be valid
 // too.
-//static const char *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/239.255.0.1:16000";
-static const ACE_TCHAR *group_ior = ACE_TEXT("corbaloc:miop:1.0@1.0-TestDomain-1/224.1.239.2:1234");
+//static char const *group_ior = "corbaloc:miop:1.0@1.0-TestDomain-1/239.255.0.1:16000";
+static ACE_TCHAR const *group_ior = ACE_TEXT("corbaloc:miop:1.0@1.0-TestDomain-1/224.1.239.2:1234");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

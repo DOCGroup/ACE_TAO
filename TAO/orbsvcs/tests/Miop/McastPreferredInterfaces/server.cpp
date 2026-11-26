@@ -3,8 +3,8 @@
 #include "ace/Get_Opt.h"
 #include "orbsvcs/PortableGroup/GOA.h"
 
-const ACE_TCHAR *uipmc_url {};
-const ACE_TCHAR *ior_output_file {};
+ACE_TCHAR const *uipmc_url {};
+ACE_TCHAR const *ior_output_file {};
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
