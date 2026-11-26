@@ -235,7 +235,7 @@ ACE_INET_Addr::is_multicast () const
     }
 #endif /* ACE_HAS_IPV6 */
   return
-    (*static_cast<const unsigned char*> (
+    (*static_cast<unsigned char const *> (
         static_cast<void const *> (std::addressof (this->inet_addr_.in4_.sin_addr.s_addr))) & 0xf0) == 0xe0;
 }
 
