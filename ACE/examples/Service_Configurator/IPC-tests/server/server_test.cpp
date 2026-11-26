@@ -58,5 +58,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   // are triggered properly.
   ACE_Reactor::run_event_loop ();
 
+  ACE_Reactor::instance ()->remove_handler (sig_set);
+
   return 0;
 }
