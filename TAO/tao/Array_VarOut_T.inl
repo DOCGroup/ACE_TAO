@@ -181,7 +181,7 @@ template<typename T, typename T_var, typename T_slice, typename TAG>
 ACE_INLINE
 TAO_Array_Out_T<T,T_var,T_slice,TAG>::TAO_Array_Out_T (
     TAO_Array_Out_T<T,T_var,T_slice,TAG> const & p)
-  : ptr_ (const_cast<THIS_OUT_TYPE &> (p).ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 template<typename T, typename T_var, typename T_slice, typename TAG>
@@ -190,7 +190,7 @@ TAO_Array_Out_T<T,T_var,T_slice,TAG> &
 TAO_Array_Out_T<T,T_var,T_slice,TAG>::operator= (
     TAO_Array_Out_T<T,T_var,T_slice,TAG> const & p)
 {
-  this->ptr_ = const_cast<THIS_OUT_TYPE &> (p).ptr_;
+  this->ptr_ = p.ptr_;
   return *this;
 }
 

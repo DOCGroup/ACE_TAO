@@ -210,7 +210,6 @@ public:
   _slice_type const & operator[] (CORBA::ULong index) const;
 private:
   using FORANY = TAO_Array_Forany_T<T, T_slice, TAG>;
-  using THIS_OUT_TYPE = TAO_Array_Out_T<T, T_var, T_slice, TAG>;
   _slice_type *& ptr_;
 
   /// Assignment from T_var is not allowed.

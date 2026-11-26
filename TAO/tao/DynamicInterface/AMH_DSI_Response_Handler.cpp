@@ -193,14 +193,14 @@ TAO_AMH_DSI_Exception_Holder_out::TAO_AMH_DSI_Exception_Holder_out (
 
 TAO_AMH_DSI_Exception_Holder_out::TAO_AMH_DSI_Exception_Holder_out (
     TAO_AMH_DSI_Exception_Holder_out const &p)
-  : ptr_ (const_cast<TAO_AMH_DSI_Exception_Holder_out&> (p).ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 TAO_AMH_DSI_Exception_Holder_out &
 TAO_AMH_DSI_Exception_Holder_out::operator= (
     TAO_AMH_DSI_Exception_Holder_out const &p)
 {
-  this->ptr_ = const_cast<TAO_AMH_DSI_Exception_Holder_out &> (p).ptr_;
+  this->ptr_ = p.ptr_;
   return *this;
 }
 

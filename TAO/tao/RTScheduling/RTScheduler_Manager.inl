@@ -151,13 +151,13 @@ TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (TAO_RTScheduler_Manage
 
 ACE_INLINE
 TAO_RTScheduler_Manager_out::TAO_RTScheduler_Manager_out (::TAO_RTScheduler_Manager_out const &p)
-  : ptr_ (const_cast<TAO_RTScheduler_Manager_out &> (p).ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE ::TAO_RTScheduler_Manager_out &
 TAO_RTScheduler_Manager_out::operator= (::TAO_RTScheduler_Manager_out const &p)
 {
-  this->ptr_ = const_cast<TAO_RTScheduler_Manager_out&> (p).ptr_;
+  this->ptr_ = p.ptr_;
   return *this;
 }
 

@@ -155,13 +155,13 @@ TAO_Network_Priority_Mapping_Manager_out::TAO_Network_Priority_Mapping_Manager_o
 ACE_INLINE
 TAO_Network_Priority_Mapping_Manager_out::TAO_Network_Priority_Mapping_Manager_out (
   TAO_Network_Priority_Mapping_Manager_out const &p)
-  : ptr_ (const_cast<TAO_Network_Priority_Mapping_Manager_out &> (p).ptr_)
+  : ptr_ (p.ptr_)
 {}
 
 ACE_INLINE ::TAO_Network_Priority_Mapping_Manager_out &
 TAO_Network_Priority_Mapping_Manager_out::operator= (TAO_Network_Priority_Mapping_Manager_out const &p)
 {
-  this->ptr_ = const_cast<TAO_Network_Priority_Mapping_Manager_out&> (p).ptr_;
+  this->ptr_ = p.ptr_;
   return *this;
 }
 
