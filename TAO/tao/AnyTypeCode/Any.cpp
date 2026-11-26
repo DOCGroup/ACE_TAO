@@ -199,6 +199,11 @@ CORBA::Any_var::Any_var (CORBA::Any_var const &r)
     }
 }
 
+CORBA::Any_var::Any_var (CORBA::Any_var &&r) noexcept
+  : ptr_ (r._retn ())
+{
+}
+
 CORBA::Any_var &
 CORBA::Any_var::operator= (CORBA::Any *p)
 {
@@ -228,6 +233,16 @@ CORBA::Any_var::operator= (CORBA::Any_var const &r)
       this->ptr_ = copy;
     }
 
+  return *this;
+}
+
+CORBA::Any_var &
+CORBA::Any_var::operator= (CORBA::Any_var &&r) noexcept
+{
+  if (this != std::addressof (r))
+    {
+      *this = r._retn ();
+    }
   return *this;
 }
 

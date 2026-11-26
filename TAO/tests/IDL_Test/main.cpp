@@ -34,6 +34,7 @@
 #include <cstring>
 #include <memory>
 #include <type_traits>
+#include <utility>
 
 static_assert (std::is_abstract_v<OBV_Supports_Inherited_Operation>,
                "A valuetype that supports an inherited operation is abstract");
@@ -981,6 +982,19 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   int error_count = 0;
+
+  CORBA::Any_var original_any (new CORBA::Any);
+  CORBA::Any * const original_any_ptr = original_any.ptr ();
+  CORBA::Any_var moved_any (std::move (original_any));
+  CORBA::Any_var assigned_any (new CORBA::Any);
+  assigned_any = std::move (moved_any);
+  assigned_any = std::move (assigned_any);
+  if (original_any.ptr () != nullptr || moved_any.ptr () != nullptr ||
+      assigned_any.ptr () != original_any_ptr)
+    {
+      ++error_count;
+      ACE_ERROR ((LM_ERROR, "Any_var move failed\n"));
+    }
 
   teststruct::_b array = {'a', 'b', 'c', 'd'};
   using array_vector = std::vector<teststruct::_b_slice *>;

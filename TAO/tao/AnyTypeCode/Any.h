@@ -184,6 +184,7 @@ namespace CORBA
     Any_var ();
     Any_var (Any *a);
     Any_var (Any_var const &);
+    Any_var (Any_var &&) noexcept;
     ~Any_var ();
 
     Any_var &operator= (Any *);
@@ -195,6 +196,7 @@ namespace CORBA
      * unmodified.
      */
     Any_var &operator= (Any_var const &);
+    Any_var &operator= (Any_var &&) noexcept;
 
     /// Arrow operator (smart pointer).
     Any *operator-> ();
