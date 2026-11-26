@@ -33,25 +33,25 @@ public:
   ACE_Connection_Recycling_Strategy &operator= (ACE_Connection_Recycling_Strategy &&) = default;
 
   /// Remove from cache.
-  virtual int purge (const void *recycling_act) = 0;
+  virtual int purge (void const *recycling_act) = 0;
 
   /// Add to cache.
-  virtual int cache (const void *recycling_act) = 0;
+  virtual int cache (void const *recycling_act) = 0;
 
-  virtual int recycle_state (const void *recycling_act,
+  virtual int recycle_state (void const *recycling_act,
                              ACE_Recyclable_State new_state) = 0;
 
   /// Get/Set recycle_state.
-  virtual ACE_Recyclable_State recycle_state (const void *recycling_act) const = 0;
+  virtual ACE_Recyclable_State recycle_state (void const *recycling_act) const = 0;
 
   /// Mark as closed.
-  virtual int mark_as_closed (const void *recycling_act) = 0;
+  virtual int mark_as_closed (void const *recycling_act) = 0;
 
   /// Mark as closed.(non-locking version)
-  virtual int mark_as_closed_i (const void *recycling_act) = 0;
+  virtual int mark_as_closed_i (void const *recycling_act) = 0;
 
   /// Cleanup hint and reset @a act_holder to nullptr if @a act_holder is not nullptr.
-  virtual int cleanup_hint (const void *recycling_act,
+  virtual int cleanup_hint (void const *recycling_act,
                             void **act_holder = nullptr) = 0;
 };
 

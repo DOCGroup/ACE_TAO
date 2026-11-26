@@ -42,7 +42,7 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::purge
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE int
 ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notify_bind (int result,
-                                                                                        const ATTRIBUTES &attr)
+                                                                                        ATTRIBUTES const &attr)
 {
   return this->implementation_->notify_bind (result,
                                              attr);
@@ -58,7 +58,7 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notif
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE int
 ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notify_unbind (int result,
-                                                                                          const ATTRIBUTES &attr)
+                                                                                          ATTRIBUTES const &attr)
 {
   return this->implementation_->notify_unbind (result,
                                                attr);
@@ -74,7 +74,7 @@ ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notif
 
 template<class ATTRIBUTES, class CACHING_UTILITY, class IMPLEMENTATION> ACE_INLINE int
 ACE_Caching_Strategy_Adapter<ATTRIBUTES, CACHING_UTILITY, IMPLEMENTATION>::notify_rebind (int result,
-                                                                                          const ATTRIBUTES &attr)
+                                                                                          ATTRIBUTES const &attr)
 {
   return this->implementation_->notify_rebind (result,
                                                attr);
@@ -126,7 +126,7 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double per
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (
   int result,
-  const ATTRIBUTES & /* attr */)
+  ATTRIBUTES const & /* attr */)
 {
   if (result == 0)
     {
@@ -153,7 +153,7 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (
   int result,
-  const ATTRIBUTES & /* attr */)
+  ATTRIBUTES const & /* attr */)
 {
   return result;
 }
@@ -169,7 +169,7 @@ ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LRU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (
   int result,
-  const ATTRIBUTES & /* attr */)
+  ATTRIBUTES const & /* attr */)
 {
   if (result == 0)
     {
@@ -219,7 +219,7 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double per
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
-                                                                    const ATTRIBUTES & /* attr */)
+                                                                    ATTRIBUTES const & /* attr */)
 {
 
   return result;
@@ -246,14 +246,14 @@ ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int resul
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
-                                                                      const ATTRIBUTES & /* attr */)
+                                                                      ATTRIBUTES const & /* attr */)
 {
   return result;
 }
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_LFU_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
-                                                                      const ATTRIBUTES & /* attr */)
+                                                                      ATTRIBUTES const & /* attr */)
 {
   return result;
 }
@@ -297,7 +297,7 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double pe
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
-                                                                     const ATTRIBUTES &attr)
+                                                                     ATTRIBUTES const &attr)
 {
   ACE_UNUSED_ARG (attr);
 
@@ -320,7 +320,7 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
-                                                                       const ATTRIBUTES &attr)
+                                                                       ATTRIBUTES const &attr)
 {
   ACE_UNUSED_ARG (attr);
 
@@ -338,7 +338,7 @@ ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int resu
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_FIFO_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
-                                                                       const ATTRIBUTES &attr)
+                                                                       ATTRIBUTES const &attr)
 {
   ACE_UNUSED_ARG (attr);
 
@@ -390,7 +390,7 @@ ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::purge_percent (double pe
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_bind (int result,
-                                                                     const ATTRIBUTES &attr)
+                                                                     ATTRIBUTES const &attr)
 {
   ACE_UNUSED_ARG (attr);
 
@@ -408,7 +408,7 @@ ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_find (int result,
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_unbind (int result,
-                                                                       const ATTRIBUTES &attr)
+                                                                       ATTRIBUTES const &attr)
 {
   ACE_UNUSED_ARG (attr);
 
@@ -426,7 +426,7 @@ ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_trybind (int resu
 
 template<class ATTRIBUTES, class CACHING_UTILITY> ACE_INLINE int
 ACE_Null_Caching_Strategy<ATTRIBUTES, CACHING_UTILITY>::notify_rebind (int result,
-                                                                       const ATTRIBUTES &attr)
+                                                                       ATTRIBUTES const &attr)
 {
   ACE_UNUSED_ARG (attr);
 

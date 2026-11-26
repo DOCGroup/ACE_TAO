@@ -57,7 +57,7 @@ public:
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
   virtual int notify_bind (int result,
-                           const ATTRIBUTES &attr) = 0;
+                           ATTRIBUTES const &attr) = 0;
 
   /// This method acts as a notification about the CONTAINERs find
   /// method call
@@ -67,7 +67,7 @@ public:
   /// This method acts as a notification about the CONTAINERs unbind
   /// method call
   virtual int notify_unbind (int result,
-                             const ATTRIBUTES &attr) = 0;
+                             ATTRIBUTES const &attr) = 0;
 
   /// This method acts as a notification about the CONTAINERs trybind
   /// method call
@@ -77,7 +77,7 @@ public:
   /// This method acts as a notification about the CONTAINERs rebind
   /// method call
   virtual int notify_rebind (int result,
-                             const ATTRIBUTES &attr) = 0;
+                             ATTRIBUTES const &attr) = 0;
   /// @}
 
   /// Purge the cache.
@@ -133,7 +133,7 @@ public:
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
   int notify_bind (int result,
-                   const ATTRIBUTES &attr) override;
+                   ATTRIBUTES const &attr) override;
 
   /// This method acts as a notification about the CONTAINERs find
   /// method call
@@ -143,7 +143,7 @@ public:
   /// This method acts as a notification about the CONTAINERs unbind
   /// method call
   int notify_unbind (int result,
-                     const ATTRIBUTES &attr) override;
+                     ATTRIBUTES const &attr) override;
 
   /// This method acts as a notification about the CONTAINERs trybind
   /// method call
@@ -153,7 +153,7 @@ public:
   /// This method acts as a notification about the CONTAINERs rebind
   /// method call
   int notify_rebind (int result,
-                     const ATTRIBUTES &attr) override;
+                     ATTRIBUTES const &attr) override;
   /// @}
 
   /// Accessor to the implementation.
@@ -239,7 +239,7 @@ public:
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
   int notify_bind (int result,
-                   const ATTRIBUTES &attr);
+                   ATTRIBUTES const &attr);
 
   /// This method acts as a notification about the CONTAINERs find
   /// method call
@@ -249,7 +249,7 @@ public:
   /// This method acts as a notification about the CONTAINERs unbind
   /// method call
   int notify_unbind (int result,
-                     const ATTRIBUTES &attr);
+                     ATTRIBUTES const &attr);
 
   /// This method acts as a notification about the CONTAINERs trybind
   /// method call
@@ -259,7 +259,7 @@ public:
   /// This method acts as a notification about the CONTAINERs rebind
   /// method call
   int notify_rebind (int result,
-                     const ATTRIBUTES &attr);
+                     ATTRIBUTES const &attr);
   /// @}
 
   /// Purge the cache.
@@ -347,7 +347,7 @@ public:
   /// This method acts as a notification about the CONTAINERs bind
   /// method call.
   int notify_bind (int result,
-                   const ATTRIBUTES &attr);
+                   ATTRIBUTES const &attr);
 
   /// Lookup notification.
   int notify_find (int result,
@@ -356,7 +356,7 @@ public:
   /// This method acts as a notification about the CONTAINERs unbind
   /// method call
   int notify_unbind (int result,
-                     const ATTRIBUTES &attr);
+                     ATTRIBUTES const &attr);
 
   /// This method acts as a notification about the CONTAINERs trybind
   /// method call
@@ -366,7 +366,7 @@ public:
   /// This method acts as a notification about the CONTAINERs rebind
   /// method call
   int notify_rebind (int result,
-                     const ATTRIBUTES &attr);
+                     ATTRIBUTES const &attr);
   /// @}
 
   /// Purge the cache.
@@ -444,7 +444,7 @@ public:
 
   /// Notification for an item getting bound into the cache.
   int notify_bind (int result,
-                   const ATTRIBUTES &attr);
+                   ATTRIBUTES const &attr);
 
   /// This method acts as a notification about the CONTAINERs find
   /// method call
@@ -454,7 +454,7 @@ public:
   /// This method acts as a notification about the CONTAINERs unbind
   /// method call
   int notify_unbind (int result,
-                     const ATTRIBUTES &attr);
+                     ATTRIBUTES const &attr);
 
   /// This method acts as a notification about the CONTAINERs trybind
   /// method call
@@ -463,7 +463,7 @@ public:
 
   /// Notification for an item getting bound again into the cache.
   int notify_rebind (int result,
-                     const ATTRIBUTES &attr);
+                     ATTRIBUTES const &attr);
   /// @}
 
   /// Purge the cache.
@@ -528,7 +528,7 @@ public:
 
   /// Notification for an item getting bound into the cache.
   int notify_bind (int result,
-                   const ATTRIBUTES &attr);
+                   ATTRIBUTES const &attr);
 
   /// This method acts as a notification about the CONTAINERs find
   /// method call
@@ -538,7 +538,7 @@ public:
   /// This method acts as a notification about the CONTAINERs unbind
   /// method call
   int notify_unbind (int result,
-                     const ATTRIBUTES &attr);
+                     ATTRIBUTES const &attr);
 
   /// This method acts as a notification about the CONTAINERs trybind
   /// method call
@@ -547,7 +547,7 @@ public:
 
   /// Notification for an item getting bound again into the cache.
   int notify_rebind (int result,
-                     const ATTRIBUTES &attr);
+                     ATTRIBUTES const &attr);
   /// @}
 
   /// Purge the cache.

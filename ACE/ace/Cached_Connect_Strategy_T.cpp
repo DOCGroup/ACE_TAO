@@ -48,9 +48,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::check_hint_i
 (SVC_HANDLER *&sh,
- const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+ ACE_PEER_CONNECTOR_ADDR const &remote_addr,
  ACE_Time_Value *timeout,
- const ACE_PEER_CONNECTOR_ADDR &local_addr,
+ ACE_PEER_CONNECTOR_ADDR const &local_addr,
  bool reuse_addr,
  int flags,
  int perms,
@@ -142,9 +142,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::find_or_create_svc_handler_i
 (SVC_HANDLER *&sh,
- const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+ ACE_PEER_CONNECTOR_ADDR const &remote_addr,
  ACE_Time_Value *timeout,
- const ACE_PEER_CONNECTOR_ADDR &local_addr,
+ ACE_PEER_CONNECTOR_ADDR const &local_addr,
  bool reuse_addr,
  int flags,
  int perms,
@@ -262,9 +262,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::cached_connect (SVC_HANDLER *&sh,
-                                                        const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+                                                        ACE_PEER_CONNECTOR_ADDR const &remote_addr,
                                                         ACE_Time_Value *timeout,
-                                                        const ACE_PEER_CONNECTOR_ADDR &local_addr,
+                                                        ACE_PEER_CONNECTOR_ADDR const &local_addr,
                                                         bool reuse_addr,
                                                         int flags,
                                                         int perms)
@@ -329,9 +329,9 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
 ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::connect_svc_handler_i
 (SVC_HANDLER *&sh,
- const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+ ACE_PEER_CONNECTOR_ADDR const &remote_addr,
  ACE_Time_Value *timeout,
- const ACE_PEER_CONNECTOR_ADDR &local_addr,
+ ACE_PEER_CONNECTOR_ADDR const &local_addr,
  bool reuse_addr,
  int flags,
  int perms,
@@ -390,7 +390,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::cache_i (const void *recycling_act)
+ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::cache_i (void const *recycling_act)
 {
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
@@ -403,7 +403,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::recycle_state_i (const void *recycling_act,
+ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::recycle_state_i (void const *recycling_act,
                                                          ACE_Recyclable_State new_state)
 {
   // The wonders and perils of ACT
@@ -417,7 +417,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 }
 
 template<class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> ACE_Recyclable_State
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::recycle_state_i (const void *recycling_act) const
+ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::recycle_state_i (void const *recycling_act) const
 {
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
@@ -428,7 +428,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::purge_i (const void *recycling_act)
+ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::purge_i (void const *recycling_act)
 {
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
@@ -437,7 +437,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::mark_as_closed_i (const void *recycling_act)
+ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::mark_as_closed_i (void const *recycling_act)
 {
   // The wonders and perils of ACT
   CONNECTION_CACHE_ENTRY *entry = (CONNECTION_CACHE_ENTRY *) recycling_act;
@@ -449,7 +449,7 @@ ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATE
 }
 
 template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class ATTRIBUTES, class MUTEX> int
-ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::cleanup_hint_i (const void *recycling_act,
+ACE_Cached_Connect_Strategy_Ex<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::cleanup_hint_i (void const *recycling_act,
                                                         void **act_holder)
 {
   // Reset the <*act_holder> in the confines and protection of the
@@ -606,9 +606,9 @@ template <class SVC_HANDLER, ACE_PEER_CONNECTOR_1, class CACHING_STRATEGY, class
 int
 ACE_Bounded_Cached_Connect_Strategy<SVC_HANDLER, ACE_PEER_CONNECTOR_2, CACHING_STRATEGY, ATTRIBUTES, MUTEX>::find_or_create_svc_handler_i
 (SVC_HANDLER *&sh,
- const ACE_PEER_CONNECTOR_ADDR &remote_addr,
+ ACE_PEER_CONNECTOR_ADDR const &remote_addr,
  ACE_Time_Value *timeout,
- const ACE_PEER_CONNECTOR_ADDR &local_addr,
+ ACE_PEER_CONNECTOR_ADDR const &local_addr,
  bool reuse_addr,
  int flags,
  int perms,

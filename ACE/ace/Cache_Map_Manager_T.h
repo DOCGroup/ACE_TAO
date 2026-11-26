@@ -118,8 +118,8 @@ public:
    * successfully, returns 1 if an attempt is made to bind an existing
    * entry, and returns -1 if failures occur.
    */
-  int bind (const KEY &key,
-            const VALUE &value);
+  int bind (KEY const &key,
+            VALUE const &value);
 
   /**
    * Lookup entry<key,value> in the cache. If it is not found, returns -1.
@@ -128,7 +128,7 @@ public:
    * If notify_find also returns 0 (success), then this function returns
    * 0 (success) and sets the cached value in @a value.
    */
-  int find (const KEY &key,
+  int find (KEY const &key,
             VALUE &value);
 
   /**
@@ -138,15 +138,15 @@ public:
    * If notify_find also returns 0 (success), then this function returns
    * 0 (success).
    */
-  int find (const KEY &key);
+  int find (KEY const &key);
 
   /**
    * Reassociate the @a key with @a value. If the @a key already exists
    * in the cache then returns 1, on a new bind returns 0 and returns
    * -1 in case of any failures.
    */
-  int rebind (const KEY &key,
-              const VALUE &value);
+  int rebind (KEY const &key,
+              VALUE const &value);
 
   /**
    * Reassociate @a key with @a value, storing the old value into the
@@ -155,8 +155,8 @@ public:
    * However, for caches that allow user specified keys, if the key is
    * not in the cache, a new @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               VALUE &old_value);
 
   /**
@@ -167,8 +167,8 @@ public:
    * user specified keys, if the key is not in the cache, a new
    * @a key / @a value association is created.
    */
-  int rebind (const KEY &key,
-              const VALUE &value,
+  int rebind (KEY const &key,
+              VALUE const &value,
               KEY &old_key,
               VALUE &old_value);
 
@@ -180,15 +180,15 @@ public:
    * Returns 1 if an attempt is made to bind an existing entry.  This
    * function fails for maps that do not allow user specified keys.
    */
-  int trybind (const KEY &key,
+  int trybind (KEY const &key,
                VALUE &value);
 
   /// Remove @a key from the cache.
-  int unbind (const KEY &key);
+  int unbind (KEY const &key);
 
   /// Remove @a key from the cache, and return the @a value associated with
   /// @a key.
-  int unbind (const KEY &key,
+  int unbind (KEY const &key,
               VALUE &value);
 
   /// Remove entries from the cache depending upon the strategy.
@@ -253,7 +253,7 @@ public:
 
   /// @name Initialization and termination methods
   /// @{
-  ACE_Cache_Map_Iterator (const IMPLEMENTATION &iterator_impl);
+  ACE_Cache_Map_Iterator (IMPLEMENTATION const &iterator_impl);
 
   ACE_Cache_Map_Iterator (const ACE_Cache_Map_Iterator<KEY, VALUE, IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
@@ -329,7 +329,7 @@ public:
 
   /// @name Initialization and termination methods
   /// @{
-  ACE_Cache_Map_Reverse_Iterator (const REVERSE_IMPLEMENTATION &iterator_impl);
+  ACE_Cache_Map_Reverse_Iterator (REVERSE_IMPLEMENTATION const &iterator_impl);
 
   ACE_Cache_Map_Reverse_Iterator (const ACE_Cache_Map_Reverse_Iterator<KEY, VALUE, REVERSE_IMPLEMENTATION, CACHING_STRATEGY, ATTRIBUTES> &rhs);
 
