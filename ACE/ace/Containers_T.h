@@ -2006,11 +2006,12 @@ public:
 
   /**
    * Assignment operator performs an assignment by making an exact
-   * copy of the contents of parameter {s}, i.e., *this == s will
-   * return true.  Note that if the {max_size_} of {array_} is >= than
-   * {s.max_size_} we can copy it without reallocating.  However, if
-   * {max_size_} is < {s.max_size_} we must delete the {array_},
-   * reallocate a new {array_}, and then copy the contents of {s}.
+   * copy of the contents of parameter @a s, i.e., *this == s will
+   * return true.
+   *
+   * @note If @c max_size_ is at least @c s.max_size_, the contents can
+   * be copied without reallocating. Otherwise, @c array_ must be deleted
+   * and reallocated before copying the contents of @a s.
    */
   void operator= (const ACE_Array<T> &s);
 

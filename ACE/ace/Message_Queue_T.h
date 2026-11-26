@@ -1401,9 +1401,9 @@ public:
   /// Dump the state of an object.
   virtual void dump () const;
 
-  /// Support access to the underlying @c Message_Queue. Note that
-  /// manipulating the lower level queue directly may be hazardous (, but
-  /// necessary in some scenarios); be sure to lock the queue first.
+  /// Support access to the underlying @c Message_Queue.
+  /// @note Manipulating the lower level queue directly may be hazardous,
+  /// but is necessary in some scenarios. Lock the queue first.
   ACE_Message_Queue<ACE_SYNCH_USE, TIME_POLICY> &queue ();
 
   /// Declare the dynamic allocation hooks.
