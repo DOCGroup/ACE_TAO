@@ -55,24 +55,16 @@ public:
    */
   int initialize (ACEXML_InputSource* input);
 
-   /**
-   * Return the current content handler.
-   */
+  /// Return the current content handler.
   ACEXML_ContentHandler *getContentHandler () const override;
 
-  /*
-   * Return the current DTD handler.
-   */
+  /// Return the current DTD handler.
   ACEXML_DTDHandler *getDTDHandler () const override;
 
-  /*
-   * Return the current entity resolver.
-   */
+  /// Return the current entity resolver.
   ACEXML_EntityResolver *getEntityResolver () const override;
 
-  /*
-   * Return the current error handler.
-   */
+  /// Return the current error handler.
   ACEXML_ErrorHandler *getErrorHandler () const override;
 
   /**
@@ -88,51 +80,33 @@ public:
   void setFeature (ACEXML_Char const *name,
                    int boolean_value) override;
 
-  /*
-   * Look up the value of a property.
-   */
+  /// Look up the value of a property.
   void * getProperty (ACEXML_Char const *name) override;
 
-  /*
-   * Set the value of a property.
-   */
+  /// Set the value of a property.
   void setProperty (ACEXML_Char const *name,
                     void *value) override;
 
-  /*
-   * Parse an XML document.
-   */
+  /// Parse an XML document.
   void parse (ACEXML_InputSource *input) override;
 
-  /*
-   * Parse an XML document from a system identifier (URI).
-   */
+  /// Parse an XML document from a system identifier (URI).
   void parse (ACEXML_Char const *systemId) override;
 
-  /*
-   * Allow an application to register a content event handler.
-   */
+  /// Allow an application to register a content event handler.
   void setContentHandler (ACEXML_ContentHandler *handler) override;
 
-  /*
-   * Allow an application to register a DTD event handler.
-   */
+  /// Allow an application to register a DTD event handler.
   void setDTDHandler (ACEXML_DTDHandler *handler) override;
 
-  /*
-   * Allow an application to register an entity resolver.
-   */
+  /// Allow an application to register an entity resolver.
   void setEntityResolver (ACEXML_EntityResolver *resolver) override;
 
-  /*
-   * Allow an application to register an error event handler.
-   */
+  /// Allow an application to register an error event handler.
   void setErrorHandler (ACEXML_ErrorHandler *handler) override;
 
 protected:
-  /**
-   * Parse XML Prolog.
-   */
+  /// Parse XML Prolog.
   void parse_xml_prolog ();
 
   /**
@@ -739,7 +713,7 @@ private:
    */
   static ACEXML_Char const validation_feature_[];
 
-  /* @} */
+  /// @}
 
   /// Keeping track of the handlers. We do not manage the memory for
   /// handlers.
