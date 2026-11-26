@@ -162,7 +162,7 @@ TAO_ORB_Core_Static_Resources::TAO_ORB_Core_Static_Resources ()
 }
 
 TAO_ORB_Core_Static_Resources&
-TAO_ORB_Core_Static_Resources::operator=(const TAO_ORB_Core_Static_Resources& other)
+TAO_ORB_Core_Static_Resources::operator=(TAO_ORB_Core_Static_Resources const& other)
 {
   this->network_priority_protocols_hooks_name_ =
     other.network_priority_protocols_hooks_name_;
@@ -1989,7 +1989,7 @@ TAO_ORB_Core::poa_adapter ()
 
 TAO_Stub *
 TAO_ORB_Core::create_stub (char const *repository_id,
-                           const TAO_MProfile &profiles)
+                           TAO_MProfile const &profiles)
 {
   TAO_Stub *retval =
     this->stub_factory ()->create_stub (repository_id, profiles, this);
@@ -2067,7 +2067,7 @@ TAO_ORB_Core::create_object (TAO_Stub *stub)
 {
   // @@ What about forwarding.  With this approach we are never forwarded
   //    when we use collocation!
-  const TAO_MProfile &mprofile = stub->base_profiles ();
+  TAO_MProfile const &mprofile = stub->base_profiles ();
 
   // @@ We should thow CORBA::NO_MEMORY in platforms with exceptions,
   // but we are stuck in platforms without exceptions!
@@ -2119,7 +2119,7 @@ TAO_ORB_Core::initialize_object (TAO_Stub *stub, CORBA::Object_ptr)
 {
   // @@ What about forwarding.  With this approach we are never forwarded
   //    when we use collocation!
-  const TAO_MProfile &mprofile =
+  TAO_MProfile const &mprofile =
     stub->base_profiles ();
 
   return initialize_object_i (stub, mprofile);
@@ -2134,7 +2134,7 @@ TAO_ORB_Core::reinitialize_object (TAO_Stub *stub)
 }
 
 CORBA::Long
-TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, const TAO_MProfile &mprofile)
+TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, TAO_MProfile const &mprofile)
 
 {
   CORBA::Long retval {};
@@ -2177,7 +2177,7 @@ TAO_ORB_Core::initialize_object_i (TAO_Stub *stub, const TAO_MProfile &mprofile)
 
 CORBA::Boolean
 TAO_ORB_Core::is_collocation_enabled (TAO_ORB_Core *orb_core,
-                                      const TAO_MProfile &mp)
+                                      TAO_MProfile const &mp)
 {
   TAO_MProfile mp_temp;
 
@@ -2209,7 +2209,7 @@ TAO_ORB_Core::is_collocation_enabled (TAO_ORB_Core *orb_core,
 }
 
 bool
-TAO_ORB_Core::is_collocated (const TAO_MProfile& mprofile)
+TAO_ORB_Core::is_collocated (TAO_MProfile const& mprofile)
 {
   // @@ Lots of issues arise when dealing with collocation.  What about
   //    forwarding or what if this is a multi-profile IOR where the order is
@@ -2835,8 +2835,8 @@ TAO_ORB_Core::resolve_monitor_i ()
 }
 
 int
-TAO_ORB_Core::set_endpoint_helper (const ACE_CString &lane,
-                                   const ACE_CString &endpoints)
+TAO_ORB_Core::set_endpoint_helper (ACE_CString const &lane,
+                                   ACE_CString const &endpoints)
 {
   if (this->orb_params ()->add_endpoints (lane, endpoints) != 0)
     {
@@ -2870,8 +2870,8 @@ TAO_ORB_Core::resolve_rir (char const *name)
   // Check if a DefaultInitRef was specified.
   if (std::strlen (default_init_ref.in ()) != 0)
     {
-      static const char corbaloc_prefix[] = "corbaloc:";
-      static const char mcast_prefix[] = "mcast:";
+      static char const corbaloc_prefix[] = "corbaloc:";
+      static char const mcast_prefix[] = "mcast:";
       char object_key_delimiter {};
 
       ACE_CString list_of_profiles (default_init_ref.in ());

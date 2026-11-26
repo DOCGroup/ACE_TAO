@@ -61,7 +61,7 @@ TAO_Connector_Registry::open (TAO_ORB_Core *orb_core)
     }
 
   // Open one connector for each loaded protocol!
-  const TAO_ProtocolFactorySetItor end = pfs->end ();
+  TAO_ProtocolFactorySetItor const end = pfs->end ();
 
   for (TAO_ProtocolFactorySetItor factory = pfs->begin ();
        factory != end;

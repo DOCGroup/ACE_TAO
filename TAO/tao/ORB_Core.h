@@ -351,7 +351,7 @@ public:
 
   /// See if we have a collocated address, if yes, return the POA
   /// associated with the address.
-  bool is_collocated (const TAO_MProfile& mprofile);
+  bool is_collocated (TAO_MProfile const& mprofile);
 
   /// This allocator is always TSS and has no locks. It is intended
   /// for allocating the ACE_Data_Blocks used in *outgoing* CDR
@@ -606,7 +606,7 @@ public:
   /// the stub, is loaded at ORB initialization, and its type depends
   /// on the fact that RTCORBA is being used or not.
   TAO_Stub *create_stub (char const *repository_id,
-                         const TAO_MProfile &profiles);
+                         TAO_MProfile const &profiles);
 
   /// Create a new object, use the adapter registry to create a
   /// collocated object, if not possible then create a regular
@@ -721,7 +721,7 @@ public:
    * services do make the selection they would return the selected
    * profile through @a profile.
    */
-  CORBA::Boolean service_profile_selection (const TAO_MProfile &mprofile,
+  CORBA::Boolean service_profile_selection (TAO_MProfile const &mprofile,
                                             TAO_Profile  *&profile);
 
   /**
@@ -737,8 +737,8 @@ public:
    * For details on how this is used please see the FT service
    */
   TAO_Service_Callbacks::Profile_Equivalence is_profile_equivalent (
-                                        const TAO_Profile *this_p,
-                                        const TAO_Profile *that_p);
+                                        TAO_Profile const *this_p,
+                                        TAO_Profile const *that_p);
 
   /// Hook for the services to determine the @c hash value of a
   /// profile.
@@ -897,7 +897,7 @@ public:
   /// both parameters must provide group attributes.
   CORBA::Boolean is_permanent_forward_condition
     (CORBA::Object_ptr const obj,
-    const TAO_Service_Context &service_context);
+    TAO_Service_Context const &service_context);
 
   /// Configuration accessor method
   ACE_Service_Gestalt* configuration () const;
@@ -979,8 +979,8 @@ protected:
   /// Pointer to the list of protocol loaded into this ORB instance.
   /// Helper method to hold the common code part for -ORBEndpoint and
   /// -ORBListenEndpoints options.
-  int set_endpoint_helper (const ACE_CString &lane,
-                           const ACE_CString &endpoints);
+  int set_endpoint_helper (ACE_CString const &lane,
+                           ACE_CString const &endpoints);
 
   /// Return pointer to the policy factory registry associated with
   /// this ORB core.
@@ -992,7 +992,7 @@ protected:
 
   /// Common code from ::initialize_object and ::reinitialize_object
   CORBA::Long initialize_object_i (TAO_Stub *the_stub,
-                                   const TAO_MProfile& mprofile);
+                                   TAO_MProfile const& mprofile);
 
 private:
   /// Obtain and cache the ior table object reference.
@@ -1004,7 +1004,7 @@ private:
   /// Checks to see whether collocation optimizations have to be
   /// applied on objects in the @a other_orb
   CORBA::Boolean is_collocation_enabled (TAO_ORB_Core *other_orb,
-                                         const TAO_MProfile &mp);
+                                         TAO_MProfile const &mp);
 
   bool use_local_memory_pool_;
 
@@ -1359,7 +1359,7 @@ public:
 
 //private:
   TAO_ORB_Core_Static_Resources ();
-  TAO_ORB_Core_Static_Resources& operator= (const TAO_ORB_Core_Static_Resources&);
+  TAO_ORB_Core_Static_Resources& operator= (TAO_ORB_Core_Static_Resources const&);
 
 private:
   /// Mostly unused variable whose sole purpose is to enforce

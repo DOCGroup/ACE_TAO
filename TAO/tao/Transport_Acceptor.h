@@ -53,7 +53,7 @@ namespace TAO
  * representation is "TA\x00".  If necessary, we can request more ORB
  * types later.
  */
-CORBA::ULong const TAO_ORB_TYPE = 0x54414f00U;
+CORBA::ULong TAO_ORB_TYPE const = 0x54414f00U;
 
 // ****************************************************************
 
@@ -113,7 +113,7 @@ public:
                               CORBA::Short priority) = 0;
 
   /// Return true if the @a endpoint has the same address as the acceptor.
-  virtual bool is_collocated (const TAO_Endpoint *endpoint) = 0;
+  virtual bool is_collocated (TAO_Endpoint const *endpoint) = 0;
 
   /**
    * Returns the number of endpoints this acceptor is listening on.  This
