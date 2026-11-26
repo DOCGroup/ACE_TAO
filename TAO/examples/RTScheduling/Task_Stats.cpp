@@ -69,7 +69,7 @@ Task_Stats::end_time (ACE_hrtime_t time)
 }
 
 void
-Task_Stats::dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg)
+Task_Stats::dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg)
 {
   // There's nothing to dump if this object was never initialized
   if (!this->thr_run_time_ || !this->thr_count_)

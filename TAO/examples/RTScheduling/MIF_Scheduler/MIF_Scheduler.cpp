@@ -150,7 +150,7 @@ MIF_Scheduler::create_segment_scheduling_parameter (CORBA::Short importance)
 
 void
 MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &/*guid*/,
-                                             const char *,
+                                             char const *,
                                              CORBA::Policy_ptr sched_policy,
                                              CORBA::Policy_ptr)
 {
@@ -188,7 +188,7 @@ MIF_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType
 
 void
 MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                                           const char *name,
+                                                           char const *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
 {
@@ -200,7 +200,7 @@ MIF_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdT
 
 void
 MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/*guid*/,
-                                          const char* /*name*/,
+                                          char const */*name*/,
                                           CORBA::Policy_ptr sched_policy,
                                           CORBA::Policy_ptr /*implicit_sched_param*/)
 {
@@ -255,7 +255,7 @@ MIF_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &/
 
 void
 MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                       const char *)
+                                       char const *)
 {
   size_t const count = rtscheduling_guid_value (guid);
 
@@ -278,7 +278,7 @@ MIF_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &guid
 
 void
 MIF_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
-                                                         const char *,
+                                                         char const *,
                                                          CORBA::Policy_ptr)
 {
 }
@@ -656,7 +656,7 @@ MIF_Scheduler::scheduling_discipline_name ()
 }
 
 RTScheduling::ResourceManager_ptr
-MIF_Scheduler::create_resource_manager (const char *,
+MIF_Scheduler::create_resource_manager (char const *,
                                         CORBA::Policy_ptr)
 {
         return nullptr;
@@ -664,7 +664,7 @@ MIF_Scheduler::create_resource_manager (const char *,
 
 void
 MIF_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
-                                         const char *,
+                                         char const *,
                                          CORBA::Policy_ptr)
 {
 }

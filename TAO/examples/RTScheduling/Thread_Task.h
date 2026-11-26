@@ -32,7 +32,7 @@ class RTSCHEDTESTLIB_Export Thread_Task : public ACE_Task <ACE_SYNCH>
   /// @name Job accessors
   /// @{
   /// Returns the name of the Job exec'ed by this Task.
-  const char* job ();
+  char const *job ();
 
   /// Sets the Job to exec.
   void job (Job_ptr job);

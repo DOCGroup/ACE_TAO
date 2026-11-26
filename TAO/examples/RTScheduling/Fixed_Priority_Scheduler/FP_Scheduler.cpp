@@ -79,7 +79,7 @@ Fixed_Priority_Scheduler::create_segment_scheduling_parameter (RTCORBA::Priority
 
 void
 Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Current::IdType &,
-                                                        const char *,
+                                                        char const *,
                                                         CORBA::Policy_ptr /*sched_policy*/,
                                                         CORBA::Policy_ptr)
 {
@@ -87,7 +87,7 @@ Fixed_Priority_Scheduler::begin_new_scheduling_segment (const RTScheduling::Curr
 
 void
 Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                                           const char *name,
+                                                           char const *name,
                                                            CORBA::Policy_ptr sched_param,
                                                            CORBA::Policy_ptr implicit_sched_param)
 {
@@ -99,7 +99,7 @@ Fixed_Priority_Scheduler::begin_nested_scheduling_segment (const RTScheduling::C
 
 void
 Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current::IdType &guid,
-                                                     const char *name,
+                                                     char const *name,
                                                      CORBA::Policy_ptr sched_param,
                                                      CORBA::Policy_ptr implicit_sched_param)
 {
@@ -111,13 +111,13 @@ Fixed_Priority_Scheduler::update_scheduling_segment (const RTScheduling::Current
 
 void
 Fixed_Priority_Scheduler::end_scheduling_segment (const RTScheduling::Current::IdType &,
-                                                  const char *)
+                                                  char const *)
 {
 }
 
 void
 Fixed_Priority_Scheduler::end_nested_scheduling_segment (const RTScheduling::Current::IdType &,
-                                                         const char *,
+                                                         char const *,
                                                          CORBA::Policy_ptr)
 {
 }
@@ -257,7 +257,7 @@ Fixed_Priority_Scheduler::scheduling_discipline_name ()
 }
 
 RTScheduling::ResourceManager_ptr
-Fixed_Priority_Scheduler::create_resource_manager (const char *,
+Fixed_Priority_Scheduler::create_resource_manager (char const *,
                                                    CORBA::Policy_ptr)
 {
   return nullptr;
@@ -265,7 +265,7 @@ Fixed_Priority_Scheduler::create_resource_manager (const char *,
 
 void
 Fixed_Priority_Scheduler::set_scheduling_parameter (PortableServer::Servant &,
-                                                    const char *,
+                                                    char const *,
                                                     CORBA::Policy_ptr)
 {
 }

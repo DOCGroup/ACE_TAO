@@ -56,7 +56,7 @@ class RTSCHEDTESTLIB_Export Task_Stats
   /// Record a sample
   int sample (time_t thr_run_time, size_t thr_count);
 
-  void dump_samples (const ACE_TCHAR *file_name, const ACE_TCHAR *msg);
+  void dump_samples (ACE_TCHAR const *file_name, ACE_TCHAR const *msg);
  protected:
   void dump_latency_stats (ACE_TCHAR *out_msg, ACE_UINT32 sf);
 

@@ -89,7 +89,7 @@ Thread_Task::perform_task ()
   return 0;
 }
 
-const char*
+char const *
 Thread_Task::job ()
 {
   return job_name_.in ();
