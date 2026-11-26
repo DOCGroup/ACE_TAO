@@ -85,9 +85,7 @@ ACEXML_NamespaceSupport::pushContext ()
   return 0;
 }
 
-ACEXML_NamespaceSupport::ACEXML_NamespaceSupport ()
-  : ns_stack_ ()
-{}
+ACEXML_NamespaceSupport::ACEXML_NamespaceSupport () = default;
 
 int
 ACEXML_NamespaceSupport::init ()
