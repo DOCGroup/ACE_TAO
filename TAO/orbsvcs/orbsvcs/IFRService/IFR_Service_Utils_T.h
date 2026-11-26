@@ -32,7 +32,7 @@ template<typename T>
 class TAO_IFR_Generic_Utils
 {
 public:
-  static void destroy_special (const ACE_TCHAR *section_name,
+  static void destroy_special (ACE_TCHAR const *section_name,
                                TAO_Repository_i *repo,
                                ACE_Configuration_Section_Key &key);
 

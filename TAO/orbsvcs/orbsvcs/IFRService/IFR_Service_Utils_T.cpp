@@ -11,7 +11,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
 void
-TAO_IFR_Generic_Utils<T>::destroy_special (const ACE_TCHAR *section_name,
+TAO_IFR_Generic_Utils<T>::destroy_special (ACE_TCHAR const *section_name,
                                            TAO_Repository_i *repo,
                                            ACE_Configuration_Section_Key &key)
 {
