@@ -65,7 +65,7 @@ CM_Client::receive (int timeout)
             }
           else
             {
-              if (Options::get_opt (Options::DEBUGGING) != 0)
+              if (Options::get_opt (Options::DEBUGGING))
                 {
                   hostent *np = ACE_OS::gethostbyaddr (
                     reinterpret_cast<char const *> (
@@ -114,7 +114,7 @@ CM_Client::send ()
 
   while (Multicast_Manager::get_next_host_addr (this->sin_.sin_addr) != 0)
     {
-      if (Options::get_opt (Options::DEBUGGING) != 0)
+      if (Options::get_opt (Options::DEBUGGING))
         {
           hostent *np = ACE_OS::gethostbyaddr (
             reinterpret_cast<char const *> (

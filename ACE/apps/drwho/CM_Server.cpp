@@ -51,7 +51,7 @@ CM_Server::receive (int)
 {
   int sin_len = sizeof this->sin_;
 
-  if (Options::get_opt (Options::DEBUGGING) != 0)
+  if (Options::get_opt (Options::DEBUGGING))
   {
     ACE_DEBUG ((LM_DEBUG, "waiting for client to send...\n"));
   }
@@ -67,7 +67,7 @@ CM_Server::receive (int)
     return -1;
   }
 
-  if (Options::get_opt (Options::DEBUGGING) != 0)
+  if (Options::get_opt (Options::DEBUGGING))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "receiving from client host %s\n",
@@ -93,7 +93,7 @@ CM_Server::send ()
     return -1;
   }
 
-  if (Options::get_opt (Options::DEBUGGING) != 0)
+  if (Options::get_opt (Options::DEBUGGING))
     {
       ACE_DEBUG ((LM_DEBUG,
                   "sending to client host %s\n",

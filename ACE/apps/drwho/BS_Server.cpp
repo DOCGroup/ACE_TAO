@@ -59,13 +59,13 @@ BS_Server::insert (char const *key_name, int max_len)
 {
   static char last_lookup[MAXHOSTNAMELEN];
   static int mid = 0;
-  static int result = 0;
+  static bool result = false;
   Protocol_Record **buffer = this->sorted_record_.get ();
 
   // First check the cache...
   if (std::strncmp (last_lookup, key_name, max_len) == 0)
     {
-      if (result == 0)
+      if (!result)
       {
         return nullptr;
       }
@@ -100,14 +100,14 @@ BS_Server::insert (char const *key_name, int max_len)
       if (!(cmp == 0
             || std::strncmp (key_name, buffer[--mid]->get_login (), max_len) == 0))
         {
-          result = 0;
+          result = false;
           return nullptr;
         }
     }
 
   // If we get here we've located a friend.
 
-  result = 1;
+  result = true;
   return buffer[mid];
 }
 
