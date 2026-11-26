@@ -43,8 +43,8 @@ public:
              RtecEventChannelAdmin::EventChannel_ptr consumer_ec,
              RtecScheduler::Scheduler_ptr supplier_sched,
              RtecScheduler::Scheduler_ptr consumer_sched,
-             const char* consumer_name,
-             const char* supplier_name);
+             char const *consumer_name,
+             char const *supplier_name);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

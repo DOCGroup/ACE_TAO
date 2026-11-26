@@ -193,7 +193,7 @@ public:
   /// be used when NOT using service configurator to obtain/configure
   /// TAO_ECG_Mcast_Gateway.  See class documentation above for more
   /// info.
-  int init (const char * address_server_arg,
+  int init (char const *address_server_arg,
             const Attributes & attributes = Attributes());
 
   /// Same as the method above, but also gives the client an opportunity to
@@ -206,7 +206,7 @@ public:
    * gets multicasted.
    */
   int init (const RtecEventChannelAdmin::ConsumerQOS & consumer_qos,
-            const char * address_server_arg,
+            char const *address_server_arg,
             const Attributes & attributes = Attributes());
 
   /// The main method - create, configure and run federation

@@ -49,7 +49,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 
   while (arg_shifter.is_anything_left ())
     {
-      const ACE_TCHAR *arg = arg_shifter.get_current ();
+      ACE_TCHAR const *arg = arg_shifter.get_current ();
 
       if (ACE_OS::strcasecmp (arg, ACE_TEXT ("-ECGService")) == 0)
         {
@@ -228,7 +228,7 @@ TAO_ECG_Mcast_Gateway::init (int argc, ACE_TCHAR* argv[])
 }
 
 int
-TAO_ECG_Mcast_Gateway::init (const char * address_server_arg,
+TAO_ECG_Mcast_Gateway::init (char const *address_server_arg,
                              const Attributes & attr)
 {
   this->address_server_arg_.set (address_server_arg);
@@ -247,7 +247,7 @@ TAO_ECG_Mcast_Gateway::init (const char * address_server_arg,
 int
 TAO_ECG_Mcast_Gateway::init (
     const RtecEventChannelAdmin::ConsumerQOS & consumer_qos,
-    const char * address_server_arg,
+    char const *address_server_arg,
     const Attributes & attributes)
 {
   this->consumer_qos_ = consumer_qos;
@@ -373,7 +373,7 @@ TAO_ECG_Mcast_Gateway::init_endpoint ()
 PortableServer::ServantBase *
 TAO_ECG_Mcast_Gateway::init_address_server ()
 {
-  const char * address_server_arg =
+  char const *address_server_arg =
     (this->address_server_arg_.length ())
     ? this->address_server_arg_.c_str () : nullptr;
 
@@ -441,9 +441,9 @@ TAO_ECG_Mcast_Gateway::init_handler (TAO_ECG_Dgram_Handler *receiver,
 {
   TAO_ECG_Refcounted_Handler handler;
 
-  const ACE_TCHAR * nic =
+  ACE_TCHAR const *nic =
     (this->nic_.length ()) ? this->nic_.c_str () : nullptr;
-  const char * address_server_arg =
+  char const *address_server_arg =
     (this->address_server_arg_.length ())
     ? this->address_server_arg_.c_str () : nullptr;
 

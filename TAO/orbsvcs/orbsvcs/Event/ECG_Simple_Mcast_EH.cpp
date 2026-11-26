@@ -13,7 +13,7 @@ TAO_ECG_Simple_Mcast_EH::TAO_ECG_Simple_Mcast_EH (TAO_ECG_Dgram_Handler *recv)
 
 int
 TAO_ECG_Simple_Mcast_EH::open (char const *mcast_addr,
-                               const ACE_TCHAR *net_if)
+                               ACE_TCHAR const *net_if)
 {
   // Check that we haven't been closed already.
   if (!this->receiver_)

@@ -34,7 +34,7 @@ TAO_EC_Thread_Flags::Supported_Flag TAO_EC_Thread_Flags::supported_flags_[] = {
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-TAO_EC_Thread_Flags::parse_symbols (const char* syms)
+TAO_EC_Thread_Flags::parse_symbols (char const *syms)
 {
   // PRE: we assume nothing other than that syms is valid
   // POST:

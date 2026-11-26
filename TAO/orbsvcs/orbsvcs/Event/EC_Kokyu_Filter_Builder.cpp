@@ -15,7 +15,7 @@
 #include "orbsvcs/Event/EC_Kokyu_Filter_Builder.inl"
 #endif /* __ACE_INLINE__ */
 
-const char* designator (long dsgn)
+char const *designator (long dsgn)
 {
   switch(dsgn)
     {

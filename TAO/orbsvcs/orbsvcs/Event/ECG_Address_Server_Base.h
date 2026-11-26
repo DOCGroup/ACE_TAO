@@ -27,7 +27,7 @@ class TAO_RTEvent_Serv_Export TAO_ECG_Address_Server_Base
   : public virtual POA_RtecUDPAdmin::AddrServer
 {
 public:
-  virtual int init (const char *arg) = 0;
+  virtual int init (char const *arg) = 0;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

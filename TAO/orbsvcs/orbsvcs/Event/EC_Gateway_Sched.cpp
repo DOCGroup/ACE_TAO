@@ -13,8 +13,8 @@ TAO_EC_Gateway_Sched::init (RtecEventChannelAdmin::EventChannel_ptr supplier_ec,
                            RtecEventChannelAdmin::EventChannel_ptr consumer_ec,
                            RtecScheduler::Scheduler_ptr supplier_sched,
                            RtecScheduler::Scheduler_ptr consumer_sched,
-                           const char* consumer_name,
-                           const char* supplier_name)
+                           char const *consumer_name,
+                           char const *supplier_name)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, ace_mon, this->lock_);
 

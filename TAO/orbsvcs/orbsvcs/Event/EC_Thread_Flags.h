@@ -43,7 +43,7 @@ class TAO_RTEvent_Serv_Export TAO_EC_Thread_Flags
 public:
   TAO_EC_Thread_Flags () = default;
   /// @brief See @a operator=().
-  explicit TAO_EC_Thread_Flags (const char* symbolic_flags)
+  explicit TAO_EC_Thread_Flags (char const *symbolic_flags)
     { this->parse_symbols(symbolic_flags); }
   ~TAO_EC_Thread_Flags () = default;
 
@@ -61,7 +61,7 @@ public:
 
     @note The \a sched value only gets set if the scheduler is specified using symbols.
   */
-  const TAO_EC_Thread_Flags& operator= (const char* symbolic_flags)
+  const TAO_EC_Thread_Flags& operator= (char const *symbolic_flags)
     { this->parse_symbols(symbolic_flags); return *this; }
 
   /*!
@@ -91,7 +91,7 @@ public:
   struct Supported_Flag
   {
     /// Flag name, e.g., THR_NEW_LWP.
-    const char* n;
+    char const *n;
 
     /// Flag value, i.e., actual symbol.
     long        v;
@@ -110,7 +110,7 @@ protected:
   /// Value of THR_SCHED_*.
   long sched_ {};
 
-  void parse_symbols (const char* syms);
+  void parse_symbols (char const *syms);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL
