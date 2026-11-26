@@ -13,8 +13,8 @@
 #define MAKE_PIPE_NAME(X) ACE_TEXT (X)
 #endif
 
-const int DEFAULT_SIZE = 8;
-const int DEFAULT_COUNT = 10000;
+int const DEFAULT_SIZE = 8;
+int const DEFAULT_COUNT = 10000;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
@@ -27,7 +27,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                   char[size],
                   1);
 
-  const ACE_TCHAR *rendezvous = MAKE_PIPE_NAME ("acepipe");
+  ACE_TCHAR const *rendezvous = MAKE_PIPE_NAME ("acepipe");
 
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;

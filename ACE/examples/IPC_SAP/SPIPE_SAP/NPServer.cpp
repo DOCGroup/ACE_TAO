@@ -16,7 +16,7 @@ ACE_TMAIN (int /* argc */, ACE_TCHAR * /* argv */ [])
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];
-  const ACE_TCHAR *rendezvous = MAKE_PIPE_NAME ("acepipe");
+  ACE_TCHAR const *rendezvous = MAKE_PIPE_NAME ("acepipe");
 
   // Initialize named pipe listener.
 

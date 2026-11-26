@@ -11,7 +11,7 @@
 #include "shared.h"
 
 // Maximum per-process open I/O descriptors.
-const int MAX_HANDLES = 200;
+int const MAX_HANDLES = 200;
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
