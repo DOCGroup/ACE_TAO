@@ -100,7 +100,7 @@ protected:
   TAO_Asynch_Queued_Message (std::unique_ptr<char[]> buffer,
                              TAO_ORB_Core *oc,
                              size_t size,
-                             const ACE_Time_Value &abs_timeout,
+                             ACE_Time_Value const &abs_timeout,
                              ACE_Allocator *alloc,
                              bool is_heap_allocated);
 

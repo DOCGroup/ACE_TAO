@@ -120,7 +120,7 @@ namespace TAO
      *
      * @param ex_count Number of elements in the array.
      */
-    virtual void invoke (const TAO::Exception_Data *ex, unsigned long ex_count);
+    virtual void invoke (TAO::Exception_Data const *ex, unsigned long ex_count);
 
     /**
      * @param byte_order The intended byte order for the message output

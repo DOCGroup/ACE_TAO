@@ -24,7 +24,7 @@ TAO_Tagged_Components::set_orb_type (CORBA::ULong orb_type)
 
 void
 TAO_Tagged_Components::set_code_sets (
-    const CONV_FRAME::CodeSetComponentInfo &ci)
+    CONV_FRAME::CodeSetComponentInfo const &ci)
 {
   this->code_sets_ = ci;
   this->code_sets_set_ = 1;
@@ -76,7 +76,7 @@ TAO_Tagged_Components::set_component_i (IOP::ComponentId tag,
   component.component_data.length (static_cast<CORBA::ULong> (length));
   CORBA::Octet *buf = component.component_data.get_buffer ();
 
-  for (const ACE_Message_Block *i = cdr.begin ();
+  for (ACE_Message_Block const *i = cdr.begin ();
        i != nullptr;
        i = i->cont ())
     {
@@ -88,7 +88,7 @@ TAO_Tagged_Components::set_component_i (IOP::ComponentId tag,
 }
 
 void
-TAO_Tagged_Components::set_component (const IOP::TaggedComponent& component)
+TAO_Tagged_Components::set_component (IOP::TaggedComponent const & component)
 {
   if (this->known_tag (component.tag))
     {
@@ -125,7 +125,7 @@ TAO_Tagged_Components::set_component (IOP::TaggedComponent& component)
 
 void
 TAO_Tagged_Components::set_known_component_i (
-    const IOP::TaggedComponent& component)
+    IOP::TaggedComponent const & component)
 {
   TAO_InputCDR cdr (reinterpret_cast<char const *> (
                       component.component_data.get_buffer ()),
@@ -168,7 +168,7 @@ TAO_Tagged_Components::set_known_component_i (
 }
 
 void
-TAO_Tagged_Components::set_component_i (const IOP::TaggedComponent& component)
+TAO_Tagged_Components::set_component_i (IOP::TaggedComponent const & component)
 {
   // @@ TODO Some components can show up multiple times, others
   //    can't find out and take appropriate action.
@@ -217,7 +217,7 @@ TAO_Tagged_Components::add_component_i (IOP::TaggedComponent& component)
 }
 
 void
-TAO_Tagged_Components::add_component_i (const IOP::TaggedComponent& component)
+TAO_Tagged_Components::add_component_i (IOP::TaggedComponent const & component)
 {
   // @@ TODO Some components can show up multiple times, others
   //    can't find out and take appropriate action.
@@ -317,7 +317,7 @@ TAO_Tagged_Components::decode (TAO_InputCDR& cdr)
 
   for (CORBA::ULong i {}; i != l; ++i)
     {
-      const IOP::TaggedComponent &component = this->components_[i];
+      IOP::TaggedComponent const &component = this->components_[i];
 
       if (this->known_tag (component.tag))
         {

@@ -120,7 +120,7 @@ public:
 
   /// The header length of a fragment
   size_t fragment_header_length (
-    const TAO_GIOP_Message_Version& giop_version) const;
+    TAO_GIOP_Message_Version const & giop_version) const;
 
   TAO_OutputCDR &out_stream ();
 
@@ -141,7 +141,7 @@ public:
   /// concurrently by multiple threads nor concurrently to
   /// consolidate_fragmented_message @return -1 on failure, 0 on
   /// success, 1 no fragment on stack relating to CancelRequest.
-  int discard_fragmented_message (const TAO_Queued_Data *cancel_request);
+  int discard_fragmented_message (TAO_Queued_Data const *cancel_request);
 
   /// Outgoing GIOP message fragmentation strategy.
   TAO_GIOP_Fragmentation_Strategy * fragmentation_strategy ();
@@ -180,7 +180,7 @@ private:
 
   /// Get the parser
   TAO_GIOP_Message_Generator_Parser *get_parser (
-    const TAO_GIOP_Message_Version &version) const;
+    TAO_GIOP_Message_Version const &version) const;
 
   /// Print out consolidate messages
   int dump_consolidated_msg (TAO_OutputCDR &stream);
@@ -193,7 +193,7 @@ private:
   /// @note If the GIOP header happens to change in the future, we can
   /// push this method in to the generator_parser classes.
   int write_protocol_header (GIOP::MsgType t,
-                             const TAO_GIOP_Message_Version& version,
+                             TAO_GIOP_Message_Version const & version,
                              TAO_OutputCDR &msg);
 
   /// Make a GIOP_LOCATEREPLY and hand that over to the transport so
@@ -228,11 +228,11 @@ private:
 
   /// Parse GIOP request-id of TAO_Queued_Data @a qd
   /// @return 0 on success, otherwise -1
-  int parse_request_id (const TAO_Queued_Data *qd, CORBA::ULong &request_id) const;
+  int parse_request_id (TAO_Queued_Data const *qd, CORBA::ULong &request_id) const;
 
   /// Parse GIOP request-id of TAO_InputCDR @a cdr.
   /// @return 0 on success, otherwise -1
-  int parse_request_id (const TAO_InputCDR &cdr, CORBA::ULong &request_id) const;
+  int parse_request_id (TAO_InputCDR const &cdr, CORBA::ULong &request_id) const;
 
   /// Set GIOP message flags in message that has been marshaled into
   /// the output CDR stream @a msg.

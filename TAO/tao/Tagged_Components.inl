@@ -18,7 +18,7 @@ TAO_Tagged_Components::get_orb_type (CORBA::ULong& orb_type) const
 
 ACE_INLINE int
 TAO_Tagged_Components::get_code_sets (
-  const CONV_FRAME::CodeSetComponentInfo* &ci) const
+  CONV_FRAME::CodeSetComponentInfo const * &ci) const
 {
   if (this->code_sets_set_ == 1)
     {

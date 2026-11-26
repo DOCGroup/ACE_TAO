@@ -66,12 +66,12 @@ public:
    * copies the data, the second version steal all the sequence
    * buffers.
    */
-  void set_code_sets (const CONV_FRAME::CodeSetComponentInfo &);
+  void set_code_sets (CONV_FRAME::CodeSetComponentInfo const &);
   void set_code_sets (CONV_FRAME::CodeSetComponentInfo &);
 
   /// Gets a reference of the IOP::TAG_CODE_SETS component value,
   /// return 0 if the component is not present.
-  int get_code_sets (const CONV_FRAME::CodeSetComponentInfo* &) const;
+  int get_code_sets (CONV_FRAME::CodeSetComponentInfo const * &) const;
 
   /// Gets a copy of the IOP::TAG_CODE_SETS component value, return 0
   /// if the component is not present.
@@ -79,7 +79,7 @@ public:
 
   /// Insert the component into the list, making a copy of the octet
   /// sequence.
-  void set_component (const IOP::TaggedComponent& component);
+  void set_component (IOP::TaggedComponent const & component);
 
   /// Insert the component into the list, but efficiently stealing the
   /// contents of the octet sequence.
@@ -112,10 +112,10 @@ private:
                         CONV_FRAME::CodeSetComponent &rhs);
 
   /// Helper methods to implement set_component()
-  void set_known_component_i (const IOP::TaggedComponent& component);
-  void set_component_i (const IOP::TaggedComponent& component);
+  void set_known_component_i (IOP::TaggedComponent const & component);
+  void set_component_i (IOP::TaggedComponent const & component);
   void set_component_i (IOP::TaggedComponent& component);
-  void add_component_i (const IOP::TaggedComponent& component);
+  void add_component_i (IOP::TaggedComponent const & component);
   void add_component_i (IOP::TaggedComponent& component);
   void set_component_i (IOP::ComponentId tag, TAO_OutputCDR &cdr);
 

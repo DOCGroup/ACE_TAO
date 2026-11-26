@@ -653,7 +653,7 @@ namespace TAO
     bool retry_on_exception {};
     bool do_forward {};
 
-    const TAO_ORB_Parameters *orb_params = this->stub ()->orb_core ()->orb_params ();
+    TAO_ORB_Parameters const *orb_params = this->stub ()->orb_core ()->orb_params ();
 
     if (this->retry_state_ &&
         this->retry_state_->forward_on_exception_limit_used () &&

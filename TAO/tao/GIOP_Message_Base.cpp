@@ -934,7 +934,7 @@ TAO_GIOP_Message_Base::generate_exception_reply (
 
 int
 TAO_GIOP_Message_Base::write_protocol_header (GIOP::MsgType type,
-                                              const TAO_GIOP_Message_Version &version,
+                                              TAO_GIOP_Message_Version const &version,
                                               TAO_OutputCDR &msg)
 {
   // Reset the message type
@@ -1393,7 +1393,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
 
 TAO_GIOP_Message_Generator_Parser*
 TAO_GIOP_Message_Base::get_parser (
-    const TAO_GIOP_Message_Version &version) const
+    TAO_GIOP_Message_Version const &version) const
 {
   switch (version.major)
     {
@@ -1436,7 +1436,7 @@ TAO_GIOP_Message_Base::get_parser (
 // required to write robust distributed systems.)
 void
 TAO_GIOP_Message_Base::
-  send_close_connection (const TAO_GIOP_Message_Version &version,
+  send_close_connection (TAO_GIOP_Message_Version const &version,
                          TAO_Transport *transport)
 {
   // static CORBA::Octet
@@ -1711,7 +1711,7 @@ TAO_GIOP_Message_Base::header_length () const
 
 size_t
 TAO_GIOP_Message_Base::fragment_header_length (
-  const TAO_GIOP_Message_Version& giop_version) const
+  TAO_GIOP_Message_Version const & giop_version) const
 {
   // Get the parser we need to use
   TAO_GIOP_Message_Generator_Parser *generator_parser =
@@ -1721,7 +1721,7 @@ TAO_GIOP_Message_Base::fragment_header_length (
 }
 
 int
-TAO_GIOP_Message_Base::parse_request_id (const TAO_Queued_Data *qd,
+TAO_GIOP_Message_Base::parse_request_id (TAO_Queued_Data const *qd,
                                          CORBA::ULong &request_id) const
 {
   // Get the read and write positions before we steal data.
@@ -1974,7 +1974,7 @@ TAO_GIOP_Message_Base::consolidate_fragmented_message (
 }
 
 int
-TAO_GIOP_Message_Base::discard_fragmented_message (const TAO_Queued_Data *cancel_request)
+TAO_GIOP_Message_Base::discard_fragmented_message (TAO_Queued_Data const *cancel_request)
 {
   // We must extract the specific request-id from message-buffer
   // and remove all fragments from stack that match this request-id.
