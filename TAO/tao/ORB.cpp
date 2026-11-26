@@ -1151,7 +1151,7 @@ namespace TAO
   }
 
   ACE_Intrusive_Auto_Ptr<ACE_Service_Gestalt>
-  find_orb_context (const ACE_TString& orbconfig_string)
+  find_orb_context (ACE_TString const & orbconfig_string)
     {
       ACE_TCHAR const *arg = orbconfig_string.c_str ();
 
@@ -1506,7 +1506,7 @@ CORBA::ORB::object_to_string (CORBA::Object_ptr obj)
       std::strcpy (cp, ior_prefix);
       cp += sizeof (ior_prefix) - 1;
 
-      for (const ACE_Message_Block *i = cdr.begin (); i != nullptr; i = i->cont ())
+      for (ACE_Message_Block const *i = cdr.begin (); i != nullptr; i = i->cont ())
         {
           char const *bytes = i->rd_ptr ();
           size_t len = i->length ();

@@ -145,10 +145,10 @@ namespace CORBA
     {
     public:
       InvalidName ();
-      InvalidName (const InvalidName &);
+      InvalidName (InvalidName const &);
       ~InvalidName () override;
 
-      InvalidName &operator= (const InvalidName &);
+      InvalidName &operator= (InvalidName const &);
 
       static InvalidName *_downcast (CORBA::Exception *);
       static CORBA::Exception *_alloc ();
@@ -552,8 +552,8 @@ namespace CORBA
     CORBA::Boolean use_omg_ior_format_ {true};
 
     // Prevent copying and assignment.
-    ORB (const ORB &);
-    ORB &operator= (const ORB &);
+    ORB (ORB const &);
+    ORB &operator= (ORB const &);
 
     /// Timeout value
     ACE_Time_Value * timeout_;

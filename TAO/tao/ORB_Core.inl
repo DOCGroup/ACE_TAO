@@ -90,7 +90,7 @@ TAO_ORB_Core::get_network_priority_protocols_hooks ()
 }
 
 ACE_INLINE CORBA::Boolean
-TAO_ORB_Core::service_profile_selection (const TAO_MProfile &mprofile,
+TAO_ORB_Core::service_profile_selection (TAO_MProfile const &mprofile,
                                          TAO_Profile  *&profile)
 {
   CORBA::Boolean retval {};
@@ -118,8 +118,8 @@ TAO_ORB_Core::object_is_nil (CORBA::Object_ptr obj)
 }
 
 ACE_INLINE TAO_Service_Callbacks::Profile_Equivalence
-TAO_ORB_Core::is_profile_equivalent (const TAO_Profile *this_p,
-                                     const TAO_Profile *that_p)
+TAO_ORB_Core::is_profile_equivalent (TAO_Profile const *this_p,
+                                     TAO_Profile const *that_p)
 {
   TAO_Service_Callbacks::Profile_Equivalence retval
     = TAO_Service_Callbacks::DONT_KNOW;
@@ -647,9 +647,9 @@ TAO_ORB_Core::serverrequestinterceptor_adapter ()
 ACE_INLINE  CORBA::Boolean
 TAO_ORB_Core::is_permanent_forward_condition
 (const CORBA::Object_ptr obj,
- const TAO_Service_Context &service_context)
+ TAO_Service_Context const &service_context)
 {
-  const TAO_Service_Callbacks *service_callback =
+  TAO_Service_Callbacks const *service_callback =
       this->fault_tolerance_service ().service_callback ();
 
   // Since forward location is allowed to be nil then check for it.
