@@ -241,7 +241,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handlers ()
 
   ACE_Event_Handler *eh {};
 
-  for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
+  for (ACE_Select_Reactor_Handler_Repository_Iterator iter (std::addressof (this->handler_rep_));
        iter.next (eh) != 0;
        iter.advance ())
     {
@@ -259,7 +259,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handlers ()
 
   ACE_Event_Handler *eh {};
 
-  for (ACE_Select_Reactor_Handler_Repository_Iterator iter (&this->handler_rep_);
+  for (ACE_Select_Reactor_Handler_Repository_Iterator iter (std::addressof (this->handler_rep_));
        iter.next (eh) != 0;
        iter.advance ())
     {
