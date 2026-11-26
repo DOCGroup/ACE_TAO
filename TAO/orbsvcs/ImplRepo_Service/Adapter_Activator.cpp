@@ -28,7 +28,7 @@ ImR_Adapter::unknown_adapter (PortableServer::POA_ptr parent,
   ACE_ASSERT (name != nullptr);
   CORBA::PolicyList policies (3);
 
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
   policies.length (3);
   try
     {

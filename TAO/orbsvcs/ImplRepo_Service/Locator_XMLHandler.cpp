@@ -4,26 +4,26 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_sys_time.h"
 
-const ACE_TCHAR* Locator_XMLHandler::ROOT_TAG = ACE_TEXT("ImplementationRepository");
-const ACE_TCHAR* Locator_XMLHandler::SERVER_INFO_TAG = ACE_TEXT("Servers");
-const ACE_TCHAR* Locator_XMLHandler::ACTIVATOR_INFO_TAG = ACE_TEXT("Activators");
-const ACE_TCHAR* Locator_XMLHandler::ENVIRONMENT_TAG = ACE_TEXT("EnvironmentVariables");
+ACE_TCHAR const *Locator_XMLHandler::ROOT_TAG = ACE_TEXT("ImplementationRepository");
+ACE_TCHAR const *Locator_XMLHandler::SERVER_INFO_TAG = ACE_TEXT("Servers");
+ACE_TCHAR const *Locator_XMLHandler::ACTIVATOR_INFO_TAG = ACE_TEXT("Activators");
+ACE_TCHAR const *Locator_XMLHandler::ENVIRONMENT_TAG = ACE_TEXT("EnvironmentVariables");
 
-const ACE_TCHAR* Locator_XMLHandler::SERVER_TAG = ACE_TEXT("server_id");
-const ACE_TCHAR* Locator_XMLHandler::POANAME_TAG = ACE_TEXT("poa_name");
-const ACE_TCHAR* Locator_XMLHandler::JACORB_TAG = ACE_TEXT("is_jacorb");
-const ACE_TCHAR* Locator_XMLHandler::ACTNAME_TAG = ACE_TEXT("activator");
-const ACE_TCHAR* Locator_XMLHandler::CMDLINE_TAG = ACE_TEXT("command_line");
-const ACE_TCHAR* Locator_XMLHandler::DIR_TAG = ACE_TEXT("working_dir");
-const ACE_TCHAR* Locator_XMLHandler::MODE_TAG = ACE_TEXT("activation_mode");
-const ACE_TCHAR* Locator_XMLHandler::LIMIT_TAG = ACE_TEXT("start_limit");
-const ACE_TCHAR* Locator_XMLHandler::PARTIOR_TAG = ACE_TEXT("partial_ior");
-const ACE_TCHAR* Locator_XMLHandler::IOR_TAG = ACE_TEXT("ior");
-const ACE_TCHAR* Locator_XMLHandler::STARTED_TAG = ACE_TEXT("started");
-const ACE_TCHAR* Locator_XMLHandler::PEER_TAG = ACE_TEXT("peer");
-const ACE_TCHAR* Locator_XMLHandler::PID_TAG = ACE_TEXT("pid");
-const ACE_TCHAR* Locator_XMLHandler::KEYNAME_TAG = ACE_TEXT("key_name");
-const ACE_TCHAR* Locator_XMLHandler::ALTKEY_TAG = ACE_TEXT("altkey");
+ACE_TCHAR const *Locator_XMLHandler::SERVER_TAG = ACE_TEXT("server_id");
+ACE_TCHAR const *Locator_XMLHandler::POANAME_TAG = ACE_TEXT("poa_name");
+ACE_TCHAR const *Locator_XMLHandler::JACORB_TAG = ACE_TEXT("is_jacorb");
+ACE_TCHAR const *Locator_XMLHandler::ACTNAME_TAG = ACE_TEXT("activator");
+ACE_TCHAR const *Locator_XMLHandler::CMDLINE_TAG = ACE_TEXT("command_line");
+ACE_TCHAR const *Locator_XMLHandler::DIR_TAG = ACE_TEXT("working_dir");
+ACE_TCHAR const *Locator_XMLHandler::MODE_TAG = ACE_TEXT("activation_mode");
+ACE_TCHAR const *Locator_XMLHandler::LIMIT_TAG = ACE_TEXT("start_limit");
+ACE_TCHAR const *Locator_XMLHandler::PARTIOR_TAG = ACE_TEXT("partial_ior");
+ACE_TCHAR const *Locator_XMLHandler::IOR_TAG = ACE_TEXT("ior");
+ACE_TCHAR const *Locator_XMLHandler::STARTED_TAG = ACE_TEXT("started");
+ACE_TCHAR const *Locator_XMLHandler::PEER_TAG = ACE_TEXT("peer");
+ACE_TCHAR const *Locator_XMLHandler::PID_TAG = ACE_TEXT("pid");
+ACE_TCHAR const *Locator_XMLHandler::KEYNAME_TAG = ACE_TEXT("key_name");
+ACE_TCHAR const *Locator_XMLHandler::ALTKEY_TAG = ACE_TEXT("altkey");
 
 Locator_XMLHandler::Locator_XMLHandler (XML_Backing_Store& repo)
   : repo_(repo),

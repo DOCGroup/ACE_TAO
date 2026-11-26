@@ -156,8 +156,8 @@ ImR_DSI_Forwarder::invoke_primary_interface(CORBA::ServerRequest_ptr )
 }
 
 
-ImR_DSI_ResponseHandler::ImR_DSI_ResponseHandler (const char *key,
-                                            const char *server_name,
+ImR_DSI_ResponseHandler::ImR_DSI_ResponseHandler (char const *key,
+                                            char const *server_name,
                                             CORBA::ORB_ptr orb,
                                             TAO_AMH_DSI_Response_Handler_ptr resp)
   :key_str_ (key),
@@ -170,7 +170,7 @@ ImR_DSI_ResponseHandler::ImR_DSI_ResponseHandler (const char *key,
 ImR_DSI_ResponseHandler::~ImR_DSI_ResponseHandler () = default;
 
 void
-ImR_DSI_ResponseHandler::send_ior (const char *pior)
+ImR_DSI_ResponseHandler::send_ior (char const *pior)
 {
   ACE_CString ior = pior;
 

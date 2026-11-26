@@ -19,9 +19,9 @@
 #include "ace/Synch.h"
 #include "tao/orbconf.h"
 
-extern const ACE_TCHAR* IMR_LOCATOR_SERVICE_NAME;
-extern const ACE_TCHAR* IMR_LOCATOR_DISPLAY_NAME;
-extern const ACE_TCHAR* IMR_LOCATOR_DESCRIPTION;
+extern ACE_TCHAR const *IMR_LOCATOR_SERVICE_NAME;
+extern ACE_TCHAR const *IMR_LOCATOR_DISPLAY_NAME;
+extern ACE_TCHAR const *IMR_LOCATOR_DESCRIPTION;
 
 /**
  * @class Locator_NT_Service

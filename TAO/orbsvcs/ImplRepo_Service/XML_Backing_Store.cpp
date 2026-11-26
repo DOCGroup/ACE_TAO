@@ -106,7 +106,7 @@ namespace {
 void
 XML_Backing_Store::persist (FILE* fp,
                             const Server_Info& info,
-                            const char* tag_prepend,
+                            char const *tag_prepend,
                             const NameValues& name_values)
 {
   ACE_CString server_id = ACEXML_escape_cstring (info.server_id);
@@ -185,7 +185,7 @@ XML_Backing_Store::persist (FILE* fp,
 void
 XML_Backing_Store::persist (FILE* fp,
                             const Activator_Info& info,
-                            const char* tag_prepend,
+                            char const *tag_prepend,
                             const NameValues& name_values)
 {
   ACE_OS::fprintf (fp,"%s<%s", tag_prepend,
@@ -283,7 +283,7 @@ XML_Backing_Store::load_file (const ACE_TString& filename,
   return 0;
 }
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 XML_Backing_Store::repo_mode() const
 {
   return this->filename_.c_str();

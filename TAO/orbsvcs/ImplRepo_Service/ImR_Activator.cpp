@@ -138,7 +138,7 @@ run_service_command (Activator_Options& opts)
         if (opts.service_command () == Activator_Options::SC_INSTALL)
           {
             // Must match Locator_NT_Service.h
-            const ACE_TCHAR* DEPENDS_ON = ACE_TEXT("TAOImR");
+            ACE_TCHAR const *DEPENDS_ON = ACE_TEXT("TAOImR");
 
             ret =  SERVICE::instance ()->insert (SERVICE_DEMAND_START,
                                                  SERVICE_ERROR_NORMAL,

@@ -3,7 +3,7 @@
 
 #include "ace/SString.h"
 
-const char *
+char const *
 ImR_Utils::activationModeToString (ImplementationRepository::ActivationMode mode)
 {
   switch (mode)
@@ -45,7 +45,7 @@ ImR_Utils::stringToActivationMode (const ACE_CString& s)
     return ImplementationRepository::NORMAL;
   }
 
-const char *
+char const *
 ImR_Utils::envListToString(const ImplementationRepository::EnvironmentList& lst)
 {
   static ACE_CString ret;
@@ -117,7 +117,7 @@ ImR_Utils::stringToEnvList(const ACE_CString& s,
     }
 }
 
-const char *
+char const *
 ImR_Utils::peerListToString (const CORBA::StringSeq& lst)
 {
   static ACE_CString ret;

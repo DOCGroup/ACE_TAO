@@ -58,7 +58,7 @@ public:
   virtual void shutdown ();
 
   int unregister_if_address_reused (const ACE_CString& fqname,
-                                    const char* partial_ior,
+                                    char const *partial_ior,
                                     ImR_Locator_i* imr_locator);
 
   /// Add a new server to the Repository
@@ -90,7 +90,7 @@ public:
   int update_activator (const Activator_Info_Ptr& info);
 
   /// Update the peer's access state
-  virtual void notify_remote_access (const char *id,
+  virtual void notify_remote_access (char const *id,
                                      ImplementationRepository::AAM_Status state);
 
   /// Returns information related to startup.
@@ -115,7 +115,7 @@ public:
   const AIMap& activators() const;
 
   /// Indicate the persistence mode for the repository
-  virtual const ACE_TCHAR* repo_mode() const = 0;
+  virtual ACE_TCHAR const *repo_mode() const = 0;
 
   /// Convert to lower case
   static ACE_CString lcase (const ACE_CString& s);
@@ -123,7 +123,7 @@ public:
   /// Initialize the repo
   int init(PortableServer::POA_ptr root_poa,
            PortableServer::POA_ptr imr_poa,
-           const char* this_ior);
+           char const *this_ior);
 
   /// Indicate if multicast should be used
   bool multicast() const;
@@ -152,7 +152,7 @@ protected:
   /// recover the ImR Locator's IOR from the persisted file
   virtual int recover_ior ();
 
-  int setup_multicast (ACE_Reactor* reactor, const char* imr_ior);
+  int setup_multicast (ACE_Reactor* reactor, char const *imr_ior);
   void teardown_multicast ();
 
   bool registered () const;
@@ -187,7 +187,7 @@ public:
   virtual ~No_Backing_Store();
 
   /// indicate the persistence mode for the repository
-  const ACE_TCHAR* repo_mode() const override;
+  ACE_TCHAR const *repo_mode() const override;
 
 private:
   /// perform repo mode specific initialization (no-op)

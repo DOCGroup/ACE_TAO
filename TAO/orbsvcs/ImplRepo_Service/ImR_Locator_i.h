@@ -67,59 +67,59 @@ public:
 
   void register_activator
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
-     const char* name,
+     char const *name,
      ImplementationRepository::Activator_ptr admin) override;
 
   void unregister_activator
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
-     const char* name,
+     char const *name,
      CORBA::Long token) override;
 
   void child_death_pid
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
-     const char* name, CORBA::Long pid) override;
+     char const *name, CORBA::Long pid) override;
 
   void spawn_pid
     (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
-     const char* name, CORBA::Long pid) override;
+     char const *name, CORBA::Long pid) override;
 
   // tao_imr->Locator
 
   void activate_server
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name) override;
+     char const *name) override;
 
   void add_or_update_server
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name,
+     char const *name,
      const ImplementationRepository::StartupOptions &options) override;
 
   void link_servers
     (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
-     const char * name,
+     char const *name,
      const CORBA::StringSeq & peers) override;
 
   void kill_server
     (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
-     const char * name,
+     char const *name,
      CORBA::Short signum) override;
 
   void remove_server
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name) override;
+     char const *name) override;
 
   void shutdown_server
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name) override;
+     char const *name) override;
 
   void force_remove_server
     (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
-     const char * name,
+     char const *name,
      CORBA::Short signum) override;
 
   void find
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name) override;
+     char const *name) override;
 
   void list
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
@@ -135,23 +135,23 @@ public:
 
   void server_is_running
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char* name,
-     const char* partial_ior,
+     char const *name,
+     char const *partial_ior,
      ImplementationRepository::ServerObject_ptr server_object) override;
 
   void server_is_shutting_down
     (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
-     const char * name) override;
+     char const *name) override;
 
   // Used by the INS_Locator to start a sever given an object name synchronously
-  char* activate_server_by_object (const char* object_name);
-  char* activate_server_by_name (const char * name, bool manual_start);
+  char* activate_server_by_object (char const *object_name);
+  char* activate_server_by_name (char const *name, bool manual_start);
 
   // Asynchronous versions, used by both INS_Locator and Forwarder
   void activate_server_by_info (const Server_Info_Ptr &si,
                                 ImR_ResponseHandler *rh);
 
-  void activate_server_by_name (const char * name,
+  void activate_server_by_name (char const *name,
                                 bool manual_start,
                                 ImR_ResponseHandler *rh);
 
@@ -166,20 +166,20 @@ public:
   void remove_server_i (const Server_Info_Ptr &si);
   void destroy_poa (const ACE_CString &poa_name);
   void remove_aam (AsyncAccessManager_ptr &aam);
-  void remove_aam (const char *name);
-  AsyncAccessManager *find_aam (const char *name, bool active = true);
-  AsyncAccessManager *find_not_running_aam (const char *name, bool active = true);
+  void remove_aam (char const *name);
+  AsyncAccessManager *find_aam (char const *name, bool active = true);
+  AsyncAccessManager *find_not_running_aam (char const *name, bool active = true);
   AsyncAccessManager *create_aam (UpdateableServerInfo &info, bool running = false);
-  void make_terminating (AsyncAccessManager_ptr &aam, const char *name, int pid);
+  void make_terminating (AsyncAccessManager_ptr &aam, char const *name, int pid);
   /// Receiving an update from remote peer
-  void remote_access_update (const char *name,
+  void remote_access_update (char const *name,
                              ImplementationRepository::AAM_Status state);
 
   CORBA::Object_ptr set_timeout_policy(CORBA::Object_ptr obj,
                                        const ACE_Time_Value& to);
 
 private:
-  bool get_info_for_name (const char *name, Server_Info_Ptr &si);
+  bool get_info_for_name (char const *name, Server_Info_Ptr &si);
 
   void  activate_server_i (UpdateableServerInfo& info,
                            bool manual_start,
@@ -187,7 +187,7 @@ private:
 
   bool server_is_alive (UpdateableServerInfo& info);
 
-  void unregister_activator_i (const char* activator);
+  void unregister_activator_i (char const *activator);
 
   void connect_activator (Activator_Info& info);
 
@@ -195,11 +195,11 @@ private:
 
   void connect_server (UpdateableServerInfo& info);
 
-  PortableServer::POA_ptr findPOA (const char* name);
+  PortableServer::POA_ptr findPOA (char const *name);
 
-  void child_death_i (const char* name, int pid);
+  void child_death_i (char const *name, int pid);
 
-  void remove_aam_i (const char *name, bool active);
+  void remove_aam_i (char const *name, bool active);
 
   bool kill_server_i (const Server_Info_Ptr &si,
                       CORBA::Short signum,
@@ -252,7 +252,7 @@ private:
 class SyncListener : public LiveListener
 {
  public:
-  SyncListener (const char *server, CORBA::ORB_ptr orb, LiveCheck &pinger);
+  SyncListener (char const *server, CORBA::ORB_ptr orb, LiveCheck &pinger);
 
   virtual ~SyncListener ();
 
@@ -277,10 +277,10 @@ class SyncListener : public LiveListener
 class ImR_SyncResponseHandler : public ImR_ResponseHandler
 {
 public:
-  ImR_SyncResponseHandler (const char *key, CORBA::ORB_ptr orb);
+  ImR_SyncResponseHandler (char const *key, CORBA::ORB_ptr orb);
   virtual ~ImR_SyncResponseHandler ();
 
-  void send_ior (const char *pior) override;
+  void send_ior (char const *pior) override;
   void send_exception (CORBA::Exception *ex) override;
 
   char *wait_for_result ();
@@ -318,11 +318,11 @@ public:
                            ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr rh);
   virtual ~ImR_Loc_ResponseHandler ();
 
-  void send_ior (const char *pior) override;
+  void send_ior (char const *pior) override;
   void send_exception (CORBA::Exception *ex) override;
 
 private:
-  void send_ior_ext (const char *pior);
+  void send_ior_ext (char const *pior);
   void send_exception_ext (CORBA::Exception *ex);
 
   Loc_Operation_Id op_id_;

@@ -43,7 +43,7 @@ public:
   ~XML_Backing_Store () override;
 
   /// indicate the XML filename as the persistence mode for the repository
-  const ACE_TCHAR* repo_mode () const override;
+  ACE_TCHAR const *repo_mode () const override;
 
   /// create the Server_Info server object
   /// @param info the source Server_Info data
@@ -106,7 +106,7 @@ protected:
   /// @param name_values extra name value pairs to write as attributes
   void persist(FILE* fp,
                const Server_Info& info,
-               const char* tag_prepend,
+               char const *tag_prepend,
                const NameValues& name_values = NameValues());
 
   /// persist the activator
@@ -117,7 +117,7 @@ protected:
   /// @param name_values extra name value pairs to write as attributes
   void persist(FILE* fp,
                const Activator_Info& info,
-               const char* tag_prepend,
+               char const *tag_prepend,
                const NameValues& name_values = NameValues());
 
   /// create the Server_Info server object

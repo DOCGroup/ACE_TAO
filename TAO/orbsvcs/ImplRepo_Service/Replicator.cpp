@@ -212,7 +212,7 @@ Replicator::handle_exception (ACE_HANDLE )
 }
 
 void
-Replicator::send_access_state (const char *name, ImplementationRepository::AAM_Status state)
+Replicator::send_access_state (char const *name, ImplementationRepository::AAM_Status state)
 {
   if (this->reactor_ == nullptr)
     {

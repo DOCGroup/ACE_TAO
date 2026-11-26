@@ -66,7 +66,7 @@ public:
   void shutdown () override;
 
   /// indicate the persistence mode for the repository
-  const ACE_TCHAR* repo_mode() const override;
+  ACE_TCHAR const *repo_mode() const override;
 
   /// enum to indicate whether the repo is in-sync, individual
   /// server and/or activator files need to be sync-ed or if
@@ -94,7 +94,7 @@ public:
                        const ACE_CString& ior,
                        const NameValues& extra_params) override;
 
-  void notify_remote_access (const char * id,
+  void notify_remote_access (char const *id,
                              ImplementationRepository::AAM_Status s) override;
 
   /// calls Locator_Repository::report_ior with the Fault Tolerant ImR
@@ -130,7 +130,7 @@ protected:
 
   /// create the Fault Tolerant ImR Locator IOR, using the peer_ior and
   /// this ImR Locator's IOR
-  char* locator_service_ior(const char* peer_ior) const;
+  char* locator_service_ior(char const *peer_ior) const;
 
   int connect_replicas ();
 
@@ -256,7 +256,7 @@ private:
   /// the ior for just this ImR Locator
   CORBA::String_var non_ft_imr_ior_;
   /// an array associating ImrType with the appropriate name
-  const char* IMR_REPLICA[3];
+  char const *IMR_REPLICA[3];
   /// map  for server unique ids
   UniqueIdMap server_uids_;
   /// map  for activator unique ids

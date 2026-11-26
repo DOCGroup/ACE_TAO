@@ -23,9 +23,9 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
-extern const ACE_TCHAR * IMR_ACTIVATOR_SERVICE_NAME;
-extern const ACE_TCHAR * IMR_ACTIVATOR_DISPLAY_NAME;
-extern const ACE_TCHAR * IMR_ACTIVATOR_DESCRIPTION;
+extern ACE_TCHAR const *IMR_ACTIVATOR_SERVICE_NAME;
+extern ACE_TCHAR const *IMR_ACTIVATOR_DISPLAY_NAME;
+extern ACE_TCHAR const *IMR_ACTIVATOR_DESCRIPTION;
 
 /**
  * @class Activator_NT_Service

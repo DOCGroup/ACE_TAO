@@ -91,12 +91,12 @@ public:
   ImR_Activator_i (ImR_Activator_i &&) = delete;
   ImR_Activator_i &operator= (ImR_Activator_i &&) = delete;
 
-  void start_server (const char* name,
-                     const char* cmdline,
-                     const char* dir,
+  void start_server (char const *name,
+                     char const *cmdline,
+                     char const *dir,
                      const ImplementationRepository::EnvironmentList & env) override;
 
-  CORBA::Boolean kill_server (const char* name, CORBA::Long pid, CORBA::Short signum) override;
+  CORBA::Boolean kill_server (char const *name, CORBA::Long pid, CORBA::Short signum) override;
 
   CORBA::Boolean still_alive (CORBA::Long pid) override;
 
@@ -126,7 +126,7 @@ private:
   int handle_exit (ACE_Process * process) override;
   int handle_exit_i (pid_t pid);
 
-  bool still_running_i (const char *name, pid_t& pid);
+  bool still_running_i (char const *name, pid_t& pid);
 
   bool in_upcall ();
 

@@ -29,26 +29,26 @@ public:
   using NameValue = std::pair<ACE_CString, ACE_CString>;
   using NameValues = std::vector<NameValue>;
   // XML ELEMENT names
-  static const ACE_TCHAR* ROOT_TAG;
-  static const ACE_TCHAR* SERVER_INFO_TAG;
-  static const ACE_TCHAR* ENVIRONMENT_TAG;
-  static const ACE_TCHAR* ACTIVATOR_INFO_TAG;
+  static ACE_TCHAR const *ROOT_TAG;
+  static ACE_TCHAR const *SERVER_INFO_TAG;
+  static ACE_TCHAR const *ENVIRONMENT_TAG;
+  static ACE_TCHAR const *ACTIVATOR_INFO_TAG;
 
-  static const ACE_TCHAR* SERVER_TAG;
-  static const ACE_TCHAR* POANAME_TAG;
-  static const ACE_TCHAR* JACORB_TAG;
-  static const ACE_TCHAR* ACTNAME_TAG;
-  static const ACE_TCHAR* CMDLINE_TAG;
-  static const ACE_TCHAR* DIR_TAG;
-  static const ACE_TCHAR* MODE_TAG;
-  static const ACE_TCHAR* LIMIT_TAG;
-  static const ACE_TCHAR* PARTIOR_TAG;
-  static const ACE_TCHAR* IOR_TAG;
-  static const ACE_TCHAR* STARTED_TAG;
-  static const ACE_TCHAR* PEER_TAG;
-  static const ACE_TCHAR* PID_TAG;
-  static const ACE_TCHAR* KEYNAME_TAG;
-  static const ACE_TCHAR* ALTKEY_TAG;
+  static ACE_TCHAR const *SERVER_TAG;
+  static ACE_TCHAR const *POANAME_TAG;
+  static ACE_TCHAR const *JACORB_TAG;
+  static ACE_TCHAR const *ACTNAME_TAG;
+  static ACE_TCHAR const *CMDLINE_TAG;
+  static ACE_TCHAR const *DIR_TAG;
+  static ACE_TCHAR const *MODE_TAG;
+  static ACE_TCHAR const *LIMIT_TAG;
+  static ACE_TCHAR const *PARTIOR_TAG;
+  static ACE_TCHAR const *IOR_TAG;
+  static ACE_TCHAR const *STARTED_TAG;
+  static ACE_TCHAR const *PEER_TAG;
+  static ACE_TCHAR const *PID_TAG;
+  static ACE_TCHAR const *KEYNAME_TAG;
+  static ACE_TCHAR const *ALTKEY_TAG;
 
   struct EnvVar {
     ACE_TString name;

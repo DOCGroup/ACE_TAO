@@ -15,7 +15,7 @@
 
 #include <cstring>
 
-static const char *unique_prefix = "\001\002\003\004";
+static char const *unique_prefix = "\001\002\003\004";
 static size_t unique_prefix_len = 4;
 
 static ACE_CString getHostName ()
@@ -90,7 +90,7 @@ ImR_Activator_i::ImR_Activator_i ()
 }
 
 static PortableServer::POA_ptr
-createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name)
+createPersistentPOA (PortableServer::POA_ptr root_poa, char const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
@@ -421,7 +421,7 @@ ImR_Activator_i::shutdown (bool signaled)
 }
 
 CORBA::Boolean
-ImR_Activator_i::kill_server (const char* name, CORBA::Long lastpid, CORBA::Short signum)
+ImR_Activator_i::kill_server (char const *name, CORBA::Long lastpid, CORBA::Short signum)
 {
   if (debug_ > 1)
     {
@@ -498,7 +498,7 @@ ImR_Activator_i::still_alive (CORBA::Long pid)
 }
 
 bool
-ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
+ImR_Activator_i::still_running_i (char const *name, pid_t &pid)
 {
   std::string const server_name (name);
   bool is_running =
@@ -530,9 +530,9 @@ ImR_Activator_i::still_running_i (const char *name, pid_t &pid)
 }
 
 void
-ImR_Activator_i::start_server(const char* name,
-                              const char* cmdline,
-                              const char* dir,
+ImR_Activator_i::start_server(char const *name,
+                              char const *cmdline,
+                              char const *dir,
                               const ImplementationRepository::EnvironmentList & env)
 {
   bool unique = false;

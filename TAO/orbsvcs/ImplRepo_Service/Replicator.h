@@ -79,7 +79,7 @@ public:
   int handle_exception (ACE_HANDLE ) override;
 
   void stop ();
-  void send_access_state (const char *name, ImplementationRepository::AAM_Status state);
+  void send_access_state (char const *name, ImplementationRepository::AAM_Status state);
   void send_entity (ImplementationRepository::UpdateInfo &info);
 
   void init_orb ();

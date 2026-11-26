@@ -30,7 +30,7 @@
 static const ACE_Time_Value DEFAULT_SHUTDOWN_TIMEOUT (0, 5000 * 1000);
 
 static PortableServer::POA_ptr
-createPersistentPOA (PortableServer::POA_ptr root_poa, const char* poa_name) {
+createPersistentPOA (PortableServer::POA_ptr root_poa, char const *poa_name) {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy (PortableServer::PERSISTENT);
 
@@ -385,7 +385,7 @@ ImR_Locator_i::fini ()
 void
 ImR_Locator_i::register_activator
 (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
- const char* aname,
+ char const *aname,
  ImplementationRepository::Activator_ptr activator)
 {
   ACE_ASSERT (aname != 0);
@@ -416,7 +416,7 @@ ImR_Locator_i::register_activator
 void
 ImR_Locator_i::unregister_activator
 (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
- const char* aname,
+ char const *aname,
  CORBA::Long token)
 {
   ACE_ASSERT (aname != 0);
@@ -457,14 +457,14 @@ ImR_Locator_i::unregister_activator
 }
 
 void
-ImR_Locator_i::unregister_activator_i (const char* aname)
+ImR_Locator_i::unregister_activator_i (char const *aname)
 {
   int err = this->repository_->remove_activator (aname);
   ACE_UNUSED_ARG (err);
 }
 
 void
-ImR_Locator_i::remote_access_update (const char *name,
+ImR_Locator_i::remote_access_update (char const *name,
                                      ImplementationRepository::AAM_Status state)
 {
   /*  ACE_GUARD (TAO_SYNCH_MUTEX, mon, this->lock_); */
@@ -490,7 +490,7 @@ ImR_Locator_i::remote_access_update (const char *name,
 }
 
 void
-ImR_Locator_i::child_death_i (const char* name, int pid)
+ImR_Locator_i::child_death_i (char const *name, int pid)
 {
   if (debug_ > 1)
     {
@@ -525,7 +525,7 @@ ImR_Locator_i::child_death_i (const char* name, int pid)
 void
 ImR_Locator_i::child_death_pid
 (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
- const char* name, CORBA::Long pid)
+ char const *name, CORBA::Long pid)
 {
   this->child_death_i (name, pid);
   _tao_rh->child_death_pid ();
@@ -534,7 +534,7 @@ ImR_Locator_i::child_death_pid
 void
 ImR_Locator_i::spawn_pid
 (ImplementationRepository::AMH_LocatorResponseHandler_ptr _tao_rh,
- const char* name, CORBA::Long pid)
+ char const *name, CORBA::Long pid)
 {
   if (debug_ > 1)
     {
@@ -579,7 +579,7 @@ ImR_Locator_i::spawn_pid
 }
 
 char*
-ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
+ImR_Locator_i::activate_server_by_name (char const *name, bool manual_start)
 {
   ImR_SyncResponseHandler rh ("", this->orb_.in());
   this->activate_server_by_name (name, manual_start, &rh);
@@ -587,7 +587,7 @@ ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start)
 }
 
 char*
-ImR_Locator_i::activate_server_by_object (const char* object_name)
+ImR_Locator_i::activate_server_by_object (char const *object_name)
 {
   Server_Info_Ptr si;
   ACE_CString key;
@@ -604,7 +604,7 @@ ImR_Locator_i::activate_server_by_object (const char* object_name)
 void
 ImR_Locator_i::activate_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
- const char* server)
+ char const *server)
 {
   if (debug_ > 1)
     {
@@ -623,7 +623,7 @@ ImR_Locator_i::activate_server
 }
 
 bool
-ImR_Locator_i::get_info_for_name (const char* name, Server_Info_Ptr &si)
+ImR_Locator_i::get_info_for_name (char const *name, Server_Info_Ptr &si)
 {
   si = this->repository_->get_active_server (name);
   return !si.null();
@@ -653,7 +653,7 @@ ImR_Locator_i::split_key (ACE_CString &full, ACE_CString &key, Server_Info_Ptr &
 }
 
 void
-ImR_Locator_i::activate_server_by_name (const char* name, bool manual_start,
+ImR_Locator_i::activate_server_by_name (char const *name, bool manual_start,
                                         ImR_ResponseHandler *rh)
 {
   // Activate the server, starting it if necessary. Don't start MANUAL
@@ -745,7 +745,7 @@ ImR_Locator_i::set_timeout_policy (CORBA::Object_ptr obj, const ACE_Time_Value& 
 void
 ImR_Locator_i::add_or_update_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
- const char* server,
+ char const *server,
  const ImplementationRepository::StartupOptions &options)
 {
   if (this->opts_->readonly ())
@@ -821,7 +821,7 @@ ImR_Locator_i::add_or_update_server
 void
 ImR_Locator_i::link_servers
 (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
- const char * name,
+ char const *name,
  const CORBA::StringSeq & peers)
 {
   Server_Info_Ptr root_si = this->repository_->get_active_server (name);
@@ -898,7 +898,7 @@ ImR_Locator_i::kill_server_i (const Server_Info_Ptr &si,
 void
 ImR_Locator_i::kill_server
 (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
- const char * name, CORBA::Short signum)
+ char const *name, CORBA::Short signum)
 {
   CORBA::Exception *ex {};
   Server_Info_Ptr si;
@@ -970,7 +970,7 @@ ImR_Locator_i::remove_server_i (const Server_Info_Ptr &info)
 void
 ImR_Locator_i::remove_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
- const char* id)
+ char const *id)
 {
   if (this->opts_->readonly ())
     {
@@ -1023,7 +1023,7 @@ ImR_Locator_i::remove_server
 void
 ImR_Locator_i::force_remove_server
 (ImplementationRepository::AMH_AdministrationExtResponseHandler_ptr _tao_rh,
- const char *name, CORBA::Short signum)
+ char const *name, CORBA::Short signum)
 {
   CORBA::Exception *ex {};
   Server_Info_Ptr si;
@@ -1109,7 +1109,7 @@ ImR_Locator_i::destroy_poa (const ACE_CString &poa_name)
 }
 
 PortableServer::POA_ptr
-ImR_Locator_i::findPOA (const char* name)
+ImR_Locator_i::findPOA (char const *name)
 {
   try
     {
@@ -1128,7 +1128,7 @@ ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
                                   bool force)
 {
   const CORBA::ULong TAO_MINOR_MASK = 0x00000f80;
-  const char *id = si->key_name_.c_str();
+  char const *id = si->key_name_.c_str();
   if (debug_ > 0)
     {
       ORBSVCS_DEBUG ((LM_DEBUG,
@@ -1247,7 +1247,7 @@ ImR_Locator_i::shutdown_server_i (const Server_Info_Ptr &si,
 void
 ImR_Locator_i::shutdown_server
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
- const char* name)
+ char const *name)
 {
   CORBA::Exception *ex {};
   Server_Info_Ptr si;
@@ -1282,8 +1282,8 @@ ImR_Locator_i::shutdown_server
 void
 ImR_Locator_i::server_is_running
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
- const char* id,
- const char* partial_ior,
+ char const *id,
+ char const *partial_ior,
  ImplementationRepository::ServerObject_ptr server_object)
 {
   if (debug_ > 0)
@@ -1403,7 +1403,7 @@ ImR_Locator_i::server_is_running
 void
 ImR_Locator_i::server_is_shutting_down
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
- const char* fqname)
+ char const *fqname)
 {
   UpdateableServerInfo info (this->repository_, fqname);
   if (info.null ())
@@ -1448,7 +1448,7 @@ ImR_Locator_i::server_is_shutting_down
 void
 ImR_Locator_i::find
 (ImplementationRepository::AMH_AdministrationResponseHandler_ptr _tao_rh,
- const char* id)
+ char const *id)
 {
   Server_Info_Ptr si = this->repository_->get_active_server (id);
   ImplementationRepository::ServerInformation_var imr_info;
@@ -1712,7 +1712,7 @@ ImR_Locator_i::remove_aam (AsyncAccessManager_ptr &aam)
 }
 
 void
-ImR_Locator_i::remove_aam_i (const char *name, bool active)
+ImR_Locator_i::remove_aam_i (char const *name, bool active)
 {
   AAM_Set &set = active ? this->aam_active_ : this->aam_terminating_;
 
@@ -1728,7 +1728,7 @@ ImR_Locator_i::remove_aam_i (const char *name, bool active)
 }
 
 void
-ImR_Locator_i::remove_aam (const char *name)
+ImR_Locator_i::remove_aam (char const *name)
 {
   this->remove_aam_i (name,true);
   this->remove_aam_i (name,false);
@@ -1736,7 +1736,7 @@ ImR_Locator_i::remove_aam (const char *name)
 
 void
 ImR_Locator_i::make_terminating (AsyncAccessManager_ptr &aam,
-                                 const char *name, int pid)
+                                 char const *name, int pid)
 {
   this->aam_active_.remove (aam);
   this->aam_terminating_.insert_tail (aam);
@@ -1744,7 +1744,7 @@ ImR_Locator_i::make_terminating (AsyncAccessManager_ptr &aam,
 }
 
 AsyncAccessManager *
-ImR_Locator_i::find_aam (const char *name, bool active)
+ImR_Locator_i::find_aam (char const *name, bool active)
 {
   AAM_Set &set = active ? this->aam_active_ : this->aam_terminating_;
   for (AAM_Set::ITERATOR i = set.begin(); i != set.end(); ++i)
@@ -1758,7 +1758,7 @@ ImR_Locator_i::find_aam (const char *name, bool active)
 }
 
 AsyncAccessManager *
-ImR_Locator_i::find_not_running_aam (const char *name, bool active)
+ImR_Locator_i::find_not_running_aam (char const *name, bool active)
 {
   AAM_Set &set = active ? this->aam_active_ : this->aam_terminating_;
   for (AAM_Set::ITERATOR i = set.begin(); i != set.end(); ++i)
@@ -1785,7 +1785,7 @@ ImR_Locator_i::create_aam (UpdateableServerInfo &info, bool running)
 }
 
 
-SyncListener::SyncListener (const char *server,
+SyncListener::SyncListener (char const *server,
                             CORBA::ORB_ptr orb,
                             LiveCheck &pinger)
   :LiveListener (server),
@@ -1830,7 +1830,7 @@ SyncListener::status_changed (LiveStatus status)
 }
 
 
-ImR_SyncResponseHandler::ImR_SyncResponseHandler (const char *objkey, CORBA::ORB_ptr orb)
+ImR_SyncResponseHandler::ImR_SyncResponseHandler (char const *objkey, CORBA::ORB_ptr orb)
   :excep_ (nullptr),
    key_ (objkey),
    orb_ (CORBA::ORB::_duplicate (orb))
@@ -1840,7 +1840,7 @@ ImR_SyncResponseHandler::ImR_SyncResponseHandler (const char *objkey, CORBA::ORB
 ImR_SyncResponseHandler::~ImR_SyncResponseHandler () = default;
 
 void
-ImR_SyncResponseHandler::send_ior (const char *pior)
+ImR_SyncResponseHandler::send_ior (char const *pior)
 {
   ACE_CString full (pior);
   full += this->key_;
@@ -1888,7 +1888,7 @@ ImR_Loc_ResponseHandler::ImR_Loc_ResponseHandler
 ImR_Loc_ResponseHandler::~ImR_Loc_ResponseHandler () = default;
 
 void
-ImR_Loc_ResponseHandler::send_ior (const char *)
+ImR_Loc_ResponseHandler::send_ior (char const *)
 {
   if (CORBA::is_nil (this->resp_))
     {
@@ -1923,7 +1923,7 @@ ImR_Loc_ResponseHandler::send_ior (const char *)
 }
 
 void
-ImR_Loc_ResponseHandler::send_ior_ext (const char *)
+ImR_Loc_ResponseHandler::send_ior_ext (char const *)
 {
   switch (this->op_id_)
     {

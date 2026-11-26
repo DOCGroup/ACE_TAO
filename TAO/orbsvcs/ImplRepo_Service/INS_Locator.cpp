@@ -18,7 +18,7 @@ INS_Locator::INS_Locator (ImR_Locator_i& loc)
 }
 
 char *
-INS_Locator::locate (const char* object_key)
+INS_Locator::locate (char const *object_key)
 {
   ACE_ASSERT (object_key != nullptr);
   try
@@ -37,7 +37,7 @@ INS_Locator::locate (const char* object_key)
 
 void
 INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
-                           const char* object_key)
+                           char const *object_key)
 {
   ACE_ASSERT (object_key != nullptr);
 
@@ -58,7 +58,7 @@ INS_Locator::async_locate (::IORTable::Locate_ResponseHandler handler,
     }
 }
 
-INS_Loc_ResponseHandler::INS_Loc_ResponseHandler (const char *key,
+INS_Loc_ResponseHandler::INS_Loc_ResponseHandler (char const *key,
                             ::IORTable::Locate_ResponseHandler handler)
   : key_str_(key),
     rh_ (handler)
@@ -66,7 +66,7 @@ INS_Loc_ResponseHandler::INS_Loc_ResponseHandler (const char *key,
 }
 
 void
-INS_Loc_ResponseHandler::send_ior (const char *pior)
+INS_Loc_ResponseHandler::send_ior (char const *pior)
 {
   ACE_CString ior = pior;
 

@@ -60,7 +60,7 @@ public:
 
   int save_registry_options();
 
-  const char* cmdline() const;
+  char const *cmdline() const;
 
   /// File that contains the activator related information
   /// that the persistent locator has to save.

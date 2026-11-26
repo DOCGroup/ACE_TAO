@@ -46,8 +46,8 @@ TAO_END_VERSIONED_NAMESPACE_DECL
 class ImR_DSI_ResponseHandler : public ImR_ResponseHandler
 {
 public:
-  ImR_DSI_ResponseHandler (const char *key,
-                        const char *server_name,
+  ImR_DSI_ResponseHandler (char const *key,
+                        char const *server_name,
                         CORBA::ORB_ptr orb,
                         TAO_AMH_DSI_Response_Handler_ptr resp);
 

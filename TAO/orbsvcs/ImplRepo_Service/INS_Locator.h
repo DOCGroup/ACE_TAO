@@ -25,7 +25,7 @@ class ImR_Locator_i;
 class INS_Loc_ResponseHandler : public ImR_ResponseHandler
 {
 public:
-  INS_Loc_ResponseHandler (const char *key, ::IORTable::Locate_ResponseHandler rh);
+  INS_Loc_ResponseHandler (char const *key, ::IORTable::Locate_ResponseHandler rh);
 
   // dummy implementations used for internal operations
   void send_ior (char const* pior) override;
@@ -52,9 +52,9 @@ public:
   explicit INS_Locator (ImR_Locator_i& loc);
 
   /// Locate the appropriate IOR.
-  char* locate (const char *object_key) override;
+  char* locate (char const *object_key) override;
   void async_locate (::IORTable::Locate_ResponseHandler handler,
-                     const char *object_key) override;
+                     char const *object_key) override;
 
 private:
   ImR_Locator_i& imr_locator_;

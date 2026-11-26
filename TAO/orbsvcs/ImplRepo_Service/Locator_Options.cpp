@@ -13,7 +13,7 @@
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
 // This string must agree with the one used in Locator_NT_Service.h
-static const ACE_TCHAR *SERVICE_REG_PATH =
+static ACE_TCHAR const *SERVICE_REG_PATH =
   ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImR\\Parameters");
 #endif /* ACE_WIN32 */
 
@@ -692,7 +692,7 @@ Options::service_command() const
   return this->service_command_;
 }
 
-const char*
+char const *
 Options::cmdline() const {
   return this->cmdline_.c_str ();
 }

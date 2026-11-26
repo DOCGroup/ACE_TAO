@@ -9,7 +9,7 @@
 #include "ace/Timer_Queue.h"
 #include "ace/Timer_Queue_Iterator.h"
 
-LiveListener::LiveListener (const char *server)
+LiveListener::LiveListener (char const *server)
   : server_ (server),
     refcount_ (1)
 {
@@ -17,7 +17,7 @@ LiveListener::LiveListener (const char *server)
 
 LiveListener::~LiveListener () = default;
 
-const char *
+char const *
 LiveListener::server () const
 {
   return this->server_.c_str ();
@@ -56,7 +56,7 @@ LiveListener::_remove_ref ()
 const int LiveEntry::reping_msec_[] = {10, 100, 500, 1000, 1000, 2000, 2000, 5000, 5000};
 int LiveEntry::reping_limit_ = sizeof (LiveEntry::reping_msec_) / sizeof (int);
 
-const char *
+char const *
 LiveEntry::status_name (LiveStatus s)
 {
   switch (s)
@@ -116,7 +116,7 @@ LiveEntry::max_retry_msec (int msec)
 }
 
 LiveEntry::LiveEntry (LiveCheck *owner,
-                      const char *server,
+                      char const *server,
                       bool may_ping,
                       ImplementationRepository::ServerObject_ptr ref,
                       int pid)
@@ -307,7 +307,7 @@ LiveEntry::next_check () const
   return this->next_check_;
 }
 
-const char *
+char const *
 LiveEntry::server_name () const
 {
   return this->server_.c_str();
@@ -494,7 +494,7 @@ PingReceiver::cancel ()
 {
   if (ImR_Locator_i::debug () > 4)
     {
-      const char *server = "not available";
+      char const *server = "not available";
       if (this->entry_ != nullptr)
         {
           server = this->entry_->server_name ();
@@ -830,7 +830,7 @@ LiveCheck::handle_timeout (const ACE_Time_Value &,
 }
 
 bool
-LiveCheck::has_server (const char *server)
+LiveCheck::has_server (char const *server)
 {
   ACE_CString s (server);
   LiveEntry *entry {};
@@ -839,7 +839,7 @@ LiveCheck::has_server (const char *server)
 }
 
 void
-LiveCheck::add_server (const char *server,
+LiveCheck::add_server (char const *server,
                        bool may_ping,
                        ImplementationRepository::ServerObject_ptr ref,
                        int pid)
@@ -874,7 +874,7 @@ LiveCheck::add_server (const char *server,
 }
 
 void
-LiveCheck::set_pid (const char *server, int pid)
+LiveCheck::set_pid (char const *server, int pid)
 {
   if (ImR_Locator_i::debug () > 0)
     {
@@ -901,7 +901,7 @@ LiveCheck::set_pid (const char *server, int pid)
 }
 
 void
-LiveCheck::remove_server (const char *server, int pid)
+LiveCheck::remove_server (char const *server, int pid)
 {
   if (ImR_Locator_i::debug () > 0)
     {
@@ -1230,7 +1230,7 @@ LiveCheck::schedule_ping (LiveEntry *entry)
 }
 
 LiveStatus
-LiveCheck::is_alive (const char *server)
+LiveCheck::is_alive (char const *server)
 {
   if (!this->running_)
   {

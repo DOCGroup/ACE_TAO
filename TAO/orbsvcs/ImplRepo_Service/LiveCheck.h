@@ -71,7 +71,7 @@ class Locator_Export LiveListener
  public:
   /// Construct a new listener. The server name supplied is used to
   /// look up a listener entry in the LiveCheck map.
-  explicit LiveListener (const char *server);
+  explicit LiveListener (char const *server);
 
   virtual ~LiveListener ();
 
@@ -80,7 +80,7 @@ class Locator_Export LiveListener
   virtual bool status_changed (LiveStatus status) = 0;
 
   /// Accessor for the server name. Used by the LiveCheck to associate a listener
-  const char *server () const;
+  char const *server () const;
 
   LiveListener *_add_ref ();
   void _remove_ref ();
@@ -108,7 +108,7 @@ class Locator_Export LiveEntry
 {
  public:
   LiveEntry (LiveCheck *owner,
-             const char *server,
+             char const *server,
              bool may_ping,
              ImplementationRepository::ServerObject_ptr ref,
              int pid);
@@ -122,7 +122,7 @@ class Locator_Export LiveEntry
   void reset_status ();
 
   /// the current state value as text
-  static const char *status_name (LiveStatus s);
+  static char const *status_name (LiveStatus s);
 
   void update_listeners ();
   bool validate_ping (bool &want_reping, ACE_Time_Value &next);
@@ -132,7 +132,7 @@ class Locator_Export LiveEntry
   bool reping_available () const;
   int next_reping ();
   void max_retry_msec (int max);
-  const char *server_name () const;
+  char const *server_name () const;
   void set_pid (int pid);
   bool has_pid (int pid) const;
   int pid () const;
@@ -249,13 +249,13 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
   void shutdown ();
   int handle_timeout (const ACE_Time_Value &current_time,
                       const void *act = nullptr) override;
-  bool has_server (const char *server);
-  void add_server (const char *server,
+  bool has_server (char const *server);
+  void add_server (char const *server,
                    bool may_ping,
                    ImplementationRepository::ServerObject_ptr ref,
                    int pid);
-  void set_pid (const char *server, int pid);
-  void remove_server (const char *server, int pid);
+  void set_pid (char const *server, int pid);
+  void remove_server (char const *server, int pid);
   bool remove_per_client_entry (LiveEntry *entry);
   bool add_listener (LiveListener *listener);
   bool add_poll_listener (LiveListener *listener);
@@ -263,7 +263,7 @@ class Locator_Export LiveCheck : public ACE_Event_Handler
                                 ImplementationRepository::ServerObject_ptr ref);
   void remove_listener (LiveListener *listener);
   bool schedule_ping (LiveEntry *entry);
-  LiveStatus is_alive (const char *server);
+  LiveStatus is_alive (char const *server);
   const ACE_Time_Value &ping_interval () const;
 
  private:

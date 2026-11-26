@@ -7,23 +7,23 @@
 
 #include <memory>
 
-static const ACE_TCHAR* STARTUP_COMMAND = ACE_TEXT("StartupCommand");
-static const ACE_TCHAR* WORKING_DIR = ACE_TEXT("WorkingDir");
-static const ACE_TCHAR* ENVIRONMENT = ACE_TEXT("Environment");
-static const ACE_TCHAR* ACTIVATION = ACE_TEXT("Activation");
-static const ACE_TCHAR* PARTIAL_IOR = ACE_TEXT("Location");
-static const ACE_TCHAR* IOR = ACE_TEXT("IOR");
-static const ACE_TCHAR* START_LIMIT = ACE_TEXT("StartLimit");
-static const ACE_TCHAR* ACTIVATOR = ACE_TEXT("Activator");
-static const ACE_TCHAR* SERVERS_ROOT_KEY = ACE_TEXT("Servers");
-static const ACE_TCHAR* ACTIVATORS_ROOT_KEY = ACE_TEXT("Activators");
-static const ACE_TCHAR* TOKEN = ACE_TEXT("Token");
-static const ACE_TCHAR* SERVER_ID = ACE_TEXT("ServerId");
-static const ACE_TCHAR* JACORB_SERVER = ACE_TEXT("JacORBServer");
-static const ACE_TCHAR* ALTKEY = ACE_TEXT("AltKey");
-static const ACE_TCHAR* POA = ACE_TEXT("POA");
-static const ACE_TCHAR* PEERS = ACE_TEXT("Peers");
-static const ACE_TCHAR* CONFIG_PID = ACE_TEXT("Pid");
+static ACE_TCHAR const *STARTUP_COMMAND = ACE_TEXT("StartupCommand");
+static ACE_TCHAR const *WORKING_DIR = ACE_TEXT("WorkingDir");
+static ACE_TCHAR const *ENVIRONMENT = ACE_TEXT("Environment");
+static ACE_TCHAR const *ACTIVATION = ACE_TEXT("Activation");
+static ACE_TCHAR const *PARTIAL_IOR = ACE_TEXT("Location");
+static ACE_TCHAR const *IOR = ACE_TEXT("IOR");
+static ACE_TCHAR const *START_LIMIT = ACE_TEXT("StartLimit");
+static ACE_TCHAR const *ACTIVATOR = ACE_TEXT("Activator");
+static ACE_TCHAR const *SERVERS_ROOT_KEY = ACE_TEXT("Servers");
+static ACE_TCHAR const *ACTIVATORS_ROOT_KEY = ACE_TEXT("Activators");
+static ACE_TCHAR const *TOKEN = ACE_TEXT("Token");
+static ACE_TCHAR const *SERVER_ID = ACE_TEXT("ServerId");
+static ACE_TCHAR const *JACORB_SERVER = ACE_TEXT("JacORBServer");
+static ACE_TCHAR const *ALTKEY = ACE_TEXT("AltKey");
+static ACE_TCHAR const *POA = ACE_TEXT("POA");
+static ACE_TCHAR const *PEERS = ACE_TEXT("Peers");
+static ACE_TCHAR const *CONFIG_PID = ACE_TEXT("Pid");
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)
 static const ACE_TCHAR WIN32_REG_KEY[] = ACE_TEXT ("Software\\TAO\\ImplementationRepository");
 #endif
@@ -42,7 +42,7 @@ Config_Backing_Store::~Config_Backing_Store () = default;
 namespace {
   int get_cstring_value (ACE_Configuration &config,
                          const ACE_Configuration_Section_Key &key,
-                         const ACE_TCHAR *name,
+                         ACE_TCHAR const *name,
                          ACE_CString &value)
   {
     ACE_TString tmp;
@@ -56,7 +56,7 @@ namespace {
 
   int set_cstring_value (ACE_Configuration &config,
                          const ACE_Configuration_Section_Key &key,
-                         const ACE_TCHAR *name,
+                         ACE_TCHAR const *name,
                          const ACE_CString &value)
   {
     return config.set_string_value (key, name, ACE_TEXT_CHAR_TO_TCHAR (value.c_str ()));
@@ -180,13 +180,13 @@ int
 Config_Backing_Store::persistent_remove (const ACE_CString& name,
                                          bool activator)
 {
-  const ACE_TCHAR* const key =
+  ACE_TCHAR const *const key =
     (activator ? ACTIVATORS_ROOT_KEY : SERVERS_ROOT_KEY);
   return remove (name, key);
 }
 
 int
-Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
+Config_Backing_Store::remove (const ACE_CString& name, ACE_TCHAR const *key)
 {
   ACE_Configuration_Section_Key root;
   int err = config_.open_section (config_.root_section (), key, false, root);
@@ -203,7 +203,7 @@ Config_Backing_Store::remove (const ACE_CString& name, const ACE_TCHAR* key)
 }
 
 static int get_key (ACE_Configuration& cfg, const ACE_CString& name,
-                    const ACE_TCHAR* const sub_section,
+                    ACE_TCHAR const *const sub_section,
                     ACE_Configuration_Section_Key& key)
 {
   ACE_Configuration_Section_Key root;
@@ -322,7 +322,7 @@ Heap_Backing_Store::Heap_Backing_Store (const Options& opts,
 
 Heap_Backing_Store::~Heap_Backing_Store () = default;
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 Heap_Backing_Store::repo_mode() const
 {
   return this->filename_.c_str();
@@ -364,7 +364,7 @@ Registry_Backing_Store::Registry_Backing_Store(const Options& opts,
 
 Registry_Backing_Store::~Registry_Backing_Store () = default;
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 Registry_Backing_Store::repo_mode () const
 {
   return ACE_TEXT("Registry");

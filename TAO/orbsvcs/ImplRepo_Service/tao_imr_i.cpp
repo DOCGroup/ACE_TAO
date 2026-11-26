@@ -46,7 +46,7 @@ TAO_IMR_i::init (int argc, ACE_TCHAR **argv)
   this->argc_ = argc;
   this->argv_ = argv;
 
-  const char *exception_message = "Null Message";
+  char const *exception_message = "Null Message";
 
   try
     {
@@ -213,7 +213,7 @@ void
 TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerInformation &info)
 {
   // Figure out what the activation string is.
-  const char *act = "UNKNOWN STARTUP";
+  char const *act = "UNKNOWN STARTUP";
   if (info.startup.activation == ImplementationRepository::NORMAL)
     {
       act = "NORMAL";
@@ -234,7 +234,7 @@ TAO_IMR_Op::display_server_information (const ImplementationRepository::ServerIn
   // Print out information
   ORBSVCS_DEBUG ((LM_DEBUG, "Server <%C>\n", info.server.in ()));
 
-  const char * locked_out = "";
+  char const *locked_out = "";
 
   int limit = info.startup.start_limit;
   if (info.startup.start_limit < 0)
@@ -1050,7 +1050,7 @@ TAO_IMR_Op_IOR::run ()
 
       // Add the key
       const char jacorb[] = "JACORB:";
-      const char *posjacorb = std::strstr (server_name_.c_str (), jacorb);
+      char const *posjacorb = std::strstr (server_name_.c_str (), jacorb);
       if (posjacorb)
       {
         ior += posjacorb + sizeof(jacorb) - 1;
@@ -1499,7 +1499,7 @@ TAO_IMR_Op_Register::run ()
 void
 TAO_IMR_Op_List::display_server_information (const ImplementationRepository::ServerInformation &info)
 {
-  const char *maybe = "";
+  char const *maybe = "";
   if (this->list_only_active_servers_)
     {
       switch (info.activeStatus)

@@ -51,7 +51,7 @@ protected:
   int persistent_remove(const ACE_CString& name, bool activator) override;
 
   /// remove the section with the given name from the key section
-  int remove(const ACE_CString& name, const ACE_TCHAR* key);
+  int remove(const ACE_CString& name, ACE_TCHAR const *key);
 
   /// the ACE_Configuration backing store
   ACE_Configuration& config_;
@@ -80,7 +80,7 @@ public:
   virtual ~Heap_Backing_Store();
 
   /// indicate the Heap filename as the persistence mode for the repository
-  const ACE_TCHAR* repo_mode() const override;
+  ACE_TCHAR const *repo_mode() const override;
 
 private:
   /// the Heap filename
@@ -105,7 +105,7 @@ public:
   virtual ~Registry_Backing_Store();
 
   /// indicate Registry as the persistence mode for the repository
-  const ACE_TCHAR* repo_mode() const override;
+  ACE_TCHAR const *repo_mode() const override;
 
 private:
 #if defined (ACE_WIN32) && !defined (ACE_LACKS_WIN32_REGISTRY)

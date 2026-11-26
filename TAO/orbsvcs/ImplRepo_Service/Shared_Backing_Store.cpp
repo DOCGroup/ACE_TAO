@@ -111,7 +111,7 @@ namespace {
       flags_ = flags | O_CREAT;
       unlink_in_destructor_ = unlink_in_destructor;
 
-      const ACE_TCHAR* const flags_str =
+      ACE_TCHAR const *const flags_str =
         ((flags_ & O_RDWR) != 0) ? ACE_TEXT ("r+") :
         (((flags_ & O_WRONLY) != 0) ? ACE_TEXT ("w") : ACE_TEXT ("r"));
       this->filename_ = file;
@@ -244,7 +244,7 @@ namespace {
   void write_listing_item (FILE* list,
                            const ACE_TString& fname,
                            const ACE_CString& name,
-                           const ACE_TCHAR* tag)
+                           ACE_TCHAR const *tag)
   {
     ACE_OS::fprintf (list, "\t<%s", ACE_TEXT_ALWAYS_CHAR (tag));
     ACE_OS::fprintf (list, " fname=\"%s\"", ACE_TEXT_ALWAYS_CHAR (fname.c_str ()));
@@ -528,7 +528,7 @@ Shared_Backing_Store::persistent_update (const Server_Info_Ptr& info, bool add)
   server_file.release ();
 
   ImplementationRepository::UpdateInfo entity;
-  entity.name = static_cast<const char *> (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
+  entity.name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (name.c_str ()));
   ImplementationRepository::RepoInfo rinfo;
   rinfo.kind = ImplementationRepository::repo_server;
   rinfo.repo.repo_id = uid.repo_id;
@@ -623,7 +623,7 @@ Shared_Backing_Store::persistent_update(const Activator_Info_Ptr& info, bool add
   return 0;
 }
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 Shared_Backing_Store::repo_mode() const
 {
   return this->listing_file_.c_str();
@@ -959,7 +959,7 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
   IORTable::Table_var ior_table = IORTable::Table::_narrow (obj.in ());
   ACE_ASSERT (! CORBA::is_nil (ior_table.in ()));
 
-  const char* const replica_name(IMR_REPLICA[this->imr_type_]);
+  char const *const replica_name(IMR_REPLICA[this->imr_type_]);
   ACE_CString replica_filename = replica_ior_filename(false);
   std::unique_ptr<FILE, int (*) (FILE *)> fp (
     ACE_OS::fopen (replica_filename.c_str (), "w"), ACE_OS::fclose);
@@ -992,7 +992,7 @@ Shared_Backing_Store::report_ior(PortableServer::POA_ptr imr_poa)
 }
 
 char*
-Shared_Backing_Store::locator_service_ior (const char* peer_ior) const
+Shared_Backing_Store::locator_service_ior (char const *peer_ior) const
 {
   const CORBA::Object_ptr this_obj =
     this->orb_->string_to_object(this->non_ft_imr_ior_.in ());
@@ -1092,7 +1092,7 @@ Shared_Backing_Store::load_activator (const ACE_CString& activator_name,
 }
 
 void
-Shared_Backing_Store::notify_remote_access (const char * id,
+Shared_Backing_Store::notify_remote_access (char const *id,
                                           ImplementationRepository::AAM_Status s)
 {
   this->replicator_.send_access_state (id, s);
@@ -1277,8 +1277,8 @@ Shared_Backing_Store::gen_ior (char*& ft_imr_ior)
     }
 
   ft_imr_ior = combined_ior;
-  // pass as const char* to make sure string is copied
-  this->imr_ior_ = (const char*)ft_imr_ior;
+  // pass as char const *to make sure string is copied
+  this->imr_ior_ = (char const *)ft_imr_ior;
 
   PortableServer::POA_var null_poa;
   Locator_Repository::report_ior(null_poa.in ());

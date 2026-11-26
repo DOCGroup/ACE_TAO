@@ -38,7 +38,7 @@ Locator_Repository::shutdown ()
 int
 Locator_Repository::init (PortableServer::POA_ptr root_poa,
                           PortableServer::POA_ptr imr_poa,
-                          const char* this_ior)
+                          char const *this_ior)
 {
   this->imr_ior_ = this_ior;
   int err = init_repo(imr_poa);
@@ -217,7 +217,7 @@ Locator_Repository::recover_ior ()
 }
 
 int
-Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
+Locator_Repository::setup_multicast (ACE_Reactor* reactor, char const *ior)
 {
   ACE_ASSERT (reactor != nullptr);
 #if defined (ACE_HAS_IP_MULTICAST)
@@ -242,7 +242,7 @@ Locator_Repository::setup_multicast (ACE_Reactor* reactor, const char* ior)
       if (port == 0)
         {
           // Check environment var. for multicast port.
-          const char* port_number = ACE_OS::getenv ("ImplRepoServicePort");
+          char const *port_number = ACE_OS::getenv ("ImplRepoServicePort");
 
           if (port_number != nullptr)
           {
@@ -307,7 +307,7 @@ Locator_Repository::lcase (const ACE_CString& s)
 
 int
 Locator_Repository::unregister_if_address_reused (const ACE_CString& fqname,
-                                                  const char* partial_ior,
+                                                  char const *partial_ior,
                                                   ImR_Locator_i* imr_locator)
 
 {
@@ -472,7 +472,7 @@ Locator_Repository::update_activator (const Activator_Info_Ptr& info)
 }
 
 void
-Locator_Repository::notify_remote_access (const char *,
+Locator_Repository::notify_remote_access (char const *,
                                           ImplementationRepository::AAM_Status)
 {
 }
@@ -727,7 +727,7 @@ No_Backing_Store::No_Backing_Store (const Options& opts,
 
 No_Backing_Store::~No_Backing_Store () = default;
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 No_Backing_Store::repo_mode () const
 {
   return ACE_TEXT ("Disabled");

@@ -12,7 +12,7 @@
 #if defined (ACE_WIN32)
 static const HKEY SERVICE_REG_ROOT = HKEY_LOCAL_MACHINE;
 // This string must agree with the one used in Activator_NT_Service.h
-static const ACE_TCHAR *SERVICE_REG_PATH =
+static ACE_TCHAR const *SERVICE_REG_PATH =
   ACE_TEXT ("SYSTEM\\CurrentControlSet\\Services\\TAOImRActivator\\Parameters");
 #endif /* ACE_WIN32 */
 
