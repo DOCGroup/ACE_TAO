@@ -988,7 +988,8 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   CORBA::Any_var moved_any (std::move (original_any));
   CORBA::Any_var assigned_any (new CORBA::Any);
   assigned_any = std::move (moved_any);
-  assigned_any = std::move (assigned_any);
+  CORBA::Any_var * const self_any = std::addressof (assigned_any);
+  assigned_any = std::move (*self_any);
   if (original_any.ptr () != nullptr || moved_any.ptr () != nullptr ||
       assigned_any.ptr () != original_any_ptr)
     {
