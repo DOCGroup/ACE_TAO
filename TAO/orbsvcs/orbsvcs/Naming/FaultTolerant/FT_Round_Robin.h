@@ -26,7 +26,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_FT_Naming_Manager;
 
 /**
- * @class TAO_LB_RoundRobin_Strategy
+ * @class TAO_FT_Round_Robin
  *
  * @brief "Round Robin" load balancing strategy used by the
  * TAO_FT_Naming_Service.

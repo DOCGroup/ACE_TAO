@@ -25,9 +25,9 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class TAO_PortableGroup_Adapter
+ * @class TAO_PortableGroup_Loader
  *
- * @brief TAO_PortableGroup_Adapter.
+ * @brief PortableGroup library loader.
  *
  * This class acts as a facade for the PortableGroup library to the
  * ORB.

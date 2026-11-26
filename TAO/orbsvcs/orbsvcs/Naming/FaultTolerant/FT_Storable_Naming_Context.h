@@ -20,7 +20,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_FT_Naming_Replication_Manager;
 
 /**
- * @class FT_TAO_Storable_Naming_Context
+ * @class TAO_FT_Storable_Naming_Context
  *
  * @brief This class specializes the TAO_Storable_Naming_Context
  * 'ConcreteImplementor' in the Bridge pattern architecture of the

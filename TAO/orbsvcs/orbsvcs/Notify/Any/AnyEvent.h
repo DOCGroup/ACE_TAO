@@ -24,9 +24,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_Consumer;
 class TAO_Notify_AnyEvent;
 /**
- * @class TAO_Notify_AnyEvent
- *
- * @brief
+ * @class TAO_Notify_AnyEvent_No_Copy
  */
 class TAO_Notify_Serv_Export TAO_Notify_AnyEvent_No_Copy : public TAO_Notify_Event
 {

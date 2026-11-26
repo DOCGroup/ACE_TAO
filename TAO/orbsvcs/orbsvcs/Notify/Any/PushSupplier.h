@@ -22,7 +22,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_Notify_ProxyConsumer;
 
 /**
- * @class TAO_Notify_StructuredPushSupplier
+ * @class TAO_Notify_PushSupplier
  *
  * @brief Wrapper for the PushSupplier that connect to the EventChannel.
  */

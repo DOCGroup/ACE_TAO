@@ -26,15 +26,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_FT_Naming_Manager;
 
 /**
- * @class TAO_LB_Random_Strategy
+ * @class TAO_FT_Random
  *
  * @brief "Random" load balancing strategy used by the
  * TAO_FT_Naming_Service.
  *
- * This load balancing strategy is designed to select an object group
- * member residing at the next location from an object group managed
- * by a specific Naming Manager. It selects an object from the object
- * group in the order in which they are stored.
+ * This load balancing strategy selects a random member from an object
+ * group managed by a specific Naming Manager.
  */
 class TAO_FtNaming_Export TAO_FT_Random
 {

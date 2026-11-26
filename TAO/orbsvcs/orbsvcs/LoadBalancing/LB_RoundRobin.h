@@ -23,7 +23,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class TAO_LB_RoundRobin_Strategy
+ * @class TAO_LB_RoundRobin
  *
  * @brief "Round Robin" load balancing strategy
  *

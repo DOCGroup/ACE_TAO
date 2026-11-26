@@ -27,7 +27,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /**
- * @class TAO_LB_ORBInitializer
+ * @class TAO_LB_ClientORBInitializer
  *
  * @brief ORBInitializer for the LB_ClientComponent Service_Object.
  *

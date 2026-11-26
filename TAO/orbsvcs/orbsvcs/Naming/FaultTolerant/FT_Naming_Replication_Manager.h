@@ -50,7 +50,7 @@ private:
 };
 
 /**
-* @class Replicator
+* @class TAO_FT_Naming_Replication_Manager
 *
 * @brief Manages the notification between the peers whenever a
 * context or object group changes state. The goal is to ensure
