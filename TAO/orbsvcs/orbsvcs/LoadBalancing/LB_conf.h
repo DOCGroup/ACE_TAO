@@ -22,13 +22,13 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #ifndef TAO_LB_PULL_HANDLER_INTERVAL
 /// The interval in seconds the load balancer queries registered load
 /// monitors for loads.
-const long TAO_LB_PULL_HANDLER_INTERVAL = 5;
+constexpr long TAO_LB_PULL_HANDLER_INTERVAL = 5;
 #endif  /* TAO_LB_PULL_HANDLER_INTERVAL */
 
 #ifndef TAO_LB_PULL_HANDLER_RESTART
 /// The time in seconds the load balancer's "pull handler" is
 /// restarted after being fired.
-const long TAO_LB_PULL_HANDLER_RESTART = 5;
+constexpr long TAO_LB_PULL_HANDLER_RESTART = 5;
 #endif  /* TAO_LB_PULL_HANDLER_RESTART */
 
 TAO_END_VERSIONED_NAMESPACE_DECL
