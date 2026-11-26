@@ -48,13 +48,13 @@ TAO::HTIOP::Endpoint::object_addr () const
   return this->object_addr_;
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO::HTIOP::Endpoint::host () const
 {
   return this->host_.in ();
 }
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO::HTIOP::Endpoint::htid () const
 {
   return this->htid_.in ();

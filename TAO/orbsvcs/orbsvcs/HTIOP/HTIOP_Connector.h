@@ -81,7 +81,7 @@ namespace TAO
 
       TAO_Profile *create_profile (TAO_InputCDR& cdr) override;
 
-      int check_prefix (const char *endpoint) override;
+      int check_prefix (char const *endpoint) override;
 
       char object_key_delimiter () const override;
       /// @}

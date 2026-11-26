@@ -54,7 +54,7 @@ namespace TAO
       int match_prefix (std::string const &prefix) override;
 
       /// Returns the prefix used by the protocol.
-      const char *prefix () const override;
+      char const *prefix () const override;
 
       /// Return the character used to mark where an endpoint ends and
       /// where its options begin.

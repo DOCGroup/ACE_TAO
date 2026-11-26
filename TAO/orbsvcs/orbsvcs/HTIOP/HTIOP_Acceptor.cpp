@@ -265,8 +265,8 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
                           ACE_Reactor *reactor,
                           int major,
                           int minor,
-                          const char *address,
-                          const char *options)
+                          char const *address,
+                          char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -323,9 +323,9 @@ TAO::HTIOP::Acceptor::open (TAO_ORB_Core *orb_core,
   // us can be a ACE::HTBP::Outside_Addr which is of the form
   // host:port:token. The last :token has to be taken into
   // consideration.
-  const char *port_separator_loc = std::strchr (address, ':');
+  char const *port_separator_loc = std::strchr (address, ':');
 
-  const char *specified_hostname {};
+  char const *specified_hostname {};
   char tmp_host[MAXHOSTNAMELEN + 1];
 
   if (port_separator_loc == address)
@@ -447,7 +447,7 @@ TAO::HTIOP::Acceptor::open_default (TAO_ORB_Core *orb_core,
                                     ACE_Reactor *reactor,
                                     int major,
                                     int minor,
-                                    const char *options)
+                                    char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -613,7 +613,7 @@ int
 TAO::HTIOP::Acceptor::hostname (TAO_ORB_Core *orb_core,
                               ACE_INET_Addr &addr,
                               char *&host,
-                              const char *specified_hostname)
+                              char const *specified_hostname)
 {
   if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
     {
@@ -884,7 +884,7 @@ TAO::HTIOP::Acceptor::object_key (IOP::TaggedProfile &profile,
 }
 
 int
-TAO::HTIOP::Acceptor::parse_options (const char *str)
+TAO::HTIOP::Acceptor::parse_options (char const *str)
 {
   if (str == nullptr)
   {

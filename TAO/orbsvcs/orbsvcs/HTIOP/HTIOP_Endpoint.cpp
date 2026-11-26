@@ -28,9 +28,9 @@ TAO::HTIOP::Endpoint::Endpoint (const ACE::HTBP::Addr &addr,
   this->set (addr, use_dotted_decimal_addresses);
 }
 
-TAO::HTIOP::Endpoint::Endpoint (const char *host,
+TAO::HTIOP::Endpoint::Endpoint (char const *host,
                                         CORBA::UShort port,
-                                        const char *htid,
+                                        char const *htid,
                                         const ACE::HTBP::Addr &addr)
   : TAO_Endpoint (OCI_TAG_HTIOP_PROFILE),
     host_ (),
@@ -61,9 +61,9 @@ TAO::HTIOP::Endpoint::Endpoint ()
 {
 }
 
-TAO::HTIOP::Endpoint::Endpoint (const char *host,
+TAO::HTIOP::Endpoint::Endpoint (char const *host,
                                 CORBA::UShort port,
-                                const char *htid)
+                                char const *htid)
   : TAO_Endpoint (OCI_TAG_HTIOP_PROFILE),
     host_ (),
     port_ (port),
@@ -93,7 +93,7 @@ TAO::HTIOP::Endpoint::set (const ACE::HTBP::Addr &addr,
   if (use_dotted_decimal_addresses
       || addr.get_host_name (tmp_host, sizeof (tmp_host)) != 0)
     {
-      const char *tmp = addr.get_host_addr ();
+      char const *tmp = addr.get_host_addr ();
       if (tmp == nullptr)
         {
           if (TAO_debug_level > 0)
@@ -151,16 +151,16 @@ TAO::HTIOP::Endpoint::addr_to_string (char *buffer, size_t length)
   return 0;
 }
 
-const char *
-TAO::HTIOP::Endpoint::host (const char *h)
+char const *
+TAO::HTIOP::Endpoint::host (char const *h)
 {
   this->host_ = h;
 
   return this->host_.in ();
 }
 
-const char *
-TAO::HTIOP::Endpoint::htid (const char *h)
+char const *
+TAO::HTIOP::Endpoint::htid (char const *h)
 {
   this->htid_ = h;
 

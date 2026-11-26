@@ -372,7 +372,7 @@ TAO::HTIOP::Connector::make_profile ()
 }
 
 int
-TAO::HTIOP::Connector::check_prefix (const char *endpoint)
+TAO::HTIOP::Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
@@ -380,7 +380,7 @@ TAO::HTIOP::Connector::check_prefix (const char *endpoint)
     return -1;  // Failure
   }
 
-  const char *protocol[] = { "htiop" };
+  char const *protocol[] = { "htiop" };
 
   size_t slot = std::strchr (endpoint, ':') - endpoint;
 

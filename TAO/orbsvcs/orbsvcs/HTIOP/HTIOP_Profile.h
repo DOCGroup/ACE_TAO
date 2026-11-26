@@ -48,7 +48,7 @@ namespace TAO
       char object_key_delimiter () const override;
 
       /// Return the char string prefix.
-      static const char *prefix ();
+      static char const *prefix ();
 
       /// Profile constructor, same as above except the object_key has
       /// already been marshaled.
@@ -59,9 +59,9 @@ namespace TAO
 
       ///  Profile constructor, this is the most efficient since it
       /// doesn't require any address resolution processing.
-      Profile (const char *host,
+      Profile (char const *host,
                CORBA::UShort port,
-               const char *htid,
+               char const *htid,
                const TAO::ObjectKey &object_key,
                const ACE::HTBP::Addr &addr,
                const TAO_GIOP_Message_Version &version,
@@ -113,7 +113,7 @@ namespace TAO
       /// Template methods. Please see Profile.h for the documentation.
       int decode_profile (TAO_InputCDR &cdr) override;
       int decode_endpoints () override;
-      void parse_string_i (const char *string) override;
+      void parse_string_i (char const *string) override;
       void create_profile_body (TAO_OutputCDR &cdr) const override;
       CORBA::Boolean do_is_equivalent (const TAO_Profile *other_profile) override;
 

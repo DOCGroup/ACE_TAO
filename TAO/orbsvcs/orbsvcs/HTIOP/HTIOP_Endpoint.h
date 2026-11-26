@@ -50,18 +50,18 @@ namespace TAO
 
       /// Constructor.  This is the most efficient constructor since it
       /// does not require any address resolution processing.
-      Endpoint (const char *host,
+      Endpoint (char const *host,
                 CORBA::UShort port,
-                const char *htid,
+                char const *htid,
                 const ACE::HTBP::Addr &addr);
 
       Endpoint (const ACE::HTBP::Addr &addr,
                 int use_dotted_decimal_addresses);
 
       /// Constructor.  This constructor is used when decoding endpoints.
-      Endpoint (const char *host,
+      Endpoint (char const *host,
                 CORBA::UShort port,
-                const char *htid);
+                char const *htid);
 
       ~Endpoint () override;
 
@@ -89,11 +89,11 @@ namespace TAO
 
       /// Return a pointer to the host string.  This object maintains
       /// ownership of this string.
-      const char *host () const;
+      char const *host () const;
 
       /// Copy the string @a h into @c host_ and return the resulting pointer.
       /// This object maintains ownership of this string.
-      const char *host (const char *h);
+      char const *host (char const *h);
 
       /// Return the port number.
       CORBA::UShort port () const;
@@ -103,11 +103,11 @@ namespace TAO
 
       /// Return a pointer to the host string.  This object maintains
       /// ownership of this string.
-      const char *htid () const;
+      char const *htid () const;
 
       /// Copy the string @a h into @c host_ and return the resulting pointer.
       /// This object maintains ownership of this string.
-      const char *htid (const char *h);
+      char const *htid (char const *h);
       /// @}
 
     private:

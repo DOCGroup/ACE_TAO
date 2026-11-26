@@ -28,7 +28,7 @@ TAO::HTIOP::Protocol_Factory::match_prefix (std::string const &prefix)
   return (ACE_OS::strcasecmp (prefix.c_str (), ::the_prefix) == 0);
 }
 
-const char *
+char const *
 TAO::HTIOP::Protocol_Factory::prefix () const
 {
   return ::the_prefix;

@@ -40,9 +40,9 @@ TAO::HTIOP::Profile::Profile (const ACE::HTBP::Addr &addr,
 {
 }
 
-TAO::HTIOP::Profile::Profile (const char* host,
+TAO::HTIOP::Profile::Profile (char const *host,
                                       CORBA::UShort port,
-                                      const char* htid,
+                                      char const *htid,
                                       const TAO::ObjectKey &object_key,
                                       const ACE::HTBP::Addr &addr,
                                       const TAO_GIOP_Message_Version &version,
@@ -113,12 +113,12 @@ TAO::HTIOP::Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO::HTIOP::Profile::parse_string_i (const char *ior)
+TAO::HTIOP::Profile::parse_string_i (char const *ior)
 {
   // Pull off the "hostname:port#token/" part of the objref
   // Copy the string because we are going to modify it...
 
-  const char *okd = std::strchr (ior, this->object_key_delimiter_);
+  char const *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == nullptr || okd == ior)
     {
@@ -133,7 +133,7 @@ TAO::HTIOP::Profile::parse_string_i (const char *ior)
   // Length of host string.
   CORBA::ULong length_host {};
 
-  const char *cp_pos = std::strchr (ior, ':');  // Look for a port
+  char const *cp_pos = std::strchr (ior, ':');  // Look for a port
 
   if (cp_pos == ior)
     {
@@ -331,7 +331,7 @@ TAO::HTIOP::Profile::to_string () const
   return buf;
 }
 
-const char *
+char const *
 TAO::HTIOP::Profile::prefix ()
 {
   return ::the_prefix;
@@ -442,7 +442,7 @@ TAO::HTIOP::Profile::decode_endpoints ()
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.

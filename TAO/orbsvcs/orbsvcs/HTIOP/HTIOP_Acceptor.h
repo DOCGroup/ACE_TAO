@@ -88,14 +88,14 @@ namespace TAO
                         ACE_Reactor *reactor,
                         int version_major,
                         int version_minor,
-                        const char *address,
-                        const char *options = nullptr) override;
+                        char const *address,
+                        char const *options = nullptr) override;
 
       int open_default (TAO_ORB_Core *orb_core,
                                 ACE_Reactor *reactor,
                                 int version_major,
                                 int version_minor,
-                                const char *options = nullptr) override;
+                                char const *options = nullptr) override;
 
       int close () override;
 
@@ -120,7 +120,7 @@ namespace TAO
       int hostname (TAO_ORB_Core *orb_core,
                     ACE_INET_Addr &addr,
                     char *&host,
-                    const char *specified_hostname = nullptr);
+                    char const *specified_hostname = nullptr);
 
       /**
        * Set the host name for the given address using the dotted decimal
@@ -154,7 +154,7 @@ namespace TAO
        * in an alternative hostname in the object reference, such as that
        * of the outside of a firewall.
        */
-      virtual int parse_options (const char *options);
+      virtual int parse_options (char const *options);
 
       /// Helper method to add a new profile to the mprofile for
       /// each endpoint.
