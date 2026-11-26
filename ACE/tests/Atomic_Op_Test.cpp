@@ -60,7 +60,7 @@ int
 Exchange_Tester<T>::svc ()
 {
   this->barrier_.wait ();     // Want all threads to try to claim "at once"
-  const bool claimed = this->op_.exchange (1) == 0;
+  bool const claimed = this->op_.exchange (1) == 0;
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Thread %t %s claim.\n"),
               claimed ? ACE_TEXT ("DID") : ACE_TEXT ("DID NOT")));

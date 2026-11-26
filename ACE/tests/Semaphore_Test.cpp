@@ -231,7 +231,7 @@ int run_main (int argc, ACE_TCHAR *argv[])
 
   ACE_Thread_Manager::instance ()->wait ();
 
-  const size_t percent = (timeouts * 100) / (n_workers * n_iterations);
+  size_t const percent = (timeouts * 100) / (n_workers * n_iterations);
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Worker threads timed out %d percent of the time\n"),

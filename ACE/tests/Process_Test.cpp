@@ -40,7 +40,7 @@ test_setenv ()
     }
   else
     {
-      const size_t env_len = ACE_OS::strlen (opts.env_buf ());
+      size_t const env_len = ACE_OS::strlen (opts.env_buf ());
       if (env_len != 5002)
         {
           status = 1;

@@ -137,7 +137,7 @@ Thread_Pool::svc ()
           break;
         }
 
-      const size_t length = mb->length ();
+      size_t const length = mb->length ();
 
       if (length > 0)
         {

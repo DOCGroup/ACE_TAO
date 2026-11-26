@@ -33,7 +33,7 @@ const unsigned long MAX_THREAD = 100000;
 namespace
 {
   // Change this to 'true' if you want lots of debugging messages in the log
-  const bool PRINT_DEBUG_MSGS = true;
+  bool const PRINT_DEBUG_MSGS = true;
 }
 
 /**
