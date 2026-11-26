@@ -140,10 +140,10 @@ ACE_Remote_Token_Proxy::request_reply (ACE_Token_Request &request,
                                        ACE_Synch_Options &)
 {
   ACE_TRACE ("ACE_Remote_Token_Proxy::request_reply");
-  void *buffer;
-  ssize_t length;
+  void *buffer {};
+  ssize_t const length = request.encode (buffer);
 
-  if ((length = request.encode (buffer)) == -1)
+  if (length == -1)
     {
       ACELIB_ERROR_RETURN ((LM_ERROR,  ACE_TEXT ("%p\n"),  ACE_TEXT ("encode failed")), -1);
     }

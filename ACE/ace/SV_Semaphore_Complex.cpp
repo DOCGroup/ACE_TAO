@@ -208,7 +208,6 @@ int
 ACE_SV_Semaphore_Complex::close ()
 {
   ACE_TRACE ("ACE_SV_Semaphore_Complex::close");
-  int semval;
 
 #ifdef ACE_HAS_SYSV_IPC
   if (this->key_ == (key_t) - 1 || this->internal_id_ == -1)
@@ -231,7 +230,8 @@ ACE_SV_Semaphore_Complex::close ()
   // see if this is the last reference to the ACE_SV_Semaphore. There
   // is a race condition here - see the comments in create ().
 
-  if ((semval = ACE_SV_Semaphore_Simple::control (GETVAL, 0, 1)) == -1)
+  int const semval = ACE_SV_Semaphore_Simple::control (GETVAL, 0, 1);
+  if (semval == -1)
     {
       return -1;
     }

@@ -109,8 +109,8 @@ ACE_OS::getenvstrings ()
 ACE_TCHAR *
 ACE_OS::strenvdup (const ACE_TCHAR *str)
 {
-  const ACE_TCHAR * start {};
-  if ((start = ACE_OS::strchr (str, ACE_TEXT ('$'))) != nullptr)
+  ACE_TCHAR const * const start = ACE_OS::strchr (str, ACE_TEXT ('$'));
+  if (start != nullptr)
     {
       size_t const var_len = ACE_OS::strcspn (start + 1,
         ACE_TEXT ("$~!#%^&*()-+=\\|/?,.;:'\"`[]{} \t\n\r"));
