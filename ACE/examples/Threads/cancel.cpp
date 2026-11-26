@@ -25,7 +25,7 @@ worker (void *arg)
   return ACE_THR_FUNC_RETURN_NULL;
 }
 
-static const int DEFAULT_THREADS = ACE_DEFAULT_THREADS;
+static int const DEFAULT_THREADS = ACE_DEFAULT_THREADS;
 static const intptr_t DEFAULT_ITERATIONS = 100000;
 
 int

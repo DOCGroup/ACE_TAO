@@ -171,7 +171,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 // process.
 
 static pid_t
-respawn_self (const ACE_TCHAR *myname,
+respawn_self (ACE_TCHAR const *myname,
               int iter,
               int exit_code)
 {

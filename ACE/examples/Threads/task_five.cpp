@@ -166,7 +166,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   size_t const stack_size = argc > 1 ? ACE_OS::atoi (argv[1]) : default_stack_size;
-  const int n_tasks = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_TASKS;
+  int const n_tasks = argc > 2 ? ACE_OS::atoi (argv[2]) : DEFAULT_TASKS;
   u_int const iterations = argc > 3 ? ACE_OS::atoi (argv[3]) : DEFAULT_ITERATIONS;
 
   for (u_int i = 0; i < iterations; ++i)

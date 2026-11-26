@@ -54,9 +54,9 @@ Pseudo_Barrier::wait ()
       return this->event_.signal ();
     }
   else
-  {
-    return this->event_.wait ();
-  }
+    {
+      return this->event_.wait ();
+    }
 }
 
 static ACE_THR_FUNC_RETURN
@@ -65,7 +65,7 @@ worker (void *arg)
   Pseudo_Barrier &thread_barrier = *static_cast<Pseudo_Barrier *> (arg);
 
   // work
-  const int work = ::amount_of_work.fetch_add (1, std::memory_order_relaxed) + 1;
+  int const work = ::amount_of_work.fetch_add (1, std::memory_order_relaxed) + 1;
   ACE_DEBUG ((LM_DEBUG, "(%t) working (%d secs)\n", work));
   ACE_OS::sleep (::amount_of_work.load (std::memory_order_relaxed));
 
@@ -74,7 +74,7 @@ worker (void *arg)
   thread_barrier.wait ();
 
   // more work
-  const int more_work = ::amount_of_work.fetch_add (1, std::memory_order_relaxed) + 1;
+  int const more_work = ::amount_of_work.fetch_add (1, std::memory_order_relaxed) + 1;
   ACE_DEBUG ((LM_DEBUG, "(%t) more work (%d secs)\n", more_work));
   ACE_OS::sleep (::amount_of_work.load (std::memory_order_relaxed));
 
@@ -95,9 +95,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
 
   // create workers
   if (tm.spawn_n (n_threads, worker, std::addressof (thread_barrier)) == -1)
-  {
-    ACE_ERROR_RETURN ((LM_ERROR, "thread creates for worker failed"), -1);
-  }
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, "thread creates for worker failed"), -1);
+    }
 
   // wait for all workers to exit
   if (tm.wait () == -1)
@@ -105,9 +105,9 @@ ACE_TMAIN (int argc, ACE_TCHAR **argv)
       ACE_ERROR_RETURN ((LM_ERROR, "thread wait failed"), -1);
     }
   else
-  {
-    ACE_DEBUG ((LM_ERROR, "graceful exit\n"));
-  }
+    {
+      ACE_DEBUG ((LM_ERROR, "graceful exit\n"));
+    }
 
   return 0;
 }
