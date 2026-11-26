@@ -11,6 +11,14 @@
 # pragma once
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
+#if defined (ACE_AS_STATIC_LIBS) && !defined (HTTPU_HAS_DLL)
+#  define HTTPU_HAS_DLL 0
+#endif /* ACE_AS_STATIC_LIBS && !HTTPU_HAS_DLL */
+
+#if !defined (HTTPU_HAS_DLL)
+#  define HTTPU_HAS_DLL 1
+#endif /* !HTTPU_HAS_DLL */
+
 #if defined (HTTPU_HAS_DLL)
 #  if (HTTPU_HAS_DLL == 1)
 #    if defined (HTTPU_BUILD_DLL)
