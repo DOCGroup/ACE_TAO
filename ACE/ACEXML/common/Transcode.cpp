@@ -68,7 +68,7 @@ ACEXML_Transcoder::ucs42utf8 (ACEXML_UCS4 src,
                   dst, len);
       return (retv == ACEXML_IS_SURROGATE ? ACEXML_NON_UNICODE : retv);
     }
-  else if (src >= 0x100000 && src < 0x110000)
+  else if (src >= 0x10000 && src < 0x110000)
     {
       if (len < 4)
       {
@@ -114,7 +114,7 @@ ACEXML_Transcoder::ucs42utf16 (ACEXML_UCS4 src,
       *dst = static_cast<ACEXML_UTF16> (src);
       return 1;
     }
-  else if (src >= 0x100000 && src < 0x110000)
+  else if (src >= 0x10000 && src < 0x110000)
     // Scalar values are encoded into surrogates
     {
       if (len < 2)
@@ -122,8 +122,9 @@ ACEXML_Transcoder::ucs42utf16 (ACEXML_UCS4 src,
         return ACEXML_DESTINATION_TOO_SHORT;
       }
 
-      *dst = 0xD800 | (static_cast<ACEXML_UTF16> (src) / 0x400);
-      *(dst+1) = 0xDC00 | (static_cast<ACEXML_UTF16> (src) % 0x400);
+      ACEXML_UCS4 const value = src - 0x10000;
+      *dst = static_cast<ACEXML_UTF16> (0xD800 | (value / 0x400));
+      *(dst+1) = static_cast<ACEXML_UTF16> (0xDC00 | (value % 0x400));
       return 2;
     }
 
@@ -136,22 +137,15 @@ ACEXML_Transcoder::surrogate2utf8 (ACEXML_UTF16 high,
                                    ACEXML_UTF8 *dst,
                                    size_t len)
 {
-  if (len < 3)
-  {
-    return ACEXML_DESTINATION_TOO_SHORT;
-  }
-
   if (dst == nullptr ||
-      (high >= 0xD800 && high < 0xDC00) ||
-      (low >= 0xDC00 && low < 0xE000))
+      high < 0xD800 || high >= 0xDC00 ||
+      low < 0xDC00 || low >= 0xE000)
   {
     return ACEXML_INVALID_ARGS;
   }
 
   ACEXML_UCS4 const src = (high - 0xD800) * 0x400 + (low - 0xDC00) + 0x10000;
-  *dst = static_cast<ACEXML_UTF8> (0xD800 | (src / 0x400));
-  *(dst+1) = static_cast<ACEXML_UTF8> (0xDC00 | (src % 0x400));
-  return 2;
+  return ACEXML_Transcoder::ucs42utf8 (src, dst, len);
 }
 
 int
@@ -159,8 +153,8 @@ ACEXML_Transcoder::surrogate2ucs4 (ACEXML_UTF16 high,
                                    ACEXML_UTF16 low,
                                    ACEXML_UCS4 &dst)
 {
-  if ((high >= 0xD800 && high < 0xDC00) ||
-      (low >= 0xDC00 && low < 0xE000))
+  if (high < 0xD800 || high >= 0xDC00 ||
+      low < 0xDC00 || low >= 0xE000)
   {
     return ACEXML_INVALID_ARGS;
   }
@@ -276,29 +270,28 @@ ACEXML_Transcoder::utf162ucs4 (const ACEXML_UTF16 *src,
       return ACEXML_INVALID_ARGS;
     }
 
-  size_t const forward = 1;
-  if (*src >= 0xDC00 && *src < 0xE000)
+  if (len == 0)
+    {
+      return ACEXML_END_OF_SOURCE;
+    }
+
+  if (*src >= 0xD800 && *src < 0xDC00)
     {
       if (len < 2)
         {
           return ACEXML_END_OF_SOURCE;
         }
 
-      return ACEXML_Transcoder::surrogate2ucs4 (*src,
-                                                *(src+1),
-                                                dst);
+      int const result = ACEXML_Transcoder::surrogate2ucs4 (*src, *(src+1), dst);
+      return result == ACEXML_SUCCESS ? 2 : result;
     }
-  else
+  if (*src >= 0xDC00 && *src < 0xE000)
     {
-      if (len < 1)
-        {
-          return ACEXML_END_OF_SOURCE;
-        }
-
-      dst = *src;
+      return ACEXML_NON_UNICODE;
     }
 
-  return ACE_Utils::truncate_cast<int> (forward);
+  dst = *src;
+  return 1;
 }
 
 int

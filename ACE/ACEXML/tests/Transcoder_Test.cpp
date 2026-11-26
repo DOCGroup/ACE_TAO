@@ -75,6 +75,40 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       return 1;
     }
 
+  std::array<ACEXML_UCS4, 3> const scalars {{0x10000, 0x1f600, 0x10ffff}};
+  for (ACEXML_UCS4 const scalar : scalars)
+    {
+      std::array<ACEXML_UTF16, 2> pair {};
+      std::array<ACEXML_UTF8, 4> encoded_scalar {};
+      std::array<ACEXML_UTF8, 4> encoded_pair {};
+      ACEXML_UCS4 decoded_scalar {};
+      if (ACEXML_Transcoder::ucs42utf16 (scalar, pair.data (), pair.size ()) != 2 ||
+          ACEXML_Transcoder::utf162ucs4 (pair.data (), pair.size (), decoded_scalar) != 2 ||
+          decoded_scalar != scalar ||
+          ACEXML_Transcoder::ucs42utf8 (scalar, encoded_scalar.data (), encoded_scalar.size ()) != 4 ||
+          ACEXML_Transcoder::surrogate2utf8 (pair[0], pair[1], encoded_pair.data (), encoded_pair.size ()) != 4 ||
+          encoded_pair != encoded_scalar ||
+          ACEXML_Transcoder::utf82ucs4 (encoded_scalar.data (), encoded_scalar.size (), decoded_scalar) != 4 ||
+          decoded_scalar != scalar)
+        {
+          return 1;
+        }
+    }
+
+  ACEXML_UCS4 invalid_scalar {};
+  std::array<ACEXML_UTF8, 4> face {};
+  if (ACEXML_Transcoder::utf162ucs4 (org.data (), 0, invalid_scalar) != ACEXML_Transcoder::ACEXML_END_OF_SOURCE ||
+      ACEXML_Transcoder::surrogate2ucs4 (0xd800, 0x0041, invalid_scalar) != ACEXML_Transcoder::ACEXML_INVALID_ARGS ||
+      ACEXML_Transcoder::surrogate2utf8 (0xd83d, 0xde00, face.data (), 3) != ACEXML_Transcoder::ACEXML_DESTINATION_TOO_SHORT ||
+      ACEXML_Transcoder::surrogate2utf8 (0xd83d, 0xde00, face.data (), face.size ()) != 4 ||
+      static_cast<unsigned char> (face[0]) != 0xf0 ||
+      static_cast<unsigned char> (face[1]) != 0x9f ||
+      static_cast<unsigned char> (face[2]) != 0x98 ||
+      static_cast<unsigned char> (face[3]) != 0x80)
+    {
+      return 1;
+    }
+
   ACE_DEBUG ((LM_DEBUG, "Restored UTF16 string:\n"));
   dump_utf16 (after.data (), x);
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
