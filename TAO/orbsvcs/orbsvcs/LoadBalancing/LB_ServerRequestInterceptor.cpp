@@ -75,7 +75,7 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           // overloaded.
           throw CORBA::TRANSIENT ();
         }
-      catch (const CORBA::BAD_PARAM& ex)
+      catch (CORBA::BAD_PARAM const& ex)
         {
           // No CosLoadBalancing::LB_GROUP_REF ServiceContext.  This
           // probably means that the target object is not

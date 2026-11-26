@@ -17,7 +17,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
   }
 
   // Try to optimize sequence growth by growing it once.
-  const CORBA::ULong initial_len = argc / 6;  // -LBGroup group
+  CORBA::ULong const initial_len = argc / 6;  // -LBGroup group
                                               // -LBTypeId type_id
                                               // -LBLocation location
 
@@ -35,7 +35,7 @@ TAO_LB_Component::init (int argc, ACE_TCHAR * argv[])
     {
       if (ACE_OS::strcasecmp (argv[i], ACE_TEXT("-LBGroup")) == 0)
         {
-          const CORBA::ULong j = len;
+          CORBA::ULong const j = len;
           ++len;
 
           ++i;  // 1
@@ -97,8 +97,8 @@ TAO_LB_Component::fini ()
 
 int
 TAO_LB_Component::register_orb_initializer (
-  const CORBA::StringSeq & object_groups,
-  const CORBA::StringSeq & repository_ids,
+  CORBA::StringSeq const & object_groups,
+  CORBA::StringSeq const & repository_ids,
   char const *location)
 {
   try
@@ -119,7 +119,7 @@ TAO_LB_Component::register_orb_initializer (
 
       PortableInterceptor::register_orb_initializer (initializer.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception (
         "Unable to register LB_Component ORB ""initializer.");

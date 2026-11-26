@@ -8,8 +8,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
-  const CORBA::StringSeq & object_groups,
-  const CORBA::StringSeq & repository_ids,
+  CORBA::StringSeq const & object_groups,
+  CORBA::StringSeq const & repository_ids,
   char const *location,
   CosLoadBalancing::LoadManager_ptr lm,
   char const *orb_id,
@@ -126,7 +126,7 @@ TAO_LB_IORInterceptor::register_load_alert ()
       }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (TAO_debug_level > 0)
       {

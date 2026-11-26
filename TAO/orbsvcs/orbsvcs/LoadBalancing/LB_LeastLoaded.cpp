@@ -245,7 +245,7 @@ TAO_LB_LeastLoaded::analyze_loads (
     throw CORBA::TRANSIENT ();
   }
 
-  const CORBA::ULong len = locations->length ();
+  CORBA::ULong const len = locations->length ();
 
   // Iterate through the entire location list to determine which
   // locations require load to be shed.
@@ -390,7 +390,7 @@ TAO_LB_LeastLoaded::get_location (
                       either load.value is negative and min_load is
                       positive, or vice versa.
                   */
-                  const CORBA::Float percent_diff =
+                  CORBA::Float const percent_diff =
                     (min_load / load.value) - 1;
 
                   /*
@@ -413,11 +413,11 @@ TAO_LB_LeastLoaded::get_location (
                   if (percent_diff <= TAO_LB::LL_DEFAULT_LOAD_PERCENT_DIFF_CUTOFF)
                     {
                       // Prevent integer arithmetic overflow.
-                      const CORBA::Float NUM_MEMBERS = 2;
+                      CORBA::Float const NUM_MEMBERS = 2;
 
                       // n == 0:  Use previously selected location.
                       // n == 1:  Use current location.
-                      const CORBA::ULong n =
+                      CORBA::ULong const n =
                         static_cast<CORBA::ULong> (NUM_MEMBERS * ACE_OS::rand ()
                                          / (RAND_MAX + 1.0));
 

@@ -105,7 +105,7 @@ TAO_LB_LoadManager::push_loads (
   PortableGroup::ObjectGroups_var groups =
     this->object_group_manager_.groups_at_location (the_location);
 
-  const CORBA::ULong len = groups->length ();
+  CORBA::ULong const len = groups->length ();
 
   for (CORBA::ULong i {}; i < len; ++i)
     {
@@ -135,7 +135,7 @@ TAO_LB_LoadManager::push_loads (
                                        this->lm_ref_.in ());
             }
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           // Ignore all exceptions.
         }
@@ -713,7 +713,7 @@ TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
           obj = strategy->next_member (object_group.in (),
                                        this->lm_ref_.in ());
         }
-        catch (const CORBA::TRANSIENT&) //no member
+        catch (CORBA::TRANSIENT const&) //no member
         {
           break;
         }
@@ -807,8 +807,8 @@ TAO_LB_LoadManager::initialize (ACE_Reactor * reactor,
       // four bytes will be used).  This is an attempt to prevent
       // different load manager servants within the same ORB from
       // using the same POA.
-      const ACE_Time_Value tv = ACE_OS::gettimeofday ();
-      const CORBA::Long time =
+      ACE_Time_Value const tv = ACE_OS::gettimeofday ();
+      CORBA::Long const time =
         static_cast<CORBA::Long> (tv.msec ()); // Time in milliseconds.
 
       char poa_name[] = "TAO_LB_LoadManager_POA - 0xZZZZZZZZ";
@@ -894,7 +894,7 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
 {
   // @@ This is slow.  Optimize this code.
 
-  const CORBA::ULong len = props.length ();
+  CORBA::ULong const len = props.length ();
   for (CORBA::ULong i {}; i < len; ++i)
     {
       PortableGroup::Property & property = props[i];

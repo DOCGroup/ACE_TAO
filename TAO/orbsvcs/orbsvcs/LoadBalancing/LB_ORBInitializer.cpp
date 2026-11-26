@@ -9,8 +9,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_LB_ORBInitializer::TAO_LB_ORBInitializer (
-  const CORBA::StringSeq & object_groups,
-  const CORBA::StringSeq & repository_ids,
+  CORBA::StringSeq const & object_groups,
+  CORBA::StringSeq const & repository_ids,
   char const *location)
   : object_groups_ (object_groups),
     repository_ids_ (repository_ids),
