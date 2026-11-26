@@ -13,6 +13,8 @@
 // remains attached.
 //
 
+#if defined (ACE_USES_WCHAR)
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
@@ -97,3 +99,5 @@ ACE_UTF16_Encoding_Converter::is_legal_utf8 (const ACE_Byte* source,
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL
+
+#endif /* ACE_USES_WCHAR */
