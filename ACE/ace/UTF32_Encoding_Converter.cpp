@@ -35,7 +35,7 @@ ACE_UTF32_Encoding_Converter::ACE_UTF32_Encoding_Converter (bool swap)
 ACE_UTF32_Encoding_Converter::~ACE_UTF32_Encoding_Converter () = default;
 
 ACE_UTF32_Encoding_Converter::Result
-ACE_UTF32_Encoding_Converter::to_utf8 (const void* source,
+ACE_UTF32_Encoding_Converter::to_utf8 (void const * source,
                                        size_t source_size,
                                        ACE_Byte* target,
                                        size_t target_size,
@@ -45,12 +45,12 @@ ACE_UTF32_Encoding_Converter::to_utf8 (const void* source,
   static constexpr ACE_UINT32 byteMark = 0x80;
   static const ACE_UINT32 UNI_SUR_HIGH_START = get_UNI_SUR_HIGH_START ();
   static const ACE_UINT32 UNI_SUR_LOW_END = get_UNI_SUR_LOW_END ();
-  static const ACE_Byte* firstByteMark = get_first_byte_mark ();
+  static ACE_Byte const * firstByteMark = get_first_byte_mark ();
 
   Result result = CONVERSION_OK;
   ACE_Byte* targetEnd = target + target_size;
-  const ACE_UINT32* sourceStart = static_cast<const ACE_UINT32*> (source);
-  const ACE_UINT32* sourceEnd = sourceStart + (source_size / sizeof (ACE_UINT32));
+  ACE_UINT32 const * sourceStart = static_cast<ACE_UINT32 const *> (source);
+  ACE_UINT32 const * sourceEnd = sourceStart + (source_size / sizeof (ACE_UINT32));
 
   while (sourceStart < sourceEnd)
     {
@@ -122,7 +122,7 @@ ACE_UTF32_Encoding_Converter::to_utf8 (const void* source,
 }
 
 ACE_UTF32_Encoding_Converter::Result
-ACE_UTF32_Encoding_Converter::from_utf8 (const ACE_Byte* source,
+ACE_UTF32_Encoding_Converter::from_utf8 (ACE_Byte const * source,
                                          size_t source_size,
                                          void* target,
                                          size_t target_size,
@@ -131,11 +131,11 @@ ACE_UTF32_Encoding_Converter::from_utf8 (const ACE_Byte* source,
   static const ACE_UINT32 UNI_SUR_HIGH_START = get_UNI_SUR_HIGH_START ();
   static const ACE_UINT32 UNI_SUR_LOW_END = get_UNI_SUR_LOW_END ();
   static const ACE_UINT32 UNI_REPLACEMENT_CHAR = get_UNI_REPLACEMENT_CHAR ();
-  static const ACE_Byte* trailingBytesForUTF8 = get_trailing_bytes_for_utf8 ();
-  static const ACE_UINT32* offsetsFromUTF8 = get_offsets_from_utf8 ();
+  static ACE_Byte const * trailingBytesForUTF8 = get_trailing_bytes_for_utf8 ();
+  static ACE_UINT32 const * offsetsFromUTF8 = get_offsets_from_utf8 ();
 
   Result result = CONVERSION_OK;
-  const ACE_Byte* sourceEnd = source + source_size;
+  ACE_Byte const * sourceEnd = source + source_size;
   ACE_UINT32* targetStart = static_cast<ACE_UINT32*> (target);
   ACE_UINT32* targetEnd   = targetStart + target_size;
 
@@ -217,7 +217,7 @@ ACE_UTF32_Encoding_Converter::from_utf8 (const ACE_Byte* source,
 }
 
 ACE_UTF32_Encoding_Converter*
-ACE_UTF32_Encoding_Converter::encoded (const ACE_Byte* source,
+ACE_UTF32_Encoding_Converter::encoded (ACE_Byte const * source,
                                        size_t source_size)
 {
   constexpr size_t begin = 16;

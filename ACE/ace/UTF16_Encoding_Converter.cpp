@@ -80,7 +80,7 @@ ACE_UTF16_Encoding_Converter::ACE_UTF16_Encoding_Converter (bool swap)
 ACE_UTF16_Encoding_Converter::~ACE_UTF16_Encoding_Converter () = default;
 
 ACE_UTF16_Encoding_Converter::Result
-ACE_UTF16_Encoding_Converter::to_utf8 (const void* source,
+ACE_UTF16_Encoding_Converter::to_utf8 (void const * source,
                                        size_t source_size,
                                        ACE_Byte* target,
                                        size_t target_size,
@@ -91,8 +91,8 @@ ACE_UTF16_Encoding_Converter::to_utf8 (const void* source,
   Result result = CONVERSION_OK;
 
   ACE_Byte* targetEnd = target + target_size;
-  const ACE_UINT16* sourceStart = static_cast<const ACE_UINT16*> (source);
-  const ACE_UINT16* sourceEnd   = sourceStart +
+  ACE_UINT16 const * sourceStart = static_cast<ACE_UINT16 const *> (source);
+  ACE_UINT16 const * sourceEnd   = sourceStart +
                                   (source_size / sizeof (ACE_UINT16));
 
   while (sourceStart < sourceEnd)
@@ -193,14 +193,14 @@ ACE_UTF16_Encoding_Converter::to_utf8 (const void* source,
 }
 
 ACE_UTF16_Encoding_Converter::Result
-ACE_UTF16_Encoding_Converter::from_utf8 (const ACE_Byte* source,
+ACE_UTF16_Encoding_Converter::from_utf8 (ACE_Byte const * source,
                                          size_t source_size,
                                          void* target,
                                          size_t target_size,
                                          bool strict)
 {
   Result result = CONVERSION_OK;
-  const ACE_Byte* sourceEnd = source + source_size;
+  ACE_Byte const * sourceEnd = source + source_size;
   ACE_UINT16* targetStart   = static_cast<ACE_UINT16*> (target);
   ACE_UINT16* targetEnd     = targetStart + target_size;
 
@@ -300,7 +300,7 @@ ACE_UTF16_Encoding_Converter::from_utf8 (const ACE_Byte* source,
 }
 
 ACE_UTF16_Encoding_Converter*
-ACE_UTF16_Encoding_Converter::encoded (const ACE_Byte* source,
+ACE_UTF16_Encoding_Converter::encoded (ACE_Byte const * source,
                                        size_t source_size)
 {
   constexpr size_t begin = 16;
@@ -344,19 +344,19 @@ ACE_UTF16_Encoding_Converter::get_UNI_REPLACEMENT_CHAR ()
   return UNI_REPLACEMENT_CHAR;
 }
 
-const ACE_Byte*
+ACE_Byte const *
 ACE_UTF16_Encoding_Converter::get_first_byte_mark ()
 {
   return firstByteMark;
 }
 
-const ACE_Byte*
+ACE_Byte const *
 ACE_UTF16_Encoding_Converter::get_trailing_bytes_for_utf8 ()
 {
   return trailingBytesForUTF8;
 }
 
-const ACE_UINT32*
+ACE_UINT32 const *
 ACE_UTF16_Encoding_Converter::get_offsets_from_utf8 ()
 {
   return offsetsFromUTF8;

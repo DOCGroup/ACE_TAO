@@ -18,11 +18,11 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE bool
-ACE_UTF16_Encoding_Converter::is_legal_utf8 (const ACE_Byte* source,
+ACE_UTF16_Encoding_Converter::is_legal_utf8 (ACE_Byte const * source,
                                              size_t length) const
 {
   ACE_Byte a;
-  const ACE_Byte* srcptr = source + length;
+  ACE_Byte const * srcptr = source + length;
 
   switch (length)
     {

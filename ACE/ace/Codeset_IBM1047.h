@@ -55,9 +55,9 @@ public:
                                ACE_CDR::Char) override;
   ACE_CDR::Boolean write_string (ACE_OutputCDR &,
                                  ACE_CDR::ULong,
-                                 const ACE_CDR::Char *) override;
+                                 ACE_CDR::Char const *) override;
   ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
-                                     const ACE_CDR::Char *,
+                                     ACE_CDR::Char const *,
                                      ACE_CDR::ULong) override;
 
   /// Return the native codeset ID as defined in the OSF code and character
@@ -98,9 +98,9 @@ public:
                                ACE_CDR::Char) override;
   ACE_CDR::Boolean write_string (ACE_OutputCDR &,
                                  ACE_CDR::ULong,
-                                 const ACE_CDR::Char *) override;
+                                 ACE_CDR::Char const *) override;
   ACE_CDR::Boolean write_char_array (ACE_OutputCDR &,
-                                     const ACE_CDR::Char *,
+                                     ACE_CDR::Char const *,
                                      ACE_CDR::ULong) override;
 
   /// Return the native codeset ID as defined in the OSF code and character

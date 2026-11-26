@@ -32,7 +32,7 @@ public:
 
   /// Convert the source from UTF-32 to UTF-8 and store it in the
   /// provided target buffer.
-  virtual Result to_utf8 (const void* source,
+  virtual Result to_utf8 (void const * source,
                           size_t source_size,
                           ACE_Byte* target,
                           size_t target_size,
@@ -40,7 +40,7 @@ public:
 
   /// Convert the UTF-8 source into a UTF-32 encoding and store it
   /// in the provided target buffer.
-  virtual Result from_utf8 (const ACE_Byte* source,
+  virtual Result from_utf8 (ACE_Byte const * source,
                             size_t source_size,
                             void* target,
                             size_t target_size,
@@ -49,7 +49,7 @@ public:
   /// This factory helper method determines if the source stream is UTF-32
   /// encoded.  If it is, allocate an ACE_UTF32_Encoding_Converter and
   /// return it.  The caller then owns the allocated object.
-  static ACE_UTF32_Encoding_Converter* encoded (const ACE_Byte* source,
+  static ACE_UTF32_Encoding_Converter* encoded (ACE_Byte const * source,
                                                 size_t source_size);
 };
 

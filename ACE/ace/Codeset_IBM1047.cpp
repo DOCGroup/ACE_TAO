@@ -124,7 +124,7 @@ ACE_IBM1047_ISO8859::read_string (ACE_InputCDR& in,
         {
           x.resize (len);
         }
-      catch (const std::bad_alloc&)
+      catch (std::bad_alloc const &)
         {
           return false;
         }
@@ -174,7 +174,7 @@ ACE_IBM1047_ISO8859::write_char (ACE_OutputCDR& out,
 ACE_CDR::Boolean
 ACE_IBM1047_ISO8859::write_string (ACE_OutputCDR& out,
                                    ACE_CDR::ULong len,
-                                   const ACE_CDR::Char* x)
+                                   ACE_CDR::Char const * x)
 {
   if (out.write_ulong (len + 1))
     {
@@ -185,7 +185,7 @@ ACE_IBM1047_ISO8859::write_string (ACE_OutputCDR& out,
 
 ACE_CDR::Boolean
 ACE_IBM1047_ISO8859::write_char_array (ACE_OutputCDR& out,
-                                       const ACE_CDR::Char* x,
+                                       ACE_CDR::Char const * x,
                                        ACE_CDR::ULong len)
 {
   char *buf {};
@@ -269,7 +269,7 @@ ACE_ISO8859_IBM1047::read_string (ACE_InputCDR& in,
         {
           x.resize (len);
         }
-      catch (const std::bad_alloc&)
+      catch (std::bad_alloc const &)
         {
           return false;
         }
@@ -319,7 +319,7 @@ ACE_ISO8859_IBM1047::write_char (ACE_OutputCDR &out,
 ACE_CDR::Boolean
 ACE_ISO8859_IBM1047::write_string (ACE_OutputCDR& out,
                                    ACE_CDR::ULong len,
-                                   const ACE_CDR::Char* x)
+                                   ACE_CDR::Char const * x)
 {
   if (out.write_ulong (len + 1))
     {
@@ -333,7 +333,7 @@ ACE_ISO8859_IBM1047::write_string (ACE_OutputCDR& out,
 
 ACE_CDR::Boolean
 ACE_ISO8859_IBM1047::write_char_array (ACE_OutputCDR &out,
-                                       const ACE_CDR::Char *x,
+                                       ACE_CDR::Char const *x,
                                        ACE_CDR::ULong len)
 {
   char *buf {};
