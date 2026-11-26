@@ -21,7 +21,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 #if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 ostream &
-operator<< (ostream &os, const CORBA::String_var &sv)
+operator<< (ostream &os, CORBA::String_var const &sv)
 {
   os << sv.in ();
   return os;
@@ -63,7 +63,7 @@ operator>> (istream &is, CORBA::String_out &so)
 // the CORBA::WChars one by one.
 
 ostream &
-operator<< (ostream &os, const CORBA::WString_var &wsv)
+operator<< (ostream &os, CORBA::WString_var const &wsv)
 {
   CORBA::ULong const len =
     static_cast <CORBA::ULong> (ACE_OS::strlen (wsv.in ()));
@@ -105,7 +105,7 @@ ostream &
 operator<< (ostream &os, CORBA::WString_out &wso)
 {
   CORBA::WChar *tmp = wso.ptr ();
-  const size_t len = ACE_OS::strlen (tmp);
+  size_t const len = ACE_OS::strlen (tmp);
 
   for (size_t i {}; i < len; ++i)
     {
@@ -120,7 +120,7 @@ operator>> (istream &is, CORBA::WString_out &wso)
 {
   is.seekg (0, ios::end);
   // @@ is.tellg()/sizeof(CORBA::WChar) instead?
-  const CORBA::ULong len = static_cast<CORBA::ULong> (is.tellg ());
+  CORBA::ULong const len = static_cast<CORBA::ULong> (is.tellg ());
   wso = CORBA::wstring_alloc (len);
   is.seekg (0, ios::beg);
 

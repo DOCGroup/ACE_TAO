@@ -256,7 +256,7 @@ namespace CORBA
 # if !defined (ACE_LACKS_IOSTREAM_TOTALLY)
 
 TAO_Export ostream &
-operator<< (ostream &, const CORBA::String_var &);
+operator<< (ostream &, CORBA::String_var const &);
 TAO_Export istream &
 operator>> (istream &, CORBA::String_var &);
 TAO_Export ostream &
@@ -266,7 +266,7 @@ operator>> (istream &, CORBA::String_out &);
 
 #  ifndef ACE_HAS_CPP20
 TAO_Export ostream &
-operator<< (ostream &, const CORBA::WString_var &);
+operator<< (ostream &, CORBA::WString_var const &);
 TAO_Export istream &
 operator>> (istream &, CORBA::WString_var &);
 TAO_Export ostream &
