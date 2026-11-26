@@ -46,13 +46,11 @@ public:
   /// the file is complete and valid.
   bool open (ACE_TString const &file_name);
 
-  ///////////////////////////////////
-  // Override Topology_Loader methods
-  // see Topology_Loader.h for documentation
+  /// Overrides the Topology_Loader operation.
   void load (Topology_Object *root) override;
 
-  /////////////////////////////////////////
-  // Override ACEXML_DefaultHandler methods
+  /// @name ACEXML_DefaultHandler operations
+  /// @{
 
   void startElement (ACEXML_Char const *namespaceURI,
     ACEXML_Char const *localName,
@@ -62,6 +60,7 @@ public:
   void endElement (ACEXML_Char const *,
     ACEXML_Char const *,
     ACEXML_Char const *name) override;
+  /// @}
 
 private:
   /// The name of the file from which data is read.

@@ -43,9 +43,8 @@ public:
   /// \return true if successful
   bool open (ACE_TString const &file_name, size_t backup_count);
 
-  //////////////////////////////////
-  // Override Topology_Saver methods
-  // see Topology_Saver.h for doc
+  /// @name Topology_Saver operations
+  /// @{
   bool begin_object (CORBA::Long id,
     ACE_CString const &type,
     NVPList const &attrs,
@@ -55,6 +54,7 @@ public:
     ACE_CString const &type) override;
 
   void close () override;
+  /// @}
 
 private:
   void backup_file_name (ACE_TCHAR * file_path, size_t nfile);

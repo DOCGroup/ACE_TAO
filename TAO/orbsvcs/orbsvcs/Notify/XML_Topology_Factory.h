@@ -53,17 +53,17 @@ namespace TAO_Notify
     XML_Topology_Factory &operator= (XML_Topology_Factory const &) = delete;
     XML_Topology_Factory &operator= (XML_Topology_Factory &&) = delete;
 
-    ////////////////////////////////////
-    // Override Topology_Factory methods
-    // documented in Topology_Factory.h
+    /// @name Topology_Factory operations
+    /// @{
     Topology_Saver* create_saver () override;
     Topology_Loader* create_loader() override;
+    /// @}
 
-    ////////////////////////////////
-    // Override Share_Object methods
-    // documented in ace/Shared_Object.h
+    /// @name ACE_Service_Object operations
+    /// @{
     int init (int argc, ACE_TCHAR *argv[]) override;
     int fini () override;
+    /// @}
 
    private:
     ACE_TString save_base_path_ = ACE_TEXT("./Notification_Service_Topology");
