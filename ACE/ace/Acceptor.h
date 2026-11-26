@@ -98,7 +98,7 @@ public:
    *                   @p local_addr.  Generally used to request that the
    *                   OS allow reuse of the listen port.  The default is 1.
    */
-  ACE_Acceptor (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+  ACE_Acceptor (typename PEER_ACCEPTOR::PEER_ADDR const &local_addr,
                 ACE_Reactor *reactor = ACE_Reactor::instance (),
                 int flags = 0,
                 int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
@@ -140,7 +140,7 @@ public:
    * @retval 0  Success
    * @retval -1 Failure, @c errno contains an error code.
    */
-  virtual int open (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+  virtual int open (typename PEER_ACCEPTOR::PEER_ADDR const &local_addr,
                     ACE_Reactor *reactor = ACE_Reactor::instance (),
                     int flags = 0,
                     int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
@@ -299,8 +299,8 @@ public:
   using SCHEDULING_STRATEGY = ACE_Scheduling_Strategy<SVC_HANDLER>;
   /// @}
 
-  ACE_Strategy_Acceptor (const ACE_TCHAR service_name[] = nullptr,
-                         const ACE_TCHAR service_description[] = nullptr,
+  ACE_Strategy_Acceptor (ACE_TCHAR const service_name[] = nullptr,
+                         ACE_TCHAR const service_description[] = nullptr,
                          int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                          int reuse_addr = 1);
 
@@ -310,14 +310,14 @@ public:
    * with the Reactor and listen for connection requests at the
    * designated {local_addr}.
    */
-  ACE_Strategy_Acceptor (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+  ACE_Strategy_Acceptor (typename PEER_ACCEPTOR::PEER_ADDR const &local_addr,
                          ACE_Reactor * = ACE_Reactor::instance (),
                          ACE_Creation_Strategy<SVC_HANDLER> * = nullptr,
                          ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> * = nullptr,
                          ACE_Concurrency_Strategy<SVC_HANDLER> * = nullptr,
                          ACE_Scheduling_Strategy<SVC_HANDLER> * = nullptr,
-                         const ACE_TCHAR service_name[] = nullptr,
-                         const ACE_TCHAR service_description[] = nullptr,
+                         ACE_TCHAR const service_name[] = nullptr,
+                         ACE_TCHAR const service_description[] = nullptr,
                          int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
                          int reuse_addr = 1);
 
@@ -355,7 +355,7 @@ public:
    * @retval 0  Success
    * @retval -1 Failure, @c errno contains an error code.
    */
-  int open (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+  int open (typename PEER_ACCEPTOR::PEER_ADDR const &local_addr,
             ACE_Reactor *reactor,
             int flags = 0,
             int use_select = ACE_DEFAULT_ACCEPTOR_USE_SELECT,
@@ -367,7 +367,7 @@ public:
    * with the Reactor and listen for connection requests at the
    * designated {local_addr}.
    */
-  virtual int open (const typename PEER_ACCEPTOR::PEER_ADDR &,
+  virtual int open (typename PEER_ACCEPTOR::PEER_ADDR const &,
                     ACE_Reactor * = ACE_Reactor::instance (),
                     ACE_Creation_Strategy<SVC_HANDLER> * = nullptr,
                     ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> * =nullptr,
@@ -562,7 +562,7 @@ public:
    * this point -- the @a reactor parameter is saved in case it's
    * needed later.
    */
-  ACE_Oneshot_Acceptor (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+  ACE_Oneshot_Acceptor (typename PEER_ACCEPTOR::PEER_ADDR const &local_addr,
                         ACE_Reactor *reactor = ACE_Reactor::instance (),
                         ACE_Concurrency_Strategy<SVC_HANDLER> * = nullptr);
 
@@ -574,7 +574,7 @@ public:
    * this point -- the @a reactor parameter is saved in case it's
    * needed later.
    */
-  int open (const typename PEER_ACCEPTOR::PEER_ADDR &,
+  int open (typename PEER_ACCEPTOR::PEER_ADDR const &,
             ACE_Reactor *reactor = ACE_Reactor::instance (),
             ACE_Concurrency_Strategy<SVC_HANDLER> * = nullptr);
 

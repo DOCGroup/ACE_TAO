@@ -61,7 +61,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle () const
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
-  (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+  (typename PEER_ACCEPTOR::PEER_ADDR const &local_addr,
    ACE_Reactor *reactor,
    int flags,
    int use_select,
@@ -124,7 +124,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Acceptor (ACE_Reactor *reactor,
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Acceptor
-  (const typename PEER_ACCEPTOR::PEER_ADDR &addr,
+  (typename PEER_ACCEPTOR::PEER_ADDR const &addr,
    ACE_Reactor *reactor,
    int flags,
    int use_select,
@@ -192,7 +192,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::info (ACE_TCHAR **strp,
   // That makes the possible total length of the combined string (given the
   // size of the literal string constants) 3 + 12 + BUFSIZE + 19 + 1.
   //
-  const size_t additional = 35;
+  size_t const additional = 35;
   ACE_TCHAR buf[BUFSIZ + additional];
   ACE_OS::snprintf (buf, sizeof buf,
                     ACE_TEXT ("%s\t %s %s"),
@@ -456,7 +456,7 @@ ACE_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::handle_input (ACE_HANDLE listener)
                           ACE_TEXT ("%p\n"),
                           ACE_TEXT ("accept_svc_handler")));
             }
-          const int ret = this->handle_accept_error ();
+          int const ret = this->handle_accept_error ();
           if (ret == -1)
             {
               // Ensure that the errno from the above call propegates.
@@ -577,7 +577,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::get_handle () const
 // designated <local_addr>.
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
-  (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+  (typename PEER_ACCEPTOR::PEER_ADDR const &local_addr,
    ACE_Reactor *reactor,
    int /* flags unused */,
    int use_select,
@@ -590,7 +590,7 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
-  (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+  (typename PEER_ACCEPTOR::PEER_ADDR const &local_addr,
    ACE_Reactor *reactor,
    ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
    ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> *acc_s,
@@ -695,8 +695,8 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor
-  (const ACE_TCHAR service_name[],
-   const ACE_TCHAR service_description[],
+  (ACE_TCHAR const service_name[],
+   ACE_TCHAR const service_description[],
    int use_select,
    int reuse_addr)
 {
@@ -718,14 +718,14 @@ ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 ACE_Strategy_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Strategy_Acceptor
-  (const typename PEER_ACCEPTOR::PEER_ADDR &addr,
+  (typename PEER_ACCEPTOR::PEER_ADDR const &addr,
    ACE_Reactor *reactor,
    ACE_Creation_Strategy<SVC_HANDLER> *cre_s,
    ACE_Accept_Strategy<SVC_HANDLER, PEER_ACCEPTOR> *acc_s,
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s,
    ACE_Scheduling_Strategy<SVC_HANDLER> *sch_s,
-   const ACE_TCHAR service_name[],
-   const ACE_TCHAR service_description[],
+   ACE_TCHAR const service_name[],
+   ACE_TCHAR const service_description[],
    int use_select,
    int reuse_addr)
 {
@@ -942,7 +942,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::dump () const
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR> int
 ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::open
-  (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+  (typename PEER_ACCEPTOR::PEER_ADDR const &local_addr,
    ACE_Reactor *reactor,
    ACE_Concurrency_Strategy<SVC_HANDLER> *con_s)
 {
@@ -973,7 +973,7 @@ ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor ()
 
 template <typename SVC_HANDLER, typename PEER_ACCEPTOR>
 ACE_Oneshot_Acceptor<SVC_HANDLER, PEER_ACCEPTOR>::ACE_Oneshot_Acceptor
-  (const typename PEER_ACCEPTOR::PEER_ADDR &local_addr,
+  (typename PEER_ACCEPTOR::PEER_ADDR const &local_addr,
    ACE_Reactor *reactor,
    ACE_Concurrency_Strategy<SVC_HANDLER> *cs)
 {

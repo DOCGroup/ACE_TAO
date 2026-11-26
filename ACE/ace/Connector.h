@@ -202,9 +202,9 @@ public:
    * automatically to prevent resource leaks.
    */
   virtual int connect (SVC_HANDLER *&svc_handler,
-                       const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                       typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
                        ACE_Synch_Options const &synch_options = ACE_Synch_Options::defaults,
-                       const typename PEER_CONNECTOR::PEER_ADDR &local_addr
+                       typename PEER_CONNECTOR::PEER_ADDR const &local_addr
                          = reinterpret_cast<peer_addr_type const &>(peer_addr_type::sap_any),
                        int reuse_addr = 0,
                        int flags = O_RDWR,
@@ -222,9 +222,9 @@ public:
    */
   virtual int connect (SVC_HANDLER *&svc_handler_hint,
                        SVC_HANDLER *&svc_handler,
-                       const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                       typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
                        ACE_Synch_Options const &synch_options = ACE_Synch_Options::defaults,
-                       const typename PEER_CONNECTOR::PEER_ADDR &local_addr
+                       typename PEER_CONNECTOR::PEER_ADDR const &local_addr
                          = reinterpret_cast<peer_addr_type const &>(peer_addr_type::sap_any),
                        int reuse_addr = 0,
                        int flags = O_RDWR,
@@ -313,17 +313,17 @@ protected:
    * @c PEER_CONNECTOR::connect.
    */
   virtual int connect_svc_handler (SVC_HANDLER *&svc_handler,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                                   typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
                                    ACE_Time_Value *timeout,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+                                   typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
                                    int reuse_addr,
                                    int flags,
                                    int perms);
   virtual int connect_svc_handler (SVC_HANDLER *&svc_handler,
                                    SVC_HANDLER *&sh_copy,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                                   typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
                                    ACE_Time_Value *timeout,
-                                   const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+                                   typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
                                    int reuse_addr,
                                    int flags,
                                    int perms);
@@ -348,9 +348,9 @@ protected:
   /// Implementation of the connect methods.
   virtual int connect_i (SVC_HANDLER *&svc_handler,
                          SVC_HANDLER **sh_copy,
-                         const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                         typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
                          ACE_Synch_Options const &synch_options,
-                         const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+                         typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
                          int reuse_addr,
                          int flags,
                          int perms);
@@ -502,9 +502,9 @@ protected:
    * @c PEER_CONNECTOR::connect in the @c Connect_Strategy.
    */
   int connect_svc_handler (SVC_HANDLER *&sh,
-                           const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                           typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
                            ACE_Time_Value *timeout,
-                           const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+                           typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
                            int reuse_addr,
                            int flags,
                            int perms) override;
@@ -521,9 +521,9 @@ protected:
    */
   int connect_svc_handler (SVC_HANDLER *&sh,
                            SVC_HANDLER *&sh_copy,
-                           const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+                           typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
                            ACE_Time_Value *timeout,
-                           const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+                           typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
                            int reuse_addr,
                            int flags,
                            int perms) override;

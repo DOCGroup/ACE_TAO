@@ -306,9 +306,9 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connector () const
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
 ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_svc_handler
 (SVC_HANDLER *&svc_handler,
- const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
  ACE_Time_Value *timeout,
- const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
  int reuse_addr,
  int flags,
  int perms)
@@ -328,9 +328,9 @@ template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
 ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_svc_handler
 (SVC_HANDLER *&svc_handler,
  SVC_HANDLER *&sh_copy,
- const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
  ACE_Time_Value *timeout,
- const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
  int reuse_addr,
  int flags,
  int perms)
@@ -366,9 +366,9 @@ ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::ACE_Connector (ACE_Reactor *r, int f
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
 ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect
 (SVC_HANDLER *&sh,
- const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
  ACE_Synch_Options const &synch_options,
- const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
  int reuse_addr,
  int flags,
  int perms)
@@ -388,9 +388,9 @@ template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
 ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect
 (SVC_HANDLER *&sh,
  SVC_HANDLER *&sh_copy,
- const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
  ACE_Synch_Options const &synch_options,
- const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
  int reuse_addr,
  int flags,
  int perms)
@@ -410,9 +410,9 @@ template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
 ACE_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_i
 (SVC_HANDLER *&sh,
  SVC_HANDLER **sh_copy,
- const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
  ACE_Synch_Options const &synch_options,
- const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
  int reuse_addr,
  int flags,
  int perms)
@@ -1015,9 +1015,9 @@ ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::make_svc_handler (SVC_HANDL
 template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
 ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_svc_handler
 (SVC_HANDLER *&sh,
- const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
  ACE_Time_Value *timeout,
- const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
  int reuse_addr,
  int flags,
  int perms)
@@ -1035,9 +1035,9 @@ template <typename SVC_HANDLER, typename PEER_CONNECTOR> int
 ACE_Strategy_Connector<SVC_HANDLER, PEER_CONNECTOR>::connect_svc_handler
 (SVC_HANDLER *&sh,
  SVC_HANDLER *&sh_copy,
- const typename PEER_CONNECTOR::PEER_ADDR &remote_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &remote_addr,
  ACE_Time_Value *timeout,
- const typename PEER_CONNECTOR::PEER_ADDR &local_addr,
+ typename PEER_CONNECTOR::PEER_ADDR const &local_addr,
  int reuse_addr,
  int flags,
  int perms)
