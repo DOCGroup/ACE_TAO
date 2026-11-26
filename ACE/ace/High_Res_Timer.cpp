@@ -248,10 +248,10 @@ ACE_High_Res_Timer::ACE_High_Res_Timer ()
 }
 
 ACE_UINT32
-ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
-                               const u_int iterations)
+ACE_High_Res_Timer::calibrate (ACE_UINT32 const usec,
+                               u_int const iterations)
 {
-  const ACE_Time_Value sleep_time (0, usec);
+  ACE_Time_Value const sleep_time (0, usec);
   ACE_Stats delta_hrtime;
   // In units of 100 usec, to avoid overflow.
   ACE_Stats actual_sleeps;
@@ -281,7 +281,7 @@ ACE_High_Res_Timer::calibrate (const ACE_UINT32 usec,
   actual_sleeps.mean (actual_sleep);
 
   // The addition of 5 below rounds instead of truncates.
-  const ACE_UINT32 scale_factor =
+  ACE_UINT32 const scale_factor =
     (ticks.whole () / actual_sleep.whole () + 5) /
     10u /* usec/100 usec */;
   ACE_High_Res_Timer::global_scale_factor (scale_factor);
@@ -405,7 +405,7 @@ ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
 
 void
 ACE_High_Res_Timer::print_ave (ACE_TCHAR const *str,
-                               const int count,
+                               int const count,
                                ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_ave");
@@ -449,7 +449,7 @@ ACE_High_Res_Timer::print_ave (ACE_TCHAR const *str,
 
 void
 ACE_High_Res_Timer::print_total (ACE_TCHAR const *str,
-                                 const int count,
+                                 int const count,
                                  ACE_HANDLE handle) const
 {
   ACE_TRACE ("ACE_High_Res_Timer::print_total");

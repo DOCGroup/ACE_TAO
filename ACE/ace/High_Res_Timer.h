@@ -139,8 +139,8 @@ public:
    * first ACE_High_Res_Timer instance.
    * Beware for platforms that can change the cycle rate on the fly.
    */
-  static ACE_UINT32 calibrate (const ACE_UINT32 usec = 500000,
-                               const u_int iterations = 10);
+  static ACE_UINT32 calibrate (ACE_UINT32 const usec = 500000,
+                               u_int const iterations = 10);
 
   /// Initialize the timer.
   ACE_High_Res_Timer ();
@@ -195,12 +195,12 @@ public:
   /// Print total time.
   /// @note only use @c print_total if incremental timings had been used!
   void print_total (ACE_TCHAR const *message,
-                    const int iterations = 1,
+                    int const iterations = 1,
                     ACE_HANDLE handle = ACE_STDOUT) const;
 
   /// Print average time.
   void print_ave (ACE_TCHAR const *message,
-                  const int iterations = 1,
+                  int const iterations = 1,
                   ACE_HANDLE handle = ACE_STDOUT) const;
 
   /// Dump the state of an object.

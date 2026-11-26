@@ -462,7 +462,7 @@ ACE_INET_Addr::set (u_short port_number,
   hints.ai_socktype = SOCK_STREAM;
 
   addrinfo *res {};
-  const int error = ACE_OS::getaddrinfo (host_name, nullptr, &hints, &res);
+  int const error = ACE_OS::getaddrinfo (host_name, nullptr, &hints, &res);
 
   if (error)
     {
@@ -966,7 +966,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
 #endif
     sizeof (sockaddr_in);
 
-  const int res = ACE_OS::getnameinfo (static_cast<sockaddr const *> (this->get_addr ()),
+  int const res = ACE_OS::getnameinfo (static_cast<sockaddr const *> (this->get_addr ()),
                                        addr_size, hostname,
                                        static_cast<ACE_SOCKET_LEN> (len),
                                        nullptr, 0, 0);

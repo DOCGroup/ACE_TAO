@@ -1155,7 +1155,7 @@ ACE_POSIX_Asynch_Accept::handle_input (ACE_HANDLE /* fd */)
   // @@ We shouldnt block here since we have already done poll/select
   // thru reactor. But are we sure?
 
-  const ACE_HANDLE new_handle = ACE_OS::accept (this->handle_, nullptr, nullptr);
+  ACE_HANDLE const new_handle = ACE_OS::accept (this->handle_, nullptr, nullptr);
 
   if (result == nullptr) // there is nobody to notify
     {
@@ -1337,7 +1337,7 @@ ACE_POSIX_Asynch_Connect::connect (ACE_HANDLE connect_handle,
   void (*result_deleter) (ACE_POSIX_Asynch_Connect_Result *) =
     [] (ACE_POSIX_Asynch_Connect_Result *result)
     {
-      const ACE_HANDLE handle = result->connect_handle ();
+      ACE_HANDLE const handle = result->connect_handle ();
       if (handle != ACE_INVALID_HANDLE)
         {
           ACE_OS::closesocket (handle);
@@ -1431,7 +1431,7 @@ int ACE_POSIX_Asynch_Connect::post_result (ACE_POSIX_Asynch_Connect_Result * res
                   ACE_TEXT(" <post_completion> failed")));
     }
 
-  const ACE_HANDLE handle = result->connect_handle ();
+  ACE_HANDLE const handle = result->connect_handle ();
 
   if (handle != ACE_INVALID_HANDLE)
     {
@@ -1576,7 +1576,7 @@ ACE_POSIX_Asynch_Connect::cancel_uncompleted (bool flg_notify,
 
   for (; iter.next (me) != 0;  ++retval, iter.advance ())
     {
-       const ACE_HANDLE handle = me->ext_id_;
+       ACE_HANDLE const handle = me->ext_id_;
        ACE_POSIX_Asynch_Connect_Result* result = me->int_id_ ;
 
        set.set_bit (handle);
