@@ -48,10 +48,10 @@ class ASNMP_Export Oid : public  SnmpSyntax
 public:
   Oid (char const * dotted_oid_string = "", size_t size = unsigned(-1));
 
-  Oid ( const Oid &oid);
+  Oid ( Oid const &oid);
   Oid (Oid &&oid) noexcept;
 
-  Oid(const unsigned long *raw_oid, size_t oid_len);
+  Oid(unsigned long const *raw_oid, size_t oid_len);
 
   ~Oid();
 
@@ -59,38 +59,38 @@ public:
   SmiUINT32 get_syntax() override;
 
   /// assignment to another oid object overloaded
-  Oid& operator=( const Oid &oid);
+  Oid& operator=( Oid const &oid);
   Oid &operator= (Oid &&oid) noexcept;
 
   /// assignment from a dotted string
   Oid& operator= (char const *dotted_oid_string);
 
   /// equal operator overloaded
-  friend ASNMP_Export bool operator==( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator==( Oid const &lhs,Oid const &rhs);
 
   /// not equal operator overloaded
-  friend ASNMP_Export bool operator!=( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator!=( Oid const &lhs,Oid const &rhs);
 
   /// less than < overloaded
-  friend ASNMP_Export bool operator<( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator<( Oid const &lhs,Oid const &rhs);
 
   /// less than <= overloaded
-  friend ASNMP_Export bool operator<=( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator<=( Oid const &lhs,Oid const &rhs);
 
   /// greater than > overloaded
-  friend ASNMP_Export bool operator>( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator>( Oid const &lhs,Oid const &rhs);
 
   /// greater than >= overloaded
-  friend ASNMP_Export bool operator>=( const Oid &lhs,const Oid &rhs);
+  friend ASNMP_Export bool operator>=( Oid const &lhs,Oid const &rhs);
 
   /// append operator, appends a string
-  Oid& operator+=( const char *a);
+  Oid& operator+=( char const *a);
 
   /// appends an int
   Oid& operator+=( const unsigned long i);
 
   /// appends an Oid
-  Oid& operator+=( const Oid &o);
+  Oid& operator+=( Oid const &o);
 
   /// allows element access
   unsigned long & operator[]( size_t position);
@@ -99,10 +99,10 @@ public:
   SmiLPOID oidval();
 
   /// reset the data from raw 1 byte format
-  void set_data( const char *dotted_oid_string);
+  void set_data( char const *dotted_oid_string);
 
   /// reset the data from raw 4byte integer format
-  void set_data( const unsigned long *raw_oid, const size_t oid_len);
+  void set_data( unsigned long const *raw_oid, const size_t oid_len);
 
   /// return the len of the oid
   size_t length() const;
@@ -119,7 +119,7 @@ public:
    * returns -1, <
    * returns 1 , >
    */
-  int left_comparison( const unsigned long n, const Oid &o) const;
+  int left_comparison( const unsigned long n, Oid const &o) const;
 
   /**
    * compare the n rightmost bytes (right-to-left)
@@ -127,14 +127,14 @@ public:
    * returns -1, <
    * returns 1 , >
    */
-  int right_comparison( const unsigned long n, const Oid &o) const;
+  int right_comparison( const unsigned long n, Oid const &o) const;
 
   /// is the Oid object valid
   int valid() const override;
 
   /// return dotted string value from the right
   /// where the user specifies how many positions to print
-  const char *to_string() override;
+  char const *to_string() override;
 
   /// create a new instance of this Value
   SnmpSyntax *clone() const override;
@@ -147,7 +147,7 @@ protected:
   std::unique_ptr<char[]> iv_str {};
 
   /// convert a string to an smi oid
-  int StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many_bytes);
+  int StrToOid( char const *string, SmiLPOID dstOid, size_t& how_many_bytes);
 
   /// clone an smi oid
   int OidCopy(  SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes);
@@ -162,7 +162,7 @@ protected:
     /// initialize object data members
     void set_null();
     void init_value( const SmiLPOID srcOid, size_t len);
-    void init_value(const unsigned long *raw_oid, size_t oid_len);
+    void init_value(unsigned long const *raw_oid, size_t oid_len);
 };
 
 #endif //OID_CLS_

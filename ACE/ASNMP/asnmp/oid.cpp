@@ -48,7 +48,7 @@ SmiUINT32 Oid::get_syntax()
 }
 
 /// Construct an OID from its dotted string representation.
-Oid::Oid( const char * dotted_oid_string, size_t size)
+Oid::Oid( char const * dotted_oid_string, size_t size)
 {
   // can't init enum SmiValue so just memset it clean
   set_null();
@@ -92,7 +92,7 @@ Oid::Oid( const char * dotted_oid_string, size_t size)
 }
 
 /// Copy an OID.
-Oid::Oid ( const Oid &oid)
+Oid::Oid ( Oid const &oid)
   : SnmpSyntax (oid)
 {
   set_null();
@@ -117,7 +117,7 @@ Oid::Oid (Oid &&oid) noexcept
 }
 
 /// Construct an OID from raw integer values.
-Oid::Oid(const unsigned long *raw_oid, size_t oid_len)
+Oid::Oid(unsigned long const *raw_oid, size_t oid_len)
 {
   set_null();
 
@@ -140,7 +140,7 @@ Oid::~Oid()
   set_invalid ();
 }
 
-void Oid::set_data( const char *dotted_oid_string)
+void Oid::set_data( char const *dotted_oid_string)
 {
   // delete the old value
   if ( smival.value.oid.ptr ) {
@@ -157,7 +157,7 @@ void Oid::set_data( const char *dotted_oid_string)
 
 /// Assign from another OID.
 // TODO: measure perf vs memory of no realloc in case where len >= oid.len
-Oid& Oid::operator=( const Oid &oid)
+Oid& Oid::operator=( Oid const &oid)
 {
   // protect against assignment from self
   if (this == std::addressof (oid))
@@ -205,7 +205,7 @@ void Oid::init_value(const SmiLPOID srcOid, size_t len)
   OidCopy (srcOid, std::addressof (smival.value.oid), byte_counter);
 }
 
-void Oid::init_value(const unsigned long *raw_oid, size_t oid_len)
+void Oid::init_value(unsigned long const *raw_oid, size_t oid_len)
 {
   if (smival.value.oid.ptr)
   {
@@ -218,7 +218,7 @@ void Oid::init_value(const unsigned long *raw_oid, size_t oid_len)
 }
 
 /// Append a dotted string to this OID.
-Oid& Oid::operator+=( const char *a)
+Oid& Oid::operator+=( char const *a)
 {
   if (!a)
   {
@@ -269,7 +269,7 @@ Oid& Oid::operator+=( const char *a)
 }
 
 /// Compare two OIDs for equality.
-bool operator==( const Oid &lhs, const Oid &rhs)
+bool operator==( Oid const &lhs, Oid const &rhs)
 {
   // ensure same len, then use left_comparison
   if (rhs.length() != lhs.length())
@@ -287,13 +287,13 @@ bool operator==( const Oid &lhs, const Oid &rhs)
 }
 
 /// Compare two OIDs for inequality.
-bool operator!=( const Oid &lhs,const Oid &rhs)
+bool operator!=( Oid const &lhs,Oid const &rhs)
 {
   return (!(lhs == rhs));
 }
 
 /// Compare two OIDs for ordering.
-bool operator<( const Oid &lhs,const Oid &rhs)
+bool operator<( Oid const &lhs,Oid const &rhs)
 {
   int result;
 
@@ -322,7 +322,7 @@ bool operator<( const Oid &lhs,const Oid &rhs)
 }
 
 /// Compare two OIDs for less-than-or-equal ordering.
-bool operator<=( const Oid &x,const Oid &y)
+bool operator<=( Oid const &x,Oid const &y)
 {
   if ( (x < y) || (x == y) )
     {
@@ -335,7 +335,7 @@ bool operator<=( const Oid &x,const Oid &y)
 }
 
 /// Compare two OIDs for greater-than ordering.
-bool operator>( const Oid &x,const Oid &y)
+bool operator>( Oid const &x,Oid const &y)
 {
   // just invert existing <=
   if (!(x<=y))
@@ -349,7 +349,7 @@ bool operator>( const Oid &x,const Oid &y)
 }
 
 /// Compare two OIDs for greater-than-or-equal ordering.
-bool operator>=( const Oid &x,const Oid &y)
+bool operator>=( Oid const &x,Oid const &y)
 {
   // just invert existing <
   if (!(x<y))
@@ -369,7 +369,7 @@ SmiLPOID Oid::oidval()
 }
 
 /// Set this OID from raw integer values.
-void Oid::set_data( const unsigned long *raw_oid, const size_t oid_len)
+void Oid::set_data( unsigned long const *raw_oid, const size_t oid_len)
 {
   if (smival.value.oid.len < oid_len) {
     if ( smival.value.oid.ptr) {
@@ -461,7 +461,7 @@ Oid& Oid::operator+=( const unsigned long i)
 }
 
 /// Append another OID's sub-identifiers.
-Oid& Oid::operator+=( const Oid &o)
+Oid& Oid::operator+=( Oid const &o)
 {
   if (o.smival.value.oid.len == 0)
   {
@@ -491,7 +491,7 @@ Oid& Oid::operator+=( const Oid &o)
 }
 
 /// Return this OID's dotted string representation.
-const char * Oid::to_string()
+char const * Oid::to_string()
 {
   unsigned long n;
   if (!valid())
@@ -564,7 +564,7 @@ int Oid::suboid(Oid& new_oid, size_t start, size_t how_many)
 }
 
 /// Convert a dotted string to an OID value.
-int Oid::StrToOid( const char *string, SmiLPOID dstOid, size_t& how_many)
+int Oid::StrToOid( char const *string, SmiLPOID dstOid, size_t& how_many)
 {
   size_t index = 0;
 
@@ -645,7 +645,7 @@ int Oid::OidCopy( SmiLPOID srcOid, SmiLPOID dstOid, size_t& how_many_bytes)
 
 /// Compare the requested number of leftmost sub-identifiers.
 /// Returns 0 when equal, -1 when this OID is less, and 1 when greater.
-int Oid::left_comparison( const unsigned long n, const Oid &o) const
+int Oid::left_comparison( const unsigned long n, Oid const &o) const
 {
   unsigned long z;
   unsigned long len = n;
@@ -702,7 +702,7 @@ int Oid::left_comparison( const unsigned long n, const Oid &o) const
 
 /// Compare the requested number of rightmost sub-identifiers.
 /// Returns 0 when equal, -1 when this OID is less, and 1 when greater.
-int Oid::right_comparison( const unsigned long n, const Oid &o) const
+int Oid::right_comparison( const unsigned long n, Oid const &o) const
 {
    // oid to compare must have at least the same number
    // of sub-ids to comparison else the argument Oid is
