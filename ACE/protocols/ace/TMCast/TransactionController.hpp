@@ -1,5 +1,8 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
+#ifndef TMCAST_TRANSACTION_CONTROLLER_HPP
+#define TMCAST_TRANSACTION_CONTROLLER_HPP
+
 #include "ace/OS_NS_stdlib.h"
 #include "ace/Synch.h"
 #include "ace/Bound_Ptr.h"
@@ -389,3 +392,5 @@ namespace ACE_TMCast
     RecvPtr recv_;
   };
 }
+
+#endif // TMCAST_TRANSACTION_CONTROLLER_HPP

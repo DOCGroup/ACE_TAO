@@ -1,5 +1,8 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
+#ifndef TMCAST_LINK_LISTENER_HPP
+#define TMCAST_LINK_LISTENER_HPP
+
 // OS primitives
 #include <ace/OS_NS_stdlib.h>
 #include <ace/Synch.h>
@@ -174,3 +177,5 @@ namespace ACE_TMCast
     MessageQueue  control_;
   };
 }
+
+#endif // TMCAST_LINK_LISTENER_HPP

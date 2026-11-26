@@ -1,5 +1,8 @@
 // author    : Boris Kolpackov <boris@dre.vanderbilt.edu>
 
+#ifndef TMCAST_FAULT_DETECTOR_HPP
+#define TMCAST_FAULT_DETECTOR_HPP
+
 #include "Protocol.hpp"
 
 namespace ACE_TMCast
@@ -41,3 +44,5 @@ namespace ACE_TMCast
     short silence_period_ {-1};
   };
 }
+
+#endif // TMCAST_FAULT_DETECTOR_HPP
