@@ -35,7 +35,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const ACE_INET_Addr &addr,
   this->set (addr, use_dotted_decimal_addresses);
 }
 
-TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
+TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (char const *host,
                                           CORBA::UShort port,
                                           const ACE_INET_Addr &addr,
                                           CORBA::Short priority)
@@ -57,7 +57,7 @@ TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint ()
 {
 }
 
-TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (const char *host,
+TAO_SHMIOP_Endpoint::TAO_SHMIOP_Endpoint (char const *host,
                                           CORBA::UShort port,
                                           CORBA::Short priority)
   : TAO_Endpoint (TAO_TAG_SHMEM_PROFILE)
@@ -138,8 +138,8 @@ TAO_SHMIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   return 0;
 }
 
-const char *
-TAO_SHMIOP_Endpoint::host (const char *h)
+char const *
+TAO_SHMIOP_Endpoint::host (char const *h)
 {
   this->host_ = h;
 

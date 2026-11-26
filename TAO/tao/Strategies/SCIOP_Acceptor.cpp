@@ -215,8 +215,8 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          ACE_Reactor *reactor,
                          int,
                          int,
-                         const char *address,
-                         const char *options)
+                         char const *address,
+                         char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -244,7 +244,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
 
   ACE_Multihomed_INET_Addr addr;
 
-  const char *port_separator_loc = std::strchr (address, ':');
+  char const *port_separator_loc = std::strchr (address, ':');
   std::unique_ptr<char[]> tmp_host_auto;
 
   if (port_separator_loc == address)
@@ -290,7 +290,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
   if (port_separator_loc != nullptr) {
     // Port separator was found.  Check that the next character is
     // not the terminator.
-    const char *port_loc = port_separator_loc;
+    char const *port_loc = port_separator_loc;
     ++port_loc;
   if (port_loc == nullptr) {
       TAOLIB_ERROR_RETURN ((LM_ERROR,
@@ -349,7 +349,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     // Obtain a char* for the primary hostname.
     ACE_CString & primary_hostname_obj = hostnames[0];
     std::unique_ptr<char[]> primary_hostname_auto(primary_hostname_obj.rep());
-    const char* primary_hostname = primary_hostname_auto.get();
+    char const *primary_hostname = primary_hostname_auto.get();
 
     // Convert the primary hostname to ACE_UINT32
     ACE_INET_Addr temp_addr;
@@ -379,7 +379,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
     // Obtain a char* for a single secondary hostname.
     ACE_CString & hostname_obj = hostnames[i + 1];
     std::unique_ptr<char[]> hostname_auto(hostname_obj.rep());
-    const char* hostname = hostname_auto.get();
+    char const *hostname = hostname_auto.get();
 
     // Obtain the ip address for this secondary hostname.
     if (temp_addr.set((u_short) 0, hostname) != 0)
@@ -455,7 +455,7 @@ TAO_SCIOP_Acceptor::open (TAO_ORB_Core *orb_core,
       // Obtain a char* for the hostname.
       ACE_CString & hostname_obj = hostnames[i];
       std::unique_ptr<char[]> hostname_auto(hostname_obj.rep());
-      const char* hostname = hostname_auto.get();
+      char const *hostname = hostname_auto.get();
 
       if (this->hostname (orb_core,
                           this->addrs_[i],
@@ -479,7 +479,7 @@ TAO_SCIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  ACE_Reactor *reactor,
                                  int,
                                  int,
-                                 const char *options)
+                                 char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -664,7 +664,7 @@ int
 TAO_SCIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
                              ACE_INET_Addr &addr,
                              char *&host,
-                             const char *specified_hostname)
+                             char const *specified_hostname)
 {
   if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
     {
@@ -871,7 +871,7 @@ TAO_SCIOP_Acceptor::probe_interfaces (TAO_ORB_Core *orb_core)
 }
 
 int
-TAO_SCIOP_Acceptor::parse_multiple_hostnames (const char *hostnames,
+TAO_SCIOP_Acceptor::parse_multiple_hostnames (char const *hostnames,
                                               ACE_Array<ACE_CString> &hostnames_out)
 {
   size_t const hostnames_length = std::strlen (hostnames);
@@ -986,7 +986,7 @@ TAO_SCIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 }
 
 int
-TAO_SCIOP_Acceptor::parse_options (const char *str)
+TAO_SCIOP_Acceptor::parse_options (char const *str)
 {
   if (str == nullptr)
     {

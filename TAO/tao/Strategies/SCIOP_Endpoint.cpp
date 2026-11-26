@@ -31,7 +31,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const ACE_INET_Addr &addr,
   this->set (addr, use_dotted_decimal_addresses);
 }
 
-TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
+TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (char const *host,
                                         CORBA::UShort port,
                                         const ACE_INET_Addr &addr,
                                         CORBA::Short priority)
@@ -52,7 +52,7 @@ TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint ()
 {
 }
 
-TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (const char *host,
+TAO_SCIOP_Endpoint::TAO_SCIOP_Endpoint (char const *host,
                                         CORBA::UShort port,
                                         CORBA::Short priority)
   : TAO_Endpoint (TAO_TAG_SCIOP_PROFILE)
@@ -133,8 +133,8 @@ TAO_SCIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   return 0;
 }
 
-const char *
-TAO_SCIOP_Endpoint::host (const char *h)
+char const *
+TAO_SCIOP_Endpoint::host (char const *h)
 {
   this->host_ = h;
 
@@ -348,7 +348,7 @@ TAO_SCIOP_Endpoint::preferred_interfaces (TAO_ORB_Core *oc)
           return count;
         }
 
-      latest->next_->preferred_path_.host = (const char *) 0;
+      latest->next_->preferred_path_.host = (char const *) 0;
       ++count;
     }
 
@@ -361,7 +361,7 @@ TAO_SCIOP_Endpoint::is_preferred_network () const
   return (this->preferred_path_.host.in () != nullptr);
 }
 
-const char *
+char const *
 TAO_SCIOP_Endpoint::preferred_network () const
 {
   return this->preferred_path_.host.in ();

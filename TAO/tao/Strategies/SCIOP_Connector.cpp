@@ -372,7 +372,7 @@ TAO_SCIOP_Connector::make_profile ()
 }
 
 int
-TAO_SCIOP_Connector::check_prefix (const char *endpoint)
+TAO_SCIOP_Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
@@ -380,7 +380,7 @@ TAO_SCIOP_Connector::check_prefix (const char *endpoint)
       return -1;  // Failure
     }
 
-  const char *protocol[] = { "sciop", "scioploc" };
+  char const *protocol[] = { "sciop", "scioploc" };
 
   size_t const slot = std::strchr (endpoint, ':') - endpoint;
   size_t const len0 = std::strlen (protocol[0]);

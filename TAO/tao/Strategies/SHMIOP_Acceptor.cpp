@@ -174,8 +174,8 @@ TAO_SHMIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                            ACE_Reactor *reactor,
                            int major,
                            int minor,
-                           const char *port,
-                           const char *options)
+                           char const *port,
+                           char const *options)
 {
   if (major >=0 && minor >= 0)
     {
@@ -206,7 +206,7 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                    ACE_Reactor *reactor,
                                    int major,
                                    int minor,
-                                   const char *options)
+                                   char const *options)
 {
   if (major >=0 && minor >= 0)
     {
@@ -229,7 +229,7 @@ TAO_SHMIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_SHMIOP_Acceptor::set_mmap_options (const ACE_TCHAR *prefix, ACE_OFF_T size)
+TAO_SHMIOP_Acceptor::set_mmap_options (ACE_TCHAR const *prefix, ACE_OFF_T size)
 {
   this->mmap_file_prefix_ = prefix;
   this->mmap_size_ = size;
@@ -303,7 +303,7 @@ TAO_SHMIOP_Acceptor::open_i (TAO_ORB_Core* orb_core, ACE_Reactor *reactor)
       // Get the ip address, we get the remote addr to put in the IOR, don't
       // calls get_host_addr() directly on address_, we then get the internal
       // address back
-      const char *tmp = this->address_.get_remote_addr().get_host_addr ();
+      char const *tmp = this->address_.get_remote_addr().get_host_addr ();
 
       if (tmp == nullptr)
         {
@@ -428,7 +428,7 @@ TAO_SHMIOP_Acceptor::endpoint_count ()
 }
 
 int
-TAO_SHMIOP_Acceptor::parse_options (const char *str)
+TAO_SHMIOP_Acceptor::parse_options (char const *str)
 {
   if (str == nullptr)
   {

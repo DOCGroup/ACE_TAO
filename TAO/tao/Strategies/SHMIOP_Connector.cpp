@@ -319,7 +319,7 @@ TAO_SHMIOP_Connector::make_profile ()
 }
 
 int
-TAO_SHMIOP_Connector::check_prefix (const char *endpoint)
+TAO_SHMIOP_Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
@@ -327,7 +327,7 @@ TAO_SHMIOP_Connector::check_prefix (const char *endpoint)
     return -1;  // Failure
   }
 
-  const char *protocol[] = { "shmiop", "shmioploc" };
+  char const *protocol[] = { "shmiop", "shmioploc" };
 
   size_t const slot = std::strchr (endpoint, ':') - endpoint;
 

@@ -23,7 +23,7 @@ TAO_SCIOP_Protocol_Factory::match_prefix (std::string const &prefix)
   return (ACE_OS::strcasecmp (prefix.c_str (), ::prefix_) == 0);
 }
 
-const char *
+char const *
 TAO_SCIOP_Protocol_Factory::prefix () const
 {
   return ::prefix_;

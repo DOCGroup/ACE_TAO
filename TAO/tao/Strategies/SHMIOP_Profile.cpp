@@ -39,7 +39,7 @@ TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const ACE_MEM_Addr &addr,
 {
 }
 
-TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (const char* host,
+TAO_SHMIOP_Profile::TAO_SHMIOP_Profile (char const *host,
                                         CORBA::UShort port,
                                         const TAO::ObjectKey &object_key,
                                         const ACE_INET_Addr &addr,
@@ -120,7 +120,7 @@ TAO_SHMIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_SHMIOP_Profile::parse_string_i (const char *string)
+TAO_SHMIOP_Profile::parse_string_i (char const *string)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
@@ -364,7 +364,7 @@ TAO_SHMIOP_Profile::to_string () const
   return buf;
 }
 
-const char *
+char const *
 TAO_SHMIOP_Profile::prefix ()
 {
   return ::prefix_;
@@ -471,7 +471,7 @@ TAO_SHMIOP_Profile::decode_endpoints ()
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast <const char*> (buf),
+      TAO_InputCDR in_cdr (reinterpret_cast <char const *> (buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.

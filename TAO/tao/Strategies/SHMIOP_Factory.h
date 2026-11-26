@@ -61,10 +61,10 @@ public:
   /// @}
 
   /// Set mmap file prefix
-  void mmap_file_prefix (const ACE_TCHAR *prefix);
+  void mmap_file_prefix (ACE_TCHAR const *prefix);
 
   /// Get mmap file prefix
-  const ACE_TCHAR *mmap_file_prefix ();
+  ACE_TCHAR const *mmap_file_prefix ();
 
 private:
   struct ACE_TCHAR_String_Deleter
