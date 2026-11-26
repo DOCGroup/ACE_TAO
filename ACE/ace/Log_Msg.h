@@ -477,7 +477,7 @@ public:
   // when using ACE_USES_WCHAR.
   /// Return true if the requested priority is enabled.
   int log_priority_enabled (ACE_Log_Priority log_priority,
-                            const wchar_t *,
+                            wchar_t const *,
                             ...);
 #endif /* ACE_USES_WCHAR */
   /// @}
@@ -570,13 +570,13 @@ public:
   ssize_t log (ACE_Log_Priority priority, ACE_TCHAR const *format, ...);
 
 #if defined (ACE_HAS_WCHAR)
-  ssize_t log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *format, ...);
+  ssize_t log (ACE_Log_Priority priority, ACE_ANTI_TCHAR const *format, ...);
 #endif /* ACE_HAS_WCHAR */
 
 #else /* ACE_LACKS_VA_FUNCTIONS */
   friend class ACE_Log_Formatter;
 
-  ssize_t log (const ACE_Log_Formatter &formatter);
+  ssize_t log (ACE_Log_Formatter const &formatter);
 
 #endif /* ACE_LACKS_VA_FUNCTIONS */
 
@@ -766,8 +766,8 @@ private:
 
   /// @name Disabled copy operations
   /// @{
-  ACE_Log_Msg &operator= (const ACE_Log_Msg &);
-  ACE_Log_Msg (const ACE_Log_Msg &);
+  ACE_Log_Msg &operator= (ACE_Log_Msg const &);
+  ACE_Log_Msg (ACE_Log_Msg const &);
   /// @}
 };
 
@@ -821,11 +821,11 @@ public:
 
   ACE_Log_Formatter &operator, (ACE_WCHAR_T pct_wz);
 
-  ACE_Log_Formatter &operator, (const ACE_WCHAR_T *pct_WZ);
+  ACE_Log_Formatter &operator, (ACE_WCHAR_T const *pct_WZ);
 
-  ACE_Log_Formatter &operator, (const void *pct_at);
+  ACE_Log_Formatter &operator, (void const *pct_at);
 
-  ACE_Log_Formatter &operator, (const ACE_Time_Value *pct_DT);
+  ACE_Log_Formatter &operator, (ACE_Time_Value const *pct_DT);
 
 #if ACE_SIZEOF_LONG == 4
   ACE_Log_Formatter &operator, (long pct_Lmodifier);

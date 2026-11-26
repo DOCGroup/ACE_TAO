@@ -57,7 +57,7 @@ public:
                   time_t time_stamp,
                   long pid);
   ACE_Log_Record (ACE_Log_Priority lp,
-                  const ACE_Time_Value &time_stamp,
+                  ACE_Time_Value const &time_stamp,
                   long pid);
   /// @}
 
@@ -130,7 +130,7 @@ public:
   ACE_Time_Value time_stamp () const;
 
   /// Set the time stamp of the Log_Record.
-  void time_stamp (const ACE_Time_Value &ts);
+  void time_stamp (ACE_Time_Value const &ts);
 
   /// Get the process id of the Log_Record.
   long pid () const;
@@ -198,7 +198,7 @@ class ACE_OutputCDR;
 
 /// iostream operators for ACE_Log_Record.
 ACE_Export int operator>> (ACE_InputCDR &cdr, ACE_Log_Record &log_record);
-ACE_Export int operator<< (ACE_OutputCDR &cdr, const ACE_Log_Record &log_record);
+ACE_Export int operator<< (ACE_OutputCDR &cdr, ACE_Log_Record const &log_record);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

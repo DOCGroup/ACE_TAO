@@ -72,7 +72,7 @@ ACE_Log_Record::time_stamp () const
 }
 
 ACE_INLINE void
-ACE_Log_Record::time_stamp (const ACE_Time_Value &ts)
+ACE_Log_Record::time_stamp (ACE_Time_Value const &ts)
 {
   ACE_TRACE ("ACE_Log_Record::time_stamp");
   this->secs_ = ts.sec ();

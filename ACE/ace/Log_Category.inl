@@ -93,7 +93,7 @@ ACE_Log_Category_TSS::log (ACE_Log_Priority priority, ACE_TCHAR const *format_st
 
 #if defined (ACE_HAS_WCHAR)
 ACE_INLINE ssize_t
-ACE_Log_Category_TSS::log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *format_str, ...)
+ACE_Log_Category_TSS::log (ACE_Log_Priority priority, ACE_ANTI_TCHAR const *format_str, ...)
 {
   // Start of variable args section.
   va_list argp;
@@ -111,7 +111,7 @@ ACE_Log_Category_TSS::log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *form
 #else /* ACE_LACKS_VA_FUNCTIONS */
 
 ACE_INLINE ssize_t
-ACE_Log_Category_TSS::log (const ACE_Log_Formatter &formatter)
+ACE_Log_Category_TSS::log (ACE_Log_Formatter const &formatter)
 {
   if (this->log_priority_enabled (formatter.priority ()))
     {

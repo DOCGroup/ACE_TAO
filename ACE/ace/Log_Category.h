@@ -197,12 +197,12 @@ public:
   ssize_t log (ACE_Log_Priority priority, ACE_TCHAR const *format, ...);
 
 #if defined (ACE_HAS_WCHAR)
-  ssize_t log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *format, ...);
+  ssize_t log (ACE_Log_Priority priority, ACE_ANTI_TCHAR const *format, ...);
 #endif /* ACE_HAS_WCHAR */
 #else /* ACE_LACKS_VA_FUNCTIONS */
   friend class ACE_Log_Formatter;
 
-  ssize_t log (const ACE_Log_Formatter &formatter);
+  ssize_t log (ACE_Log_Formatter const &formatter);
 #endif /* ACE_LACKS_VA_FUNCTIONS */
 
   ssize_t log (ACE_TCHAR const *format,

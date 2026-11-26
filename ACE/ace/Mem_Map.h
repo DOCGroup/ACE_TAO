@@ -36,9 +36,9 @@ class ACE_Export ACE_Mem_Map
 public:
   ACE_Mem_Map ();
 
-  ACE_Mem_Map (const ACE_Mem_Map &) = delete;
+  ACE_Mem_Map (ACE_Mem_Map const &) = delete;
   ACE_Mem_Map (ACE_Mem_Map &&) = delete;
-  ACE_Mem_Map &operator= (const ACE_Mem_Map &) = delete;
+  ACE_Mem_Map &operator= (ACE_Mem_Map const &) = delete;
   ACE_Mem_Map &operator= (ACE_Mem_Map &&) = delete;
 
   /// Map a file from an open file descriptor @a handle.  This function

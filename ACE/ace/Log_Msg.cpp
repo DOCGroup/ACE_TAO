@@ -133,7 +133,7 @@ public:
 
   static u_long log_backend_flags_;
 
-  static int init_backend (const u_long *flags = nullptr);
+  static int init_backend (u_long const *flags = nullptr);
 
 #if defined (ACE_MT_SAFE) && (ACE_MT_SAFE != 0)
   //FUZZ: disable check_for_lack_ACE_OS
@@ -160,7 +160,7 @@ ACE_Log_Msg_Backend *ACE_Log_Msg_Manager::custom_backend_ {};
 
 u_long ACE_Log_Msg_Manager::log_backend_flags_ = ACE_DEFAULT_LOG_BACKEND_FLAGS;
 
-int ACE_Log_Msg_Manager::init_backend (const u_long *flags)
+int ACE_Log_Msg_Manager::init_backend (u_long const *flags)
 {
   // If flags have been supplied, and they are different from the flags
   // we had last time, then we may have to re-create the backend as a
@@ -1017,7 +1017,7 @@ ACE_Log_Msg::log (ACE_Log_Priority log_priority,
  */
 ssize_t
 ACE_Log_Msg::log (ACE_Log_Priority log_priority,
-                  const ACE_ANTI_TCHAR *format_str, ...)
+                  ACE_ANTI_TCHAR const *format_str, ...)
 {
   ACE_TRACE ("ACE_Log_Msg::log");
 
@@ -2984,19 +2984,19 @@ ACE_Log_Formatter &ACE_Log_Formatter::operator, (ACE_WCHAR_T pct_wz)
   return *this;
 }
 
-ACE_Log_Formatter &ACE_Log_Formatter::operator, (const ACE_WCHAR_T *pct_WZ)
+ACE_Log_Formatter &ACE_Log_Formatter::operator, (ACE_WCHAR_T const *pct_WZ)
 {
   this->insert_arg (pct_WZ ? pct_WZ : (const ACE_WCHAR_T *) L"(null)");
   return *this;
 }
 
-ACE_Log_Formatter &ACE_Log_Formatter::operator, (const void *pct_at)
+ACE_Log_Formatter &ACE_Log_Formatter::operator, (void const *pct_at)
 {
   this->insert_arg (pct_at);
   return *this;
 }
 
-ACE_Log_Formatter &ACE_Log_Formatter::operator, (const ACE_Time_Value *pct_DT)
+ACE_Log_Formatter &ACE_Log_Formatter::operator, (ACE_Time_Value const *pct_DT)
 {
   if (!this->enabled_)
     {
@@ -3051,7 +3051,7 @@ bool ACE_Log_Formatter::to_record (ACE_Log_Record &record)
   return true;
 }
 
-ssize_t ACE_Log_Msg::log (const ACE_Log_Formatter &formatter)
+ssize_t ACE_Log_Msg::log (ACE_Log_Formatter const &formatter)
 {
   ACE_Log_Record record;
   if (const_cast<ACE_Log_Formatter &> (formatter).to_record (record))
@@ -3500,7 +3500,7 @@ ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
 #if defined (ACE_USES_WCHAR)
 int
 ACE_Log_Msg::log_priority_enabled (ACE_Log_Priority log_priority,
-                                   const wchar_t *,
+                                   wchar_t const *,
                                    ...)
 {
   return this->log_priority_enabled (log_priority);

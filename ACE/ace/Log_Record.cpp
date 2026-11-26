@@ -165,7 +165,7 @@ ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
 }
 
 ACE_Log_Record::ACE_Log_Record (ACE_Log_Priority lp,
-                                const ACE_Time_Value &ts,
+                                ACE_Time_Value const &ts,
                                 long p)
   : type_ (ACE_UINT32 (lp)),
     secs_ (ts.sec ()),
@@ -336,7 +336,7 @@ ACE_Log_Record::print (const ACE_TCHAR host_name[],
 
 int
 operator<< (ACE_OutputCDR &cdr,
-            const ACE_Log_Record &log_record)
+            ACE_Log_Record const &log_record)
 {
   // The written message length can't be more than 32 bits (ACE_CDR::ULong)
   // so reduce it here if needed.

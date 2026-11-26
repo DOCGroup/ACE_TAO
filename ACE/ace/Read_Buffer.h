@@ -98,8 +98,8 @@ public:
   void dump () const;
 
 private:
-  void operator= (const ACE_Read_Buffer &) = delete;
-  ACE_Read_Buffer (const ACE_Read_Buffer &) = delete;
+  void operator= (ACE_Read_Buffer const &) = delete;
+  ACE_Read_Buffer (ACE_Read_Buffer const &) = delete;
   void operator= (ACE_Read_Buffer &&) = delete;
   ACE_Read_Buffer (ACE_Read_Buffer &&) = delete;
 
