@@ -70,7 +70,6 @@ private:
  * @brief Simpler Server implementation
  *
  * Implements the Simple_Server interface in test.idl
- * for (int loop = 0; loop < 10; loop++)
  */
 class Simple_Server_i : public POA_Simple_Server
 {
