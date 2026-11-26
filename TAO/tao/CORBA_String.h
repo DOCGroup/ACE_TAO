@@ -48,9 +48,7 @@ namespace TAO
     using character_type = charT;
     using s_traits = TAO::details::string_traits_base<character_type>;
 
-    inline String_var ()
-    {
-    }
+    String_var () = default;
 
     /// Constructor, owns p.
     inline String_var (character_type *p) : ptr_ (p)
@@ -135,7 +133,7 @@ namespace TAO
     inline character_type *&out ()
     {
       s_traits::release (this->ptr_);
-      this->ptr_ = 0;
+      this->ptr_ = nullptr;
       return this->ptr_;
     }
 
@@ -143,7 +141,7 @@ namespace TAO
     inline character_type *_retn ()
     {
       character_type *temp = this->ptr_;
-      this->ptr_ = 0;
+      this->ptr_ = nullptr;
       return temp;
     }
 
@@ -171,7 +169,7 @@ namespace TAO
     /// Construction from a reference to a string.
     inline String_out (character_type *&p) : ptr_ (p)
     {
-      this->ptr_ = 0;
+      this->ptr_ = nullptr;
     }
 
     /// Construction from a var.
@@ -184,9 +182,7 @@ namespace TAO
     {
     }
 
-    inline String_out (String_out<charT> const &s) : ptr_ (s.ptr_)
-    {
-    }
+    String_out (String_out<charT> const &) = default;
 
     /// Assignment from a string_out.
     inline String_out &operator= (String_out<charT> const &s)
