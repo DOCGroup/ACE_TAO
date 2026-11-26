@@ -125,7 +125,7 @@ ACE_Hash<ACE_INT64>::operator () (ACE_INT64 t) const
 
 #if (ACE_SIZEOF_LONG < 8)
 ACE_INLINE unsigned long
-ACE_Hash<ACE_UINT64>::operator () (const ACE_UINT64 &t) const
+ACE_Hash<ACE_UINT64>::operator () (ACE_UINT64 const &t) const
 {
 #if (ACE_SIZEOF_LONG == 4)
   return ACE_U64_TO_U32 (t);
@@ -148,7 +148,7 @@ ACE_Hash<char *>::operator () (char const *t) const
 }
 
 ACE_INLINE unsigned long
-ACE_Hash<void *>::operator () (const void *t) const
+ACE_Hash<void *>::operator () (void const *t) const
 {
   return static_cast<unsigned long> (reinterpret_cast<uintptr_t> (t));
 }
@@ -191,7 +191,7 @@ ACE_Equal_To<ACE_INT32>::operator () (const ACE_INT32 lhs, const ACE_INT32 rhs) 
 }
 
 ACE_INLINE int
-ACE_Equal_To<ACE_UINT64>::operator () (const ACE_UINT64 lhs, const ACE_UINT64 rhs) const
+ACE_Equal_To<ACE_UINT64>::operator () (ACE_UINT64 const lhs, ACE_UINT64 const rhs) const
 {
   return (lhs == rhs);
 }

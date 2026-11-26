@@ -240,7 +240,7 @@ class ACE_Export ACE_Hash<ACE_UINT64>
 {
 public:
   /// Simply returns t
-  unsigned long operator () (const ACE_UINT64 &t) const;
+  unsigned long operator () (ACE_UINT64 const &t) const;
 };
 #endif /* ACE_SIZEOF_LONG < 8 */
 
@@ -272,7 +272,7 @@ template<>
 class ACE_Export ACE_Hash<void *>
 {
 public:
-  unsigned long operator () (const void *) const;
+  unsigned long operator () (void const *) const;
 };
 
 /**
@@ -361,8 +361,8 @@ class ACE_Export ACE_Equal_To<ACE_UINT64>
 {
 public:
   /// Simply calls built-in operators
-  int operator () (const ACE_UINT64 lhs,
-                   const ACE_UINT64 rhs) const;
+  int operator () (ACE_UINT64 const lhs,
+                   ACE_UINT64 const rhs) const;
 };
 
 /**

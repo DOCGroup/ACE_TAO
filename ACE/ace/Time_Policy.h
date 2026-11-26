@@ -115,7 +115,7 @@ public:
   /// Set delegate
   void set_delegate (ACE_Dynamic_Time_Policy_Base const * delegate);
 
-  ACE_Delegating_Time_Policy (const ACE_Delegating_Time_Policy&) = default;
+  ACE_Delegating_Time_Policy (ACE_Delegating_Time_Policy const&) = default;
   ACE_Delegating_Time_Policy (ACE_Delegating_Time_Policy&&) = default;
   ACE_Delegating_Time_Policy& operator = (ACE_Delegating_Time_Policy const &) = default;
   ACE_Delegating_Time_Policy &operator = (ACE_Delegating_Time_Policy&&)  = default;
