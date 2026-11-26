@@ -400,7 +400,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const ACE_CDR::Fixed &x)
+                                      ACE_CDR::Fixed const &x)
 {
   return os.write_fixed (x);
 }
@@ -415,7 +415,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const CORBA::WChar * x)
+                                      CORBA::WChar const *x)
 {
   return
     os.fragment_stream ((sizeof (CORBA::WChar) == 2

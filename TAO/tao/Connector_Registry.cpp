@@ -126,7 +126,7 @@ TAO_Connector_Registry::make_mprofile (char const *ior,
     {
       if (connector != nullptr)
         {
-          const int mp_result =
+          int const mp_result =
             connector->make_mprofile (ior,
                                       mprofile);
 

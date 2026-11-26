@@ -500,11 +500,11 @@ TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       CORBA::Double x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const ACE_CDR::Fixed &x);
+                                      ACE_CDR::Fixed const &x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const CORBA::Char* x);
+                                      CORBA::Char const *x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const CORBA::WChar* x);
+                                      CORBA::WChar const *x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,
                                       ACE_OutputCDR::from_string x);
 TAO_Export CORBA::Boolean operator<< (TAO_OutputCDR &os,

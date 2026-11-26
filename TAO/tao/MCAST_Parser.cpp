@@ -217,7 +217,7 @@ TAO_MCAST_Parser::multicast_query (char* & buf,
           // Vector we will send.  It contains: 1) length of service
           // name string, 2)port on which we are listening for
           // replies, and 3) name of service we are looking for.
-          const int iovcnt = 3;
+          int const iovcnt = 3;
           iovec iovp[iovcnt];
 
           // The length of service name string.
