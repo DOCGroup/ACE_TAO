@@ -177,7 +177,7 @@ Pipe::open ()
   else
     {
       int const af = my_addr.get_type ();
-      const ACE_TCHAR *local = ACE_LOCALHOST;
+      ACE_TCHAR const *local = ACE_LOCALHOST;
 #if defined (ACE_HAS_IPV6)
       if (af == AF_INET6)
         {

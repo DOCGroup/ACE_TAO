@@ -19,7 +19,7 @@
 
 // This will only work on Linux. Even UNIX-ish with /proc filesys lacks the
 // 'self' level and link to the opened file name.
-static const char *proc_self_fd = "/proc/self/fd/";
+static char const *proc_self_fd = "/proc/self/fd/";
 
 int
 test_setenv ()
@@ -54,7 +54,7 @@ test_setenv ()
 }
 
 int
-check_temp_file (const ACE_TString &tmpfilename)
+check_temp_file (ACE_TString const &tmpfilename)
 {
   ACE_DIRENT *dir {};
   ACE_Dirent entr;
@@ -139,7 +139,7 @@ run_parent (bool inherit_files)
 
   // Build child options
   ACE_TString exe_sub_dir;
-  const char *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
+  char const *subdir_env = ACE_OS::getenv ("ACE_EXE_SUB_DIR");
   if (subdir_env)
     {
       exe_sub_dir = ACE_TEXT_CHAR_TO_TCHAR (subdir_env);

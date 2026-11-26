@@ -12,7 +12,7 @@
 
 size_t
 run_duplicate_test (const size_t msg_block_count,
-                    const char * block,
+                    char const * block,
                     const size_t msg_block_size)
 {
     size_t rc = 0;
@@ -53,7 +53,7 @@ run_duplicate_test (const size_t msg_block_count,
 
 size_t
 run_clone_test (const size_t msg_block_count,
-                const char * block,
+                char const * block,
                 const size_t msg_block_size)
 {
     size_t rc = 0;

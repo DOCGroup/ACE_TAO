@@ -97,7 +97,7 @@ producer (void *args)
 
   ACE_Message_Block *mb {};
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       ++message_count;
 

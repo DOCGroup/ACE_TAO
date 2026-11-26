@@ -55,7 +55,7 @@ using MALLOC = ACE_Malloc<ACE_MMAP_MEMORY_POOL, ACE_Process_Mutex>;
 #endif /*ACE_WIN32*/
 
 // Parents <ACE_Malloc> base address in shared memory.
-static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
+static void const *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 
 // If the platform supports position-independent malloc, choose
 // another base address that's 1M higher so that <ACE_Malloc> will be
@@ -71,8 +71,8 @@ static const void *PARENT_BASE_ADDR = ACE_DEFAULT_BASE_ADDR;
 # define CHILD_ADDR_DELTA 0
 #endif /* CHILD_ADDR_DELTA */
 
-static const void *CHILD_BASE_ADDR =
-  (const void *)(CHILD_ADDR_DELTA + ACE_DEFAULT_BASE_ADDR);
+static void const *CHILD_BASE_ADDR =
+  (void const *)(CHILD_ADDR_DELTA + ACE_DEFAULT_BASE_ADDR);
 
 // Shared memory allocator.  Hide the allocator inside this function
 // so that it doesn't get constructed until after the
@@ -80,7 +80,7 @@ static const void *CHILD_BASE_ADDR =
 // <ACE_HAS_NONSTATIC_OBJECT_MANAGER>.
 
 static MALLOC *
-myallocator (const void *base_addr = nullptr)
+myallocator (void const *base_addr = nullptr)
 {
   static std::unique_ptr<MALLOC> static_allocator;
 
@@ -101,7 +101,7 @@ myallocator (const void *base_addr = nullptr)
 }
 
 static void
-init_test (const void *base_addr = nullptr)
+init_test (void const *base_addr = nullptr)
 {
   // Cleanup the MMAP file so we won't trip over the leftover mmap
   // file from the previous crash.
@@ -201,7 +201,7 @@ initialize (MALLOC *allocator)
 }
 
 static void
-print (const char *process_name,
+print (char const *process_name,
        Test_Data *data)
 {
   for (Test_Data *t = data; t != nullptr; t = t->next_)
