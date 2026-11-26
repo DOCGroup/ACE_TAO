@@ -54,8 +54,7 @@ TAO_Notify_EventChannel::init (TAO_Notify_EventChannelFactory* ecf
 {
   ACE_ASSERT (!this->ca_container_);
 
-  // this-> on the following line confuses VC6
-  initialize (ecf);
+  this->initialize (ecf);
 
   this->ecf_.reset (ecf);
 
@@ -119,8 +118,7 @@ void
 TAO_Notify_EventChannel::init (TAO_Notify::Topology_Parent* parent)
 {
   ACE_ASSERT (this->ecf_.get() == nullptr);
-  // this-> on the following line confuses VC6
-  initialize (parent);
+  this->initialize (parent);
 
   this->ecf_.reset (dynamic_cast <TAO_Notify_EventChannelFactory*>(parent));
   ACE_ASSERT (this->ecf_.get() != nullptr);

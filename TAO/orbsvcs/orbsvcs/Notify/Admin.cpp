@@ -52,8 +52,7 @@ TAO_Notify_Admin::init (TAO_Notify::Topology_Parent* parent)
 
   filter_admin_.event_channel (this->ec_.get ());
 
-  // this-> on the following line confuses VC6
-  initialize (parent);
+  this->initialize (parent);
 
   TAO_Notify_Proxy_Container* proxy_container {};
   ACE_NEW_THROW_EX (proxy_container,

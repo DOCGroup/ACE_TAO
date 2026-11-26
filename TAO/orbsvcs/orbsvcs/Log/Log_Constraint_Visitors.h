@@ -105,7 +105,6 @@ private:
 
 private:
   /// Size of property_lookup_ hash map.
-  /// TODO: define inline once VC6 support is deprecated.
   static constexpr size_t property_lookup_size_ = 31;
 
   using HASH_MAP = ACE_Hash_Map_Manager<ACE_CString,
