@@ -139,14 +139,14 @@ namespace CORBA
     SystemException (CORBA::ULong code, CORBA::CompletionStatus completed);
 
     /// Constructor using a repository id.
-    SystemException (const char *repository_id,
-                     const char *local_name,
+    SystemException (char const *repository_id,
+                     char const *local_name,
                      CORBA::ULong code,
                      CORBA::CompletionStatus completed);
 
     /// Return the exception description associated with the given OMG
     /// minor code.
-    static const char *_tao_get_omg_exception_description (
+    static char const *_tao_get_omg_exception_description (
       const CORBA::SystemException &exc, CORBA::ULong minor_code);
 
   private:

@@ -58,8 +58,8 @@ public:
 
   /// Get/Set address:port for Multicast Discovery Protocol for
   /// the Naming Service.
-  const char *mcast_discovery_endpoint () const;
-  void mcast_discovery_endpoint (const char *mde);
+  char const *mcast_discovery_endpoint () const;
+  void mcast_discovery_endpoint (char const *mde);
 
   /// Set/Get the size to be used for a socket's receive buffer.
   int sock_rcvbuf_size () const;
@@ -134,7 +134,7 @@ public:
 
   /// Set/Get the Init Reference of an arbitrary ObjectID.
   char *default_init_ref () const;
-  void default_init_ref (const char *default_init_ref);
+  void default_init_ref (char const *default_init_ref);
 
   /// Disable the OMG standard profile components, useful for
   /// homogenous environments.
@@ -202,11 +202,11 @@ public:
 
   /// Accepts the list of preferred interfaces and does a simple
   /// semantic check on the string before setting. Also the getter.
-  bool preferred_interfaces (const char *s);
-  const char *preferred_interfaces () const;
+  bool preferred_interfaces (char const *s);
+  char const *preferred_interfaces () const;
 
   /// Utility function called by the preferred interfaces setter
-  static bool check_preferred_interfaces_string (const char *);
+  static bool check_preferred_interfaces_string (char const *);
 
   void enforce_pref_interfaces (bool p);
   bool enforce_pref_interfaces () const;
@@ -228,29 +228,29 @@ public:
   void ami_collication (bool opt);
   bool ami_collication () const;
 
-  void protocols_hooks_name (const char *s);
-  const char *protocols_hooks_name () const;
+  void protocols_hooks_name (char const *s);
+  char const *protocols_hooks_name () const;
 
-  void thread_lane_resources_manager_factory_name (const char *s);
-  const char *thread_lane_resources_manager_factory_name () const;
+  void thread_lane_resources_manager_factory_name (char const *s);
+  char const *thread_lane_resources_manager_factory_name () const;
 
-  void dynamic_thread_pool_config_name (const char *s);
-  const char *dynamic_thread_pool_config_name () const;
+  void dynamic_thread_pool_config_name (char const *s);
+  char const *dynamic_thread_pool_config_name () const;
 
-  void stub_factory_name (const char *s);
-  const char *stub_factory_name () const;
+  void stub_factory_name (char const *s);
+  char const *stub_factory_name () const;
 
-  void poa_factory_name (const char *s);
-  const char *poa_factory_name () const;
+  void poa_factory_name (char const *s);
+  char const *poa_factory_name () const;
 
-  void poa_factory_directive (const ACE_TCHAR *s);
-  const ACE_TCHAR *poa_factory_directive () const;
+  void poa_factory_directive (ACE_TCHAR const *s);
+  ACE_TCHAR const *poa_factory_directive () const;
 
-  void endpoint_selector_factory_name (const char *s);
-  const char *endpoint_selector_factory_name () const;
+  void endpoint_selector_factory_name (char const *s);
+  char const *endpoint_selector_factory_name () const;
 
-  void collocation_resolver_name (const char *s);
-  const char *collocation_resolver_name () const;
+  void collocation_resolver_name (char const *s);
+  char const *collocation_resolver_name () const;
 
   void forward_invocation_on_object_not_exist (bool opt);
   bool forward_invocation_on_object_not_exist () const;

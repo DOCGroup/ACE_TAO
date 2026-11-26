@@ -201,7 +201,7 @@ protected:
   virtual ACE_Reactor_Impl *allocate_reactor_impl () const;
 
   /// Add a Parser name to the list of Parser names.
-  int add_to_ior_parser_names (const char *);
+  int add_to_ior_parser_names (char const *);
 
   void report_option_value_error (ACE_TCHAR const *option_name,
                                   ACE_TCHAR const *option_value);

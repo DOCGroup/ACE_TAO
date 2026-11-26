@@ -53,8 +53,8 @@ public:
   Messaging::SyncScope sync_scope () const override;
 
 protected:
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 
 private:
   enum Lock_Type

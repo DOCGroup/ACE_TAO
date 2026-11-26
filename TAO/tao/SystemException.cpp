@@ -61,8 +61,8 @@ const CORBA::ULong TAO_ENOTSUP_MINOR_CODE            = 0x14U;
 CORBA::SystemException::SystemException ()
 = default;
 
-CORBA::SystemException::SystemException (const char *repository_id,
-                                         const char *local_name,
+CORBA::SystemException::SystemException (char const *repository_id,
+                                         char const *local_name,
                                          CORBA::ULong code,
                                          CORBA::CompletionStatus completed)
   : CORBA::Exception (repository_id,
@@ -233,7 +233,7 @@ CORBA::SystemException::_info () const
   if (VMCID == TAO::VMCID)
     {
       // @@ Move the following code to a subroutine, it is too long already!
-      const char *location {};
+      char const *location {};
       switch (this->minor () & 0x00000F80u)
         {
         case TAO_INVOCATION_LOCATION_FORWARD_MINOR_CODE:
@@ -300,7 +300,7 @@ CORBA::SystemException::_info () const
           location = "unknown location";
         }
 
-      const char *errno_indication {};
+      char const *errno_indication {};
       char unknown_errno [255];
       CORBA::ULong const minor_code = this->minor () & 0x7FU;
       switch (minor_code)
@@ -402,7 +402,7 @@ CORBA::SystemException::_info () const
     {
       CORBA::ULong const minor_code = this->minor () & 0xFFFU;
 
-      const char *minor_description {};
+      char const *minor_description {};
 
       if (minor_code > 0)
         {
@@ -457,21 +457,21 @@ CORBA::SystemException::_info () const
   return info;
 }
 
-const char *
+char const *
 CORBA::SystemException::_tao_get_omg_exception_description (
   const CORBA::SystemException &exc,
   CORBA::ULong minor_code)
 {
 #ifndef ACE_NDEBUG
 
-  static const char *UNKNOWN_TABLE[] =
+  static char const *UNKNOWN_TABLE[] =
     {
       "Unlisted user exception received by client.",    // 1
       "Non-standard SystemException not supported.",    // 2
       "An unknown user exception received by a portable interceptor." // 3
     };
 
-  static const char *BAD_PARAM_TABLE[] =
+  static char const *BAD_PARAM_TABLE[] =
     {
       "Failure to register, unregister, or lookup value factory.", // 1
       "RID already defined in IFR.",                               // 2
@@ -518,23 +518,23 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Attempt to add a Pollable to a second PollableSet." // 43
     };
 
-  static const char *IMP_LIMIT_TABLE[] =
+  static char const *IMP_LIMIT_TABLE[] =
     {
       "Unable to use any profile in IOR." // 1
     };
 
-  static const char *INITIALIZE_TABLE[] =
+  static char const *INITIALIZE_TABLE[] =
     {
       "Priority range too restricted for ORB." // 1
     };
 
-  static const char *INV_OBJREF_TABLE[] =
+  static char const *INV_OBJREF_TABLE[] =
     {
       "wchar Code Set support not specified.", // 1
       "Codeset component required for type using wchar or wstring data." // 2
     };
 
-  static const char *MARSHAL_TABLE[] =
+  static char const *MARSHAL_TABLE[] =
     {
       "Unable to locate value factory.",  // 1
       "ServerRequest::set_result called before ServerRequest::ctx when the operation IDL contains a context clause.", // 2
@@ -548,14 +548,14 @@ CORBA::SystemException::_tao_get_omg_exception_description (
 
     };
 
-  static const char *BAD_TYPECODE_TABLE[] =
+  static char const *BAD_TYPECODE_TABLE[] =
     {
       "Attempt to marshal incomplete TypeCode.",              // 1
       "Member type code illegitimate in TypeCode operation.", // 2
       "Illegal parameter type."                               // 3
     };
 
-  static const char *NO_IMPLEMENT_TABLE[] =
+  static char const *NO_IMPLEMENT_TABLE[] =
     {
       "Missing local value implementation.",        // 1
       "Incompatible value implementation version.", // 2
@@ -567,13 +567,13 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Operation not implemented in local object"   // 8
     };
 
-  static const char *NO_RESOURCES_TABLE[] =
+  static char const *NO_RESOURCES_TABLE[] =
     {
       "Portable Interceptor operation not support in this binding.", // 1
       "No connection for request's priority."                        // 2
     };
 
-  static const char *BAD_INV_ORDER_TABLE[] =
+  static char const *BAD_INV_ORDER_TABLE[] =
     {
       "Dependency exists in IFR preventing destruction of this object", // 1
       "Attempt to destroy indestructible objects in IFR.", // 2
@@ -603,7 +603,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
        "Invocation of this operation not allowed in post_init." // 26
     };
 
-  static const char *TRANSIENT_TABLE[] =
+  static char const *TRANSIENT_TABLE[] =
     {
       "Request discarded because of resource exhaustion in POA, or because POA is in discarding state.", // 1
       "No usable profile in IOR.",                            // 2
@@ -611,7 +611,7 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "POA destroyed."                                        // 4
     };
 
-  static const char *OBJ_ADAPTER_TABLE[] =
+  static char const *OBJ_ADAPTER_TABLE[] =
     {
       "System exception in AdapterActivator::unknown_adapter.",              // 1
       "Incorrect servant type returned by servant manager",     // 2
@@ -622,13 +622,13 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "Null servant returned by servant manager."               // 7
     };
 
-  static const char *DATA_CONVERSION_TABLE[] =
+  static char const *DATA_CONVERSION_TABLE[] =
     {
       "Character does not map to negotiated transmission code set.", // 1
       "Failure of PriorityMapping object."                           // 2
     };
 
-  static const char *OBJECT_NOT_EXIST_TABLE[] =
+  static char const *OBJECT_NOT_EXIST_TABLE[] =
     {
       "Attempt to pass an unactivated (unregistered) value as an object reference.", // 1
       "Failed to create or locate Object Adapter.", // 2
@@ -637,48 +637,48 @@ CORBA::SystemException::_tao_get_omg_exception_description (
       "This Poller has already delivered a reply to some client." // 5
     };
 
-  static const char *INV_POLICY_TABLE[] =
+  static char const *INV_POLICY_TABLE[] =
     {
       "Unable to reconcile IOR specified policy with the effective policy override.", // 1
       "Invalid PolicyType.", // 2
       "No PolicyFactory has been registered for the given PolicyType." // 3
     };
 
-  static const char *ACTIVITY_COMPLETED_TABLE[] =
+  static char const *ACTIVITY_COMPLETED_TABLE[] =
     {
       "Activity context completed through timeout, or in some way other then requested." // 1
     };
 
-  static const char *ACTIVITY_REQUIRED_TABLE[] =
+  static char const *ACTIVITY_REQUIRED_TABLE[] =
     {
       "Calling thread lacks required activity context." // 1
     };
 
-  static const char *BAD_OPERATION_TABLE[] =
+  static char const *BAD_OPERATION_TABLE[] =
     {
       "ServantManager returned wrong servant type.", // 1
       "Operation or attribute not known to target object." // 2
     };
 
-  static const char *BAD_CONTEXT_TABLE[] =
+  static char const *BAD_CONTEXT_TABLE[] =
     {
       "IDL context not found.", // 1
       "No matching IDL context property." // 2
     };
 
-  static const char *CODESET_INCOMPATIBLE_TABLE[] =
+  static char const *CODESET_INCOMPATIBLE_TABLE[] =
     {
       "Codeset negotiation failed.", // 1
       "Codeset delivered in CodeSetContext is not supported by server as transmission codeset." // 2
     };
 
-  static const char *INTF_REPOS_TABLE[] =
+  static char const *INTF_REPOS_TABLE[] =
     {
       "Interface Repository not available.", // 1
       "No entry for requested interface in Interface Repository." // 2
     };
 
-  static const char *TIMEOUT_TABLE[] =
+  static char const *TIMEOUT_TABLE[] =
     {
       "Reply is not available in the Poller by the timeout set for it.", // 1
       "End time specified in RequestEndTimePolicy or RelativeRequestTimeoutPolicy has expired.", // 2
@@ -929,7 +929,7 @@ TAO_END_VERSIONED_NAMESPACE_DECL
     TAO_SYSTEM_EXCEPTION (ACTIVITY_REQUIRED) \
     TAO_SYSTEM_EXCEPTION (THREAD_CANCELLED)
 
-static const char *repo_id_array[] = {
+static char const *repo_id_array[] = {
 #define TAO_SYSTEM_EXCEPTION(name) \
                   (char *) "IDL:omg.org/CORBA/" #name ":1.0",
       STANDARD_EXCEPTION_LIST
@@ -997,7 +997,7 @@ STANDARD_EXCEPTION_LIST
 #undef  TAO_SYSTEM_EXCEPTION
 
 CORBA::SystemException *
-TAO::create_system_exception (const char *id)
+TAO::create_system_exception (char const *id)
 {
   for (CORBA::ULong i {}; i < array_sz; ++i)
     {

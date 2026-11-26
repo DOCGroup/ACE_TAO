@@ -559,8 +559,8 @@ TAO_Default_Client_Strategy_Factory::allow_callback ()
 
 void
 TAO_Default_Client_Strategy_Factory::report_option_value_error (
-                                 const ACE_TCHAR* option_name,
-                                 const ACE_TCHAR* option_value)
+                                 ACE_TCHAR const *option_name,
+                                 ACE_TCHAR const *option_value)
 {
   TAOLIB_DEBUG((LM_DEBUG,
              ACE_TEXT ("Client_Strategy_Factory - unknown argument")

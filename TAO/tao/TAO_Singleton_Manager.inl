@@ -4,7 +4,7 @@ ACE_INLINE
 int
 TAO_Singleton_Manager::at_exit (ACE_Cleanup *object,
                                 void *param,
-                                const char* name)
+                                char const *name)
 {
   return TAO_Singleton_Manager::instance ()->at_exit_i (
     object,
@@ -18,7 +18,7 @@ int
 TAO_Singleton_Manager::at_exit (void *object,
                                 ACE_CLEANUP_FUNC cleanup_hook,
                                 void *param,
-                                const char* name)
+                                char const *name)
 {
   return TAO_Singleton_Manager::instance ()->at_exit_i (
     object,

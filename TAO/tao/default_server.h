@@ -49,8 +49,8 @@ public:
 protected:
   void tokenize (ACE_TCHAR* flag_string);
 
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 
 protected:
   /// Should the server connection handlers run in their own thread?

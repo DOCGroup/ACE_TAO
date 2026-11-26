@@ -668,7 +668,7 @@ TAO_Default_Resource_Factory::get_parser_names (char **&names,
 }
 
 int
-TAO_Default_Resource_Factory::add_to_ior_parser_names (const char *curarg)
+TAO_Default_Resource_Factory::add_to_ior_parser_names (char const *curarg)
 {
   this->parser_names_[this->index_] = CORBA::string_dup (curarg);
 

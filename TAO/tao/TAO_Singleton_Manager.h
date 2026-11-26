@@ -90,7 +90,7 @@ public:
    * memory, or EEXIST if the object (or array) had already been
    * registered.
    */
-  static int at_exit (ACE_Cleanup *object, void *param = nullptr, const char* name = nullptr);
+  static int at_exit (ACE_Cleanup *object, void *param = nullptr, char const *name = nullptr);
 
   /// Register an object (or array) for cleanup at process
   /// termination.
@@ -110,7 +110,7 @@ public:
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param,
-                      const char* name);
+                      char const *name);
 
 protected:
   /// Force allocation on the heap.
@@ -127,7 +127,7 @@ private:
 
   /// Register an object or array for deletion at program termination.
   /// See description of static version above for return values.
-  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name);
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, char const *name);
 
 private:
   /// Default signal set used, for example, in ACE_Sig_Guard.

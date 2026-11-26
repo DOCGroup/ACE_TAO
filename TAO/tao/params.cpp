@@ -221,7 +221,7 @@ TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
 }
 
 bool
-TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
+TAO_ORB_Parameters::check_preferred_interfaces_string (char const *s)
 {
   // Validates that s contains one or more comma separated
   // interfaces each consisting of a string with a single
@@ -233,7 +233,7 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
   bool expect_wild {true};
   bool found_remote {};
 
-  for (const char *p = s; *p; ++p)
+  for (char const *p = s; *p; ++p)
     {
       switch (*p)
         {
@@ -287,7 +287,7 @@ TAO_ORB_Parameters::check_preferred_interfaces_string (const char *s)
 }
 
 bool
-TAO_ORB_Parameters::preferred_interfaces (const char *s)
+TAO_ORB_Parameters::preferred_interfaces (char const *s)
 {
   const bool valid= check_preferred_interfaces_string (s);
   if (valid)
@@ -305,7 +305,7 @@ TAO_ORB_Parameters::preferred_interfaces (const char *s)
   return valid;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::preferred_interfaces () const
 {
   return this->pref_network_.c_str ();
@@ -362,84 +362,84 @@ TAO_ORB_Parameters::use_ipv6_link_local () const
 #endif /* ACE_HAS_IPV6 */
 
 void
-TAO_ORB_Parameters::protocols_hooks_name (const char *s)
+TAO_ORB_Parameters::protocols_hooks_name (char const *s)
 {
   this->protocols_hooks_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::protocols_hooks_name () const
 {
   return this->protocols_hooks_name_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::thread_lane_resources_manager_factory_name (const char *s)
+TAO_ORB_Parameters::thread_lane_resources_manager_factory_name (char const *s)
 {
   this->thread_lane_resources_manager_factory_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::thread_lane_resources_manager_factory_name () const
 {
   return this->thread_lane_resources_manager_factory_name_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::dynamic_thread_pool_config_name (const char *s)
+TAO_ORB_Parameters::dynamic_thread_pool_config_name (char const *s)
 {
   this->dynamic_thread_pool_config_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::dynamic_thread_pool_config_name () const
 {
   return this->dynamic_thread_pool_config_name_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::stub_factory_name (const char *s)
+TAO_ORB_Parameters::stub_factory_name (char const *s)
 {
   this->stub_factory_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::stub_factory_name () const
 {
   return this->stub_factory_name_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::poa_factory_name (const char *s)
+TAO_ORB_Parameters::poa_factory_name (char const *s)
 {
   this->poa_factory_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::poa_factory_name () const
 {
   return this->poa_factory_name_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::poa_factory_directive (const ACE_TCHAR *s)
+TAO_ORB_Parameters::poa_factory_directive (ACE_TCHAR const *s)
 {
   this->poa_factory_directive_ = s;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 TAO_ORB_Parameters::poa_factory_directive () const
 {
   return this->poa_factory_directive_.c_str ();
 }
 
 void
-TAO_ORB_Parameters::endpoint_selector_factory_name (const char *s)
+TAO_ORB_Parameters::endpoint_selector_factory_name (char const *s)
 {
   this->endpoint_selector_factory_name_ = s;
 }
 
-const char *
+char const *
 TAO_ORB_Parameters::endpoint_selector_factory_name () const
 {
   return this->endpoint_selector_factory_name_.c_str ();

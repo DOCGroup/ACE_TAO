@@ -14,7 +14,7 @@ namespace TAO
   template<typename T>
   T *
   Narrow_Utils<T>::narrow (CORBA::Object_ptr obj,
-                           const char *repo_id)
+                           char const *repo_id)
   {
     if (CORBA::is_nil (obj))
       {

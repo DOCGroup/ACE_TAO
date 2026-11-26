@@ -861,7 +861,7 @@ namespace
         // Can't interpret this argument.  Move on to the next argument.
         if (arg_shifter.cur_arg_strncasecmp (ACE_TEXT ("-ORBSvcConf")) == 0)
           {
-            const ACE_TCHAR *current_arg =
+            ACE_TCHAR const *current_arg =
                         arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConf"));
             arg_shifter.consume_arg ();
 
@@ -892,7 +892,7 @@ namespace
         else if (arg_shifter.cur_arg_strncasecmp
                  (ACE_TEXT ("-ORBSvcConfDirective")) == 0)
           {
-            const ACE_TCHAR *current_arg =
+            ACE_TCHAR const *current_arg =
               arg_shifter.get_the_parameter (ACE_TEXT ("-ORBSvcConfDirective"));
 
             // This is used to pass arguments to the Service
@@ -928,7 +928,7 @@ namespace
 
     while (arg_shifter.is_anything_left ())
       {
-        const ACE_TCHAR *current_arg {};
+        ACE_TCHAR const *current_arg {};
         if (0 == arg_shifter.cur_arg_strncasecmp
             (ACE_TEXT ("-ORBSkipServiceConfigOpen")))
           {
@@ -1074,7 +1074,7 @@ namespace
             arg_shifter.ignore_arg ();
 
             // This should set current_arg to the value of ORBGestalt option.
-            const ACE_TCHAR *current_arg = arg_shifter.get_current ();
+            ACE_TCHAR const *current_arg = arg_shifter.get_current ();
 
             if (nullptr != current_arg &&
                 ACE_OS::strcasecmp (current_arg, ACE_TEXT("GLOBAL")) != 0)

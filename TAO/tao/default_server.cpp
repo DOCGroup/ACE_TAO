@@ -39,7 +39,7 @@ TAO_Default_Server_Strategy_Factory::server_connection_thread_count ()
 // Evil macros b/c I'm lazy!
 #define TAO_BEGINCHECK  if (0)
 #define TAO_CHECKANDSET(sym) \
-  else if (ACE_OS::strcmp (const_cast <const ACE_TCHAR *> ( flag), ACE_TEXT(#sym)) == 0) \
+  else if (ACE_OS::strcmp (const_cast <ACE_TCHAR const *> ( flag), ACE_TEXT(#sym)) == 0) \
   ACE_SET_BITS (this->thread_flags_, sym)
 #define TAO_ENDCHECK
 
@@ -375,8 +375,8 @@ TAO_Default_Server_Strategy_Factory::parse_args (int argc, ACE_TCHAR* argv[])
 
 void
 TAO_Default_Server_Strategy_Factory::report_option_value_error (
-                                 const ACE_TCHAR* option_name,
-                                 const ACE_TCHAR* option_value)
+                                 ACE_TCHAR const *option_name,
+                                 ACE_TCHAR const *option_value)
 {
   TAOLIB_DEBUG((LM_DEBUG,
              ACE_TEXT ("Server_Strategy_Factory - unknown argument")
