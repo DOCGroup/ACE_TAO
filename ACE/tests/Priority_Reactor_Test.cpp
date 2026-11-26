@@ -111,7 +111,7 @@ Read_Handler::handle_input (ACE_HANDLE h)
 
   char buf[BUFSIZ];
 
-  const ssize_t result = this->peer ().recv (buf, sizeof (buf));
+  ssize_t const result = this->peer ().recv (buf, sizeof (buf));
 
   if (result <= 0)
     {

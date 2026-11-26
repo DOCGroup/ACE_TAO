@@ -900,7 +900,7 @@ Sender::initiate_write ()
 {
   if ( this->msg_queue ()->message_count () < 20) // flow control
     {
-      const size_t nbytes = ACE_OS::strlen (send_buf_);
+      size_t const nbytes = ACE_OS::strlen (send_buf_);
 
       ACE_Message_Block *mb {};
       ACE_NEW_RETURN (mb,
