@@ -109,8 +109,7 @@ ACE_Capabilities::resetcaps ()
       delete entry->int_id_;
     }
 
-  this->caps_.close ();
-  this->caps_.open ();
+  this->caps_.unbind_all ();
 }
 
 int

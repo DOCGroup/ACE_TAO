@@ -54,6 +54,12 @@ load_config ()
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("string = %s\n"),
               s.c_str ()));
+
+  if (caps.getent (config, ACE_TEXT ("Config")) != 0
+      || caps.getval (ACE_TEXT ("integer"), n) != 0 || n != 2)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Reloading capabilities failed\n")), 1);
+    }
   return 0;
 }
 
