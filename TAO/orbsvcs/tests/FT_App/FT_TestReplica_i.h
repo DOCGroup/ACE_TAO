@@ -32,7 +32,7 @@ class FT_ReplicaFactory_i;
 class FT_TestReplica_i : public virtual POA_FT_TEST::TestReplica
 {
 public:
-  FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * name, unsigned long factory_id);
+  FT_TestReplica_i (FT_ReplicaFactory_i * factory, char const *name, unsigned long factory_id);
   virtual ~FT_TestReplica_i ();
 
   /**
@@ -50,14 +50,14 @@ public:
    *  usage: [program] &lt;usageMessage()&gt; [other usage]
    * @returns c-style string containing "bare" usage options.
    */
-  const char * usage_options();
+  char const *usage_options();
 
   /**
    * Initialize this object.
    * @param orb The ORB.
    * @return zero for success; nonzero is process return code for failure.
    */
-  int init (CORBA::ORB_var & orb, const ACE_TCHAR*);
+  int init (CORBA::ORB_var & orb, ACE_TCHAR const *);
 
   /**
    * Prepare to exit.
@@ -76,7 +76,7 @@ public:
 
   unsigned long factory_id()const;
 
-  static const char * repository_id();
+  static char const *repository_id();
 
   ::FT_TEST::TestReplica_ptr object_reference();
 
@@ -143,7 +143,7 @@ private:
    */
   void store(long value);
 
-  void suicide(const char *);
+  void suicide(char const *);
 
   ///////////////
   // data members
@@ -192,7 +192,7 @@ private:
    * The CORBA object id assigned to this object.
    */
 
-  const ACE_TCHAR* name_persistent_storage;
+  ACE_TCHAR const *name_persistent_storage;
 };
 
 #include /**/ "ace/post.h"

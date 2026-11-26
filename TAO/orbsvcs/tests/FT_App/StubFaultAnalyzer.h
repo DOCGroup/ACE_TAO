@@ -49,7 +49,7 @@ public:
   /**
    * Return a string to identify this object for logging/console message purposes.
    */
-  const char * identity () const;
+  char const *identity () const;
 
   /**
    * idle time activity.
@@ -67,7 +67,7 @@ public:
   /// @name Implementation methods
   /// @{
 private:
-  int readIORFile(const ACE_TCHAR * fileName, CORBA::String_var & ior);
+  int readIORFile(ACE_TCHAR const *fileName, CORBA::String_var & ior);
   /// @}
 
   /// @name Data members

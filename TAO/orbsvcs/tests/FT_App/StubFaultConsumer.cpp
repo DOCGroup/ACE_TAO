@@ -43,7 +43,7 @@ int StubFaultConsumer::parse_args (int argc, ACE_TCHAR * argv[])
       {
         if (this->replicaIorBuffer_ == nullptr)
         {
-          const char * repNames = get_opts.opt_arg ();
+          char const *repNames = get_opts.opt_arg ();
           const size_t repNameLen = std::strlen (repNames);
 
           // make a working copy of the string
@@ -204,7 +204,7 @@ int StubFaultConsumer::init (CORBA::ORB_ptr orb,
 /**
  * Return a string to identify this object for logging/console message purposes.
  */
-const char * StubFaultConsumer::identity () const
+char const *StubFaultConsumer::identity () const
 {
   return this->identity_.c_str();
 }
@@ -238,9 +238,9 @@ void StubFaultConsumer::push_structured_event(
     "FaultConsumer:   Header EventType type: %s\n"
     "FaultConsumer:   Header EventName: %s\n",
     static_cast<unsigned int> (this->notifications_),
-    static_cast<const char *> (notification.header.fixed_header.event_type.domain_name),
-    static_cast<const char *> (notification.header.fixed_header.event_type.type_name),
-    static_cast<const char *> (notification.header.fixed_header.event_name)
+    static_cast<char const *> (notification.header.fixed_header.event_type.domain_name),
+    static_cast<char const *> (notification.header.fixed_header.event_type.type_name),
+    static_cast<char const *> (notification.header.fixed_header.event_name)
     ));
   const CosNotification::FilterableEventBody & filterable = notification.filterable_data;
 
@@ -249,8 +249,8 @@ void StubFaultConsumer::push_structured_event(
   {
     const CosNotification::Property & property = filterable[nProp];
 
-    const char * property_name = static_cast<const char *> (property.name);
-    const char * value = "<unknown>";
+    char const *property_name = static_cast<char const *> (property.name);
+    char const *value = "<unknown>";
     if (property.value >>= value )
     {
       // ok!

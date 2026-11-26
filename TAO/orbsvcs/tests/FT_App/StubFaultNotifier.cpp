@@ -185,7 +185,7 @@ int StubFaultNotifier::init (CORBA::ORB_ptr orb)
     size_t const replicaCount = this->iorReplicaFiles_.size();
     for(size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
-      const char * iorName = this->iorReplicaFiles_[nRep];
+      char const *iorName = this->iorReplicaFiles_[nRep];
       CORBA::Object_var replica_object = this->orb_->string_to_object(iorName);
       FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow(replica_object.in ());
       if (CORBA::is_nil(replica.in ()))
@@ -310,7 +310,7 @@ int StubFaultNotifier::write_ior_file()
 /**
  * Return a string to identify this object for logging/console message purposes.
  */
-const ACE_TCHAR * StubFaultNotifier::identity () const
+ACE_TCHAR const *StubFaultNotifier::identity () const
 {
   return this->identity_.c_str();
 }
@@ -331,9 +331,9 @@ void StubFaultNotifier::push_structured_fault (
     "FaultNotifier:   Header EventType domain: %s\n"
     "FaultNotifier:   Header EventType type: %s\n"
     "FaultNotifier:   Header EventName: %s\n",
-    static_cast<const char *> (event.header.fixed_header.event_type.domain_name),
-    static_cast<const char *> (event.header.fixed_header.event_type.type_name),
-    static_cast<const char *> (event.header.fixed_header.event_name)
+    static_cast<char const *> (event.header.fixed_header.event_type.domain_name),
+    static_cast<char const *> (event.header.fixed_header.event_type.type_name),
+    static_cast<char const *> (event.header.fixed_header.event_name)
     ));
   const CosNotification::FilterableEventBody & filterable = event.filterable_data;
 
@@ -343,7 +343,7 @@ void StubFaultNotifier::push_structured_fault (
     const CosNotification::Property & property = filterable[nProp];
     ACE_ERROR ((LM_ERROR,
       "FaultNotifier:   Property Name: %s\n",
-      static_cast<const char *> (property.name)
+      static_cast<char const *> (property.name)
       ));
     //@@ we could stand to decode more--just for completeness
   }
@@ -357,7 +357,7 @@ void StubFaultNotifier::push_sequence_fault (
 }
 
 ::CosNotifyFilter::Filter_ptr StubFaultNotifier::create_subscription_filter (
-    const char * constraint_grammar)
+    char const *constraint_grammar)
 {
   ACE_UNUSED_ARG (constraint_grammar);
   throw CORBA::NO_IMPLEMENT();

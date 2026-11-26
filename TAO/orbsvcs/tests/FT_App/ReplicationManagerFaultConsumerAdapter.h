@@ -39,7 +39,7 @@ public:
   /**
    * Return a string to identify this object for logging/console message purposes.
    */
-  const char * identity () const;
+  char const *identity () const;
 
   /**
    * idle time activity.
@@ -84,12 +84,12 @@ private:
   /**
    * a file to write to to signal "ready"
    */
-  const ACE_TCHAR * readyFile_;
+  ACE_TCHAR const *readyFile_;
 
   /**
    * Detector's IOR
    */
-  const ACE_TCHAR * detector_ior_;
+  ACE_TCHAR const *detector_ior_;
 
   /**
    * The FaultDetectorFactory object reference.
@@ -109,7 +109,7 @@ private:
   /**
    * A file from which the notifier's IOR should be read.
    */
-  const ACE_TCHAR * notifier_ior_;
+  ACE_TCHAR const *notifier_ior_;
 
   /**
    * the fault notifier

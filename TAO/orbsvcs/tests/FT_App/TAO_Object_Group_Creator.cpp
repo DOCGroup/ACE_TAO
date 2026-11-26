@@ -98,7 +98,7 @@ int TAO::Object_Group_Creator::init (CORBA::ORB_ptr orb)
   return result;
 }
 
-int TAO::Object_Group_Creator::unregister_role (const char * role)
+int TAO::Object_Group_Creator::unregister_role (char const *role)
 {
   int result = 0;
   ACE_ERROR ( (LM_INFO,
@@ -111,8 +111,8 @@ int TAO::Object_Group_Creator::unregister_role (const char * role)
 
 int TAO::Object_Group_Creator::create_detector_for_replica (
   CORBA::Object_ptr replica,
-  const char * role,
-  const char * type_id,
+  char const *role,
+  char const *type_id,
   PortableGroup::ObjectGroupId group_id,
   const PortableGroup::Location & location)
 {
@@ -179,7 +179,7 @@ int TAO::Object_Group_Creator::create_detector_for_replica (
 }
 
 CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group (
-    const char * type_id)
+    char const *type_id)
 {
   CORBA::Object_var group = CORBA::Object::_nil ();
 
@@ -229,7 +229,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_infrastructure_managed_group
 }
 
 CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
-    const char * role,
+    char const *role,
     int write_iors)
 {
   CORBA::Object_var group = CORBA::Object::_nil ();
@@ -294,7 +294,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
     {
       ::PortableGroup::FactoryInfo & info = infos[nFact];
 
-      const char * loc_name = info.the_location[0].id;
+      char const *loc_name = info.the_location[0].id;
       ACE_ERROR ( (LM_INFO,
         "%T %n (%P|%t) Object_Group_Creator: Creating %s@%s\n",
         role,
@@ -321,7 +321,7 @@ CORBA::Object_ptr TAO::Object_Group_Creator::create_group (
           group_id,
           info.the_location);
 
-        const char * replica_ior = orb_->object_to_string (created_obj.in ());
+        char const *replica_ior = orb_->object_to_string (created_obj.in ());
 
         if (write_iors)
         {
@@ -402,7 +402,7 @@ int TAO::Object_Group_Creator::fini ()
   return 0;
 }
 
-int TAO::Object_Group_Creator::write_ior_file (const char * outputFile, const char * ior)
+int TAO::Object_Group_Creator::write_ior_file (char const *outputFile, char const *ior)
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (outputFile, "w");

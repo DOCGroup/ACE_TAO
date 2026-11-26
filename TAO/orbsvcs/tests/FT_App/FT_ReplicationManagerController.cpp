@@ -37,7 +37,7 @@ private:
 private:
   CORBA::ORB_var orb_;
   FT::ReplicationManager_var replication_manager_;
-  const ACE_TCHAR *rm_ior_;
+  ACE_TCHAR const *rm_ior_;
   int shutdown_;
 };
 

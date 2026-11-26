@@ -219,7 +219,7 @@ int StubFaultAnalyzer::init (CORBA::ORB_ptr orb)
 /**
  * Return a string to identify this object for logging/console message purposes.
  */
-const char * StubFaultAnalyzer::identity () const
+char const *StubFaultAnalyzer::identity () const
 {
   return this->identity_.c_str();
 }

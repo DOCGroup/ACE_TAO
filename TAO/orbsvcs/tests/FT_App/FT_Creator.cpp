@@ -172,7 +172,7 @@ int FTAPP::FT_Creator::run ()
   size_t nType = 0;
   for ( nType = 0; result == 0 && nType < typeCount; ++nType)
   {
-    const char * role = this->create_roles_[nType].c_str();
+    char const *role = this->create_roles_[nType].c_str();
     ACE_OS::fprintf (stdout, "\nCreator: Creating group of %s\n", role);
     PortableGroup::ObjectGroup_var group = this->creator_.create_group (
       role,
@@ -191,7 +191,7 @@ int FTAPP::FT_Creator::run ()
       FILE * iogr_file = ACE_OS::fopen (iogr_filename, "w");
       if (iogr_file != nullptr)
       {
-        char const * siogr = static_cast<const char *> (iogr.in ());
+        char const * siogr = static_cast<char const *> (iogr.in ());
         ACE_OS::fwrite (siogr, 1, std::strlen (siogr), iogr_file);
         ACE_OS::fclose (iogr_file);
       }
@@ -224,7 +224,7 @@ int FTAPP::FT_Creator::run ()
   typeCount = this->unregister_roles_.size();
   for ( nType = 0; result == 0 && nType < typeCount; ++nType)
   {
-    const char * role = this->unregister_roles_[nType].c_str();
+    char const *role = this->unregister_roles_[nType].c_str();
     result = this->creator_.unregister_role (role);
   }
 

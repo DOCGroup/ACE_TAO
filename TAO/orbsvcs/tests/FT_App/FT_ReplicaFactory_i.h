@@ -77,9 +77,9 @@ public:
    * Identify this replica factory.
    * @return a string to identify this object for logging/console message purposes.
    */
-  const ACE_TCHAR * identity () const;
+  ACE_TCHAR const *identity () const;
 
-  const char * location () const;
+  char const *location () const;
 
   /**
    * Remove pointer to individual replica; delete FT_TestReplica_i.
@@ -117,7 +117,7 @@ private:
    * Actual replica creation happens in this method.
    * @param name becomes part of the objects identity.
    */
-  FT_TestReplica_i * create_replica(const char * name);
+  FT_TestReplica_i * create_replica(char const *name);
 
   /**
    * Find or allocate an ID for a new replica
@@ -127,7 +127,7 @@ private:
   /**
    * Write this factory's IOR to a file
    */
-  int write_ior (const ACE_TCHAR * outputFile, const char * ior);
+  int write_ior (ACE_TCHAR const *outputFile, char const *ior);
 
   /**
    * Clean house for factory shut down.
@@ -170,7 +170,7 @@ private:
   /**
    * A file to which the factory's IOR should be written.
    */
-  const ACE_TCHAR * ior_output_file_;
+  ACE_TCHAR const *ior_output_file_;
 
   /**
    * A human-readable string to distinguish this from other Notifiers.
@@ -191,7 +191,7 @@ private:
   /**
    * The factory registry IOR
    */
-  const ACE_TCHAR * factory_registry_ior_;
+  ACE_TCHAR const *factory_registry_ior_;
 
   /**
    * The factory registry with which to register.
@@ -206,7 +206,7 @@ private:
   /**
    * A file to which the test replica's IOR will be written
    */
-  const ACE_TCHAR * test_output_file_;
+  ACE_TCHAR const *test_output_file_;
 
   /**
    * A name to be used to register the factory with the name service.
@@ -256,7 +256,7 @@ private:
   /**
   * A file that use by FT_TestReplica_i object
   */
-  const ACE_TCHAR* name_persistent_file_;
+  ACE_TCHAR const *name_persistent_file_;
   /// @}
 };
 

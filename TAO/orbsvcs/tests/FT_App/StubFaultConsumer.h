@@ -45,7 +45,7 @@ public:
   /**
    * Return a string to identify this object for logging/console message purposes.
    */
-  const char * identity () const;
+  char const *identity () const;
 
   /**
    * idle time activity.

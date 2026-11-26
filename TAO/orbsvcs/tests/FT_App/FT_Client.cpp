@@ -54,7 +54,7 @@ private:
 
   int argc_;
   ACE_TCHAR ** argv_;
-  const ACE_TCHAR * inFileName_;
+  ACE_TCHAR const *inFileName_;
   FILE *inFile_;
   FILE *commandIn_;
 
@@ -68,7 +68,7 @@ private:
 
   StringVec replica_iors_;
   size_t replica_pos_;
-  const char * replica_name_;
+  char const *replica_name_;
   FT_TEST::TestReplica_var replica_;
 };
 

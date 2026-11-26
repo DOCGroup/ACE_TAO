@@ -85,7 +85,7 @@ int StubBatchConsumer::init (CORBA::ORB_ptr orb, ::FT::FaultNotifier_var & notif
 /**
  * Return a string to identify this object for logging/console message purposes.
  */
-const char * StubBatchConsumer::identity () const
+char const *StubBatchConsumer::identity () const
 {
   return this->identity_.c_str();
 }

@@ -37,7 +37,7 @@
       ));                     \
     return /* value goes here */
 
-static const char * criterion_initial_value = "INITIAL_VALUE";
+static char const *criterion_initial_value = "INITIAL_VALUE";
 
 //////////////////////////////////////////////////////
 // FT_ReplicaFactory_i  Construction/destruction
@@ -129,7 +129,7 @@ void FT_ReplicaFactory_i::shutdown_i()
   }
 }
 
-int FT_ReplicaFactory_i::write_ior(const ACE_TCHAR * outputFile, const char * ior)
+int FT_ReplicaFactory_i::write_ior(ACE_TCHAR const *outputFile, char const *ior)
 {
   int result = -1;
   FILE* out = ACE_OS::fopen (outputFile, "w");
@@ -230,12 +230,12 @@ int FT_ReplicaFactory_i::parse_args (int argc, ACE_TCHAR * argv[])
   return 0;
 }
 
-const char * FT_ReplicaFactory_i::location () const
+char const *FT_ReplicaFactory_i::location () const
 {
   return this->location_.c_str ();
 }
 
-const ACE_TCHAR * FT_ReplicaFactory_i::identity () const
+ACE_TCHAR const *FT_ReplicaFactory_i::identity () const
 {
   return this->identity_.c_str();
 }
@@ -387,7 +387,7 @@ int FT_ReplicaFactory_i::init (CORBA::ORB_ptr orb)
     size_t const roleCount = roles_.size();
     for (size_t nRole = 0; nRole < roleCount; ++nRole)
     {
-      const char * roleName = this->roles_[nRole].c_str();
+      char const *roleName = this->roles_[nRole].c_str();
 
       PortableGroup::FactoryInfo info;
       info.the_factory = ::PortableGroup::GenericFactory::_narrow(this_obj.in ());
@@ -527,7 +527,7 @@ int FT_ReplicaFactory_i::fini ()
       size_t const roleCount = roles_.size();
       for (size_t nRole = 0; nRole < roleCount; ++nRole)
       {
-        const char * roleName = this->roles_[nRole].c_str();
+        char const *roleName = this->roles_[nRole].c_str();
         ACE_ERROR (( LM_INFO,
            "Factory for: %s@%C unregistering from factory registry\n",
            roleName,
@@ -581,7 +581,7 @@ void FT_ReplicaFactory_i::remove_replica(CORBA::ULong id, FT_TestReplica_i * rep
 // FT_ReplicaFactory_i CORBA methods
 
 CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
-    const char * type_id,
+    char const *type_id,
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out factory_creation_id)
 {
@@ -602,7 +602,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
     // missingParameterName = criterion_initial_value;
   }
 
-  const char * role = "replica";
+  char const *role = "replica";
   if (! ::TAO::find (decoder, PortableGroup::role_criterion, role) )
   {
     ACE_ERROR((LM_INFO,
@@ -647,7 +647,7 @@ CORBA::Object_ptr FT_ReplicaFactory_i::create_object (
   METHOD_RETURN(FT_ReplicaFactory_i::create_object) replica_obj->_duplicate(replica_obj);
 }
 
-FT_TestReplica_i * FT_ReplicaFactory_i::create_replica(const char * name)
+FT_TestReplica_i * FT_ReplicaFactory_i::create_replica(char const *name)
 {
   // assume mutex is locked
   CORBA::ULong factoryId = allocate_id();

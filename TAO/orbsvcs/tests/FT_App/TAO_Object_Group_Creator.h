@@ -45,15 +45,15 @@ namespace TAO
     /////////////////
     // functionality
     CORBA::Object_ptr create_group(
-        const char * role,
+        char const *role,
         int write_iors);
 
     /////////////////
     // functionality
     CORBA::Object_ptr create_infrastructure_managed_group(
-        const char * type_id);
+        char const *type_id);
 
-    int unregister_role(const char * role);
+    int unregister_role(char const *role);
 
     ////////////
     // shut down
@@ -62,12 +62,12 @@ namespace TAO
     /////////////////
     // implementation
   private:
-    int write_ior_file(const char * outputFile, const char * ior);
+    int write_ior_file(char const *outputFile, char const *ior);
 
   int create_detector_for_replica (
     CORBA::Object_ptr replica,
-    const char * role,
-    const char * type_id,
+    char const *role,
+    char const *type_id,
     PortableGroup::ObjectGroupId group_id,
     const PortableGroup::Location & location);
 

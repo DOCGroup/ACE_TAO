@@ -234,7 +234,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
     ));
     for (size_t nRep = 0; result == 0 && nRep < replicaCount; ++nRep)
     {
-      const char * iorName = this->replica_iors_[nRep];
+      char const *iorName = this->replica_iors_[nRep];
       CORBA::Object_var replica_obj = this->orb_->string_to_object (
         iorName);
       FT::PullMonitorable_var replica = FT::PullMonitorable::_narrow (
@@ -327,7 +327,7 @@ int ReplicationManagerFaultConsumerAdapter::init (
 /**
  * Return a string to identify this object for logging/console message purposes.
  */
-const char * ReplicationManagerFaultConsumerAdapter::identity () const
+char const *ReplicationManagerFaultConsumerAdapter::identity () const
 {
   return this->identity_.c_str();
 }

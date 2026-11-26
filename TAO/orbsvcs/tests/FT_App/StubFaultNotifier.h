@@ -49,7 +49,7 @@ public:
   /**
    * Return a string to identify this object for logging/console message purposes.
    */
-  const ACE_TCHAR * identity () const;
+  ACE_TCHAR const *identity () const;
 
   /**
    * idle time activity.
@@ -126,12 +126,12 @@ private:
   /**
    * A file to which the factory's IOR should be written.
    */
-  const ACE_TCHAR * ior_output_file_;
+  ACE_TCHAR const *ior_output_file_;
 
   /**
    * A file from which the detector's IOR should be read.
    */
-  const ACE_TCHAR * detector_ior_;
+  ACE_TCHAR const *detector_ior_;
 
   ::FT::FaultDetectorFactory_var factory_;
 

@@ -111,7 +111,7 @@ namespace
 //////////////////////////////////////////////////
 // class FT_TestReplica_i construction/destruction
 
-FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, const char * name, unsigned long factory_id)
+FT_TestReplica_i::FT_TestReplica_i (FT_ReplicaFactory_i * factory, char const *name, unsigned long factory_id)
   : death_pending_ (FT_TEST::TestReplica::NOT_YET)
   , verbose_ (1)
   , name_ (name)
@@ -130,7 +130,7 @@ FT_TestReplica_i::~FT_TestReplica_i ()
 //  cout << name_.c_str() << '@' << this->factory_->location() << '#' << this->factory_id_ << " Destruct" << endl;
 }
 
-void FT_TestReplica_i::suicide(const char * note)
+void FT_TestReplica_i::suicide(char const *note)
 {
   ACE_OS::fprintf (stdout, "%s@%s#%lu Simulate FAULT_CODE fault: %s\n",
                    name_.c_str(), this->factory_->location(), this->factory_id_, note);
@@ -143,9 +143,9 @@ void FT_TestReplica_i::suicide(const char * note)
 // class FT_TestReplica_i public, non-CORBA interface
 
 //static
-const char * FT_TestReplica_i::repository_id()
+char const *FT_TestReplica_i::repository_id()
 {
-  const char * id =
+  char const *id =
     FT_TEST::_tc_TestReplica->id();
 
   return id;
@@ -160,7 +160,7 @@ FT_TestReplica_i::parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 //static
-const char *
+char const *
 FT_TestReplica_i::usage_options()
 {
   return "";
@@ -186,7 +186,7 @@ PortableServer::ObjectId FT_TestReplica_i::object_id()const
  * @param orbManager our ORB -- we keep var to it.
  * @return zero for success; nonzero is process return code for failure.
  */
-int FT_TestReplica_i::init (CORBA::ORB_var & orb, const ACE_TCHAR* file_persistent)
+int FT_TestReplica_i::init (CORBA::ORB_var & orb, ACE_TCHAR const *file_persistent)
 {
   this->orb_ = orb;
 
@@ -307,7 +307,7 @@ void FT_TestReplica_i::set_state (const FT::State & s)
 }
 
 void FT_TestReplica_i::tao_update_object_group (
-    const char * iogr,
+    char const *iogr,
     PortableGroup::ObjectGroupRefVersion version,
     CORBA::Boolean is_primary)
 {
