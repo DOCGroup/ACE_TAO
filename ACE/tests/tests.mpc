@@ -193,6 +193,13 @@ project(Auto Event Test) : acetest {
   }
 }
 
+project(Auto Functor Test) : acetest {
+  exename = Auto_Functor_Test
+  Source_Files {
+    Auto_Functor_Test.cpp
+  }
+}
+
 project(Auto IncDec Test) : acetest {
   exename = Auto_IncDec_Test
   Source_Files {

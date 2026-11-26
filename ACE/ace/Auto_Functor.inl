@@ -34,7 +34,7 @@ ACE_Utils::Auto_Functor<X,Functor>:: operator=(Auto_Functor & rhs)
 template<typename X, typename Functor> template<typename Y> ACE_INLINE
 ACE_Utils::Auto_Functor<X,Functor>::Auto_Functor(Auto_Functor<Y,Functor>& rhs)
   : p_(rhs.release())
-  , f_(rhs.f_)
+  , f_(rhs.functor())
 {
 }
 
@@ -43,6 +43,7 @@ ACE_INLINE ACE_Utils::Auto_Functor<X,Functor>&
 ACE_Utils::Auto_Functor<X,Functor>::operator=(Auto_Functor<Y,Functor>& rhs)
 {
   reset(rhs.release());
+  f_ = rhs.functor();
   return *this;
 }
 

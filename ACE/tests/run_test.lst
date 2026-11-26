@@ -22,6 +22,7 @@ Array_Base_Test
 Array_Map_Test
 Atomic_Op_Test
 Auto_Event_Test
+Auto_Functor_Test
 Auto_IncDec_Test
 Barrier_Test
 Based_Pointer_Test: !STATIC !ACE_FOR_TAO !PHARLAP
