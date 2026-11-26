@@ -25,14 +25,14 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       // Create the test policy.
 
-      const CORBA::ULong val (40442);
+      CORBA::ULong const val (40442);
       CORBA::Any any {};
       any <<= val;
 
       CORBA::Policy_var const p (orb->create_policy (Test::POLICY_TYPE,
                                                      any));
 
-      const CORBA::PolicyType ptype (p->policy_type ());
+      CORBA::PolicyType const ptype (p->policy_type ());
 
       // Sanity check.
       if (ptype != Test::POLICY_TYPE)
@@ -42,7 +42,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       Test::Policy_var const policy (Test::Policy::_narrow (p.in ()));
 
-      const CORBA::ULong pval (policy->value ());
+      CORBA::ULong const pval (policy->value ());
 
       // Sanity check.
       if (val != pval)

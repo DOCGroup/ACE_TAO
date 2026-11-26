@@ -106,7 +106,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       sorb->destroy ();
 
-      const CORBA::ULong number_called =
+      CORBA::ULong const number_called =
         Echo_Server_Request_Interceptor::server_interceptor_check_;
 
       if (number_called != 10)

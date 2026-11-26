@@ -50,7 +50,7 @@ protected:
 
 private:
   /// Pseudo-reference to the ORB.
-  const CORBA::ULong value_;
+  CORBA::ULong const value_;
 };
 
 #endif  /* POLICY_H */

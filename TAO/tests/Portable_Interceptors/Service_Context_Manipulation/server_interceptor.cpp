@@ -56,7 +56,7 @@ Echo_Server_Request_Interceptor::receive_request_service_contexts (
 
   scc.context_id = ::service_id;
 
-  const CORBA::ULong string_len = std::strlen (reply_msg) + 1;
+  CORBA::ULong const string_len = std::strlen (reply_msg) + 1;
   CORBA::Octet *buff = CORBA::OctetSeq::allocbuf (string_len);
 
   std::strcpy (reinterpret_cast<char *> (buff), reply_msg);

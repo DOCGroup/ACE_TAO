@@ -278,7 +278,7 @@ wait_for_exception (CORBA::ORB_ptr orb,
           CORBA::String_var dummy =
             echo->echo_operation ("foo");
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           exception_detected = true;
         }

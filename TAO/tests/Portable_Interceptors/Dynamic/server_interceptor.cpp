@@ -222,7 +222,7 @@ Echo_Server_Request_Interceptor::send_reply (PortableInterceptor::ServerRequestI
       Dynamic::ParameterList_var paramlist = ri->arguments ();
 
       CORBA::Long param {};
-      const CORBA::ULong i {};  // index -- explicitly used to avoid
+      CORBA::ULong const i {};  // index -- explicitly used to avoid
                            // overloaded operator ambiguity.
       paramlist[i].argument >>= param;
       ACE_DEBUG ((LM_DEBUG,
