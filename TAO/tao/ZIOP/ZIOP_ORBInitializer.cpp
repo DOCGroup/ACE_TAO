@@ -88,7 +88,7 @@ TAO_ZIOP_ORBInitializer::register_policy_factories (
       info->register_policy_factory (ZIOP::COMPRESSION_MIN_RATIO_POLICY_ID,
                                      policy_factory.in ());
     }
-  catch (const CORBA::BAD_INV_ORDER& ex)
+  catch (CORBA::BAD_INV_ORDER const &ex)
     {
       if (ex.minor () == (CORBA::OMGVMCID | 16))
         {
