@@ -71,7 +71,7 @@ spawn_my_orb_thread (void *)
 
       the_orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 0;
@@ -97,7 +97,7 @@ CServerApp::~CServerApp()
 
       int argc = 0;
       ACE_TCHAR **argv {};
-      const ACE_TCHAR *orb_name = ACE_TEXT("");
+      ACE_TCHAR const *orb_name = ACE_TEXT("");
 
       // Retrieving a reference to the ORB used inside the thread
       the_shutdown_orb =
@@ -109,7 +109,7 @@ CServerApp::~CServerApp()
 
       ACE_Thread_Manager::instance ()->wait ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Caught exception:");
     }

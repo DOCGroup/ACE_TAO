@@ -51,7 +51,7 @@ Starter::resolve_synch_objs ()
 
   CosNaming::BindingIterator_var iterator;
   CosNaming::BindingList_var binding_list;
-  const CORBA::ULong chunk = 100;
+  CORBA::ULong const chunk = 100;
 
   // Get the list of synchs registered for this sender.
   this->synch_context_->list (chunk,
