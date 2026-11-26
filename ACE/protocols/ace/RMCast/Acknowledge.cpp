@@ -153,7 +153,7 @@ namespace ACE_RMCast
 
         while (!stop_)
           {
-            if (cond_.wait (&time) == -1)
+            if (cond_.wait (std::addressof (time)) == -1)
               {
                 if (errno != ETIME)
                   {

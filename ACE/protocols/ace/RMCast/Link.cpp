@@ -41,15 +41,15 @@ namespace ACE_RMCast
       int s (sizeof (r));
 
       static_cast<ACE_SOCK&> (rsock_).set_option (
-        SOL_SOCKET, SO_RCVBUF, &r, s);
+        SOL_SOCKET, SO_RCVBUF, std::addressof (r), s);
 
       static_cast<ACE_SOCK&> (ssock_).set_option (
-        SOL_SOCKET, SO_RCVBUF, &r, s);
+        SOL_SOCKET, SO_RCVBUF, std::addressof (r), s);
 
-      rsock_.get_option (SOL_SOCKET, SO_RCVBUF, &r, &s);
+      rsock_.get_option (SOL_SOCKET, SO_RCVBUF, std::addressof (r), std::addressof (s));
       //cerr << 5 << "recv buffer size: " << r << endl;
 
-      ssock_.get_option (SOL_SOCKET, SO_RCVBUF, &r, &s);
+      ssock_.get_option (SOL_SOCKET, SO_RCVBUF, std::addressof (r), std::addressof (s));
       //cerr << 5 << "send buffer size: " << r << endl;
     }
 
@@ -204,7 +204,7 @@ namespace ACE_RMCast
       for (;;)
       {
         ACE_Time_Value t (params_.tick ());
-        ssize_t r = rsock_.recv (data, 4, addr, MSG_PEEK, &t);
+        ssize_t r = rsock_.recv (data, 4, addr, MSG_PEEK, std::addressof (t));
 
         // Check for cancellation request.
         //
