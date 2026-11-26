@@ -287,10 +287,15 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::null () const
 template<class X, class ACE_LOCK> inline void
 ACE_Strong_Bound_Ptr<X, ACE_LOCK>::reset (X *p)
 {
+  if (p != nullptr && p == this->ptr_)
+    {
+      return;
+    }
+  std::unique_ptr<X> owner (p);
   COUNTER *old_counter = this->counter_;
   X *old_ptr = this->ptr_;
   this->counter_ = COUNTER::create_strong ();
-  this->ptr_ = p;
+  this->ptr_ = owner.release ();
   if (COUNTER::detach_strong (old_counter) == 0)
     {
       delete old_ptr;

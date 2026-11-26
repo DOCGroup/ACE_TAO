@@ -99,8 +99,17 @@ struct Cast_Other : virtual Cast_Base
 class Throwing_Lock : public ACE_Null_Mutex
 {
 public:
-  Throwing_Lock () { throw std::bad_alloc (); }
+  Throwing_Lock ()
+  {
+    if (fail_)
+      {
+        throw std::bad_alloc ();
+      }
+  }
+  static bool fail_;
 };
+
+bool Throwing_Lock::fail_ {true};
 
 class Construction_Probe
 {
@@ -393,6 +402,29 @@ run_main (int, ACE_TCHAR *[])
     if (!caught || destroyed != 1)
       {
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bound pointer construction leaked its object\n")), -1);
+      }
+  }
+  {
+    int destroyed {};
+    Throwing_Lock::fail_ = false;
+    ACE_Strong_Bound_Ptr<Construction_Probe, Throwing_Lock> ptr (
+      new Construction_Probe (destroyed));
+    Construction_Probe * const original = ptr.get ();
+    ptr.reset (original);
+    Throwing_Lock::fail_ = true;
+    bool caught {};
+    try
+      {
+        ptr.reset (new Construction_Probe (destroyed));
+      }
+    catch (std::bad_alloc const &)
+      {
+        caught = true;
+      }
+    Throwing_Lock::fail_ = false;
+    if (!caught || destroyed != 1 || ptr.get () != original)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bound pointer reset lost ownership on failure\n")), -1);
       }
   }
 
