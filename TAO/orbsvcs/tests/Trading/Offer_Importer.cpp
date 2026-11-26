@@ -110,7 +110,7 @@ TAO_Offer_Importer::perform_directed_queries ()
 
 void
 TAO_Offer_Importer::perform_queries_with_policies (
-    const TAO_Policy_Creator& policies)
+    TAO_Policy_Creator const & policies)
 {
   try
     {
@@ -214,7 +214,7 @@ TAO_Offer_Importer::perform_queries_with_policies (
 }
 
 void
-TAO_Offer_Importer::display_results (const CosTrading::OfferSeq& offer_seq,
+TAO_Offer_Importer::display_results (CosTrading::OfferSeq const & offer_seq,
                                      CosTrading::OfferIterator_ptr offer_iterator) const
 {
   try

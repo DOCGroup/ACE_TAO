@@ -41,7 +41,7 @@ private:
   /// Dump a service type description to standard output.
   void
   dump_typestruct (char const *type_name,
-                   const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct) const;
+                   CosTradingRepos::ServiceTypeRepository::TypeStruct const & type_struct) const;
 
   /// Whether the user requested verbose output.
   CORBA::Boolean verbose_;

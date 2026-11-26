@@ -140,7 +140,7 @@ char const *TT_Info::QUERIES[][4] =
 };
 
 void
-TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
+TT_Info::dump_properties (CosTrading::PropertySeq const & prop_seq,
                           CORBA::Boolean print_dynamic)
 {
   TAO_Property_Evaluator prop_eval (prop_seq);
@@ -166,7 +166,7 @@ TT_Info::dump_properties (const CosTrading::PropertySeq& prop_seq,
               ACE_DEBUG ((LM_DEBUG, "Dynamic Property\n"));
             }
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           // @@ Seth, don't pass the exceptions back?
           ACE_DEBUG ((LM_DEBUG, "Error retrieving property value.\n"));

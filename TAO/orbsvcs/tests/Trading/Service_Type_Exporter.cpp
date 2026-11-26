@@ -22,7 +22,7 @@ TAO_Service_Type_Exporter::~TAO_Service_Type_Exporter ()
   {
     this->remove_all_types ();
   }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
   {
   };
 }
@@ -39,7 +39,7 @@ TAO_Service_Type_Exporter::remove_all_types ()
         {
           this->repos_->remove_type (TT_Info::INTERFACE_NAMES[i]);
         }
-      catch (const CosTrading::UnknownServiceType& excp)
+      catch (CosTrading::UnknownServiceType const & excp)
         {
           if (this->verbose_)
             {
@@ -50,7 +50,7 @@ TAO_Service_Type_Exporter::remove_all_types ()
             }
           // Don't re-throw, this one is expected in the test.
         }
-      catch (const CORBA::Exception& e)
+      catch (CORBA::Exception const & e)
         {
           e._tao_print_exception ("TAO_Service_Type_Exporter::remove_all_types");
           throw;
@@ -101,7 +101,7 @@ TAO_Service_Type_Exporter::add_all_types_to_all ()
           str =
             CosTradingRepos::ServiceTypeRepository::_narrow (remote_repos.in ());
         }
-      catch (const CORBA::Exception& e)
+      catch (CORBA::Exception const & e)
         {
           e._tao_print_exception ("TAO_Service_Type_Exporter::add_all_types_to_all");
           throw;
@@ -125,7 +125,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
                            this->type_structs_[i].super_types);
         }
       catch (
-        const CosTradingRepos::ServiceTypeRepository::ServiceTypeExists& ste)
+        CosTradingRepos::ServiceTypeRepository::ServiceTypeExists const & ste)
         {
           ste._tao_print_exception (
             "TAO_Service_Type_Exporter::add_all_types_to");
@@ -136,7 +136,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
           }
           throw;
         }
-      catch (const CosTrading::IllegalPropertyName& excp)
+      catch (CosTrading::IllegalPropertyName const & excp)
         {
           excp._tao_print_exception (
             "TAO_Service_Type_Exporter::add_all_types_to");
@@ -148,7 +148,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
           throw;
         }
       catch (
-        const CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition& vtr)
+        CosTradingRepos::ServiceTypeRepository::ValueTypeRedefinition const & vtr)
         {
           vtr._tao_print_exception (
             "TAO_Service_Type_Exporter::add_all_types_to");
@@ -163,7 +163,7 @@ add_all_types_to (CosTradingRepos::ServiceTypeRepository_ptr repos)
           }
           throw;
         }
-      catch (const CORBA::Exception& e)
+      catch (CORBA::Exception const & e)
         {
           e._tao_print_exception (
             "TAO_Service_Type_Exporter::add_all_types_to");
@@ -204,7 +204,7 @@ TAO_Service_Type_Exporter::list_all_types ()
         throw CORBA::TRANSIENT(); // Try again later?
       };
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const & e)
     {
       e._tao_print_exception ("TAO_Service_Type_Exporter::list_all_types");
       throw;
@@ -231,7 +231,7 @@ TAO_Service_Type_Exporter::describe_all_types ()
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const & e)
     {
       e._tao_print_exception ("TAO_Service_Type_Exporter::describe_all_types");
       throw;
@@ -258,7 +258,7 @@ TAO_Service_Type_Exporter::fully_describe_all_types ()
             }
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const & e)
     {
       e._tao_print_exception ("TAO_Service_Type_Exporter::fully_describe_all_types");
       throw;
@@ -268,7 +268,7 @@ TAO_Service_Type_Exporter::fully_describe_all_types ()
 void
 TAO_Service_Type_Exporter::
 dump_typestruct (char const *type_name,
-                 const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct) const
+                 CosTradingRepos::ServiceTypeRepository::TypeStruct const & type_struct) const
 {
   char const *mode_str[] =
     {

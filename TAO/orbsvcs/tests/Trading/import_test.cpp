@@ -59,7 +59,7 @@ int failure = 0;
           offer_importer.perform_directed_queries ();
         }
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const & e)
     {
       e._tao_print_exception ("Trader import test ERROR!");
       failure = 1;

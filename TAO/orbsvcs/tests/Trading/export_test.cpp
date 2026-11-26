@@ -159,7 +159,7 @@ int failure = 0;
 
       orb_manager.run ();
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const & e)
     {
       e._tao_print_exception ("Trader export test ERROR!");
       failure = 1;

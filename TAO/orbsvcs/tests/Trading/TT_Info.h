@@ -12,7 +12,7 @@
 class TAO_TTest_Export TT_Info
 {
 public:
-  static void dump_properties (const CosTrading::PropertySeq& prop_seq,
+  static void dump_properties (CosTrading::PropertySeq const & prop_seq,
                                CORBA::Boolean print_dynamic = true);
   /// Dump the contents of this property sequence.
 

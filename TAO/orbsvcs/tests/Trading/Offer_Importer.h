@@ -26,10 +26,10 @@ public:
 
 private:
   /// Query the bootstrapped trader using the supplied policies.
-  void perform_queries_with_policies (const TAO_Policy_Creator& policy_manager);
+  void perform_queries_with_policies (TAO_Policy_Creator const & policy_manager);
 
   /// Display query results.
-  void display_results (const CosTrading::OfferSeq& offer_seq,
+  void display_results (CosTrading::OfferSeq const & offer_seq,
                         CosTrading::OfferIterator_ptr offer_iterator) const;
 
   /// Whether to display the contents of each returned offer.

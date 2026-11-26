@@ -126,7 +126,7 @@ int failure = 0;
       ACE_DEBUG ((LM_DEBUG, "*** Shutting down.\n"));
       orb_manager.fini();
     }
-  catch (const CORBA::Exception& e)
+  catch (CORBA::Exception const & e)
     {
       e._tao_print_exception ("Trader colocated test ERROR!");
       failure = 1;
