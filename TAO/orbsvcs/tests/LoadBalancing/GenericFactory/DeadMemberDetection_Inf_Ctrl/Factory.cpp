@@ -13,7 +13,7 @@ Factory::Factory (int id, int pong_delay)
 
 CORBA::Object_ptr
 Factory::create_object (
-    const char * /*type_id*/,
+    char const * /*type_id*/,
     const PortableGroup::Criteria & /*the_criteria*/,
     PortableGroup::GenericFactory::FactoryCreationId_out fcid)
 {
