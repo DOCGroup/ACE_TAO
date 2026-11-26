@@ -41,7 +41,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Buffering_Strategy
 public:
   TAO_Notify_Buffering_Strategy (
     TAO_Notify_Message_Queue& msg_queue,
-    const TAO_Notify_AdminProperties::Ptr& admin_properties);
+    TAO_Notify_AdminProperties::Ptr const& admin_properties);
 
   ~TAO_Notify_Buffering_Strategy () = default;
 

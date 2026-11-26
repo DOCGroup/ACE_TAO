@@ -55,7 +55,7 @@ Delivery_Request::complete ()
 
 // DO NOT INLINE THIS.  It uses the Routing_Slip_Ptr which cannot be declared at
 // the time Delivery_Request.inl is compiled.
-const TAO_Notify_Event::Ptr &
+TAO_Notify_Event::Ptr const &
 Delivery_Request::event () const
 {
   return this->routing_slip_->event ();

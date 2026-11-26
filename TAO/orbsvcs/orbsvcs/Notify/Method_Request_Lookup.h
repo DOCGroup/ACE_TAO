@@ -75,7 +75,7 @@ class TAO_Notify_Serv_Export TAO_Notify_Method_Request_Lookup_Queueable
 public:
   /// Constructor from event
   TAO_Notify_Method_Request_Lookup_Queueable (
-    const TAO_Notify_Event::Ptr& event,
+    TAO_Notify_Event::Ptr const& event,
     TAO_Notify_ProxyConsumer * proxy_consumer);
 
   /// Constructor from delivery request

@@ -66,7 +66,7 @@ class TAO_Notify_Serv_Export Routing_Slip : public Persistent_Callback
 // FUZZ: enable check_for_ACE_Guard
 public:
   /// "Factory" method for normal use.
-  static Routing_Slip_Ptr create (const TAO_Notify_Event::Ptr& event);
+  static Routing_Slip_Ptr create (TAO_Notify_Event::Ptr const& event);
 
   /// "Factory" method for use during reload from persistent storage.
   static Routing_Slip_Ptr create (
@@ -117,7 +117,7 @@ public:
 
   /////////////////////////////////////////////////////
   // \brief Access the event associated with this routing slip
-  const TAO_Notify_Event::Ptr & event () const;
+  TAO_Notify_Event::Ptr const & event () const;
 
   /// \brief Provide an identifying number for this Routing Slip
   /// to use in debug messages.
@@ -150,7 +150,7 @@ private:
   bool create_persistence_manager();
 
   /// Private constructor for use by create method
-  explicit Routing_Slip(const TAO_Notify_Event::Ptr& event);
+  explicit Routing_Slip(TAO_Notify_Event::Ptr const& event);
 
   /// Test to see if all deliveries are complete.
   bool all_deliveries_complete () const;

@@ -18,7 +18,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_Notify_Buffering_Strategy::TAO_Notify_Buffering_Strategy (
   TAO_Notify_Message_Queue& msg_queue,
-  const TAO_Notify_AdminProperties::Ptr& admin_properties)
+  TAO_Notify_AdminProperties::Ptr const& admin_properties)
 : msg_queue_ (msg_queue)
 , admin_properties_ (admin_properties)
 , global_queue_lock_ (admin_properties->global_queue_lock ())

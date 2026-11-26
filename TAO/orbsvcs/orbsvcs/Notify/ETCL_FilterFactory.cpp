@@ -99,7 +99,7 @@ TAO_Notify_ETCL_FilterFactory::create_filter (char const *constraint_grammar)
 CosNotifyFilter::Filter_ptr
 TAO_Notify_ETCL_FilterFactory::create_filter (
   char const *constraint_grammar,
-  const TAO_Notify_Object::ID& id,
+  TAO_Notify_Object::ID const& id,
   TAO_Notify_ETCL_Filter*& filter)
 {
   // Create the RefCounted servant.
@@ -276,7 +276,7 @@ TAO_Notify_ETCL_FilterFactory::get_filter (CosNotifyFilter::FilterID id)
 }
 
 CosNotifyFilter::Filter_ptr
-TAO_Notify_ETCL_FilterFactory::find_filter (const TAO_Notify_Object::ID& id)
+TAO_Notify_ETCL_FilterFactory::find_filter (TAO_Notify_Object::ID const& id)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     ace_mon,

@@ -345,7 +345,7 @@ Persistent_File_Allocator::write(Persistent_Storage_Block* psb)
         this->block_queue_.push_back (ourpsb);
         this->wake_up_thread_.signal();
       }
-    catch (const std::bad_alloc&)
+    catch (std::bad_alloc const&)
       {
         if (ourpsb != psb)
         {

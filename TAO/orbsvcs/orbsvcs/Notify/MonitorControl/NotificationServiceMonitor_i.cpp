@@ -73,7 +73,7 @@ NotificationServiceMonitor_i::get_statistic (char const *name)
 }
 
 Monitor::DataList*
-NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
+NotificationServiceMonitor_i::get_statistics (Monitor::NameList const& names)
 {
   Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
 
@@ -105,7 +105,7 @@ NotificationServiceMonitor_i::get_statistics (const Monitor::NameList& names)
 
 Monitor::DataList*
 NotificationServiceMonitor_i::get_and_clear_statistics (
-  const Monitor::NameList& names)
+  Monitor::NameList const& names)
 {
   Monitor::DataList* data =
     this->get_statistics (names);
@@ -133,7 +133,7 @@ NotificationServiceMonitor_i::get_and_clear_statistics (
 
 void
 NotificationServiceMonitor_i::clear_statistics (
-  const Monitor::NameList& names)
+  Monitor::NameList const& names)
 {
   Monitor_Point_Registry* registry = Monitor_Point_Registry::instance ();
 
@@ -245,7 +245,7 @@ NotificationServiceMonitor_i::get_data (
 void
 NotificationServiceMonitor_i::get_invalid_names (
    Monitor_Point_Registry* registry,
-   const Monitor::NameList& names,
+   Monitor::NameList const& names,
    Monitor::NameList& invalid)
 {
   invalid.length (0);

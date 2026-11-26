@@ -59,7 +59,7 @@ TAO_Notify_Method_Request_Event::should_retry ()
 
 TAO_Notify_Method_Request_Event_Queueable::TAO_Notify_Method_Request_Event_Queueable (
       const TAO_Notify_Method_Request_Event & prev_request,
-      const TAO_Notify_Event::Ptr& event)
+      TAO_Notify_Event::Ptr const& event)
   : TAO_Notify_Method_Request_Queueable (event.get ())
   , TAO_Notify_Method_Request_Event (prev_request, event.get ())
   , event_var_ (event)

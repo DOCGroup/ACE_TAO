@@ -165,7 +165,7 @@ TAO_Notify_Method_Request_Lookup::unmarshal (
 /****************************************************************/
 
 TAO_Notify_Method_Request_Lookup_Queueable::TAO_Notify_Method_Request_Lookup_Queueable (
-      const TAO_Notify_Event::Ptr& event,
+      TAO_Notify_Event::Ptr const& event,
       TAO_Notify_ProxyConsumer* proxy_consumer)
   : TAO_Notify_Method_Request_Lookup (event.get (), proxy_consumer)
   , TAO_Notify_Method_Request_Queueable (event.get ())

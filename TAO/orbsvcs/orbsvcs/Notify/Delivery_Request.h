@@ -72,7 +72,7 @@ public:
   void complete ();
 
   /// \brief An accessor method for the event associated with the Routing Slip that owns this Delivery request.
-  const TAO_Notify_Event::Ptr & event () const;
+  TAO_Notify_Event::Ptr const & event () const;
 
   /// \brief An accessor method for the routing slip that owns this request.
   const Routing_Slip_Ptr & routing_slip ()const;

@@ -66,7 +66,7 @@ TAO_Control_Registry::remove (ACE_CString const& name)
   return true;
 }
 
-const TAO_Control_Registry::NameList&
+TAO_Control_Registry::NameList const&
 TAO_Control_Registry::names ()
 {
   if (this->name_cache_.length () == 0)

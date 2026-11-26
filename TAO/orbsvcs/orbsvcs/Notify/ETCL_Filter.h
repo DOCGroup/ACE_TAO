@@ -78,7 +78,7 @@ class TAO_Notify_Serv_Export TAO_Notify_ETCL_Filter
 public:
   TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,
                           char const *constraint_grammar,
-                          const TAO_Notify_Object::ID& id);
+                          TAO_Notify_Object::ID const& id);
 
   ~TAO_Notify_ETCL_Filter () override;
 
@@ -126,8 +126,8 @@ private:
   /// Release this object.
   void release () override;
 
-  void add_constraints_i (const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq);
-  void add_constraint_i (const CosNotifyFilter::ConstraintInfo& constraint,
+  void add_constraints_i (CosNotifyFilter::ConstraintInfoSeq const& constraint_info_seq);
+  void add_constraint_i (CosNotifyFilter::ConstraintInfo const& constraint,
     CosNotifyFilter::ConstraintID cnstr_id = 0);
 
   TAO_Notify_Constraint_Expr*

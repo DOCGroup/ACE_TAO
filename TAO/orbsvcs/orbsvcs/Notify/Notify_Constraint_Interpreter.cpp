@@ -34,7 +34,7 @@ TAO_Notify_Constraint_Interpreter::build_tree (
 
 void
 TAO_Notify_Constraint_Interpreter::build_tree (
-    const CosNotifyFilter::ConstraintExp& exp)
+    CosNotifyFilter::ConstraintExp const& exp)
 {
   ACE_CString exp_str;
   ACE_CString et_exp;

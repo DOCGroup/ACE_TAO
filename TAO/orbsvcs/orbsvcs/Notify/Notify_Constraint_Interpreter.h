@@ -48,7 +48,7 @@ public:
    * Constraint exception if the constraint given has syntax errors or
    * semantic errors, such as mismatched types.
    */
-  void build_tree (const CosNotifyFilter::ConstraintExp& exp);
+  void build_tree (CosNotifyFilter::ConstraintExp const& exp);
 
   /// Returns true if the constraint is evaluated successfully by
   /// the evaluator.

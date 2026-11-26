@@ -90,7 +90,7 @@ TAO_Notify_Constraint_Expr::release ()
 
 TAO_Notify_ETCL_Filter::TAO_Notify_ETCL_Filter (PortableServer::POA_ptr poa,
                                                 char const *constraint_grammar,
-                                                const TAO_Notify_Object::ID& id)
+                                                TAO_Notify_Object::ID const& id)
   : poa_ (PortableServer::POA::_duplicate (poa)),
    id_ (id),
    grammar_ (constraint_grammar)
@@ -127,7 +127,7 @@ TAO_Notify_ETCL_Filter::constraint_grammar ()
 
 void
 TAO_Notify_ETCL_Filter::add_constraints_i (
-  const CosNotifyFilter::ConstraintInfoSeq& constraint_info_seq)
+  CosNotifyFilter::ConstraintInfoSeq const& constraint_info_seq)
 {
   for (CORBA::ULong index {}; index < constraint_info_seq.length (); ++index)
     {
@@ -163,7 +163,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i (CosNotifyFilter::ConstraintID cnstr_id
 
 void
 TAO_Notify_ETCL_Filter::add_constraint_i
-        (const CosNotifyFilter::ConstraintInfo& constraint,
+        (CosNotifyFilter::ConstraintInfo const& constraint,
          CosNotifyFilter::ConstraintID cnstr_id)
 {
   TAO_Notify_Constraint_Expr* notify_constr_expr {};
@@ -211,7 +211,7 @@ TAO_Notify_ETCL_Filter::add_constraint_i
 
 CosNotifyFilter::ConstraintInfoSeq*
 TAO_Notify_ETCL_Filter::add_constraints (
-  const CosNotifyFilter::ConstraintExpSeq& constraint_list)
+  CosNotifyFilter::ConstraintExpSeq const& constraint_list)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -256,8 +256,8 @@ TAO_Notify_ETCL_Filter::add_constraints (
 
 void
 TAO_Notify_ETCL_Filter::modify_constraints (
-  const CosNotifyFilter::ConstraintIDSeq & del_list,
-  const CosNotifyFilter::ConstraintInfoSeq & modify_list)
+  CosNotifyFilter::ConstraintIDSeq const & del_list,
+  CosNotifyFilter::ConstraintInfoSeq const & modify_list)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
@@ -340,7 +340,7 @@ TAO_Notify_ETCL_Filter::modify_constraints (
 
 CosNotifyFilter::ConstraintInfoSeq*
 TAO_Notify_ETCL_Filter::get_constraints (
-  const CosNotifyFilter::ConstraintIDSeq & id_list)
+  CosNotifyFilter::ConstraintIDSeq const & id_list)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());

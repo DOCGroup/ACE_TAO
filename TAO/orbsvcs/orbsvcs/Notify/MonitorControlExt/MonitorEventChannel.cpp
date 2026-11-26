@@ -1425,7 +1425,7 @@ TAO_MonitorEventChannel::destroy_consumer (
                   return true;
                 }
             }
-          catch(const CosNotifyChannelAdmin::ProxyNotFound&)
+          catch(CosNotifyChannelAdmin::ProxyNotFound const&)
             {
             }
         }
@@ -1468,7 +1468,7 @@ TAO_MonitorEventChannel::destroy_supplier (
                   return true;
                 }
             }
-          catch(const CosNotifyChannelAdmin::ProxyNotFound&)
+          catch(CosNotifyChannelAdmin::ProxyNotFound const&)
             {
             }
         }

@@ -45,7 +45,7 @@ class TAO_Notify_Serv_Export TAO_Notify_FilterAdmin
   /// @name Matching operations
   /// @{
   /// See if any of the filters match.
-  CORBA::Boolean match (const TAO_Notify_Event::Ptr &event);
+  CORBA::Boolean match (TAO_Notify_Event::Ptr const &event);
 
   /// See if any of the filters match.
   CORBA::Boolean match (const TAO_Notify_Event* event);

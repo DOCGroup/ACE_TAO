@@ -84,11 +84,11 @@ public:
 protected:
   CosNotifyFilter::Filter_ptr
     create_filter (char const *constraint_grammar,
-                   const TAO_Notify_Object::ID& id,
+                   TAO_Notify_Object::ID const& id,
                    TAO_Notify_ETCL_Filter*& filter);
 
   TAO_Notify_Object::ID find_filter_id (CosNotifyFilter::Filter_ptr filter);
-  CosNotifyFilter::Filter_ptr find_filter (const TAO_Notify_Object::ID& id);
+  CosNotifyFilter::Filter_ptr find_filter (TAO_Notify_Object::ID const& id);
 
   /// Release this object.
   void release () override;

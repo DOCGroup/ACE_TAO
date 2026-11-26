@@ -53,7 +53,7 @@ size_t Routing_Slip::count_enter_deleting_ {};
 size_t Routing_Slip::count_enter_terminal_ {};
 
 Routing_Slip_Ptr
-Routing_Slip::create (const TAO_Notify_Event::Ptr& event)
+Routing_Slip::create (TAO_Notify_Event::Ptr const& event)
 {
   Routing_Slip * prs;
   ACE_NEW_THROW_EX (prs, Routing_Slip (event), CORBA::NO_MEMORY ());
@@ -165,7 +165,7 @@ Routing_Slip::set_rspm (Routing_Slip_Persistence_Manager * rspm)
 }
 
 Routing_Slip::Routing_Slip(
-      const TAO_Notify_Event::Ptr& event)
+      TAO_Notify_Event::Ptr const& event)
   : until_safe_ (internals_)
   , event_(event)
 {
@@ -211,7 +211,7 @@ Routing_Slip::create_persistence_manager()
   return this->rspm_ != nullptr;
 }
 
-const TAO_Notify_Event::Ptr &
+TAO_Notify_Event::Ptr const &
 Routing_Slip::event () const
 {
   return this->event_;

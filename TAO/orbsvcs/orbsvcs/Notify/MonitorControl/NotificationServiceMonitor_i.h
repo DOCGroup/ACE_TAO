@@ -45,14 +45,14 @@ public:
   Monitor::Data* get_statistic (char const *name) override;
 
   /// Get the data from multiple statistic instances
-  Monitor::DataList* get_statistics (const Monitor::NameList& names) override;
+  Monitor::DataList* get_statistics (Monitor::NameList const& names) override;
 
   /// Get the data from multiple statistic instances and clear them
   /// directly afterward
-  Monitor::DataList* get_and_clear_statistics (const Monitor::NameList& names) override;
+  Monitor::DataList* get_and_clear_statistics (Monitor::NameList const& names) override;
 
   /// Clear the data from multiple statistic instances
-  void clear_statistics (const Monitor::NameList& names) override;
+  void clear_statistics (Monitor::NameList const& names) override;
 
   /// Shut down an event channel by name
   void shutdown_event_channel (char const *name) override;
@@ -80,7 +80,7 @@ private:
                  Monitor::Data& data);
 
   void get_invalid_names (Monitor_Point_Registry* registry,
-                          const Monitor::NameList& names,
+                          Monitor::NameList const& names,
                           Monitor::NameList& invalid);
 
   CORBA::ORB_var orb_;
