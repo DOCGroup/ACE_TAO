@@ -264,8 +264,8 @@ Object_Group_Factory_i::make_group (bool random,
 
   // Calculate and allocate the memory we need to store this name to
   // object binding.
-  const size_t id_len = std::strlen (id) + 1;
-  const size_t kind_len = std::strlen (ior.in ()) + 1;
+  size_t const id_len = std::strlen (id) + 1;
+  size_t const kind_len = std::strlen (ior.in ()) + 1;
 
   char *ptr = static_cast<char *> (this->mem_pool_->malloc (id_len + kind_len));
 
@@ -657,8 +657,8 @@ Object_Group_i::bind (Load_Balancer::Member const &member)
     throw Load_Balancer::duplicate_member ();
   }
 
-  const size_t id_len = std::strlen (member.id) + 1;
-  const size_t ref_len = std::strlen (member.obj) + 1;
+  size_t const id_len = std::strlen (member.id) + 1;
+  size_t const ref_len = std::strlen (member.obj) + 1;
 
   char *mem_alloc = static_cast<char *> (this->allocator_->malloc (id_len + ref_len));
 
