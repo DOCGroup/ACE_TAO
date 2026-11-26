@@ -22,7 +22,7 @@ ACE_Locked_Data_Block<ACE_LOCK>::clone_nocopy (ACE_Message_Block::Message_Flags 
 
   // You always want to clear this one to prevent memory leaks but you
   // might add some others later.
-  const ACE_Message_Block::Message_Flags always_clear =
+  ACE_Message_Block::Message_Flags const always_clear =
     ACE_Message_Block::DONT_DELETE;
 
   ACE_Locked_Data_Block<ACE_LOCK> *nb {};

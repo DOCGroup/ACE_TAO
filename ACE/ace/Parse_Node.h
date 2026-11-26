@@ -227,7 +227,7 @@ public:
 
 private:
   /// Pointer to a descriptor that describes this node.
-  std::unique_ptr<const ACE_Service_Type_Factory> factory_;
+  std::unique_ptr<ACE_Service_Type_Factory const> factory_;
 
 private:
   ACE_Dynamic_Node (ACE_Dynamic_Node const &) = delete;
