@@ -36,7 +36,7 @@ public:
   ~TAO_Var_Base_T ();
 
   T * operator-> ();
-  const T * operator-> () const;
+  T const * operator-> () const;
 
   using _in_type = T const &;
   using _inout_type = T &;
@@ -68,15 +68,15 @@ public:
   TAO_Fixed_Var_T (const TAO_Fixed_Var_T<T> &);
 
   /// Fixed-size types only.
-  TAO_Fixed_Var_T (const T &);
+  TAO_Fixed_Var_T (T const &);
 
   TAO_Fixed_Var_T & operator= (T *);
   TAO_Fixed_Var_T & operator= (const TAO_Fixed_Var_T<T> &);
 
   /// Fixed-size types only.
-  TAO_Fixed_Var_T & operator= (const T &);
+  TAO_Fixed_Var_T & operator= (T const &);
 
-  operator const T & () const;
+  operator T const & () const;
   operator T & ();
   operator T & () const;
 
@@ -105,7 +105,7 @@ public:
   TAO_Var_Var_T & operator= (T *);
   TAO_Var_Var_T & operator= (const TAO_Var_Var_T<T> &);
 
-  operator const T & () const;
+  operator T const & () const;
   operator T & ();
   operator T & () const;
 

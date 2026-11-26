@@ -22,7 +22,7 @@ TAO_Seq_Var_Base_T<T>::~TAO_Seq_Var_Base_T ()
 
 template<typename T>
 ACE_INLINE
-const T *
+T const *
 TAO_Seq_Var_Base_T<T>::operator-> () const
 {
   return this->ptr_;
@@ -38,7 +38,7 @@ TAO_Seq_Var_Base_T<T>::operator-> ()
 
 template<typename T>
 ACE_INLINE
-TAO_Seq_Var_Base_T<T>::operator const T & () const
+TAO_Seq_Var_Base_T<T>::operator T const & () const
 {
   return *this->ptr_;
 }
@@ -59,7 +59,7 @@ TAO_Seq_Var_Base_T<T>::operator T & () const
 
 template<typename T>
 ACE_INLINE
-const T &
+T const &
 TAO_Seq_Var_Base_T<T>::in () const
 {
   return *this->ptr_;
@@ -123,7 +123,7 @@ TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T> & p)
 // Fixed-size base types only.
 template<typename T>
 ACE_INLINE
-TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (const T & p)
+TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (T const & p)
 {
   ACE_NEW (this->ptr_,
            T (p));

@@ -37,9 +37,9 @@ public:
   ~TAO_Seq_Var_Base_T ();
 
   T *operator-> ();
-  const T *operator-> () const;
+  T const *operator-> () const;
 
-  operator const T & () const;
+  operator T const & () const;
   operator T & ();
   operator T & () const;
 
@@ -79,7 +79,7 @@ public:
   TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T> &);
 
   /// Fixed-size base types only.
-  TAO_FixedSeq_Var_T (const T &);
+  TAO_FixedSeq_Var_T (T const &);
 
   TAO_FixedSeq_Var_T & operator= (T *);
   TAO_FixedSeq_Var_T & operator= (const TAO_FixedSeq_Var_T<T> &);
@@ -88,7 +88,7 @@ public:
   T_const_elem operator[] (CORBA::ULong index) const;
 
   /// Fixed-size base types only.
-  TAO_FixedSeq_Var_T & operator= (const T &);
+  TAO_FixedSeq_Var_T & operator= (T const &);
 };
 
 /**

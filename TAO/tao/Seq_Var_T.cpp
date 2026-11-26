@@ -35,7 +35,7 @@ TAO_FixedSeq_Var_T<T>::operator= (const TAO_FixedSeq_Var_T<T> & p)
 // Fixed-size types only.
 template<typename T>
 TAO_FixedSeq_Var_T<T> &
-TAO_FixedSeq_Var_T<T>::operator= (const T & p)
+TAO_FixedSeq_Var_T<T>::operator= (T const & p)
 {
   // Strongly exception safe assignment using copy and non-throwing
   // swap technique.
