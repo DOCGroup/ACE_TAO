@@ -1,9 +1,7 @@
 #include "test_i.h"
 #include "ace/Log_Msg.h"
 
-Test_i::Test_i ()
-{
-}
+Test_i::Test_i () = default;
 
 Test_i::~Test_i () = default;
 

@@ -1,9 +1,7 @@
 #include "test_i.h"
 #include "ace/OS_NS_time.h"
 
-Test_Dummy_i::Test_Dummy_i ()
-{
-}
+Test_Dummy_i::Test_Dummy_i () = default;
 
 Test_Dummy_i::~Test_Dummy_i () = default;
 
@@ -13,9 +11,7 @@ char * Test_Dummy_i::getMessage ()
    return CORBA::string_dup("Test::Dummy---->Hello World");
 }
 
-Test_Time_i::Test_Time_i ()
-{
-}
+Test_Time_i::Test_Time_i () = default;
 
 Test_Time_i::~Test_Time_i () = default;
 
