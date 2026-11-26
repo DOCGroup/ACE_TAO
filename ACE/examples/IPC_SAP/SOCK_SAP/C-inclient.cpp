@@ -16,7 +16,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   ACE_OS::socket_init (ACE_WSOCK_VERSION);
 
   struct sockaddr_in saddr;
-  const ACE_TCHAR *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
+  ACE_TCHAR const *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short const port_num =
     ACE_HTONS (argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT);
   int sockbufsize = argc > 3 ? ACE_OS::atoi (argv[3]) : 0;

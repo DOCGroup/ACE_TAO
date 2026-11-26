@@ -92,7 +92,7 @@ server (void *arg)
 }
 
 static int
-run_event_loop (const ACE_TCHAR rendezvous[])
+run_event_loop (ACE_TCHAR const rendezvous[])
 {
   ACE_LSOCK_Acceptor peer_acceptor;
 

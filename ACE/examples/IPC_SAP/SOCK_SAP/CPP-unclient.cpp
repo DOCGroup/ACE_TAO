@@ -10,7 +10,7 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *rendezvous = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
+  ACE_TCHAR const *rendezvous = argc > 1 ? argv[1] : ACE_DEFAULT_RENDEZVOUS;
   char buf[BUFSIZ];
 
   ACE_LSOCK_Stream cli_stream;

@@ -31,13 +31,13 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   if (sockbufsize > 0)
     {
       if (ACE_OS::setsockopt (s_handle, SOL_SOCKET, SO_SNDBUF,
-                              (const char *) &sockbufsize,
+                              (char const *) &sockbufsize,
                               sizeof (sockbufsize)) != 0)
       {
         ACE_OS::perror (ACE_TEXT("SO_SNDBUF")), ACE_OS::exit (1);
       }
       if (ACE_OS::setsockopt (s_handle, SOL_SOCKET, SO_RCVBUF,
-                              (const char *) &sockbufsize,
+                              (char const *) &sockbufsize,
                               sizeof (sockbufsize)) != 0)
       {
         ACE_OS::perror (ACE_TEXT("SO_RCVBUF")), ACE_OS::exit (1);

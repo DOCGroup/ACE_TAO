@@ -11,8 +11,8 @@
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *file_name = argc > 1 ? argv[1] : ACE_TEXT ("./local_data");
-  const ACE_TCHAR *rendezvous = argc > 2 ? argv[2] : ACE_DEFAULT_RENDEZVOUS;
+  ACE_TCHAR const *file_name = argc > 1 ? argv[1] : ACE_TEXT ("./local_data");
+  ACE_TCHAR const *rendezvous = argc > 2 ? argv[2] : ACE_DEFAULT_RENDEZVOUS;
 
   ACE_LSOCK_Stream cli_stream;
   ACE_UNIX_Addr const addr (rendezvous);

@@ -37,7 +37,7 @@ private:
   /// Creates the requested handler type.
   int create_handler (ACE_SOCK_Acceptor &acceptor,
                       Handler *(*handler_factory) (ACE_HANDLE),
-                      const char *handler_type);
+                      char const *handler_type);
 
   /// @name Handler factories
   /// @{
@@ -480,7 +480,7 @@ Handler_Factory::init_acceptors ()
 int
 Handler_Factory::create_handler (ACE_SOCK_Acceptor &acceptor,
                                  Handler * (*handler_factory) (ACE_HANDLE),
-                                 const char *handler_type)
+                                 char const *handler_type)
 {
   ACE_SOCK_Stream new_stream;
 
