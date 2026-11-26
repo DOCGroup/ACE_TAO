@@ -161,16 +161,17 @@ public:
    * this this block ceases to exist; this object will not free @a data on
    * destruction.  If @a locking_strategy is non-0 then this is used
    * to protect regions of code that access shared state (e.g.,
-   * reference counting) from race conditions.  Note that the @c size
-   * of the ACE_Message_Block will be @a size, but the @c length will be 0
-   * until the write pointer is set. The @a data_block_allocator is used to
-   * allocate the data blocks while the @a allocator_strategy is used
+   * reference counting) from race conditions. The @a data_block_allocator
+   * is used to allocate the data blocks while the @a allocator_strategy is used
    * to allocate the buffers contained by those. The
    * @a message_block_allocator is used to allocate new ACE_Message_Block
    * objects when the duplicate() method is called. If a
    * @a message_block_allocator is given, this ACE_Message_Block and
    * future ACE_Message_Block objects created by duplicate() will be
    * freed using this allocator when they are released.
+   *
+   * @note The @c size of the ACE_Message_Block will be @a size, but its
+   * @c length will be 0 until the write pointer is set.
    * @note If you use this allocator, the ACE_Message_Block you created
    * should have been created using this allocator because it will be
    * released to the same allocator.
@@ -204,7 +205,9 @@ public:
   /**
    * Create a Message Block that assumes it has ownership of @a data,
    * but in reality it doesn't (i.e., cannot delete it since it didn't
-   * malloc it!).  Note that the @c size of the Message_Block will
+   * malloc it!).
+   *
+   * @note The @c size of the Message_Block will
    * be @a size, but the @a length  will be 0 until @c wr_ptr is set.
    */
   int init (char const *data,
@@ -219,11 +222,12 @@ public:
    * this object ceases to exist  (and don't delete it during
    * destruction).  If @a locking_strategy is non-0 then this is used
    * to protect regions of code that access shared state (e.g.,
-   * reference counting) from race conditions.  Note that the @a size
-   * of the Message_Block will be @a size, but the @a length will be 0
-   * until @c wr_ptr is set. The @a data_block_allocator is use to
-   * allocate the data blocks while the @a allocator_strategy is used
+   * reference counting) from race conditions. The @a data_block_allocator
+   * is used to allocate the data blocks while the @a allocator_strategy is used
    * to allocate the buffers contained by those.
+   *
+   * @note The @c size of the Message_Block will be @a size, but its
+   * @c length will be 0 until @c wr_ptr is set.
    */
   int init (size_t size,
             ACE_Message_Type type = MB_DATA,
@@ -537,9 +541,10 @@ public:
   /// @{
 
   /**
-   * Get a pointer to the data block. Note that the ACE_Message_Block
-   * still references the block; this call does not change the reference
-   * count.
+   * Get a pointer to the data block.
+   *
+   * @note The ACE_Message_Block still references the block; this call does
+   * not change the reference count.
    */
   ACE_Data_Block *data_block () const;
 
@@ -872,8 +877,9 @@ protected:
   /// @name Allocation and locking strategies
   /// @{
   /**
-   * Pointer to the allocator defined for this ACE_Data_Block.  Note
-   * that this pointer is shared by all owners of this
+   * Pointer to the allocator defined for this ACE_Data_Block.
+   *
+   * @note This pointer is shared by all owners of this
    * ACE_Data_Block.
    */
   ACE_Allocator *allocator_strategy_;
@@ -881,16 +887,18 @@ protected:
   /**
    * Pointer to the locking strategy defined for this
    * ACE_Data_Block.  This is used to protect regions of code that
-   * access shared ACE_Data_Block state.  Note that this lock is
-   * shared by all owners of the ACE_Data_Block's data.
+   * access shared ACE_Data_Block state.
+   *
+   * @note This lock is shared by all owners of the ACE_Data_Block's data.
    */
   ACE_Lock *locking_strategy_;
   /// @}
 
   /**
    * Reference count for this ACE_Data_Block, which is used to avoid
-   * deep copies (i.e., clone()).  Note that this pointer value is
-   * shared by all owners of the @c Data_Block's data, i.e., all the
+   * deep copies (i.e., clone()).
+   *
+   * @note This count is shared by all owners of the @c Data_Block's data, i.e., all the
    * ACE_Message_Blocks.
    */
   int reference_count_ {1};
