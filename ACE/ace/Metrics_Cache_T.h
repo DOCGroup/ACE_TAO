@@ -57,13 +57,13 @@ public:
 
   /// Default constructor: plugs in the above event descriptions.
   ACE_Metrics_Timeprobe (u_int id = 0,
-                         const char *name = nullptr,
+                         char const *name = nullptr,
                          u_long size = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
   /// Constructor with allocator: plugs in the above event descriptions.
   ACE_Metrics_Timeprobe (ALLOCATOR *allocatorPtr,
                          u_int id = 0,
-                         const char *name = nullptr,
+                         char const *name = nullptr,
                          u_long size = METRICS_DEFAULT_TIMEPROBE_TABLE_SIZE);
 
   ACE_Metrics_Timeprobe (ACE_Metrics_Timeprobe const &) = delete;
@@ -74,12 +74,12 @@ public:
   virtual ~ACE_Metrics_Timeprobe ();
 
   /// Returns true if a timeprobe event matches the passed id.
-  bool is_event (const ACE_METRICS_TIMEPROBE_DATA_TYPE &t,
+  bool is_event (ACE_METRICS_TIMEPROBE_DATA_TYPE const &t,
                  ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::event_id id) const;
 
   /// Accessor and mutator for probe name.
-  const char * probe_name () const;
-  void probe_name (const char *name);
+  char const * probe_name () const;
+  void probe_name (char const *name);
 
   /// Accessor for probe id.
   u_int probe_id () const;

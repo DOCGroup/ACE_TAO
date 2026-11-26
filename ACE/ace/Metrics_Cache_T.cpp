@@ -14,7 +14,7 @@
 #endif /* __ACE_INLINE__ */
 
 /// Const strings for timeprobe event type descriptions.
-static const char * event_description_strings [] =
+static char const * event_description_strings [] =
 {
   "start",
   "stop",
@@ -30,7 +30,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Metrics_Timeprobe (u_int id,
-                                                                   const char *name,
+                                                                   char const *name,
                                                                    u_long size)
   :
     ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> (size),
@@ -52,14 +52,14 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::ACE_Metrics_Timeprobe (u_int id,
   name_ = name_tmp;
 
   this->event_descriptions (event_description_strings,
-                            sizeof(event_description_strings)/sizeof(const char *));
+                            sizeof(event_description_strings)/sizeof(char const *));
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::
 ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
                        u_int id,
-                       const char *name,
+                       char const *name,
                        u_long size)
   : ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> (size),
     id_ (id)
@@ -80,7 +80,7 @@ ACE_Metrics_Timeprobe (ALLOCATOR *alloc,
   name_ = name_tmp;
 
   this->event_descriptions (event_description_strings,
-                            sizeof(event_description_strings)/sizeof(const char *));
+                            sizeof(event_description_strings)/sizeof(char const *));
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
@@ -107,7 +107,7 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::is_event (const ACE_Metrics_Timeprob
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
-const char *
+char const *
 ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name () const
 {
    return name_;
@@ -115,7 +115,7 @@ ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name () const
 
 template <class ACE_LOCK, class ALLOCATOR>
 void
-ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (const char *name)
+ACE_Metrics_Timeprobe<ACE_LOCK, ALLOCATOR>::probe_name (char const *name)
 {
   size_t const name_size = std::strlen (name) + 1;
   char * name_tmp {};
