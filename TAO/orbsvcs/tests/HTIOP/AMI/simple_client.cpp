@@ -85,12 +85,12 @@ public:
         {
           excep_holder->raise_exception ();
         }
-      catch (const A::DidTheRightThing&)
+      catch (A::DidTheRightThing const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... exception received successfully\n"));
                     }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "... caught the wrong exception -> ERROR\n"));
@@ -247,7 +247,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Caught exception:");
       return 1;

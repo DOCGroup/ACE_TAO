@@ -24,7 +24,7 @@ McastHello::send_forty_two (CORBA::Long forty_two)
 }
 
 void
-McastHello::send_large_octet_array (const Test::Octets &payload)
+McastHello::send_large_octet_array (Test::Octets const &payload)
 {
   CORBA::Boolean valid_payload = true;
   for (CORBA::ULong i = 0; i < payload.length (); ++i)

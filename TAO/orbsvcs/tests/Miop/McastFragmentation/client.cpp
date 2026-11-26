@@ -111,7 +111,7 @@ public:
             this->obj_->process (seq);
           }
       }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const & ex)
       {
         ex._tao_print_exception ("Exception caught in ClientThread:");
         return -1;
@@ -194,7 +194,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught in client main ():");
       return 1;

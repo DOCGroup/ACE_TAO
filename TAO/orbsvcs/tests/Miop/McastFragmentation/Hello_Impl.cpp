@@ -110,7 +110,7 @@ Hello_Impl::shutdown ()
     {
       this->orb_->shutdown (false);
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ++Number_of_Problems;
       ex._tao_print_exception ("Exception caught in shutdown():");

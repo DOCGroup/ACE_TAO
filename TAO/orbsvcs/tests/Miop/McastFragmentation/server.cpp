@@ -76,7 +76,7 @@ public:
       {
         this->orb_->run ();
       }
-    catch (const CORBA::Exception& ex)
+    catch (CORBA::Exception const & ex)
       {
         ex._tao_print_exception ("Exception caught in OrbThread:");
         return -1;
@@ -191,7 +191,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught in server main ():");
       return -1;

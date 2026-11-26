@@ -132,7 +132,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
             {
               orb->run ();
             }
-          catch (const CORBA::Exception& ex)
+          catch (CORBA::Exception const & ex)
             {
               ex._tao_print_exception ("(%P|%t) server - Orb->run Exception caught:");
               exit_status = 1;
@@ -162,7 +162,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
         ACE_DEBUG ((LM_DEBUG, "(%P|%t) server - Success!\n"));
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("(%P|%t) server - Exception caught:");
       exit_status = 1;
