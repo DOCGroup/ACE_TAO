@@ -108,7 +108,7 @@ public:
 
   /// Return the active object map creation parameters.
   virtual
-  const Active_Object_Map_Creation_Parameters &
+  Active_Object_Map_Creation_Parameters const &
   active_object_map_creation_parameters () const;
 
 protected:

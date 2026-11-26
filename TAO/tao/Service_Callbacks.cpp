@@ -8,7 +8,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_Service_Callbacks::~TAO_Service_Callbacks () = default;
 
 CORBA::Boolean
-TAO_Service_Callbacks::select_profile (const TAO_MProfile & /*mprofile*/,
+TAO_Service_Callbacks::select_profile (TAO_MProfile const & /*mprofile*/,
                                        TAO_Profile *& /*pfile*/)
 {
   return false;
@@ -23,8 +23,8 @@ TAO_Service_Callbacks::object_is_nil (CORBA::Object_ptr /* obj */)
 }
 
 TAO_Service_Callbacks::Profile_Equivalence
-TAO_Service_Callbacks::is_profile_equivalent (const TAO_Profile *,
-                                              const TAO_Profile *)
+TAO_Service_Callbacks::is_profile_equivalent (TAO_Profile const *,
+                                              TAO_Profile const *)
 {
   return DONT_KNOW;
 }
@@ -38,7 +38,7 @@ TAO_Service_Callbacks::hash_ft (TAO_Profile *,
 
 CORBA::Boolean
 TAO_Service_Callbacks::is_permanent_forward_condition (CORBA::Object_ptr const,
-                                                       const TAO_Service_Context &) const
+                                                       TAO_Service_Context const &) const
 {
   return false;
 }

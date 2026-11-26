@@ -47,7 +47,7 @@ public:
 
   /// Creates a Stub Object.
   virtual TAO_Stub *create_stub (char const *repository_id,
-                                 const TAO_MProfile &profiles,
+                                 TAO_MProfile const &profiles,
                                  TAO_ORB_Core *orb_core) = 0;
 };
 

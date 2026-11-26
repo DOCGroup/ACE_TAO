@@ -65,15 +65,15 @@ public:
 
   /// Select the profile from MProfile as the needs of the services
   /// may be. Return the profile in @a pfile
-  virtual CORBA::Boolean select_profile (const TAO_MProfile &mprofile,
+  virtual CORBA::Boolean select_profile (TAO_MProfile const &mprofile,
                                          TAO_Profile *&pfile);
 
   /// Check whether @a obj is nil or not.
   virtual CORBA::Boolean object_is_nil (CORBA::Object_ptr obj);
 
   /// Check for equivalency of the two profiles
-  virtual Profile_Equivalence is_profile_equivalent (const TAO_Profile *,
-                                                     const TAO_Profile *);
+  virtual Profile_Equivalence is_profile_equivalent (TAO_Profile const *,
+                                                     TAO_Profile const *);
 
   /// Calculate the hash value..
   virtual CORBA::ULong hash_ft (TAO_Profile *p,
@@ -81,7 +81,7 @@ public:
 
   /// Verify if condition is given for LOCATION_FORWARD_PERM reply
   virtual CORBA::Boolean is_permanent_forward_condition (CORBA::Object_ptr const obj,
-                                                         const TAO_Service_Context &service_context) const;
+                                                         TAO_Service_Context const &service_context) const;
 
   /// Allow the service layer to decide whether the COMM_FAILURE
   /// exception should be thrown or a reinvocation is needed
