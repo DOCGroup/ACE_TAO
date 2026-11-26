@@ -179,7 +179,7 @@ public:
 
 #else
 private:
-  void ACE_Get_Opt_Init (const ACE_TCHAR *optstring);
+  void ACE_Get_Opt_Init (ACE_TCHAR const *optstring);
 public:
   ACE_Get_Opt (int argc,
                ACE_TCHAR **argv,

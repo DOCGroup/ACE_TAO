@@ -39,7 +39,7 @@ ACE_INLINE ssize_t
 ACE_SPIPE_Stream::send (const void *buf, size_t n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
-  return ACE_OS::write (this->get_handle (), (const char *) buf, n);
+  return ACE_OS::write (this->get_handle (), static_cast<char const *> (buf), n);
 }
 
 ACE_INLINE ssize_t
@@ -227,7 +227,7 @@ ACE_SPIPE_Stream::send (const void *buf, size_t n,
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
   return ACE_OS::write (this->get_handle (),
-                        (const char *) buf, n,
+                        static_cast<char const *> (buf), n,
                         overlapped);
 }
 
