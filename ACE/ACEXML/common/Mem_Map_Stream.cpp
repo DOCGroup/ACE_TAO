@@ -20,7 +20,7 @@ ACEXML_Mem_Map_Stream::stream ()
 }
 
 ssize_t
-ACEXML_Mem_Map_Stream::send_n (const void *buf, size_t size,
+ACEXML_Mem_Map_Stream::send_n (void const *buf, size_t size,
                                ACE_Time_Value *tv)
 {
   return svc_handler_->peer ().send_n (buf, size, 0, tv);
@@ -159,7 +159,7 @@ ACEXML_Mem_Map_Stream::available () const
 
 int
 ACEXML_Mem_Map_Stream::open (Connector *connector,
-                             const ACE_INET_Addr &addr)
+                             ACE_INET_Addr const &addr)
 {
   this->svc_handler_.reset ();
 

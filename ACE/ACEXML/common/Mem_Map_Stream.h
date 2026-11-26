@@ -54,7 +54,7 @@ public:
 
   /// Initialize this object.
   virtual int open (Connector *connector,
-                    const ACE_INET_Addr &);
+                    ACE_INET_Addr const &);
 
   virtual ~ACEXML_Mem_Map_Stream ();
 
@@ -65,7 +65,7 @@ public:
    * Send @a size bytes from @a buf to the connected peer. This is a
    * completely unbuffered call.
    */
-  virtual ssize_t send_n (const void *buf,
+  virtual ssize_t send_n (void const *buf,
                           size_t size,
                           ACE_Time_Value *tv = nullptr);
 
