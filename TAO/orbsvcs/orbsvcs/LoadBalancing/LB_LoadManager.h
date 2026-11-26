@@ -274,7 +274,7 @@ private:
   /// Extract the value of the InitialNumberReplicas property from
   /// the_criteria.
   int get_initial_number_replicas (
-    const char * type_id,
+    char const *type_id,
     const PortableGroup::Criteria & the_criteria,
     CORBA::UShort & initial_number_replicas) const;
 
@@ -286,7 +286,7 @@ private:
    * given location.
    */
   int get_factory_infos (
-    const char * type_id,
+    char const *type_id,
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::FactoryInfos & factory_infos) const;
 

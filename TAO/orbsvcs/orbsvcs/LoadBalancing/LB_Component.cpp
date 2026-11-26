@@ -99,7 +99,7 @@ int
 TAO_LB_Component::register_orb_initializer (
   const CORBA::StringSeq & object_groups,
   const CORBA::StringSeq & repository_ids,
-  const char * location)
+  char const *location)
 {
   try
     {

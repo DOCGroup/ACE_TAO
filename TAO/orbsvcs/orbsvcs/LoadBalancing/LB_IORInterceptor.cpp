@@ -10,9 +10,9 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_LB_IORInterceptor::TAO_LB_IORInterceptor (
   const CORBA::StringSeq & object_groups,
   const CORBA::StringSeq & repository_ids,
-  const char * location,
+  char const *location,
   CosLoadBalancing::LoadManager_ptr lm,
-  const char * orb_id,
+  char const *orb_id,
   TAO_LB_LoadAlert & load_alert)
   : object_groups_ (object_groups),
     repository_ids_ (repository_ids),
@@ -80,7 +80,7 @@ TAO_LB_IORInterceptor::components_established (
 
 void
 TAO_LB_IORInterceptor::adapter_manager_state_changed (
-    const char *,
+    char const *,
     PortableInterceptor::AdapterState state)
 {
   if (state == PortableInterceptor::ACTIVE)

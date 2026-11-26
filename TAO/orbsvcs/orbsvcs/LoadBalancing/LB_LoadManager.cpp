@@ -499,7 +499,7 @@ TAO_LB_LoadManager::remove_default_properties (
 
 void
 TAO_LB_LoadManager::set_type_properties (
-    const char *type_id,
+    char const *type_id,
     const PortableGroup::Properties & overrides)
 {
   PortableGroup::Properties new_overrides (overrides);
@@ -511,7 +511,7 @@ TAO_LB_LoadManager::set_type_properties (
 
 PortableGroup::Properties *
 TAO_LB_LoadManager::get_type_properties (
-    const char *type_id)
+    char const *type_id)
 {
   return
     this->property_manager_.get_type_properties (type_id);
@@ -519,7 +519,7 @@ TAO_LB_LoadManager::get_type_properties (
 
 void
 TAO_LB_LoadManager::remove_type_properties (
-    const char *type_id,
+    char const *type_id,
     const PortableGroup::Properties & props)
 {
   this->property_manager_.remove_type_properties (type_id,
@@ -550,7 +550,7 @@ PortableGroup::ObjectGroup_ptr
 TAO_LB_LoadManager::create_member (
     PortableGroup::ObjectGroup_ptr object_group,
     const PortableGroup::Location & the_location,
-    const char * type_id,
+    char const *type_id,
     const PortableGroup::Criteria & the_criteria)
 {
   return
@@ -636,7 +636,7 @@ TAO_LB_LoadManager::get_member_ref (
 
 CORBA::Object_ptr
 TAO_LB_LoadManager::create_object (
-    const char * type_id,
+    char const *type_id,
     const PortableGroup::Criteria & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out
       factory_creation_id)

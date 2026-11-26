@@ -50,8 +50,8 @@ TAO_LB_ServerRequestInterceptor::receive_request_service_contexts (
           // Use TAO-specific "compiled marshaling" instead of
           // standard interpretive marshaling via a CDR encapsulation
           // Codec for efficiency reasons.
-          const char * buf =
-            reinterpret_cast<const char *> (service_context->context_data.get_buffer ());
+          char const *buf =
+            reinterpret_cast<char const *> (service_context->context_data.get_buffer ());
           TAO_InputCDR cdr (buf,
                             service_context->context_data.length ());
 
