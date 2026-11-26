@@ -107,9 +107,9 @@ PMC_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
 }
 
 char *
-PMC_Ruser::handle_protocol_entries (const char *cp,
-                                    const char *host_name,
-                                    const char *)
+PMC_Ruser::handle_protocol_entries (char const *cp,
+                                    char const *host_name,
+                                    char const *)
 {
   static Protocol_Record protocol_record (1);
   Drwho_Node *current_node = protocol_record.get_drwho_list ();
@@ -128,7 +128,7 @@ PMC_Ruser::handle_protocol_entries (const char *cp,
 void
 PMC_Ruser::process ()
 {
-  const char *(Drwho_Node::*get_name)();
+  char const *(Drwho_Node::*get_name)();
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
     {

@@ -19,24 +19,24 @@ class Protocol_Record
 public:
   Protocol_Record ();
   explicit Protocol_Record (int use_dummy);
-  explicit Protocol_Record (const char *key_name1,
+  explicit Protocol_Record (char const *key_name1,
                             Protocol_Record *next = nullptr);
   ~Protocol_Record ();
   Protocol_Record (Protocol_Record const &) = delete;
   Protocol_Record (Protocol_Record &&) = delete;
   Protocol_Record &operator= (Protocol_Record const &) = delete;
   Protocol_Record &operator= (Protocol_Record &&) = delete;
-  const char *get_host ();
-  const char *set_host (const char *str);
-  const char *get_login ();
-  const char *set_login (const char *str);
-  const char *get_real ();
-  const char *set_real (const char *str);
+  char const *get_host ();
+  char const *set_host (char const *str);
+  char const *get_login ();
+  char const *set_login (char const *str);
+  char const *get_real ();
+  char const *set_real (char const *str);
   Drwho_Node *get_drwho_list ();
 
   static Drwho_Node drwho_node_;
-  const char *key_name1_ {};
-  const char *key_name2_ {};
+  char const *key_name1_ {};
+  char const *key_name2_ {};
   Drwho_Node *drwho_list_ {};
   Protocol_Record *next_ {};
   bool is_active_ {};

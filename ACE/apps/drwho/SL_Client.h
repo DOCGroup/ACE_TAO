@@ -17,8 +17,8 @@
 class SL_Client : public Single_Lookup
 {
 public:
-  explicit SL_Client (const char *key_name);
-  Protocol_Record *insert (const char *key_name,
+  explicit SL_Client (char const *key_name);
+  Protocol_Record *insert (char const *key_name,
                            int max_len = MAXUSERIDNAMELEN) override;
 };
 

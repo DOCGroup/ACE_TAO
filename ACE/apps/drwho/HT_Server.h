@@ -17,7 +17,7 @@
 class HT_Server : public Hash_Table
 {
 public:
-  Protocol_Record *insert (const char *key_name,
+  Protocol_Record *insert (char const *key_name,
                            int max_len = MAXUSERIDNAMELEN) override;
 };
 

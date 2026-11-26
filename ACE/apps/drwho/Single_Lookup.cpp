@@ -4,7 +4,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_Memory.h"
 
-Single_Lookup::Single_Lookup (const char *usr_name)
+Single_Lookup::Single_Lookup (char const *usr_name)
 {
   Protocol_Record *record {};
   ACE_NEW (record, Protocol_Record (ACE::strnew (usr_name)));

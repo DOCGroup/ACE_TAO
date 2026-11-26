@@ -2,7 +2,7 @@
 #include "SL_Server.h"
 #include <cstring>
 
-SL_Server::SL_Server (const char *usr_name)
+SL_Server::SL_Server (char const *usr_name)
   : Single_Lookup (usr_name)
 {
 }
@@ -15,7 +15,7 @@ SL_Server::get_each_entry ()
 }
 
 Protocol_Record *
-SL_Server::insert (const char *key_name, int max_len)
+SL_Server::insert (char const *key_name, int max_len)
 {
   return std::strncmp (key_name,
                        this->prp_->get_login (),

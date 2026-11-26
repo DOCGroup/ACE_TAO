@@ -17,8 +17,8 @@
 class SL_Server : public Single_Lookup
 {
 public:
-  explicit SL_Server (const char *packet);
-  Protocol_Record *insert (const char *key_name,
+  explicit SL_Server (char const *packet);
+  Protocol_Record *insert (char const *key_name,
                            int max_len = MAXUSERIDNAMELEN) override;
   Protocol_Record *get_each_entry () override;
 };

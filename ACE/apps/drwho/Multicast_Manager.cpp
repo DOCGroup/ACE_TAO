@@ -14,7 +14,7 @@ Host_Elem *Multicast_Manager::drwho_list {};
 Host_Elem *Multicast_Manager::current_ptr {};
 
 // Names of hosts to query for friend info.
-const char *Multicast_Manager::host_names[] =
+char const *Multicast_Manager::host_names[] =
 {
   "tango.cs.wustl.edu",
   nullptr // The null entry...
@@ -25,7 +25,7 @@ Multicast_Manager::insert_default_hosts ()
 {
   // Enter the static list of hosts into the dynamic table!
 
-  for (const char **np = host_names;
+  for (char const **np = host_names;
        *np != nullptr;
        ++np)
     {
@@ -37,7 +37,7 @@ Multicast_Manager::insert_default_hosts ()
 // contact.
 
 int
-Multicast_Manager::insert_hosts_from_file (const char *filename)
+Multicast_Manager::insert_hosts_from_file (char const *filename)
 {
   //FUZZ: disable check_for_lack_ACE_OS
   ACE_Mem_Map const mmap (filename);
@@ -84,7 +84,7 @@ Multicast_Manager::get_next_host_addr (in_addr &host_addr)
        Multicast_Manager::current_ptr != nullptr;
        Multicast_Manager::current_ptr = Multicast_Manager::current_ptr->next)
     {
-      const char *host_name = Multicast_Manager::current_ptr->host_name;
+      char const *host_name = Multicast_Manager::current_ptr->host_name;
       hostent *hp = Multicast_Manager::get_host_entry (host_name);
 
       if (hp == nullptr)
@@ -109,7 +109,7 @@ Multicast_Manager::get_next_host_addr (in_addr &host_addr)
 // assumption that hostnames begin with an alphabetic character!
 
 hostent *
-Multicast_Manager::get_host_entry (const char *host)
+Multicast_Manager::get_host_entry (char const *host)
 {
   static hostent host_entry;
   hostent *hp;
@@ -143,7 +143,7 @@ Multicast_Manager::get_host_entry (const char *host)
 // Adds an additional new host to the list of host machines.
 
 void
-Multicast_Manager::add_host (const char *host_name)
+Multicast_Manager::add_host (char const *host_name)
 {
   ACE_NEW (Multicast_Manager::drwho_list,
            Host_Elem (host_name,
@@ -169,7 +169,7 @@ Multicast_Manager::checkoff_host (in_addr host_addr)
 }
 
 int
-Multicast_Manager::get_next_non_responding_host (const char *&host_name)
+Multicast_Manager::get_next_non_responding_host (char const *&host_name)
 {
   for (Multicast_Manager::current_ptr =
          Multicast_Manager::current_ptr == nullptr
@@ -188,7 +188,7 @@ Multicast_Manager::get_next_non_responding_host (const char *&host_name)
   return 0;
 }
 
-Host_Elem::Host_Elem (const char *h_name,
+Host_Elem::Host_Elem (char const *h_name,
                       Host_Elem *n)
   : host_name (h_name),
     next (n)

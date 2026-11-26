@@ -14,12 +14,12 @@
 class Host_Elem
 {
 public:
-  const char *host_name;
+  char const *host_name;
   in_addr host_addr;
   bool checked_off {};
   Host_Elem *next;
 
-  Host_Elem (const char *h_name, Host_Elem *n);
+  Host_Elem (char const *h_name, Host_Elem *n);
 };
 
 /**
@@ -33,19 +33,19 @@ class Multicast_Manager
 public:
   Multicast_Manager () = delete;
 
-  static void add_host (const char *host_name);
+  static void add_host (char const *host_name);
   static void checkoff_host (in_addr host_addr);
   static int get_next_host_addr (in_addr &host_addr);
   static int outstanding_hosts_remain ();
-  static int get_next_non_responding_host (const char *&host_name);
-  static int insert_hosts_from_file (const char *filename);
+  static int get_next_non_responding_host (char const *&host_name);
+  static int insert_hosts_from_file (char const *filename);
   static void insert_default_hosts ();
 
 private:
-  static hostent *get_host_entry (const char *host);
+  static hostent *get_host_entry (char const *host);
 
   static int received_host_count;
-  static const char *host_names[];
+  static char const *host_names[];
   static Host_Elem *drwho_list;
   static Host_Elem *current_ptr;
 };

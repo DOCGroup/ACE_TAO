@@ -40,7 +40,7 @@ PM_Client::insert_protocol_info (Protocol_Record &protocol_record)
 void
 PM_Client::process ()
 {
-  const char *(Protocol_Record::*get_name)();
+  char const *(Protocol_Record::*get_name)();
 
   if (Options::get_opt (Options::PRINT_LOGIN_NAME))
     {
@@ -128,9 +128,9 @@ PM_Client::process ()
 }
 
 char *
-PM_Client::handle_protocol_entries (const char *cp,
-                                    const char *login_name,
-                                    const char *real_name)
+PM_Client::handle_protocol_entries (char const *cp,
+                                    char const *login_name,
+                                    char const *real_name)
 {
   static Protocol_Record protocol_record (1);
   Drwho_Node *current_node = protocol_record.get_drwho_list ();

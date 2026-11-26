@@ -25,7 +25,7 @@ int Options::max_server_timeout = 5;
 char *Options::program_name;
 
 // Default name of file that stores friend info.
-const char *Options::friend_file = FRIEND_FILE;
+char const *Options::friend_file = FRIEND_FILE;
 
 void
 Options::print_usage_and_die (int long_msg)

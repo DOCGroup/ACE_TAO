@@ -30,47 +30,47 @@ Protocol_Record::Protocol_Record (int)
 {
 }
 
-Protocol_Record::Protocol_Record (const char *kn1,
+Protocol_Record::Protocol_Record (char const *kn1,
                                   Protocol_Record *next)
   : key_name1_ (kn1),
     next_ (next)
 {
 }
 
-const char *
+char const *
 Protocol_Record::get_login ()
 {
   return this->key_name1_;
 }
 
-const char *
-Protocol_Record::set_login (const char *str)
+char const *
+Protocol_Record::set_login (char const *str)
 {
   this->key_name1_ = str;
   return str;
 }
 
-const char *
+char const *
 Protocol_Record::get_real ()
 {
   return this->key_name2_;
 }
 
-const char *
+char const *
 Protocol_Record::get_host ()
 {
   return this->key_name1_;
 }
 
-const char *
-Protocol_Record::set_host (const char *str)
+char const *
+Protocol_Record::set_host (char const *str)
 {
   this->key_name1_ = str;
   return str;
 }
 
-const char *
-Protocol_Record::set_real (const char *str)
+char const *
+Protocol_Record::set_real (char const *str)
 {
   this->key_name2_ = str;
   return str;

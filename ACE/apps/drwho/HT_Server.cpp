@@ -9,7 +9,7 @@
 // that we do our own memory allocation here...
 
 Protocol_Record *
-HT_Server::insert (const char *key_name, int max_len)
+HT_Server::insert (char const *key_name, int max_len)
 {
   Protocol_Record **prpp {};
 

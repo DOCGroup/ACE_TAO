@@ -89,7 +89,7 @@ CM_Client::receive (int timeout)
         }
     }
 
-  for (const char *host_name;
+  for (char const *host_name;
        Multicast_Manager::get_next_non_responding_host (host_name);
        )
                 {

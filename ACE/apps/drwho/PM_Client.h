@@ -27,9 +27,9 @@ public:
 protected:
   int max_key_length {};
 
-  virtual char *handle_protocol_entries (const char *cp,
-                                         const char *key_name1,
-                                         const char *key_name2 = nullptr);
+  virtual char *handle_protocol_entries (char const *cp,
+                                         char const *key_name1,
+                                         char const *key_name2 = nullptr);
 
   Protocol_Record *insert_protocol_info (Protocol_Record &protocol_record) override;
 };

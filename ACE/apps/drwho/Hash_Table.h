@@ -24,7 +24,7 @@ public:
   Hash_Table &operator= (Hash_Table const &) = delete;
   Hash_Table (Hash_Table &&) = delete;
   Hash_Table &operator= (Hash_Table &&) = delete;
-  Protocol_Record *insert (const char *key_name,
+  Protocol_Record *insert (char const *key_name,
                            int max_len = MAXUSERIDNAMELEN) override = 0;
   Protocol_Record *get_next_entry () override;
   Protocol_Record *get_each_entry () override;

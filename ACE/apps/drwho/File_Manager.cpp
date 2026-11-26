@@ -16,7 +16,7 @@ File_Manager::File_Manager () = default;
 // entries in the file are returned, i.e., number of friends...
 
 int
-File_Manager::open_file (const char *filename)
+File_Manager::open_file (char const *filename)
 {
   return filename == nullptr
     ? this->open_passwd_file ()
@@ -26,7 +26,7 @@ File_Manager::open_file (const char *filename)
 // Returns the next LOGIN_NAME and REAL_NAME from the file.
 
 void
-File_Manager::get_login_and_real_name (const char *&login_name, const char *&real_name)
+File_Manager::get_login_and_real_name (char const *&login_name, char const *&real_name)
 {
   char *buf_ptr = this->current_ptr;
 
@@ -146,10 +146,10 @@ File_Manager::open_passwd_file ()
 // space.
 
 int
-File_Manager::open_friends_file (const char *filename)
+File_Manager::open_friends_file (char const *filename)
 {
   std::string directory;
-  const char *pathname = filename;
+  char const *pathname = filename;
 
   // See if we've got a filename or a pathname (i.e., directory/filename).
 

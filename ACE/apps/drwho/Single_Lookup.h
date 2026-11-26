@@ -19,13 +19,13 @@
 class Single_Lookup : public Search_Struct
 {
 public:
-  explicit Single_Lookup (const char *usr_name);
+  explicit Single_Lookup (char const *usr_name);
   ~Single_Lookup () override;
   Single_Lookup (Single_Lookup const &) = delete;
   Single_Lookup (Single_Lookup &&) = delete;
   Single_Lookup &operator= (Single_Lookup const &) = delete;
   Single_Lookup &operator= (Single_Lookup &&) = delete;
-  Protocol_Record *insert (const char *key_name,
+  Protocol_Record *insert (char const *key_name,
                            int max_len = MAXUSERIDNAMELEN) override = 0;
   Protocol_Record *get_next_entry () override;
   Protocol_Record *get_each_entry () override;

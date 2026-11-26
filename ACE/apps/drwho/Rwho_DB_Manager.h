@@ -37,7 +37,7 @@ private:
   int current_user {};
   const int WHOD_HEADER_SIZE;
   char original_pathname[MAXPATHLEN + 1];
-  const char *rwho_dir_name;
+  char const *rwho_dir_name;
 
   int get_next_host ();
 };
