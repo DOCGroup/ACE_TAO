@@ -2293,6 +2293,14 @@ PREDEFINED             = __ACE_INLINE__= \
                          ACE_END_VERSIONED_NAMESPACE_DECL= \
                          "ACE_SYNCH_DECL=typename _ACE_SYNCH" \
                          ACE_SYNCH_USE=_ACE_SYNCH \
+                         "ACE_MEM_POOL_1=typename _ACE_MEM_POOL" \
+                         ACE_MEM_POOL_2=_ACE_MEM_POOL \
+                         "ACE_PEER_STREAM_1=typename _ACE_PEER_STREAM" \
+                         ACE_PEER_STREAM_2=_ACE_PEER_STREAM \
+                         "ACE_PEER_ACCEPTOR_1=typename _ACE_PEER_ACCEPTOR" \
+                         ACE_PEER_ACCEPTOR_2=_ACE_PEER_ACCEPTOR \
+                         "ACE_PEER_CONNECTOR_1=typename _ACE_PEER_CONNECTOR" \
+                         ACE_PEER_CONNECTOR_2=_ACE_PEER_CONNECTOR \
                          ACE_INLINE=inline \
                          ACE_NAMESPACE_INLINE_FUNCTION=inline \
                          ACE_Export= \
