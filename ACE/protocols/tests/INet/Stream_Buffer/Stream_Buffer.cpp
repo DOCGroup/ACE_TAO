@@ -193,6 +193,46 @@ ACE_TMAIN (int, ACE_TCHAR *[])
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bidirectional stream lost or repeated data after a short write\n")), 1);
       }
   }
+  handler.max_write_ = 1024;
+  handler.written_data_.clear ();
+  {
+    Test_Buffer output (handler);
+    if (output.sputn ("abcdefg", 7) != 7)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not fill buffered stream\n")), 1);
+      }
+    handler.fail_write_ = true;
+    if (output.overflow ('x') != std::char_traits<char>::eof ()
+        || output.overflow ('y') != std::char_traits<char>::eof ())
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffered stream failed to report write errors\n")), 1);
+      }
+    handler.fail_write_ = false;
+    if (output.pubsync () != 0 || handler.written_data_ != "abcdefgx")
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffered stream lost data after a failed flush\n")), 1);
+      }
+  }
+  handler.written_data_.clear ();
+  {
+    ACE::IOS::BasicBidirStreamBuffer<char, Test_Handler> output (
+      std::addressof (handler), 8, std::ios::out);
+    if (output.sputn ("abcdefg", 7) != 7)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not fill bidirectional stream\n")), 1);
+      }
+    handler.fail_write_ = true;
+    if (output.overflow ('x') != std::char_traits<char>::eof ()
+        || output.overflow ('y') != std::char_traits<char>::eof ())
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bidirectional stream failed to report write errors\n")), 1);
+      }
+    handler.fail_write_ = false;
+    if (output.pubsync () != 0 || handler.written_data_ != "abcdefgx")
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bidirectional stream lost data after a failed flush\n")), 1);
+      }
+  }
 #if defined (ACE_HAS_WCHAR)
   Wide_Handler wide_handler;
   {

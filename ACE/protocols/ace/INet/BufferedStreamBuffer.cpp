@@ -46,6 +46,11 @@ namespace ACE
 
         if (c != char_traits::eof ())
         {
+          if (this->pptr () == this->pbase () + this->bufsize_
+              && this->flush_buffer () == -1)
+            {
+              return char_traits::eof ();
+            }
           *this->pptr () = char_traits::to_char_type (c);
           this->pbump (1);
         }
