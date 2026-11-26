@@ -193,6 +193,41 @@ ACE_TMAIN (int, ACE_TCHAR *[])
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bidirectional stream lost or repeated data after a short write\n")), 1);
       }
   }
+  handler.max_write_ = 2;
+  handler.written_data_.clear ();
+  {
+    Test_Buffer output (handler);
+    if (output.sputn ("abcdefg", 7) != 7
+        || output.overflow ('x') != std::char_traits<char>::eof ())
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffered stream did not report a short write\n")), 1);
+      }
+    handler.max_write_ = 1024;
+    if (output.pubsync () != 0 || handler.written_data_ != "abcdefg"
+        || output.overflow ('x') == std::char_traits<char>::eof ()
+        || handler.written_data_ != "abcdefgx")
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffered stream mishandled an overflow retry\n")), 1);
+      }
+  }
+  handler.max_write_ = 2;
+  handler.written_data_.clear ();
+  {
+    ACE::IOS::BasicBidirStreamBuffer<char, Test_Handler> output (
+      std::addressof (handler), 8, std::ios::out);
+    if (output.sputn ("abcdefg", 7) != 7
+        || output.overflow ('x') != std::char_traits<char>::eof ())
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bidirectional stream did not report a short write\n")), 1);
+      }
+    handler.max_write_ = 1024;
+    if (output.pubsync () != 0 || handler.written_data_ != "abcdefg"
+        || output.overflow ('x') == std::char_traits<char>::eof ()
+        || handler.written_data_ != "abcdefgx")
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bidirectional stream mishandled an overflow retry\n")), 1);
+      }
+  }
   handler.max_write_ = 1024;
   handler.written_data_.clear ();
   {
