@@ -40,8 +40,8 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (ACE_Hash_Map_Entry<EXT_I
 }
 
 template <class EXT_ID, class INT_ID>
-ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (const EXT_ID &ext_id,
-                                                        const INT_ID &int_id,
+ACE_Hash_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Map_Entry (EXT_ID const &ext_id,
+                                                        INT_ID const &int_id,
                                                         ACE_Hash_Map_Entry<EXT_ID, INT_ID> *next,
                                                         ACE_Hash_Map_Entry<EXT_ID, INT_ID> *prev)
   : ext_id_ (ext_id),
@@ -60,7 +60,7 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::key ()
   return ext_id_;
 }
 
-template <class EXT_ID, class INT_ID> const EXT_ID &
+template <class EXT_ID, class INT_ID> EXT_ID const &
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::key () const
 {
   return ext_id_;
@@ -72,7 +72,7 @@ ACE_Hash_Map_Entry<EXT_ID, INT_ID>::item ()
   return int_id_;
 }
 
-template <class EXT_ID, class INT_ID> const INT_ID &
+template <class EXT_ID, class INT_ID> INT_ID const &
 ACE_Hash_Map_Entry<EXT_ID, INT_ID>::item () const
 {
   return int_id_;
@@ -232,8 +232,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
-                                                                                   const INT_ID &int_id,
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_i (EXT_ID const &ext_id,
+                                                                                   INT_ID const &int_id,
                                                                                    ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
   size_t loc {};
@@ -261,7 +261,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybind_i (EXT_ID const &ext_id,
                                                                                       INT_ID &int_id,
                                                                                       ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
@@ -290,7 +290,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybi
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbind_i (EXT_ID const &ext_id,
                                                                                      INT_ID &int_id)
 {
   ACE_Hash_Map_Entry<EXT_ID, INT_ID> *temp {};
@@ -322,7 +322,7 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbin
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::shared_find (const EXT_ID &ext_id,
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::shared_find (EXT_ID const &ext_id,
                                                                                         ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry,
                                                                                         size_t &loc)
 {
@@ -354,8 +354,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::share
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
-                                                                                     const INT_ID &int_id,
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
+                                                                                     INT_ID const &int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
   size_t dummy {};
@@ -372,8 +372,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
-                                                                                     const INT_ID &int_id,
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
+                                                                                     INT_ID const &int_id,
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
@@ -392,8 +392,8 @@ ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebin
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
-                                                                                     const INT_ID &int_id,
+ACE_Hash_Map_Manager_Ex<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
+                                                                                     INT_ID const &int_id,
                                                                                      EXT_ID &old_ext_id,
                                                                                      INT_ID &old_int_id,
                                                                                      ACE_Hash_Map_Entry<EXT_ID, INT_ID> *&entry)
