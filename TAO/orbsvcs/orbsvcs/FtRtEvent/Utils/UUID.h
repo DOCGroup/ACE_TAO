@@ -36,17 +36,17 @@ class TAO_FtRtEvent_Export  UUID
     {
       BINARY_LENGTH= 16,
 
-      // the required length for the string representation including the termination '\0'
+      /// Required string representation length, including the terminating '\0'.
       STRING_LENGTH = 37
     };
 
-    /* Construct an Global Unique Identifier. */
+    /// Construct a global unique identifier.
     UUID();
 
-    /* This is used to create an uninitialized UUID. */
+    /// Construct an uninitialized UUID.
     explicit UUID(int);
 
-    /*
+    /**
      * Construct an UUID from the binary representation. If you want to avoid a memory
      * copy operation for this constructor. You can safely reinterpret_cast the 16
      * bytes buffer into the UUID object and use all the member functions provided in
@@ -55,26 +55,26 @@ class TAO_FtRtEvent_Export  UUID
      */
     explicit UUID(unsigned char const *buffer);
 
-    /*
+    /**
      * Construct an UUID from the string representation. Use is_valid() to test if the
      * construction is successful or not.
      */
     explicit UUID(ACE_TCHAR const *);
 
-    /* Construct an uuid from the string representation. */
+    /// Set the UUID from its string representation.
     bool from_string(char const *string_rep);
 
     bool operator==(UUID const &other) const;
     bool operator!=(UUID const &other) const;
 
-    /*
+    /**
      * Test if the UUID is valid. Used after constructing an UUID from an string
      * representation. This is done by testing whether the time_hi and time_mid fields
      * of the timestamp are 0. By current time, those two field shouldn't be 0 at all.
      */
     bool is_valid() const;
 
-    /*
+    /**
      * convert to a string representation the buffer size provided must be at least
      * STRING_LENGTH
      */
@@ -82,13 +82,13 @@ class TAO_FtRtEvent_Export  UUID
 
     void to_string(ACE_CString &string) const;
 
-    /*
+    /**
      * convert to a string representation the buffer size provided must be at least
      * BINARY_LENGTH
      */
     void to_binary(unsigned char *binary_rep) const;
 
-    /* create an UUID in the specified buffer */
+    /// Create a UUID in the specified buffer.
     static void create(unsigned char *buffer);
   private:
     union
