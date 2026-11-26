@@ -31,7 +31,7 @@ class EventChannelConsumersSuppliers
 {
 public:
   EventChannelConsumersSuppliers (TAO_MonitorEventChannel* ec,
-                                  const ACE_CString& name,
+                                  ACE_CString const& name,
                                   Monitor_Control_Types::Information_Type type,
                                   bool is_supplier = false)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
@@ -77,7 +77,7 @@ class EventChannelTimedoutConsumers
 {
 public:
   EventChannelTimedoutConsumers (TAO_MonitorEventChannel* ec,
-                                 const ACE_CString& name,
+                                 ACE_CString const& name,
                                  Monitor_Control_Types::Information_Type type)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
@@ -97,7 +97,7 @@ class EventChannelConsumerSupplierAdmins
 {
 public:
   EventChannelConsumerSupplierAdmins (TAO_MonitorEventChannel* ec,
-                                      const ACE_CString& name,
+                                      ACE_CString const& name,
                                       Monitor_Control_Types::Information_Type type,
                                       bool is_supplier = false)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
@@ -146,7 +146,7 @@ class QueuedEvents
 {
 public:
   QueuedEvents (TAO_MonitorEventChannel* ec,
-                const ACE_CString& name,
+                ACE_CString const& name,
                 Monitor_Control_Types::Information_Type type,
                 bool count)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
@@ -170,7 +170,7 @@ class OldestEvent
 {
 public:
   OldestEvent (TAO_MonitorEventChannel* ec,
-               const ACE_CString& name,
+               ACE_CString const& name,
                Monitor_Control_Types::Information_Type type)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
@@ -189,7 +189,7 @@ class SlowestConsumers
 {
 public:
   SlowestConsumers (TAO_MonitorEventChannel* ec,
-                    const ACE_CString& name,
+                    ACE_CString const& name,
                     Monitor_Control_Types::Information_Type type)
     : TAO_Dynamic_Statistic<TAO_MonitorEventChannel> (ec,
                                                       name.c_str (),
@@ -209,7 +209,7 @@ class QueueOverflows:
   public Monitor_Base
 {
 public:
-  explicit QueueOverflows (const ACE_CString& name)
+  explicit QueueOverflows (ACE_CString const& name)
   : Monitor_Base (
       name.c_str (),
       Monitor_Control_Types::MC_COUNTER) {
@@ -220,7 +220,7 @@ class ShutdownControl : public TAO_NS_Control
 {
 public:
   ShutdownControl (TAO_MonitorEventChannel* ec,
-                   const ACE_CString& name)
+                   ACE_CString const& name)
     : TAO_NS_Control (name.c_str ()),
       ec_ (ec)
   {
@@ -248,7 +248,7 @@ class RemoveConsumerSupplierControl : public TAO_NS_Control
 {
 public:
   RemoveConsumerSupplierControl (TAO_MonitorEventChannel* ec,
-                                 const ACE_CString& name,
+                                 ACE_CString const& name,
                                  CosNotifyChannelAdmin::ProxyID id,
                                  bool is_supplier)
     : TAO_NS_Control (name.c_str ()),

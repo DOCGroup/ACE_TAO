@@ -281,7 +281,7 @@ TAO_MonitorManager::ORBTask::svc ()
       // Set to nil to avoid double shutdown in TAO_MonitorManager::fini()
       this->orb_ = CORBA::ORB::_nil ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       if (!CORBA::is_nil (this->orb_.in ()))
         {

@@ -62,7 +62,7 @@ public:
   /// Removes an object from the map.
   /// Returns true if the object is successfully removed from the map.
   /// Returns false otherwise.
-  bool remove (const ACE_CString& name);
+  bool remove (ACE_CString const& name);
 
   /// Returns a list of names stored in the registry
   const NameList& names ();
@@ -70,7 +70,7 @@ public:
   /// Gets an object from the map
   /// Returns the object if it is successfully located.
   /// Returns null otherwise.
-  TAO_NS_Control* get (const ACE_CString& name) const;
+  TAO_NS_Control* get (ACE_CString const& name) const;
 
 private:
   using Map = ACE_Hash_Map_Manager<ACE_CString,

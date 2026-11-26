@@ -29,7 +29,7 @@ public:
   TAO_NS_Control& operator= (TAO_NS_Control&&) = delete;
 
   /// Return the name of this control object.
-  const ACE_CString& name () const;
+  ACE_CString const& name () const;
 
   /// Execute the control object.  Only return false if the command
   /// specified is not supported.
