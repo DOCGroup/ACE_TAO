@@ -191,7 +191,7 @@ public:
   static ACE_OS_Object_Manager *instance ();
 
   /// For @c ACE_OS::atexit support.
-  int at_exit (ACE_EXIT_HOOK func, const char* name = nullptr);
+  int at_exit (ACE_EXIT_HOOK func, char const * name = nullptr);
 
 //private:
   /// Singleton instance pointer.
@@ -217,7 +217,7 @@ public:
 #endif /* ACE_HAS_WIN32_STRUCTURED_EXCEPTIONS */
 
   /// For use by init () and fini (), to consolidate error reporting.
-  static void print_error_message (unsigned int line_number, const ACE_TCHAR *message);
+  static void print_error_message (unsigned int line_number, ACE_TCHAR const *message);
 
   /// This class is for internal use by ACE_OS, etc., only.
   friend class ACE_Object_Manager;

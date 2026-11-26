@@ -243,7 +243,7 @@ public:
    * shutting down, ENOMEM if insufficient virtual memory, or EEXIST
    * if the object (or array) had already been registered.
    */
-  static int at_exit (ACE_Cleanup *object, void *param = nullptr, const char* name = nullptr);
+  static int at_exit (ACE_Cleanup *object, void *param = nullptr, char const * name = nullptr);
 
 #if defined (ACE_HAS_TSS_EMULATION)
   static int init_tss ();
@@ -267,7 +267,7 @@ public:
   static int at_exit (void *object,
                       ACE_CLEANUP_FUNC cleanup_hook,
                       void *param,
-                      const char* name = nullptr);
+                      char const * name = nullptr);
 
   static int remove_at_exit (void *object);
 
@@ -277,7 +277,7 @@ public:
   static int at_thread_exit (void *object,
                              ACE_CLEANUP_FUNC cleanup_hook,
                              void *param,
-                             const char* name);
+                             char const * name);
 #endif /* 0 */
 
   /// Unique identifiers for preallocated objects.  Please see
@@ -351,7 +351,7 @@ private:
 
   /// Register an object or array for deletion at program termination.
   /// See description of static version above for return values.
-  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, const char* name);
+  int at_exit_i (void *object, ACE_CLEANUP_FUNC cleanup_hook, void *param, char const * name);
 
   /// Remove an object for deletion at program termination.
   /// See description of static version above for return values.

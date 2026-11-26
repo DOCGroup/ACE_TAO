@@ -451,7 +451,7 @@ ACE_OS_Object_Manager::fini ()
 int ace_exit_hook_marker = 0;
 
 int
-ACE_OS_Object_Manager::at_exit (ACE_EXIT_HOOK func, const char* name)
+ACE_OS_Object_Manager::at_exit (ACE_EXIT_HOOK func, char const * name)
 {
   return exit_info_.at_exit_i (&ace_exit_hook_marker,
                                reinterpret_cast <ACE_CLEANUP_FUNC> (func),
@@ -461,7 +461,7 @@ ACE_OS_Object_Manager::at_exit (ACE_EXIT_HOOK func, const char* name)
 
 void
 ACE_OS_Object_Manager::print_error_message (unsigned int line_number,
-                                            const ACE_TCHAR *message)
+                                            ACE_TCHAR const *message)
 {
   // To avoid duplication of these const strings in OS.o.
 #ifndef ACE_LACKS_STDERR
