@@ -12,7 +12,7 @@ public:
   {}
 
   CORBA::Boolean
-  send_message (const char *user_name, const char *subject, char *&message) override;
+  send_message (char const *user_name, char const *subject, char *&message) override;
 
 private:
   int count_;

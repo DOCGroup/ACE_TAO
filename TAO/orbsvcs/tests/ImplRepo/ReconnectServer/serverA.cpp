@@ -3,7 +3,7 @@
 #include <ace/Task.h>
 #include <ace/Get_Opt.h>
 
-const ACE_TCHAR * ior_output_file = ACE_TEXT ("serverA.ior");
+ACE_TCHAR const * ior_output_file = ACE_TEXT ("serverA.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

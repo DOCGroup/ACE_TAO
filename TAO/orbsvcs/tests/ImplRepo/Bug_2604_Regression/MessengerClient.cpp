@@ -4,7 +4,7 @@
 #include "ace/SString.h"
 #include "ace/Get_Opt.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://messenger.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

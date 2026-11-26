@@ -5,7 +5,7 @@
 #include <ace/Get_Opt.h>
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR * ior_output_file = ACE_TEXT ("serverB.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("serverB.ior");
 // server_notify_delay between resolving RootPOA init ref and create_POA.
 int server_notify_delay = 0;
 

@@ -19,8 +19,8 @@ Test_i::Test_i (Terminator &terminator)
 Test_i::~Test_i () = default;
 
 CORBA::Boolean
-Test_i::send_message (const char * user_name,
-                      const char * subject,
+Test_i::send_message (char const *user_name,
+                      char const *subject,
                       char *& message)
 {
   std::cout << "Message count: " << message_count_++ << std::endl;

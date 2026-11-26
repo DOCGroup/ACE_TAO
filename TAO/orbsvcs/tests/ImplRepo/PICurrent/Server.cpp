@@ -8,7 +8,7 @@
 #include <iostream>
 
 PortableServer::POA_ptr
-createPOA(PortableServer::POA_ptr root_poa, const char* poa_name)
+createPOA(PortableServer::POA_ptr root_poa, char const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);
@@ -42,7 +42,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
     PortableServer::POAManager_var mgr = root_poa->the_POAManager();
 
-    const char* poa_name = "TestService";
+    char const *poa_name = "TestService";
 
     PortableServer::POA_var test_poa = createPOA(root_poa.in(), poa_name);
 

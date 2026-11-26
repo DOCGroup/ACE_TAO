@@ -18,8 +18,8 @@ public:
   ~Test_i () override;
 
   CORBA::Boolean send_message (
-    const char * user_name,
-    const char * subject,
+    char const *user_name,
+    char const *subject,
     char *& message) override;
 
 private:

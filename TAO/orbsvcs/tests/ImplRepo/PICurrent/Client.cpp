@@ -11,7 +11,7 @@
 #include <cstdio>
 #include <cstring>
 
-const ACE_TCHAR *ior = ACE_TEXT("file://test.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://test.ior");
 int number_of_tries = 5;
 int ofs = 100;
 TAO_SYNCH_MUTEX ofs_lock;

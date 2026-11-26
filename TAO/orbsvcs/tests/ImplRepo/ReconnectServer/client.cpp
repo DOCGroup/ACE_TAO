@@ -6,7 +6,7 @@
 
 #include <memory>
 
-const ACE_TCHAR *ior_input_file = ACE_TEXT ("file://serverA.ior");
+ACE_TCHAR const *ior_input_file = ACE_TEXT ("file://serverA.ior");
 int test_duration_sec = 15;
 bool expect_object_not_exist = false;
 

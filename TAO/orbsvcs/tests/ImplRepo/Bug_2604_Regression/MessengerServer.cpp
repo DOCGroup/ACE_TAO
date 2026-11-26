@@ -10,7 +10,7 @@
 
 #include <memory>
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT ("messenger.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT ("messenger.ior");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])
@@ -39,7 +39,7 @@ parse_args (int argc, ACE_TCHAR *argv[])
 }
 
 PortableServer::POA_ptr
-createPersistentPOA (PortableServer::POA_ptr root_poa, const char *poa_name)
+createPersistentPOA (PortableServer::POA_ptr root_poa, char const *poa_name)
 {
   CORBA::PolicyList policies;
   policies.length (2);
@@ -59,7 +59,7 @@ createPersistentPOA (PortableServer::POA_ptr root_poa, const char *poa_name)
 }
 
 void
-writeIORFile (const char* ior)
+writeIORFile (char const *ior)
 {
   FILE *out = ACE_OS::fopen (ACE_TEXT_ALWAYS_CHAR(ior_output_file), "w");
   if (out)
@@ -89,7 +89,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       PortableServer::POAManager_var mgr = root_poa->the_POAManager ();
 
-      const char* poa_name = "MessengerService";
+      char const *poa_name = "MessengerService";
 
       PortableServer::POA_var poa = createPersistentPOA (root_poa.in (),
                                                          poa_name);
