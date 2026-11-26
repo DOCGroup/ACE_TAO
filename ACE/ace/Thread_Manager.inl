@@ -68,7 +68,7 @@ ACE_Thread_Descriptor_Base::~ACE_Thread_Descriptor_Base () = default;
 
 ACE_INLINE bool
 ACE_Thread_Descriptor_Base::operator== (
-  const ACE_Thread_Descriptor_Base &rhs) const
+  ACE_Thread_Descriptor_Base const &rhs) const
 {
   return
     ACE_OS::thr_cmp (this->thr_handle_, rhs.thr_handle_)
@@ -76,7 +76,7 @@ ACE_Thread_Descriptor_Base::operator== (
 }
 
 ACE_INLINE bool
-ACE_Thread_Descriptor_Base::operator!=(const ACE_Thread_Descriptor_Base &rhs) const
+ACE_Thread_Descriptor_Base::operator!=(ACE_Thread_Descriptor_Base const &rhs) const
 {
   return !(*this == rhs);
 }

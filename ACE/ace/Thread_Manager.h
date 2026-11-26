@@ -171,10 +171,10 @@ public:
   /// Borland requires these comparison operators.
 
   /// Equality operator.
-  bool operator== (const ACE_Thread_Descriptor_Base &rhs) const;
+  bool operator== (ACE_Thread_Descriptor_Base const &rhs) const;
 
   /// Inequality operator.
-  bool operator!= (const ACE_Thread_Descriptor_Base &rhs) const;
+  bool operator!= (ACE_Thread_Descriptor_Base const &rhs) const;
 
   /// Group ID.
   int grp_id () const;
@@ -434,7 +434,7 @@ public:
                       size_t lwm = ACE_DEFAULT_THREAD_MANAGER_LWM,
                       size_t inc = ACE_DEFAULT_THREAD_MANAGER_INC,
                       size_t hwm = ACE_DEFAULT_THREAD_MANAGER_HWM);
-  ACE_Thread_Manager (const ACE_Condition_Attributes &attributes,
+  ACE_Thread_Manager (ACE_Condition_Attributes const &attributes,
                       size_t preaolloc = ACE_DEFAULT_THREAD_MANAGER_PREALLOC,
                       size_t lwm = ACE_DEFAULT_THREAD_MANAGER_LWM,
                       size_t inc = ACE_DEFAULT_THREAD_MANAGER_INC,
@@ -730,7 +730,7 @@ public:
    * as your object is being destroyed by the @c ACE_Object_Manager)
    * you can use @c wait_grp() instead.
    */
-  int wait (const ACE_Time_Value *timeout = nullptr,
+  int wait (ACE_Time_Value const *timeout = nullptr,
             bool abandon_detached_threads = false,
             bool use_absolute_time = true);
 

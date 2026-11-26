@@ -133,7 +133,7 @@ public:
   int tryacquire_write_upgrade ();
 
   /// Return the underlying mutex.
-  const ACE_thread_mutex_t &lock () const;
+  ACE_thread_mutex_t const &lock () const;
   ACE_thread_mutex_t &lock ();
 
   /// Dump the state of an object.

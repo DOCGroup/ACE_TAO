@@ -209,7 +209,7 @@ public:
 
   /// Change and/or examine calling thread's signal mask.
   static int sigsetmask (int how,
-                         const sigset_t *sigset,
+                         sigset_t const *sigset,
                          sigset_t *osigset = nullptr);
 
   /**

@@ -392,7 +392,7 @@ ACE_Thread_Manager::ACE_Thread_Manager (size_t prealloc,
   ACE_TRACE ("ACE_Thread_Manager::ACE_Thread_Manager");
 }
 
-ACE_Thread_Manager::ACE_Thread_Manager (const ACE_Condition_Attributes &attributes,
+ACE_Thread_Manager::ACE_Thread_Manager (ACE_Condition_Attributes const &attributes,
                                         size_t prealloc,
                                         size_t lwm,
                                         size_t inc,
@@ -1801,7 +1801,7 @@ ACE_Thread_Manager::exit (ACE_THR_FUNC_RETURN status, bool do_thread_exit)
 
 // Wait for all the threads to exit.
 int
-ACE_Thread_Manager::wait (const ACE_Time_Value *timeout,
+ACE_Thread_Manager::wait (ACE_Time_Value const *timeout,
                           bool abandon_detached_threads,
                           bool use_absolute_time)
 {
