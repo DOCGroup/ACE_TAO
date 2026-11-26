@@ -117,7 +117,7 @@ Svc_Handler::send_data ()
 {
   // Send data to server.
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       if (this->peer ().send_n (c, 1) == -1)
         {
@@ -146,7 +146,7 @@ Svc_Handler::recv_data ()
 #endif /* ! ACE_WIN32 */
   handle_set.set_bit (handle);
 
-  const char *t = ACE_ALPHABET;
+  char const *t = ACE_ALPHABET;
 
   // Read data from client (terminate on error).
 
@@ -266,7 +266,7 @@ struct Client_Info
 
 void
 timed_blocking_connect (CONNECTOR &con,
-                        const ACE_INET_Addr &server_addr)
+                        ACE_INET_Addr const &server_addr)
 {
   ACE_Time_Value const tv (ACE_DEFAULT_TIMEOUT);
   ACE_Synch_Options const options (ACE_Synch_Options::USE_TIMEOUT, tv);
@@ -303,7 +303,7 @@ timed_blocking_connect (CONNECTOR &con,
 
 void
 blocking_connect (CONNECTOR &con,
-                  const ACE_INET_Addr &server_addr)
+                  ACE_INET_Addr const &server_addr)
 {
   Svc_Handler *svc_handler;
   ACE_NEW (svc_handler,
@@ -337,7 +337,7 @@ blocking_connect (CONNECTOR &con,
 
 void
 cached_connect (STRAT_CONNECTOR &con,
-                const ACE_INET_Addr &server_addr)
+                ACE_INET_Addr const &server_addr)
 {
   Svc_Handler *svc_handler {};
 
@@ -766,7 +766,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
-  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
+  if (acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {
       ACE_ERROR ((LM_ERROR,

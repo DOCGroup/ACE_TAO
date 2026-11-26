@@ -68,7 +68,7 @@ static int disable_signal (int sigmin, int sigmax);
 static int both = 0;
 
 // Host that we're connecting to.
-static const ACE_TCHAR *host {};
+static ACE_TCHAR const *host {};
 
 // number of Senders instances
 static int senders = 1;
@@ -349,7 +349,7 @@ Acceptor::on_delete_receiver (Receiver &rcvr)
 }
 
 int
-Acceptor::start (const ACE_INET_Addr &addr)
+Acceptor::start (ACE_INET_Addr const &addr)
 {
   if (ACE_Acceptor<Receiver,ACE_SOCK_ACCEPTOR>::open (addr,
                                                       ACE_Reactor::instance (),
@@ -758,7 +758,7 @@ Connector::on_delete_sender (Sender & sndr)
 }
 
 int
-Connector::start (const ACE_INET_Addr & addr, int num)
+Connector::start (ACE_INET_Addr const & addr, int num)
 {
   if (ACE_Connector<Sender,ACE_SOCK_CONNECTOR>::open (ACE_Reactor::instance (),
                                                       ACE_NONBLOCK) < 0)

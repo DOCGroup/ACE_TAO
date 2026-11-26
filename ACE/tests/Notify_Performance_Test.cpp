@@ -121,7 +121,7 @@ create_reactor ()
 static void
 print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 {
-  const ACE_TCHAR *reactor_type {};
+  ACE_TCHAR const *reactor_type {};
   if (opt_wfmo_reactor)
     {
       reactor_type = ACE_TEXT ("WFMO_Reactor");
