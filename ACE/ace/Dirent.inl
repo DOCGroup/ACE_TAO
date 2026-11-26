@@ -1,4 +1,6 @@
 #include "ace/Log_Category.h"
+#include <memory>
+#include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -39,10 +41,24 @@ ACE_Dirent::ACE_Dirent (ACE_TCHAR const *dirname)
 ACE_INLINE
 ACE_Dirent::~ACE_Dirent ()
 {
-  if (this->dirp_)
+  this->close ();
+}
+
+ACE_INLINE
+ACE_Dirent::ACE_Dirent (ACE_Dirent &&other) noexcept
+  : dirp_ (std::exchange (other.dirp_, nullptr))
+{
+}
+
+ACE_INLINE ACE_Dirent &
+ACE_Dirent::operator= (ACE_Dirent &&other) noexcept
+{
+  if (this != std::addressof (other))
     {
-      ACE_OS::closedir (this->dirp_);
+      this->close ();
+      this->dirp_ = std::exchange (other.dirp_, nullptr);
     }
+  return *this;
 }
 
 ACE_INLINE ACE_DIRENT *

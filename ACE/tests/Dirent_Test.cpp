@@ -20,6 +20,11 @@
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_NS_unistd.h"
 #include "ace/SString.h"
+#include <type_traits>
+#include <utility>
+
+static_assert (!std::is_copy_constructible<ACE_Dirent>::value, "Directory streams cannot be copied");
+static_assert (!std::is_copy_assignable<ACE_Dirent>::value, "Directory streams cannot be copied");
 
 #if defined (ACE_HAS_TCHAR_DIRENT)
 #  define TEST_ENTRY ACE_TEXT ("run_test.lst")
@@ -161,6 +166,21 @@ dirent_test ()
     {
       ACE_ERROR_RETURN
         ((LM_ERROR, ACE_TEXT ("open of dir %s failed\n"), TestDir.c_str()), -1);
+    }
+
+  ACE_Dirent moved (std::move (dir));
+  if (dir.read () != nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Moved-from directory remains open\n")), -1);
+    }
+  if (dir.open (TestDir.c_str ()) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not reopen directory for move assignment\n")), -1);
+    }
+  dir = std::move (moved);
+  if (moved.read () != nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Move-assigned directory remains open\n")), -1);
     }
 
   for (ACE_DIRENT *directory {};

@@ -34,6 +34,11 @@ public:
   /// Constructor calls @c opendir()
   explicit ACE_Dirent (ACE_TCHAR const *dirname);
 
+  ACE_Dirent (ACE_Dirent const &) = delete;
+  ACE_Dirent &operator= (ACE_Dirent const &) = delete;
+  ACE_Dirent (ACE_Dirent &&other) noexcept;
+  ACE_Dirent &operator= (ACE_Dirent &&other) noexcept;
+
   /// Opens the directory named by filename and associates a directory
   /// stream with it.
   int open (ACE_TCHAR const *filename);
