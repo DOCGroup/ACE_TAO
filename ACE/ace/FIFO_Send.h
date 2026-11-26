@@ -50,10 +50,10 @@ public:
   /// @}
 
   /// Send @a buf of up to @a len bytes.
-  ssize_t send (const void *buf, size_t len);
+  ssize_t send (void const *buf, size_t len);
 
   /// Send @a buf of exactly @a len bytes (block until done).
-  ssize_t send_n (const void *buf, size_t len);
+  ssize_t send_n (void const *buf, size_t len);
 
   /// Dump the state of an object.
   void dump () const;

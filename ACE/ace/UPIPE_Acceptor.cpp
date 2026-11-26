@@ -33,7 +33,7 @@ ACE_UPIPE_Acceptor::~ACE_UPIPE_Acceptor ()
 
 // General purpose routine for performing server ACE_UPIPE.
 int
-ACE_UPIPE_Acceptor::open (const ACE_UPIPE_Addr &local_addr,
+ACE_UPIPE_Acceptor::open (ACE_UPIPE_Addr const &local_addr,
                           int reuse_addr)
 {
   ACE_TRACE ("ACE_UPIPE_Acceptor::open");
@@ -48,7 +48,7 @@ ACE_UPIPE_Acceptor::close ()
 }
 
 // General purpose routine for accepting new connections.
-ACE_UPIPE_Acceptor::ACE_UPIPE_Acceptor (const ACE_UPIPE_Addr &local_addr,
+ACE_UPIPE_Acceptor::ACE_UPIPE_Acceptor (ACE_UPIPE_Addr const &local_addr,
                                         int reuse_addr)
   : mb_ (sizeof (ACE_UPIPE_Stream *))
 {

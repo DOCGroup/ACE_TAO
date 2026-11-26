@@ -19,7 +19,7 @@ ACE_SPIPE_Stream::get_remote_addr (ACE_SPIPE_Addr &remote_sap) const
 /// this many bytes are sent.
 
 ACE_INLINE ssize_t
-ACE_SPIPE_Stream::send_n (const void *buf, size_t n) const
+ACE_SPIPE_Stream::send_n (void const *buf, size_t n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send_n");
   return ACE::write_n (this->get_handle (), buf, n);
@@ -36,7 +36,7 @@ ACE_SPIPE_Stream::recv_n (void *buf, size_t n) const
 }
 
 ACE_INLINE ssize_t
-ACE_SPIPE_Stream::send (const void *buf, size_t n) const
+ACE_SPIPE_Stream::send (void const *buf, size_t n) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
   return ACE_OS::write (this->get_handle (), static_cast<char const *> (buf), n);
@@ -50,7 +50,7 @@ ACE_SPIPE_Stream::recv (void *buf, size_t n) const
 }
 
 ACE_INLINE ssize_t
-ACE_SPIPE_Stream::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int flags) const
+ACE_SPIPE_Stream::send (ACE_Str_Buf const *cntl, ACE_Str_Buf const *data, int flags) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
   return ACE_OS::putmsg (this->get_handle (), (strbuf const *) cntl, (strbuf const *) data, flags);
@@ -64,7 +64,7 @@ ACE_SPIPE_Stream::recv (ACE_Str_Buf *cntl, ACE_Str_Buf *data, int *flags) const
 }
 
 ACE_INLINE ssize_t
-ACE_SPIPE_Stream::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int band, int flags) const
+ACE_SPIPE_Stream::send (ACE_Str_Buf const *cntl, ACE_Str_Buf const *data, int band, int flags) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");
   return ACE_OS::putpmsg (this->get_handle (), (strbuf const *) cntl, (strbuf const *) data, band, flags);
@@ -222,7 +222,7 @@ ACE_SPIPE_Stream::recv_handle (strrecvfd &recvfd) const
 }
 
 ACE_INLINE ssize_t
-ACE_SPIPE_Stream::send (const void *buf, size_t n,
+ACE_SPIPE_Stream::send (void const *buf, size_t n,
                         ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_SPIPE_Stream::send");

@@ -58,7 +58,7 @@ public:
    * @param pipe_mode   Optional, ignored on non-Windows. The NT pipe
    *                    mode used when creating the pipe.
    */
-  ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
+  ACE_SPIPE_Acceptor (ACE_SPIPE_Addr const &local_sap,
                       int reuse_addr = 1,
                       int perms = ACE_DEFAULT_FILE_PERMS,
                       LPSECURITY_ATTRIBUTES sa = 0,
@@ -83,7 +83,7 @@ public:
    * @retval 0 for success.
    * @retval -1 for failure.
    */
-  int open (const ACE_SPIPE_Addr &local_sap,
+  int open (ACE_SPIPE_Addr const &local_sap,
             int reuse_addr = 1,
             int perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0,

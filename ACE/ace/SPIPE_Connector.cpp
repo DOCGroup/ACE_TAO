@@ -19,9 +19,9 @@ ACE_ALLOC_HOOK_DEFINE(ACE_SPIPE_Connector)
 // Creates a Local ACE_SPIPE.
 
 ACE_SPIPE_Connector::ACE_SPIPE_Connector (ACE_SPIPE_Stream &new_io,
-                                          const ACE_SPIPE_Addr &remote_sap,
+                                          ACE_SPIPE_Addr const &remote_sap,
                                           ACE_Time_Value *timeout,
-                                          const ACE_Addr & local_sap,
+                                          ACE_Addr const & local_sap,
                                           int reuse_addr,
                                           int flags,
                                           int perms,
@@ -53,9 +53,9 @@ ACE_SPIPE_Connector::ACE_SPIPE_Connector ()
 
 int
 ACE_SPIPE_Connector::connect (ACE_SPIPE_Stream &new_io,
-                              const ACE_SPIPE_Addr &remote_sap,
+                              ACE_SPIPE_Addr const &remote_sap,
                               ACE_Time_Value *timeout,
-                              const ACE_Addr & /* local_sap */,
+                              ACE_Addr const & /* local_sap */,
                               int /* reuse_addr */,
                               int flags,
                               int perms,

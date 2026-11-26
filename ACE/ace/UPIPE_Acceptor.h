@@ -34,11 +34,11 @@ public:
   ACE_UPIPE_Acceptor ();
 
   /// Initialize passive endpoint.
-  ACE_UPIPE_Acceptor (const ACE_UPIPE_Addr &local_sap,
+  ACE_UPIPE_Acceptor (ACE_UPIPE_Addr const &local_sap,
                       int reuse_addr = 0);
 
   /// Initialize passive endpoint.
-  int open (const ACE_UPIPE_Addr &local_sap,
+  int open (ACE_UPIPE_Addr const &local_sap,
             int reuse_addr = 0);
 
   /// Close down and release resources.

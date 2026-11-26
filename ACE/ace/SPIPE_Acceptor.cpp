@@ -49,7 +49,7 @@ ACE_SPIPE_Acceptor::dump () const
 // General purpose routine for performing server ACE_SPIPE creation.
 
 int
-ACE_SPIPE_Acceptor::open (const ACE_SPIPE_Addr &local_sap,
+ACE_SPIPE_Acceptor::open (ACE_SPIPE_Addr const &local_sap,
                           int reuse_addr,
                           int perms,
                           LPSECURITY_ATTRIBUTES sa,
@@ -241,7 +241,7 @@ ACE_SPIPE_Acceptor::close ()
   return result;
 }
 
-ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (const ACE_SPIPE_Addr &local_sap,
+ACE_SPIPE_Acceptor::ACE_SPIPE_Acceptor (ACE_SPIPE_Addr const &local_sap,
                                         int reuse_addr,
                                         int perms,
                                         LPSECURITY_ATTRIBUTES sa,

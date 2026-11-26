@@ -30,9 +30,9 @@ ACE_UPIPE_Connector::ACE_UPIPE_Connector ()
 
 int
 ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
-                              const ACE_UPIPE_Addr &addr,
+                              ACE_UPIPE_Addr const &addr,
                               ACE_Time_Value *timeout,
-                              const ACE_Addr & /* local_sap */,
+                              ACE_Addr const & /* local_sap */,
                               int /* reuse_addr */,
                               int flags,
                               int perms)
@@ -68,7 +68,7 @@ ACE_UPIPE_Connector::connect (ACE_UPIPE_Stream &new_stream,
       // to our corresponding ACE_UPIPE_Acceptor, so he may link the
       // two streams.
       ssize_t result = ACE_OS::write (handle,
-                                      (const char *) &ustream,
+                                      (char const *) &ustream,
                                       sizeof ustream);
       if (result == -1)
         {

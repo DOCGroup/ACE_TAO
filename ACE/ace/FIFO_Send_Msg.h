@@ -47,21 +47,21 @@ public:
             LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Send @a buf of up to @a len bytes.
-  ssize_t send (const ACE_Str_Buf &msg);
+  ssize_t send (ACE_Str_Buf const &msg);
 
   /// Send @a buf of exactly @a len bytes (block until done).
-  ssize_t send (const void *buf, size_t len);
+  ssize_t send (void const *buf, size_t len);
 
 #if defined (ACE_HAS_STREAM_PIPES)
   /// Send @a data and @a cntl message via Stream pipes.
-  ssize_t send (const ACE_Str_Buf *data,
-                const ACE_Str_Buf *cntl = nullptr,
+  ssize_t send (ACE_Str_Buf const *data,
+                ACE_Str_Buf const *cntl = nullptr,
                 int flags = 0);
 
   /// Send @a data and @a cntl message via Stream pipes in "band" mode.
   ssize_t send (int band,
-                const ACE_Str_Buf *data,
-                const ACE_Str_Buf *cntl = nullptr,
+                ACE_Str_Buf const *data,
+                ACE_Str_Buf const *cntl = nullptr,
                 int flags = MSG_BAND);
 #endif /* ACE_HAS_STREAM_PIPES */
 

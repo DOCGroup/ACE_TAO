@@ -3,9 +3,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /// Creates a local ACE_UPIPE.
 ACE_INLINE
 ACE_UPIPE_Connector::ACE_UPIPE_Connector (ACE_UPIPE_Stream &new_stream,
-                                          const ACE_UPIPE_Addr &addr,
+                                          ACE_UPIPE_Addr const &addr,
                                           ACE_Time_Value *timeout,
-                                          const ACE_Addr &local_sap,
+                                          ACE_Addr const &local_sap,
                                           int reuse_addr,
                                           int flags,
                                           int perms)

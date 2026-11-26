@@ -66,7 +66,7 @@ public:
 
   /// Send a buffer of @a n bytes through the message queue.  Returns -1
   /// on error, else number of bytes sent.
-  ssize_t send (const char *buffer,
+  ssize_t send (char const *buffer,
                 size_t n,
                 ACE_Time_Value *timeout = nullptr);
 
@@ -78,7 +78,7 @@ public:
 
   /// Send a buffer of exactly @a n bytes to the message queue.  Returns
   /// -1 on error, else number of bytes written (which should == n).
-  ssize_t send_n (const char *buffer,
+  ssize_t send_n (char const *buffer,
                   size_t n,
                   ACE_Time_Value *timeout = nullptr);
 

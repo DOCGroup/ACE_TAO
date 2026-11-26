@@ -93,7 +93,7 @@ int ACE_UPIPE_Stream::recv (ACE_Message_Block *& mb_p,
 // Send a buffer.
 
 ssize_t
-ACE_UPIPE_Stream::send (const char *buffer,
+ACE_UPIPE_Stream::send (char const *buffer,
                         size_t n,
                         ACE_Time_Value *timeout)
 {
@@ -177,7 +177,7 @@ ACE_UPIPE_Stream::recv (char *buffer,
 }
 
 ssize_t
-ACE_UPIPE_Stream::send_n (const char *buf,
+ACE_UPIPE_Stream::send_n (char const *buf,
                           size_t n,
                           ACE_Time_Value *timeout)
 {
