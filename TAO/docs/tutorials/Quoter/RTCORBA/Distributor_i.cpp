@@ -167,25 +167,6 @@ StockDistributor_i::shutdown ()
   this->rt_poa_->deactivate_object (oid.in ());
 }
 
-// @@Todo: It would be cool to be able to use boost::Lambda, so we wouldn't
-// have to create stupid functors like this!
-struct StrSeq_Converter
-{
-  StrSeq_Converter (CORBA::StringSeq &seq)
-    : seq_ (seq),
-      pos_ (0)
-  {
-  }
-
-  void operator () (const std::string &str)
-  {
-    this->seq_[pos_++] = str.c_str ();
-  }
-
-  CORBA::StringSeq &seq_;
-  CORBA::ULong pos_;
-};
-
 struct Stock_Publisher
 {
   Stock_Publisher (CORBA::ORB_ptr orb,
@@ -232,7 +213,10 @@ StockDistributor_i::operator () (std::vector <std::string> &stocks)
 
   std::for_each (stocks.cbegin (),
                  stocks.cend (),
-                 StrSeq_Converter (corba_stocks));
+                 [&corba_stocks, pos = CORBA::ULong {}] (std::string const &str) mutable
+                 {
+                   corba_stocks[pos++] = str.c_str ();
+                 });
 
   ACE_READ_GUARD (ACE_RW_Thread_Mutex, g, lock_);
   std::for_each (this->subscribers_list_.begin (),
