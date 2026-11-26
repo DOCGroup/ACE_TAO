@@ -385,7 +385,7 @@ class  ASNMP_Export MacAddress : public Address
 public:
   MacAddress( char const  *inaddr = "");
 
-  MacAddress( const MacAddress  &macaddr);
+  MacAddress( MacAddress const  &macaddr);
 
   /// construct a MacAddress with a GenAddress
   explicit MacAddress (GenAddress const &genaddr);
@@ -399,7 +399,7 @@ public:
   SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// assignment to another IpAddress object overloaded
-  MacAddress& operator=( const MacAddress &macaddress);
+  MacAddress& operator=( MacAddress const &macaddress);
 
   /// create a new instance of this Value
   SnmpSyntax *clone() const override;
@@ -495,7 +495,7 @@ class  ASNMP_Export DecNetAddress : public Address
 public:
   DecNetAddress( char const *inaddr = "");
 
-  DecNetAddress( const DecNetAddress& decaddr);
+  DecNetAddress( DecNetAddress const& decaddr);
 
   /// construct with a GenAddress
   explicit DecNetAddress (GenAddress const &genaddr);
@@ -504,7 +504,7 @@ public:
 
   char const *to_string() override;
 
-  DecNetAddress& operator=( const DecNetAddress &decaddr);
+  DecNetAddress& operator=( DecNetAddress const &decaddr);
 
   /// convert address into octet string format 2 bytes of decnet address
   void to_octet(OctetStr& octet) const override;
@@ -538,7 +538,7 @@ class  ASNMP_Export AppleTalkAddress :  public Address
 public:
   AppleTalkAddress( char const *inaddr = "");
 
-  AppleTalkAddress( const AppleTalkAddress& atkaddr);
+  AppleTalkAddress( AppleTalkAddress const& atkaddr);
 
   /// construct with a GenAddress
   explicit AppleTalkAddress (GenAddress const &genaddr);
@@ -547,7 +547,7 @@ public:
 
   char const *to_string() override;
 
-  AppleTalkAddress& operator=( const AppleTalkAddress &atkaddr);
+  AppleTalkAddress& operator=( AppleTalkAddress const &atkaddr);
 
   /// convert address into octet string format 3 bytes of atk address
   void to_octet(OctetStr& octet) const override;

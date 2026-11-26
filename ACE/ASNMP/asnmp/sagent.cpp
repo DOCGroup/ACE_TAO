@@ -43,7 +43,7 @@ int sagent::handle_input(ACE_HANDLE fd)
     return 0;
   }
   OctetStr const community(rcv_com_str);
-  const ACE_INET_Addr &ta = tr.get_from_addr();
+  ACE_INET_Addr const &ta = tr.get_from_addr();
   ACE_TCHAR buf_tmp[MAXHOSTNAMELEN + 1];
   ta.addr_to_string (buf_tmp, MAXHOSTNAMELEN);
   UdpAddress ra (ACE_TEXT_ALWAYS_CHAR (buf_tmp));

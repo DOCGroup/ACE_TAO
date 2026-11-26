@@ -61,7 +61,7 @@ public:
   SnmpSyntax (SnmpSyntax const &) = default;
 
   /// virtual function for getting a printable ASCII value for any SNMP Value
-  virtual const char * to_string() = 0;
+  virtual char const * to_string() = 0;
 
   /// return the current syntax
   virtual SmiUINT32 get_syntax() = 0;

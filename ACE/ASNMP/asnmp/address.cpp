@@ -1745,7 +1745,7 @@ SmiUINT32 MacAddress::get_syntax()
   return sNMP_SYNTAX_OCTETS;
 }
 
-MacAddress::MacAddress(const MacAddress &macaddr)
+MacAddress::MacAddress(MacAddress const &macaddr)
   : Address (macaddr)
 {
   // always initialize SMI info
@@ -1813,7 +1813,7 @@ SnmpSyntax *MacAddress::clone() const
   return new MacAddress(*this);
 }
 
-MacAddress& MacAddress::operator=( const MacAddress &macaddress)
+MacAddress& MacAddress::operator=( MacAddress const &macaddress)
 {
   // protect against assignment from itself
   if (this == std::addressof (macaddress))
@@ -2486,7 +2486,7 @@ DecNetAddress::DecNetAddress( char const *inaddr): Address()
   DecNetAddress::format_output();
 }
 
-DecNetAddress::DecNetAddress( const DecNetAddress& addr)
+DecNetAddress::DecNetAddress( DecNetAddress const& addr)
   : Address (addr)
 {
 }
@@ -2518,7 +2518,7 @@ char const *DecNetAddress::to_string()
   return (char *)output_buffer;
 }
 
-DecNetAddress& DecNetAddress::operator=( const DecNetAddress &decaddr)
+DecNetAddress& DecNetAddress::operator=( DecNetAddress const &decaddr)
 {
   // protect against assignment from itself
   if (this == std::addressof (decaddr))
@@ -2629,7 +2629,7 @@ AppleTalkAddress::AppleTalkAddress( char const *inaddr): Address()
   valid_flag = parse_address( (char *) inaddr);
   AppleTalkAddress::format_output();
 }
-AppleTalkAddress::AppleTalkAddress( const AppleTalkAddress& addr)
+AppleTalkAddress::AppleTalkAddress( AppleTalkAddress const& addr)
   : Address (addr)
 {
 }
@@ -2661,7 +2661,7 @@ char const *AppleTalkAddress::to_string()
   return (char *)output_buffer;
 }
 
-AppleTalkAddress& AppleTalkAddress::operator=( const AppleTalkAddress &ataddr)
+AppleTalkAddress& AppleTalkAddress::operator=( AppleTalkAddress const &ataddr)
 {
   // protect against assignment from itself
   if (this == std::addressof (ataddr))

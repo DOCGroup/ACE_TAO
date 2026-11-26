@@ -101,7 +101,7 @@
 
 /// ASCII strings returned by Snmp::error().
 /// @note Changes to these strings require rebuilding the ASNMP library.
-static const char * pErrs[] = {
+static char const * pErrs[] = {
   "Success",                                                  // 0
   "SNMP: Response PDU Too Big",                               // 1
   "SNMP: Variable does not exist",                            // 2
@@ -124,7 +124,7 @@ static const char * pErrs[] = {
   "SNMP: Unknown error code",                                 // Always last
 };
 
-static const char * nErrs[] = {
+static char const * nErrs[] = {
   // General:
   // 0  SNMP_CLASS_SUCCESS
   "ASNMP: Success",
