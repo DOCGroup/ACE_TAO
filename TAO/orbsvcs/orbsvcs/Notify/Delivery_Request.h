@@ -61,9 +61,9 @@ public:
   /// a normal destructor.
   ~Delivery_Request ();
 
-  Delivery_Request (const Delivery_Request&) = delete;
+  Delivery_Request (Delivery_Request const&) = delete;
   Delivery_Request (Delivery_Request&&) = delete;
-  Delivery_Request& operator= (const Delivery_Request&) = delete;
+  Delivery_Request& operator= (Delivery_Request const&) = delete;
   Delivery_Request& operator= (Delivery_Request&&) = delete;
 
   /// \brief A method to indicate the delivery is complete.

@@ -65,7 +65,7 @@ public:
   bool remove (ACE_CString const& name);
 
   /// Returns a list of names stored in the registry
-  const NameList& names ();
+  NameList const& names ();
 
   /// Gets an object from the map
   /// Returns the object if it is successfully located.

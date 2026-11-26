@@ -51,9 +51,9 @@ namespace TAO_Notify
     NVP(char const *n, ACE_CString const & v);
 
     /// Equality comparison operator.
-    bool operator==(const NVP& rhs) const;
+    bool operator==(NVP const& rhs) const;
     /// Comparison operator compares only name (not value)
-    bool operator!=(const NVP& rhs) const;
+    bool operator!=(NVP const& rhs) const;
     ACE_CString name;
     ACE_CString value;
   };
@@ -76,11 +76,11 @@ namespace TAO_Notify
     /// Find the NVP with specified name, copy the value to a long.
     bool load(char const *n, ACE_CString& v) const;
     /// add a new name/value pair.
-    void push_back(const NVP& v);
+    void push_back(NVP const& v);
     /// size of the collection.
     size_t size() const;
     /// access NVP via numeric index.
-    const NVP& operator[](size_t ndx) const;
+    NVP const& operator[](size_t ndx) const;
     /// low level access: find
     bool find (char const *name, ACE_CString& val) const;
     /// low level access:  use this when you don't need a CString

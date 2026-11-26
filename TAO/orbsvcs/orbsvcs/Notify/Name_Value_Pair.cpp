@@ -84,12 +84,12 @@ namespace TAO_Notify
   {
   }
 
-  bool NVP::operator==(const NVP& rhs) const
+  bool NVP::operator==(NVP const& rhs) const
   {
     return (this->name == rhs.name) != 0;
   }
 
-  bool NVP::operator!=(const NVP& rhs) const
+  bool NVP::operator!=(NVP const& rhs) const
   {
     return ! (rhs == *this);
   }
@@ -179,7 +179,7 @@ namespace TAO_Notify
     return find(n, v);
   }
 
-  void NVPList::push_back(const NVP& v)
+  void NVPList::push_back(NVP const& v)
   {
     for (size_t i {}; i < list_.size(); ++i)
     {
@@ -197,7 +197,7 @@ namespace TAO_Notify
     return list_.size();
   }
 
-  const NVP& NVPList::operator[](size_t ndx) const
+  NVP const& NVPList::operator[](size_t ndx) const
   {
     ACE_ASSERT (ndx < list_.size());
     return list_[ndx];

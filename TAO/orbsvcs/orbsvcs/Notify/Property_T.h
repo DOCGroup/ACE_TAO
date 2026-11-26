@@ -32,7 +32,7 @@ template <class TYPE>
 class TAO_Notify_PropertyBase_T
 {
 public:
-  TAO_Notify_PropertyBase_T (char const *name, const TYPE& initial);
+  TAO_Notify_PropertyBase_T (char const *name, TYPE const& initial);
 
   explicit TAO_Notify_PropertyBase_T (char const *name);
 
@@ -41,19 +41,19 @@ public:
   ~TAO_Notify_PropertyBase_T () = default;
 
   /// Equality comparison operator.
-  bool operator== (const TYPE &rhs) const;
+  bool operator== (TYPE const &rhs) const;
 
   /// Inequality comparison operator.
-  bool operator!= (const TYPE &rhs) const;
+  bool operator!= (TYPE const &rhs) const;
 
   /// Populate the Property Sequence with this valid value.
   void get (CosNotification::PropertySeq& prop_seq);
 
   // assign a new value
-  void assign (const TYPE& value);
+  void assign (TYPE const& value);
 
   /// Return the value.
-  const TYPE& value () const;
+  TYPE const& value () const;
 
   /// Return the name
   char const *name () const;
@@ -85,7 +85,7 @@ template <class TYPE>
 class TAO_Notify_Property_T : public TAO_Notify_PropertyBase_T<TYPE>
 {
 public:
-  TAO_Notify_Property_T (char const *name, const TYPE& initial);
+  TAO_Notify_Property_T (char const *name, TYPE const& initial);
 
   explicit TAO_Notify_Property_T (char const *name);
 
@@ -108,7 +108,7 @@ template <class TYPE>
 class TAO_Notify_StructProperty_T
 {
 public:
-  TAO_Notify_StructProperty_T (char const *name, const TYPE& initial);
+  TAO_Notify_StructProperty_T (char const *name, TYPE const& initial);
 
   explicit TAO_Notify_StructProperty_T (char const *name);
 
@@ -120,7 +120,7 @@ public:
   char const *name () const;
 
   /// Return the value.
-  const TYPE& value () const;
+  TYPE const& value () const;
 
   /// Is the current value valid
   CORBA::Boolean is_valid () const;

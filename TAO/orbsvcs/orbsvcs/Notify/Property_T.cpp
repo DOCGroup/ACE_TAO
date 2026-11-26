@@ -22,7 +22,7 @@ TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (char const *name)
 }
 
 template <class TYPE>
-TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (char const *name, const TYPE& initial)
+TAO_Notify_PropertyBase_T<TYPE>::TAO_Notify_PropertyBase_T (char const *name, TYPE const& initial)
   : name_ (name), value_ (initial), valid_ (true)
 {
 }
@@ -54,7 +54,7 @@ TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (char const *name)
 }
 
 template <class TYPE>
-TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (char const *name, const TYPE& initial)
+TAO_Notify_Property_T<TYPE>::TAO_Notify_Property_T (char const *name, TYPE const& initial)
   :TAO_Notify_PropertyBase_T <TYPE> (name, initial)
 {
 }
@@ -95,7 +95,7 @@ TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (char const *name
 }
 
 template <class TYPE>
-TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (char const *name, const TYPE& initial)
+TAO_Notify_StructProperty_T<TYPE>::TAO_Notify_StructProperty_T (char const *name, TYPE const& initial)
   :name_ (name), value_ (initial), valid_ (true)
 {
 }
@@ -108,7 +108,7 @@ TAO_Notify_StructProperty_T<TYPE>::set (
 
   if (property_seq.find (this->name_, value) == 0)
     {
-      const TYPE* extract_type {};
+      TYPE const* extract_type {};
 
       if ((value >>= extract_type)  && extract_type != 0) // make sure we get something valid.
         {

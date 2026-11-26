@@ -464,7 +464,7 @@ TAO_Notify_EventChannel::save_persistent (TAO_Notify::Topology_Saver& saver)
 
 namespace {
   template<class T>
-    void add_attr(TAO_Notify::NVPList& attrs, const T& prop) {
+    void add_attr(TAO_Notify::NVPList& attrs, T const& prop) {
       if (prop.is_valid())
       {
         attrs.push_back(TAO_Notify::NVP (prop));

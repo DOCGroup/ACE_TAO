@@ -341,7 +341,7 @@ TAO_Notify_Object::timer ()
 namespace
 {
   template<class T>
-  void add_qos_attr(TAO_Notify::NVPList& attrs, const T& prop)
+  void add_qos_attr(TAO_Notify::NVPList& attrs, T const& prop)
   {
     if (prop.is_valid())
     {
