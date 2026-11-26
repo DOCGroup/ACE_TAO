@@ -74,11 +74,11 @@ ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
     }
 
   this->cur_offset_ = 0;
-  ssize_t retv {};
+  ssize_t const retv = this->deliver_strategy_->recv_buf (this->recv_buffer_,
+                                                           flag,
+                                                           timeout);
 
-  if ((retv = this->deliver_strategy_->recv_buf (this->recv_buffer_,
-                                                 flag,
-                                                 timeout)) > 0)
+  if (retv > 0)
     {
       this->buf_size_ = retv;
     }

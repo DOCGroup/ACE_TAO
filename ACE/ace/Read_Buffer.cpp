@@ -227,9 +227,13 @@ ACE_Read_Buffer::rec_read (int term, int search, int replace)
       // Null terminate the buffer.
       *result = '\0';
     }
-  else if ((result = this->rec_read (term, search, replace)) == nullptr)
+  else
     {
-      return nullptr;
+      result = this->rec_read (term, search, replace);
+      if (result == nullptr)
+        {
+          return nullptr;
+        }
     }
 
   if (slot != 0)
