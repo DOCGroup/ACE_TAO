@@ -146,7 +146,7 @@ Event_Handler::handle_close (ACE_HANDLE,
 
 void
 test (ACE_Reactor_Impl &reactor_impl,
-      const char *reactor_type)
+      char const *reactor_type)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("\nTesting with %C\n\n"),

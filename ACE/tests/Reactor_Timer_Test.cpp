@@ -29,8 +29,8 @@ public:
   Time_Handler ();
 
   /// Handle the timeout.
-  int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg) override;
 
   /// Called when @c Time_Handler is removed.
   int handle_close (ACE_HANDLE handle,
@@ -67,8 +67,8 @@ Time_Handler::handle_close (ACE_HANDLE handle,
 }
 
 int
-Time_Handler::handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg)
+Time_Handler::handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg)
 {
   long const current_count = static_cast<long> (reinterpret_cast<size_t> (arg));
   if (current_count >= 0)

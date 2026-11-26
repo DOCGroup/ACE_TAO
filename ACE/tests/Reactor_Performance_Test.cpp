@@ -291,7 +291,7 @@ create_reactor ()
 void
 print_results (ACE_Profile_Timer::ACE_Elapsed_Time &et)
 {
-  const ACE_TCHAR *reactor_type {};
+  ACE_TCHAR const *reactor_type {};
 
   if (opt_wfmo_reactor)
     {
@@ -370,7 +370,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
-  ACE_INET_Addr local_addr (ACE_sap_any_cast (const ACE_INET_Addr &));
+  ACE_INET_Addr local_addr (ACE_sap_any_cast (ACE_INET_Addr const &));
   if (acceptor.open (local_addr) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {

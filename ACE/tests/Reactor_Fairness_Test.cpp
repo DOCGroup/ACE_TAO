@@ -291,7 +291,7 @@ reactor_loop (void *p)
 }
 
 void
-run (ACE_Reactor_Impl &ri, const ACE_TCHAR *what, bool tp = true)
+run (ACE_Reactor_Impl &ri, ACE_TCHAR const *what, bool tp = true)
 {
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("Starting test with %s\n"), what));
 
@@ -301,7 +301,7 @@ run (ACE_Reactor_Impl &ri, const ACE_TCHAR *what, bool tp = true)
 
   // Bind acceptor to any port and then find out what the port was.
   ACE_INET_Addr server_addr;
-  ACE_INET_Addr const local_addr (ACE_sap_any_cast (const ACE_INET_Addr &));
+  ACE_INET_Addr const local_addr (ACE_sap_any_cast (ACE_INET_Addr const &));
   if (acceptor.open (local_addr, std::addressof (r)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {

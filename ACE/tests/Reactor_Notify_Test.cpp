@@ -107,7 +107,7 @@ class Supplier_Task : public ACE_Task<ACE_MT_SYNCH>
 {
 public:
   Supplier_Task (int disable_notify_pipe,
-                 const ACE_Time_Value &tv);
+                 ACE_Time_Value const &tv);
 
   ~Supplier_Task () override;
 
@@ -171,7 +171,7 @@ Supplier_Task::release ()
 }
 
 Supplier_Task::Supplier_Task (int disable_notify_pipe,
-                              const ACE_Time_Value &tv)
+                              ACE_Time_Value const &tv)
   : waiter_ ((unsigned int) 0), // Make semaphore "locked" by default.
     disable_notify_pipe_ (disable_notify_pipe),
     long_timeout_ (tv.sec () == LONG_TIMEOUT)
@@ -344,7 +344,7 @@ Supplier_Task::handle_output (ACE_HANDLE handle)
 
 static int
 run_test (int disable_notify_pipe,
-          const ACE_Time_Value &tv)
+          ACE_Time_Value const &tv)
 {
   // Create special reactors with the appropriate flags enabled.
 
