@@ -119,7 +119,9 @@ namespace TAO
       /// @}
 
     private:
+      /// @name Recursive TypeCode state
       /// @{
+
       /// Typecode id
       CORBA::String_var id_;
 

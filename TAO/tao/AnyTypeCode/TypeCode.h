@@ -132,6 +132,7 @@ namespace CORBA
      * block.
      */
     /// @{
+
     /// Equality of two @c TypeCodes.
     /**
      * @return @c true if and only if the set of legal operations is
