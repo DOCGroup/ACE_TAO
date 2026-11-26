@@ -49,7 +49,7 @@ public:
   using VALUE_SET = ACE_Unbounded_Set<INT_ID>;
   using VALUE_SET_ITERATOR = ACE_Unbounded_Set_Iterator<INT_ID>;
 
-  ACE_Hash_Multi_Map_Entry (const EXT_ID &ext_id,
+  ACE_Hash_Multi_Map_Entry (EXT_ID const &ext_id,
                             const ACE_Unbounded_Set<INT_ID> &int_id_set,
                             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *next = nullptr,
                             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev = nullptr);
@@ -226,16 +226,16 @@ public:
    * a new entry is bound successfully, returns 1 if an attempt is made
    * to bind an existing entry, and returns -1 if failures occur.
    */
-  int bind (const EXT_ID &ext_id,
-            const INT_ID &int_id);
+  int bind (EXT_ID const &ext_id,
+            INT_ID const &int_id);
 
   /**
    * Same as a normal bind, except the map entry is also passed back
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int bind (const EXT_ID &ext_id,
-            const INT_ID &int_id,
+  int bind (EXT_ID const &ext_id,
+            INT_ID const &int_id,
             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -244,7 +244,7 @@ public:
    * new entry is bound successfully, returns 1 if an attempt is made
    * to bind an existing entry, and returns -1 if failures occur.
    */
-  int bind (const EXT_ID &ext_id,
+  int bind (EXT_ID const &ext_id,
             const ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /**
@@ -252,7 +252,7 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int bind (const EXT_ID &ext_id,
+  int bind (EXT_ID const &ext_id,
             const ACE_Unbounded_Set<INT_ID> &int_id_set,
             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
@@ -263,7 +263,7 @@ public:
    * if a new entry is bound successfully, returns 1 if an attempt is
    * made to bind an existing entry, and returns -1 if failures occur.
    */
-  int trybind (const EXT_ID &ext_id,
+  int trybind (EXT_ID const &ext_id,
                ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /**
@@ -271,7 +271,7 @@ public:
    * back to the caller.  The entry in this case will either be the
    * newly created entry, or the existing one.
    */
-  int trybind (const EXT_ID &ext_id,
+  int trybind (EXT_ID const &ext_id,
                ACE_Unbounded_Set<INT_ID> &int_id_set,
                ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
@@ -281,7 +281,7 @@ public:
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
+  int rebind (EXT_ID const &ext_id,
               const ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /**
@@ -289,7 +289,7 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
+  int rebind (EXT_ID const &ext_id,
               const ACE_Unbounded_Set<INT_ID> &int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
@@ -300,7 +300,7 @@ public:
    * Returns 0 if a new entry is bound successfully, returns 1 if an
    * existing entry was rebound, and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
+  int rebind (EXT_ID const &ext_id,
               const ACE_Unbounded_Set<INT_ID> &int_id_set,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set);
 
@@ -309,7 +309,7 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
+  int rebind (EXT_ID const &ext_id,
               const ACE_Unbounded_Set<INT_ID> &int_id_set,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
@@ -324,7 +324,7 @@ public:
    * is bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
+  int rebind (EXT_ID const &ext_id,
               const ACE_Unbounded_Set<INT_ID> &int_id_set,
               EXT_ID &old_ext_id,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set);
@@ -334,7 +334,7 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
+  int rebind (EXT_ID const &ext_id,
               const ACE_Unbounded_Set<INT_ID> &int_id_set,
               EXT_ID &old_ext_id,
               ACE_Unbounded_Set<INT_ID> &old_int_id_set,
@@ -342,20 +342,20 @@ public:
 
   /// Locate @a ext_id and pass out parameter via @a int_id_set.
   /// Return 0 if found, returns -1 if not found.
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             ACE_Unbounded_Set<INT_ID> &int_id_set) const;
 
   /// Locate @a ext_id and @a int_id.
   /// Return 0 if found, returns -1 if not found.
-  int find (const EXT_ID &ext_id,
-            const INT_ID &int_id) const;
+  int find (EXT_ID const &ext_id,
+            INT_ID const &int_id) const;
 
   /// Returns 0 if the @a ext_id is in the mapping, otherwise -1.
-  int find (const EXT_ID &ext_id) const;
+  int find (EXT_ID const &ext_id) const;
 
   /// Locate @a ext_id and pass out parameter via @a entry.  If found,
   /// return 0, returns -1 if not found.
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry) const;
 
   /**
@@ -363,18 +363,18 @@ public:
    * int_id to the caller (this is useful for collections where the
    * int_ids are *not* dynamically allocated...)
    */
-  int unbind (const EXT_ID &ext_id);
+  int unbind (EXT_ID const &ext_id);
 
   /// Break any association of @a ext_id.  Returns the value of @a int_id_set
   /// in case the caller needs to deallocate memory. Return 0 if the
   /// unbind was successfully, and returns -1 if failures occur.
-  int unbind (const EXT_ID &ext_id,
+  int unbind (EXT_ID const &ext_id,
               ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /// Break any association of @a ext_id and @a int_id. Return 0 if the
   /// unbind was successfully, and returns -1 if failures occur.
-  int unbind (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  int unbind (EXT_ID const &ext_id,
+              INT_ID const &int_id);
 
   /// Remove @a entry from map. Return 0 if the unbind was successfully,
   /// and returns -1 if failures occur.
@@ -419,70 +419,70 @@ public:
 protected:
   /// Returns 1 if @a id1 == @a id2, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
-  int equal (const EXT_ID &id1, const EXT_ID &id2);
+  int equal (EXT_ID const &id1, EXT_ID const &id2);
 
   /// Compute the hash value of the @a ext_id.  This is defined as a
   /// separate method to facilitate template specialization.
-  u_long hash (const EXT_ID &ext_id);
+  u_long hash (EXT_ID const &ext_id);
 
   /// @name Methods called with locks held
   /// @{
 
   /// Performs bind.  Must be called with locks held.
-  int bind_i (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  int bind_i (EXT_ID const &ext_id,
+              INT_ID const &int_id);
 
   /// Performs bind.  Must be called with locks held.
-  int bind_i (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int bind_i (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs bind.  Must be called with locks held.
-  int bind_i (const EXT_ID &ext_id,
+  int bind_i (EXT_ID const &ext_id,
               const ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /// Performs bind.  Must be called with locks held.
-  int bind_i (const EXT_ID &ext_id,
+  int bind_i (EXT_ID const &ext_id,
               const ACE_Unbounded_Set<INT_ID> &int_id_set,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs trybind.  Must be called with locks held.
-  int trybind_i (const EXT_ID &ext_id,
+  int trybind_i (EXT_ID const &ext_id,
                  ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /// Performs trybind.  Must be called with locks held.
-  int trybind_i (const EXT_ID &ext_id,
+  int trybind_i (EXT_ID const &ext_id,
                  ACE_Unbounded_Set<INT_ID> &int_id_set,
                  ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
+  int rebind_i (EXT_ID const &ext_id,
                 const ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
+  int rebind_i (EXT_ID const &ext_id,
                 const ACE_Unbounded_Set<INT_ID> &int_id_set,
                 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
+  int rebind_i (EXT_ID const &ext_id,
                 const ACE_Unbounded_Set<INT_ID> &int_id_set,
                 ACE_Unbounded_Set<INT_ID> &old_int_id);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
+  int rebind_i (EXT_ID const &ext_id,
                 const ACE_Unbounded_Set<INT_ID> &int_id_set,
                 ACE_Unbounded_Set<INT_ID> &old_int_id_set,
                 ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
+  int rebind_i (EXT_ID const &ext_id,
                 const ACE_Unbounded_Set<INT_ID> &int_id_set,
                 EXT_ID &old_ext_id,
                 ACE_Unbounded_Set<INT_ID> &old_int_id_set);
 
   /// Performs rebind.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
+  int rebind_i (EXT_ID const &ext_id,
                 const ACE_Unbounded_Set<INT_ID> &int_id_set,
                 EXT_ID &old_ext_id,
                 ACE_Unbounded_Set<INT_ID> &old_int_id_set,
@@ -490,33 +490,33 @@ protected:
 
   /// Performs a find of @a int_id_set using @a ext_id as the key.  Must be
   /// called with locks held.
-  int find_i (const EXT_ID &ext_id,
+  int find_i (EXT_ID const &ext_id,
               ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /// Performs a find of @a ext_id and @a int_id.  Must be
   /// called with locks held.
-  int find_i (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  int find_i (EXT_ID const &ext_id,
+              INT_ID const &int_id);
 
   /// Performs a find using @a ext_id as the key.  Must be called with
   /// locks held.
-  int find_i (const EXT_ID &ext_id);
+  int find_i (EXT_ID const &ext_id);
 
   /// Performs a find using @a ext_id as the key.  Must be called with
   /// locks held.
-  int find_i (const EXT_ID &ext_id,
+  int find_i (EXT_ID const &ext_id,
               ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry);
 
   /// Performs unbind.  Must be called with locks held.
-  int unbind_i (const EXT_ID &ext_id,
+  int unbind_i (EXT_ID const &ext_id,
                 ACE_Unbounded_Set<INT_ID> &int_id_set);
 
   /// Performs unbind.  Must be called with locks held.
-  int unbind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id);
+  int unbind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id);
 
   /// Performs unbind.  Must be called with locks held.
-  int unbind_i (const EXT_ID &ext_id);
+  int unbind_i (EXT_ID const &ext_id);
 
   /// Performs unbind.  Must be called with locks held.
   int unbind_i (ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *entry);
@@ -559,7 +559,7 @@ protected:
 protected:
   /// Returns the @c ACE_Hash_Multi_Map_Entry object that corresponds to
   /// @a ext_id.
-  int shared_find (const EXT_ID &ext_id,
+  int shared_find (EXT_ID const &ext_id,
                    ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry,
                    size_t &loc);
 
@@ -837,7 +837,7 @@ class ACE_Hash_Multi_Map_Bucket_Iterator
 {
 public:
   ACE_Hash_Multi_Map_Bucket_Iterator (ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK> &mm,
-                                      const EXT_ID &ext_id,
+                                      EXT_ID const &ext_id,
                                       int tail = 0);
 
   /// @name STL styled iteration, compare, and reference functions.

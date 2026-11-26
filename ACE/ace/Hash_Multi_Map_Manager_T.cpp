@@ -39,7 +39,7 @@ ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Multi_Map_Entry (ACE_Hash_Mul
 }
 
 template <class EXT_ID, class INT_ID>
-ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Multi_Map_Entry (const EXT_ID &ext_id,
+ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID>::ACE_Hash_Multi_Map_Entry (EXT_ID const &ext_id,
                                                                     const ACE_Unbounded_Set<INT_ID> &int_id_set,
                                                                     ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *next,
                                                                     ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *prev)
@@ -216,8 +216,8 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::un
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
-                                                                                      const INT_ID &int_id,
+ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_i (EXT_ID const &ext_id,
+                                                                                      INT_ID const &int_id,
                                                                                       ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
   size_t loc;
@@ -260,7 +260,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bi
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
+ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bind_i (EXT_ID const &ext_id,
                                                                                       const ACE_Unbounded_Set<INT_ID> &int_id_set,
                                                                                       ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
@@ -291,7 +291,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::bi
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
+ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::trybind_i (EXT_ID const &ext_id,
                                                                                          ACE_Unbounded_Set<INT_ID> &int_id_set,
                                                                                          ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
@@ -322,7 +322,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::tr
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
+ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbind_i (EXT_ID const &ext_id,
                                                                                         ACE_Unbounded_Set<INT_ID> &int_id_set)
 {
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *temp;
@@ -356,8 +356,8 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::un
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
-                                                                                        const INT_ID &int_id)
+ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::unbind_i (EXT_ID const &ext_id,
+                                                                                        INT_ID const &int_id)
 {
   ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *temp;
 
@@ -391,7 +391,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::un
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::shared_find (const EXT_ID &ext_id,
+ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::shared_find (EXT_ID const &ext_id,
                                                                                            ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry,
                                                                                            size_t &loc)
 {
@@ -417,7 +417,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::sh
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
+ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
                                                                                         const ACE_Unbounded_Set<INT_ID> &int_id_set,
                                                                                         ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry)
 {
@@ -435,7 +435,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::re
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
+ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
                                                                                         const ACE_Unbounded_Set<INT_ID> &int_id_set,
                                                                                         ACE_Unbounded_Set<INT_ID> &old_int_id_set,
                                                                                         ACE_Hash_Multi_Map_Entry<EXT_ID, INT_ID> *&entry)
@@ -455,7 +455,7 @@ ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::re
 }
 
 template <class EXT_ID, class INT_ID, class HASH_KEY, class COMPARE_KEYS, class ACE_LOCK> int
-ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
+ACE_Hash_Multi_Map_Manager<EXT_ID, INT_ID, HASH_KEY, COMPARE_KEYS, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
                                                                                         const ACE_Unbounded_Set<INT_ID> &int_id_set,
                                                                                         EXT_ID &old_ext_id,
                                                                                         ACE_Unbounded_Set<INT_ID> &old_int_id_set,
