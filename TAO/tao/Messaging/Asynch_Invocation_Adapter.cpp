@@ -25,7 +25,7 @@ namespace TAO
     char const *operation,
     size_t op_len,
     int collocation_opportunity,
-    Invocation_Mode m,
+    TAO::Invocation_Mode m,
     bool has_in_args)
     : Invocation_Adapter (target,
                           args,
