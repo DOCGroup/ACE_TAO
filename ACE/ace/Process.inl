@@ -247,7 +247,7 @@ ACE_Process_Options::inherit_environment (bool nv)
 }
 
 ACE_INLINE int
-ACE_Process_Options::setreugid (const ACE_TCHAR* user)
+ACE_Process_Options::setreugid (ACE_TCHAR const *user)
 {
 #if !defined (ACE_LACKS_PWD_FUNCTIONS)
   struct passwd *ent = ACE_OS::getpwnam (ACE_TEXT_ALWAYS_CHAR (user));
@@ -343,7 +343,7 @@ ACE_Process_Options::working_directory ()
 }
 
 ACE_INLINE void
-ACE_Process_Options::working_directory (const char *wd)
+ACE_Process_Options::working_directory (char const *wd)
 {
   ACE_OS::strcpy (working_directory_, ACE_TEXT_CHAR_TO_TCHAR (wd));
 }
@@ -357,12 +357,12 @@ ACE_Process_Options::working_directory (const wchar_t *wd)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE void
-ACE_Process_Options::process_name (const ACE_TCHAR *p)
+ACE_Process_Options::process_name (ACE_TCHAR const *p)
 {
   ACE_OS::strcpy (this->process_name_, p);
 }
 
-ACE_INLINE const ACE_TCHAR *
+ACE_INLINE ACE_TCHAR const *
 ACE_Process_Options::process_name ()
 {
   if (process_name_[0] == '\0')

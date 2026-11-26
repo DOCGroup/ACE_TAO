@@ -113,7 +113,7 @@ public:
 #ifndef ACE_LACKS_VA_FUNCTIONS
   /// @param format must be of the form "VARIABLE=VALUE".  There can not be
   /// any spaces between VARIABLE and the equal sign.
-  int setenv (const ACE_TCHAR *format,
+  int setenv (ACE_TCHAR const *format,
               ...)
 #if !defined (ACE_USES_WCHAR)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3)
@@ -128,8 +128,8 @@ public:
    * ("FOO","one + two = %s", "three") will result in "FOO=one + two =
    * three".
    */
-  int setenv (const ACE_TCHAR *variable_name,
-              const ACE_TCHAR *format,
+  int setenv (ACE_TCHAR const *variable_name,
+              ACE_TCHAR const *format,
               ...)
 #if !defined (ACE_USES_WCHAR)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 3, 4)
@@ -142,7 +142,7 @@ public:
 
   /// Set the working directory for the process.  strlen of @a wd must
   /// be <= MAXPATHLEN.
-  void working_directory (const char *wd);
+  void working_directory (char const *wd);
 
 #if defined (ACE_HAS_WCHAR)
   /// wchar_t version of working_directory
@@ -159,7 +159,7 @@ public:
    * path to run a process, this method *must* be called!  Returns 0
    * on success, -1 on failure.
    */
-  int command_line (const ACE_TCHAR *format, ...)
+  int command_line (ACE_TCHAR const *format, ...)
 #if !defined (ACE_USES_WCHAR)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3)
 #endif /* !ACE_USES_WCHAR */
@@ -172,7 +172,7 @@ public:
 #endif // ACE_LACKS_VA_FUNCTIONS
 
   /// Same as above in argv format.  @a argv must be null terminated.
-  int command_line (const ACE_TCHAR * const argv[]);
+  int command_line (ACE_TCHAR const *const argv[]);
 
   /**
    * Specify the full path or relative path, or just the executable
@@ -181,11 +181,11 @@ public:
    * line. This is here so that you can supply something other than
    * executable name as argv[0].
    */
-  void process_name (const ACE_TCHAR *name);
+  void process_name (ACE_TCHAR const *name);
 
   /// Return the process_name.  If the <process_name(name)> set
   /// method is not called, this method will return argv[0].
-  const ACE_TCHAR *process_name ();
+  ACE_TCHAR const *process_name ();
 
   /// Get the creation flags.
   u_long creation_flags () const;
@@ -349,7 +349,7 @@ public:
 
   /// @name Real and effective user/group ID accessors
   /// @{
-  int setreugid (const ACE_TCHAR* user);
+  int setreugid (ACE_TCHAR const *user);
   void setruid (uid_t id);
   void seteuid (uid_t id);
   void setrgid (gid_t id);
@@ -666,7 +666,7 @@ protected:
 
 private:
 #if defined (ACE_WIN32) && defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
-  wchar_t* convert_env_buffer (const char* env) const;
+  wchar_t* convert_env_buffer (char const *env) const;
 #endif
 };
 

@@ -279,8 +279,8 @@ ACE_Process::spawn (ACE_Process_Options &options)
       procenv[env_count] = nullptr;
     }
 # else
-  const char **procargv = const_cast<const char**> (options.command_line_argv ());
-  const char **procenv = const_cast<const char**> (options.env_argv ());
+  char const **procargv = const_cast<char const **> (options.command_line_argv ());
+  char const **procenv = const_cast<char const **> (options.env_argv ());
 # endif /* ACE_USES_WCHAR */
 
   this->child_id_ = ::rtpSpawn (procargv[0],
@@ -475,7 +475,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
         // process will either exec() or exit() shortly.
 # if defined (ACE_USES_WCHAR)
         ACE_Wide_To_Ascii n_procname (options.process_name ());
-        const char *procname = n_procname.char_rep ();
+        char const *procname = n_procname.char_rep ();
 
         wchar_t * const *wargv = options.command_line_argv ();
         size_t vcount {};
@@ -515,7 +515,7 @@ ACE_Process::spawn (ACE_Process_Options &options)
           }
         procenv[env_count] = nullptr;
 # else
-        const char *procname = options.process_name ();
+        char const *procname = options.process_name ();
         char *const *procargv = options.command_line_argv ();
         char *const *procenv = options.env_argv ();
 # endif /* ACE_USES_WCHAR */
@@ -790,7 +790,7 @@ ACE_Process::close_passed_handles ()
 #if defined (ACE_WIN32) && \
     defined (ACE_HAS_WCHAR) && !defined (ACE_USES_WCHAR)
 wchar_t*
-ACE_Process::convert_env_buffer (const char* env) const
+ACE_Process::convert_env_buffer (char const *env) const
 {
   // Total starts out at 1 due to the final block nul terminator
   size_t total = 1;
@@ -990,7 +990,7 @@ ACE_Process_Options::setenv (ACE_TCHAR *envp[])
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
 int
-ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
+ACE_Process_Options::setenv (ACE_TCHAR const *format, ...)
 {
   ACE_TCHAR stack_buf[DEFAULT_COMMAND_LINE_BUF_LEN];
 
@@ -1025,8 +1025,8 @@ ACE_Process_Options::setenv (const ACE_TCHAR *format, ...)
 }
 
 int
-ACE_Process_Options::setenv (const ACE_TCHAR *variable_name,
-                             const ACE_TCHAR *format, ...)
+ACE_Process_Options::setenv (ACE_TCHAR const *variable_name,
+                             ACE_TCHAR const *format, ...)
 {
   // To address the potential buffer overflow,
   // we now allocate the buffer on heap with a variable size.
@@ -1281,7 +1281,7 @@ ACE_Process_Options::~ACE_Process_Options ()
 }
 
 int
-ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
+ACE_Process_Options::command_line (ACE_TCHAR const *const argv[])
 {
   size_t length = ACE_OS::strlen (command_line_buf_);
   for (size_t i = 0; argv[i] != nullptr; ++i)
@@ -1326,7 +1326,7 @@ ACE_Process_Options::command_line (const ACE_TCHAR *const argv[])
 
 #ifndef ACE_LACKS_VA_FUNCTIONS
 int
-ACE_Process_Options::command_line (const ACE_TCHAR *format, ...)
+ACE_Process_Options::command_line (ACE_TCHAR const *format, ...)
 {
   // Store all ... args in argp.
   va_list argp;
