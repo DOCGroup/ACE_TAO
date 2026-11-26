@@ -145,7 +145,7 @@ public:
 
 private:
   /// The parent...
-  TAO_EC_Filter* parent_;
+  TAO_EC_Filter* parent_ {};
 };
 
 // ****************************************************************

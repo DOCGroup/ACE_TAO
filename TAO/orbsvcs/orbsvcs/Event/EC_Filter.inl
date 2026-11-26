@@ -1,10 +1,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
-TAO_EC_Filter::TAO_EC_Filter ()
-  :  parent_ (nullptr)
-{
-}
+TAO_EC_Filter::TAO_EC_Filter () = default;
 
 ACE_INLINE TAO_EC_Filter*
 TAO_EC_Filter::parent () const
