@@ -15,6 +15,7 @@
 #include "ace/Null_Mutex.h"
 #include "ace/Svc_Handler.h"
 #include "ace/Synch_Traits.h"
+#include <memory>
 
 using SVC_HANDLER = ACE_Buffered_Svc_Handler<ACE_FILE_IO, ACE_NULL_SYNCH>;
 
@@ -146,6 +147,21 @@ run_main (int argc, ACE_TCHAR *argv[])
     ACE_DEBUG ((LM_DEBUG, ACE_TEXT("\n")));
 
     file_io.close ();
+
+    if (info.size_ > 0)
+      {
+        if (connector.connect (file_io, file, nullptr, ACE_Addr::sap_any, 0, O_WRONLY) == -1)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not reopen file for writing\n")), 1);
+          }
+        iovec result {};
+        ssize_t const received = file_io.recvv (std::addressof (result));
+        file_io.close ();
+        if (received != -1 || result.iov_base != nullptr || result.iov_len != 0)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Reading a write-only file unexpectedly succeeded\n")), 1);
+          }
+      }
 
     if (file_io.unlink () == -1)
       {

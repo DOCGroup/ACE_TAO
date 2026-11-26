@@ -155,6 +155,7 @@ ACE_FILE_IO::recvv (iovec *io_vec)
   ACE_TRACE ("ACE_FILE_IO::recvv");
 
   io_vec->iov_base = nullptr;
+  io_vec->iov_len = 0;
   ACE_OFF_T const length = ACE_OS::filesize (this->get_handle ());
 
   if (length > 0)
@@ -170,9 +171,21 @@ ACE_FILE_IO::recvv (iovec *io_vec)
                       char[len],
                       -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      io_vec->iov_len = static_cast<u_long> (this->recv_n (io_vec->iov_base,
-                                                           len));
-      return io_vec->iov_len;
+      ssize_t const received = this->recv_n (io_vec->iov_base, len);
+      if (received < 0)
+        {
+          int const saved_errno = errno;
+#if defined (ACE_HAS_ALLOC_HOOKS)
+          ACE_Allocator::instance ()->free (io_vec->iov_base);
+#else
+          delete [] static_cast<char *> (io_vec->iov_base);
+#endif
+          io_vec->iov_base = nullptr;
+          errno = saved_errno;
+          return received;
+        }
+      io_vec->iov_len = static_cast<u_long> (received);
+      return received;
     }
   else
     {
