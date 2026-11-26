@@ -60,7 +60,7 @@ ACE_FIFO_Recv_Msg::recv (ACE_Str_Buf &recv_msg)
 
       while (remaining > 0)
         {
-          const size_t throw_away = 1024;
+          size_t const throw_away = 1024;
           char dev_null[throw_away];
           recv_len = ACE_OS::read (this->get_handle (),
                                    dev_null,

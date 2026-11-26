@@ -117,7 +117,7 @@ ACE_Mutex::ACE_Mutex (int type, ACE_TCHAR const *name,
         }
       else
         {
-          const size_t un_len = (ACE_UNIQUE_NAME_LEN + 1) * sizeof (ACE_TCHAR);
+          size_t const un_len = (ACE_UNIQUE_NAME_LEN + 1) * sizeof (ACE_TCHAR);
           ACE_TCHAR *const un =
 # ifdef ACE_HAS_ALLOC_HOOKS
             static_cast<ACE_TCHAR *> (ACE_Allocator::instance ()->malloc (un_len));

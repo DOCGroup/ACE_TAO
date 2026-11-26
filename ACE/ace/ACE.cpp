@@ -2440,9 +2440,9 @@ ACE::format_hexdump (char const *buffer,
 {
   ACE_TRACE ("ACE::format_hexdump");
 
-  const size_t bytes_per_line = 16;
-  const size_t bytes_per_group = bytes_per_line / 2;
-  const size_t output_chars_per_line = 68;
+  size_t const bytes_per_line = 16;
+  size_t const bytes_per_group = bytes_per_line / 2;
+  size_t const output_chars_per_line = 68;
 
   u_char c;
   ACE_TCHAR textver[bytes_per_line + 1];

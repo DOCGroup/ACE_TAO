@@ -272,7 +272,7 @@ ACE_MT_MEM_IO::init (ACE_HANDLE handle,
 int
 ACE_MT_MEM_IO::fini ()
 {
-  const int ret = ACE_MEM_SAP::fini ();
+  int const ret = ACE_MEM_SAP::fini ();
   if (this->recv_channel_.lock_ != nullptr)
     {
       ACE_Process_Mutex::unlink (this->recv_channel_.lock_->name ());
