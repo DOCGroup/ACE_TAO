@@ -75,7 +75,7 @@ TAO_Notify_Property_T<TYPE>::set (const TAO_Notify_PropertySeq& property_seq)
 }
 
 template <class TYPE> int
-TAO_Notify_Property_T<TYPE>::set(const CosNotification::PropertyValue &value)
+TAO_Notify_Property_T<TYPE>::set(CosNotification::PropertyValue const &value)
 {
   if (value >>= this->value_)
   {

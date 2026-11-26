@@ -31,11 +31,11 @@ class TAO_Notify_Serv_Export TAO_Notify_ProxyConsumer_T
 public:
   TAO_Notify_ProxyConsumer_T ();
 
-  ~TAO_Notify_ProxyConsumer_T ();
+  ~TAO_Notify_ProxyConsumer_T () override;
 
   /// Notification of subscriptions set at the admin.
-  void admin_types_changed (const CosNotification::EventTypeSeq & added,
-                            const CosNotification::EventTypeSeq & removed) override;
+  void admin_types_changed (CosNotification::EventTypeSeq const &added,
+                            CosNotification::EventTypeSeq const &removed) override;
 
   virtual CosNotifyChannelAdmin::SupplierAdmin_ptr MyAdmin ();
 
@@ -43,8 +43,8 @@ public:
     CosNotifyChannelAdmin::ObtainInfoMode mode);
 
   virtual void offer_change (
-    const CosNotification::EventTypeSeq & added,
-    const CosNotification::EventTypeSeq & removed);
+    CosNotification::EventTypeSeq const &added,
+    CosNotification::EventTypeSeq const &removed);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

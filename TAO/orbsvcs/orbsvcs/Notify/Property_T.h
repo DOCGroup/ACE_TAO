@@ -95,7 +95,7 @@ public:
 
   /// Init this Property from the CosNotification::PropertyValue
   /// Returns 0 on success, -1 on error
-  int set (const CosNotification::PropertyValue &value);
+  int set (CosNotification::PropertyValue const &value);
 };
 
 /*******************************************************************************/

@@ -15,8 +15,8 @@ template <class SERVANT_TYPE>
 TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::~TAO_Notify_ProxyConsumer_T () = default;
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::admin_types_changed (const CosNotification::EventTypeSeq & added,
-                                                           const CosNotification::EventTypeSeq & removed)
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::admin_types_changed (CosNotification::EventTypeSeq const &added,
+                                                           CosNotification::EventTypeSeq const &removed)
 {
   this->offer_change (added, removed);
 }
@@ -34,7 +34,7 @@ TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::MyAdmin ()
 }
 
 template <class SERVANT_TYPE> void
-TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::offer_change (const CosNotification::EventTypeSeq & added, const CosNotification::EventTypeSeq & removed)
+TAO_Notify_ProxyConsumer_T<SERVANT_TYPE>::offer_change (CosNotification::EventTypeSeq const &added, CosNotification::EventTypeSeq const &removed)
 {
   TAO_Notify_EventTypeSeq seq_added (added);
   TAO_Notify_EventTypeSeq seq_removed (removed);
