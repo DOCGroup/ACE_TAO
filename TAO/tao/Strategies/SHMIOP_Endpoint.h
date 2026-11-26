@@ -63,12 +63,14 @@ public:
 
   ~TAO_SHMIOP_Endpoint () override = default;
 
-  /// @name TAO_Endpoint methods
-  /// Please check the documentation in Endpoint.h for details.
-  /// @{
-  /// Return a copy of @c this
+  // See Endpoint.h for the base interface.
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
+
+  /// @name TAO_Endpoint methods
+  /// @{
+
+  /// Return a copy of @c this.
   TAO_Endpoint *duplicate () override;
 
   /// Return true if this endpoint is equivalent to @a other_endpoint.  Two
@@ -81,6 +83,7 @@ public:
 
   /// @name SHMIOP-specific methods
   /// @{
+
   /// Return a reference to the @c object_addr.
   ACE_INET_Addr const &object_addr () const;
 

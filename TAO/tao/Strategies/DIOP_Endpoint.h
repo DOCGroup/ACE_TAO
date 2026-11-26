@@ -59,11 +59,12 @@ public:
 
   ~TAO_DIOP_Endpoint () override = default;
 
-  /// @name TAO_Endpoint methods
-  /// Please check the documentation in Endpoint.h for details.
-  /// @{
+  // See Endpoint.h for the base interface.
   TAO_Endpoint *next () override;
   int addr_to_string (char *buffer, size_t length) override;
+
+  /// @name TAO_Endpoint methods
+  /// @{
 
   /// Allocate memory and return a copy of this endpoint.
   TAO_Endpoint *duplicate () override;
@@ -78,6 +79,7 @@ public:
 
   /// @name DIOP-specific methods
   /// @{
+
   /// Return a reference to the @c object_addr.
   ACE_INET_Addr const &object_addr () const;
 
