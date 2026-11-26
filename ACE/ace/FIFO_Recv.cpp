@@ -47,7 +47,7 @@ ACE_FIFO_Recv::close ()
 // aren't any writers at the moment!
 
 int
-ACE_FIFO_Recv::open (const ACE_TCHAR *fifo_name,
+ACE_FIFO_Recv::open (ACE_TCHAR const *fifo_name,
                      int flags,
                      mode_t perms,
                      int persistent,
@@ -80,7 +80,7 @@ ACE_FIFO_Recv::ACE_FIFO_Recv ()
   ACE_TRACE ("ACE_FIFO_Recv::ACE_FIFO_Recv");
 }
 
-ACE_FIFO_Recv::ACE_FIFO_Recv (const ACE_TCHAR *fifo_name,
+ACE_FIFO_Recv::ACE_FIFO_Recv (ACE_TCHAR const *fifo_name,
                               int flags,
                               mode_t perms,
                               int persistent,

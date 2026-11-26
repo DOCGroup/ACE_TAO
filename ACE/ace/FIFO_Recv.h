@@ -42,14 +42,14 @@ public:
   ACE_FIFO_Recv ();
 
   /// Open up a bytestream named pipe for reading.
-  ACE_FIFO_Recv (const ACE_TCHAR *rendezvous,
+  ACE_FIFO_Recv (ACE_TCHAR const *rendezvous,
                  int flags = O_CREAT | O_RDONLY,
                  mode_t perms = ACE_DEFAULT_FILE_PERMS,
                  int persistent = 1,
                  LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a bytestream named pipe for reading.
-  int open (const ACE_TCHAR *rendezvous,
+  int open (ACE_TCHAR const *rendezvous,
             int flags = O_CREAT | O_RDONLY,
             mode_t perms = ACE_DEFAULT_FILE_PERMS,
             int persistent = 1,

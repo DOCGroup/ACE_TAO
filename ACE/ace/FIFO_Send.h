@@ -37,13 +37,13 @@ public:
   ACE_FIFO_Send ();
 
   /// Open up a bytestream named pipe for writing.
-  ACE_FIFO_Send (const ACE_TCHAR *rendezvous,
+  ACE_FIFO_Send (ACE_TCHAR const *rendezvous,
                  int flags = O_WRONLY,
                  mode_t perms = ACE_DEFAULT_FILE_PERMS,
                  LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Open up a bytestream named pipe for writing.
-  int open (const ACE_TCHAR *rendezvous,
+  int open (ACE_TCHAR const *rendezvous,
             int flags = O_WRONLY,
             mode_t perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);

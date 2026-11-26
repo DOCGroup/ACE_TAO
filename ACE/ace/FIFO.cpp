@@ -30,7 +30,7 @@ ACE_FIFO::dump () const
 }
 
 int
-ACE_FIFO::open (const ACE_TCHAR *r, int flags, mode_t perms,
+ACE_FIFO::open (ACE_TCHAR const *r, int flags, mode_t perms,
                 LPSECURITY_ATTRIBUTES sa)
 {
   ACE_TRACE ("ACE_FIFO::open");
@@ -47,7 +47,7 @@ ACE_FIFO::open (const ACE_TCHAR *r, int flags, mode_t perms,
   return this->get_handle () == ACE_INVALID_HANDLE ? -1 : 0;
 }
 
-ACE_FIFO::ACE_FIFO (const ACE_TCHAR *fifo_name,
+ACE_FIFO::ACE_FIFO (ACE_TCHAR const *fifo_name,
                     int flags,
                     mode_t perms,
                     LPSECURITY_ATTRIBUTES sa)

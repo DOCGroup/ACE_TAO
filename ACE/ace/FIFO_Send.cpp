@@ -27,7 +27,7 @@ ACE_FIFO_Send::ACE_FIFO_Send ()
 }
 
 int
-ACE_FIFO_Send::open (const ACE_TCHAR *rendezvous_name,
+ACE_FIFO_Send::open (ACE_TCHAR const *rendezvous_name,
                      int flags,
                      mode_t perms,
                      LPSECURITY_ATTRIBUTES sa)
@@ -39,7 +39,7 @@ ACE_FIFO_Send::open (const ACE_TCHAR *rendezvous_name,
                          sa);
 }
 
-ACE_FIFO_Send::ACE_FIFO_Send (const ACE_TCHAR *fifo_name,
+ACE_FIFO_Send::ACE_FIFO_Send (ACE_TCHAR const *fifo_name,
                               int flags,
                               mode_t perms,
                               LPSECURITY_ATTRIBUTES sa)

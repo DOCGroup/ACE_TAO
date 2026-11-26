@@ -43,7 +43,7 @@ public:
    * @retval 0 for success
    * @retval -1 for error; errno contains the error code.
    */
-  int open (const ACE_TCHAR *rendezvous, int flags, mode_t perms,
+  int open (ACE_TCHAR const *rendezvous, int flags, mode_t perms,
             LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Close down the ACE_FIFO without removing the rendezvous point.
@@ -54,7 +54,7 @@ public:
   int remove ();
 
   /// Return the local address of this endpoint.
-  int get_local_addr (const ACE_TCHAR *&rendezvous) const;
+  int get_local_addr (ACE_TCHAR const *&rendezvous) const;
 
   /// Dump the state of an object.
   void dump () const;
@@ -72,7 +72,7 @@ protected:
 
   /// Open up the named pipe on the @a rendezvous in accordance with the
   /// flags.
-  ACE_FIFO (const ACE_TCHAR *rendezvous, int flags, mode_t perms,
+  ACE_FIFO (ACE_TCHAR const *rendezvous, int flags, mode_t perms,
             LPSECURITY_ATTRIBUTES sa = 0);
   /// @}
 
