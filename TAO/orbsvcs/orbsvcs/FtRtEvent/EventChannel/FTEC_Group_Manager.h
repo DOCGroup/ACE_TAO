@@ -37,20 +37,20 @@ public:
         FTRT::Location_out cur);
 
   void create_group (
-    const FTRT::ManagerInfoList & info_list,
+    FTRT::ManagerInfoList const & info_list,
     CORBA::ULong object_group_ref_version);
 
-  void join_group (const FTRT::ManagerInfo & info);
+  void join_group (FTRT::ManagerInfo const & info);
 
   void add_member (
-    const FTRT::ManagerInfo & info,
+    FTRT::ManagerInfo const & info,
     CORBA::ULong object_group_ref_version);
 
   void remove_member (
-    const FTRT::Location & crashed_location,
+    FTRT::Location const & crashed_location,
     CORBA::ULong object_group_ref_version);
 
-  void replica_crashed (const FTRT::Location & location);
+  void replica_crashed (FTRT::Location const & location);
 
 private:
   virtual void get_state (FtRtecEventChannelAdmin::EventChannelState & s)=0;

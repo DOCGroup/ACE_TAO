@@ -43,9 +43,9 @@ public:
   void disconnect_push_consumer () override;
   /// @}
 
-  const FtRtecEventChannelAdmin::ObjectId& id() const;
+  FtRtecEventChannelAdmin::ObjectId const& id() const;
   void get_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);
-  void set_state(const FtRtecEventChannelAdmin::ProxyPushConsumerStat& state);
+  void set_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat const& state);
 
   using RollbackOperation = void (FtRtecEventChannelAdmin::EventChannelFacade::*)
     (FtRtecEventChannelAdmin::ObjectId const&);

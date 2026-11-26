@@ -26,7 +26,7 @@ public:
   ObjectGroupManagerHandler& operator=(ObjectGroupManagerHandler&&) = delete;
 
   void start (CORBA::Boolean ami_return_val,
-              const FTRT::Location & the_location) override;
+              FTRT::Location const & the_location) override;
 
   void start_excep (::Messaging::ExceptionHolder * excep_holder) override;
 

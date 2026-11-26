@@ -99,7 +99,7 @@ AMI_Primary_Replication_Strategy::replicate_request(
     FTRT::TransactionDepth transaction_depth =
       Request_Context_Repository().get_transaction_depth();
 
-   const FtRtecEventChannelAdmin::EventChannelList& backups =
+   FtRtecEventChannelAdmin::EventChannelList const& backups =
      GroupInfoPublisher::instance()->backups();
 
    size_t const num_backups = backups.length();
@@ -158,7 +158,7 @@ AMI_Primary_Replication_Strategy::add_member(FTRT::ManagerInfo const &info,
                                              CORBA::ULong object_group_ref_version)
 {
   ACE_Auto_Event event;
-  const FtRtecEventChannelAdmin::EventChannelList& backups =
+  FtRtecEventChannelAdmin::EventChannelList const& backups =
      GroupInfoPublisher::instance()->backups();
 
   size_t const num_backups = backups.length();

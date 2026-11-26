@@ -45,14 +45,14 @@ public:
 
   const BackupList& backups() const;
 
-  Info* setup_info(const FTRT::ManagerInfoList & info_list,
+  Info* setup_info(FTRT::ManagerInfoList const & info_list,
               int my_position,
               CORBA::ULong object_group_ref_version);
 
   void update_info(Info_ptr& info);
 
-  const PortableServer::ObjectId& object_id() const;
-  const CosNaming::Name& name() const;
+  PortableServer::ObjectId const& object_id() const;
+  CosNaming::Name const& name() const;
 
   void object_id(char const *oid);
   void name(char const *nam);

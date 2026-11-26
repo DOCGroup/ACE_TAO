@@ -286,7 +286,7 @@ FtEventServiceInterceptor::get_state(FtRtecEventChannelAdmin::CachedOptionResult
 }
 
 void
-FtEventServiceInterceptor::set_state(const FtRtecEventChannelAdmin::CachedOptionResults& state)
+FtEventServiceInterceptor::set_state(FtRtecEventChannelAdmin::CachedOptionResults const& state)
 {
   request_table_.set_state(state);
 }

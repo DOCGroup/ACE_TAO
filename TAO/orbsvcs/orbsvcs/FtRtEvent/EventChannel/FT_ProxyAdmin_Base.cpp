@@ -11,15 +11,15 @@ FT_ProxyAdmin_Base::FT_ProxyAdmin_Base(PortableServer::ServantBase* servant,
 }
 
 void
-FT_ProxyAdmin_Base::activate(const FtRtecEventComm::ObjectId& oid)
+FT_ProxyAdmin_Base::activate(FtRtecEventComm::ObjectId const& oid)
 {
   poa_->activate_object_with_id(
-    reinterpret_cast<const PortableServer::ObjectId&> (oid),
+    reinterpret_cast<PortableServer::ObjectId const&> (oid),
     servant_);
   object_id_ = oid;
 }
 
-const FtRtecEventComm::ObjectId&
+FtRtecEventComm::ObjectId const&
 FT_ProxyAdmin_Base::object_id() const
 {
   return object_id_;

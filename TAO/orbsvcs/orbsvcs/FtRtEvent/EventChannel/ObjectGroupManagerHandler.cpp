@@ -10,7 +10,7 @@ ObjectGroupManagerHandler::ObjectGroupManagerHandler(
 
 void
 ObjectGroupManagerHandler::start (CORBA::Boolean ami_return_val,
-                                  const FTRT::Location & the_location)
+                                  FTRT::Location const & the_location)
 {
   ACE_UNUSED_ARG(ami_return_val);
   ACE_UNUSED_ARG(the_location);

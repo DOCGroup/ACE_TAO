@@ -26,9 +26,9 @@ void obtain_push_consumer(TAO_FTEC_Event_Channel_Impl* ec,
 }
 
 void obtain_push_consumer_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
-                           const FtRtecEventChannelAdmin::ObjectId& oid,
+                           FtRtecEventChannelAdmin::ObjectId const& oid,
                            RtecEventComm::PushSupplier_ptr push_supplier,
-                           const RtecEventChannelAdmin::SupplierQOS & qos)
+                           RtecEventChannelAdmin::SupplierQOS const & qos)
 {
   Request_Context_Repository().set_object_id(oid);
 
@@ -67,9 +67,9 @@ void connect_push_supplier(TAO_FTEC_Event_Channel_Impl* ec,
 }
 
 void obtain_push_supplier_and_connect(TAO_FTEC_Event_Channel_Impl* ec,
-                           const FtRtecEventChannelAdmin::ObjectId& oid,
+                           FtRtecEventChannelAdmin::ObjectId const& oid,
                            RtecEventComm::PushConsumer_ptr push_consumer,
-                           const RtecEventChannelAdmin::ConsumerQOS & qos)
+                           RtecEventChannelAdmin::ConsumerQOS const & qos)
 {
   Request_Context_Repository().set_object_id(oid);
 
@@ -199,8 +199,8 @@ TAO_FTEC_Event_Channel_Impl::factory()
 void
 TAO_FTEC_Event_Channel_Impl::activate_object (
   CORBA::ORB_var orb,
-  const FtRtecEventComm::ObjectId& supplier_admin_oid,
-  const FtRtecEventComm::ObjectId& consumer_admin_oid)
+  FtRtecEventComm::ObjectId const& supplier_admin_oid,
+  FtRtecEventComm::ObjectId const& consumer_admin_oid)
 {
   iogr_maker_.init(orb.in());
 
@@ -234,12 +234,12 @@ TAO_FTEC_Event_Channel_Impl::for_suppliers ()
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
         RtecEventComm::PushConsumer_ptr push_consumer,
-        const RtecEventChannelAdmin::ConsumerQOS & qos)
+        RtecEventChannelAdmin::ConsumerQOS const & qos)
 {
   CORBA::Any_var any
     = Request_Context_Repository().get_cached_result();
 
-  const FtRtecEventChannelAdmin::ObjectId *oid {};
+  FtRtecEventChannelAdmin::ObjectId const *oid {};
 
   if (any.in() >>= oid) {
     FtRtecEventChannelAdmin::ObjectId* result {};
@@ -267,7 +267,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_consumer (
 ::FtRtecEventChannelAdmin::ObjectId *
 TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
         RtecEventComm::PushSupplier_ptr push_supplier,
-        const RtecEventChannelAdmin::SupplierQOS & qos)
+        RtecEventChannelAdmin::SupplierQOS const & qos)
 {
   CORBA::Any_var any
     = Request_Context_Repository().get_cached_result();
@@ -297,7 +297,7 @@ TAO_FTEC_Event_Channel_Impl::connect_push_supplier (
 }
 
 void TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid)
+        FtRtecEventChannelAdmin::ObjectId const & oid)
 {
   if (Request_Context_Repository().is_executed_request())
   {
@@ -315,7 +315,7 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_supplier (
 }
 
 void TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer (
-        const FtRtecEventChannelAdmin::ObjectId & oid)
+        FtRtecEventChannelAdmin::ObjectId const & oid)
 {
   if (Request_Context_Repository().is_executed_request())
   {
@@ -333,7 +333,7 @@ void TAO_FTEC_Event_Channel_Impl::disconnect_push_consumer (
 }
 
 void TAO_FTEC_Event_Channel_Impl::suspend_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid)
+        FtRtecEventChannelAdmin::ObjectId const & oid)
 {
   if (Request_Context_Repository().is_executed_request())
   {
@@ -351,7 +351,7 @@ void TAO_FTEC_Event_Channel_Impl::suspend_push_supplier (
 }
 
 void TAO_FTEC_Event_Channel_Impl::resume_push_supplier (
-        const FtRtecEventChannelAdmin::ObjectId & oid)
+        FtRtecEventChannelAdmin::ObjectId const & oid)
 {
   if (Request_Context_Repository().is_executed_request())
   {
@@ -369,8 +369,8 @@ void TAO_FTEC_Event_Channel_Impl::resume_push_supplier (
 }
 
 void TAO_FTEC_Event_Channel_Impl::push (
-        const FtRtecEventChannelAdmin::ObjectId & oid,
-        const RtecEventComm::EventSet & data)
+        FtRtecEventChannelAdmin::ObjectId const & oid,
+        RtecEventComm::EventSet const & data)
 {
   TAO_FTEC_ProxyPushConsumer* proxy = this->find_proxy_push_consumer(oid);
 
@@ -390,7 +390,7 @@ void TAO_FTEC_Event_Channel_Impl::get_state (
   this->consumer_admin()->get_state(state.consumer_admin_state);
 }
 
-void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat)
+void TAO_FTEC_Event_Channel_Impl::set_state (FTRT::State const & stat)
 {
   FtRtecEventChannelAdmin::EventChannelState state;
 
@@ -403,7 +403,7 @@ void TAO_FTEC_Event_Channel_Impl::set_state (const FTRT::State & stat)
   this->consumer_admin()->set_state(state.consumer_admin_state);
 }
 
-void TAO_FTEC_Event_Channel_Impl::set_update (const FTRT::State & s)
+void TAO_FTEC_Event_Channel_Impl::set_update (FTRT::State const & s)
 {
   FTRTEC::Replication_Service::instance()->check_validity();
 
@@ -433,13 +433,13 @@ TAO_FTEC_SupplierAdmin* TAO_FTEC_Event_Channel_Impl::supplier_admin () const
 }
 
 TAO_FTEC_ProxyPushSupplier*
-TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const FtRtecEventChannelAdmin::ObjectId& id)
+TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(FtRtecEventChannelAdmin::ObjectId const& id)
 {
   try{
     PortableServer::POA_var poa = consumer_poa();
 
     const PortableServer::Servant servant = poa->id_to_servant(
-      reinterpret_cast<const PortableServer::ObjectId&> (id));
+      reinterpret_cast<PortableServer::ObjectId const&> (id));
     POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr obj =
       dynamic_cast<POA_RtecEventChannelAdmin::ProxyPushSupplier_ptr> (servant);
 
@@ -451,13 +451,13 @@ TAO_FTEC_Event_Channel_Impl::find_proxy_push_supplier(const FtRtecEventChannelAd
 }
 
 TAO_FTEC_ProxyPushConsumer*
-TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(const FtRtecEventChannelAdmin::ObjectId& id)
+TAO_FTEC_Event_Channel_Impl::find_proxy_push_consumer(FtRtecEventChannelAdmin::ObjectId const& id)
 {
   try{
     PortableServer::POA_var poa= supplier_poa();
 
     const PortableServer::Servant servant = poa->id_to_servant(
-      reinterpret_cast<const PortableServer::ObjectId&> (id));
+      reinterpret_cast<PortableServer::ObjectId const&> (id));
 
     POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr obj =
       dynamic_cast<POA_RtecEventChannelAdmin::ProxyPushConsumer_ptr> (servant);

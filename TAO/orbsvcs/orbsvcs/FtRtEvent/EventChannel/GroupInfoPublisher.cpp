@@ -46,14 +46,14 @@ GroupInfoPublisherBase::successor() const
   return info_->successor;
 }
 
-const GroupInfoPublisherBase::BackupList&
+GroupInfoPublisherBase::BackupList const&
 GroupInfoPublisherBase::backups() const
 {
   return info_->backups;
 }
 
 GroupInfoPublisherBase::Info*
-GroupInfoPublisherBase::setup_info(const FTRT::ManagerInfoList & info_list,
+GroupInfoPublisherBase::setup_info(FTRT::ManagerInfoList const & info_list,
                                    int my_position,
                                    CORBA::ULong object_group_ref_version)
 {

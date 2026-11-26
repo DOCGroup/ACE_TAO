@@ -109,7 +109,7 @@ Basic_Replication_Strategy::replicate_request(
 }
 
 void
-Basic_Replication_Strategy::add_member(const FTRT::ManagerInfo & info,
+Basic_Replication_Strategy::add_member(FTRT::ManagerInfo const & info,
                                        CORBA::ULong object_group_ref_version)
 {
   FtRtecEventChannelAdmin::EventChannel_var successor = GroupInfoPublisher::instance()->successor();

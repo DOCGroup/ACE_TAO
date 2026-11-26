@@ -45,10 +45,10 @@ public:
   void resume_connection () override;
   /// @}
 
-  const FtRtecEventChannelAdmin::ObjectId& id() const;
+  FtRtecEventChannelAdmin::ObjectId const& id() const;
 
   void get_state(FtRtecEventChannelAdmin::ProxyPushSupplierStat& state);
-  void set_state(const FtRtecEventChannelAdmin::ProxyPushSupplierStat& state);
+  void set_state(FtRtecEventChannelAdmin::ProxyPushSupplierStat const& state);
 
   using RollbackOperation = void (FtRtecEventChannelAdmin::EventChannelFacade::*)
     (FtRtecEventChannelAdmin::ObjectId const&);

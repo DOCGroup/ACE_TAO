@@ -13,8 +13,8 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-int find_by_location(const FTRT::ManagerInfoList& list,
-                const FTRT::Location & location)
+int find_by_location(FTRT::ManagerInfoList const& list,
+                FTRT::Location const & location)
 {
     unsigned i {};
     for (i = 0; i < list.length(); ++i) {
@@ -26,7 +26,7 @@ int find_by_location(const FTRT::ManagerInfoList& list,
 }
 
 /*
-void print(const FTRT::Location& location)
+void print(FTRT::Location const& location)
 {
   ORBSVCS_DEBUG((LM_DEBUG, "{"));
   for (size_t i = 0; i < location.length(); ++i) {
@@ -60,7 +60,7 @@ CORBA::Boolean TAO_FTEC_Group_Manager::start (
 }
 
 void TAO_FTEC_Group_Manager::create_group (
-    const FTRT::ManagerInfoList & info_list,
+    FTRT::ManagerInfoList const & info_list,
     CORBA::ULong object_group_ref_version)
 {
   TAO_FTRTEC::Log(1, ACE_TEXT("create_group\n"));
@@ -96,7 +96,7 @@ void TAO_FTEC_Group_Manager::create_group (
 }
 
 void TAO_FTEC_Group_Manager::join_group (
-    const FTRT::ManagerInfo & info)
+    FTRT::ManagerInfo const & info)
 {
   TAO_FTRTEC::Log(1, ACE_TEXT("join group\n"));
   if (impl_->my_position == 0) {
@@ -107,7 +107,7 @@ void TAO_FTEC_Group_Manager::join_group (
 }
 
 void TAO_FTEC_Group_Manager::add_member (
-    const FTRT::ManagerInfo & info,
+    FTRT::ManagerInfo const & info,
     CORBA::ULong object_group_ref_version)
 {
   TAO_FTRTEC::Log(1, ACE_TEXT("add_member location = <%s>\n"),
@@ -234,7 +234,7 @@ void remove_item(SEQ & seq, int position)
 }
 
 void TAO_FTEC_Group_Manager::replica_crashed (
-    const FTRT::Location & location)
+    FTRT::Location const & location)
 {
   TAO_FTRTEC::Log(1, ACE_TEXT("TAO_FTEC_Group_Manager::replica_crashed\n"));
   FTRTEC::Replication_Service* svc = FTRTEC::Replication_Service::instance();
@@ -243,7 +243,7 @@ void TAO_FTEC_Group_Manager::replica_crashed (
 }
 
 void TAO_FTEC_Group_Manager::remove_member (
-    const FTRT::Location & crashed_location,
+    FTRT::Location const & crashed_location,
     CORBA::ULong object_group_ref_version)
 {
   // find my position of this EventChannel in the group

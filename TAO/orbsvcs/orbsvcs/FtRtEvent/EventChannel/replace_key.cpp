@@ -12,8 +12,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void replace_key(char* ior, char* end_ior,
-                 const TAO::ObjectKey& oldkey,
-                 const TAO::ObjectKey& newkey)
+                 TAO::ObjectKey const& oldkey,
+                 TAO::ObjectKey const& newkey)
 {
   size_t const keylen = oldkey.length();
   ACE_ASSERT(keylen == newkey.length());

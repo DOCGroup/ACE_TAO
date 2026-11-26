@@ -14,7 +14,7 @@ TAO_FTEC_ProxyPushConsumer::TAO_FTEC_ProxyPushConsumer (TAO_EC_Event_Channel_Bas
 {
 }
 
-const FtRtecEventChannelAdmin::ObjectId&
+FtRtecEventChannelAdmin::ObjectId const&
 TAO_FTEC_ProxyPushConsumer::id() const
 {
   return object_id_.in();
@@ -40,7 +40,7 @@ TAO_FTEC_ProxyPushConsumer::activate (
 
 void TAO_FTEC_ProxyPushConsumer::connect_push_supplier (
                 RtecEventComm::PushSupplier_ptr push_supplier,
-                const RtecEventChannelAdmin::SupplierQOS& qos)
+                RtecEventChannelAdmin::SupplierQOS const& qos)
 {
   if (Request_Context_Repository().is_executed_request())
   {
@@ -98,7 +98,7 @@ void TAO_FTEC_ProxyPushConsumer::get_state(FtRtecEventChannelAdmin::ProxyPushCon
   }
 }
 
-void TAO_FTEC_ProxyPushConsumer::set_state(const FtRtecEventChannelAdmin::ProxyPushConsumerStat& state)
+void TAO_FTEC_ProxyPushConsumer::set_state(FtRtecEventChannelAdmin::ProxyPushConsumerStat const& state)
 {
   if (!CORBA::is_nil(state.parameter.info().push_supplier.in()) )
   {
