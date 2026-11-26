@@ -164,9 +164,9 @@ public:
    * @retval -1 Failure
    * @retval 0 Success.
    */
-  static int consolidate (ACE_Message_Block *dst, const ACE_Message_Block *src);
+  static int consolidate (ACE_Message_Block *dst, ACE_Message_Block const *src);
 
-  static size_t total_length (const ACE_Message_Block *begin, const ACE_Message_Block *end);
+  static size_t total_length (ACE_Message_Block const *begin, ACE_Message_Block const *end);
 
   /**
    * @name Basic OMG IDL Types
@@ -256,11 +256,11 @@ public:
 
          char ld[16];
 
-         LongDouble& assign (const NativeImpl& rhs);
-         LongDouble& assign (const LongDouble& rhs);
+         LongDouble& assign (NativeImpl const & rhs);
+         LongDouble& assign (LongDouble const & rhs);
 
-         bool operator== (const LongDouble &rhs) const;
-         bool operator!= (const LongDouble &rhs) const;
+         bool operator== (LongDouble const &rhs) const;
+         bool operator!= (LongDouble const &rhs) const;
 
          LongDouble& operator*= (const NativeImpl rhs) {
            return this->assign (static_cast<NativeImpl> (*this) * rhs);
@@ -320,7 +320,7 @@ public:
          static Fixed from_integer (ULongLong val);
          static Fixed from_floating (LongDouble val);
          static Fixed from_string (char const *str);
-         static Fixed from_octets (const Octet *array, int len,
+         static Fixed from_octets (Octet const *array, int len,
                                    unsigned int scale = 0);
 
          operator LongLong () const;
@@ -330,12 +330,12 @@ public:
          Fixed truncate (UShort scale) const;
 
          bool to_string (char *buffer, size_t buffer_size) const;
-         const Octet *to_octets (int &n) const;
+         Octet const *to_octets (int &n) const;
 
-         Fixed &operator+= (const Fixed &rhs);
-         Fixed &operator-= (const Fixed &rhs);
-         Fixed &operator*= (const Fixed &rhs);
-         Fixed &operator/= (const Fixed &rhs);
+         Fixed &operator+= (Fixed const &rhs);
+         Fixed &operator-= (Fixed const &rhs);
+         Fixed &operator*= (Fixed const &rhs);
+         Fixed &operator/= (Fixed const &rhs);
 
          Fixed &operator++ ();
          Fixed operator++ (int);
@@ -353,8 +353,8 @@ public:
          Octet digit (int n) const;
          void digit (int n, int value);
 
-         bool less (const Fixed &rhs) const;
-         bool equal (const Fixed &rhs) const;
+         bool less (Fixed const &rhs) const;
+         bool equal (Fixed const &rhs) const;
 
          class Proxy
          {
@@ -376,8 +376,8 @@ public:
            explicit IteratorBase (int digit);
            bool high_nibble () const;
            Octet &storage (Fixed *outer) const;
-           Octet storage (const Fixed *outer) const;
-           bool compare (const IteratorBase &rhs) const;
+           Octet storage (Fixed const *outer) const;
+           bool compare (IteratorBase const &rhs) const;
            int digit_;
          };
 
@@ -398,8 +398,8 @@ public:
            Iterator operator++ (int);
            Iterator &operator-- ();
            Iterator operator-- (int);
-           bool operator== (const Iterator &rhs) const;
-           bool operator!= (const Iterator &rhs) const;
+           bool operator== (Iterator const &rhs) const;
+           bool operator!= (Iterator const &rhs) const;
          private:
            Fixed *outer_;
          };
@@ -414,17 +414,17 @@ public:
            using pointer = Octet *;
            using reference = Octet &;
 
-           explicit ConstIterator (const Fixed *outer, int digit = 0);
+           explicit ConstIterator (Fixed const *outer, int digit = 0);
            Octet operator* ();
            ConstIterator &operator+= (std::ptrdiff_t n);
            ConstIterator &operator++ ();
            ConstIterator operator++ (int);
            ConstIterator &operator-- ();
            ConstIterator operator-- (int);
-           bool operator== (const ConstIterator &rhs) const;
-           bool operator!= (const ConstIterator &rhs) const;
+           bool operator== (ConstIterator const &rhs) const;
+           bool operator!= (ConstIterator const &rhs) const;
          private:
-           const Fixed *outer_;
+           Fixed const *outer_;
          };
 
          Iterator begin ();
@@ -461,11 +461,11 @@ public:
          /// Prepare to add (or subtract) f by changing the digits and scale
          /// of *this, returnins an iterator to the least significant
          /// digit of f that will influence the sum (or difference).
-         ConstIterator pre_add (const Fixed &f);
+         ConstIterator pre_add (Fixed const &f);
 
-         Fixed div_helper2 (const Fixed &rhs, Fixed &r) const;
-         Fixed div_helper1 (const Fixed &rhs, Fixed &r) const;
-         Fixed join (int digits, const Fixed &bottom) const;
+         Fixed div_helper2 (Fixed const &rhs, Fixed &r) const;
+         Fixed div_helper1 (Fixed const &rhs, Fixed &r) const;
+         Fixed join (int digits, Fixed const &bottom) const;
          void ltrim ();
        };
 
@@ -481,7 +481,7 @@ public:
 };
 
 ACE_Export
-ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs, const ACE_CDR::Fixed &rhs);
+ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs, ACE_CDR::Fixed const &rhs);
 
 #ifndef ACE_LACKS_IOSTREAM_TOTALLY
 ACE_Export
@@ -489,34 +489,34 @@ std::istream &operator>> (std::istream &lhs, ACE_CDR::Fixed &rhs);
 #endif
 
 ACE_Export
-bool operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+bool operator< (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs);
 
 ACE_Export
-bool operator> (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+bool operator> (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs);
 
 ACE_Export
-bool operator>= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+bool operator>= (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs);
 
 ACE_Export
-bool operator<= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+bool operator<= (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs);
 
 ACE_Export
-bool operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+bool operator== (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs);
 
 ACE_Export
-bool operator!= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+bool operator!= (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs);
 
 ACE_Export
-ACE_CDR::Fixed operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+ACE_CDR::Fixed operator+ (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs);
 
 ACE_Export
-ACE_CDR::Fixed operator- (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+ACE_CDR::Fixed operator- (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs);
 
 ACE_Export
-ACE_CDR::Fixed operator* (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+ACE_CDR::Fixed operator* (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs);
 
 ACE_Export
-ACE_CDR::Fixed operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs);
+ACE_CDR::Fixed operator/ (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

@@ -32,7 +32,7 @@ ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
             {
               return
                 this->write_octet_array (
-                  reinterpret_cast<const ACE_CDR::Octet*> (&x),
+                  reinterpret_cast<ACE_CDR::Octet const *> (&x),
                   static_cast<ACE_CDR::ULong> (len));
             }
           else
@@ -42,7 +42,7 @@ ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
                   ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
                   return
                     this->write_octet_array (
-                      reinterpret_cast<const ACE_CDR::Octet*> (&sx),
+                      reinterpret_cast<ACE_CDR::Octet const *> (&sx),
                       static_cast<ACE_CDR::ULong> (len));
                 }
               else
@@ -50,7 +50,7 @@ ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
                   ACE_CDR::Octet ox = static_cast<ACE_CDR::Octet> (x);
                   return
                     this->write_octet_array (
-                      reinterpret_cast<const ACE_CDR::Octet*> (&ox),
+                      reinterpret_cast<ACE_CDR::Octet const *> (&ox),
                       static_cast<ACE_CDR::ULong> (len));
                 }
             }
@@ -64,22 +64,22 @@ ACE_SizeCDR::write_wchar (ACE_CDR::WChar x)
 
   if (ACE_OutputCDR::wchar_maxbytes () == sizeof (ACE_CDR::WChar))
     {
-      const void *temp = &x;
-      return this->write_4 (reinterpret_cast<const ACE_CDR::ULong *> (temp));
+      void const *temp = &x;
+      return this->write_4 (reinterpret_cast<ACE_CDR::ULong const *> (temp));
     }
   else if (ACE_OutputCDR::wchar_maxbytes () == 2)
     {
       ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
-      return this->write_2 (reinterpret_cast<const ACE_CDR::UShort *> (&sx));
+      return this->write_2 (reinterpret_cast<ACE_CDR::UShort const *> (&sx));
     }
 
   ACE_CDR::Octet ox = static_cast<ACE_CDR::Octet> (x);
-  return this->write_1 (reinterpret_cast<const ACE_CDR::Octet *> (&ox));
+  return this->write_1 (reinterpret_cast<ACE_CDR::Octet const *> (&ox));
 }
 
 ACE_CDR::Boolean
 ACE_SizeCDR::write_string (ACE_CDR::ULong len,
-                             const ACE_CDR::Char *x)
+                             ACE_CDR::Char const *x)
 {
   // Note: translator framework is not supported.
   //
@@ -106,7 +106,7 @@ ACE_SizeCDR::write_string (ACE_CDR::ULong len,
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_string (const ACE_CString &x)
+ACE_SizeCDR::write_string (ACE_CString const &x)
 {
   // @@ Leave this method in here, not the `.i' file so that we don't
   //    have to unnecessarily pull in the `ace/SString.h' header.
@@ -116,7 +116,7 @@ ACE_SizeCDR::write_string (const ACE_CString &x)
 
 ACE_CDR::Boolean
 ACE_SizeCDR::write_wstring (ACE_CDR::ULong len,
-                              const ACE_CDR::WChar *x)
+                              ACE_CDR::WChar const *x)
 {
   // Note: translator framework is not supported.
   //
@@ -169,35 +169,35 @@ ACE_SizeCDR::write_wstring (ACE_CDR::ULong len,
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_1 (const ACE_CDR::Octet *)
+ACE_SizeCDR::write_1 (ACE_CDR::Octet const *)
 {
   this->adjust (1);
   return true;
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_2 (const ACE_CDR::UShort *)
+ACE_SizeCDR::write_2 (ACE_CDR::UShort const *)
 {
   this->adjust (ACE_CDR::SHORT_SIZE);
   return true;
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_4 (const ACE_CDR::ULong *)
+ACE_SizeCDR::write_4 (ACE_CDR::ULong const *)
 {
   this->adjust (ACE_CDR::LONG_SIZE);
   return true;
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_8 (const ACE_CDR::ULongLong *)
+ACE_SizeCDR::write_8 (ACE_CDR::ULongLong const *)
 {
   this->adjust (ACE_CDR::LONGLONG_SIZE);
   return true;
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_16 (const ACE_CDR::LongDouble *)
+ACE_SizeCDR::write_16 (ACE_CDR::LongDouble const *)
 {
   this->adjust (ACE_CDR::LONGDOUBLE_SIZE,
                 ACE_CDR::LONGDOUBLE_ALIGN);
@@ -205,7 +205,7 @@ ACE_SizeCDR::write_16 (const ACE_CDR::LongDouble *)
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_wchar_array_i (const ACE_CDR::WChar *,
+ACE_SizeCDR::write_wchar_array_i (ACE_CDR::WChar const *,
                                     ACE_CDR::ULong length)
 {
   if (length == 0)
@@ -222,7 +222,7 @@ ACE_SizeCDR::write_wchar_array_i (const ACE_CDR::WChar *,
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_array (const void *,
+ACE_SizeCDR::write_array (void const *,
                           size_t size,
                           size_t align,
                           ACE_CDR::ULong length)
@@ -237,7 +237,7 @@ ACE_SizeCDR::write_array (const void *,
 }
 
 ACE_CDR::Boolean
-ACE_SizeCDR::write_boolean_array (const ACE_CDR::Boolean*,
+ACE_SizeCDR::write_boolean_array (ACE_CDR::Boolean const *,
                                   ACE_CDR::ULong length)
 {
   this->adjust (length, 1);
@@ -262,7 +262,7 @@ ACE_SizeCDR::adjust (size_t size,
 }
 
 ACE_CDR::Boolean
-operator<< (ACE_SizeCDR &ss, const ACE_CString &x)
+operator<< (ACE_SizeCDR &ss, ACE_CString const &x)
 {
   ss.write_string (x);
   return ss.good_bit ();

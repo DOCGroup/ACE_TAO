@@ -253,7 +253,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
             {
               return
                 this->write_octet_array (
-                                         reinterpret_cast<const ACE_CDR::Octet*> (&x),
+                                         reinterpret_cast<ACE_CDR::Octet const *> (&x),
                                          static_cast<ACE_CDR::ULong> (len));
             }
           else
@@ -262,7 +262,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
                 ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
                 return
                   this->write_octet_array (
-                                           reinterpret_cast<const ACE_CDR::Octet*> (&sx),
+                                           reinterpret_cast<ACE_CDR::Octet const *> (&sx),
                                            static_cast<ACE_CDR::ULong> (len));
               }
             else
@@ -270,7 +270,7 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
                 ACE_CDR::Octet ox = static_cast<ACE_CDR::Octet> (x);
                 return
                   this->write_octet_array (
-                                           reinterpret_cast<const ACE_CDR::Octet*> (&ox),
+                                           reinterpret_cast<ACE_CDR::Octet const *> (&ox),
                                            static_cast<ACE_CDR::ULong> (len));
               }
         }
@@ -284,20 +284,20 @@ ACE_OutputCDR::write_wchar (ACE_CDR::WChar x)
     {
       void const * const temp = &x;
       return
-        this->write_4 (reinterpret_cast<const ACE_CDR::ULong *> (temp));
+        this->write_4 (reinterpret_cast<ACE_CDR::ULong const *> (temp));
     }
   else if (ACE_OutputCDR::wchar_maxbytes_ == 2)
     {
       ACE_CDR::Short sx = static_cast<ACE_CDR::Short> (x);
-      return this->write_2 (reinterpret_cast<const ACE_CDR::UShort *> (&sx));
+      return this->write_2 (reinterpret_cast<ACE_CDR::UShort const *> (&sx));
     }
   ACE_CDR::Octet ox = static_cast<ACE_CDR::Octet> (x);
-  return this->write_1 (reinterpret_cast<const ACE_CDR::Octet *> (&ox));
+  return this->write_1 (reinterpret_cast<ACE_CDR::Octet const *> (&ox));
 }
 
 ACE_CDR::Boolean
 ACE_OutputCDR::write_string (ACE_CDR::ULong len,
-                             const ACE_CDR::Char *x)
+                             ACE_CDR::Char const *x)
 {
   // @@ This is a slight violation of "Optimize for the common case",
   // i.e. normally the translator will be 0, but OTOH the code is
@@ -330,7 +330,7 @@ ACE_OutputCDR::write_string (ACE_CDR::ULong len,
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_string (const ACE_CString &x)
+ACE_OutputCDR::write_string (ACE_CString const &x)
 {
   // @@ Leave this method in here, not the `.i' file so that we don't
   //    have to unnecessarily pull in the `ace/SString.h' header.
@@ -340,7 +340,7 @@ ACE_OutputCDR::write_string (const ACE_CString &x)
 
 ACE_CDR::Boolean
 ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
-                              const ACE_CDR::WChar *x)
+                              ACE_CDR::WChar const *x)
 {
   // @@ This is a slight violation of "Optimize for the common case",
   // i.e. normally the translator will be 0, but OTOH the code is
@@ -397,11 +397,11 @@ ACE_OutputCDR::write_wstring (ACE_CDR::ULong len,
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
+ACE_OutputCDR::write_octet_array_mb (ACE_Message_Block const * mb)
 {
   // If the buffer is small and it fits in the current message
   // block it is be cheaper just to copy the buffer.
-  for (const ACE_Message_Block* i = mb;
+  for (ACE_Message_Block const * i = mb;
        i != nullptr;
        i = i->cont ())
     {
@@ -461,7 +461,7 @@ ACE_OutputCDR::write_octet_array_mb (const ACE_Message_Block* mb)
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_1 (const ACE_CDR::Octet *x)
+ACE_OutputCDR::write_1 (ACE_CDR::Octet const *x)
 {
   char *buf {};
   if (this->adjust (1, buf) == 0)
@@ -474,7 +474,7 @@ ACE_OutputCDR::write_1 (const ACE_CDR::Octet *x)
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_2 (const ACE_CDR::UShort *x)
+ACE_OutputCDR::write_2 (ACE_CDR::UShort const *x)
 {
   char *buf {};
   if (this->adjust (ACE_CDR::SHORT_SIZE, buf) == 0)
@@ -500,7 +500,7 @@ ACE_OutputCDR::write_2 (const ACE_CDR::UShort *x)
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_4 (const ACE_CDR::ULong *x)
+ACE_OutputCDR::write_4 (ACE_CDR::ULong const *x)
 {
   char *buf {};
   if (this->adjust (ACE_CDR::LONG_SIZE, buf) == 0)
@@ -526,7 +526,7 @@ ACE_OutputCDR::write_4 (const ACE_CDR::ULong *x)
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_8 (const ACE_CDR::ULongLong *x)
+ACE_OutputCDR::write_8 (ACE_CDR::ULongLong const *x)
 {
   char *buf {};
 
@@ -553,7 +553,7 @@ ACE_OutputCDR::write_8 (const ACE_CDR::ULongLong *x)
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_16 (const ACE_CDR::LongDouble *x)
+ACE_OutputCDR::write_16 (ACE_CDR::LongDouble const *x)
 {
   char* buf {};
   if (this->adjust (ACE_CDR::LONGDOUBLE_SIZE,
@@ -581,7 +581,7 @@ ACE_OutputCDR::write_16 (const ACE_CDR::LongDouble *x)
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
+ACE_OutputCDR::write_wchar_array_i (ACE_CDR::WChar const *x,
                                     ACE_CDR::ULong length)
 {
   if (length == 0)
@@ -628,7 +628,7 @@ ACE_OutputCDR::write_wchar_array_i (const ACE_CDR::WChar *x,
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_array (const void *x,
+ACE_OutputCDR::write_array (void const *x,
                             size_t size,
                             size_t align,
                             ACE_CDR::ULong length)
@@ -679,7 +679,7 @@ ACE_OutputCDR::write_array (const void *x,
 }
 
 ACE_CDR::Boolean
-ACE_OutputCDR::write_boolean_array (const ACE_CDR::Boolean* x,
+ACE_OutputCDR::write_boolean_array (ACE_CDR::Boolean const * x,
                                     ACE_CDR::ULong length)
 {
   // It is hard to optimize this, the spec requires that on the wire
@@ -1078,7 +1078,7 @@ ACE_OutputCDR::consolidate ()
       // above.  There is therefore no reason to check for a 0 continuation
       // field here.
       ACE_Message_Block *cont = this->start_.cont ();
-      for (const ACE_Message_Block* i = cont; i != nullptr; i = i->cont ())
+      for (ACE_Message_Block const * i = cont; i != nullptr; i = i->cont ())
         {
           this->start_.copy (i->rd_ptr (), i->length ());
         }
@@ -1163,7 +1163,7 @@ ACE_InputCDR::ACE_InputCDR (size_t bufsiz,
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
 
-ACE_InputCDR::ACE_InputCDR (const ACE_Message_Block *data,
+ACE_InputCDR::ACE_InputCDR (ACE_Message_Block const *data,
                             int byte_order,
                             ACE_CDR::Octet major_version,
                             ACE_CDR::Octet minor_version,
@@ -1228,7 +1228,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_Data_Block *data,
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
 
-ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
+ACE_InputCDR::ACE_InputCDR (ACE_InputCDR const & rhs,
                             size_t size,
                             ACE_CDR::Long offset)
   : start_ (rhs.start_,
@@ -1269,7 +1269,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
 
-ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
+ACE_InputCDR::ACE_InputCDR (ACE_InputCDR const & rhs,
                             size_t size)
   : start_ (rhs.start_,
             ACE_CDR::MAX_ALIGNMENT),
@@ -1315,7 +1315,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs,
 #endif /* ACE_HAS_MONITOR_POINTS==1 */
 }
 
-ACE_InputCDR::ACE_InputCDR (const ACE_InputCDR& rhs)
+ACE_InputCDR::ACE_InputCDR (ACE_InputCDR const & rhs)
   : start_ (rhs.start_,
             ACE_CDR::MAX_ALIGNMENT),
     do_byte_swap_ (rhs.do_byte_swap_),
@@ -1365,7 +1365,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_InputCDR::Transfer_Contents x)
 }
 
 ACE_InputCDR&
-ACE_InputCDR::operator= (const ACE_InputCDR& rhs)
+ACE_InputCDR::operator= (ACE_InputCDR const & rhs)
 {
   if (this != std::addressof (rhs))
     {
@@ -1386,7 +1386,7 @@ ACE_InputCDR::operator= (const ACE_InputCDR& rhs)
   return *this;
 }
 
-ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
+ACE_InputCDR::ACE_InputCDR (ACE_OutputCDR const & rhs,
                             ACE_Allocator* buffer_allocator,
                             ACE_Allocator* data_block_allocator,
                             ACE_Allocator* message_block_allocator)
@@ -1408,7 +1408,7 @@ ACE_InputCDR::ACE_InputCDR (const ACE_OutputCDR& rhs,
     wchar_translator_ (rhs.wchar_translator_)
 {
   ACE_CDR::mb_align (std::addressof (this->start_));
-  for (const ACE_Message_Block *i = rhs.begin ();
+  for (ACE_Message_Block const *i = rhs.begin ();
        i != rhs.end ();
        i = i->cont ())
     {
@@ -1778,7 +1778,7 @@ ACE_InputCDR::read_string (std::string& x)
           x.resize (len-1); // no need to include the terminating '\0' here
 #if !defined (ACE_STD_ALLOCATOR_NOTHROW)
         }
-      catch (const std::bad_alloc&)
+      catch (std::bad_alloc const &)
         {
           return false;
         }
@@ -1838,7 +1838,7 @@ ACE_InputCDR::read_wstring (std::wstring& x)
               x.resize (len);
 #if !defined (ACE_STD_ALLOCATOR_NOTHROW)
             }
-          catch (const std::bad_alloc&)
+          catch (std::bad_alloc const &)
             {
               return false;
             }
@@ -1858,7 +1858,7 @@ ACE_InputCDR::read_wstring (std::wstring& x)
               x.resize (len-1); // no need to include the terminating '\0' here
 #if !defined (ACE_STD_ALLOCATOR_NOTHROW)
             }
-          catch (const std::bad_alloc&)
+          catch (std::bad_alloc const &)
             {
               return false;
             }
@@ -2208,7 +2208,7 @@ ACE_InputCDR::grow (size_t newsize)
 }
 
 void
-ACE_InputCDR::reset (const ACE_Message_Block* data,
+ACE_InputCDR::reset (ACE_Message_Block const * data,
                      int byte_order)
 {
   this->reset_byte_order (byte_order);
@@ -2488,7 +2488,7 @@ ACE_WChar_Codeset_Translator::read_wstring (ACE_InputCDR &cdr,
 
 
 ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, const ACE_CString &x)
+operator<< (ACE_OutputCDR &os, ACE_CString const &x)
 {
   os.write_string (x);
   return os.good_bit ();

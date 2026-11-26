@@ -293,8 +293,8 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
     {
       while (orig < end)
         {
-          unsigned long a = * reinterpret_cast<const long*> (orig);
-          unsigned long b = * reinterpret_cast<const long*> (orig + 8);
+          unsigned long a = * reinterpret_cast<long const *> (orig);
+          unsigned long b = * reinterpret_cast<long const *> (orig + 8);
 
 #if defined(ACE_HAS_INTEL_ASSEMBLY)
           asm ("bswapq %1" : "=r" (a) : "0" (a));
@@ -327,8 +327,8 @@ ACE_CDR::swap_4_array (char const * orig, char* target, size_t n)
       // We are out of luck, we have to write in 4 byte chunks.
       while (orig < end)
         {
-          unsigned long a = * reinterpret_cast<const long*> (orig);
-          unsigned long b = * reinterpret_cast<const long*> (orig + 8);
+          unsigned long a = * reinterpret_cast<long const *> (orig);
+          unsigned long b = * reinterpret_cast<long const *> (orig + 8);
 
 #if defined(ACE_HAS_INTEL_ASSEMBLY)
           asm ("bswapq %1" : "=r" (a) : "0" (a));
@@ -536,12 +536,12 @@ ACE_CDR::grow (ACE_Message_Block *mb, size_t minsize)
 }
 
 size_t
-ACE_CDR::total_length (const ACE_Message_Block* begin,
-                       const ACE_Message_Block* end)
+ACE_CDR::total_length (ACE_Message_Block const * begin,
+                       ACE_Message_Block const * end)
 {
   size_t l = 0;
   // Compute the total size.
-  for (const ACE_Message_Block *i = begin;
+  for (ACE_Message_Block const *i = begin;
        i != end;
        i = i->cont ())
     {
@@ -552,7 +552,7 @@ ACE_CDR::total_length (const ACE_Message_Block* begin,
 
 int
 ACE_CDR::consolidate (ACE_Message_Block *dst,
-                      const ACE_Message_Block *src)
+                      ACE_Message_Block const *src)
 {
   if (src == nullptr)
     {
@@ -584,7 +584,7 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
   dst->wr_ptr (dst->rd_ptr ());
 #endif /* ACE_CDR_IGNORE_ALIGNMENT */
 
-  for (const ACE_Message_Block* i = src;
+  for (ACE_Message_Block const * i = src;
        i != nullptr;
        i = i->cont ())
     {
@@ -604,7 +604,7 @@ ACE_CDR::consolidate (ACE_Message_Block *dst,
 
 #if defined (NONNATIVE_LONGDOUBLE)
 ACE_CDR::LongDouble&
-ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
+ACE_CDR::LongDouble::assign (ACE_CDR::LongDouble::NativeImpl const & rhs)
 {
   std::memset (this->ld, 0, sizeof (this->ld));
 
@@ -674,7 +674,7 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble::NativeImpl& rhs)
 }
 
 ACE_CDR::LongDouble&
-ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble& rhs)
+ACE_CDR::LongDouble::assign (ACE_CDR::LongDouble const & rhs)
 {
   if (this != std::addressof (rhs))
     {
@@ -684,13 +684,13 @@ ACE_CDR::LongDouble::assign (const ACE_CDR::LongDouble& rhs)
 }
 
 bool
-ACE_CDR::LongDouble::operator== (const ACE_CDR::LongDouble &rhs) const
+ACE_CDR::LongDouble::operator== (ACE_CDR::LongDouble const &rhs) const
 {
   return std::memcmp (this->ld, rhs.ld, 16) == 0;
 }
 
 bool
-ACE_CDR::LongDouble::operator!= (const ACE_CDR::LongDouble &rhs) const
+ACE_CDR::LongDouble::operator!= (ACE_CDR::LongDouble const &rhs) const
 {
   return std::memcmp (this->ld, rhs.ld, 16) != 0;
 }
@@ -1002,7 +1002,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::from_string (char const *str)
   return f;
 }
 
-ACE_CDR::Fixed ACE_CDR::Fixed::from_octets (const Octet *array, int len,
+ACE_CDR::Fixed ACE_CDR::Fixed::from_octets (Octet const *array, int len,
   unsigned int scale)
 {
   Fixed f;
@@ -1198,13 +1198,13 @@ bool ACE_CDR::Fixed::to_string (char *buffer, size_t buffer_size) const
   return true;
 }
 
-const ACE_CDR::Octet *ACE_CDR::Fixed::to_octets (int &n) const
+ACE_CDR::Octet const *ACE_CDR::Fixed::to_octets (int &n) const
 {
   n = (this->digits_ + 2) / 2;
-  return 16 - n + reinterpret_cast<const Octet *> (this->value_);
+  return 16 - n + reinterpret_cast<Octet const *> (this->value_);
 }
 
-ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (const ACE_CDR::Fixed &f)
+ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (ACE_CDR::Fixed const &f)
 {
   ConstIterator rhs_iter = f.begin ();
   if (f.scale_ > this->scale_)
@@ -1233,7 +1233,7 @@ ACE_CDR::Fixed::ConstIterator ACE_CDR::Fixed::pre_add (const ACE_CDR::Fixed &f)
   return rhs_iter;
 }
 
-ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (const Fixed &rhs)
+ACE_CDR::Fixed &ACE_CDR::Fixed::operator+= (Fixed const &rhs)
 {
   Fixed result = *this;
   if (!result.sign () && rhs.sign ())
@@ -1345,7 +1345,7 @@ int ACE_CDR::Fixed::lshift (int digits)
   return shifted;
 }
 
-ACE_CDR::Fixed &ACE_CDR::Fixed::operator-= (const Fixed &rhs)
+ACE_CDR::Fixed &ACE_CDR::Fixed::operator-= (Fixed const &rhs)
 {
   if (!this->sign () && rhs.sign ())
     {
@@ -1405,7 +1405,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator-= (const Fixed &rhs)
   return *this;
 }
 
-ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (const Fixed &rhs)
+ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (Fixed const &rhs)
 {
   Fixed result = *this;
   if (!result.sign () && rhs.sign ())
@@ -1476,7 +1476,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator*= (const Fixed &rhs)
   return *this = result;
 }
 
-ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
+ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (Fixed const &rhs)
 {
   if (!rhs)
     {
@@ -1610,7 +1610,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (const Fixed &rhs)
   return *this;
 }
 
-ACE_CDR::Fixed ACE_CDR::Fixed::div_helper2 (const Fixed &rhs, Fixed &r) const
+ACE_CDR::Fixed ACE_CDR::Fixed::div_helper2 (Fixed const &rhs, Fixed &r) const
 {
   if (this->digits_ < rhs.digits_)
     {
@@ -1657,7 +1657,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::div_helper2 (const Fixed &rhs, Fixed &r) const
   return from_integer ();
 }
 
-ACE_CDR::Fixed ACE_CDR::Fixed::div_helper1 (const Fixed &rhs, Fixed &r) const
+ACE_CDR::Fixed ACE_CDR::Fixed::div_helper1 (Fixed const &rhs, Fixed &r) const
 {
   static const Fixed ten = from_integer (LongLong (10));
   if (*this >= rhs * ten)
@@ -1683,7 +1683,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::div_helper1 (const Fixed &rhs, Fixed &r) const
   return from_integer (LongLong (q));
 }
 
-ACE_CDR::Fixed ACE_CDR::Fixed::join (int digits, const Fixed &bot) const
+ACE_CDR::Fixed ACE_CDR::Fixed::join (int digits, Fixed const &bot) const
 {
   Fixed res = bot;
   res.digits_ = static_cast<Octet> (this->digits_ + digits);
@@ -1760,7 +1760,7 @@ bool ACE_CDR::Fixed::operator! () const
   return 0 == std::memcmp (this->value_, ZERO, sizeof ZERO);
 }
 
-ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs, const ACE_CDR::Fixed &rhs)
+ACE_OSTREAM_TYPE &operator<< (ACE_OSTREAM_TYPE &lhs, ACE_CDR::Fixed const &rhs)
 {
   char digits[ACE_CDR::Fixed::MAX_STRING_SIZE];
   rhs.to_string (digits, sizeof digits);
@@ -1785,9 +1785,9 @@ std::istream &operator>> (std::istream &lhs, ACE_CDR::Fixed &rhs)
 }
 #endif
 
-bool ACE_CDR::Fixed::less (const ACE_CDR::Fixed &rhs) const
+bool ACE_CDR::Fixed::less (ACE_CDR::Fixed const &rhs) const
 {
-  const Fixed &lhs = *this;
+  Fixed const &lhs = *this;
   if (lhs.sign () != rhs.sign ())
     {
       return lhs.sign ();
@@ -1797,7 +1797,7 @@ bool ACE_CDR::Fixed::less (const ACE_CDR::Fixed &rhs) const
   // if positive, |lhs| < |rhs|
   // if negative, |rhs| < |lhs|
   // 'a' will refer to the value left of < and 'b' to the value to the right
-  const ACE_CDR::Fixed &a = lhs.sign () ? rhs : lhs,
+  ACE_CDR::Fixed const &a = lhs.sign () ? rhs : lhs,
     &b = lhs.sign () ? lhs : rhs;
 
   if (a.scale_ == b.scale_)
@@ -1860,9 +1860,9 @@ bool ACE_CDR::Fixed::less (const ACE_CDR::Fixed &rhs) const
   return false;
 }
 
-bool ACE_CDR::Fixed::equal (const ACE_CDR::Fixed &rhs) const
+bool ACE_CDR::Fixed::equal (ACE_CDR::Fixed const &rhs) const
 {
-  const Fixed &lhs = *this;
+  Fixed const &lhs = *this;
   if (lhs.sign () != rhs.sign ())
     {
       return false;
@@ -1873,7 +1873,7 @@ bool ACE_CDR::Fixed::equal (const ACE_CDR::Fixed &rhs) const
       return 0 == std::memcmp (lhs.value_, rhs.value_, sizeof lhs.value_);
     }
 
-  const ACE_CDR::Fixed &more = (lhs.scale_ > rhs.scale_) ? lhs : rhs,
+  ACE_CDR::Fixed const &more = (lhs.scale_ > rhs.scale_) ? lhs : rhs,
     &fewer = (lhs.scale_ > rhs.scale_) ? rhs : lhs;
 
   const ACE_CDR::Octet scale_diff = more.scale_ - fewer.scale_;

@@ -66,7 +66,7 @@ ACE_OutputCDR::from_string::from_string (ACE_CDR::Char *s,
 }
 
 ACE_INLINE
-ACE_OutputCDR::from_string::from_string (const ACE_CDR::Char *s,
+ACE_OutputCDR::from_string::from_string (ACE_CDR::Char const *s,
                                          ACE_CDR::ULong b,
                                          ACE_CDR::Boolean nocopy)
   : val_ (const_cast<ACE_CDR::Char *> (s)),
@@ -78,13 +78,13 @@ ACE_OutputCDR::from_string::from_string (const ACE_CDR::Char *s,
 ACE_INLINE
 ACE_InputCDR::to_string::to_string (ACE_CDR::Char *&s,
                                     ACE_CDR::ULong b)
-  : val_ (const_cast<const ACE_CDR::Char *&> (s)),
+  : val_ (const_cast<ACE_CDR::Char const *&> (s)),
     bound_ (b)
 {
 }
 
 ACE_INLINE
-ACE_InputCDR::to_string::to_string (const ACE_CDR::Char *&s,
+ACE_InputCDR::to_string::to_string (ACE_CDR::Char const *&s,
                                     ACE_CDR::ULong b)
   : val_ (s),
     bound_ (b)
@@ -102,7 +102,7 @@ ACE_OutputCDR::from_wstring::from_wstring (ACE_CDR::WChar *ws,
 }
 
 ACE_INLINE
-ACE_OutputCDR::from_wstring::from_wstring (const ACE_CDR::WChar *ws,
+ACE_OutputCDR::from_wstring::from_wstring (ACE_CDR::WChar const *ws,
                                            ACE_CDR::ULong b,
                                            ACE_CDR::Boolean nocopy)
   : val_ (const_cast<ACE_CDR::WChar *> (ws)),
@@ -114,13 +114,13 @@ ACE_OutputCDR::from_wstring::from_wstring (const ACE_CDR::WChar *ws,
 ACE_INLINE
 ACE_InputCDR::to_wstring::to_wstring (ACE_CDR::WChar *&ws,
                                       ACE_CDR::ULong b)
-  : val_ (const_cast<const ACE_CDR::WChar *&> (ws)),
+  : val_ (const_cast<ACE_CDR::WChar const *&> (ws)),
     bound_ (b)
 {
 }
 
 ACE_INLINE
-ACE_InputCDR::to_wstring::to_wstring (const ACE_CDR::WChar *&ws,
+ACE_InputCDR::to_wstring::to_wstring (ACE_CDR::WChar const *&ws,
                                       ACE_CDR::ULong b)
   : val_ (ws),
     bound_ (b)
@@ -136,7 +136,7 @@ ACE_InputCDR::to_std_string::to_std_string (std::string &s,
 }
 
 ACE_INLINE
-ACE_OutputCDR::from_std_string::from_std_string (const std::string &ws,
+ACE_OutputCDR::from_std_string::from_std_string (std::string const &ws,
                                                  ACE_CDR::ULong b)
   : val_ (ws),
     bound_ (b)
@@ -153,7 +153,7 @@ ACE_InputCDR::to_std_wstring::to_std_wstring (std::wstring &s,
 }
 
 ACE_INLINE
-ACE_OutputCDR::from_std_wstring::from_std_wstring (const std::wstring &ws,
+ACE_OutputCDR::from_std_wstring::from_std_wstring (std::wstring const &ws,
                                                    ACE_CDR::ULong b)
   : val_ (ws),
     bound_ (b)
@@ -293,14 +293,14 @@ ACE_OutputCDR::write_ulong (ACE_CDR::ULong x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_longlong (const ACE_CDR::LongLong &x)
+ACE_OutputCDR::write_longlong (ACE_CDR::LongLong const &x)
 {
   void const * const temp = &x;
   return this->write_8 (reinterpret_cast<ACE_CDR::ULongLong const *> (temp));
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_ulonglong (const ACE_CDR::ULongLong &x)
+ACE_OutputCDR::write_ulonglong (ACE_CDR::ULongLong const &x)
 {
   return this->write_8 (&x);
 }
@@ -313,28 +313,28 @@ ACE_OutputCDR::write_float (ACE_CDR::Float x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_double (const ACE_CDR::Double &x)
+ACE_OutputCDR::write_double (ACE_CDR::Double const &x)
 {
   void const * const temp = &x;
   return this->write_8 (reinterpret_cast<ACE_CDR::ULongLong const *> (temp));
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_longdouble (const ACE_CDR::LongDouble &x)
+ACE_OutputCDR::write_longdouble (ACE_CDR::LongDouble const &x)
 {
   return this->write_16 (&x);
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_fixed (const ACE_CDR::Fixed &x)
+ACE_OutputCDR::write_fixed (ACE_CDR::Fixed const &x)
 {
   int n;
-  const ACE_CDR::Octet *arr = x.to_octets (n);
+  ACE_CDR::Octet const *arr = x.to_octets (n);
   return this->write_array (arr, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, static_cast<ACE_CDR::ULong> (n));
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_string (const ACE_CDR::Char *x)
+ACE_OutputCDR::write_string (ACE_CDR::Char const *x)
 {
   if (x)
     {
@@ -347,7 +347,7 @@ ACE_OutputCDR::write_string (const ACE_CDR::Char *x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_wstring (const ACE_CDR::WChar *x)
+ACE_OutputCDR::write_wstring (ACE_CDR::WChar const *x)
 {
   if (x)
     {
@@ -360,7 +360,7 @@ ACE_OutputCDR::write_wstring (const ACE_CDR::WChar *x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_string (const std::string &x)
+ACE_OutputCDR::write_string (std::string const &x)
 {
   ACE_CDR::ULong const len =
     static_cast<ACE_CDR::ULong> (x.size ());
@@ -370,7 +370,7 @@ ACE_OutputCDR::write_string (const std::string &x)
 
 #if !defined (ACE_LACKS_STD_STRING_VIEW)
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_string_view (const std::string_view &x)
+ACE_OutputCDR::write_string_view (std::string_view const &x)
 {
   ACE_CDR::ULong const len =
     static_cast<ACE_CDR::ULong> (x.size ());
@@ -381,7 +381,7 @@ ACE_OutputCDR::write_string_view (const std::string_view &x)
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_wstring (const std::wstring &x)
+ACE_OutputCDR::write_wstring (std::wstring const &x)
 {
   ACE_CDR::ULong const len =
     static_cast<ACE_CDR::ULong> (x.size ());
@@ -403,7 +403,7 @@ ACE_OutputCDR::write_uint8 (ACE_CDR::UInt8 x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_char_array (const ACE_CDR::Char *x,
+ACE_OutputCDR::write_char_array (ACE_CDR::Char const *x,
                                  ACE_CDR::ULong length)
 {
   if (this->char_translator_ == nullptr)
@@ -417,7 +417,7 @@ ACE_OutputCDR::write_char_array (const ACE_CDR::Char *x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
+ACE_OutputCDR::write_wchar_array (ACE_CDR::WChar const * x,
                                   ACE_CDR::ULong length)
 {
   if (this->wchar_translator_)
@@ -444,7 +444,7 @@ ACE_OutputCDR::write_wchar_array (const ACE_CDR::WChar* x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_octet_array (const ACE_CDR::Octet* x,
+ACE_OutputCDR::write_octet_array (ACE_CDR::Octet const * x,
                                   ACE_CDR::ULong length)
 {
   return this->write_array (x,
@@ -454,7 +454,7 @@ ACE_OutputCDR::write_octet_array (const ACE_CDR::Octet* x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_short_array (const ACE_CDR::Short *x,
+ACE_OutputCDR::write_short_array (ACE_CDR::Short const *x,
                                   ACE_CDR::ULong length)
 {
   return this->write_array (x,
@@ -464,7 +464,7 @@ ACE_OutputCDR::write_short_array (const ACE_CDR::Short *x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_ushort_array (const ACE_CDR::UShort *x,
+ACE_OutputCDR::write_ushort_array (ACE_CDR::UShort const *x,
                                    ACE_CDR::ULong length)
 {
   return this->write_array (x,
@@ -474,7 +474,7 @@ ACE_OutputCDR::write_ushort_array (const ACE_CDR::UShort *x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_long_array (const ACE_CDR::Long *x,
+ACE_OutputCDR::write_long_array (ACE_CDR::Long const *x,
                                  ACE_CDR::ULong length)
 {
   return this->write_array (x,
@@ -484,7 +484,7 @@ ACE_OutputCDR::write_long_array (const ACE_CDR::Long *x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_ulong_array (const ACE_CDR::ULong *x,
+ACE_OutputCDR::write_ulong_array (ACE_CDR::ULong const *x,
                                   ACE_CDR::ULong length)
 {
   return this->write_array (x,
@@ -494,7 +494,7 @@ ACE_OutputCDR::write_ulong_array (const ACE_CDR::ULong *x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_longlong_array (const ACE_CDR::LongLong *x,
+ACE_OutputCDR::write_longlong_array (ACE_CDR::LongLong const *x,
                                      ACE_CDR::ULong length)
 {
   return this->write_array (x,
@@ -504,7 +504,7 @@ ACE_OutputCDR::write_longlong_array (const ACE_CDR::LongLong *x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_ulonglong_array (const ACE_CDR::ULongLong *x,
+ACE_OutputCDR::write_ulonglong_array (ACE_CDR::ULongLong const *x,
                                       ACE_CDR::ULong length)
 {
   return this->write_array (x,
@@ -514,7 +514,7 @@ ACE_OutputCDR::write_ulonglong_array (const ACE_CDR::ULongLong *x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_float_array (const ACE_CDR::Float *x,
+ACE_OutputCDR::write_float_array (ACE_CDR::Float const *x,
                                   ACE_CDR::ULong length)
 {
   return this->write_array (x,
@@ -524,7 +524,7 @@ ACE_OutputCDR::write_float_array (const ACE_CDR::Float *x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_double_array (const ACE_CDR::Double *x,
+ACE_OutputCDR::write_double_array (ACE_CDR::Double const *x,
                                    ACE_CDR::ULong length)
 {
   return this->write_array (x,
@@ -534,7 +534,7 @@ ACE_OutputCDR::write_double_array (const ACE_CDR::Double *x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_longdouble_array (const ACE_CDR::LongDouble* x,
+ACE_OutputCDR::write_longdouble_array (ACE_CDR::LongDouble const * x,
                                        ACE_CDR::ULong length)
 {
   return this->write_array (x,
@@ -544,13 +544,13 @@ ACE_OutputCDR::write_longdouble_array (const ACE_CDR::LongDouble* x,
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_int8_array (const ACE_CDR::Int8 *x, ACE_CDR::ULong length)
+ACE_OutputCDR::write_int8_array (ACE_CDR::Int8 const *x, ACE_CDR::ULong length)
 {
   return write_array (x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, length);
 }
 
 ACE_INLINE ACE_CDR::Boolean
-ACE_OutputCDR::write_uint8_array (const ACE_CDR::UInt8 *x, ACE_CDR::ULong length)
+ACE_OutputCDR::write_uint8_array (ACE_CDR::UInt8 const *x, ACE_CDR::ULong length)
 {
   return write_array (x, ACE_CDR::OCTET_SIZE, ACE_CDR::OCTET_ALIGN, length);
 }
@@ -621,19 +621,19 @@ ACE_OutputCDR::get_version (ACE_CDR::Octet &major, ACE_CDR::Octet &minor)
   minor = this->minor_version_;
 }
 
-ACE_INLINE const ACE_Message_Block*
+ACE_INLINE ACE_Message_Block const *
 ACE_OutputCDR::begin () const
 {
   return std::addressof (this->start_);
 }
 
-ACE_INLINE const ACE_Message_Block*
+ACE_INLINE ACE_Message_Block const *
 ACE_OutputCDR::end () const
 {
   return this->current_->cont ();
 }
 
-ACE_INLINE const ACE_Message_Block*
+ACE_INLINE ACE_Message_Block const *
 ACE_OutputCDR::current () const
 {
   return this->current_;
@@ -1288,7 +1288,7 @@ ACE_InputCDR::adjust (size_t size,
   return this->adjust (size, size, buf);
 }
 
-ACE_INLINE const ACE_Message_Block*
+ACE_INLINE ACE_Message_Block const *
 ACE_InputCDR::start () const
 {
   return std::addressof (this->start_);
@@ -1373,21 +1373,21 @@ operator<< (ACE_OutputCDR &os, ACE_CDR::Double x)
 }
 
 ACE_INLINE ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, const ACE_CDR::Fixed &x)
+operator<< (ACE_OutputCDR &os, ACE_CDR::Fixed const &x)
 {
   os.write_fixed (x);
   return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, const ACE_CDR::Char *x)
+operator<< (ACE_OutputCDR &os, ACE_CDR::Char const *x)
 {
   os.write_string (x);
   return os.good_bit ();
 }
 
 ACE_INLINE ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, const ACE_CDR::WChar *x)
+operator<< (ACE_OutputCDR &os, ACE_CDR::WChar const *x)
 {
   os.write_wstring (x);
   return os.good_bit ();
@@ -1414,7 +1414,7 @@ operator<< (ACE_OutputCDR &os, ACE_OutputCDR::from_std_wstring x)
 #endif
 
 ACE_INLINE ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, const std::string& x)
+operator<< (ACE_OutputCDR &os, std::string const & x)
 {
   os.write_string (x);
   return os.good_bit ();
@@ -1422,7 +1422,7 @@ operator<< (ACE_OutputCDR &os, const std::string& x)
 
 #if !defined (ACE_LACKS_STD_STRING_VIEW)
 ACE_INLINE ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, const std::string_view& x)
+operator<< (ACE_OutputCDR &os, std::string_view const & x)
 {
   os.write_string_view (x);
   return os.good_bit ();
@@ -1431,7 +1431,7 @@ operator<< (ACE_OutputCDR &os, const std::string_view& x)
 
 #if !defined(ACE_LACKS_STD_WSTRING)
 ACE_INLINE ACE_CDR::Boolean
-operator<< (ACE_OutputCDR &os, const std::wstring& x)
+operator<< (ACE_OutputCDR &os, std::wstring const & x)
 {
   os.write_wstring (x);
   return os.good_bit ();
@@ -1904,7 +1904,7 @@ ACE_Char_Codeset_Translator::read_1 (ACE_InputCDR& input,
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_Char_Codeset_Translator::write_1 (ACE_OutputCDR& output,
-                                      const ACE_CDR::Octet *x)
+                                      ACE_CDR::Octet const *x)
 {
   return output.write_1 (x);
 }
@@ -1921,7 +1921,7 @@ ACE_Char_Codeset_Translator::read_array (ACE_InputCDR& in,
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_Char_Codeset_Translator::write_array (ACE_OutputCDR& out,
-                                          const void *x,
+                                          void const *x,
                                           size_t size,
                                           size_t align,
                                           ACE_CDR::ULong length)
@@ -1993,21 +1993,21 @@ ACE_WChar_Codeset_Translator::read_4 (ACE_InputCDR& input,
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_WChar_Codeset_Translator::write_1 (ACE_OutputCDR& output,
-                                       const ACE_CDR::Octet *x)
+                                       ACE_CDR::Octet const *x)
 {
   return output.write_1 (x);
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_WChar_Codeset_Translator::write_2 (ACE_OutputCDR& output,
-                                       const ACE_CDR::UShort *x)
+                                       ACE_CDR::UShort const *x)
 {
   return output.write_2 (x);
 }
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_WChar_Codeset_Translator::write_4 (ACE_OutputCDR& output,
-                                       const ACE_CDR::ULong *x)
+                                       ACE_CDR::ULong const *x)
 {
   return output.write_4 (x);
 }
@@ -2024,7 +2024,7 @@ ACE_WChar_Codeset_Translator::read_array (ACE_InputCDR& in,
 
 ACE_INLINE ACE_CDR::Boolean
 ACE_WChar_Codeset_Translator::write_array (ACE_OutputCDR& out,
-                                           const void *x,
+                                           void const *x,
                                            size_t size,
                                            size_t align,
                                            ACE_CDR::ULong length)

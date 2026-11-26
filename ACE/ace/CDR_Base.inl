@@ -355,13 +355,13 @@ ACE_CDR::Fixed::IteratorBase::storage (Fixed *outer) const
 }
 
 ACE_INLINE ACE_CDR::Octet
-ACE_CDR::Fixed::IteratorBase::storage (const Fixed *outer) const
+ACE_CDR::Fixed::IteratorBase::storage (Fixed const *outer) const
 {
   return outer->value_[15 - (this->digit_ + 1) / 2];
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::IteratorBase::compare (const IteratorBase &rhs) const
+ACE_CDR::Fixed::IteratorBase::compare (IteratorBase const &rhs) const
 {
   return this->digit_ == rhs.digit_;
 }
@@ -414,19 +414,19 @@ ACE_CDR::Fixed::Iterator::operator-- (int)
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::Iterator::operator== (const Iterator &rhs) const
+ACE_CDR::Fixed::Iterator::operator== (Iterator const &rhs) const
 {
   return this->compare (rhs);
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::Iterator::operator!= (const Iterator &rhs) const
+ACE_CDR::Fixed::Iterator::operator!= (Iterator const &rhs) const
 {
   return !(*this == rhs);
 }
 
 ACE_INLINE
-ACE_CDR::Fixed::ConstIterator::ConstIterator (const Fixed *outer, int digit)
+ACE_CDR::Fixed::ConstIterator::ConstIterator (Fixed const *outer, int digit)
   : IteratorBase (digit), outer_ (outer) {}
 
 ACE_INLINE ACE_CDR::Octet
@@ -474,13 +474,13 @@ ACE_CDR::Fixed::ConstIterator::operator-- (int)
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::ConstIterator::operator== (const ConstIterator &rhs) const
+ACE_CDR::Fixed::ConstIterator::operator== (ConstIterator const &rhs) const
 {
   return this->compare (rhs);
 }
 
 ACE_INLINE bool
-ACE_CDR::Fixed::ConstIterator::operator!= (const ConstIterator &rhs) const
+ACE_CDR::Fixed::ConstIterator::operator!= (ConstIterator const &rhs) const
 {
   return !(*this == rhs);
 }
@@ -568,7 +568,7 @@ ACE_CDR::Fixed::ltrim ()
 }
 
 ACE_INLINE ACE_CDR::Fixed
-operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator+ (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   ACE_CDR::Fixed f = lhs;
   f += rhs;
@@ -576,7 +576,7 @@ operator+ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 }
 
 ACE_INLINE ACE_CDR::Fixed
-operator- (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator- (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   ACE_CDR::Fixed f = lhs;
   f -= rhs;
@@ -584,7 +584,7 @@ operator- (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 }
 
 ACE_INLINE ACE_CDR::Fixed
-operator* (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator* (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   ACE_CDR::Fixed f = lhs;
   f *= rhs;
@@ -592,7 +592,7 @@ operator* (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 }
 
 ACE_INLINE ACE_CDR::Fixed
-operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator/ (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   ACE_CDR::Fixed f = lhs;
   f /= rhs;
@@ -600,37 +600,37 @@ operator/ (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
 }
 
 ACE_INLINE bool
-operator< (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator< (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return lhs.less (rhs);
 }
 
 ACE_INLINE bool
-operator> (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator> (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return rhs < lhs;
 }
 
 ACE_INLINE bool
-operator>= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator>= (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return !(lhs < rhs);
 }
 
 ACE_INLINE bool
-operator<= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator<= (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return !(rhs < lhs);
 }
 
 ACE_INLINE bool
-operator== (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator== (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return lhs.equal (rhs);
 }
 
 ACE_INLINE bool
-operator!= (const ACE_CDR::Fixed &lhs, const ACE_CDR::Fixed &rhs)
+operator!= (ACE_CDR::Fixed const &lhs, ACE_CDR::Fixed const &rhs)
 {
   return !(lhs == rhs);
 }
