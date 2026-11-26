@@ -23,9 +23,9 @@ public:
   explicit AIO_Input_Handler (AIO_CLD_Acceptor *acc = nullptr)
     : acceptor_ (acc) {}
 
-  AIO_Input_Handler (const AIO_Input_Handler &) = delete;
+  AIO_Input_Handler (AIO_Input_Handler const &) = delete;
   AIO_Input_Handler (AIO_Input_Handler &&) = delete;
-  AIO_Input_Handler &operator= (const AIO_Input_Handler &) = delete;
+  AIO_Input_Handler &operator= (AIO_Input_Handler const &) = delete;
   AIO_Input_Handler &operator= (AIO_Input_Handler &&) = delete;
 
   ~AIO_Input_Handler () override;
@@ -45,7 +45,7 @@ protected:
   ACE_Asynch_Read_Stream reader_;
 
   /// Handle input from logging clients.
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 };
 
 class AIO_Output_Handler
@@ -54,9 +54,9 @@ class AIO_Output_Handler
 public:
   AIO_Output_Handler () : can_write_ (false) {}
 
-  AIO_Output_Handler (const AIO_Output_Handler &) = delete;
+  AIO_Output_Handler (AIO_Output_Handler const &) = delete;
   AIO_Output_Handler (AIO_Output_Handler &&) = delete;
-  AIO_Output_Handler &operator= (const AIO_Output_Handler &) = delete;
+  AIO_Output_Handler &operator= (AIO_Output_Handler const &) = delete;
   AIO_Output_Handler &operator= (AIO_Output_Handler &&) = delete;
 
   ~AIO_Output_Handler () override;
@@ -87,10 +87,10 @@ protected:
   void start_write (ACE_Message_Block *mblk = nullptr);
 
   /// Handle disconnects from the logging server.
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
   /// Handle completed write to logging server.
-  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 };
 
 using OUTPUT_HANDLER = ACE_Unmanaged_Singleton<AIO_Output_Handler, ACE_Null_Mutex>;
@@ -104,9 +104,9 @@ public:
     : retry_delay_ (INITIAL_RETRY_DELAY), ssl_ctx_ (nullptr), ssl_ (nullptr)
   { open (); }
 
-  AIO_CLD_Connector (const AIO_CLD_Connector &) = delete;
+  AIO_CLD_Connector (AIO_CLD_Connector const &) = delete;
   AIO_CLD_Connector (AIO_CLD_Connector &&) = delete;
-  AIO_CLD_Connector &operator= (const AIO_CLD_Connector &) = delete;
+  AIO_CLD_Connector &operator= (AIO_CLD_Connector const &) = delete;
   AIO_CLD_Connector &operator= (AIO_CLD_Connector &&) = delete;
 
   /// Destructor frees the SSL resources.
@@ -119,15 +119,15 @@ public:
   /// Hook method to detect failure and validate peer before
   /// opening handler.
   int validate_connection
-    (const ACE_Asynch_Connect::Result& result,
-     const ACE_INET_Addr &remote, const ACE_INET_Addr& local) override;
+    (ACE_Asynch_Connect::Result const & result,
+     ACE_INET_Addr const &remote, ACE_INET_Addr const & local) override;
 
   /// Re-establish a connection to the logging server.
   int reconnect () { return connect (remote_addr_); }
 
 protected:
   /// Hook method called on timer expiration - retry connect
-  void handle_time_out (const ACE_Time_Value&, const void *) override;
+  void handle_time_out (ACE_Time_Value const &, void const *) override;
 
   /// Template method to create a new handler
   AIO_Output_Handler *make_handler () override

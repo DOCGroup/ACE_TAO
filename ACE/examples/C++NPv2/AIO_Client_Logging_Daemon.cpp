@@ -119,7 +119,7 @@ void AIO_Output_Handler::start_write (ACE_Message_Block *mblk) {
 }
 
 void AIO_Output_Handler::handle_read_stream
-       (const ACE_Asynch_Read_Stream::Result &result) {
+       (ACE_Asynch_Read_Stream::Result const &result) {
   result.message_block ().release ();
   writer_.cancel ();
   ACE_OS::closesocket (result.handle ());
@@ -129,7 +129,7 @@ void AIO_Output_Handler::handle_read_stream
 }
 
 void AIO_Output_Handler::handle_write_stream
-       (const ACE_Asynch_Write_Stream::Result &result) {
+       (ACE_Asynch_Write_Stream::Result const &result) {
   ACE_Message_Block &mblk = result.message_block ();
   if (!result.success ()) {
     mblk.rd_ptr (mblk.base ());
@@ -177,7 +177,7 @@ void AIO_Input_Handler::open
 }
 
 void AIO_Input_Handler::handle_read_stream
-    (const ACE_Asynch_Read_Stream::Result &result) {
+    (ACE_Asynch_Read_Stream::Result const &result) {
   if (!result.success () || result.bytes_transferred () == 0)
     {
       delete this;
@@ -247,8 +247,8 @@ AIO_Input_Handler * AIO_CLD_Acceptor::make_handler () {
 #endif /* !CLD_KEY_FILENAME */
 
 int AIO_CLD_Connector::validate_connection
-  (const ACE_Asynch_Connect::Result& result,
-   const ACE_INET_Addr &remote, const ACE_INET_Addr&) {
+  (ACE_Asynch_Connect::Result const & result,
+   ACE_INET_Addr const &remote, ACE_INET_Addr const &) {
   remote_addr_ = remote;
   if (!result.success ()) {
     ACE_Time_Value delay (retry_delay_);
@@ -307,7 +307,7 @@ int AIO_CLD_Connector::validate_connection
 }
 
 void AIO_CLD_Connector::handle_time_out
-(const ACE_Time_Value&, const void *) {
+(ACE_Time_Value const &, void const *) {
   this->connect (remote_addr_);
 }
 

@@ -22,7 +22,7 @@ template <class TASK>
 class Logrec_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
-  explicit Logrec_Module (const ACE_TCHAR *name)
+  explicit Logrec_Module (ACE_TCHAR const *name)
   {
     this->open (name,
                 &task_, // Initialize writer-side task.
@@ -46,7 +46,7 @@ public:
   enum {MB_CLIENT = ACE_Message_Block::MB_USER,
         MB_TYPE, MB_PID, MB_TIME, MB_TEXT};
 
-  explicit Logrec_Reader (const ACE_TString &file): filename_ (file) {}
+  explicit Logrec_Reader (ACE_TString const &file): filename_ (file) {}
 
   //FUZZ: disable check_for_lack_ACE_OS
   int open (void *) override {
@@ -215,7 +215,7 @@ public:
 class Logrec_Reader_Module : public ACE_Module<ACE_SYNCH>
 {
 public:
-  explicit Logrec_Reader_Module (const ACE_TString &filename)
+  explicit Logrec_Reader_Module (ACE_TString const &filename)
     : task_ (filename)
   {
     this->open (ACE_TEXT ("Logrec Reader"),

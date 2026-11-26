@@ -83,17 +83,17 @@ protected:
   // Connection establishment and authentication hook method.
   int connect_svc_handler
     (AC_Output_Handler *&svc_handler,
-     const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
+     ACE_SOCK_Connector::PEER_ADDR const &remote_addr,
      ACE_Time_Value *timeout,
-     const ACE_SOCK_Connector::PEER_ADDR &local_addr,
+     ACE_SOCK_Connector::PEER_ADDR const &local_addr,
      int reuse_addr, int flags, int perms) override;
 
   int connect_svc_handler
     (AC_Output_Handler *&svc_handler,
      AC_Output_Handler *&sh_copy,
-     const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
+     ACE_SOCK_Connector::PEER_ADDR const &remote_addr,
      ACE_Time_Value *timeout,
-     const ACE_SOCK_Connector::PEER_ADDR &local_addr,
+     ACE_SOCK_Connector::PEER_ADDR const &local_addr,
      int reuse_addr, int flags, int perms) override;
 
   // Pointer to <AC_Output_Handler> we're connecting.
@@ -386,9 +386,9 @@ int AC_CLD_Connector::open (ACE_Reactor *r, int flags) {
 
 int AC_CLD_Connector::connect_svc_handler
     (AC_Output_Handler *&svc_handler,
-     const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
+     ACE_SOCK_Connector::PEER_ADDR const &remote_addr,
      ACE_Time_Value *timeout,
-     const ACE_SOCK_Connector::PEER_ADDR &local_addr,
+     ACE_SOCK_Connector::PEER_ADDR const &local_addr,
      int reuse_addr, int flags, int perms) {
   if (PARENT::connect_svc_handler
       (svc_handler, remote_addr, timeout,
@@ -419,9 +419,9 @@ int AC_CLD_Connector::connect_svc_handler
 int AC_CLD_Connector::connect_svc_handler
     (AC_Output_Handler *&svc_handler,
      AC_Output_Handler *&sh_copy,
-     const ACE_SOCK_Connector::PEER_ADDR &remote_addr,
+     ACE_SOCK_Connector::PEER_ADDR const &remote_addr,
      ACE_Time_Value *timeout,
-     const ACE_SOCK_Connector::PEER_ADDR &local_addr,
+     ACE_SOCK_Connector::PEER_ADDR const &local_addr,
      int reuse_addr, int flags, int perms) {
   sh_copy = svc_handler;
   return this->connect_svc_handler (svc_handler, remote_addr, timeout,

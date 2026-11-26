@@ -28,7 +28,7 @@ public:
 
   explicit Logging_Event_Handler_Ex
     (ACE_Reactor *reactor,
-     const ACE_Time_Value &max_client_timeout
+     ACE_Time_Value const &max_client_timeout
        = ACE_Time_Value (MAX_CLIENT_TIMEOUT))
     : Logging_Event_Handler (reactor),
       time_of_last_log_record_ (0),
@@ -44,8 +44,8 @@ public:
 
   /// Called when a timeout expires to check if the client has
   /// been idle for an excessive amount of time.
-  int handle_timeout (const ACE_Time_Value &tv,
-                      const void *act) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *act) override;
 
   /// Called when this object is destroyed, e.g., when it's
   /// removed from a reactor.

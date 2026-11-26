@@ -29,13 +29,13 @@ public:
   explicit Logging_Acceptor (ACE_Reactor *r = ACE_Reactor::instance ())
     : ACE_Event_Handler (r) {};
 
-  Logging_Acceptor (const Logging_Acceptor &) = delete;
+  Logging_Acceptor (Logging_Acceptor const &) = delete;
   Logging_Acceptor (Logging_Acceptor &&) = delete;
-  Logging_Acceptor &operator= (const Logging_Acceptor &) = delete;
+  Logging_Acceptor &operator= (Logging_Acceptor const &) = delete;
   Logging_Acceptor &operator= (Logging_Acceptor &&) = delete;
 
   /// Initialization method.
-  virtual int open (const ACE_INET_Addr &local_addr);
+  virtual int open (ACE_INET_Addr const &local_addr);
 
   /// Called by a reactor when there's a new connection to accept.
   int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;

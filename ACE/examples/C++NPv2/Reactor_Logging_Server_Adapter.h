@@ -13,9 +13,9 @@ class Reactor_Logging_Server_Adapter : public ACE_Service_Object {
 public:
   Reactor_Logging_Server_Adapter () = default;
 
-  Reactor_Logging_Server_Adapter (const Reactor_Logging_Server_Adapter &) = delete;
+  Reactor_Logging_Server_Adapter (Reactor_Logging_Server_Adapter const &) = delete;
   Reactor_Logging_Server_Adapter (Reactor_Logging_Server_Adapter &&) = delete;
-  Reactor_Logging_Server_Adapter &operator= (const Reactor_Logging_Server_Adapter &) = delete;
+  Reactor_Logging_Server_Adapter &operator= (Reactor_Logging_Server_Adapter const &) = delete;
   Reactor_Logging_Server_Adapter &operator= (Reactor_Logging_Server_Adapter &&) = delete;
 
   /// Hook methods inherited from @c ACE_Service_Object.

@@ -57,9 +57,9 @@ public:
       queued_count_ (0),
       deferred_close_ (false) {}
 
-  TP_Logging_Handler (const TP_Logging_Handler &) = delete;
+  TP_Logging_Handler (TP_Logging_Handler const &) = delete;
   TP_Logging_Handler (TP_Logging_Handler &&) = delete;
-  TP_Logging_Handler &operator= (const TP_Logging_Handler &) = delete;
+  TP_Logging_Handler &operator= (TP_Logging_Handler const &) = delete;
   TP_Logging_Handler &operator= (TP_Logging_Handler &&) = delete;
 
   /// Called when input events occur, e.g., connection or data.
@@ -102,9 +102,9 @@ protected:
 
 public:
   TP_Logging_Server () = default;
-  TP_Logging_Server (const TP_Logging_Server &) = delete;
+  TP_Logging_Server (TP_Logging_Server const &) = delete;
   TP_Logging_Server (TP_Logging_Server &&) = delete;
-  TP_Logging_Server &operator= (const TP_Logging_Server &) = delete;
+  TP_Logging_Server &operator= (TP_Logging_Server const &) = delete;
   TP_Logging_Server &operator= (TP_Logging_Server &&) = delete;
 
   int init (int argc, ACE_TCHAR *argv[]) override {

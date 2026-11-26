@@ -27,9 +27,9 @@ public:
     : ACE_Event_Handler (reactor),
       logging_handler_ (log_file_) {};
 
-  Logging_Event_Handler (const Logging_Event_Handler &) = delete;
+  Logging_Event_Handler (Logging_Event_Handler const &) = delete;
   Logging_Event_Handler (Logging_Event_Handler &&) = delete;
-  Logging_Event_Handler &operator= (const Logging_Event_Handler &) = delete;
+  Logging_Event_Handler &operator= (Logging_Event_Handler const &) = delete;
   Logging_Event_Handler &operator= (Logging_Event_Handler &&) = delete;
 
   ~Logging_Event_Handler () override = default;

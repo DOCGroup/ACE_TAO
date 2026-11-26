@@ -46,7 +46,7 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
   ACE_Service_Repository_Iterator iterator
     (*ACE_Service_Repository::instance (), false);
 
-  for (const ACE_Service_Type *st;
+  for (ACE_Service_Type const *st;
        iterator.next (st) != 0;
        iterator.advance ()) {
     iovec iov[3];
@@ -56,7 +56,7 @@ int Service_Reporter::handle_input (ACE_HANDLE) {
       ACE_Utils::truncate_cast<u_long> (
         ACE_OS::strlen (st->name ()) * sizeof (ACE_TCHAR));
 
-    const ACE_TCHAR *state = st->active () ?
+    ACE_TCHAR const *state = st->active () ?
            ACE_TEXT (" (active) ") : ACE_TEXT (" (paused) ");
     iov[1].iov_base = const_cast<ACE_TCHAR *> (state);
 

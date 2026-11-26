@@ -5,7 +5,7 @@
 #include "Logging_Acceptor.h"
 #include "Logging_Event_Handler.h"
 
-int Logging_Acceptor::open (const ACE_INET_Addr &local_addr) {
+int Logging_Acceptor::open (ACE_INET_Addr const &local_addr) {
   if (acceptor_.open (local_addr) == -1)
   {
     return -1;

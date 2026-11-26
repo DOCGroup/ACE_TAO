@@ -85,7 +85,7 @@ public:
   // Establish a connection to the logging server
   // at the <remote_addr>.
   int connect (CLD_Handler *handler,
-               const ACE_INET_Addr &remote_addr);
+               ACE_INET_Addr const &remote_addr);
   //FUZZ: enable check_for_lack_ACE_OS
 
   // Re-establish a connection to the logging server.
@@ -104,7 +104,7 @@ class CLD_Acceptor : public ACE_Event_Handler {
 public:
   //FUZZ: disable check_for_lack_ACE_OS
   // Initialization hook method.
-  virtual int open (CLD_Handler *, const ACE_INET_Addr &,
+  virtual int open (CLD_Handler *, ACE_INET_Addr const &,
                     ACE_Reactor * = ACE_Reactor::instance ());
   //FUZZ: enable check_for_lack_ACE_OS
 
@@ -261,7 +261,7 @@ int CLD_Handler::close () {
 /**************************************************************/
 
 int CLD_Acceptor::open (CLD_Handler *handler,
-                        const ACE_INET_Addr &local_addr,
+                        ACE_INET_Addr const &local_addr,
                         ACE_Reactor *r) {
   reactor (r); // Store the reactor pointer.
   handler_ = handler;
@@ -306,7 +306,7 @@ int CLD_Acceptor::handle_close (ACE_HANDLE, ACE_Reactor_Mask) {
 
 int CLD_Connector::connect
   (CLD_Handler *handler,
-   const ACE_INET_Addr &remote_addr) {
+   ACE_INET_Addr const &remote_addr) {
   ACE_SOCK_Connector connector;
 
   if (connector.connect (handler->peer (), remote_addr) == -1)

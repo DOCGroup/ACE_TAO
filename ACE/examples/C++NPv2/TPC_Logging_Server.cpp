@@ -43,7 +43,7 @@ int TPC_Logging_Handler::open (void *) {
 #endif /* !TPC_KEY_FILENAME */
 
 int TPC_Logging_Acceptor::open
-    (const ACE_SOCK_Acceptor::PEER_ADDR &local_addr,
+    (ACE_SOCK_Acceptor::PEER_ADDR const &local_addr,
            ACE_Reactor *reactor,
            int flags, int use_select, int reuse_addr) {
   if (PARENT::open (local_addr, reactor, flags,
