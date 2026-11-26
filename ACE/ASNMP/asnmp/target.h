@@ -130,11 +130,13 @@ public:
   friend bool operator== (SnmpTarget const &lhs, SnmpTarget const &rhs);
 
   SnmpTarget &operator= (SnmpTarget const &lhs);
+  SnmpTarget &operator= (SnmpTarget &&) = default;
 
 protected:
   ///     SnmpTarget(const SnmpTarget &);
   SnmpTarget();
   SnmpTarget (SnmpTarget const &) = default;
+  SnmpTarget (SnmpTarget &&) = default;
 
   /// used by derived class instances
   bool validity_ {};
@@ -176,6 +178,7 @@ class ASNMP_Export UdpTarget : public SnmpTarget
 public:
   UdpTarget();
   UdpTarget (UdpTarget const &) = default;
+  UdpTarget (UdpTarget &&) = default;
 
   /**
     * constructor with only address
@@ -229,6 +232,7 @@ public:
 
   /// overloaded assignment
   UdpTarget &operator= (UdpTarget const &target);
+  UdpTarget &operator= (UdpTarget &&) = default;
 
   /// compare two C targets
   friend bool operator== (UdpTarget const &lhs, UdpTarget const &rhs);
@@ -246,7 +250,7 @@ protected:
   OctetStr write_community_;
   UdpAddress udp_address_;
   /// to_string() rep of data
-  char output_buffer_[MAX_TARGET_STRING_REP];
+  char output_buffer_[MAX_TARGET_STRING_REP] {};
 };
 
 #endif //TARGET_

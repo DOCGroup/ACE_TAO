@@ -32,6 +32,7 @@ DAMAGES.
 #include <cstring>
 #include <memory>
 #include <type_traits>
+#include <utility>
 #include "ace/OS_main.h"
 #include "asnmp/octet.h"
 #include "asnmp/oid.h"
@@ -52,7 +53,7 @@ static_assert (std::is_move_constructible_v<OctetStr>
                && std::is_move_assignable_v<GenAddress>
                && std::is_move_constructible_v<UdpTarget>
                && std::is_move_assignable_v<UdpTarget>,
-               "ASNMP values and targets accept rvalues through copy operations");
+               "ASNMP values and targets accept rvalues");
 /*
   Percieved Problems with this CTarget aka UdpTarget Interface:
 
@@ -137,6 +138,15 @@ static void TestSnmpTarget()
   ACE_TEST_ASSERT(std::strstr (c5->to_string (), "ver: 1") != nullptr);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) UdpTarget:c5(\"\") [%s]\n",
     c5->to_string()));
+
+  c2.set_read_community (rd);
+  UdpTarget moved (std::move (c2));
+  UdpTarget assigned;
+  assigned = std::move (moved);
+  assigned.get_read_community (a);
+  ACE_TEST_ASSERT (assigned.valid () == 1);
+  ACE_TEST_ASSERT (assigned.get_version () == version2c);
+  ACE_TEST_ASSERT (a == rd);
 
 // these are not supported yet
 //   ACE_TEST_ASSERT(c5 == c5);
