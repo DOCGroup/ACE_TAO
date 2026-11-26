@@ -138,9 +138,11 @@ namespace ACE
 
               ConnectionCacheValue ();
               explicit ConnectionCacheValue (connection_type* connection);
-              ConnectionCacheValue (ConnectionCacheValue const& cacheval);
+              ConnectionCacheValue (ConnectionCacheValue const&) = default;
+              ConnectionCacheValue (ConnectionCacheValue&&) = default;
 
-              ConnectionCacheValue& operator = (ConnectionCacheValue const& cacheval);
+              ConnectionCacheValue& operator = (ConnectionCacheValue const&) = default;
+              ConnectionCacheValue& operator = (ConnectionCacheValue&&) = default;
 
               bool operator == (ConnectionCacheValue const& cacheval) const;
 

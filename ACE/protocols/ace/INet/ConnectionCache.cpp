@@ -70,22 +70,6 @@ namespace ACE
       {
       }
 
-    ConnectionCacheValue::ConnectionCacheValue (ConnectionCacheValue const& cacheval)
-      : state_ (cacheval.state_),
-        connection_ (cacheval.connection_)
-      {
-      }
-
-    ConnectionCacheValue& ConnectionCacheValue::operator = (ConnectionCacheValue const& cacheval)
-      {
-        if (this != std::addressof (cacheval))
-          {
-            this->state_ = cacheval.state_;
-            this->connection_ = cacheval.connection_;
-          }
-        return *this;
-      }
-
     ConnectionCache::ConnectionCache (size_t size)
       : condition_ (lock_),
         cache_map_ (size)
