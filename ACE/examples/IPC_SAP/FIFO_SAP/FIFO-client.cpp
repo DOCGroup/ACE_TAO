@@ -1,19 +1,20 @@
 #include "ace/FIFO_Send.h"
 #include "ace/Log_Msg.h"
 #include "ace/Truncate.h"
-#include "ace/OS_NS_string.h"
-#include "ace/OS_NS_stdio.h"
 #include "ace/OS_main.h"
+
+#include <cstdio>
+#include <cstring>
 
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   ACE_FIFO_Send client (ACE_DEFAULT_RENDEZVOUS);
-  ACE_TCHAR buf[BUFSIZ] {};
+  char buf[BUFSIZ] {};
 
-  while (ACE_OS::fgets (buf, sizeof buf, stdin) != nullptr)
+  while (std::fgets (buf, sizeof buf, stdin) != nullptr)
     {
-      ssize_t n = ACE_Utils::truncate_cast<ssize_t> (ACE_OS::strlen (buf));
+      ssize_t const n = ACE_Utils::truncate_cast<ssize_t> (std::strlen (buf));
 
       if (client.send (buf, n) != n)
       {
