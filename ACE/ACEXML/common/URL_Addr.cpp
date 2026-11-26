@@ -14,10 +14,7 @@
 #include "ace/OS_NS_stdlib.h"
 #include "ace/OS_NS_string.h"
 
-ACEXML_URL_Addr::ACEXML_URL_Addr ()
-  : addr_string_len_ (0)
-{
-}
+ACEXML_URL_Addr::ACEXML_URL_Addr () = default;
 
 void
 ACEXML_URL_Addr::Free_Deleter::operator() (ACEXML_Char *ptr) const
@@ -162,8 +159,7 @@ ACEXML_URL_Addr::string_to_addr (ACEXML_Char const* s,
 }
 
 ACEXML_URL_Addr::ACEXML_URL_Addr (ACEXML_URL_Addr const &addr)
-  : ACE_INET_Addr (),
-    addr_string_len_ (0)
+  : ACE_INET_Addr ()
 {
   if (this->set (addr) == -1)
     {
@@ -218,8 +214,7 @@ ACEXML_URL_Addr::set (ACEXML_URL_Addr const &addr)
 ACEXML_URL_Addr::ACEXML_URL_Addr (ACEXML_Char const *host_name,
                             ACEXML_Char const *path_name,
                             unsigned short port)
-  : ACE_INET_Addr (port, host_name),
-    addr_string_len_ (0)
+  : ACE_INET_Addr (port, host_name)
 {
   this->path_name_.reset (ACE_OS::strdup (path_name));
 }

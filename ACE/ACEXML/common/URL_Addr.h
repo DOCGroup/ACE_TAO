@@ -125,7 +125,7 @@ private:
   ACEXML_Char_Ptr addr_string_ {};
 
   /// Current length of @c addr_string_.
-  size_t addr_string_len_;
+  size_t addr_string_len_ {};
 };
 
 #if defined (__ACEXML_INLINE__)

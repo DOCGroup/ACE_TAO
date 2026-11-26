@@ -6,10 +6,7 @@
 #include "ace/Log_Msg.h"
 #include "ace/OS_NS_string.h"
 
-ACEXML_StrCharStream::ACEXML_StrCharStream ()
-  : ptr_ {}, end_ {}
-{
-}
+ACEXML_StrCharStream::ACEXML_StrCharStream () = default;
 
 ACEXML_StrCharStream::~ACEXML_StrCharStream ()
 {
