@@ -235,7 +235,7 @@ public:
   /// @name STL typedefs and traits
   /// @{
   using value_type = T;
-  using const_value_type = const T;
+  using const_value_type = T const;
   using reference = value_type &;
   using const_reference = const_value_type &;
   using pointer = value_type *;

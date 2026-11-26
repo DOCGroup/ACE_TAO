@@ -56,8 +56,8 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template <typename T>
 struct ACE_Numeric_Limits
 {
-  static const T min () { return (std::numeric_limits<T>::min) (); }
-  static const T max () { return (std::numeric_limits<T>::max) (); }
+  static T const min () { return (std::numeric_limits<T>::min) (); }
+  static T const max () { return (std::numeric_limits<T>::max) (); }
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

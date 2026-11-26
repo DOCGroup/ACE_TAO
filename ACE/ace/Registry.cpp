@@ -166,7 +166,7 @@ ACE_Registry::Naming_Context::Naming_Context ()
 }
 
 // Context constructor
-ACE_Registry::Naming_Context::Naming_Context (const HKEY &key)
+ACE_Registry::Naming_Context::Naming_Context (HKEY const &key)
   : key_ (key),
     parent_key_ ((HKEY) 0),
     name_ ()

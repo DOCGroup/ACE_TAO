@@ -229,7 +229,7 @@ class ACE_TSS_Type_Adapter
 {
 public:
   /// Constructor.  Inlined here so that it should _always_ be inlined.
-  ACE_TSS_Type_Adapter (const TYPE value = 0): value_ (value) {}
+  ACE_TSS_Type_Adapter (TYPE const value = 0): value_ (value) {}
 
   /// TYPE conversion.  Inlined here so that it should _always_ be
   /// inlined.

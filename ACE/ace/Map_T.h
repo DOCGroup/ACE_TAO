@@ -245,7 +245,7 @@ public:
   /// Type aliases.
   using key_type = KEY;
   using mapped_type = VALUE;
-  using value_type = ACE_Reference_Pair<const KEY, VALUE>;
+  using value_type = ACE_Reference_Pair<KEY const, VALUE>;
   using iterator = ACE_Iterator<value_type>;
   using reverse_iterator = ACE_Reverse_Iterator<value_type>;
   using iterator_implementation = ACE_Iterator_Impl<value_type>;
@@ -401,12 +401,12 @@ protected:
   ACE_Map () = default;
 
   /// Return forward iterator.
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *begin_impl () = 0;
-  virtual ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *end_impl () = 0;
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *begin_impl () = 0;
+  virtual ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *end_impl () = 0;
 
   /// Return reverse iterator.
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *rbegin_impl () = 0;
-  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *rend_impl () = 0;
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rbegin_impl () = 0;
+  virtual ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rend_impl () = 0;
 };
 
 /**
@@ -666,12 +666,12 @@ protected:
   /// @{
 
   /// Return forward iterator.
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *begin_impl () override;
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *end_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *begin_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *end_impl () override;
 
   /// Return reverse iterator.
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *rbegin_impl () override;
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *rend_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rbegin_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rend_impl () override;
   /// @}
 };
 
@@ -775,8 +775,8 @@ public:
 
   /// Type aliases.
   using expanded_value = std::pair<KEY, VALUE>;
-  using iterator_impl = ACE_Active_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value>;
-  using reverse_iterator_impl = ACE_Active_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, expanded_value>;
+  using iterator_impl = ACE_Active_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, expanded_value>;
+  using reverse_iterator_impl = ACE_Active_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, expanded_value>;
   using implementation = ACE_Active_Map_Manager<expanded_value>;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
@@ -945,12 +945,12 @@ protected:
   /// @{
 
   /// Return forward iterator.
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *begin_impl () override;
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *end_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *begin_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *end_impl () override;
 
   /// Return reverse iterator.
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *rbegin_impl () override;
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *rend_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rbegin_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rend_impl () override;
   /// @}
 };
 
@@ -1053,8 +1053,8 @@ public:
   ACE_Hash_Map_Manager_Ex_Adapter &operator= (ACE_Hash_Map_Manager_Ex_Adapter &&) = delete;
 
   /// Type aliases.
-  using iterator_impl = ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
-  using reverse_iterator_impl = ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
+  using iterator_impl = ACE_Hash_Map_Manager_Ex_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
+  using reverse_iterator_impl = ACE_Hash_Map_Manager_Ex_Reverse_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, KEY, VALUE, HASH_KEY, COMPARE_KEYS>;
   using implementation = ACE_Hash_Map_Manager_Ex<KEY, VALUE, HASH_KEY, COMPARE_KEYS, ACE_Null_Mutex>;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
@@ -1216,12 +1216,12 @@ protected:
   /// @{
 
   /// Return forward iterator.
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *begin_impl () override;
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *end_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *begin_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *end_impl () override;
 
   /// Return reverse iterator.
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *rbegin_impl () override;
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *rend_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rbegin_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rend_impl () override;
   /// @}
 };
 
@@ -1324,8 +1324,8 @@ public:
   ACE_Map_Manager_Adapter &operator= (ACE_Map_Manager_Adapter &&) = delete;
 
   /// Type aliases.
-  using iterator_impl = ACE_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE>;
-  using reverse_iterator_impl = ACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<const KEY, VALUE>, KEY, VALUE>;
+  using iterator_impl = ACE_Map_Manager_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, KEY, VALUE>;
+  using reverse_iterator_impl = ACE_Map_Manager_Reverse_Iterator_Adapter<ACE_Reference_Pair<KEY const, VALUE>, KEY, VALUE>;
   using implementation = ACE_Map_Manager<KEY, VALUE, ACE_Null_Mutex>;
 
   /// Initialize with the ACE_DEFAULT_MAP_SIZE.
@@ -1487,12 +1487,12 @@ protected:
   /// @{
 
   /// Return forward iterator.
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *begin_impl () override;
-  ACE_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *end_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *begin_impl () override;
+  ACE_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *end_impl () override;
 
   /// Return reverse iterator.
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *rbegin_impl () override;
-  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<const KEY, VALUE>> *rend_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rbegin_impl () override;
+  ACE_Reverse_Iterator_Impl<ACE_Reference_Pair<KEY const, VALUE>> *rend_impl () override;
   /// @}
 };
 
