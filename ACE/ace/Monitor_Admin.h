@@ -72,7 +72,7 @@ namespace ACE
 
       bool monitor_point (Monitor_Base* monitor_point,
                           const ACE_Time_Value& time);
-      Monitor_Base* monitor_point (const char* name);
+      Monitor_Base* monitor_point (char const * name);
 
       /// Works similarly to monitor_point() above, but registers the
       /// handler arg's handle_timeout() method with the reactor,

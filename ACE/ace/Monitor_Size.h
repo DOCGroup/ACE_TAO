@@ -36,7 +36,7 @@ namespace ACE
     {
     public:
       Size_Monitor ();
-      explicit Size_Monitor (const char* name);
+      explicit Size_Monitor (char const * name);
       ~Size_Monitor () override = default;
 
       /// Implemented by the most-derived class. Does the actual

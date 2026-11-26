@@ -52,7 +52,7 @@ namespace ACE
     }
 
     bool
-    Monitor_Point_Registry::remove (const char* name)
+    Monitor_Point_Registry::remove (char const * name)
     {
       if (name == nullptr)
         {

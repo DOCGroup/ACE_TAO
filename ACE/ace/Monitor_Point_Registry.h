@@ -50,7 +50,7 @@ namespace ACE
       bool add (Monitor_Base* type);
 
       /// Remove a monitor from the registry.
-      bool remove (const char* name);
+      bool remove (char const * name);
 
       /// Returns a list of names stored in the registry
       Monitor_Control_Types::NameList names ();

@@ -47,7 +47,7 @@ namespace ACE
       using CONSTRAINTS = Monitor_Control_Types::ConstraintList;
       using CONSTRAINT_ITERATOR = CONSTRAINTS::const_iterator;
 
-      Monitor_Base (const char* name,
+      Monitor_Base (char const * name,
                     Monitor_Control_Types::Information_Type type);
       ~Monitor_Base () override;
 
@@ -65,7 +65,7 @@ namespace ACE
       virtual void receive (const Monitor_Control_Types::NameList& data);
 
       /// Add a constraint, returns a unique constraint id.
-      long add_constraint (const char* expression,
+      long add_constraint (char const * expression,
                            Control_Action* action = nullptr);
 
       /// Remove a constraint and return the associated control action,
@@ -88,8 +88,8 @@ namespace ACE
         const ACE_Time_Value& time = ACE_Time_Value::zero);
       void remove_from_registry ();
 
-      const char* name () const;
-      void name (const char* new_name);
+      char const * name () const;
+      void name (char const * new_name);
 
       void add_ref ();
       void remove_ref ();

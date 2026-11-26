@@ -20,7 +20,7 @@ namespace ACE
 {
   namespace Monitor_Control
   {
-    Monitor_Base::Monitor_Base (const char* name,
+    Monitor_Base::Monitor_Base (char const * name,
                                 Monitor_Control_Types::Information_Type type)
       : ACE_Refcountable_T<ACE_SYNCH_MUTEX> (1)
       , data_ (type)
@@ -135,7 +135,7 @@ namespace ACE
     }
 
     long
-    Monitor_Base::add_constraint (const char* expression,
+    Monitor_Base::add_constraint (char const * expression,
                                   Control_Action* action)
     {
       /// Thread-safe and guaranteed to be unique.
