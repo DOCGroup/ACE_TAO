@@ -78,27 +78,27 @@ unsigned char& Address::operator[]( const int position)
 }
 
 /// Overloaded equivalence operator, are two addresses equal?
-bool operator==( const Address &lhs, const Address &rhs)
+bool operator==( Address const &lhs, Address const &rhs)
 {
   return std::strcmp (static_cast<char const *> (lhs),
                       static_cast<char const *> (rhs)) == 0;
 }
 
 /// Overloaded inequality operator, are two addresses unequal?
-bool operator!=( const Address &lhs, const Address &rhs)
+bool operator!=( Address const &lhs, Address const &rhs)
 {
   return (!( lhs == rhs));
 }
 
 /// Overloaded > operator, is a1 greater than a2?
-bool operator>( const Address &lhs, const Address &rhs)
+bool operator>( Address const &lhs, Address const &rhs)
 {
   return std::strcmp (static_cast<char const *> (lhs),
                       static_cast<char const *> (rhs)) > 0;
 }
 
 /// Overloaded >= operator, is a1 greater than or equal to a2?
-bool operator>=( const Address &lhs,const Address &rhs)
+bool operator>=( Address const &lhs,Address const &rhs)
 {
   if (( lhs > rhs) || ( lhs == rhs))
     {
@@ -111,7 +111,7 @@ bool operator>=( const Address &lhs,const Address &rhs)
 }
 
 /// Overloaded <= operator, is a1 less than or equal to a2?
-bool operator<=( const Address &lhs,const Address &rhs)
+bool operator<=( Address const &lhs,Address const &rhs)
 {
   if (( lhs < rhs) || ( lhs == rhs))
     {
@@ -124,14 +124,14 @@ bool operator<=( const Address &lhs,const Address &rhs)
 }
 
 /// Overloaded < operator, is a1 less than a2?
-bool operator<( const Address &lhs, const Address &rhs)
+bool operator<( Address const &lhs, Address const &rhs)
 {
   return std::strcmp (static_cast<char const *> (lhs),
                       static_cast<char const *> (rhs)) < 0;
 }
 
 /// Overloaded equivalence operator, are an address and a string equal?
-bool operator==( const Address &lhs,const char *rhs)
+bool operator==( Address const &lhs,char const *rhs)
 {
   if (!rhs && !lhs.valid())
   {
@@ -141,13 +141,13 @@ bool operator==( const Address &lhs,const char *rhs)
 }
 
 /// Overloaded inequality operator, are an address and a string unequal?
-bool operator!=( const Address &lhs,const char *rhs)
+bool operator!=( Address const &lhs,char const *rhs)
 {
   return (!( lhs == rhs));
 }
 
 /// Overloaded > operator, is an address greater than a string?
-bool operator>( const Address &lhs,const char *rhs)
+bool operator>( Address const &lhs,char const *rhs)
 {
   if (!rhs)
   {
@@ -157,7 +157,7 @@ bool operator>( const Address &lhs,const char *rhs)
 }
 
 /// Overloaded >= operator, is an address greater than or equal to a string?
-bool operator>=( const Address &lhs,const char *rhs)
+bool operator>=( Address const &lhs,char const *rhs)
 {
   if (!rhs)
   {
@@ -167,7 +167,7 @@ bool operator>=( const Address &lhs,const char *rhs)
 }
 
 /// Overloaded < operator, is an address less than a string?
-bool operator<( const Address &lhs,const char *rhs)
+bool operator<( Address const &lhs,char const *rhs)
 {
   if (!rhs)
   {
@@ -177,7 +177,7 @@ bool operator<( const Address &lhs,const char *rhs)
 }
 
 /// Overloaded <= operator, is an address less than or equal to a string?
-bool operator<=( const Address &lhs,const char *rhs)
+bool operator<=( Address const &lhs,char const *rhs)
 {
   if (!rhs)
   {
@@ -191,7 +191,7 @@ SmiUINT32 IpAddress::get_syntax()
   return sNMP_SYNTAX_IPADDR;
 }
 
-IpAddress::IpAddress(const IpAddress &ipaddr)
+IpAddress::IpAddress(IpAddress const &ipaddr)
   : Address (ipaddr)
 {
   // always initialize what type this object is
@@ -211,7 +211,7 @@ IpAddress::IpAddress(const IpAddress &ipaddr)
 }
 
 /// Default-construct an IP address from a string.
-IpAddress::IpAddress( const char *inaddr): Address()
+IpAddress::IpAddress( char const *inaddr): Address()
 {
   // always initialize what type this object is
   smival.syntax = sNMP_SYNTAX_IPADDR;
@@ -231,7 +231,7 @@ IpAddress::IpAddress( const char *inaddr): Address()
   IpAddress::format_output();
 }
 
-IpAddress::IpAddress( const GenAddress &genaddr)
+IpAddress::IpAddress( GenAddress const &genaddr)
 {
   // always initialize what type this object is
   smival.syntax = sNMP_SYNTAX_IPADDR;
@@ -356,7 +356,7 @@ SnmpSyntax& IpAddress::operator=( SnmpSyntax &val)
   return *this;
 }
 
-IpAddress& IpAddress::operator=( const IpAddress &ipaddress)
+IpAddress& IpAddress::operator=( IpAddress const &ipaddress)
 {
   // protect against assignment from itself
   if (this == std::addressof (ipaddress))
@@ -380,7 +380,7 @@ SnmpSyntax *IpAddress::clone() const
   return new IpAddress(*this);
 }
 
-const char *IpAddress::resolve_hostname(int &status)
+char const *IpAddress::resolve_hostname(int &status)
 {
   if ((iv_friendly_name_[0] == 0) && valid_flag)
   {
@@ -391,7 +391,7 @@ const char *IpAddress::resolve_hostname(int &status)
 }
 
 // parse a dotted string
-int IpAddress::parse_dotted_ipstring( const char *inaddr)
+int IpAddress::parse_dotted_ipstring( char const *inaddr)
 {
   char temp[MAXHOSTNAMELEN +1];  // temp buffer for destruction
 
@@ -451,7 +451,7 @@ int IpAddress::parse_dotted_ipstring( const char *inaddr)
   return 1;
 }
 
-int IpAddress::parse_address( const char *inaddr)
+int IpAddress::parse_address( char const *inaddr)
 {
   // parse the input char array
   // fill up internal buffer with four ip bytes
@@ -526,7 +526,7 @@ int IpAddress::addr_to_friendly()
 }
 
 // static aka class member function (1.2.3.4 -> foo.com)
-int IpAddress::resolve_to_hostname(const in_addr& quad_addr, char *hostname)
+int IpAddress::resolve_to_hostname(in_addr const& quad_addr, char *hostname)
 {
   struct hostent lookupResult;
   int loc_errno = 0;
@@ -556,7 +556,7 @@ int IpAddress::resolve_to_hostname(const in_addr& quad_addr, char *hostname)
 }
 
 // static aka class member function (foo.com -> 1.2.3.4)
-int IpAddress::resolve_to_address(const char *hostname, in_addr& quad_addr)
+int IpAddress::resolve_to_address(char const *hostname, in_addr& quad_addr)
 {
    struct hostent lookupResult;
    ACE_HOSTENT_DATA buffer;
@@ -577,12 +577,12 @@ int IpAddress::resolve_to_address(const char *hostname, in_addr& quad_addr)
    return loc_errno;
 }
 
-IpAddress::operator const char *() const
+IpAddress::operator char const *() const
 {
   return (char *)output_buffer;
 }
 
-const char * IpAddress::to_string()
+char const * IpAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -611,7 +611,7 @@ addr_type IpAddress::get_type() const
 
 // logically and two IPaddresses and
 // return the new one
-void IpAddress::mask( const IpAddress& ipaddr)
+void IpAddress::mask( IpAddress const& ipaddr)
 {
   if ( this->valid() && ipaddr.valid())  {
      this->address_buffer[0] = this->address_buffer[0] & ipaddr.address_buffer[0];
@@ -710,7 +710,7 @@ SmiUINT32 UdpAddress::get_syntax()
   return sNMP_SYNTAX_OCTETS;
 }
 
-UdpAddress::UdpAddress( const UdpAddress  &udpaddr):IpAddress(udpaddr)
+UdpAddress::UdpAddress( UdpAddress const  &udpaddr):IpAddress(udpaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -722,7 +722,7 @@ UdpAddress::UdpAddress( const UdpAddress  &udpaddr):IpAddress(udpaddr)
   format_output();
 }
 
-UdpAddress::UdpAddress( const char *inaddr):IpAddress()
+UdpAddress::UdpAddress( char const *inaddr):IpAddress()
 {
   if (std::strlen (inaddr) == 0) {
     // Inherits IP Address attributes
@@ -744,7 +744,7 @@ UdpAddress::UdpAddress( const char *inaddr):IpAddress()
    format_output();
 }
 
-UdpAddress::UdpAddress( const GenAddress &genaddr):IpAddress()
+UdpAddress::UdpAddress( GenAddress const &genaddr):IpAddress()
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -783,7 +783,7 @@ UdpAddress::UdpAddress( const GenAddress &genaddr):IpAddress()
   format_output();
 }
 
-UdpAddress::UdpAddress( const IpAddress &ipaddr):IpAddress(ipaddr)
+UdpAddress::UdpAddress( IpAddress const &ipaddr):IpAddress(ipaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -833,7 +833,7 @@ SnmpSyntax& UdpAddress::operator=( SnmpSyntax &val)
 }
 
   // assignment to another UdpAddress object overloaded
-UdpAddress& UdpAddress::operator=( const UdpAddress &udpaddr)
+UdpAddress& UdpAddress::operator=( UdpAddress const &udpaddr)
 {
   // protect against assignment from itself
   if (this == std::addressof (udpaddr))
@@ -847,7 +847,7 @@ UdpAddress& UdpAddress::operator=( const UdpAddress &udpaddr)
   return *this;
 }
 
-int UdpAddress::parse_address( const char *inaddr)
+int UdpAddress::parse_address( char const *inaddr)
 {
   char buffer[MAXHOSTNAMELEN +1];
 
@@ -912,12 +912,12 @@ addr_type UdpAddress::get_type() const
   return type_udp;
 }
 
-UdpAddress::operator const char *() const
+UdpAddress::operator char const *() const
 {
   return (char *)output_buffer;
 }
 
-const char * UdpAddress::to_string()
+char const * UdpAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -953,7 +953,7 @@ void NetbiosAddress::format_output()
     }
 }
 
-void NetbiosAddress::InitNBAddr(const char *inaddr)
+void NetbiosAddress::InitNBAddr(char const *inaddr)
 {
   if (std::strlen (inaddr) == 0) {
     // always initialize SMI info
@@ -976,12 +976,12 @@ void NetbiosAddress::InitNBAddr(const char *inaddr)
 }
 
 // TODO: how to handle addresses < 15 chars (zero out or pad with ' ')
-NetbiosAddress::NetbiosAddress( const char *inaddr)
+NetbiosAddress::NetbiosAddress( char const *inaddr)
 {
   InitNBAddr(inaddr);
 }
 
-NetbiosAddress::NetbiosAddress( const char *inaddr,  nb_service svc)
+NetbiosAddress::NetbiosAddress( char const *inaddr,  nb_service svc)
 {
   InitNBAddr(inaddr);
   address_buffer[15] = svc;
@@ -991,7 +991,7 @@ NetbiosAddress::NetbiosAddress( const char *inaddr,  nb_service svc)
 // 16 chars, 15 can be any character, 16th is service number between 0 and 20
 // names beginning with IBM are reserved, and hence invalid
 // and doubt IBM would use this class anyway
-int NetbiosAddress::parse_address(const char *address)
+int NetbiosAddress::parse_address(char const *address)
 {
   if (std::strlen (address) > NETBIOSLEN)
   {
@@ -1014,7 +1014,7 @@ int NetbiosAddress::parse_address(const char *address)
   return 1; // valid
 }
 
-NetbiosAddress::NetbiosAddress( const NetbiosAddress& nbaddr)
+NetbiosAddress::NetbiosAddress( NetbiosAddress const& nbaddr)
   : Address (nbaddr)
 {
   // always initialize SMI info
@@ -1030,7 +1030,7 @@ NetbiosAddress::NetbiosAddress( const NetbiosAddress& nbaddr)
   NetbiosAddress::format_output();
 }
 
-NetbiosAddress::NetbiosAddress( const GenAddress& genaddr)
+NetbiosAddress::NetbiosAddress( GenAddress const& genaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1053,7 +1053,7 @@ NetbiosAddress::NetbiosAddress( const GenAddress& genaddr)
 NetbiosAddress::~NetbiosAddress()
 = default;
 
-const char *NetbiosAddress::to_string()
+char const *NetbiosAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1063,7 +1063,7 @@ void NetbiosAddress::to_octet(OctetStr& octet) const
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
 
-NetbiosAddress& NetbiosAddress::operator=( const NetbiosAddress &val)
+NetbiosAddress& NetbiosAddress::operator=( NetbiosAddress const &val)
 {
  // protect against assignment from itself
   if (this == std::addressof (val))
@@ -1095,7 +1095,7 @@ void NetbiosAddress::set_service_type(nb_service nbservice)
   NetbiosAddress::format_output();
 }
 
-NetbiosAddress::operator const char *() const
+NetbiosAddress::operator char const *() const
 {
   return (char *)output_buffer;
 }
@@ -1143,7 +1143,7 @@ SmiUINT32 IpxAddress::get_syntax()
   return sNMP_SYNTAX_OCTETS;
 }
 
-IpxAddress::IpxAddress( const char  *inaddr):Address( )
+IpxAddress::IpxAddress( char const  *inaddr):Address( )
 {
   if (std::strlen (inaddr) == 0) {
     // always initialize SMI info
@@ -1166,7 +1166,7 @@ IpxAddress::IpxAddress( const char  *inaddr):Address( )
   IpxAddress::format_output();
 }
 
-IpxAddress::IpxAddress(const IpxAddress &ipxaddr)
+IpxAddress::IpxAddress(IpxAddress const &ipxaddr)
   : Address (ipxaddr)
 {
   // always initialize SMI info
@@ -1183,7 +1183,7 @@ IpxAddress::IpxAddress(const IpxAddress &ipxaddr)
   IpxAddress::format_output();
 }
 
-IpxAddress::IpxAddress( const GenAddress &genaddr)
+IpxAddress::IpxAddress( GenAddress const &genaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1238,7 +1238,7 @@ SnmpSyntax& IpxAddress::operator=( SnmpSyntax &val)
   return *this;
 }
 
-IpxAddress& IpxAddress::operator=( const IpxAddress &ipxaddress)
+IpxAddress& IpxAddress::operator=( IpxAddress const &ipxaddress)
 {
   // protect against assignment from itself
   if (this == std::addressof (ipxaddress))
@@ -1287,7 +1287,7 @@ SnmpSyntax *IpxAddress::clone() const
 //  XXXXXXXX.XXXXXX-XXXXXX
 //  XXXXXXXX:XXXXXX-XXXXXX
 //  XXXXXXXX-XXXXXX-XXXXXX
-int IpxAddress::parse_address( const char *inaddr)
+int IpxAddress::parse_address( char const *inaddr)
 {
   char unsigned *str1,*str2;
   char temp[30];    // don't destroy original
@@ -1440,12 +1440,12 @@ int IpxAddress::parse_address( const char *inaddr)
   return 1;
 }
 
-IpxAddress::operator const char *() const
+IpxAddress::operator char const *() const
 {
   return (char *)output_buffer;
 }
 
-const char * IpxAddress::to_string()
+char const * IpxAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1519,7 +1519,7 @@ SmiUINT32 IpxSockAddress::get_syntax()
   return sNMP_SYNTAX_OCTETS;
 }
 
-IpxSockAddress::IpxSockAddress( const IpxSockAddress &ipxaddr):IpxAddress(ipxaddr)
+IpxSockAddress::IpxSockAddress( IpxSockAddress const &ipxaddr):IpxAddress(ipxaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1531,7 +1531,7 @@ IpxSockAddress::IpxSockAddress( const IpxSockAddress &ipxaddr):IpxAddress(ipxadd
   format_output();
 }
 
-IpxSockAddress::IpxSockAddress( const char *inaddr):IpxAddress()
+IpxSockAddress::IpxSockAddress( char const *inaddr):IpxAddress()
 {
   if (std::strlen (inaddr) == 0) {
     // always initialize SMI info
@@ -1553,7 +1553,7 @@ IpxSockAddress::IpxSockAddress( const char *inaddr):IpxAddress()
   format_output();
 }
 
-IpxSockAddress::IpxSockAddress( const GenAddress &genaddr):IpxAddress()
+IpxSockAddress::IpxSockAddress( GenAddress const &genaddr):IpxAddress()
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1590,7 +1590,7 @@ IpxSockAddress::IpxSockAddress( const GenAddress &genaddr):IpxAddress()
   format_output();
 }
 
-IpxSockAddress::IpxSockAddress( const IpxAddress &ipxaddr):IpxAddress(ipxaddr)
+IpxSockAddress::IpxSockAddress( IpxAddress const &ipxaddr):IpxAddress(ipxaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1638,7 +1638,7 @@ SnmpSyntax& IpxSockAddress::operator=( SnmpSyntax &val)
 }
 
 // assignment to another IpAddress object overloaded
-IpxSockAddress& IpxSockAddress::operator=( const IpxSockAddress &ipxaddr)
+IpxSockAddress& IpxSockAddress::operator=( IpxSockAddress const &ipxaddr)
 {
   // protect against assignment from itself
   if (this == std::addressof (ipxaddr))
@@ -1657,12 +1657,12 @@ SnmpSyntax *IpxSockAddress::clone() const
   return new IpxSockAddress(*this);
 }
 
-IpxSockAddress::operator const char *() const
+IpxSockAddress::operator char const *() const
 {
   return (char *)output_buffer;
 }
 
-const char * IpxSockAddress::to_string()
+char const * IpxSockAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -1684,7 +1684,7 @@ void IpxSockAddress::format_output()
   }
 }
 
-int IpxSockAddress::parse_address( const char *inaddr)
+int IpxSockAddress::parse_address( char const *inaddr)
 {
    char buffer[MAXHOSTNAMELEN +1];
    unsigned short socketid=0;
@@ -1761,7 +1761,7 @@ MacAddress::MacAddress(const MacAddress &macaddr)
   format_output();
 }
 
-MacAddress::MacAddress( const char  *inaddr):Address( )
+MacAddress::MacAddress( char const  *inaddr):Address( )
 {
   if (std::strlen (inaddr) == 0) {
      // always initialize SMI info
@@ -1783,7 +1783,7 @@ MacAddress::MacAddress( const char  *inaddr):Address( )
   format_output();
 }
 
-MacAddress::MacAddress( const GenAddress &genaddr)
+MacAddress::MacAddress( GenAddress const &genaddr)
 {
   // always initialize SMI info
   smival.syntax = sNMP_SYNTAX_OCTETS;
@@ -1867,7 +1867,7 @@ SnmpSyntax& MacAddress::operator=( SnmpSyntax &val)
 //   Total length must be 17
 //   Each char must take on value 0-F
 //
-int MacAddress::parse_address( const char *inaddr)
+int MacAddress::parse_address( char const *inaddr)
 {
   char temp[MAXHOSTNAMELEN +1];    // don't destroy original
   char unsigned *tmp;
@@ -1954,11 +1954,11 @@ int MacAddress::parse_address( const char *inaddr)
   return 1;
 }
 
-MacAddress::operator const char *() const
+MacAddress::operator char const *() const
 {
   return (char *)output_buffer;
 }
-const char * MacAddress::to_string()
+char const * MacAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -2464,7 +2464,7 @@ void GenAddress::to_octet(OctetStr& octet) const
 }
 
 
-DecNetAddress::DecNetAddress( const char *inaddr): Address()
+DecNetAddress::DecNetAddress( char const *inaddr): Address()
 {
   if (std::strlen (inaddr) == 0) {
     // always initialize SMI info
@@ -2491,7 +2491,7 @@ DecNetAddress::DecNetAddress( const DecNetAddress& addr)
 {
 }
 
-DecNetAddress::DecNetAddress( const GenAddress& genaddr)
+DecNetAddress::DecNetAddress( GenAddress const& genaddr)
 {
   smival.syntax = sNMP_SYNTAX_OCTETS;
   smival.value.string.len = DECNETLEN;
@@ -2513,7 +2513,7 @@ DecNetAddress::DecNetAddress( const GenAddress& genaddr)
 DecNetAddress::~DecNetAddress()
 = default;
 
-const char *DecNetAddress::to_string()
+char const *DecNetAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -2539,7 +2539,7 @@ void DecNetAddress::to_octet(OctetStr& octet) const
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
 
-DecNetAddress::operator const char *() const
+DecNetAddress::operator char const *() const
 {
   return (char *)output_buffer;
 }
@@ -2594,7 +2594,7 @@ void DecNetAddress::format_output()
   }
 }
 
-int DecNetAddress::parse_address( const char *address)
+int DecNetAddress::parse_address( char const *address)
 {
  if (std::strlen (address) > DECNETLEN)
  {
@@ -2608,7 +2608,7 @@ int DecNetAddress::parse_address( const char *address)
 }
 
 
-AppleTalkAddress::AppleTalkAddress( const char *inaddr): Address()
+AppleTalkAddress::AppleTalkAddress( char const *inaddr): Address()
 {
   if (std::strlen (inaddr) == 0) {
     // always initialize SMI info
@@ -2634,7 +2634,7 @@ AppleTalkAddress::AppleTalkAddress( const AppleTalkAddress& addr)
 {
 }
 
-AppleTalkAddress::AppleTalkAddress( const GenAddress& genaddr)
+AppleTalkAddress::AppleTalkAddress( GenAddress const& genaddr)
 {
   smival.syntax = sNMP_SYNTAX_OCTETS;
   smival.value.string.len = APPLETKLEN;
@@ -2656,7 +2656,7 @@ AppleTalkAddress::AppleTalkAddress( const GenAddress& genaddr)
 AppleTalkAddress::~AppleTalkAddress()
 = default;
 
-const char *AppleTalkAddress::to_string()
+char const *AppleTalkAddress::to_string()
 {
   return (char *)output_buffer;
 }
@@ -2682,7 +2682,7 @@ void AppleTalkAddress::to_octet(OctetStr& octet) const
    octet.set_data( smival.value.string.ptr, smival.value.string.len);
 }
 
-AppleTalkAddress::operator const char *() const
+AppleTalkAddress::operator char const *() const
 {
   return (char *)output_buffer;
 }
@@ -2738,7 +2738,7 @@ void AppleTalkAddress::format_output()
   }
 }
 
-int AppleTalkAddress::parse_address( const char *address)
+int AppleTalkAddress::parse_address( char const *address)
 {
  if (std::strlen (address) > APPLETKLEN)
  {

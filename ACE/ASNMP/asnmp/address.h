@@ -94,43 +94,43 @@ public:
    ~Address() override;
 
    /// overloaded equivlence operator, are two addresses equal?
-   friend ASNMP_Export bool operator==( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator==( Address const &lhs,Address const &rhs);
 
    /// overloaded not equivlence operator, are two addresses not equal?
-   friend ASNMP_Export bool operator!=( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator!=( Address const &lhs,Address const &rhs);
 
    /// overloaded > operator, is a1 > a2
-   friend ASNMP_Export bool operator>( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator>( Address const &lhs,Address const &rhs);
 
    /// overloaded >= operator, is a1 >= a2
-   friend ASNMP_Export bool operator>=( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator>=( Address const &lhs,Address const &rhs);
 
    /// overloaded < operator, is a1 < a2
-   friend ASNMP_Export bool operator<( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator<( Address const &lhs,Address const &rhs);
 
    /// overloaded <= operator, is a1 <= a2
-   friend ASNMP_Export bool operator<=( const Address &lhs,const Address &rhs);
+   friend ASNMP_Export bool operator<=( Address const &lhs,Address const &rhs);
 
    /// equivlence operator overloaded, are an address and a string equal?
-   friend ASNMP_Export bool operator==( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator==( Address const &lhs,char const *rhs);
 
    /// overloaded not equivlence operator, are an address and string not equal?
-   friend ASNMP_Export bool operator!=( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator!=( Address const &lhs,char const *rhs);
 
    /// overloaded < , is an address greater than a string?
-   friend ASNMP_Export bool operator>( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator>( Address const &lhs,char const *rhs);
 
    /// overloaded >=, is an address greater than or equal to a string?
-   friend ASNMP_Export bool operator>=( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator>=( Address const &lhs,char const *rhs);
 
    /// overloaded < , is an address less than a string?
-   friend ASNMP_Export bool operator<( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator<( Address const &lhs,char const *rhs);
 
    /// overloaded <=, is an address less than or equal to a string?
-   friend ASNMP_Export bool operator<=( const Address &lhs,const char *rhs);
+   friend ASNMP_Export bool operator<=( Address const &lhs,char const *rhs);
 
-   /// overloaded const char * cast
-   virtual operator const char *() const = 0;
+   /// overloaded char const * cast
+   virtual operator char const *() const = 0;
 
   /// verify the is the address object constructed ok
   int valid() const override;
@@ -145,7 +145,7 @@ public:
   unsigned char& operator[]( const int position);
 
   /// get a printable ASCII value
-  const char *to_string() override = 0;
+  char const *to_string() override = 0;
 
   /// create a new instance of this Value
   SnmpSyntax *clone() const override = 0;
@@ -166,7 +166,7 @@ protected:
 
   /// parse the address string
   /// redefined for each specific address subclass
-  virtual int parse_address( const char * inaddr) =0;
+  virtual int parse_address( char const * inaddr) =0;
 
   /// format the output
   /// redefined for each specific address subclass
@@ -186,10 +186,10 @@ class ASNMP_Export IpAddress : public Address
 {
 public:
   /// default construct an IP address with a string
-  IpAddress( const char *inaddr = "");
+  IpAddress( char const *inaddr = "");
 
   /// construct an IP address with another IP address
-  IpAddress( const IpAddress  &ipaddr);
+  IpAddress( IpAddress const  &ipaddr);
 
   /// construct an IP address with a GenAddress
   explicit IpAddress (GenAddress const &genaddr);
@@ -200,7 +200,7 @@ public:
   SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// assignment to another IpAddress object overloaded
-  IpAddress& operator=( const IpAddress &ipaddress);
+  IpAddress& operator=( IpAddress const &ipaddress);
 
   // TODO: add ability to set addr given long
 
@@ -209,17 +209,17 @@ public:
 
   /// return the DNS Fully Qualified Domain Name (host.domain)
   /// on failure returns dotted_quad string
-  const char *resolve_hostname(int& was_found);
+  char const *resolve_hostname(int& was_found);
 
   /// return string representation of object (dotted quad returned)
-  const char *to_string() override;
+  char const *to_string() override;
 
-  /// const char * operator overloaded for streaming output
-  operator const char *() const override;
+  /// char const * operator overloaded for streaming output
+  operator char const *() const override;
 
   /// logically AND two IPaddresses and
   /// return the new one
-  void mask( const IpAddress& ipaddr);
+  void mask( IpAddress const& ipaddr);
 
   /// return the type
   addr_type get_type() const override;
@@ -254,14 +254,14 @@ protected:
 
   /// redefined parse address
   /// specific to IP addresses
-  int parse_address( const char *inaddr) override;
+  int parse_address( char const *inaddr) override;
 
   /// redefined format output
   /// specific to IP addresses
   void format_output() override;
 
   /// parse a dotted string
-  int parse_dotted_ipstring( const char *inaddr);
+  int parse_dotted_ipstring( char const *inaddr);
 
   /// using the currently defined address, do a gethostbyname()
   /// and try to fill up the name
@@ -269,11 +269,11 @@ protected:
 
   /// thread safe routine to lookup ip address given hostname
   /// return <> 0 on error
-  static int resolve_to_address(const char *hostname, in_addr& quad_addr);
+  static int resolve_to_address(char const *hostname, in_addr& quad_addr);
 
   /// thread safe routine to lookup name given ip address
   /// return <> 0 on error
-  static int resolve_to_hostname(const in_addr& quad_addr, char *hostname);
+  static int resolve_to_hostname(in_addr const& quad_addr, char *hostname);
 };
 
 /**
@@ -323,7 +323,7 @@ public:
   /// default constructor with a dotted string in the form of addr:port
   UdpAddress (char const *inaddr = "");
 
-  UdpAddress( const UdpAddress &udpaddr);
+  UdpAddress( UdpAddress const &udpaddr);
 
   /// construct a Udp address with a GenAddress
   explicit UdpAddress (GenAddress const &genaddr);
@@ -341,16 +341,16 @@ public:
   SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// assignment to another IpAddress object overloaded
-  UdpAddress& operator=( const UdpAddress &udpaddr);
+  UdpAddress& operator=( UdpAddress const &udpaddr);
 
   /// create a new instance of this Value
   SnmpSyntax *clone() const override;
 
   /// output in the form of address:port
-  const char *to_string() override;
+  char const *to_string() override;
 
-  /// const char * operator overloaded for streaming output
-  operator const char *() const override;
+  /// char const * operator overloaded for streaming output
+  operator char const *() const override;
 
   /// set the port number
   void set_port( const unsigned short p);
@@ -367,7 +367,7 @@ protected:
 
   /// redefined parse address
   /// specific to IP addresses
-  int parse_address( const char *inaddr) override;
+  int parse_address( char const *inaddr) override;
 
   /// redefined format output
   /// specific to IP addresses
@@ -383,7 +383,7 @@ protected:
 class  ASNMP_Export MacAddress : public Address
 {
 public:
-  MacAddress( const char  *inaddr = "");
+  MacAddress( char const  *inaddr = "");
 
   MacAddress( const MacAddress  &macaddr);
 
@@ -405,10 +405,10 @@ public:
   SnmpSyntax *clone() const override;
 
   /// create a string to internal class storage representing object
-  const char *to_string() override;
+  char const *to_string() override;
 
-  /// const char * operator overloaded for streaming output
-  operator const char *() const override;
+  /// char const * operator overloaded for streaming output
+  operator char const *() const override;
 
   /// return the type
   addr_type get_type() const override;
@@ -424,7 +424,7 @@ protected:
   char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// redefined parse address for macs
-  int parse_address( const char *inaddr) override;
+  int parse_address( char const *inaddr) override;
 
   /// redefined format output for MACs
   void format_output() override;
@@ -438,21 +438,21 @@ protected:
 class  ASNMP_Export NetbiosAddress : public Address
 {
 public:
-   NetbiosAddress( const char *inaddr = "");
+   NetbiosAddress( char const *inaddr = "");
 
    /// set name and service type
-   NetbiosAddress( const char *inaddr, nb_service svc);
+   NetbiosAddress( char const *inaddr, nb_service svc);
 
-   NetbiosAddress( const NetbiosAddress& nbaddr);
+   NetbiosAddress( NetbiosAddress const& nbaddr);
 
    /// construct with a GenAddress
    explicit NetbiosAddress (GenAddress const &genaddr);
 
    ~NetbiosAddress() override;
 
-   const char *to_string() override;
+   char const *to_string() override;
 
-   NetbiosAddress& operator=( const NetbiosAddress &nbaddr);
+   NetbiosAddress& operator=( NetbiosAddress const &nbaddr);
 
    /// retrieve the network service type
    nb_service get_service_type() const;
@@ -460,8 +460,8 @@ public:
    /// set the service type (workstation, server, etc)
    void set_service_type(nb_service nbservice);
 
-   /// const char * operator overloaded for streaming output
-   operator const char *() const override;
+   /// char const * operator overloaded for streaming output
+   operator char const *() const override;
 
    /// syntax type
    SmiUINT32 get_syntax() override;
@@ -476,12 +476,12 @@ public:
    void to_octet(OctetStr& octet) const override;
 
 protected:
-  void InitNBAddr(const char *inaddr);
+  void InitNBAddr(char const *inaddr);
   char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// output buffer to hold string representation
   void format_output() override;
-  int parse_address( const char  *inaddr) override;
+  int parse_address( char const  *inaddr) override;
   addr_type get_type() const override;
 };
 /**
@@ -493,7 +493,7 @@ protected:
 class  ASNMP_Export DecNetAddress : public Address
 {
 public:
-  DecNetAddress( const char *inaddr = "");
+  DecNetAddress( char const *inaddr = "");
 
   DecNetAddress( const DecNetAddress& decaddr);
 
@@ -502,15 +502,15 @@ public:
 
   ~DecNetAddress() override;
 
-  const char *to_string() override;
+  char const *to_string() override;
 
   DecNetAddress& operator=( const DecNetAddress &decaddr);
 
   /// convert address into octet string format 2 bytes of decnet address
   void to_octet(OctetStr& octet) const override;
 
-  /// const char * operator overloaded for streaming output
-  operator const char *() const override;
+  /// char const * operator overloaded for streaming output
+  operator char const *() const override;
 
   /// syntax type
   SmiUINT32 get_syntax() override;
@@ -522,7 +522,7 @@ public:
   SnmpSyntax *clone() const override;
 
 protected:
-  int parse_address( const char *inaddr) override;
+  int parse_address( char const *inaddr) override;
   addr_type get_type() const override;
   void format_output() override;
   char output_buffer[MAX_DISPLAY_SZ] {};
@@ -536,7 +536,7 @@ protected:
 class  ASNMP_Export AppleTalkAddress :  public Address
 {
 public:
-  AppleTalkAddress( const char *inaddr = "");
+  AppleTalkAddress( char const *inaddr = "");
 
   AppleTalkAddress( const AppleTalkAddress& atkaddr);
 
@@ -545,7 +545,7 @@ public:
 
   ~AppleTalkAddress() override;
 
-  const char *to_string() override;
+  char const *to_string() override;
 
   AppleTalkAddress& operator=( const AppleTalkAddress &atkaddr);
 
@@ -564,8 +564,8 @@ public:
   /// set the host 2 byte atk  network address
   void set_net_address(const short atknet);
 
-  /// const char * operator overloaded for streaming output
-  operator const char *() const override;
+  /// char const * operator overloaded for streaming output
+  operator char const *() const override;
 
   /// syntax type
   SmiUINT32 get_syntax() override;
@@ -577,7 +577,7 @@ public:
   SnmpSyntax *clone() const override;
 
 private:
-  int parse_address( const char *inaddr) override;
+  int parse_address( char const *inaddr) override;
   addr_type get_type() const override;
   void format_output() override;
   char output_buffer[MAX_DISPLAY_SZ] {};
@@ -591,9 +591,9 @@ private:
 class ASNMP_Export IpxAddress : public Address
 {
 public:
-  IpxAddress( const char  *inaddr = "");
+  IpxAddress( char const  *inaddr = "");
 
-  IpxAddress( const IpxAddress  &ipxaddr);
+  IpxAddress( IpxAddress const  &ipxaddr);
 
   /// construct with a GenAddress
   explicit IpxAddress (GenAddress const &genaddr);
@@ -607,7 +607,7 @@ public:
   SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// assignment to another IpxAddress object overloaded
-  IpxAddress& operator=( const IpxAddress &ipxaddress);
+  IpxAddress& operator=( IpxAddress const &ipxaddress);
 
   /// get the host id portion of an ipx address
   int get_hostid( MacAddress& mac);
@@ -616,10 +616,10 @@ public:
   SnmpSyntax *clone() const override;
 
   /// create string represtation of object value
-  const char *to_string() override;
+  char const *to_string() override;
 
-  /// const char * operator overloaded for streaming output
-  operator const char *() const override;
+  /// char const * operator overloaded for streaming output
+  operator char const *() const override;
 
   /// return the type
   addr_type get_type() const override;
@@ -635,7 +635,7 @@ protected:
   char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// redefined parse address for ipx strings
-  int parse_address( const char  *inaddr) override;
+  int parse_address( char const  *inaddr) override;
 
   /// redefined format output for ipx strings
   /// uses same separator as when constructed
@@ -650,9 +650,9 @@ protected:
 class ASNMP_Export IpxSockAddress : public IpxAddress
 {
 public:
-  IpxSockAddress( const char *inaddr = "");
+  IpxSockAddress( char const *inaddr = "");
 
-  IpxSockAddress( const IpxSockAddress &ipxaddr);
+  IpxSockAddress( IpxSockAddress const &ipxaddr);
 
   explicit IpxSockAddress (GenAddress const &genaddr);
 
@@ -668,7 +668,7 @@ public:
   SnmpSyntax& operator=( SnmpSyntax &val) override;
 
   /// assignment to another IpxAddress object overloaded
-  IpxSockAddress& operator=( const IpxSockAddress &ipxaddr);
+  IpxSockAddress& operator=( IpxSockAddress const &ipxaddr);
 
   /// create a new instance of this Value
   SnmpSyntax *clone() const override;
@@ -680,10 +680,10 @@ public:
   unsigned short get_socket() const;
 
   /// create string representation of object value
-  const char *to_string() override;
+  char const *to_string() override;
 
-  /// const char * operator overloaded for streaming output
-  operator const char *() const override;
+  /// char const * operator overloaded for streaming output
+  operator char const *() const override;
 
   /// return the type
   addr_type get_type() const override;
@@ -693,7 +693,7 @@ protected:
   char output_buffer[MAX_DISPLAY_SZ] {};
 
   /// redefined parse address for ipx strings
-  int parse_address( const char  *inaddr) override;
+  int parse_address( char const  *inaddr) override;
 
   /// redefined format output
   /// specific to IP addresses
@@ -731,7 +731,7 @@ public:
   /// string representation of object value
   char const *to_string() override;
 
-  /// const char * operator overloaded for streaming output
+  /// char const * operator overloaded for streaming output
   operator char const *() const override;
 
   /// return the type
