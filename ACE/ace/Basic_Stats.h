@@ -45,7 +45,7 @@ public:
   void sample (ACE_UINT64 value);
 
   /// Update the values to reflect the stats in @a rhs.
-  void accumulate (const ACE_Basic_Stats &rhs);
+  void accumulate (ACE_Basic_Stats const &rhs);
 
   /// Dump all the samples
   /**

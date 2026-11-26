@@ -8,7 +8,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 void
-ACE_Basic_Stats::accumulate (const ACE_Basic_Stats &rhs)
+ACE_Basic_Stats::accumulate (ACE_Basic_Stats const &rhs)
 {
   if (rhs.samples_count_ == 0)
   {

@@ -151,10 +151,10 @@ public:
   void reset ();
 
   /// Start timing.
-  void start (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void start (ACE_OS::ACE_HRTimer_Op const = ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Stop timing.
-  void stop (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void stop (ACE_OS::ACE_HRTimer_Op const = ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Set @a tv to the number of microseconds elapsed.
   void elapsed_time (ACE_Time_Value &tv) const;
@@ -179,10 +179,10 @@ public:
   void elapsed_microseconds (ACE_hrtime_t &usecs) const;
 
   /// Start incremental timing.
-  void start_incr (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void start_incr (ACE_OS::ACE_HRTimer_Op const = ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Stop incremental timing.
-  void stop_incr (const ACE_OS::ACE_HRTimer_Op = ACE_OS::ACE_HRTIMER_GETTIME);
+  void stop_incr (ACE_OS::ACE_HRTimer_Op const = ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Set @a tv to the number of microseconds elapsed between all calls
   /// to start_incr and stop_incr.
@@ -230,12 +230,12 @@ public:
    * @c global_scale_factor_ appropriately will result in the finest
    * resolution possible.
    */
-  static ACE_Time_Value gettimeofday (const ACE_OS::ACE_HRTimer_Op =
+  static ACE_Time_Value gettimeofday (ACE_OS::ACE_HRTimer_Op const =
                                         ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Converts an @a hrt to @a tv using global_scale_factor_.
   static void hrtime_to_tv (ACE_Time_Value &tv,
-                            const ACE_hrtime_t hrt);
+                            ACE_hrtime_t const hrt);
 
 #if defined (ACE_LINUX) && !defined (ACE_LACKS_SSCANF)
   /**
@@ -254,14 +254,14 @@ private:
    * low-resolution clock if the @c global_scale_factor_ has not been
    * set.
    */
-  static ACE_hrtime_t gettime (const ACE_OS::ACE_HRTimer_Op =
+  static ACE_hrtime_t gettime (ACE_OS::ACE_HRTimer_Op const =
                                  ACE_OS::ACE_HRTIMER_GETTIME);
 
   /// Calculate the difference between two ACE_hrtime_t values. It is assumed
   /// that the end time is later than start time, so if end is a smaller
   /// value, the time counter has wrapped around.
-  static ACE_hrtime_t elapsed_hrtime (const ACE_hrtime_t end,
-                                      const ACE_hrtime_t start);
+  static ACE_hrtime_t elapsed_hrtime (ACE_hrtime_t const end,
+                                      ACE_hrtime_t const start);
 
   /// Starting time.
   ACE_hrtime_t start_;
