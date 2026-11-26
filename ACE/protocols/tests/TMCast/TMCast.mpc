@@ -1,0 +1,6 @@
+project(*Message_Cast_Test) : aceexe, tmcast {
+  exename = message_cast_test
+  Source_Files {
+    Message_Cast_Test.cpp
+  }
+}
