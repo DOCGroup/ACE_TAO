@@ -1220,7 +1220,7 @@ TAO_Log_Constraint_Visitor::any_does_contain (
 
   *any >>= result;
 
-  TAO_ETCL_Literal_Constraint const element (const_cast<CORBA::Any *> (result));
+  TAO_ETCL_Literal_Constraint const element (result);
 
   return (item == element);
 }
