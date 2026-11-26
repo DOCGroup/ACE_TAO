@@ -31,9 +31,9 @@ TAO_EventPortDef_i::event_i ()
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_type",
+                                            ACE_TEXT ("base_type"),
                                             holder);
-  CORBA::Contained_var obj = this->repo_->lookup_id (holder.fast_rep ());
+  CORBA::Contained_var obj = this->repo_->lookup_id (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   return CORBA::ComponentIR::EventDef::_narrow (obj.in ());
 }
@@ -54,7 +54,7 @@ TAO_EventPortDef_i::event_i (
     CORBA::ComponentIR::EventDef_ptr event)
 {
   this->repo_->config ()->remove_value (this->section_key_,
-                                        "base_type");
+                                        ACE_TEXT ("base_type"));
 
   if (CORBA::is_nil (event))
     {
@@ -66,17 +66,17 @@ TAO_EventPortDef_i::event_i (
 
   ACE_Configuration_Section_Key new_key;
   this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                       tmp,
+                                       ACE_TEXT_CHAR_TO_TCHAR (tmp),
                                        new_key,
                                        false);
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (new_key,
-                                            "id",
+                                            ACE_TEXT ("id"),
                                             holder);
 
   this->repo_->config ()->set_string_value (this->section_key_,
-                                            "base_type",
+                                            ACE_TEXT ("base_type"),
                                             holder);
 }
 
@@ -97,7 +97,7 @@ TAO_EventPortDef_i::is_a_i (
 {
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "base_type",
+                                            ACE_TEXT ("base_type"),
                                             holder);
   this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
                                             holder.fast_rep (),
@@ -135,9 +135,9 @@ TAO_EventPortDef_i::describe_i ()
 
   ACE_TString holder;
   this->repo_->config ()->get_string_value (this->section_key_,
-                            "base_type",
+                            ACE_TEXT ("base_type"),
                             holder);
-  epd.event = holder.fast_rep ();
+  epd.event = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   CORBA::Contained::Description *retval {};
   ACE_NEW_RETURN (retval,
