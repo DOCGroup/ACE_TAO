@@ -95,6 +95,7 @@ template<>
 class ACE_Export ACE_Guard<ACE_Null_Mutex>
 {
 public:
+  ACE_Guard () = delete;
   ACE_Guard (ACE_Null_Mutex &) {}
   ACE_Guard (ACE_Null_Mutex &, int) {}
   ACE_Guard (ACE_Null_Mutex &, int, int) {}
@@ -129,6 +130,7 @@ class ACE_Export ACE_Write_Guard<ACE_Null_Mutex>
   : public ACE_Guard<ACE_Null_Mutex>
 {
 public:
+  ACE_Write_Guard () = delete;
   ACE_Write_Guard (ACE_Null_Mutex &m)
     : ACE_Guard<ACE_Null_Mutex> (m) {}
   ACE_Write_Guard (ACE_Null_Mutex &m, int blocked)
@@ -153,6 +155,7 @@ class ACE_Export ACE_Read_Guard<ACE_Null_Mutex>
   : public ACE_Guard<ACE_Null_Mutex>
 {
 public:
+  ACE_Read_Guard () = delete;
   ACE_Read_Guard (ACE_Null_Mutex &m)
     : ACE_Guard<ACE_Null_Mutex> (m) {}
   ACE_Read_Guard (ACE_Null_Mutex &m, int blocked)

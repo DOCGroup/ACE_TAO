@@ -60,6 +60,7 @@ template <class ACE_LOCK>
 class ACE_Guard
 {
 public:
+  ACE_Guard () = delete;
   explicit ACE_Guard (ACE_LOCK &l);
 
   /// Implicitly and automatically acquire (or try to acquire) the
@@ -141,6 +142,7 @@ template <class ACE_LOCK>
 class ACE_Write_Guard : public ACE_Guard<ACE_LOCK>
 {
 public:
+  ACE_Write_Guard () = delete;
   /// Implicitly and automatically acquire a write lock.
   explicit ACE_Write_Guard (ACE_LOCK &m);
 
@@ -190,6 +192,7 @@ template <class ACE_LOCK>
 class ACE_Read_Guard : public ACE_Guard<ACE_LOCK>
 {
 public:
+  ACE_Read_Guard () = delete;
   /// Implicitly and automatically acquire a read lock.
   explicit ACE_Read_Guard (ACE_LOCK& m);
 
@@ -316,6 +319,7 @@ template <class ACE_LOCK>
 class ACE_TSS_Write_Guard : public ACE_TSS_Guard<ACE_LOCK>
 {
 public:
+  ACE_TSS_Write_Guard () = delete;
   /// Implicitly and automatically acquire the thread-specific write lock.
   explicit ACE_TSS_Write_Guard (ACE_LOCK &lock, bool block = true);
 
@@ -364,6 +368,7 @@ template <class ACE_LOCK>
 class ACE_TSS_Read_Guard : public ACE_TSS_Guard<ACE_LOCK>
 {
 public:
+  ACE_TSS_Read_Guard () = delete;
   /// Implicitly and automatically acquire the thread-specific read lock.
   explicit ACE_TSS_Read_Guard (ACE_LOCK &lock, bool block = true);
 
