@@ -38,7 +38,7 @@ ACE_File_Lock::ACE_File_Lock (ACE_HANDLE h,
   this->set_handle (h);
 }
 
-ACE_File_Lock::ACE_File_Lock (const ACE_TCHAR *name,
+ACE_File_Lock::ACE_File_Lock (ACE_TCHAR const *name,
                               int flags,
                               mode_t perms,
                               bool unlink_in_destructor)
@@ -56,7 +56,7 @@ ACE_File_Lock::ACE_File_Lock (const ACE_TCHAR *name,
 }
 
 int
-ACE_File_Lock::open (const ACE_TCHAR *name,
+ACE_File_Lock::open (ACE_TCHAR const *name,
                      int flags,
                      mode_t perms)
 {

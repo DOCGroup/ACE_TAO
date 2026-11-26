@@ -3,7 +3,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
-ACE_Dirent::open (const ACE_TCHAR *dirname)
+ACE_Dirent::open (ACE_TCHAR const *dirname)
 {
   // If the directory stream is already open, close it to prevent
   // possible resource leaks.
@@ -26,7 +26,7 @@ ACE_Dirent::open (const ACE_TCHAR *dirname)
 }
 
 ACE_INLINE
-ACE_Dirent::ACE_Dirent (const ACE_TCHAR *dirname)
+ACE_Dirent::ACE_Dirent (ACE_TCHAR const *dirname)
 {
   if (this->open (dirname) == -1)
     {

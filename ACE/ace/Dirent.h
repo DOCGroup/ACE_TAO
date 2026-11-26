@@ -32,11 +32,11 @@ public:
   ACE_Dirent () = default;
 
   /// Constructor calls @c opendir()
-  explicit ACE_Dirent (const ACE_TCHAR *dirname);
+  explicit ACE_Dirent (ACE_TCHAR const *dirname);
 
   /// Opens the directory named by filename and associates a directory
   /// stream with it.
-  int open (const ACE_TCHAR *filename);
+  int open (ACE_TCHAR const *filename);
 
   /// Destructor calls @c closedir().
   ~ACE_Dirent ();

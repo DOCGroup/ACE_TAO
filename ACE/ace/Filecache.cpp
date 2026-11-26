@@ -44,7 +44,7 @@ ACE_Filecache *ACE_Filecache::cvf_ {};
 
 ACE_Filecache_Handle::ACE_Filecache_Handle () = default;
 
-ACE_Filecache_Handle::ACE_Filecache_Handle (const ACE_TCHAR *filename,
+ACE_Filecache_Handle::ACE_Filecache_Handle (ACE_TCHAR const *filename,
                                             ACE_Filecache_Flag mapit)
 {
   // Fetch the file from the Virtual_Filesystem let the
@@ -55,7 +55,7 @@ ACE_Filecache_Handle::ACE_Filecache_Handle (const ACE_TCHAR *filename,
   this->file_ = ACE_Filecache::instance ()->fetch (filename, mapit);
 }
 
-ACE_Filecache_Handle::ACE_Filecache_Handle (const ACE_TCHAR *filename,
+ACE_Filecache_Handle::ACE_Filecache_Handle (ACE_TCHAR const *filename,
                                             int size,
                                             ACE_Filecache_Flag )
 {
@@ -129,13 +129,13 @@ ACE_Filecache_Handle::size () const
 // ACE_Filecache_Hash
 
 #define ACE_Filecache_Hash \
-        ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>
+        ACE_Hash_Map_Manager_Ex<ACE_TCHAR const *, ACE_Filecache_Object *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>
 #define ACE_Filecache_Hash_Entry \
-        ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>
+        ACE_Hash_Map_Entry<ACE_TCHAR const *, ACE_Filecache_Object *>
 
 template <>
 ACE_Filecache_Hash_Entry::ACE_Hash_Map_Entry (
-  const ACE_TCHAR *const &ext_id,
+  ACE_TCHAR const *const &ext_id,
   ACE_Filecache_Object *const &int_id,
   ACE_Filecache_Hash_Entry *next,
   ACE_Filecache_Hash_Entry *prev)
@@ -173,15 +173,15 @@ ACE_Filecache_Hash_Entry::~ACE_Hash_Map_Entry ()
 
 template <>
 unsigned long
-ACE_Filecache_Hash::hash (const ACE_TCHAR *const &ext_id)
+ACE_Filecache_Hash::hash (ACE_TCHAR const *const &ext_id)
 {
   return ACE::hash_pjw (ext_id);
 }
 
 template <>
 int
-ACE_Filecache_Hash::equal (const ACE_TCHAR *const &id1,
-                           const ACE_TCHAR *const &id2)
+ACE_Filecache_Hash::equal (ACE_TCHAR const *const &id1,
+                           ACE_TCHAR const *const &id2)
 {
   return ACE_OS::strcmp (id1, id2) == 0;
 }
@@ -226,7 +226,7 @@ ACE_Filecache::~ACE_Filecache () = default;
 ACE_ALLOC_HOOK_DEFINE(ACE_Filecache)
 
 ACE_Filecache_Object *
-ACE_Filecache::insert_i (const ACE_TCHAR *filename,
+ACE_Filecache::insert_i (ACE_TCHAR const *filename,
                          ACE_SYNCH_RW_MUTEX &filelock,
                          int mapit)
 {
@@ -255,7 +255,7 @@ ACE_Filecache::insert_i (const ACE_TCHAR *filename,
 }
 
 ACE_Filecache_Object *
-ACE_Filecache::remove_i (const ACE_TCHAR *filename)
+ACE_Filecache::remove_i (ACE_TCHAR const *filename)
 {
   ACE_Filecache_Object *handle {};
 
@@ -281,7 +281,7 @@ ACE_Filecache::remove_i (const ACE_TCHAR *filename)
 }
 
 ACE_Filecache_Object *
-ACE_Filecache::update_i (const ACE_TCHAR *filename,
+ACE_Filecache::update_i (ACE_TCHAR const *filename,
                          ACE_SYNCH_RW_MUTEX &filelock,
                          int mapit)
 {
@@ -294,7 +294,7 @@ ACE_Filecache::update_i (const ACE_TCHAR *filename,
 }
 
 int
-ACE_Filecache::find (const ACE_TCHAR *filename)
+ACE_Filecache::find (ACE_TCHAR const *filename)
 {
   if (filename == nullptr || ACE_OS::strlen (filename) > MAXPATHLEN)
     {
@@ -305,7 +305,7 @@ ACE_Filecache::find (const ACE_TCHAR *filename)
 }
 
 ACE_Filecache_Object *
-ACE_Filecache::remove (const ACE_TCHAR *filename)
+ACE_Filecache::remove (ACE_TCHAR const *filename)
 {
   if (filename == nullptr || ACE_OS::strlen (filename) > MAXPATHLEN)
     {
@@ -332,7 +332,7 @@ ACE_Filecache::remove (const ACE_TCHAR *filename)
 }
 
 ACE_Filecache_Object *
-ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
+ACE_Filecache::fetch (ACE_TCHAR const *filename, int mapit)
 {
   if (filename == nullptr || ACE_OS::strlen (filename) > MAXPATHLEN)
     {
@@ -389,7 +389,7 @@ ACE_Filecache::fetch (const ACE_TCHAR *filename, int mapit)
 }
 
 ACE_Filecache_Object *
-ACE_Filecache::create (const ACE_TCHAR *filename, int size)
+ACE_Filecache::create (ACE_TCHAR const *filename, int size)
 {
   if (filename == nullptr || ACE_OS::strlen (filename) > MAXPATHLEN)
     {
@@ -478,7 +478,7 @@ ACE_Filecache::finish (ACE_Filecache_Object *&file)
 
 ACE_Filecache_Object::ACE_Filecache_Object () = default;
 
-ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
+ACE_Filecache_Object::ACE_Filecache_Object (ACE_TCHAR const *filename,
                                             ACE_SYNCH_RW_MUTEX &lock,
                                             LPSECURITY_ATTRIBUTES sa,
                                             int mapit)
@@ -543,7 +543,7 @@ ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
    this->action_ = ACE_Filecache_Object::ACE_READING;
 }
 
-ACE_Filecache_Object::ACE_Filecache_Object (const ACE_TCHAR *filename,
+ACE_Filecache_Object::ACE_Filecache_Object (ACE_TCHAR const *filename,
                                             ACE_OFF_T size,
                                             ACE_SYNCH_RW_MUTEX &lock,
                                             LPSECURITY_ATTRIBUTES sa)
@@ -688,7 +688,7 @@ ACE_Filecache_Object::error () const
 }
 
 int
-ACE_Filecache_Object::error_i (int error_value, const ACE_TCHAR *s)
+ACE_Filecache_Object::error_i (int error_value, ACE_TCHAR const *s)
 {
   ACE_UNUSED_ARG (s);
   ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p.\n"), s));
@@ -696,7 +696,7 @@ ACE_Filecache_Object::error_i (int error_value, const ACE_TCHAR *s)
   return error_value;
 }
 
-const ACE_TCHAR *
+ACE_TCHAR const *
 ACE_Filecache_Object::filename () const
 {
   // The existence of the object means a read lock is being held.

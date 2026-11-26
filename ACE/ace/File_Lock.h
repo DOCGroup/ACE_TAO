@@ -48,14 +48,14 @@ public:
   /// Open the @a filename with @a flags and @a mode and set the result
   /// to @c handle_.  If you don't want the file unlinked in the
   /// destructor pass a false value for @a unlink_in_destructor.
-  ACE_File_Lock (const ACE_TCHAR *filename,
+  ACE_File_Lock (ACE_TCHAR const *filename,
                  int flags,
                  mode_t mode = 0,
                  bool unlink_in_destructor = true);
 
   /// Open the @a filename with @a flags and @a mode and set the result to
   /// @c handle_.
-  int open (const ACE_TCHAR *filename,
+  int open (ACE_TCHAR const *filename,
             int flags,
             mode_t mode = 0);
 

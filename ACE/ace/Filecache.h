@@ -85,7 +85,7 @@ class ACE_Export ACE_Filecache_Handle
 public:
   /// Query cache for file, and acquire it.  Assumes the file is being
   /// opened for reading.
-  explicit ACE_Filecache_Handle (const ACE_TCHAR *filename,
+  explicit ACE_Filecache_Handle (ACE_TCHAR const *filename,
                                  ACE_Filecache_Flag mapit = ACE_MAPIT);
 
   /**
@@ -93,7 +93,7 @@ public:
    * file is being opened for writing.  If SIZE is zero, assumes the
    * file is to be removed from the cache.
    */
-  ACE_Filecache_Handle (const ACE_TCHAR *filename,
+  ACE_Filecache_Handle (ACE_TCHAR const *filename,
                         int size,
                         ACE_Filecache_Flag mapit = ACE_MAPIT);
 
@@ -143,9 +143,9 @@ private:
   ACE_HANDLE handle_ {ACE_INVALID_HANDLE};
 };
 
-using ACE_Filecache_Hash = ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, ACE_Filecache_Object *, ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, ACE_Null_Mutex>;
+using ACE_Filecache_Hash = ACE_Hash_Map_Manager_Ex<ACE_TCHAR const *, ACE_Filecache_Object *, ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, ACE_Null_Mutex>;
 
-using ACE_Filecache_Hash_Entry = ACE_Hash_Map_Entry<const ACE_TCHAR *, ACE_Filecache_Object *>;
+using ACE_Filecache_Hash_Entry = ACE_Hash_Map_Entry<ACE_TCHAR const *, ACE_Filecache_Object *>;
 
 /**
  * @class ACE_Filecache
@@ -166,17 +166,17 @@ public:
 
   /// Returns 0 if the file associated with ``filename'' is in the cache,
   /// or -1 if not.
-  int find (const ACE_TCHAR *filename);
+  int find (ACE_TCHAR const *filename);
 
   /// Return the file associated with ``filename'' if it is in the cache,
   /// or create if not.
-  ACE_Filecache_Object *fetch (const ACE_TCHAR *filename, int mapit = 1);
+  ACE_Filecache_Object *fetch (ACE_TCHAR const *filename, int mapit = 1);
 
   /// Remove the file associated with ``filename'' from the cache.
-  ACE_Filecache_Object *remove (const ACE_TCHAR *filename);
+  ACE_Filecache_Object *remove (ACE_TCHAR const *filename);
 
   /// Create a new Filecache_Object, returns it.
-  ACE_Filecache_Object *create (const ACE_TCHAR *filename, int size);
+  ACE_Filecache_Object *create (ACE_TCHAR const *filename, int size);
 
   /// Release an acquired Filecache_Object, returns it again or NULL if it
   /// was deleted.
@@ -185,11 +185,11 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
 protected:
-  ACE_Filecache_Object *insert_i (const ACE_TCHAR *filename,
+  ACE_Filecache_Object *insert_i (ACE_TCHAR const *filename,
                                   ACE_SYNCH_RW_MUTEX &filelock,
                                   int mapit);
-  ACE_Filecache_Object *remove_i (const ACE_TCHAR *filename);
-  ACE_Filecache_Object *update_i (const ACE_TCHAR *filename,
+  ACE_Filecache_Object *remove_i (ACE_TCHAR const *filename);
+  ACE_Filecache_Object *update_i (ACE_TCHAR const *filename,
                                   ACE_SYNCH_RW_MUTEX &filelock,
                                   int mapit);
 
@@ -237,13 +237,13 @@ public:
   friend class ACE_Filecache;
 
   /// Creates a file for reading.
-  ACE_Filecache_Object (const ACE_TCHAR *filename,
+  ACE_Filecache_Object (ACE_TCHAR const *filename,
                         ACE_SYNCH_RW_MUTEX &lock,
                         LPSECURITY_ATTRIBUTES sa = LPSECURITY_ATTRIBUTES {},
                         int mapit = 1);
 
   /// Creates a file for writing.
-  ACE_Filecache_Object (const ACE_TCHAR *filename,
+  ACE_Filecache_Object (ACE_TCHAR const *filename,
                         ACE_OFF_T size,
                         ACE_SYNCH_RW_MUTEX &lock,
                         LPSECURITY_ATTRIBUTES sa = LPSECURITY_ATTRIBUTES {});
@@ -261,11 +261,11 @@ public:
   /// @{
   int error () const;
   int error (int error_value,
-             const ACE_TCHAR *s = ACE_TEXT ("ACE_Filecache_Object"));
+             ACE_TCHAR const *s = ACE_TEXT ("ACE_Filecache_Object"));
   /// @}
 
   /// filename_ accessor
-  const ACE_TCHAR *filename () const;
+  ACE_TCHAR const *filename () const;
 
   /// handle_ accessor.
   ACE_HANDLE handle () const;
@@ -288,7 +288,7 @@ protected:
 private:
   /// Internal error logging method, no locking.
   int error_i (int error_value,
-               const ACE_TCHAR *s = ACE_TEXT ("ACE_Filecache_Object"));
+               ACE_TCHAR const *s = ACE_TEXT ("ACE_Filecache_Object"));
 
 public:
   enum Creation_States
