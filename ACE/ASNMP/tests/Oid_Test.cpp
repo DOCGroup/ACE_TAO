@@ -84,6 +84,9 @@ static void OidTest()
   ACE_TEST_ASSERT(d2[2] == 3UL);
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) Oid:d2(\"1.2.3\") [%s]\n",
     d2.to_string()));
+  d2 = d2.to_string ();
+  ACE_TEST_ASSERT (d2.length () == 3);
+  ACE_TEST_ASSERT (d2[0] == 1UL && d2[1] == 2UL && d2[2] == 3UL);
 
   Oid move_source ("1.2.3");
   SmiUINT32 * const original_oid = move_source.oidval ()->ptr;

@@ -193,8 +193,7 @@ Oid &Oid::operator= (Oid &&oid) noexcept
 
 Oid& Oid::operator= (char const *dotted_oid_string)
 {
-  Oid const value (dotted_oid_string);
-  return *this = value;
+  return *this = Oid (dotted_oid_string);
 }
 
 /// Initialize this OID from another raw OID value.
