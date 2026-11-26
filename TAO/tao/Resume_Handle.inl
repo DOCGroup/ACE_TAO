@@ -27,7 +27,7 @@ TAO_Resume_Handle::set_flag (TAO_Handle_Resume_Flag fl)
 }
 
 ACE_INLINE TAO_Resume_Handle &
-TAO_Resume_Handle::operator= (const TAO_Resume_Handle &rhs)
+TAO_Resume_Handle::operator= (TAO_Resume_Handle const &rhs)
 {
   if (this != std::addressof (rhs))
     {

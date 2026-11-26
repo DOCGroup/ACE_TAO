@@ -49,7 +49,7 @@ public:
   void transport (TAO_Transport *t);
 
   /// Install the timeout handler
-  virtual long schedule_timer (CORBA::ULong , const ACE_Time_Value &) = 0;
+  virtual long schedule_timer (CORBA::ULong , ACE_Time_Value const &) = 0;
 
   /// A helper method that can be used by the subclasses
   /**

@@ -133,9 +133,9 @@ protected:
   TAO_Abstract_ServantBase () = default;
 
   /// Copy constructor, protected so no instances can be created.
-  TAO_Abstract_ServantBase (const TAO_Abstract_ServantBase &) = default;
+  TAO_Abstract_ServantBase (TAO_Abstract_ServantBase const &) = default;
 
-  TAO_Abstract_ServantBase &operator= (const TAO_Abstract_ServantBase &) = default;
+  TAO_Abstract_ServantBase &operator= (TAO_Abstract_ServantBase const &) = default;
 
   /// Dispatches a request to the object
   /**

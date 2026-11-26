@@ -606,7 +606,7 @@ TAO::Storable_FlatFileStream::operator << (TAO_OutputCDR const &cdr)
   unsigned int const length =
     ACE_Utils::truncate_cast<unsigned int> (cdr.total_length ());
   *this << length;
-  for (const ACE_Message_Block *i = cdr.begin (); i != nullptr; i = i->cont ())
+  for (ACE_Message_Block const *i = cdr.begin (); i != nullptr; i = i->cont ())
     {
       char const *bytes = i->rd_ptr ();
       size_t const len = i->length ();
