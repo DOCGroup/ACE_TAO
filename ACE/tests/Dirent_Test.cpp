@@ -201,6 +201,8 @@ dirent_test ()
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Move-assigned directory remains open\n")), -1);
     }
+  ACE_Dirent &same_dir = dir;
+  dir = std::move (same_dir);
 
   for (ACE_DIRENT *directory {};
        (directory = dir.read ()) != nullptr;
