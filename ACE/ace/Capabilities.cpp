@@ -11,8 +11,6 @@
 
 #include <memory>
 
-#define ACE_ESC ((ACE_TCHAR)0x1b)
-
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_Capabilities::ACE_Capabilities ()
@@ -35,7 +33,7 @@ ACE_Capabilities::parse (ACE_TCHAR const *buf, ACE_TString &cap)
           ++buf;
           if (*buf == ACE_TEXT ('E') || *buf == ACE_TEXT ('e'))
             {
-              cap += ACE_ESC;
+              cap += ACE_TEXT ('\033');
               ++buf;
               continue;
             }
@@ -73,7 +71,7 @@ ACE_Capabilities::parse (ACE_TCHAR const *buf, ACE_TString &cap)
                   oc = oc * 8 + (*buf++ - ACE_TEXT ('0'));
                 }
 
-              cap += (ACE_TCHAR) oc;
+              cap += static_cast<ACE_TCHAR> (oc);
               continue;
             }
         }
@@ -255,7 +253,7 @@ ACE_Capabilities::getline (FILE *fp, ACE_TString &line)
 
   while ((ch = ACE_OS::fgetc (fp)) != EOF && ch != ACE_TEXT ('\n'))
     {
-      line += (ACE_TCHAR) ch;
+      line += static_cast<ACE_TCHAR> (ch);
     }
 
   if (ch == EOF && line.length () == 0)

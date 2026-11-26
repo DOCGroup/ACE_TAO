@@ -12,7 +12,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Capabilities.h"
 
-static const ACE_TCHAR config[] = ACE_TEXT ("Capabilities_Test.cfg");
+static ACE_TCHAR const config[] = ACE_TEXT ("Capabilities_Test.cfg");
 
 static int
 load_config ()
@@ -55,6 +55,11 @@ load_config ()
               ACE_TEXT ("string = %s\n"),
               s.c_str ()));
 
+  if (caps.getval (ACE_TEXT ("escape"), s) != 0 || s != ACE_TEXT ("\033value"))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Incorrect escaped capability\n")), 1);
+    }
+
   if (caps.getent (config, ACE_TEXT ("Config")) != 0
       || caps.getval (ACE_TEXT ("integer"), n) != 0 || n != 2)
     {
@@ -73,14 +78,15 @@ run_main (int, ACE_TCHAR *[])
   // A config file is created within the test so that the test is
   // completely self contained.
 
-  const char file_contents[] =
+  char const file_contents[] =
     "Config|Esta entrada reservada para la configuracion,\n"
     "   bool,\n"
     "   bool,\n"
     "   integer#2,\n"
     "   integer#3,\n"
     "   string=000030,\n"
-    "   string=ignored,\n\n";
+    "   string=ignored,\n"
+    "   escape=\\Evalue,\n\n";
 
   ACE_HANDLE const fd = ACE_OS::open (config,
                                 O_RDWR | O_CREAT | O_TRUNC,
@@ -94,8 +100,8 @@ run_main (int, ACE_TCHAR *[])
                         -1);
     }
 
-  if (ACE_OS::write (fd, file_contents, sizeof(file_contents)) !=
-      (ssize_t) sizeof(file_contents))
+  if (ACE_OS::write (fd, file_contents, sizeof (file_contents)) !=
+      static_cast<ssize_t> (sizeof (file_contents)))
     {
       ACE_OS::unlink (config);
       ACE_OS::close (fd);
