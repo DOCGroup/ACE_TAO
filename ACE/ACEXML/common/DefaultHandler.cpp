@@ -5,7 +5,7 @@ ACEXML_DefaultHandler::ACEXML_DefaultHandler () = default;
 ACEXML_DefaultHandler::~ACEXML_DefaultHandler () = default;
 
 void
-ACEXML_DefaultHandler::characters (const ACEXML_Char *,
+ACEXML_DefaultHandler::characters (ACEXML_Char const *,
                                    size_t,
                                    size_t)
 {
@@ -17,20 +17,20 @@ ACEXML_DefaultHandler::endDocument ()
 }
 
 void
-ACEXML_DefaultHandler::endElement (const ACEXML_Char *,
-                                   const ACEXML_Char *,
-                                   const ACEXML_Char *)
+ACEXML_DefaultHandler::endElement (ACEXML_Char const *,
+                                   ACEXML_Char const *,
+                                   ACEXML_Char const *)
 {
 }
 
 void
-ACEXML_DefaultHandler::endPrefixMapping (const ACEXML_Char *)
+ACEXML_DefaultHandler::endPrefixMapping (ACEXML_Char const *)
 {
   // No-op.
 }
 
 void
-ACEXML_DefaultHandler::ignorableWhitespace (const ACEXML_Char *,
+ACEXML_DefaultHandler::ignorableWhitespace (ACEXML_Char const *,
                                             int,
                                             int)
 {
@@ -38,8 +38,8 @@ ACEXML_DefaultHandler::ignorableWhitespace (const ACEXML_Char *,
 }
 
 void
-ACEXML_DefaultHandler::processingInstruction (const ACEXML_Char *,
-                                              const ACEXML_Char *)
+ACEXML_DefaultHandler::processingInstruction (ACEXML_Char const *,
+                                              ACEXML_Char const *)
 {
   // No-op.
 }
@@ -51,7 +51,7 @@ ACEXML_DefaultHandler::setDocumentLocator (ACEXML_Locator * )
 }
 
 void
-ACEXML_DefaultHandler::skippedEntity (const ACEXML_Char *)
+ACEXML_DefaultHandler::skippedEntity (ACEXML_Char const *)
 {
   // No-op.
 }
@@ -63,17 +63,17 @@ ACEXML_DefaultHandler::startDocument ()
 }
 
 void
-ACEXML_DefaultHandler::startElement (const ACEXML_Char *,
-                                     const ACEXML_Char *,
-                                     const ACEXML_Char *,
+ACEXML_DefaultHandler::startElement (ACEXML_Char const *,
+                                     ACEXML_Char const *,
+                                     ACEXML_Char const *,
                                      ACEXML_Attributes *)
 {
   // No-op.
 }
 
 void
-ACEXML_DefaultHandler::startPrefixMapping (const ACEXML_Char *,
-                                           const ACEXML_Char *)
+ACEXML_DefaultHandler::startPrefixMapping (ACEXML_Char const *,
+                                           ACEXML_Char const *)
 {
   // No-op.
 }
@@ -81,18 +81,18 @@ ACEXML_DefaultHandler::startPrefixMapping (const ACEXML_Char *,
   // *** Methods inherited from ACEXML_DTDHandler.
 
 void
-ACEXML_DefaultHandler::notationDecl (const ACEXML_Char *,
-                                     const ACEXML_Char *,
-                                     const ACEXML_Char *)
+ACEXML_DefaultHandler::notationDecl (ACEXML_Char const *,
+                                     ACEXML_Char const *,
+                                     ACEXML_Char const *)
 {
   // No-op.
 }
 
 void
-ACEXML_DefaultHandler::unparsedEntityDecl (const ACEXML_Char *,
-                                           const ACEXML_Char *,
-                                           const ACEXML_Char *,
-                                           const ACEXML_Char *)
+ACEXML_DefaultHandler::unparsedEntityDecl (ACEXML_Char const *,
+                                           ACEXML_Char const *,
+                                           ACEXML_Char const *,
+                                           ACEXML_Char const *)
 {
   // No-op.
 }
@@ -100,8 +100,8 @@ ACEXML_DefaultHandler::unparsedEntityDecl (const ACEXML_Char *,
   // Methods inherited from ACEXML_EntityResolver.
 
 ACEXML_InputSource *
-ACEXML_DefaultHandler::resolveEntity (const ACEXML_Char *,
-                                      const ACEXML_Char * )
+ACEXML_DefaultHandler::resolveEntity (ACEXML_Char const *,
+                                      ACEXML_Char const * )
 {
   // No-op.
   return nullptr;

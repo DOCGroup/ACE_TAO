@@ -51,7 +51,7 @@ public:
   /// @{
 
   /// Receive notification of character data.
-  void characters (const ACEXML_Char *ch,
+  void characters (ACEXML_Char const *ch,
                    size_t start,
                    size_t length) override;
 
@@ -59,63 +59,63 @@ public:
   void endDocument () override;
 
   /// Receive notification of the end of an element.
-  void endElement (const ACEXML_Char *namespaceURI,
-                   const ACEXML_Char *localName,
-                   const ACEXML_Char *qName) override;
+  void endElement (ACEXML_Char const *namespaceURI,
+                   ACEXML_Char const *localName,
+                   ACEXML_Char const *qName) override;
 
   /// End the scope of a prefix-URI mapping.
-  void endPrefixMapping (const ACEXML_Char *prefix) override;
+  void endPrefixMapping (ACEXML_Char const *prefix) override;
 
   /// Receive notification of ignorable whitespace in element content.
-  void ignorableWhitespace (const ACEXML_Char *ch,
+  void ignorableWhitespace (ACEXML_Char const *ch,
                             int start,
                             int length) override;
 
   /// Receive notification of a processing instruction.
-  void processingInstruction (const ACEXML_Char *target,
-                              const ACEXML_Char *data) override;
+  void processingInstruction (ACEXML_Char const *target,
+                              ACEXML_Char const *data) override;
 
   /// Receive an object for locating the origin of SAX document events.
   void setDocumentLocator (ACEXML_Locator *locator) override;
 
   /// Receive notification of a skipped entity.
-  void skippedEntity (const ACEXML_Char *name) override;
+  void skippedEntity (ACEXML_Char const *name) override;
 
   /// Receive notification of the beginning of a document.
   void startDocument () override;
 
   /// Receive notification of the beginning of an element.
-  void startElement (const ACEXML_Char *namespaceURI,
-                     const ACEXML_Char *localName,
-                     const ACEXML_Char *qName,
+  void startElement (ACEXML_Char const *namespaceURI,
+                     ACEXML_Char const *localName,
+                     ACEXML_Char const *qName,
                      ACEXML_Attributes *atts) override;
 
   /// Begin the scope of a prefix-URI Namespace mapping.
-  void startPrefixMapping (const ACEXML_Char *prefix,
-                           const ACEXML_Char *uri) override;
+  void startPrefixMapping (ACEXML_Char const *prefix,
+                           ACEXML_Char const *uri) override;
 
   /// @}
   /// @name Methods inherited from ACEXML_DTDHandler.
   /// @{
 
   /// Receive notification of a notation declaration event.
-  void notationDecl (const ACEXML_Char *name,
-                     const ACEXML_Char *publicId,
-                     const ACEXML_Char *systemId) override;
+  void notationDecl (ACEXML_Char const *name,
+                     ACEXML_Char const *publicId,
+                     ACEXML_Char const *systemId) override;
 
   /// Receive notification of an unparsed entity declaration event.
-  void unparsedEntityDecl (const ACEXML_Char *name,
-                           const ACEXML_Char *publicId,
-                           const ACEXML_Char *systemId,
-                           const ACEXML_Char *notationName) override;
+  void unparsedEntityDecl (ACEXML_Char const *name,
+                           ACEXML_Char const *publicId,
+                           ACEXML_Char const *systemId,
+                           ACEXML_Char const *notationName) override;
 
   /// @}
   /// @name Methods inherited from ACEXML_EntityResolver.
   /// @{
 
   /// Allow the application to resolve external entities.
-  ACEXML_InputSource *resolveEntity (const ACEXML_Char *publicId,
-                                     const ACEXML_Char *systemId) override;
+  ACEXML_InputSource *resolveEntity (ACEXML_Char const *publicId,
+                                     ACEXML_Char const *systemId) override;
 
   /// @}
   /// @name Methods inherited from ACEXML_ErrorHandler.

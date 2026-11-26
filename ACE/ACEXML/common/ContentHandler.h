@@ -43,7 +43,7 @@ public:
   /**
    * Receive notification of character data.
    */
-  virtual void characters (const ACEXML_Char *ch,
+  virtual void characters (ACEXML_Char const *ch,
                            size_t start,
                            size_t length) = 0;
 
@@ -55,27 +55,27 @@ public:
   /**
    * Receive notification of the end of an element.
    */
-  virtual void endElement (const ACEXML_Char *namespaceURI,
-                           const ACEXML_Char *localName,
-                           const ACEXML_Char *qName) = 0;
+  virtual void endElement (ACEXML_Char const *namespaceURI,
+                           ACEXML_Char const *localName,
+                           ACEXML_Char const *qName) = 0;
 
   /**
    * End the scope of a prefix-URI mapping.
    */
-  virtual void endPrefixMapping (const ACEXML_Char *prefix) = 0;
+  virtual void endPrefixMapping (ACEXML_Char const *prefix) = 0;
 
   /**
    * Receive notification of ignorable whitespace in element content.
    */
-  virtual void ignorableWhitespace (const ACEXML_Char *ch,
+  virtual void ignorableWhitespace (ACEXML_Char const *ch,
                                     int start,
                                     int length) = 0;
 
   /**
    * Receive notification of a processing instruction.
    */
-  virtual void processingInstruction (const ACEXML_Char *target,
-                                      const ACEXML_Char *data) = 0;
+  virtual void processingInstruction (ACEXML_Char const *target,
+                                      ACEXML_Char const *data) = 0;
 
   /**
    * Receive an object for locating the origin of SAX document events.
@@ -85,7 +85,7 @@ public:
   /**
    * Receive notification of a skipped entity.
    */
-  virtual void skippedEntity (const ACEXML_Char *name) = 0;
+  virtual void skippedEntity (ACEXML_Char const *name) = 0;
 
   /**
    * Receive notification of the beginning of a document.
@@ -95,16 +95,16 @@ public:
   /**
    * Receive notification of the beginning of an element.
    */
-  virtual void startElement (const ACEXML_Char *namespaceURI,
-                             const ACEXML_Char *localName,
-                             const ACEXML_Char *qName,
+  virtual void startElement (ACEXML_Char const *namespaceURI,
+                             ACEXML_Char const *localName,
+                             ACEXML_Char const *qName,
                              ACEXML_Attributes *atts) = 0;
 
   /**
    * Begin the scope of a prefix-URI Namespace mapping.
    */
-  virtual void startPrefixMapping (const ACEXML_Char *prefix,
-                                   const ACEXML_Char *uri) = 0;
+  virtual void startPrefixMapping (ACEXML_Char const *prefix,
+                                   ACEXML_Char const *uri) = 0;
 };
 
 #include /**/ "ace/post.h"

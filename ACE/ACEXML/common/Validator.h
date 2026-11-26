@@ -44,9 +44,9 @@ public:
    *
    * @retval 0 if valid, -1 otherwise.
    */
-  virtual int nextElement (const ACEXML_Char *namespaceURI,
-                            const ACEXML_Char *localName,
-                            const ACEXML_Char *qName) = 0;
+  virtual int nextElement (ACEXML_Char const *namespaceURI,
+                            ACEXML_Char const *localName,
+                            ACEXML_Char const *qName) = 0;
 };
 
 #include /**/ "ace/post.h"

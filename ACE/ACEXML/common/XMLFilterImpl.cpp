@@ -24,7 +24,7 @@ ACEXML_XMLFilterImpl::parse (ACEXML_InputSource *input)
 }
 
 void
-ACEXML_XMLFilterImpl::parse (const ACEXML_Char *systemId)
+ACEXML_XMLFilterImpl::parse (ACEXML_Char const *systemId)
 {
   if (this->setupParser () < 0)
     {
@@ -35,7 +35,7 @@ ACEXML_XMLFilterImpl::parse (const ACEXML_Char *systemId)
 }
 
 int
-ACEXML_XMLFilterImpl::getFeature (const ACEXML_Char *name)
+ACEXML_XMLFilterImpl::getFeature (ACEXML_Char const *name)
 {
   if (this->parent_ != nullptr)
   {
@@ -46,7 +46,7 @@ ACEXML_XMLFilterImpl::getFeature (const ACEXML_Char *name)
 }
 
 void *
-ACEXML_XMLFilterImpl::getProperty (const ACEXML_Char *name)
+ACEXML_XMLFilterImpl::getProperty (ACEXML_Char const *name)
 {
   if (this->parent_ != nullptr)
   {
@@ -57,7 +57,7 @@ ACEXML_XMLFilterImpl::getProperty (const ACEXML_Char *name)
 }
 
 void
-ACEXML_XMLFilterImpl::setFeature (const ACEXML_Char *name, int boolean_value)
+ACEXML_XMLFilterImpl::setFeature (ACEXML_Char const *name, int boolean_value)
 {
   if (this->parent_ != nullptr)
     {
@@ -70,7 +70,7 @@ ACEXML_XMLFilterImpl::setFeature (const ACEXML_Char *name, int boolean_value)
 }
 
 void
-ACEXML_XMLFilterImpl::setProperty (const ACEXML_Char *name, void *value)
+ACEXML_XMLFilterImpl::setProperty (ACEXML_Char const *name, void *value)
 {
   if (this->parent_ != nullptr)
     {
@@ -95,7 +95,7 @@ ACEXML_XMLFilterImpl::setParent (ACEXML_XMLReader *parent)
 }
 
 void
-ACEXML_XMLFilterImpl::characters (const ACEXML_Char *ch,
+ACEXML_XMLFilterImpl::characters (ACEXML_Char const *ch,
                                   size_t start,
                                   size_t length)
 {
@@ -115,9 +115,9 @@ ACEXML_XMLFilterImpl::endDocument ()
 }
 
 void
-ACEXML_XMLFilterImpl::endElement (const ACEXML_Char *namespaceURI,
-                                  const ACEXML_Char *localName,
-                                  const ACEXML_Char *qName)
+ACEXML_XMLFilterImpl::endElement (ACEXML_Char const *namespaceURI,
+                                  ACEXML_Char const *localName,
+                                  ACEXML_Char const *qName)
 {
   if (this->contentHandler_ != nullptr)
     {
@@ -128,7 +128,7 @@ ACEXML_XMLFilterImpl::endElement (const ACEXML_Char *namespaceURI,
 }
 
 void
-ACEXML_XMLFilterImpl::endPrefixMapping (const ACEXML_Char *prefix)
+ACEXML_XMLFilterImpl::endPrefixMapping (ACEXML_Char const *prefix)
 {
   if (this->contentHandler_ != nullptr)
   {
@@ -137,7 +137,7 @@ ACEXML_XMLFilterImpl::endPrefixMapping (const ACEXML_Char *prefix)
 }
 
 void
-ACEXML_XMLFilterImpl::ignorableWhitespace (const ACEXML_Char *ch,
+ACEXML_XMLFilterImpl::ignorableWhitespace (ACEXML_Char const *ch,
                                            int start,
                                            int length)
 {
@@ -150,8 +150,8 @@ ACEXML_XMLFilterImpl::ignorableWhitespace (const ACEXML_Char *ch,
 }
 
 void
-ACEXML_XMLFilterImpl::processingInstruction (const ACEXML_Char *target,
-                                             const ACEXML_Char *data)
+ACEXML_XMLFilterImpl::processingInstruction (ACEXML_Char const *target,
+                                             ACEXML_Char const *data)
 {
   if (this->contentHandler_ != nullptr)
     {
@@ -170,7 +170,7 @@ ACEXML_XMLFilterImpl::setDocumentLocator (ACEXML_Locator *locator)
 }
 
 void
-ACEXML_XMLFilterImpl::skippedEntity (const ACEXML_Char *name)
+ACEXML_XMLFilterImpl::skippedEntity (ACEXML_Char const *name)
 {
   if (this->contentHandler_ != nullptr)
   {
@@ -188,9 +188,9 @@ ACEXML_XMLFilterImpl::startDocument ()
 }
 
 void
-ACEXML_XMLFilterImpl::startElement (const ACEXML_Char *namespaceURI,
-                                    const ACEXML_Char *localName,
-                                    const ACEXML_Char *qName,
+ACEXML_XMLFilterImpl::startElement (ACEXML_Char const *namespaceURI,
+                                    ACEXML_Char const *localName,
+                                    ACEXML_Char const *qName,
                                     ACEXML_Attributes *atts)
 {
   if (this->contentHandler_ != nullptr)
@@ -203,8 +203,8 @@ ACEXML_XMLFilterImpl::startElement (const ACEXML_Char *namespaceURI,
 }
 
 void
-ACEXML_XMLFilterImpl::startPrefixMapping (const ACEXML_Char *prefix,
-                                          const ACEXML_Char *uri)
+ACEXML_XMLFilterImpl::startPrefixMapping (ACEXML_Char const *prefix,
+                                          ACEXML_Char const *uri)
 {
   if (this->contentHandler_ != nullptr)
     {
@@ -214,9 +214,9 @@ ACEXML_XMLFilterImpl::startPrefixMapping (const ACEXML_Char *prefix,
 }
 
 void
-ACEXML_XMLFilterImpl::notationDecl (const ACEXML_Char *name,
-                                    const ACEXML_Char *publicId,
-                                    const ACEXML_Char *systemId)
+ACEXML_XMLFilterImpl::notationDecl (ACEXML_Char const *name,
+                                    ACEXML_Char const *publicId,
+                                    ACEXML_Char const *systemId)
 {
   if (this->dtdHandler_ != nullptr)
     {
@@ -227,10 +227,10 @@ ACEXML_XMLFilterImpl::notationDecl (const ACEXML_Char *name,
 }
 
 void
-ACEXML_XMLFilterImpl::unparsedEntityDecl (const ACEXML_Char *name,
-                                          const ACEXML_Char *publicId,
-                                          const ACEXML_Char *systemId,
-                                          const ACEXML_Char *notationName)
+ACEXML_XMLFilterImpl::unparsedEntityDecl (ACEXML_Char const *name,
+                                          ACEXML_Char const *publicId,
+                                          ACEXML_Char const *systemId,
+                                          ACEXML_Char const *notationName)
 {
   if (this->dtdHandler_ != nullptr)
     {
@@ -242,8 +242,8 @@ ACEXML_XMLFilterImpl::unparsedEntityDecl (const ACEXML_Char *name,
 }
 
 ACEXML_InputSource *
-ACEXML_XMLFilterImpl::resolveEntity (const ACEXML_Char *publicId,
-                                     const ACEXML_Char *systemId)
+ACEXML_XMLFilterImpl::resolveEntity (ACEXML_Char const *publicId,
+                                     ACEXML_Char const *systemId)
 {
   if (this->entityResolver_ != nullptr)
     {

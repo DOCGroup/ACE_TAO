@@ -49,22 +49,22 @@ public:
   ACEXML_XMLFilterImpl &operator= (ACEXML_XMLFilterImpl &&) = delete;
 
   /// Look up the value of a feature.
-  int getFeature (const ACEXML_Char *name) override;
+  int getFeature (ACEXML_Char const *name) override;
 
   /// Look up the value of a property.
-  void * getProperty (const ACEXML_Char *name) override;
+  void * getProperty (ACEXML_Char const *name) override;
 
   /// Parse an XML document.
   void parse (ACEXML_InputSource *input) override;
 
   /// Parse an XML document from a system identifier (URI).
-  void parse (const ACEXML_Char *systemId) override;
+  void parse (ACEXML_Char const *systemId) override;
 
   /// Set the state of a feature.
-  void setFeature (const ACEXML_Char *name, int boolean_value) override;
+  void setFeature (ACEXML_Char const *name, int boolean_value) override;
 
   /// Set the value of a property.
-  void setProperty (const ACEXML_Char *name, void *value) override;
+  void setProperty (ACEXML_Char const *name, void *value) override;
 
   /// Get the parent reader.
   ACEXML_XMLReader *getParent () const override;
@@ -97,7 +97,7 @@ public:
   void setErrorHandler (ACEXML_ErrorHandler *handler) override;
 
   /// Receive notification of character data.
-  void characters (const ACEXML_Char *ch,
+  void characters (ACEXML_Char const *ch,
                    size_t start,
                    size_t length) override;
 
@@ -105,55 +105,55 @@ public:
   void endDocument () override;
 
   /// Receive notification of the end of an element.
-  void endElement (const ACEXML_Char *namespaceURI,
-                   const ACEXML_Char *localName,
-                   const ACEXML_Char *qName) override;
+  void endElement (ACEXML_Char const *namespaceURI,
+                   ACEXML_Char const *localName,
+                   ACEXML_Char const *qName) override;
 
   /// End the scope of a prefix-URI mapping.
-  void endPrefixMapping (const ACEXML_Char *prefix) override;
+  void endPrefixMapping (ACEXML_Char const *prefix) override;
 
   /// Receive notification of ignorable whitespace in element content.
-  void ignorableWhitespace (const ACEXML_Char *ch,
+  void ignorableWhitespace (ACEXML_Char const *ch,
                             int start,
                             int length) override;
 
   /// Receive notification of a processing instruction.
-  void processingInstruction (const ACEXML_Char *target,
-                              const ACEXML_Char *data) override;
+  void processingInstruction (ACEXML_Char const *target,
+                              ACEXML_Char const *data) override;
 
   /// Receive an object for locating the origin of SAX document events.
   void setDocumentLocator (ACEXML_Locator *locator) override;
 
   /// Receive notification of a skipped entity.
-  void skippedEntity (const ACEXML_Char *name) override;
+  void skippedEntity (ACEXML_Char const *name) override;
 
   /// Receive notification of the beginning of a document.
   void startDocument () override;
 
   /// Receive notification of the beginning of an element.
-  void startElement (const ACEXML_Char *namespaceURI,
-                     const ACEXML_Char *localName,
-                     const ACEXML_Char *qName,
+  void startElement (ACEXML_Char const *namespaceURI,
+                     ACEXML_Char const *localName,
+                     ACEXML_Char const *qName,
                      ACEXML_Attributes *atts) override;
 
   /// Begin the scope of a prefix-URI Namespace mapping.
-  void startPrefixMapping (const ACEXML_Char *prefix,
-                           const ACEXML_Char *uri) override;
+  void startPrefixMapping (ACEXML_Char const *prefix,
+                           ACEXML_Char const *uri) override;
 
   /// Receive notification of a notation declaration event.
-  void notationDecl (const ACEXML_Char *name,
-                     const ACEXML_Char *publicId,
-                     const ACEXML_Char *systemId) override;
+  void notationDecl (ACEXML_Char const *name,
+                     ACEXML_Char const *publicId,
+                     ACEXML_Char const *systemId) override;
 
   /// Receive notification of an unparsed entity declaration event.
-  void unparsedEntityDecl (const ACEXML_Char *name,
-                           const ACEXML_Char *publicId,
-                           const ACEXML_Char *systemId,
-                           const ACEXML_Char *notationName) override;
+  void unparsedEntityDecl (ACEXML_Char const *name,
+                           ACEXML_Char const *publicId,
+                           ACEXML_Char const *systemId,
+                           ACEXML_Char const *notationName) override;
 
   /// Allow the application to resolve external entities.
-  ACEXML_InputSource *resolveEntity (const ACEXML_Char *publicId,
-                                     const ACEXML_Char *systemId) override;
+  ACEXML_InputSource *resolveEntity (ACEXML_Char const *publicId,
+                                     ACEXML_Char const *systemId) override;
 
   /// Receive notification of a recoverable error.
   void error (ACEXML_SAXParseException &exception) override;

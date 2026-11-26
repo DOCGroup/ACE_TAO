@@ -53,12 +53,12 @@ public:
   /*
    * Return the public identifier for the current document event.
    */
-  virtual const ACEXML_Char *getPublicId () const = 0;
+  virtual ACEXML_Char const *getPublicId () const = 0;
 
   /*
    * Return the system identifier for the current document event.
    */
-  virtual const ACEXML_Char *getSystemId () const = 0;
+  virtual ACEXML_Char const *getSystemId () const = 0;
 };
 
 #include /**/ "ace/post.h"

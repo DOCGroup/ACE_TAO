@@ -66,12 +66,12 @@ public:
   /*
    * Get the character encoding for a byte stream or URI.
    */
-  virtual const ACEXML_Char *getEncoding ()  = 0;
+  virtual ACEXML_Char const *getEncoding ()  = 0;
 
   /*
    * Get the systemId for the underlying CharStream
    */
-  virtual const ACEXML_Char* getSystemId () = 0;
+  virtual ACEXML_Char const * getSystemId () = 0;
 };
 
 #include /**/ "ace/post.h"

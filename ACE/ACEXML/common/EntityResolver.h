@@ -42,8 +42,8 @@ public:
   /**
    * Allow the application to resolve external entities.
    */
-  virtual ACEXML_InputSource *resolveEntity (const ACEXML_Char *publicId,
-                                             const ACEXML_Char *systemId) = 0;
+  virtual ACEXML_InputSource *resolveEntity (ACEXML_Char const *publicId,
+                                             ACEXML_Char const *systemId) = 0;
 };
 
 #include /**/ "ace/post.h"

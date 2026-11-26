@@ -49,17 +49,17 @@ public:
   /**
    * Receive notification of a notation declaration event.
    */
-  virtual void notationDecl (const ACEXML_Char *name,
-                             const ACEXML_Char *publicId,
-                             const ACEXML_Char *systemId) = 0;
+  virtual void notationDecl (ACEXML_Char const *name,
+                             ACEXML_Char const *publicId,
+                             ACEXML_Char const *systemId) = 0;
 
   /**
    * Receive notification of an unparsed entity declaration event.
    */
-  virtual void unparsedEntityDecl (const ACEXML_Char *name,
-                                   const ACEXML_Char *publicId,
-                                   const ACEXML_Char *systemId,
-                                   const ACEXML_Char *notationName) = 0;
+  virtual void unparsedEntityDecl (ACEXML_Char const *name,
+                                   ACEXML_Char const *publicId,
+                                   ACEXML_Char const *systemId,
+                                   ACEXML_Char const *notationName) = 0;
 };
 
 #include /**/ "ace/post.h"

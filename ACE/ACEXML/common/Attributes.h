@@ -56,13 +56,13 @@ public:
   /**
    * Look up the index of an attribute by XML 1.0 qualified name.
    */
-  virtual int getIndex (const ACEXML_Char *qName) = 0;
+  virtual int getIndex (ACEXML_Char const *qName) = 0;
 
   /**
    * Look up the index of an attribute by Namespace name.
    */
-  virtual int getIndex (const ACEXML_Char *uri,
-                        const ACEXML_Char *localPart) = 0;
+  virtual int getIndex (ACEXML_Char const *uri,
+                        ACEXML_Char const *localPart) = 0;
 
   /**
    * Return the number of attributes in the list.
@@ -72,49 +72,49 @@ public:
   /**
    * Look up an attribute's local name by index.
    */
-  virtual const ACEXML_Char *getLocalName (size_t index) = 0;
+  virtual ACEXML_Char const *getLocalName (size_t index) = 0;
 
   /**
    * Look up an attribute's XML 1.0 qualified name by index.
    */
-  virtual const ACEXML_Char *getQName (size_t index) = 0;
+  virtual ACEXML_Char const *getQName (size_t index) = 0;
 
   /**
    * Look up an attribute's type by index.
    */
-  virtual const ACEXML_Char *getType (size_t index) = 0;
+  virtual ACEXML_Char const *getType (size_t index) = 0;
 
   /**
    * Look up an attribute's type by XML 1.0 qualified name.
    */
-  virtual const ACEXML_Char *getType (const ACEXML_Char *qName) = 0;
+  virtual ACEXML_Char const *getType (ACEXML_Char const *qName) = 0;
 
   /**
    * Look up an attribute's type by Namespace name.
    */
-  virtual const ACEXML_Char *getType (const ACEXML_Char *uri,
-                                      const ACEXML_Char *localPart) = 0;
+  virtual ACEXML_Char const *getType (ACEXML_Char const *uri,
+                                      ACEXML_Char const *localPart) = 0;
 
   /**
    * Look up an attribute's Namespace URI by index.
    */
-  virtual const ACEXML_Char *getURI (size_t index) = 0;
+  virtual ACEXML_Char const *getURI (size_t index) = 0;
 
   /**
    * Look up an attribute's value by index.
    */
-  virtual const ACEXML_Char *getValue (size_t index) = 0;
+  virtual ACEXML_Char const *getValue (size_t index) = 0;
 
   /**
    * Look up an attribute's value by XML 1.0 qualified name.
    */
-  virtual const ACEXML_Char *getValue (const ACEXML_Char *qName) = 0;
+  virtual ACEXML_Char const *getValue (ACEXML_Char const *qName) = 0;
 
   /**
    * Look up an attribute's value by Namespace name.
    */
-  virtual const ACEXML_Char *getValue (const ACEXML_Char *uri,
-                                       const ACEXML_Char *localPart) = 0;
+  virtual ACEXML_Char const *getValue (ACEXML_Char const *uri,
+                                       ACEXML_Char const *localPart) = 0;
 };
 
 #include /**/ "ace/post.h"
