@@ -49,13 +49,13 @@ TAO_InterfaceDef_i::destroy_i ()
   // destroy the attribute's anonymous type, if any.
 
   TAO_IFR_Generic_Utils<TAO_AttributeDef_i>::destroy_special (
-      "attrs",
+      ACE_TEXT ("attrs"),
       this->repo_,
       this->section_key_
     );
 
   TAO_IFR_Generic_Utils<TAO_OperationDef_i>::destroy_special (
-      "ops",
+      ACE_TEXT ("ops"),
       this->repo_,
       this->section_key_
     );
@@ -90,21 +90,21 @@ TAO_InterfaceDef_i::describe_i ()
   ACE_TString holder;
 
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT ("name"),
                                             holder);
-  ifd.name = holder.fast_rep ();
+  ifd.name = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT ("id"),
                                             holder);
-  ifd.id = holder.fast_rep ();
+  ifd.id = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "container_id",
+                                            ACE_TEXT ("container_id"),
                                             holder);
-  ifd.defined_in = holder.fast_rep ();
+  ifd.defined_in = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "version",
+                                            ACE_TEXT ("version"),
                                             holder);
-  ifd.version = holder.fast_rep ();
+  ifd.version = static_cast<char const *> (ACE_TEXT_ALWAYS_CHAR (holder.fast_rep ()));
 
   CORBA::ULong i {};
   CORBA::InterfaceDefSeq_var bases =
@@ -121,7 +121,7 @@ TAO_InterfaceDef_i::describe_i ()
       char * const base_path = TAO_IFR_Service_Utils::reference_to_path (bases[i]);
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                           base_path,
+                                           ACE_TEXT_CHAR_TO_TCHAR (base_path),
                                            base_key,
                                            false);
 
@@ -151,17 +151,17 @@ TAO_InterfaceDef_i::type_i ()
 {
   ACE_TString id;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "id",
+                                            ACE_TEXT ("id"),
                                             id);
 
   ACE_TString name;
   this->repo_->config ()->get_string_value (this->section_key_,
-                                            "name",
+                                            ACE_TEXT ("name"),
                                             name);
 
   return this->repo_->tc_factory ()->create_interface_tc (
-                                         id.c_str (),
-                                         name.c_str ()
+                                         ACE_TEXT_ALWAYS_CHAR (id.c_str ()),
+                                         ACE_TEXT_ALWAYS_CHAR (name.c_str ())
                                        );
 }
 
