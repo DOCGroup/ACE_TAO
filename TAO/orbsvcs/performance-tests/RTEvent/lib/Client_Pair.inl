@@ -5,9 +5,7 @@
  */
 
 ACE_INLINE
-Client_Pair::Client_Pair ()
-{
-}
+Client_Pair::Client_Pair () = default;
 
 ACE_INLINE Supplier *
 Client_Pair::supplier () const

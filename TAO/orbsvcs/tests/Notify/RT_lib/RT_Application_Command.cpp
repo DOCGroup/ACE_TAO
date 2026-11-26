@@ -3,9 +3,7 @@
 #include "../lib/LookupManager.h"
 #include "RT_Priority_Mapping.h"
 
-TAO_Notify_Tests_RT_Application_Command::TAO_Notify_Tests_RT_Application_Command ()
-{
-}
+TAO_Notify_Tests_RT_Application_Command::TAO_Notify_Tests_RT_Application_Command () = default;
 
 void
 TAO_Notify_Tests_RT_Application_Command::handle_init ()
