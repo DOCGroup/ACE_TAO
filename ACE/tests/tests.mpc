@@ -907,6 +907,7 @@ project(Config Test) : acetest {
   Documentation_Files {
     Config_Test.ini
     Config_Test_Import_1.ini
+    Config_Test_Whitespace.ini
   }
 }
 

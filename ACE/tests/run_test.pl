@@ -462,6 +462,10 @@ my $conf_ini_file = "Config_Test_Import_1.ini";
 if ($target->PutFile ($conf_ini_file) == -1) {
     print STDERR "WARNING: Cannot send $conf_ini_file to target\n";
 }
+$conf_ini_file = "Config_Test_Whitespace.ini";
+if ($target->PutFile ($conf_ini_file) == -1) {
+    print STDERR "WARNING: Cannot send $conf_ini_file to target\n";
+}
 # Service_Config_Stream_Test needs service config file.
 $svc_conf_file = "Service_Config_Stream_Test.conf";
 if ($target->PutFile ($svc_conf_file) == -1) {
