@@ -220,7 +220,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   My_Handler handler;
 
   // Create a few MyResult objects and post them to Proactor.
-  const size_t NrCompletions (10);
+  size_t const NrCompletions (10);
   My_Result *result_objects [NrCompletions];
 
   Completions_To_Go = NrCompletions;

@@ -23,8 +23,8 @@ public:
   int init (int argc, ACE_TCHAR *argv[]) override;
 
   /// Timeout hook.
-  int handle_timeout (const ACE_Time_Value &,
-                      const void *) override;
+  int handle_timeout (ACE_Time_Value const &,
+                      void const *) override;
 
   /// Close hook.
   int handle_close (ACE_HANDLE, ACE_Reactor_Mask) override;

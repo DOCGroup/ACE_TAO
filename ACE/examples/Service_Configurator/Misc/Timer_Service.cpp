@@ -74,8 +74,8 @@ Timer_Service_1::init (int argc, ACE_TCHAR *argv[])
 }
 
 int
-Timer_Service_1::handle_timeout (const ACE_Time_Value &tv,
-                                 const void *)
+Timer_Service_1::handle_timeout (ACE_Time_Value const &tv,
+                                 void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("(%x) in %s::handle_timeout sec = %:, usec = %q")
