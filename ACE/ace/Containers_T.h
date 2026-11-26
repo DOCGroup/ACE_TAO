@@ -207,6 +207,7 @@ class ACE_Fixed_Stack
 public:
   /// @name Initialization, assignment, and termination methods
   /// @{
+
   /// Initialize a new stack so that it is empty.
   /**
    * Initialize an empty stack.
@@ -379,6 +380,7 @@ public:
 
   /// @name Initialization, assignment, and termination methods
   /// @{
+
   /// Initialize a new stack so that it is empty.  Use user defined
   /// allocation strategy if specified.
   /**
@@ -1149,6 +1151,7 @@ public:
 
   /// @name Iteration methods
   /// @{
+
   /// Move forward by one element in the list.  Returns 0 when all the
   /// items in the list have been seen, else 1.
   int advance ();
@@ -1211,6 +1214,7 @@ public:
 
   /// @name Iteration methods
   /// @{
+
   /// Move forward by one element in the list.  Returns 0 when all the
   /// items in the list have been seen, else 1.
   int advance ();
