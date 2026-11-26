@@ -1,3 +1,5 @@
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE int
@@ -17,10 +19,10 @@ ACE_Condition<ACE_Thread_Mutex>::remove ()
     {
       this->removed_ = true;
 
-      while ((result = ACE_OS::cond_destroy (&this->cond_)) == -1
+      while ((result = ACE_OS::cond_destroy (std::addressof (this->cond_))) == -1
              && errno == EBUSY)
         {
-          ACE_OS::cond_broadcast (&this->cond_);
+          ACE_OS::cond_broadcast (std::addressof (this->cond_));
           ACE_OS::thr_yield ();
         }
     }

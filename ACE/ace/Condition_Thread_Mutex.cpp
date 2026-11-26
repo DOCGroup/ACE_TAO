@@ -14,6 +14,8 @@
 
 #include "ace/Log_Category.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Condition<ACE_Thread_Mutex>)
@@ -41,7 +43,7 @@ ACE_Condition<ACE_Thread_Mutex>::ACE_Condition (ACE_Thread_Mutex &m,
   : mutex_ (m)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>");
-  if (ACE_OS::cond_init (&this->cond_,
+  if (ACE_OS::cond_init (std::addressof (this->cond_),
                          (short) USYNC_THREAD,
                          name,
                          arg) != 0)
@@ -59,7 +61,7 @@ ACE_Condition<ACE_Thread_Mutex>::ACE_Condition (ACE_Thread_Mutex &m,
   : mutex_ (m)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::ACE_Condition<ACE_Thread_Mutex>");
-  if (ACE_OS::cond_init (&this->cond_,
+  if (ACE_OS::cond_init (std::addressof (this->cond_),
                          const_cast<ACE_condattr_t &> (attributes.attributes ()),
                          name, arg) != 0)
     {
@@ -82,7 +84,7 @@ int
 ACE_Condition<ACE_Thread_Mutex>::wait ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::wait");
-  return ACE_OS::cond_wait (&this->cond_, &this->mutex_.lock ());
+  return ACE_OS::cond_wait (std::addressof (this->cond_), std::addressof (this->mutex_.lock ()));
 }
 
 int
@@ -90,8 +92,8 @@ ACE_Condition<ACE_Thread_Mutex>::wait (ACE_Thread_Mutex &mutex,
                                   ACE_Time_Value const *abstime)
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::wait");
-  return ACE_OS::cond_timedwait (&this->cond_,
-                                 &mutex.lock (),
+  return ACE_OS::cond_timedwait (std::addressof (this->cond_),
+                                 std::addressof (mutex.lock ()),
                                  const_cast <ACE_Time_Value *> (abstime));
 }
 
@@ -106,14 +108,14 @@ int
 ACE_Condition<ACE_Thread_Mutex>::signal ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::signal");
-  return ACE_OS::cond_signal (&this->cond_);
+  return ACE_OS::cond_signal (std::addressof (this->cond_));
 }
 
 int
 ACE_Condition<ACE_Thread_Mutex>::broadcast ()
 {
 // ACE_TRACE ("ACE_Condition<ACE_Thread_Mutex>::broadcast");
-  return ACE_OS::cond_broadcast (&this->cond_);
+  return ACE_OS::cond_broadcast (std::addressof (this->cond_));
 }
 
 ACE_END_VERSIONED_NAMESPACE_DECL

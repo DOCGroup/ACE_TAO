@@ -10,12 +10,14 @@
 
 #include "ace/Log_Category.h"
 
+#include <memory>
+
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::remove ()
 {
-  return ACE_OS::cond_destroy (&this->cond_);
+  return ACE_OS::cond_destroy (std::addressof (this->cond_));
 }
 
 void
@@ -41,7 +43,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::~ACE_Condition ()
 ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_Mutex &m)
   : mutex_ (m)
 {
-  if (ACE_OS::cond_init (&this->cond_) != 0)
+  if (ACE_OS::cond_init (std::addressof (this->cond_)) != 0)
     {
       ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
                      ACE_TEXT ("ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition<ACE_Recursive_Thread_Mutex>")));
@@ -52,7 +54,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::ACE_Condition (ACE_Recursive_Thread_M
                                                           ACE_Condition_Attributes const &attributes)
   : mutex_ (m)
 {
-  if (ACE_OS::cond_init (&this->cond_,
+  if (ACE_OS::cond_init (std::addressof (this->cond_),
                          const_cast<ACE_condattr_t &> (attributes.attributes ())) != 0)
     {
       ACELIB_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"),
@@ -73,7 +75,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
   ACE_recursive_mutex_state mutex_state_holder;
   ACE_recursive_thread_mutex_t &recursive_mutex = mutex.lock ();
 
-  if (ACE_OS::recursive_mutex_cond_unlock (&recursive_mutex,
+  if (ACE_OS::recursive_mutex_cond_unlock (std::addressof (recursive_mutex),
                                            mutex_state_holder) == -1)
   {
     return -1;
@@ -89,10 +91,10 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
   // released. At cond_wait below, the mutex will be released.
   // On return, it will be reacquired.
   int const result = abstime == nullptr
-    ? ACE_OS::cond_wait (&this->cond_,
-                         &mutex.get_nesting_mutex ())
-    : ACE_OS::cond_timedwait (&this->cond_,
-                              &mutex.get_nesting_mutex (),
+    ? ACE_OS::cond_wait (std::addressof (this->cond_),
+                         std::addressof (mutex.get_nesting_mutex ()))
+    : ACE_OS::cond_timedwait (std::addressof (this->cond_),
+                              std::addressof (mutex.get_nesting_mutex ()),
                               const_cast <ACE_Time_Value *> (abstime));
   // We are holding the mutex, whether the wait succeeded or failed.
   // Stash errno (in case it failed) and then we need to reset the
@@ -103,7 +105,7 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
   // care of that.
   {
     ACE_Errno_Guard error (errno);
-    ACE_OS::recursive_mutex_cond_relock (&recursive_mutex,
+    ACE_OS::recursive_mutex_cond_relock (std::addressof (recursive_mutex),
                                          mutex_state_holder);
   }
 
@@ -113,13 +115,13 @@ ACE_Condition<ACE_Recursive_Thread_Mutex>::wait (ACE_Recursive_Thread_Mutex &mut
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::signal ()
 {
-  return ACE_OS::cond_signal (&this->cond_);
+  return ACE_OS::cond_signal (std::addressof (this->cond_));
 }
 
 int
 ACE_Condition<ACE_Recursive_Thread_Mutex>::broadcast ()
 {
-  return ACE_OS::cond_broadcast (&this->cond_);
+  return ACE_OS::cond_broadcast (std::addressof (this->cond_));
 }
 
 ACE_Recursive_Thread_Mutex &
