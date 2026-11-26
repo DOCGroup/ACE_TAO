@@ -135,7 +135,7 @@ namespace TAO
   }
 
   template <typename stream, typename T_array, typename T_slice, typename T_tag>
-  bool marshal_sequence(stream & strm, const TAO::unbounded_array_sequence<T_array, T_slice, T_tag> & source) {
+  bool marshal_sequence(stream & strm, TAO::unbounded_array_sequence<T_array, T_slice, T_tag> const &source) {
     using fixed_array = TAO_FixedArray_Var_T<T_array, T_slice, T_tag>;
     using forany = TAO_Array_Forany_T<T_array, T_slice, T_tag>;
     using array_traits = TAO::Array_Traits<forany>;

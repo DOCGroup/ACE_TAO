@@ -133,7 +133,7 @@ namespace TAO
   }
 
   template <typename stream, typename T_array, typename T_slice, typename T_tag, CORBA::ULong MAX>
-  bool marshal_sequence(stream & strm, const TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> & source) {
+  bool marshal_sequence(stream & strm, TAO::bounded_array_sequence<T_array, T_slice, T_tag, MAX> const &source) {
     using forany = TAO_Array_Forany_T<T_array, T_slice, T_tag>;
     using fixed_array = TAO_FixedArray_Var_T<T_array, T_slice, T_tag>;
     using array_traits = TAO::Array_Traits<forany>;
