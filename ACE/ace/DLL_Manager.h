@@ -56,7 +56,7 @@ public:
   ~ACE_DLL_Handle ();
 
   /// Returns the name of the shared library (without prefixes or suffixes).
-  const ACE_TCHAR *dll_name () const;
+  ACE_TCHAR const *dll_name () const;
 
   /**
    * This method opens and dynamically links a library/DLL.
@@ -100,7 +100,7 @@ public:
    * @retval -1 On failure
    * @retval 0 On success.
    */
-  int open (const ACE_TCHAR *dll_name,
+  int open (ACE_TCHAR const *dll_name,
             int open_mode,
             ACE_SHLIB_HANDLE handle,
             ERROR_STACK *errors = nullptr);
@@ -118,10 +118,10 @@ public:
   /// @a ignore_errors flag to suppress logging errors if @a symbol_name isn't
   /// found.  This is nice if you just want to probe a dll to see what's
   /// available, since missing functions in that case aren't really errors.
-  void *symbol (const ACE_TCHAR *symbol_name, bool ignore_errors = false);
+  void *symbol (ACE_TCHAR const *symbol_name, bool ignore_errors = false);
 
   /// Resolves and returns any error encountered.
-  void *symbol (const ACE_TCHAR *symbol_name, bool ignore_errors,
+  void *symbol (ACE_TCHAR const *symbol_name, bool ignore_errors,
                 ACE_TString &error);
 
   /**
@@ -142,7 +142,7 @@ private:
   /// Builds array of DLL names to try to dlopen, based on platform
   /// and configured DLL prefixes/suffixes.
   /// Returns the array of names to try in @a try_names.
-  void get_dll_names (const ACE_TCHAR *dll_name,
+  void get_dll_names (ACE_TCHAR const *dll_name,
                       ACE_Array<ACE_TString> &try_names);
 
   /**
@@ -162,7 +162,7 @@ private:
    * @retval false On failure
    * @retval true On success
    */
-  bool open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* errors);
+  bool open_i (ACE_TCHAR const *dll_name, int open_mode, ERROR_STACK* errors);
 
   ACE_DLL_Handle (ACE_DLL_Handle const &) = delete;
   ACE_DLL_Handle &operator= (ACE_DLL_Handle const &) = delete;
@@ -239,13 +239,13 @@ public:
 
   /// Factory for ACE_DLL_Handle objects.  If one already exits,
   /// its refcount is incremented.
-  ACE_DLL_Handle *open_dll (const ACE_TCHAR *dll_name,
+  ACE_DLL_Handle *open_dll (ACE_TCHAR const *dll_name,
                             int openmode,
                             ACE_SHLIB_HANDLE handle,
                             ACE_DLL_Handle::ERROR_STACK *errors = nullptr);
 
   /// Close the underlying dll.  Decrements the refcount.
-  int close_dll (const ACE_TCHAR *dll_name);
+  int close_dll (ACE_TCHAR const *dll_name);
 
   /// Returns the current per-process UNLOAD_POLICY.
   u_long unload_policy () const;
@@ -269,7 +269,7 @@ protected:
   int close ();
 
   /// Find dll in handle_vector_.
-  ACE_DLL_Handle *find_dll (const ACE_TCHAR *dll_name) const;
+  ACE_DLL_Handle *find_dll (ACE_TCHAR const *dll_name) const;
 
   /// Applies strategy for unloading dll.
   int unload_dll (ACE_DLL_Handle *dll_handle, int force_unload = 0);

@@ -36,7 +36,7 @@ ACE_DLL_Handle::~ACE_DLL_Handle ()
 
 ACE_ALLOC_HOOK_DEFINE(ACE_DLL_Handle)
 
-const ACE_TCHAR  *
+ACE_TCHAR const *
 ACE_DLL_Handle::dll_name () const
 {
   ACE_TRACE ("ACE_DLL_Handle::dll_name");
@@ -44,7 +44,7 @@ ACE_DLL_Handle::dll_name () const
 }
 
 int
-ACE_DLL_Handle::open (const ACE_TCHAR *dll_name,
+ACE_DLL_Handle::open (ACE_TCHAR const *dll_name,
                       int open_mode,
                       ACE_SHLIB_HANDLE handle,
                       ERROR_STACK *errors)
@@ -248,14 +248,14 @@ ACE_DLL_Handle::refcount () const
 }
 
 void *
-ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, bool ignore_errors)
+ACE_DLL_Handle::symbol (ACE_TCHAR const *sym_name, bool ignore_errors)
 {
   ACE_TString error;
   return this->symbol (sym_name, ignore_errors, error);
 }
 
 void *
-ACE_DLL_Handle::symbol (const ACE_TCHAR *sym_name, bool ignore_errors, ACE_TString &error)
+ACE_DLL_Handle::symbol (ACE_TCHAR const *sym_name, bool ignore_errors, ACE_TString &error)
 {
   ACE_TRACE ("ACE_DLL_Handle::symbol");
   ACE_MT (ACE_GUARD_RETURN (ACE_Thread_Mutex, ace_mon, this->lock_, nullptr));
@@ -337,7 +337,7 @@ ACE_TString &
 ACE_DLL_Handle::error (ACE_TString &err)
 {
   ACE_TRACE ("ACE_DLL_Handle::error");
-  const ACE_TCHAR *error = ACE_OS::dlerror ();
+  ACE_TCHAR const *error = ACE_OS::dlerror ();
   if (error)
     {
       err = error;
@@ -346,7 +346,7 @@ ACE_DLL_Handle::error (ACE_TString &err)
 }
 
 void
-ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
+ACE_DLL_Handle::get_dll_names (ACE_TCHAR const *dll_name,
                                ACE_Array<ACE_TString> &try_names)
 {
   // Build the array of DLL names to try on this platform by applying the
@@ -451,7 +451,7 @@ ACE_DLL_Handle::get_dll_names (const ACE_TCHAR *dll_name,
 }
 
 bool
-ACE_DLL_Handle::open_i (const ACE_TCHAR *dll_name, int open_mode, ERROR_STACK* errors)
+ACE_DLL_Handle::open_i (ACE_TCHAR const *dll_name, int open_mode, ERROR_STACK* errors)
 {
   // The ACE_SHLIB_HANDLE object is obtained.
   this->handle_ = ACE_OS::dlopen (dll_name, open_mode);
@@ -547,7 +547,7 @@ ACE_DLL_Manager::~ACE_DLL_Manager ()
 ACE_ALLOC_HOOK_DEFINE(ACE_DLL_Manager)
 
 ACE_DLL_Handle *
-ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
+ACE_DLL_Manager::open_dll (ACE_TCHAR const *dll_name,
                            int open_mode,
                            ACE_SHLIB_HANDLE handle,
                            ACE_DLL_Handle::ERROR_STACK *errors)
@@ -605,7 +605,7 @@ ACE_DLL_Manager::open_dll (const ACE_TCHAR *dll_name,
 }
 
 int
-ACE_DLL_Manager::close_dll (const ACE_TCHAR *dll_name)
+ACE_DLL_Manager::close_dll (ACE_TCHAR const *dll_name)
 {
   ACE_TRACE ("ACE_DLL_Manager::close_dll");
   ACE_DLL_Handle *handle {};
@@ -719,7 +719,7 @@ ACE_DLL_Manager::close ()
 }
 
 ACE_DLL_Handle *
-ACE_DLL_Manager::find_dll (const ACE_TCHAR *dll_name) const
+ACE_DLL_Manager::find_dll (ACE_TCHAR const *dll_name) const
 {
   ACE_TRACE ("ACE_DLL_Manager::find_dll");
 

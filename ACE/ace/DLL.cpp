@@ -57,7 +57,7 @@ ACE_DLL::operator= (const ACE_DLL &rhs)
 // If the library name and the opening mode are specified than on
 // object creation the library is implicitly opened.
 
-ACE_DLL::ACE_DLL (const ACE_TCHAR *dll_name,
+ACE_DLL::ACE_DLL (ACE_TCHAR const *dll_name,
                   int open_mode,
                   bool close_handle_on_destruction)
   : open_mode_ (open_mode),
@@ -107,7 +107,7 @@ ACE_DLL::~ACE_DLL ()
 //               relocation processing of any other object.
 
 int
-ACE_DLL::open (const ACE_TCHAR *dll_filename,
+ACE_DLL::open (ACE_TCHAR const *dll_filename,
                int open_mode,
                bool close_handle_on_destruction)
 {
@@ -117,7 +117,7 @@ ACE_DLL::open (const ACE_TCHAR *dll_filename,
 }
 
 int
-ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
+ACE_DLL::open_i (ACE_TCHAR const *dll_filename,
                  int open_mode,
                  bool close_handle_on_destruction,
                  ACE_SHLIB_HANDLE handle)
@@ -187,7 +187,7 @@ ACE_DLL::open_i (const ACE_TCHAR *dll_filename,
 // The symbol refernce of the name specified is obtained.
 
 void *
-ACE_DLL::symbol (const ACE_TCHAR *sym_name, int ignore_errors)
+ACE_DLL::symbol (ACE_TCHAR const *sym_name, int ignore_errors)
 {
   ACE_TRACE ("ACE_DLL::symbol");
 

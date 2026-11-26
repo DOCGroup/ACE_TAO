@@ -71,7 +71,7 @@ public:
    *        is controlled in a scope other than that of this ACE_DLL object.
    *        For example, termination by ACE_DLL_Manager via ACE::fini().
    */
-  explicit ACE_DLL (const ACE_TCHAR *dll_name,
+  explicit ACE_DLL (ACE_TCHAR const *dll_name,
                     int open_mode = ACE_DEFAULT_SHLIB_MODE,
                     bool close_handle_on_destruction = true);
 
@@ -120,7 +120,7 @@ public:
    * @retval -1 On failure
    * @retval 0 On success.
    */
-  int open (const ACE_TCHAR *dll_name,
+  int open (ACE_TCHAR const *dll_name,
             int open_mode = ACE_DEFAULT_SHLIB_MODE,
             bool close_handle_on_destruction = true);
 
@@ -144,7 +144,7 @@ public:
    * @return Returns the value of @a symbol_name if it is a valid symbol
    *        in the DLL. Otherwise, returns 0.
    */
-  void *symbol (const ACE_TCHAR *symbol_name, int ignore_errors = 0);
+  void *symbol (ACE_TCHAR const *symbol_name, int ignore_errors = 0);
 
   /// Returns a pointer to a string explaining that an error occurred.  You
   /// will need to consult the error log for the actual error string
@@ -165,7 +165,7 @@ public:
                   bool close_handle_on_destruction = true);
 
 private:
-  int open_i (const ACE_TCHAR *dll_name,
+  int open_i (ACE_TCHAR const *dll_name,
               int open_mode = ACE_DEFAULT_SHLIB_MODE,
               bool close_handle_on_destruction = true,
               ACE_SHLIB_HANDLE handle = nullptr);
