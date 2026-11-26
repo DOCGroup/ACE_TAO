@@ -130,7 +130,7 @@ public:
   PortableServer::POA_ptr create_POA (
       char const *adapter_name,
       PortableServer::POAManager_ptr poa_manager,
-      const CORBA::PolicyList &policies) override;
+      CORBA::PolicyList const &policies) override;
 
   PortableServer::POA_ptr find_POA (char const *adapter_name,
                                     CORBA::Boolean activate_it) override;
@@ -260,7 +260,7 @@ public:
 
   TAO_Root_POA (const String &name,
                 PortableServer::POAManager_ptr poa_manager,
-                const TAO_POA_Policy_Set &policies,
+                TAO_POA_Policy_Set const &policies,
                 TAO_Root_POA *parent,
                 ACE_Lock &lock,
                 TAO_SYNCH_MUTEX &thread_lock,
@@ -277,12 +277,12 @@ public:
 
   static CORBA::Octet const objectkey_prefix[TAO_OBJECTKEY_PREFIX_SIZE];
 
-  const TAO_Object_Adapter::poa_name &folded_name () const;
+  TAO_Object_Adapter::poa_name const &folded_name () const;
 
-  const TAO_Object_Adapter::poa_name &system_name () const;
+  TAO_Object_Adapter::poa_name const &system_name () const;
 
   static void check_for_valid_wait_for_completions (
-      const TAO_ORB_Core &orb_core,
+      TAO_ORB_Core const &orb_core,
       CORBA::Boolean wait_for_completion);
 
   /// ORB Core for POA.
@@ -299,7 +299,7 @@ public:
   CORBA::Boolean cleanup_in_progress ();
 
   /// Calls protected static method used when POACurrent is not appropriate.
-  static int parse_ir_object_key (const TAO::ObjectKey &object_key,
+  static int parse_ir_object_key (TAO::ObjectKey const &object_key,
                                   PortableServer::ObjectId &user_id);
 
   TAO_Object_Adapter &object_adapter ();
@@ -308,7 +308,7 @@ public:
 
   /// Create the correct stub, properly initialized with the
   /// attributes and policies attached to the current POA.
-  TAO_Stub* key_to_stub (const TAO::ObjectKey &key,
+  TAO_Stub* key_to_stub (TAO::ObjectKey const &key,
                          char const *type_id,
                          CORBA::Short priority);
 
@@ -416,11 +416,11 @@ public:
 
   void post_invoke_servant_cleanup(
     PortableServer::ObjectId const &system_id,
-    const TAO::Portable_Server::Servant_Upcall &servant_upcall);
+    TAO::Portable_Server::Servant_Upcall const &servant_upcall);
 
    bool validate_lifespan (
     CORBA::Boolean is_persistent,
-    const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const;
+    TAO::Portable_Server::Temporary_Creation_Time const& creation_time) const;
 
   PortableServer::ObjectId *activate_object_i (
       PortableServer::Servant p_servant,
@@ -473,7 +473,7 @@ protected:
   /// Template method for creating new POA's of this type.
   virtual TAO_Root_POA *new_POA (const String &name,
                             PortableServer::POAManager_ptr poa_manager,
-                            const TAO_POA_Policy_Set &policies,
+                            TAO_POA_Policy_Set const &policies,
                             TAO_Root_POA *parent,
                             ACE_Lock &lock,
                             TAO_SYNCH_MUTEX &thread_lock,
@@ -483,11 +483,11 @@ protected:
   PortableServer::POA_ptr create_POA_i (
       char const *adapter_name,
       PortableServer::POAManager_ptr poa_manager,
-      const CORBA::PolicyList &policies);
+      CORBA::PolicyList const &policies);
 
   PortableServer::POA_ptr create_POA_i (const String &adapter_name,
                                         PortableServer::POAManager_ptr poa_manager,
-                                        const TAO_POA_Policy_Set &policies);
+                                        TAO_POA_Policy_Set const &policies);
 
   TAO_Root_POA *find_POA_i (const ACE_CString &child_name,
                             CORBA::Boolean activate_it);
@@ -508,7 +508,7 @@ protected:
   /// Method to notify the IOR Interceptors when there is a state
   /// changed not related to POAManager.
   void adapter_state_changed (
-      const TAO::ORT_Array &array_obj_ref_template,
+      TAO::ORT_Array const &array_obj_ref_template,
       PortableInterceptor::AdapterState state);
 
   /// Add the given tagged component to all profiles.
@@ -523,7 +523,7 @@ protected:
 
   /// Wrapper for the ORB's key_to_object that will alter the object pointer
   /// if the ImplRepo is used.
-  CORBA::Object_ptr key_to_object (const TAO::ObjectKey &key,
+  CORBA::Object_ptr key_to_object (TAO::ObjectKey const &key,
                                    char const *type_id,
                                    TAO_ServantBase *servant,
                                    CORBA::Boolean collocated,
@@ -531,11 +531,11 @@ protected:
                                    bool indirect);
 
   /// Like key_to_stub() but assume that the ORB is not shutting down.
-  virtual TAO_Stub* key_to_stub_i (const TAO::ObjectKey &key,
+  virtual TAO_Stub* key_to_stub_i (TAO::ObjectKey const &key,
                                    char const *type_id,
                                    CORBA::Short priority);
 
-  TAO_Stub *create_stub_object (const TAO::ObjectKey &object_key,
+  TAO_Stub *create_stub_object (TAO::ObjectKey const &object_key,
                                 char const *type_id,
                                 CORBA::PolicyList *policy_list,
                                 TAO_Acceptor_Filter *filter,
@@ -592,7 +592,7 @@ protected:
 
   TAO::ObjectKey *create_object_key (PortableServer::ObjectId const &id);
 
-  static int parse_key (const TAO::ObjectKey &key,
+  static int parse_key (TAO::ObjectKey const &key,
                         TAO_Object_Adapter::poa_name &poa_system_name,
                         PortableServer::ObjectId &system_id,
                         CORBA::Boolean &is_root,

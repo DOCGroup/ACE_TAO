@@ -229,7 +229,7 @@ namespace TAO
     void
     RequestProcessingStrategyDefaultServant::post_invoke_servant_cleanup(
       PortableServer::ObjectId const &/*system_id*/,
-      const TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
+      TAO::Portable_Server::Servant_Upcall const &/*servant_upcall*/)
     {
     }
   }

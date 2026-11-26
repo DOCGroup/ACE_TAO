@@ -88,12 +88,12 @@ namespace TAO
       ~Servant_Upcall ();
 
       /// Locate POA and servant.
-      int prepare_for_upcall (const TAO::ObjectKey &key,
+      int prepare_for_upcall (TAO::ObjectKey const &key,
                               char const *operation,
                               CORBA::Object_out forward_to);
 
       /// Helper.
-      int prepare_for_upcall_i (const TAO::ObjectKey &key,
+      int prepare_for_upcall_i (TAO::ObjectKey const &key,
                                 char const *operation,
                                 CORBA::Object_out forward_to,
                                 bool &wait_occurred_restart_call);
@@ -108,7 +108,7 @@ namespace TAO
       void post_invoke ();
 
       /// Locate POA.
-      ::TAO_Root_POA *lookup_POA (const TAO::ObjectKey &key);
+      ::TAO_Root_POA *lookup_POA (TAO::ObjectKey const &key);
 
       /// POA accessor.
       ::TAO_Root_POA &poa () const;

@@ -59,7 +59,7 @@ TAO_ServantBase::TAO_ServantBase (TAO_Operation_Table *optable)
 {
 }
 
-TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
+TAO_ServantBase::TAO_ServantBase (TAO_ServantBase const &rhs)
   :
 #if defined __GNUC__ && __GNUC__ < 9
   // GCC version 8 issues an invalid warning without the next non-comment line.
@@ -73,7 +73,7 @@ TAO_ServantBase::TAO_ServantBase (const TAO_ServantBase &rhs)
 }
 
 TAO_ServantBase &
-TAO_ServantBase::operator= (const TAO_ServantBase &rhs)
+TAO_ServantBase::operator= (TAO_ServantBase const &rhs)
 {
   this->optable_ = rhs.optable_;
   return *this;

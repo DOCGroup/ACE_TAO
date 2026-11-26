@@ -39,7 +39,7 @@ hexstring (ACE_CString& hexstr, char const *s, size_t l)
 
 void
 TAO_Active_Object_Map::set_system_id_size (
-  const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &creation_parameters)
+  TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters const &creation_parameters)
 {
   if (TAO_Active_Object_Map::system_id_size_ == 0)
     {
@@ -96,7 +96,7 @@ TAO_Active_Object_Map::TAO_Active_Object_Map (
     int user_id_policy,
     int unique_id_policy,
     int persistent_id_policy,
-    const TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters &
+    TAO_Server_Strategy_Factory::Active_Object_Map_Creation_Parameters const &
       creation_parameters)
 {
   TAO_Active_Object_Map::set_system_id_size (creation_parameters);

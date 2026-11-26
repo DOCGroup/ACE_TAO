@@ -8,9 +8,9 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-TAO_Regular_POA::TAO_Regular_POA (const TAO_Root_POA::String &name,
+TAO_Regular_POA::TAO_Regular_POA (TAO_Root_POA::String const &name,
                                   PortableServer::POAManager_ptr poa_manager,
-                  const TAO_POA_Policy_Set &policies,
+                  TAO_POA_Policy_Set const &policies,
                   TAO_Root_POA *parent,
                   ACE_Lock &lock,
                   TAO_SYNCH_MUTEX &thread_lock,

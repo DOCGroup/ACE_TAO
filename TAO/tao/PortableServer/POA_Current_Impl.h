@@ -103,10 +103,10 @@ namespace TAO
       void replace_object_id (PortableServer::ObjectId const &system_id);
 
       /// Set the object key.
-      void object_key (const TAO::ObjectKey &key);
+      void object_key (TAO::ObjectKey const &key);
 
       /// Get the object key.
-      const TAO::ObjectKey &object_key () const;
+      TAO::ObjectKey const &object_key () const;
 
       /// Set the servant for the current upcall.
       void servant (PortableServer::Servant servant);
@@ -130,7 +130,7 @@ namespace TAO
       void teardown ();
 
       /// Setup the current.
-      void setup (::TAO_Root_POA *impl, const TAO::ObjectKey &key);
+      void setup (::TAO_Root_POA *impl, TAO::ObjectKey const &key);
 
     private:
       /// Copying and moving this current context is prohibited.

@@ -193,7 +193,7 @@ namespace TAO
     void
     RequestProcessingStrategyServantLocator::post_invoke_servant_cleanup(
       PortableServer::ObjectId const &system_id,
-      const TAO::Portable_Server::Servant_Upcall &servant_upcall)
+      TAO::Portable_Server::Servant_Upcall const &servant_upcall)
     {
       // @todo This method seems to misbehave according to the corba spec, see
       // section 11.3.7.2. It says that when postinvoke raises an system

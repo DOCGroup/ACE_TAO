@@ -177,9 +177,9 @@ TAO_Root_POA::set_obj_ref_factory (
     }
 }
 
-TAO_Root_POA::TAO_Root_POA (const TAO_Root_POA::String &name,
+TAO_Root_POA::TAO_Root_POA (TAO_Root_POA::String const &name,
                             PortableServer::POAManager_ptr poa_manager,
-                            const TAO_POA_Policy_Set &policies,
+                            TAO_POA_Policy_Set const &policies,
                             TAO_Root_POA *parent,
                             ACE_Lock &lock,
                             TAO_SYNCH_MUTEX &thread_lock,
@@ -409,7 +409,7 @@ TAO_Root_POA::complete_destruction_i ()
 PortableServer::POA_ptr
 TAO_Root_POA::create_POA_i (char const *adapter_name,
                             PortableServer::POAManager_ptr poa_manager,
-                            const CORBA::PolicyList &policies)
+                            CORBA::PolicyList const &policies)
 {
   // Initialize a TAO_POA_Policy_Set instance so that it contains the
   // default POA policies.
@@ -489,7 +489,7 @@ TAO_Root_POA::create_POA_i (char const *adapter_name,
 TAO_Root_POA *
 TAO_Root_POA::new_POA (const String &name,
                        PortableServer::POAManager_ptr poa_manager,
-                       const TAO_POA_Policy_Set &policies,
+                       TAO_POA_Policy_Set const &policies,
                        TAO_Root_POA *parent,
                        ACE_Lock &lock,
                        TAO_SYNCH_MUTEX &thread_lock,
@@ -513,9 +513,9 @@ TAO_Root_POA::new_POA (const String &name,
 }
 
 PortableServer::POA_ptr
-TAO_Root_POA::create_POA_i (const TAO_Root_POA::String &adapter_name,
+TAO_Root_POA::create_POA_i (TAO_Root_POA::String const &adapter_name,
                             PortableServer::POAManager_ptr poa_manager,
-                            const TAO_POA_Policy_Set &policies)
+                            TAO_POA_Policy_Set const &policies)
 {
   // This operation creates a new POA as a child of the target POA. The
   // specified name identifies the new POA with respect to other POAs
@@ -683,7 +683,7 @@ TAO_Root_POA::tao_poa_manager ()
 PortableServer::POA_ptr
 TAO_Root_POA::create_POA (char const *adapter_name,
                           PortableServer::POAManager_ptr poa_manager,
-                          const CORBA::PolicyList &policies)
+                          CORBA::PolicyList const &policies)
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (nullptr);
@@ -943,7 +943,7 @@ TAO_Root_POA::destroy_i (CORBA::Boolean etherealize_objects,
 }
 
 int
-TAO_Root_POA::delete_child (const TAO_Root_POA::String &child)
+TAO_Root_POA::delete_child (TAO_Root_POA::String const &child)
 {
   int result {};
 
@@ -1089,7 +1089,7 @@ TAO_Root_POA::add_ior_component_to_profile (
 
 void
 TAO_Root_POA::adapter_state_changed (
-   const TAO::ORT_Array &array_obj_ref_template,
+   TAO::ORT_Array const &array_obj_ref_template,
    PortableInterceptor::AdapterState state)
 {
   TAO_IORInterceptor_Adapter *ior_adapter =
@@ -1211,7 +1211,7 @@ TAO_Root_POA::wait_for_completions (CORBA::Boolean wait_for_completion)
 
 /* static */
 void
-TAO_Root_POA::check_for_valid_wait_for_completions (const TAO_ORB_Core &orb_core,
+TAO_Root_POA::check_for_valid_wait_for_completions (TAO_ORB_Core const &orb_core,
                                                     CORBA::Boolean wait_for_completion)
 {
   if (wait_for_completion)
@@ -1563,7 +1563,7 @@ TAO_Root_POA::locate_servant_i (char const *operation,
 
 /* static */
 int
-TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
+TAO_Root_POA::parse_key (TAO::ObjectKey const &key,
                          TAO_Object_Adapter::poa_name &poa_system_name,
                          PortableServer::ObjectId &system_id,
                          CORBA::Boolean &is_root,
@@ -1572,7 +1572,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
                          TAO::Portable_Server::Temporary_Creation_Time &poa_creation_time)
 {
   // Get the object key octets.
-  const CORBA::Octet *key_data = key.get_buffer ();
+  CORBA::Octet const *key_data = key.get_buffer ();
 
   // Skip the object key prefix since we have already checked for this.
   CORBA::ULong starting_at = TAO_OBJECTKEY_PREFIX_SIZE;
@@ -1862,7 +1862,7 @@ TAO_Root_POA::set_folded_name (TAO_Root_POA *parent)
 }
 
 int
-TAO_Root_POA::parse_ir_object_key (const TAO::ObjectKey &object_key,
+TAO_Root_POA::parse_ir_object_key (TAO::ObjectKey const &object_key,
                                    PortableServer::ObjectId &user_id)
 {
   TAO_Object_Adapter::poa_name poa_system_name;
@@ -1905,7 +1905,7 @@ TAO_Root_POA::invoke_key_to_object ()
 }
 
 CORBA::Object_ptr
-TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
+TAO_Root_POA::key_to_object (TAO::ObjectKey const &key,
                              char const *type_id,
                              TAO_ServantBase *servant,
                              CORBA::Boolean collocated,
@@ -1966,7 +1966,7 @@ TAO_Root_POA::key_to_object (const TAO::ObjectKey &key,
 }
 
 TAO_Stub *
-TAO_Root_POA::key_to_stub (const TAO::ObjectKey &key,
+TAO_Root_POA::key_to_stub (TAO::ObjectKey const &key,
                            char const *type_id,
                            CORBA::Short priority)
 {
@@ -1979,7 +1979,7 @@ TAO_Root_POA::key_to_stub (const TAO::ObjectKey &key,
 }
 
 TAO_Stub *
-TAO_Root_POA::key_to_stub_i (const TAO::ObjectKey &key,
+TAO_Root_POA::key_to_stub_i (TAO::ObjectKey const &key,
                              char const *type_id,
                              CORBA::Short priority)
 {
@@ -2071,7 +2071,7 @@ save_ior_component_and_profile_id (const IOP::TaggedComponent &component,
 }
 
 TAO_Stub *
-TAO_Root_POA::create_stub_object (const TAO::ObjectKey &object_key,
+TAO_Root_POA::create_stub_object (TAO::ObjectKey const &object_key,
                                   char const *type_id,
                                   CORBA::PolicyList *policy_list,
                                   TAO_Acceptor_Filter *filter,
@@ -2400,7 +2400,7 @@ TAO_Root_POA::allow_multiple_activations () const
 void
 TAO_Root_POA::post_invoke_servant_cleanup(
   PortableServer::ObjectId const &system_id,
-  const TAO::Portable_Server::Servant_Upcall &servant_upcall)
+  TAO::Portable_Server::Servant_Upcall const &servant_upcall)
 {
   this->active_policy_strategies_.request_processing_strategy ()->
     post_invoke_servant_cleanup (system_id, servant_upcall);
@@ -2458,7 +2458,7 @@ TAO_Root_POA::exit ()
 bool
 TAO_Root_POA::validate_lifespan (
   CORBA::Boolean is_persistent,
-  const TAO::Portable_Server::Temporary_Creation_Time& creation_time) const
+  TAO::Portable_Server::Temporary_Creation_Time const& creation_time) const
 {
   return this->active_policy_strategies_.lifespan_strategy()->
     validate (is_persistent, creation_time);

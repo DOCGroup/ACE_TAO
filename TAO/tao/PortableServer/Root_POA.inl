@@ -91,13 +91,13 @@ TAO_Root_POA::the_name ()
   return CORBA::string_dup (this->name_.c_str ());
 }
 
-ACE_INLINE const TAO_Object_Adapter::poa_name &
+ACE_INLINE TAO_Object_Adapter::poa_name const &
 TAO_Root_POA::folded_name () const
 {
   return this->folded_name_;
 }
 
-ACE_INLINE const TAO_Object_Adapter::poa_name &
+ACE_INLINE TAO_Object_Adapter::poa_name const &
 TAO_Root_POA::system_name () const
 {
   return this->system_name_.in ();

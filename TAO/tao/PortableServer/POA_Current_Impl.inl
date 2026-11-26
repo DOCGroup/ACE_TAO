@@ -60,12 +60,12 @@ namespace TAO
     }
 
     ACE_INLINE void
-    POA_Current_Impl::object_key (const TAO::ObjectKey &key)
+    POA_Current_Impl::object_key (TAO::ObjectKey const &key)
     {
       this->object_key_ = std::addressof (key);
     }
 
-    ACE_INLINE const TAO::ObjectKey &
+    ACE_INLINE TAO::ObjectKey const &
     POA_Current_Impl::object_key () const
     {
       return *this->object_key_;

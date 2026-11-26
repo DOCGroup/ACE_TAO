@@ -33,7 +33,7 @@ namespace TAO
 
     int
     Servant_Upcall::prepare_for_upcall (
-      const TAO::ObjectKey &key,
+      TAO::ObjectKey const &key,
       char const *operation,
       CORBA::Object_out forward_to)
     {
@@ -67,7 +67,7 @@ namespace TAO
 
     int
     Servant_Upcall::prepare_for_upcall_i (
-      const TAO::ObjectKey &key,
+      TAO::ObjectKey const &key,
       char const *operation,
       CORBA::Object_out forward_to,
       bool &wait_occurred_restart_call)
@@ -193,7 +193,7 @@ namespace TAO
     Servant_Upcall::Pre_Invoke_State::Pre_Invoke_State () = default;
 
     ::TAO_Root_POA *
-    Servant_Upcall::lookup_POA (const TAO::ObjectKey &key)
+    Servant_Upcall::lookup_POA (TAO::ObjectKey const &key)
     {
       // Acquire the object adapter lock first.
       if (this->object_adapter_->lock ().acquire () == -1)
