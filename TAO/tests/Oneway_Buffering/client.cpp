@@ -457,13 +457,13 @@ run_liveness_test (CORBA::ORB_ptr orb,
       ACE_Time_Value tv (0, 1000);
       orb->run (tv);
 
-      const CORBA::ULong receive_count =
+      CORBA::ULong const receive_count =
         request_count (oneway_buffering_admin);
 
       // Once the system has sent enough messages we don't
       // expect it to fall too far behind, i.e. at least 90% of the
       // messages should be delivered....
-      const CORBA::ULong expected =
+      CORBA::ULong const expected =
         CORBA::ULong (LIVENESS_TOLERANCE * send_count);
 
       if (receive_count < expected)
@@ -521,7 +521,7 @@ run_message_count (CORBA::ORB_ptr orb,
     {
       sync_server (flusher.in ());
 
-      const CORBA::ULong initial_receive_count =
+      CORBA::ULong const initial_receive_count =
         request_count (oneway_buffering_admin, send_count);
 
       if (initial_receive_count != send_count)
@@ -540,13 +540,13 @@ run_message_count (CORBA::ORB_ptr orb,
           ACE_Time_Value tv (0, 1000);
           orb->run (tv);
 
-          const CORBA::ULong iteration_count =
+          CORBA::ULong const iteration_count =
             send_count - initial_receive_count;
 
           bool const
             too_few= (iteration_count < static_cast<CORBA::ULong> (BUFFERED_MESSAGES_COUNT));
 
-          const CORBA::ULong receive_count =
+          CORBA::ULong const receive_count =
             request_count (
               oneway_buffering_admin,
               static_cast<CORBA::ULong> (too_few ?
@@ -628,7 +628,7 @@ run_timeout (CORBA::ORB_ptr orb,
     {
       sync_server (flusher.in ());
 
-      const CORBA::ULong initial_receive_count =
+      CORBA::ULong const initial_receive_count =
         request_count (oneway_buffering_admin, send_count);
 
       if (initial_receive_count != send_count)
@@ -648,7 +648,7 @@ run_timeout (CORBA::ORB_ptr orb,
           ACE_Time_Value tv (0, 1000);
           orb->run (tv);
 
-          const CORBA::ULong receive_count =
+          CORBA::ULong const receive_count =
             request_count (oneway_buffering_admin);
 
           ACE_Time_Value elapsed = ACE_OS::gettimeofday () - start;
@@ -726,7 +726,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
     {
       sync_server (flusher.in ());
 
-      const CORBA::ULong initial_receive_count =
+      CORBA::ULong const initial_receive_count =
         request_count (oneway_buffering_admin, send_count);
 
       if (initial_receive_count != send_count)
@@ -749,7 +749,7 @@ run_timeout_reactive (CORBA::ORB_ptr orb,
 
       while (true)
         {
-          const CORBA::ULong receive_count =
+          CORBA::ULong const receive_count =
             request_count (oneway_buffering_admin);
 
           //FUZZ: disable check_for_lack_ACE_OS
@@ -835,7 +835,7 @@ run_buffer_size (CORBA::ORB_ptr orb,
     {
       sync_server (flusher.in ());
 
-      const CORBA::ULong initial_bytes_received =
+      CORBA::ULong const initial_bytes_received =
         bytes_received_count (oneway_buffering_admin, bytes_sent);
 
       if (initial_bytes_received != bytes_sent)
@@ -854,10 +854,10 @@ run_buffer_size (CORBA::ORB_ptr orb,
           ACE_Time_Value tv (0, 1000);
           orb->run (tv);
 
-          const CORBA::ULong payload_delta =
+          CORBA::ULong const payload_delta =
             bytes_sent - initial_bytes_received;
 
-          const CORBA::ULong bytes_received =
+          CORBA::ULong const bytes_received =
             bytes_received_count (oneway_buffering_admin);
 
           if (bytes_received != initial_bytes_received)

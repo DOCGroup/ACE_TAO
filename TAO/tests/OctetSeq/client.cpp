@@ -109,7 +109,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       for (int i = 0; i != options.niterations; ++i)
         {
-          const CORBA::ULong r = ACE_OS::rand_r (&options.seed);
+          CORBA::ULong const r = ACE_OS::rand_r (&options.seed);
           Test::Index const idx = static_cast<Test::Index> (r % nelements);
 
           if (i % 100 == 0)
@@ -142,10 +142,10 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                 }
             }
 
-          const CORBA::ULong crc_remote =
+          CORBA::ULong const crc_remote =
             server->get_crc (idx);
 
-          const CORBA::ULong crc_local =
+          CORBA::ULong const crc_local =
             ACE::crc32 (elements[idx].get_buffer (),
                         elements[idx].length ());
 
