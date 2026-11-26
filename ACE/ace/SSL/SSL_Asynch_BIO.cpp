@@ -126,13 +126,13 @@ ACE_SSL_make_BIO (void * ssl_asynch_stream)
 }
 
 /**
- * @struct @c ACE_SSL_Asynch_Stream_Accessor
+ * @struct ACE_SSL_Asynch_Stream_Accessor
  *
  * @brief Privileged @c ACE_SSL_Asynch_Stream accessor.
  *
  * This structure is a @c friend to the @c ACE_SSL_Asynch_Stream
  * class so that it can gain access to the protected
- * ssl_bio_{read,write}() methods in that class.  It is full declared
+ * ssl_bio_{read,write}() methods in that class.  It is fully declared
  * in this implementation file to hide its interface from users to
  * prevent potential abuse of the friend relationship between it and
  * the @c ACE_SSL_Asynch_Stream class.
