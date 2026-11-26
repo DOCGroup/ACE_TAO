@@ -78,7 +78,7 @@ public:
 
   /// Receive the timeout from the adapter
   void handle_timeout (ACE_Time_Value const &tv,
-                       const void* arg);
+                       void const* arg);
 
   /// Documented in TAO_EC_ConsumerControl
   int activate () override;

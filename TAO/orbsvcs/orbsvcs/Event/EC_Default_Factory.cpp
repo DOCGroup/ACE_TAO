@@ -1153,7 +1153,7 @@ TAO_EC_Default_Factory::create_consumer_control (TAO_EC_Event_Channel_Base* ec)
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
-      const ACE_Time_Value rate (0, this->consumer_control_period_);
+      ACE_Time_Value const rate (0, this->consumer_control_period_);
       return new TAO_EC_Reactive_ConsumerControl (rate, consumer_control_timeout_, ec, orb.in ());
     }
   return nullptr;
@@ -1179,7 +1179,7 @@ TAO_EC_Default_Factory::create_supplier_control (TAO_EC_Event_Channel_Base* ec)
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
 
-      const ACE_Time_Value rate (0, this->supplier_control_period_);
+      ACE_Time_Value const rate (0, this->supplier_control_period_);
       return new TAO_EC_Reactive_SupplierControl (rate, supplier_control_timeout_, ec, orb.in ());
     }
   return nullptr;

@@ -137,7 +137,7 @@ TAO_EC_Dispatching_Task::svc ()
               done = true;
             }
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           ex._tao_print_exception ("EC (%P|%t) exception in dispatching queue");
         }

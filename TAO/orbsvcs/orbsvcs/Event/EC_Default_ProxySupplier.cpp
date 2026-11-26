@@ -140,7 +140,7 @@ TAO_EC_Default_ProxyPushSupplier::disconnect_push_supplier ()
         {
           consumer->disconnect_push_consumer ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const& ex)
         {
           // Ignore exceptions, we must isolate other clients from
           // problems on this one.

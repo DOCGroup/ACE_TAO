@@ -121,7 +121,7 @@ TAO_EC_Disjunction_Filter::max_event_size () const
        i != end;
        ++i)
     {
-      const CORBA::ULong m = (*i)->max_event_size ();
+      CORBA::ULong const m = (*i)->max_event_size ();
       if (n < m)
       {
         n = m;

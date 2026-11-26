@@ -161,7 +161,7 @@ TAO_EC_Basic_ObserverStrategy::supplier_qos_update (
         {
           copy[i]->update_supplier (s_qos);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           // Ignore exceptions, we must isolate other observers from
           // failures on this one.
@@ -205,7 +205,7 @@ TAO_EC_Basic_ObserverStrategy::consumer_qos_update (
         {
           copy[i]->update_consumer (c_qos);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           // Ignore exceptions, we must isolate other observers from
           // failures on this one.
@@ -283,19 +283,19 @@ TAO_EC_Reactive_ObserverStrategy::supplier_qos_update (
         {
           entry.observer->update_supplier (s_qos);
         }
-      catch (const CORBA::OBJECT_NOT_EXIST&)
+      catch (CORBA::OBJECT_NOT_EXIST const&)
         {
           // Exception occurred while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry);
         }
-      catch (const CORBA::TRANSIENT&)
+      catch (CORBA::TRANSIENT const&)
         {
           // Exception occurred while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           // Ignore all exceptions
         }
@@ -327,19 +327,19 @@ TAO_EC_Reactive_ObserverStrategy::consumer_qos_update (
         {
           entry.observer->update_consumer (c_qos);
         }
-      catch (const CORBA::OBJECT_NOT_EXIST&)
+      catch (CORBA::OBJECT_NOT_EXIST const&)
         {
           // Exception occurred while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry);
         }
-      catch (const CORBA::TRANSIENT&)
+      catch (CORBA::TRANSIENT const&)
         {
           // Exception occurred while updating observer, so remove it from the
           // observer list
           this->observer_not_exists (entry);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           // Ignore all exceptions
         }
@@ -377,7 +377,7 @@ TAO_EC_Reactive_ObserverStrategy::observer_not_exists (Observer_Entry& observer)
     {
       this->remove_observer(observer.handle);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore exceptions
     }

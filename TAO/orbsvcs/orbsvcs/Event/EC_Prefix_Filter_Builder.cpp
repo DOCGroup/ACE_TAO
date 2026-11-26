@@ -94,8 +94,8 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
       {
         return nullptr;
       }
-      const CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
-      const CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
+      CORBA::ULong const source_mask = qos.dependencies[pos].event.header.source;
+      CORBA::ULong const type_mask = qos.dependencies[pos].event.header.type;
       ++pos;
 
       TAO_EC_Filter *child =
@@ -112,16 +112,16 @@ TAO_EC_Prefix_Filter_Builder:: recursive_build (
       {
         return nullptr;
       }
-      const CORBA::ULong source_mask = qos.dependencies[pos].event.header.source;
-      const CORBA::ULong type_mask = qos.dependencies[pos].event.header.type;
+      CORBA::ULong const source_mask = qos.dependencies[pos].event.header.source;
+      CORBA::ULong const type_mask = qos.dependencies[pos].event.header.type;
       ++pos;
 
       if (pos == qos.dependencies.length ())
       {
         return nullptr;
       }
-      const CORBA::ULong source_value = qos.dependencies[pos].event.header.source;
-      const CORBA::ULong type_value = qos.dependencies[pos].event.header.type;
+      CORBA::ULong const source_value = qos.dependencies[pos].event.header.source;
+      CORBA::ULong const type_value = qos.dependencies[pos].event.header.type;
       ++pos;
 
       return new TAO_EC_Masked_Type_Filter (source_mask,

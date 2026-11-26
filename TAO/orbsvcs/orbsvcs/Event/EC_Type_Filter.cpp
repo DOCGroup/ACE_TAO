@@ -130,7 +130,7 @@ int
 TAO_EC_Type_Filter::filter_set (RtecEventComm::EventSet const &event,
                                 TAO_EC_QOS_Info& qos_info)
 {
-  const CORBA::ULong maximum = event.length ();
+  CORBA::ULong const maximum = event.length ();
   if (event.maximum () == 0)
   {
     return 0;

@@ -8,7 +8,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
 TAO_EC_Timeout_Adapter::handle_timeout (ACE_Time_Value const & /* tv */,
-                                        const void *vp)
+                                        void const *vp)
 {
   //  ORBSVCS_DEBUG ((LM_DEBUG,
   //              "TAO_EC_Timeout_Adapter::handle_timeout -"
@@ -35,7 +35,7 @@ TAO_EC_Timeout_Adapter::handle_timeout (ACE_Time_Value const & /* tv */,
       filter->push_to_proxy (single_event,
                              qos_info);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return -1;
     }

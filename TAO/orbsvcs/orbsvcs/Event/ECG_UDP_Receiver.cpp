@@ -215,7 +215,7 @@ TAO_ECG_UDP_Receiver::handle_input (ACE_SOCK_Dgram& dgram)
       this->consumer_proxy_->push (cdr_decoder.events);
     }
 
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ORBSVCS_ERROR ((LM_ERROR,
                   "Caught and swallowed EXCEPTION in "

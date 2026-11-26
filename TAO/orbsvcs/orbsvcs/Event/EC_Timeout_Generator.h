@@ -82,7 +82,7 @@ public:
 private:
   /// Casts @a act to EC_Filter and dispatches an event to it.
   int handle_timeout (ACE_Time_Value const &tv,
-                              const void *act) override;
+                              void const *act) override;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

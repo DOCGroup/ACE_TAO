@@ -112,7 +112,7 @@ void
 TAO_EC_Conjunction_Filter::push (RtecEventComm::EventSet const &event,
                                  TAO_EC_QOS_Info& qos_info)
 {
-  const CORBA::Long pos = this->current_child_ - this->begin ();
+  CORBA::Long const pos = this->current_child_ - this->begin ();
   const int w = pos / bits_per_word;
   const int b = pos % bits_per_word;
   if (ACE_BIT_ENABLED (this->bitvec_[w], 1<<b))
@@ -120,8 +120,8 @@ TAO_EC_Conjunction_Filter::push (RtecEventComm::EventSet const &event,
     return;
   }
   ACE_SET_BITS (this->bitvec_[w], 1<<b);
-  const CORBA::ULong n = event.length ();
-  const CORBA::ULong l = this->event_.length ();
+  CORBA::ULong const n = event.length ();
+  CORBA::ULong const l = this->event_.length ();
   this->event_.length (l + n);
   for (CORBA::ULong i {}; i != n; ++i)
     {

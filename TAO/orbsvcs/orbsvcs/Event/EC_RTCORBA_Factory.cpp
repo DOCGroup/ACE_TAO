@@ -59,7 +59,7 @@ TAO_EC_RTCORBA_Factory::create_dispatching (TAO_EC_Event_Channel_Base *)
                                                   current.in ()),
                       nullptr);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
     }
 

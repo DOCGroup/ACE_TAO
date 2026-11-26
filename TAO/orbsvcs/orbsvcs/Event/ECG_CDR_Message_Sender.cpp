@@ -28,7 +28,7 @@ TAO_ECG_CDR_Message_Sender::init (
 
 void
 TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
-                                           const ACE_INET_Addr &addr)
+                                           ACE_INET_Addr const &addr)
 {
   if (this->endpoint_rptr_.get () == nullptr)
     {
@@ -37,7 +37,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
       throw CORBA::INTERNAL ();
     }
 
-  const CORBA::ULong max_fragment_payload = this->mtu () -
+  CORBA::ULong const max_fragment_payload = this->mtu () -
     TAO_ECG_CDR_Message_Sender::ECG_HEADER_SIZE;
   // ACE_ASSERT (max_fragment_payload != 0);
 
@@ -49,14 +49,14 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
   iovec iov[TAO_WRITEV_MAX];
 
   CORBA::ULong total_length;
-  const CORBA::ULong fragment_count =
+  CORBA::ULong const fragment_count =
     this->compute_fragment_count (cdr.begin (),
                                   cdr.end (),
                                   TAO_WRITEV_MAX,
                                   max_fragment_payload,
                                   total_length);
 
-  const CORBA::ULong request_id = this->endpoint_rptr_->next_request_id ();
+  CORBA::ULong const request_id = this->endpoint_rptr_->next_request_id ();
 
   // Reserve the first iovec for the header...
   int iovcnt = 1;
@@ -80,7 +80,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
           // This fragment is full, we have to send it...
 
           // First adjust the last iov entry:
-          const CORBA::ULong last_mb_length =
+          CORBA::ULong const last_mb_length =
             max_fragment_payload - (fragment_size - l);
           iov[iovcnt - 1].iov_len = last_mb_length;
 
@@ -172,7 +172,7 @@ TAO_ECG_CDR_Message_Sender::send_message  (const TAO_OutputCDR &cdr,
 }
 
 void
-TAO_ECG_CDR_Message_Sender::send_fragment (const ACE_INET_Addr &addr,
+TAO_ECG_CDR_Message_Sender::send_fragment (ACE_INET_Addr const &addr,
                                            CORBA::ULong request_id,
                                            CORBA::ULong request_size,
                                            CORBA::ULong fragment_size,

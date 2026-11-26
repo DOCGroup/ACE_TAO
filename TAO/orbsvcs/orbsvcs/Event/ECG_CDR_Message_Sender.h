@@ -123,7 +123,7 @@ public:
    * to send later via the reactor.
    */
   void send_message (const TAO_OutputCDR &cdr,
-                     const ACE_INET_Addr &addr);
+                     ACE_INET_Addr const &addr);
 
 private:
   /// Return the datagram...
@@ -134,7 +134,7 @@ private:
    * the header, the rest of the iovec array should contain pointers
    * to the actual data.
    */
-  void send_fragment (const ACE_INET_Addr &addr,
+  void send_fragment (ACE_INET_Addr const &addr,
                       CORBA::ULong request_id,
                       CORBA::ULong request_size,
                       CORBA::ULong fragment_size,

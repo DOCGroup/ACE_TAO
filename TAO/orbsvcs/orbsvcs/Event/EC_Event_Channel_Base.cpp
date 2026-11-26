@@ -174,7 +174,7 @@ TAO_EC_Event_Channel_Base::deactivate_supplier_admin ()
         supplier_poa->servant_to_id (this->supplier_admin_);
       supplier_poa->deactivate_object (supplier_id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
             // The deactivation can throw...
     }
@@ -191,7 +191,7 @@ TAO_EC_Event_Channel_Base::deactivate_consumer_admin ()
         consumer_poa->servant_to_id (this->consumer_admin_);
       consumer_poa->deactivate_object (consumer_id.in ());
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
             // The deactivation can throw...
     }

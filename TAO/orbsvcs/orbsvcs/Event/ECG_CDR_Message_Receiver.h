@@ -192,18 +192,18 @@ private:
 private:
   /// Returns 1 on success, 0 if @c request_id has already been
   /// received or is below current request range, and -1 on error.
-  int mark_received (const ACE_INET_Addr &from,
+  int mark_received (ACE_INET_Addr const &from,
                      CORBA::ULong request_id);
 
   /// Returns 1 if complete request is received and @c event is
   /// populated, 0 if request has only partially been received or is a
   /// duplicate, and -1 on error.
-  int process_fragment (const ACE_INET_Addr &from,
+  int process_fragment (ACE_INET_Addr const &from,
                         const Mcast_Header &header,
                         char * data_buf,
                         TAO_ECG_CDR_Processor *cdr_processor);
 
-  Request_Map::ENTRY* get_source_entry (const ACE_INET_Addr &from);
+  Request_Map::ENTRY* get_source_entry (ACE_INET_Addr const &from);
 
 private:
   /// Ignore any events coming from this IP address.

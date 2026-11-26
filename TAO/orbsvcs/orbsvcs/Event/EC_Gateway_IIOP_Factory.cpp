@@ -180,7 +180,7 @@ TAO_EC_Gateway_IIOP_Factory::create_consumerec_control (TAO_EC_Gateway_IIOP* gat
       ACE_TCHAR **argv {};
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
-      const ACE_Time_Value rate (0, this->consumer_ec_control_period_);
+      ACE_Time_Value const rate (0, this->consumer_ec_control_period_);
       return new TAO_ECG_Reactive_ConsumerEC_Control (rate, consumer_ec_control_timeout_, gateway, orb.in ());
     }
   else if (this->consumer_ec_control_ == 2)
@@ -189,7 +189,7 @@ TAO_EC_Gateway_IIOP_Factory::create_consumerec_control (TAO_EC_Gateway_IIOP* gat
       ACE_TCHAR **argv {};
       CORBA::ORB_var const orb =
         CORBA::ORB_init (argc, argv, this->orbid_.c_str ());
-      const ACE_Time_Value rate (0, this->consumer_ec_control_period_);
+      ACE_Time_Value const rate (0, this->consumer_ec_control_period_);
       return new TAO_ECG_Reconnect_ConsumerEC_Control (rate, consumer_ec_control_timeout_, gateway, orb.in ());
     }
   return nullptr;

@@ -127,7 +127,7 @@ TAO_EC_Default_ProxyPushConsumer::disconnect_push_consumer ()
         {
           supplier->disconnect_push_supplier ();
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           // Ignore exceptions, we must isolate other clients from
           // failures on this one.

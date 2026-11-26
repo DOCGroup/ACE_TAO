@@ -50,8 +50,8 @@ TAO_ECG_UDP_Request_Entry (CORBA::Boolean byte_order,
     {
       this->received_fragments_[i] = 0;
     }
-  const CORBA::ULong idx = this->fragment_count_ / bits_per_ulong;
-  const CORBA::ULong bit = this->fragment_count_ % bits_per_ulong;
+  CORBA::ULong const idx = this->fragment_count_ / bits_per_ulong;
+  CORBA::ULong const bit = this->fragment_count_ % bits_per_ulong;
   this->received_fragments_[idx] = (0xFFFFFFFF << bit);
 }
 
@@ -89,8 +89,8 @@ TAO_ECG_UDP_Request_Entry::test_received (CORBA::ULong fragment_id) const
   }
 
   constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
-  const CORBA::ULong idx = fragment_id / bits_per_ulong;
-  const CORBA::ULong bit = fragment_id % bits_per_ulong;
+  CORBA::ULong const idx = fragment_id / bits_per_ulong;
+  CORBA::ULong const bit = fragment_id % bits_per_ulong;
   return ACE_BIT_ENABLED (this->received_fragments_[idx], 1<<bit);
 }
 
@@ -104,8 +104,8 @@ TAO_ECG_UDP_Request_Entry::mark_received (CORBA::ULong fragment_id)
   }
 
   constexpr int bits_per_ulong = sizeof(CORBA::ULong) * CHAR_BIT;
-  const CORBA::ULong idx = fragment_id / bits_per_ulong;
-  const CORBA::ULong bit = fragment_id % bits_per_ulong;
+  CORBA::ULong const idx = fragment_id / bits_per_ulong;
+  CORBA::ULong const bit = fragment_id % bits_per_ulong;
   ACE_SET_BITS (this->received_fragments_[idx], 1<<bit);
 }
 
@@ -376,7 +376,7 @@ TAO_ECG_CDR_Message_Receiver::handle_input (
 }
 
 int
-TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
+TAO_ECG_CDR_Message_Receiver::mark_received (ACE_INET_Addr const &from,
                                              CORBA::ULong request_id)
 {
   // ACE_GUARD_RETURN (ACE_Lock, guard, *this->lock_, -1);
@@ -415,7 +415,7 @@ TAO_ECG_CDR_Message_Receiver::mark_received (const ACE_INET_Addr &from,
 
 int
 TAO_ECG_CDR_Message_Receiver::process_fragment (
-                                   const ACE_INET_Addr &from,
+                                   ACE_INET_Addr const &from,
                                    const Mcast_Header &header,
                                    char * data_buf,
                                    TAO_ECG_CDR_Processor *cdr_processor)
@@ -500,7 +500,7 @@ TAO_ECG_CDR_Message_Receiver::process_fragment (
 }
 
 TAO_ECG_CDR_Message_Receiver::Request_Map::ENTRY*
-TAO_ECG_CDR_Message_Receiver::get_source_entry (const ACE_INET_Addr &from)
+TAO_ECG_CDR_Message_Receiver::get_source_entry (ACE_INET_Addr const &from)
 {
   // Get the entry for <from> from the <request_map_>.
   Request_Map::ENTRY * entry {};

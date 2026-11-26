@@ -135,7 +135,7 @@ TAO_EC_Gateway_IIOP::disconnect_consumer_proxies_i ()
             {
               consumer->disconnect_push_consumer ();
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const&)
             {
             }
           CORBA::release (consumer);
@@ -538,7 +538,7 @@ TAO_EC_Gateway_IIOP::push_to_consumer (
     {
       consumer->push (event);
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const&)
     {
       ec_control_->event_channel_not_exist (this);
     }
@@ -546,7 +546,7 @@ TAO_EC_Gateway_IIOP::push_to_consumer (
     {
       ec_control_->system_exception (this, sysex);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Shouldn't happen.
     }

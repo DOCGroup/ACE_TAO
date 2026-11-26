@@ -122,7 +122,7 @@ TAO_EC_And_Filter::max_event_size () const
        i != end;
        ++i)
     {
-      const CORBA::ULong c = (*i)->max_event_size ();
+      CORBA::ULong const c = (*i)->max_event_size ();
       if (n < c)
       {
         n = c;

@@ -65,7 +65,7 @@ TAO_EC_Priority_Dispatching::activate ()
                                  1, // threads
                                  RtecScheduler::OPERATION);
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const&)
         {
           // Ignore exceptions..
         }

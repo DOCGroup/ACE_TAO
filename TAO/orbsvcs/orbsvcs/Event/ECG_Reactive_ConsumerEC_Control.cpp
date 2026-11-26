@@ -34,7 +34,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel ()
   try
     {
       CORBA::Boolean disconnected;
-      const CORBA::Boolean non_existent =
+      CORBA::Boolean const non_existent =
         gateway_->consumer_ec_non_existent (disconnected);
       if (non_existent && !disconnected)
         {
@@ -61,7 +61,7 @@ TAO_ECG_Reactive_ConsumerEC_Control::query_eventchannel ()
 void
 TAO_ECG_Reactive_ConsumerEC_Control::handle_timeout (
       ACE_Time_Value const &,
-      const void *)
+      void const *)
 {
   // NOTE, setting RELATIVE_RT_TIMEOUT_POLICY for the duration of
   // query_eventchannel () below has greater impact than desired.  For

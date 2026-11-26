@@ -45,7 +45,7 @@ TAO_EC_Reactive_ConsumerControl::query_consumers ()
 void
 TAO_EC_Reactive_ConsumerControl::handle_timeout (
       ACE_Time_Value const &,
-      const void *)
+      void const *)
 {
   // NOTE, setting RELATIVE_RT_TIMEOUT_POLICY for the duration of
   // query_consumers () below has greater impact than desired.  For
@@ -77,7 +77,7 @@ TAO_EC_Reactive_ConsumerControl::handle_timeout (
           policies[i]->destroy ();
         }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore all exceptions
     }
@@ -122,7 +122,7 @@ TAO_EC_Reactive_ConsumerControl::activate ()
         }
       }
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       return -1;
     }
@@ -154,7 +154,7 @@ TAO_EC_Reactive_ConsumerControl::consumer_not_exist (
       //            "Consumer %x does not exists\n", long(proxy)));
       proxy->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Reactive_ConsumerControl::consumer_not_exist");
       // Ignore all exceptions..
@@ -180,7 +180,7 @@ TAO_EC_Reactive_ConsumerControl::system_exception (
       // Anything else is serious, including timeouts...
       proxy->disconnect_push_supplier ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore all exceptions..
     }
@@ -197,7 +197,7 @@ TAO_EC_ConsumerControl_Adapter::TAO_EC_ConsumerControl_Adapter (
 int
 TAO_EC_ConsumerControl_Adapter::handle_timeout (
       ACE_Time_Value const &tv,
-      const void *arg)
+      void const *arg)
 {
   this->adaptee_->handle_timeout (tv, arg);
   return 0;
@@ -211,25 +211,25 @@ TAO_EC_Ping_Consumer::work (TAO_EC_ProxyPushSupplier *supplier)
   try
     {
       CORBA::Boolean disconnected;
-      const CORBA::Boolean non_existent =
+      CORBA::Boolean const non_existent =
         supplier->consumer_non_existent (disconnected);
       if (non_existent && !disconnected)
         {
           this->control_->consumer_not_exist (supplier);
         }
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const&)
     {
       this->control_->consumer_not_exist (supplier);
     }
-  catch (const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const&)
     {
       // This is TAO's minor code for a failed connection, we may
       // want to be more lenient in the future..
       // if (transient.minor () == 0x54410085)
       this->control_->consumer_not_exist (supplier);
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const&)
     {
       // Ignore all exceptions
     }
