@@ -64,6 +64,48 @@ private:
   Test_Handler &handler_;
 };
 
+#if defined (ACE_HAS_WCHAR)
+class Wide_Handler
+{
+public:
+  void add_reference () { ++references_; }
+  void remove_reference () { --references_; }
+  int read_from_stream (void *, size_t, size_t) { return 0; }
+  int write_to_stream (void const *buffer, size_t length, size_t char_size)
+  {
+    if (char_size != sizeof (wchar_t))
+      {
+        return -1;
+      }
+    if (length > 2)
+      {
+        length = 2;
+      }
+    written_.append (static_cast<wchar_t const *> (buffer), length);
+    return static_cast<int> (length);
+  }
+  int references_ {};
+  std::wstring written_;
+};
+
+class Wide_Buffer : public ACE::IOS::BasicBufferedStreamBuffer<wchar_t>
+{
+public:
+  explicit Wide_Buffer (Wide_Handler &handler)
+    : ACE::IOS::BasicBufferedStreamBuffer<wchar_t> (8, std::ios::out), handler_ (handler)
+  {
+  }
+
+  int write_to_stream (wchar_t const *buffer, std::streamsize length) override
+  {
+    return handler_.write_to_stream (buffer, static_cast<size_t> (length), sizeof (wchar_t));
+  }
+
+private:
+  Wide_Handler &handler_;
+};
+#endif
+
 int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
@@ -151,5 +193,30 @@ ACE_TMAIN (int, ACE_TCHAR *[])
         ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bidirectional stream lost or repeated data after a short write\n")), 1);
       }
   }
+#if defined (ACE_HAS_WCHAR)
+  Wide_Handler wide_handler;
+  {
+    Wide_Buffer output (wide_handler);
+    if (output.sputn (L"abcd", 4) != 4 || output.pubsync () != -1
+        || output.pubsync () != 0 || wide_handler.written_ != L"abcd")
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Wide buffered stream repeated data after a short write\n")), 1);
+      }
+  }
+  wide_handler.written_.clear ();
+  {
+    ACE::IOS::BasicBidirStreamBuffer<wchar_t, Wide_Handler> output (
+      std::addressof (wide_handler), 8, std::ios::out);
+    if (output.sputn (L"abcd", 4) != 4 || output.pubsync () != -1
+        || output.pubsync () != 0 || wide_handler.written_ != L"abcd")
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Wide bidirectional stream repeated data after a short write\n")), 1);
+      }
+  }
+  if (wide_handler.references_ != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Wide stream handler was not released\n")), 1);
+    }
+#endif
   return 0;
 }
