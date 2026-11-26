@@ -7,7 +7,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 // ****************************************************************
 
 int
-TAO_EC_Timeout_Adapter::handle_timeout (const ACE_Time_Value & /* tv */,
+TAO_EC_Timeout_Adapter::handle_timeout (ACE_Time_Value const & /* tv */,
                                         const void *vp)
 {
   //  ORBSVCS_DEBUG ((LM_DEBUG,

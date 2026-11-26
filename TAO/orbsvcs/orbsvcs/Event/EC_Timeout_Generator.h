@@ -54,8 +54,8 @@ public:
 
   /// Add a timer at the given priority, returns the timer ID.
   virtual int schedule_timer (TAO_EC_Timeout_Filter* filter,
-                              const ACE_Time_Value& delta,
-                              const ACE_Time_Value& interval) = 0;
+                              ACE_Time_Value const & delta,
+                              ACE_Time_Value const & interval) = 0;
 
   /// Cancel a timer at the given priority.
   virtual int cancel_timer (const TAO_EC_QOS_Info& info,
@@ -81,7 +81,7 @@ public:
 
 private:
   /// Casts @a act to EC_Filter and dispatches an event to it.
-  int handle_timeout (const ACE_Time_Value &tv,
+  int handle_timeout (ACE_Time_Value const &tv,
                               const void *act) override;
 };
 

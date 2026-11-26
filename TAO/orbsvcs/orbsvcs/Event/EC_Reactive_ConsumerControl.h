@@ -48,7 +48,7 @@ public:
   explicit TAO_EC_ConsumerControl_Adapter (TAO_EC_Reactive_ConsumerControl *adaptee);
 
   /// Documented in ACE_Event_Handler.
-  int handle_timeout (const ACE_Time_Value &tv,
+  int handle_timeout (ACE_Time_Value const &tv,
                       void const *arg = nullptr) override;
 
 private:
@@ -69,15 +69,15 @@ class TAO_RTEvent_Serv_Export TAO_EC_Reactive_ConsumerControl : public TAO_EC_Co
 public:
   /// Constructor.  It does not assume ownership of the @a event_channel
   /// parameter.
-  TAO_EC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
-                                   const ACE_Time_Value &timeout,
+  TAO_EC_Reactive_ConsumerControl (ACE_Time_Value const &rate,
+                                   ACE_Time_Value const &timeout,
                                    TAO_EC_Event_Channel_Base *event_channel,
                                    CORBA::ORB_ptr orb);
 
   ~TAO_EC_Reactive_ConsumerControl () override = default;
 
   /// Receive the timeout from the adapter
-  void handle_timeout (const ACE_Time_Value &tv,
+  void handle_timeout (ACE_Time_Value const &tv,
                        const void* arg);
 
   /// Documented in TAO_EC_ConsumerControl

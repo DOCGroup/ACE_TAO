@@ -18,8 +18,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_EC_Reactive_ConsumerControl::
-     TAO_EC_Reactive_ConsumerControl (const ACE_Time_Value &rate,
-                                      const ACE_Time_Value &timeout,
+     TAO_EC_Reactive_ConsumerControl (ACE_Time_Value const &rate,
+                                      ACE_Time_Value const &timeout,
                                       TAO_EC_Event_Channel_Base *ec,
                                       CORBA::ORB_ptr orb)
   : rate_ (rate),
@@ -44,7 +44,7 @@ TAO_EC_Reactive_ConsumerControl::query_consumers ()
 
 void
 TAO_EC_Reactive_ConsumerControl::handle_timeout (
-      const ACE_Time_Value &,
+      ACE_Time_Value const &,
       const void *)
 {
   // NOTE, setting RELATIVE_RT_TIMEOUT_POLICY for the duration of
@@ -196,7 +196,7 @@ TAO_EC_ConsumerControl_Adapter::TAO_EC_ConsumerControl_Adapter (
 
 int
 TAO_EC_ConsumerControl_Adapter::handle_timeout (
-      const ACE_Time_Value &tv,
+      ACE_Time_Value const &tv,
       const void *arg)
 {
   this->adaptee_->handle_timeout (tv, arg);

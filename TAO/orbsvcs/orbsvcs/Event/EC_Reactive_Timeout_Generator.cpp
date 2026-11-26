@@ -25,8 +25,8 @@ TAO_EC_Reactive_Timeout_Generator::shutdown ()
 int
 TAO_EC_Reactive_Timeout_Generator::schedule_timer (
       TAO_EC_Timeout_Filter* filter,
-      const ACE_Time_Value& delta,
-      const ACE_Time_Value& interval)
+      ACE_Time_Value const & delta,
+      ACE_Time_Value const & interval)
 {
   return this->reactor_->schedule_timer (std::addressof (this->event_handler_),
                                          static_cast<void*> (filter),
