@@ -376,15 +376,18 @@ TAO_ComponentDef_i::supported_interfaces_i (
                                           false);
 
   CORBA::ULong length = supported_interfaces.length ();
-  ACE_Configuration_Section_Key inherited_key;
+  ACE_Configuration_Section_Key supported_key;
   this->repo_->config ()->open_section (this->section_key_,
                                         ACE_TEXT ("supported"),
                                         true,
-                                        inherited_key);
+                                        supported_key);
+
+  this->repo_->config ()->set_integer_value (supported_key,
+                                             ACE_TEXT ("count"),
+                                             length);
 
   CORBA::String_var name;
   char *supported_path {};
-  ACE_Configuration_Section_Key supported_key;
 
   for (CORBA::ULong i {}; i < length; ++i)
     {

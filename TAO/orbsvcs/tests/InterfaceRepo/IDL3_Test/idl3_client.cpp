@@ -790,6 +790,21 @@ IDL3_Client::component_inheritance_test (
       return -1;
     }
 
+  comp_base->supported_interfaces (supported.in ());
+  supported = comp_base->supported_interfaces ();
+
+  if (supported->length () != length)
+    {
+      if (this->debug_)
+        {
+          ACE_DEBUG ((LM_DEBUG,
+                      "component_inheritance_test: "
+                      "supported interface setter lost entries\n"));
+        }
+
+      return -1;
+    }
+
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       str = supported[i]->id ();
