@@ -40,7 +40,7 @@ ACE_Typed_SV_Message_Queue<T>::recv (ACE_Typed_SV_Message<T> &mb,
 }
 
 template <class T> ACE_INLINE int
-ACE_Typed_SV_Message_Queue<T>::send (const ACE_Typed_SV_Message<T> &mb,
+ACE_Typed_SV_Message_Queue<T>::send (ACE_Typed_SV_Message<T> const &mb,
                                      int mflags)
 {
   ACE_TRACE ("ACE_Typed_SV_Message_Queue<T>::send");

@@ -230,7 +230,7 @@ ACE_Refcounted_Hash_Recyclable<T>::subject ()
 }
 
 template <class T> ACE_INLINE bool
-ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
+ACE_Refcounted_Hash_Recyclable<T>::operator== (ACE_Refcounted_Hash_Recyclable<T> const &rhs) const
 {
   return
     this->recycle_state () == rhs.recycle_state ()
@@ -238,7 +238,7 @@ ACE_Refcounted_Hash_Recyclable<T>::operator== (const ACE_Refcounted_Hash_Recycla
 }
 
 template <class T> ACE_INLINE bool
-ACE_Refcounted_Hash_Recyclable<T>::operator!= (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const
+ACE_Refcounted_Hash_Recyclable<T>::operator!= (ACE_Refcounted_Hash_Recyclable<T> const &rhs) const
 {
   return !this->operator== (rhs);
 }

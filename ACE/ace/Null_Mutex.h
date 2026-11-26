@@ -111,8 +111,8 @@ public:
   void dump () const {}
 
 private:
-  ACE_Guard (const ACE_Guard<ACE_Null_Mutex> &) = delete;
-  void operator= (const ACE_Guard<ACE_Null_Mutex> &) = delete;
+  ACE_Guard (ACE_Guard<ACE_Null_Mutex> const &) = delete;
+  void operator= (ACE_Guard<ACE_Null_Mutex> const &) = delete;
   ACE_Guard (ACE_Guard<ACE_Null_Mutex> &&) = delete;
   void operator= (ACE_Guard<ACE_Null_Mutex> &&) = delete;
 };

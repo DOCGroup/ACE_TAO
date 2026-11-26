@@ -756,8 +756,8 @@ public:
   ~ACE_Refcounted_Hash_Recyclable () override;
 
   /// Compares two instances.
-  bool operator== (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
-  bool operator!= (const ACE_Refcounted_Hash_Recyclable<T> &rhs) const;
+  bool operator== (ACE_Refcounted_Hash_Recyclable<T> const &rhs) const;
+  bool operator!= (ACE_Refcounted_Hash_Recyclable<T> const &rhs) const;
 
   T &subject ();
 

@@ -199,7 +199,7 @@ public:
   ACE_Allocator_Std_Adapter() = default;
 
   template <typename U>
-  ACE_Allocator_Std_Adapter(const ACE_Allocator_Std_Adapter<U>&) {}
+  ACE_Allocator_Std_Adapter(ACE_Allocator_Std_Adapter<U> const &) {}
 
   static T* allocate(size_t n)
   {
@@ -235,13 +235,13 @@ public:
 };
 
 template <typename T, typename U>
-bool operator==(const ACE_Allocator_Std_Adapter<T>&, const ACE_Allocator_Std_Adapter<U>&)
+bool operator==(ACE_Allocator_Std_Adapter<T> const &, ACE_Allocator_Std_Adapter<U> const &)
 {
   return true;
 }
 
 template <typename T, typename U>
-bool operator!=(const ACE_Allocator_Std_Adapter<T>&, const ACE_Allocator_Std_Adapter<U>&)
+bool operator!=(ACE_Allocator_Std_Adapter<T> const &, ACE_Allocator_Std_Adapter<U> const &)
 {
   return false;
 }

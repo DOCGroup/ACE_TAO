@@ -52,7 +52,7 @@ ACE_Timeprobe_Ex (ALLOCATOR *allocator,
 }
 
 template <class ACE_LOCK, class ALLOCATOR>
-ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> &)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::ACE_Timeprobe_Ex (ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> const &)
 {
   //
   // Stupid MSVC is forcing me to define this; please don't use it.

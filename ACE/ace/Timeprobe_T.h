@@ -95,7 +95,7 @@ public:
   void increase_size (u_long size);
 
   /// Not implemented (stupid MSVC won't let it be protected).
-  ACE_Timeprobe_Ex (const ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> &);
+  ACE_Timeprobe_Ex (ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR> const &);
 
   /// @name Internal accessors
   /// @{
