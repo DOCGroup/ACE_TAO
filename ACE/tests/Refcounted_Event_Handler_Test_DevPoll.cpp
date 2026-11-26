@@ -21,7 +21,7 @@
 
 #if defined (ACE_HAS_DEV_POLL) || defined (ACE_HAS_EVENT_POLL)
 
-static const char *message =
+static char const *message =
 "Hello there! Hope you get this message";
 
 class Handler : public ACE_Event_Handler
@@ -31,8 +31,8 @@ public:
 
   ~Handler() override;
 
-  int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg) override;
 
   int handle_input (ACE_HANDLE fd) override;
 
@@ -96,8 +96,8 @@ Handler::get_handle () const
 }
 
 int
-Handler::handle_timeout (const ACE_Time_Value &,
-                         const void *)
+Handler::handle_timeout (ACE_Time_Value const &,
+                         void const *)
 {
   int const me = this->dispatch_order_++;
   if (me != 1)

@@ -93,7 +93,7 @@ struct My_Task : public ACE_Task_Base
 // event handler used to signal when the reactor started
 struct Timer_Handler : public ACE_Event_Handler
 {
-   int handle_timeout (const ACE_Time_Value&, const void*) override
+   int handle_timeout (ACE_Time_Value const &, void const *) override
    {
      g_semaphore.release (); // signal reactor started
      return 0;
@@ -114,7 +114,7 @@ run_main (int, ACE_TCHAR *[])
 #if defined (ACE_HAS_THREADS) && !defined ACE_LACKS_ACCEPT
 
   My_Acceptor acceptor;
-  if (-1 == acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)))
+  if (-1 == acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &)))
     {
       ACE_ERROR_RETURN ((LM_ERROR,
                          ACE_TEXT ("%p\n"),

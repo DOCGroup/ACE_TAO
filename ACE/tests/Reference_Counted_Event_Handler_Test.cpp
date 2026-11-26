@@ -32,8 +32,8 @@ static int test_reference_counted_event_handler_1 = 1;
 static int test_reference_counted_event_handler_2 = 1;
 static int test_closed_in_upcall_event_handler = 1;
 static int debug = 1;
-static const char *one_second_timeout = "one second timeout";
-static const char *two_second_timeout = "two second timeout";
+static char const *one_second_timeout = "one second timeout";
+static char const *two_second_timeout = "two second timeout";
 
 class Reference_Counted_Event_Handler : public ACE_Event_Handler
 {
@@ -46,8 +46,8 @@ public:
 
   int handle_output (ACE_HANDLE) override;
 
-  int handle_timeout (const ACE_Time_Value &,
-                      const void *) override;
+  int handle_timeout (ACE_Time_Value const &,
+                      void const *) override;
 
   int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
@@ -153,12 +153,12 @@ Reference_Counted_Event_Handler::handle_output (ACE_HANDLE)
 }
 
 int
-Reference_Counted_Event_Handler::handle_timeout (const ACE_Time_Value &,
-                                                 const void *arg)
+Reference_Counted_Event_Handler::handle_timeout (ACE_Time_Value const &,
+                                                 void const *arg)
 {
   ACE_DEBUG ((LM_DEBUG,
               "Reference count in Reference_Counted_Event_Handler::handle_timeout() for arg = %C is %Ld\n",
-              static_cast<const char *> (arg),
+              static_cast<char const *> (arg),
               this->reference_count_.load ()));
 
   --this->events_;
@@ -558,8 +558,8 @@ public:
 
   int handle_output (ACE_HANDLE) override;
 
-  int handle_timeout (const ACE_Time_Value &,
-                      const void *) override;
+  int handle_timeout (ACE_Time_Value const &,
+                      void const *) override;
 
   int handle_signal (int, siginfo_t *, ucontext_t *) override;
 
@@ -644,12 +644,12 @@ Simple_Event_Handler::handle_output (ACE_HANDLE)
 }
 
 int
-Simple_Event_Handler::handle_timeout (const ACE_Time_Value &,
-                                      const void *arg)
+Simple_Event_Handler::handle_timeout (ACE_Time_Value const &,
+                                      void const *arg)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("Simple_Event_Handler::handle_timeout() for arg = %C\n"),
-              static_cast<const char *> (arg)));
+              static_cast<char const *> (arg)));
 
   --this->events_;
 
