@@ -18,8 +18,119 @@
 #include "ace/Hash_Cache_Map_Manager_T.h"
 #include "ace/Caching_Strategies_T.h"
 
+#include <cerrno>
+#include <limits>
 #include <memory>
 #include <new>
+#include <stdexcept>
+
+class Resize_Test_Value
+{
+public:
+  Resize_Test_Value ()
+  {
+    if (defaults_until_throw_ == 0)
+      {
+        throw std::runtime_error ("test default construction failure");
+      }
+    if (defaults_until_throw_ > 0)
+      {
+        --defaults_until_throw_;
+      }
+    ++live_;
+  }
+  Resize_Test_Value (Resize_Test_Value const &)
+  {
+    if (copies_until_throw_ == 0)
+      {
+        throw std::runtime_error ("test copy failure");
+      }
+    if (copies_until_throw_ > 0)
+      {
+        --copies_until_throw_;
+      }
+    ++live_;
+  }
+  Resize_Test_Value &operator= (Resize_Test_Value const &) = default;
+  ~Resize_Test_Value () { --live_; }
+  static int defaults_until_throw_;
+  static int copies_until_throw_;
+  static int live_;
+};
+
+int Resize_Test_Value::defaults_until_throw_ {-1};
+int Resize_Test_Value::copies_until_throw_ {-1};
+int Resize_Test_Value::live_ {};
+
+class Resize_Test_Map : public ACE_Map_Manager<int, Resize_Test_Value, ACE_Null_Mutex>
+{
+public:
+  Resize_Test_Map () : ACE_Map_Manager<int, Resize_Test_Value, ACE_Null_Mutex> (4) {}
+  int resize (ACE_UINT32 size) { return this->resize_i (size); }
+};
+
+static int
+test_resize_exceptions ()
+{
+  {
+    Resize_Test_Map map;
+    Resize_Test_Value value;
+    if (map.bind (1, value) != 0 || map.bind (2, value) != 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not set up resize test\n")), -1);
+      }
+    int const original_live = Resize_Test_Value::live_;
+    errno = 0;
+    if (map.resize (4) != -1 || errno != ENOMEM || map.current_size () != 2)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Map accepted a non-growing resize\n")), -1);
+      }
+    errno = 0;
+    if (map.resize (ACE_UINT32_MAX) != -1 || errno != ENOMEM || map.current_size () != 2)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Map accepted a sentinel-sized resize\n")), -1);
+      }
+    errno = 0;
+    if (map.open ((std::numeric_limits<size_t>::max) ()) != -1
+        || errno != EINVAL || map.current_size () != 2)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Map accepted an oversized capacity\n")), -1);
+      }
+    int const copy_cases[] = {1, 3, -1};
+    for (int const copies : copy_cases)
+      {
+        Resize_Test_Value::copies_until_throw_ = copies;
+        Resize_Test_Value::defaults_until_throw_ = copies == -1 ? 1 : -1;
+        bool caught {};
+        try
+          {
+            map.resize (8);
+          }
+        catch (std::runtime_error const &)
+          {
+            caught = true;
+          }
+        if (!caught || Resize_Test_Value::live_ != original_live || map.total_size () != 4
+            || map.current_size () != 2 || map.find (1) != 0 || map.find (2) != 0)
+          {
+            ACE_ERROR_RETURN ((LM_ERROR,
+                               ACE_TEXT ("Map resize failed: copies %d, caught %d, live %d, total %B, current %B\n"),
+                               copies, caught, Resize_Test_Value::live_, map.total_size (), map.current_size ()), -1);
+          }
+      }
+    Resize_Test_Value::copies_until_throw_ = -1;
+    Resize_Test_Value::defaults_until_throw_ = -1;
+    if (map.resize (8) != 0 || map.total_size () != 8 || map.find (1) != 0 || map.find (2) != 0)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Map could not resize after a construction failure\n")), -1);
+      }
+  }
+  if (Resize_Test_Value::live_ != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Map resize leaked constructed entries\n")), -1);
+    }
+  return 0;
+}
 
 using MUTEX = ACE_Null_Mutex;
 using TYPE = ACE_UINT32;
@@ -900,6 +1011,7 @@ run_main (int argc, ACE_TCHAR *argv[])
   ACE_START_TEST (ACE_TEXT ("Map_Manager_Test"));
   ACE_LOG_MSG->clr_flags (ACE_Log_Msg::VERBOSE_LITE);
   int result = 0;
+  result += test_resize_exceptions ();
   size_t table_size = ACE_MAX_ITERATIONS / 2;
   size_t iterations = ACE_MAX_ITERATIONS;
   int test_iterators = 1;

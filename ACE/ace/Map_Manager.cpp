@@ -9,6 +9,8 @@
 
 #include "ace/Malloc_Base.h"
 
+#include <cerrno>
+#include <limits>
 #include <memory>
 
 #if !defined (__ACE_INLINE__)
@@ -31,6 +33,12 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
+  if (size == 0 || size > this->occupied_list_id ())
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
   // Close old map (if any).
   this->close_i ();
 
@@ -42,22 +50,15 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::open (size_t size,
 
   this->allocator_ = alloc;
 
-  // This assertion is here to help track a situation that shouldn't
-  // happen.
-  ACE_ASSERT (size != 0);
-
   // Active_Map_Manager depends on the <slot_index_> being of fixed
   // size. It cannot be size_t because size_t is 64-bits on 64-bit
   // platform and 32-bits on 32-bit platforms. Size of the <slot_index_>
   // has to be consistent across platforms. ACE_UIN32 is chosen as
-  // ACE_UIN32_MAX is big enough. The assert is to ensure that the user
-  // doesn't open the ACE_Map_Manager with a bigger size than we can
-  // handle.
-  ACE_ASSERT (size <= ACE_UINT32_MAX);
+  // ACE_UINT32_MAX is big enough. The two sentinel values are reserved.
 
   // Resize from 0 to <size>.  Note that this will also set up the
   // circular free list.
-  return this->resize_i ((ACE_UINT32) size);
+  return this->resize_i (static_cast<ACE_UINT32> (size));
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
@@ -536,50 +537,84 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::resize_i (ACE_UINT32 new_size)
   ACE_UINT32 i;
   ENTRY *temp {};
 
+  if (new_size <= this->total_size_ || new_size > this->occupied_list_id ()
+      || static_cast<size_t> (new_size) > (std::numeric_limits<size_t>::max) () / sizeof (ENTRY))
+    {
+      errno = ENOMEM;
+      return -1;
+    }
+
   // Allocate new memory.
   ACE_ALLOCATOR_RETURN (temp,
                         static_cast<ENTRY *> (
                           this->allocator_->malloc (new_size * sizeof (ENTRY))),
                         -1);
 
-  // Copy over the occupied entires.
-  for (i = this->occupied_list_.next ();
-       i != this->occupied_list_id ();
-       i = this->search_structure_[i].next ())
+  ACE_UINT32 copied_occupied {};
+  ACE_UINT32 copied_free {};
+  ACE_UINT32 constructed_new {};
+  ACE_UINT32 last_occupied = this->occupied_list_id ();
+  ACE_UINT32 last_free = this->free_list_id ();
+  try
     {
-      // Call the copy constructor using operator placement new.
-      new (&(temp[i])) ENTRY (this->search_structure_[i]);
-    }
+      for (i = this->occupied_list_.next ();
+           i != this->occupied_list_id ();
+           i = this->search_structure_[i].next ())
+        {
+          new (std::addressof (temp[i])) ENTRY (this->search_structure_[i]);
+          last_occupied = i;
+          ++copied_occupied;
+        }
 
-  // Copy over the free entires.
-  for (i = this->free_list_.next ();
-       i != this->free_list_id ();
-       i = this->search_structure_[i].next ())
-    {
-      // Call the copy constructor using operator placement new.
-      new (&(temp[i])) ENTRY (this->search_structure_[i]);
-    }
+      for (i = this->free_list_.next ();
+           i != this->free_list_id ();
+           i = this->search_structure_[i].next ())
+        {
+          new (std::addressof (temp[i])) ENTRY (this->search_structure_[i]);
+          last_free = i;
+          ++copied_free;
+        }
 
-  // Construct the new elements.
-  for (i = this->total_size_; i < new_size; ++i)
-    {
-      // Call the constructor for each element in the array using
-      // operator placement new.  Note that this requires a default
-      // constructor for <EXT_ID> and <INT_ID>.
-      new (&(temp[i])) ENTRY;
-      temp[i].next (i + 1);
-      temp[i].prev (i - 1);
+      for (i = this->total_size_; i < new_size; ++i)
+        {
+          new (std::addressof (temp[i])) ENTRY;
+          ++constructed_new;
+          temp[i].next (i + 1);
+          temp[i].prev (i - 1);
 
 #if defined (ACE_HAS_LAZY_MAP_MANAGER)
 
-      // Even though this slot is initially free, we need the <free_>
-      // flag to be zero so that we don't have to set it when the slot
-      // is moved to the occupied list.  In addition, this flag has no
-      // meaning while this slot is in the free list.
-      temp[i].free_ = false;
+          // Even though this slot is initially free, we need the <free_>
+          // flag to be zero so that we don't have to set it when the slot
+          // is moved to the occupied list.  In addition, this flag has no
+          // meaning while this slot is in the free list.
+          temp[i].free_ = false;
 
 #endif /* ACE_HAS_LAZY_MAP_MANAGER */
 
+        }
+    }
+  catch (...)
+    {
+      while (constructed_new > 0)
+        {
+          --constructed_new;
+          temp[this->total_size_ + constructed_new].~ENTRY ();
+        }
+      while (copied_free > 0)
+        {
+          temp[last_free].~ENTRY ();
+          last_free = this->search_structure_[last_free].prev ();
+          --copied_free;
+        }
+      while (copied_occupied > 0)
+        {
+          temp[last_occupied].~ENTRY ();
+          last_occupied = this->search_structure_[last_occupied].prev ();
+          --copied_occupied;
+        }
+      this->allocator_->free (temp);
+      throw;
     }
 
   // Add new entries to the free list.
