@@ -302,16 +302,16 @@ public:
   void msg_priority (unsigned long priority);
 
   /// Get execution time associated with the message.
-  const ACE_Time_Value &msg_execution_time () const;
+  ACE_Time_Value const &msg_execution_time () const;
 
   /// Set execution time associated with the message.
-  void msg_execution_time (const ACE_Time_Value &et);
+  void msg_execution_time (ACE_Time_Value const &et);
 
   /// Get absolute time of deadline associated with the message.
-  const ACE_Time_Value &msg_deadline_time () const;
+  ACE_Time_Value const &msg_deadline_time () const;
 
   /// Set absolute time of deadline associated with the message.
-  void msg_deadline_time (const ACE_Time_Value &dt);
+  void msg_deadline_time (ACE_Time_Value const &dt);
 
   /// @name Deep and shallow copy operations
   /// @{
@@ -329,7 +329,7 @@ public:
    * if you want to eliminate lots of checks for NULL @a mb pointers
    * before calling _duplicate() on them.
    */
-  static ACE_Message_Block *duplicate (const ACE_Message_Block *mb);
+  static ACE_Message_Block *duplicate (ACE_Message_Block const *mb);
 
   /**
    * Decrease the shared ACE_Data_Block's reference count by 1.  If the

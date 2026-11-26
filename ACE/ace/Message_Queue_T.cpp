@@ -2648,7 +2648,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::enqueue_i (ACE_Message_Bl
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
 ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::sublist_enqueue_i (ACE_Message_Block *new_item,
-                                                             const ACE_Time_Value &current_time,
+                                                             ACE_Time_Value const &current_time,
                                                              ACE_Message_Block *&sublist_head,
                                                              ACE_Message_Block *&sublist_tail,
                                                              ACE_Dynamic_Message_Strategy::Priority_Status status)
@@ -2867,7 +2867,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::dequeue_head_i (ACE_Messa
 // sets the passed pointer to zero and returns -1.
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
-ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_queue (const ACE_Time_Value &current_time)
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_queue (ACE_Time_Value const &current_time)
 {
   int result;
 
@@ -2885,7 +2885,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_queue (const ACE_
 // function.
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
-ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (const ACE_Time_Value &current_time)
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (ACE_Time_Value const &current_time)
 {
   ACE_Dynamic_Message_Strategy::Priority_Status current_status;
 
@@ -3022,7 +3022,7 @@ ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_pending_queue (co
 // status function.
 
 template <ACE_SYNCH_DECL, class TIME_POLICY> int
-ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_late_queue (const ACE_Time_Value &current_time)
+ACE_Dynamic_Message_Queue<ACE_SYNCH_USE, TIME_POLICY>::refresh_late_queue (ACE_Time_Value const &current_time)
 {
   ACE_Dynamic_Message_Strategy::Priority_Status current_status;
 

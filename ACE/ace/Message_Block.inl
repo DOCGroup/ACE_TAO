@@ -225,7 +225,7 @@ ACE_Message_Block::msg_priority (unsigned long pri)
   this->priority_ = pri;
 }
 
-ACE_INLINE const ACE_Time_Value &
+ACE_INLINE ACE_Time_Value const &
 ACE_Message_Block::msg_execution_time () const
 {
   ACE_TRACE ("ACE_Message_Block::msg_execution_time ()");
@@ -237,7 +237,7 @@ ACE_Message_Block::msg_execution_time () const
 }
 
 ACE_INLINE void
-ACE_Message_Block::msg_execution_time (const ACE_Time_Value &et)
+ACE_Message_Block::msg_execution_time (ACE_Time_Value const &et)
 {
   ACE_TRACE ("ACE_Message_Block::msg_execution_time (const ACE_Time_Value & et)");
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)
@@ -247,7 +247,7 @@ ACE_Message_Block::msg_execution_time (const ACE_Time_Value &et)
 #endif /* ACE_HAS_TIMED_MESSAGE_BLOCKS */
 }
 
-ACE_INLINE const ACE_Time_Value &
+ACE_INLINE ACE_Time_Value const &
 ACE_Message_Block::msg_deadline_time () const
 {
   ACE_TRACE ("ACE_Message_Block::msg_deadline_time ()");
@@ -260,7 +260,7 @@ ACE_Message_Block::msg_deadline_time () const
 }
 
 ACE_INLINE void
-ACE_Message_Block::msg_deadline_time (const ACE_Time_Value &dt)
+ACE_Message_Block::msg_deadline_time (ACE_Time_Value const &dt)
 {
   ACE_TRACE ("ACE_Message_Block::msg_deadline_time (const ACE_Time_Value & et)");
 #if defined (ACE_HAS_TIMED_MESSAGE_BLOCKS)

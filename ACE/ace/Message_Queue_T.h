@@ -859,7 +859,7 @@ protected:
 
   /// Enqueue a message in priority order within a given priority status sublist
   virtual int sublist_enqueue_i (ACE_Message_Block *new_item,
-                                 const ACE_Time_Value &current_time,
+                                 ACE_Time_Value const &current_time,
                                  ACE_Message_Block *&sublist_head,
                                  ACE_Message_Block *&sublist_tail,
                                  ACE_Dynamic_Message_Strategy::Priority_Status status);
@@ -875,15 +875,15 @@ protected:
 
   /// Refresh the queue using the strategy
   /// specific priority status function.
-  virtual int refresh_queue (const ACE_Time_Value & current_time);
+  virtual int refresh_queue (ACE_Time_Value const & current_time);
 
   /// Refresh the pending queue using the strategy
   /// specific priority status function.
-  virtual int refresh_pending_queue (const ACE_Time_Value & current_time);
+  virtual int refresh_pending_queue (ACE_Time_Value const & current_time);
 
   /// Refresh the late queue using the strategy
   /// specific priority status function.
-  virtual int refresh_late_queue (const ACE_Time_Value & current_time);
+  virtual int refresh_late_queue (ACE_Time_Value const & current_time);
 
   /// Pointer to head of the pending messages
   ACE_Message_Block *pending_head_ {};

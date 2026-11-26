@@ -263,7 +263,7 @@ ACE_Message_Block::total_size_and_length (size_t &mb_size,
 {
   ACE_TRACE ("ACE_Message_Block::total_size_and_length");
 
-  for (const ACE_Message_Block *i = this;
+  for (ACE_Message_Block const *i = this;
        i != nullptr;
        i = i->cont ())
     {
@@ -278,7 +278,7 @@ ACE_Message_Block::total_size () const
   ACE_TRACE ("ACE_Message_Block::total_size");
 
   size_t size {};
-  for (const ACE_Message_Block *i = this;
+  for (ACE_Message_Block const *i = this;
        i != nullptr;
        i = i->cont ())
     {
@@ -294,7 +294,7 @@ ACE_Message_Block::total_length () const
   ACE_TRACE ("ACE_Message_Block::total_length");
 
   size_t length {};
-  for (const ACE_Message_Block *i = this;
+  for (ACE_Message_Block const *i = this;
        i != nullptr;
        i = i->cont ())
     {
@@ -311,7 +311,7 @@ ACE_Message_Block::total_capacity () const
 
   size_t size {};
 
-  for (const ACE_Message_Block *i = this;
+  for (ACE_Message_Block const *i = this;
        i != nullptr;
        i = i->cont ())
     {
@@ -1142,7 +1142,7 @@ ACE_Message_Block::duplicate () const
 }
 
 ACE_Message_Block *
-ACE_Message_Block::duplicate (const ACE_Message_Block *mb)
+ACE_Message_Block::duplicate (ACE_Message_Block const *mb)
 {
   ACE_TRACE ("ACE_Message_Block::duplicate");
   if (mb == nullptr)
