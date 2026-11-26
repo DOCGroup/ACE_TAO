@@ -2,6 +2,8 @@
 #include "orbsvcs/Event/EC_QOS_Info.h"
 #include "orbsvcs/Event/EC_Supplier_Filter.h"
 
+#include <memory>
+
 #if ! defined (__ACE_INLINE__)
 #include "orbsvcs/Event/EC_Null_Scheduling.inl"
 #endif /* __ACE_INLINE__ */
@@ -22,7 +24,7 @@ TAO_EC_Null_Scheduling::schedule_event (RtecEventComm::EventSet const &event,
     {
       RtecEventComm::Event const & e = event[j];
       RtecEventComm::Event* buffer =
-        const_cast<RtecEventComm::Event*> (&e);
+        const_cast<RtecEventComm::Event*> (std::addressof (e));
       RtecEventComm::EventSet single_event (1, 1, buffer, false);
 
       TAO_EC_QOS_Info event_info;
