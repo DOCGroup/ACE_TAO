@@ -179,7 +179,7 @@ TAO_Codeset_Manager_i::process_service_context (TAO_ServerRequest &request)
     {
       // Convert the Service Context to Codeset Context
       char const *buffer =
-        reinterpret_cast<const char*> (context.context_data.get_buffer ());
+        reinterpret_cast<char const *> (context.context_data.get_buffer ());
 
       TAO_InputCDR cdr (buffer,context.context_data.length ());
       CORBA::Boolean byte_order {};
