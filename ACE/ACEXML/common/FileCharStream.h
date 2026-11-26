@@ -83,14 +83,10 @@ public:
    */
   void rewind () override;
 
-  /*
-   * Get the character encoding for the file.
-   */
+  /// Get the character encoding for the file.
   ACEXML_Char const *getEncoding () override;
 
-  /*
-   * Get the systemId for the underlying CharStream
-   */
+  /// Get the systemId for the underlying CharStream
   ACEXML_Char const *getSystemId () override;
 
 private:

@@ -71,14 +71,10 @@ public:
    */
   int peek () override;
 
-  /*
-   * Get the character encoding for a byte stream or URI.
-   */
+  /// Get the character encoding for a byte stream or URI.
   ACEXML_Char const *getEncoding () override;
 
-  /*
-   * Get the systemId for the underlying CharStream
-   */
+  /// Get the systemId for the underlying CharStream
   ACEXML_Char const *getSystemId () override;
 
   /**

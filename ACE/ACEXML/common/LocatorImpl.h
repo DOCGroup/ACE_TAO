@@ -80,57 +80,37 @@ public:
 
   ~ACEXML_LocatorImpl () override;
 
-  /*
-   * Return the column number where the current document event ends.
-   */
+  /// Return the column number where the current document event ends.
   int getColumnNumber () const override;
 
-  /*
-   * Return the line number where the current document event ends.
-   */
+  /// Return the line number where the current document event ends.
   int getLineNumber () const override;
 
-  /*
-   * Return the public identifier for the current document event.
-   */
+  /// Return the public identifier for the current document event.
   ACEXML_Char const *getPublicId () const override;
 
-  /*
-   * Return the system identifier for the current document event.
-   */
+  /// Return the system identifier for the current document event.
   ACEXML_Char const *getSystemId () const override;
 
-  /*
-   * Set the column number of this locator.
-   */
+  /// Set the column number of this locator.
   void setColumnNumber (int cn);
 
-  /*
-   * Set the line number of this locator.
-   */
+  /// Set the line number of this locator.
   void setLineNumber (int ln);
 
-  /*
-   * Set the public identifier of this locator.
-   */
+  /// Set the public identifier of this locator.
   void setPublicId (ACEXML_Char const *id);
 
-  /*
-   * Set the system identifier of this locator.
-   */
+  /// Set the system identifier of this locator.
   void setSystemId (ACEXML_Char const *id);
 
-  /*
-   * Increment the line number.
-   */
+  /// Increment the line number.
   void incrLineNumber ();
 
-  /*
-   * Increment the column number.
-   */
+  /// Increment the column number.
   void incrColumnNumber ();
 
-  /*
+  /**
    * Reset the Locator information. This is necessary because one might
    * want to use the same parser to parse multiple files. In that case,
    * tying the life of the Locator with the parser is not appropriate. The
