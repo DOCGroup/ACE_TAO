@@ -47,7 +47,7 @@ public:
   ACE_Thread_Mutex &operator= (ACE_Thread_Mutex const &) = delete;
   ACE_Thread_Mutex &operator= (ACE_Thread_Mutex &&) = delete;
 
-  ACE_Thread_Mutex (const ACE_TCHAR *name = nullptr,
+  ACE_Thread_Mutex (ACE_TCHAR const *name = nullptr,
                     ACE_mutexattr_t *attributes = nullptr);
 
   /// Implicitly destroy the mutex.

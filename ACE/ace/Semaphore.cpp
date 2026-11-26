@@ -28,7 +28,7 @@ ACE_Semaphore::dump () const
 
 ACE_Semaphore::ACE_Semaphore (unsigned int count,
                               int type,
-                              const ACE_TCHAR *name,
+                              ACE_TCHAR const *name,
                               void *arg,
                               int max)
 {

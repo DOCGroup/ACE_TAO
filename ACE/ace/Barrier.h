@@ -31,7 +31,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_Barrier
 {
 public:
-  ACE_Barrier (unsigned int, const ACE_TCHAR * = nullptr, void * = nullptr) {}
+  ACE_Barrier (unsigned int, ACE_TCHAR const *= nullptr, void * = nullptr) {}
   ~ACE_Barrier () = default;
   int wait () { ACE_NOTSUP_RETURN (-1); }
   void dump () const {}
@@ -51,7 +51,7 @@ struct ACE_Export ACE_Sub_Barrier
   /// Initialization.
   ACE_Sub_Barrier (unsigned int count,
                    ACE_Thread_Mutex &lock,
-                   const ACE_TCHAR *name = nullptr,
+                   ACE_TCHAR const *name = nullptr,
                    void *arg = nullptr);
 
   ~ACE_Sub_Barrier () = default;
@@ -96,7 +96,7 @@ public:
 
   /// Initialize the barrier to synchronize @a count threads.
   ACE_Barrier (unsigned int count,
-               const ACE_TCHAR *name = nullptr,
+               ACE_TCHAR const *name = nullptr,
                void *arg = nullptr);
 
   ~ACE_Barrier () = default;
@@ -160,7 +160,7 @@ class ACE_Export ACE_Thread_Barrier : public ACE_Barrier
 {
 public:
   /// Create a Thread_Barrier, passing in the optional @a name.
-  explicit ACE_Thread_Barrier (unsigned int count, const ACE_TCHAR *name = nullptr);
+  explicit ACE_Thread_Barrier (unsigned int count, ACE_TCHAR const *name = nullptr);
 
   ~ACE_Thread_Barrier () = default;
 

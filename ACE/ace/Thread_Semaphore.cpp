@@ -33,7 +33,7 @@ ACE_Thread_Semaphore::dump () const
 }
 
 ACE_Thread_Semaphore::ACE_Thread_Semaphore (unsigned int count,
-                                            const ACE_TCHAR *name,
+                                            ACE_TCHAR const *name,
                                             void *arg,
                                             int max)
   : ACE_Semaphore (count, USYNC_THREAD, name, arg, max)
@@ -44,7 +44,7 @@ ACE_Thread_Semaphore::ACE_Thread_Semaphore (unsigned int count,
 /*****************************************************************************/
 
 ACE_Thread_Semaphore *
-ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>::operator () (const ACE_TCHAR *name)
+ACE_Malloc_Lock_Adapter_T<ACE_Thread_Semaphore>::operator () (ACE_TCHAR const *name)
 {
   ACE_Thread_Semaphore *p {};
   if (name == nullptr)

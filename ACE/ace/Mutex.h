@@ -51,7 +51,7 @@ public:
 
   /// Initialize the mutex.
   ACE_Mutex (int type = USYNC_THREAD,
-             const ACE_TCHAR *name = nullptr,
+             ACE_TCHAR const *name = nullptr,
              ACE_mutexattr_t *arg = nullptr,
              mode_t mode = ACE_DEFAULT_FILE_PERMS);
 
@@ -147,7 +147,7 @@ public:
 
   /// If a file was created as the underlying storage for the mutex,
   /// remove it from the filesystem (for process-shared mutexes).
-  static int unlink (const ACE_TCHAR *name);
+  static int unlink (ACE_TCHAR const *name);
 
   /// Dump the state of an object.
   void dump () const;
@@ -177,7 +177,7 @@ public:
    * it when we go away (only the actor that initialized the memory
    * can destroy it).
    */
-  const ACE_TCHAR *lockname_ {};
+  ACE_TCHAR const *lockname_ {};
 #endif /* ACE_MUTEX_USE_PROCESS_LOCK */
 
   /// Mutex type supported by the OS.

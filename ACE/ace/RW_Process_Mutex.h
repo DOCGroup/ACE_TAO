@@ -39,7 +39,7 @@ public:
   /// @a name, @a flags and @a mode \sa ACE_File_Lock.
   /// If not specified, a name is generated and flags and mode are set
   /// to default platform values.
-  ACE_RW_Process_Mutex (const ACE_TCHAR *name = nullptr,
+  ACE_RW_Process_Mutex (ACE_TCHAR const *name = nullptr,
                         int flags = O_CREAT|O_RDWR,
                         mode_t mode =  ACE_DEFAULT_RW_PROCESS_MUTEX_PERMS);
 
@@ -115,7 +115,7 @@ private:
   ACE_TCHAR name_[ACE_UNIQUE_NAME_LEN];
 
   /// Create and return the unique name.
-  const ACE_TCHAR *unique_name ();
+  ACE_TCHAR const *unique_name ();
 
   /// We need this to get the readers/writer semantics...
   ACE_File_Lock lock_;

@@ -33,7 +33,7 @@ ACE_Mutex::dump () const
 }
 
 int
-ACE_Mutex::unlink (const ACE_TCHAR *name)
+ACE_Mutex::unlink (ACE_TCHAR const *name)
 {
 #ifdef ACE_MUTEX_PROCESS_LOCK_IS_SEMA
   return ACE_OS::sema_unlink (ACE_TEXT_ALWAYS_CHAR (name));
@@ -43,7 +43,7 @@ ACE_Mutex::unlink (const ACE_TCHAR *name)
 #endif
 }
 
-ACE_Mutex::ACE_Mutex (int type, const ACE_TCHAR *name,
+ACE_Mutex::ACE_Mutex (int type, ACE_TCHAR const *name,
                       ACE_mutexattr_t *arg, mode_t mode)
 {
   // ACE_TRACE ("ACE_Mutex::ACE_Mutex");

@@ -39,7 +39,7 @@ public:
   ACE_Recursive_Thread_Mutex &operator= (ACE_Recursive_Thread_Mutex &&) = delete;
 
   /// Initialize a recursive mutex.
-  ACE_Recursive_Thread_Mutex (const ACE_TCHAR *name = nullptr,
+  ACE_Recursive_Thread_Mutex (ACE_TCHAR const *name = nullptr,
                               ACE_mutexattr_t *arg = nullptr);
 
   /// Implicitly release a recursive mutex.

@@ -33,7 +33,7 @@ ACE_Sub_Barrier::dump () const
 
 ACE_Sub_Barrier::ACE_Sub_Barrier (unsigned int count,
                                   ACE_Thread_Mutex &lock,
-                                  const ACE_TCHAR *name,
+                                  ACE_TCHAR const *name,
                                   void *arg)
   : barrier_finished_ (lock, name, arg),
     running_threads_ (count)
@@ -60,7 +60,7 @@ ACE_Barrier::dump () const
 }
 
 ACE_Barrier::ACE_Barrier (unsigned int count,
-                          const ACE_TCHAR *name,
+                          ACE_TCHAR const *name,
                           void *arg)
   : lock_ (name, (ACE_mutexattr_t *) arg),
     count_ (count),
@@ -150,7 +150,7 @@ ACE_Barrier::shutdown ()
 ACE_ALLOC_HOOK_DEFINE(ACE_Thread_Barrier)
 
 ACE_Thread_Barrier::ACE_Thread_Barrier (unsigned int count,
-                                        const ACE_TCHAR *name)
+                                        ACE_TCHAR const *name)
   : ACE_Barrier (count, name)
 {
 // ACE_TRACE ("ACE_Thread_Barrier::ACE_Thread_Barrier");

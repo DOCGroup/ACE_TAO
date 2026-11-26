@@ -22,7 +22,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_ALLOC_HOOK_DEFINE(ACE_RW_Thread_Mutex)
 
-ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex (const ACE_TCHAR *name,
+ACE_RW_Thread_Mutex::ACE_RW_Thread_Mutex (ACE_TCHAR const *name,
                                           void *arg)
   : ACE_RW_Mutex (USYNC_THREAD, name, arg)
 {

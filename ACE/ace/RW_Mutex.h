@@ -40,7 +40,7 @@ public:
 
   /// Initialize a readers/writer lock.
   ACE_RW_Mutex (int type = USYNC_THREAD,
-                const ACE_TCHAR *name = nullptr,
+                ACE_TCHAR const *name = nullptr,
                 void *arg = nullptr);
 
   /// Implicitly destroy a readers/writer lock
