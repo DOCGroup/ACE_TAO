@@ -25,35 +25,41 @@ using TAO_EC_Event_Initializer = void (*) (RtecEventComm::Event&);
  *
  * This class allows easy (free from CORBA IDL constraints)
  * construction of RtecEventChannelAdmin::ConsumerQOS structures.
- * = CORRELATIONS
+ * @par Correlations
  * ACE_ConsumerQOS_Factory separates subscriptions into conjunction
  * and disjunction groups.  A group can be thought of as a set of
  * events inside parenthesis: (A+B+C), where A,B, and C are
  * events.
  * The following code would be used to represent (A+B) | (B+C):
- * ACE_ConsumerQOS_Factor factory;
+ * @code
+ * ACE_ConsumerQOS_Factory factory;
  * factory.start_conjunction_group ();
  * factory.insert (A);
  * factory.insert (B);
  * factory.start_conjunction_group ();
  * factory.insert (B);
  * factory.insert (C);
+ * @endcode
  * The following code would be used to represent (A|B) | (B|C):
- * ACE_ConsumerQOS_Factor factory;
+ * @code
+ * ACE_ConsumerQOS_Factory factory;
  * factory.start_disjunction_group ();
  * factory.insert (A);
  * factory.insert (B);
  * factory.start_disjunction_group ();
  * factory.insert (B);
  * factory.insert (C);
+ * @endcode
  * First, this may not seem to be initially useful, as (A|B) |
  * (B|C) seems the same as A|B|C.  However, this form does have a
  * significant use when deadline timers are specified (described
- * below). Note that groups end with the next call to
+ * below).
+ *
+ * @note Groups end with the next call to
  * start_XX_group.  Groups are always OR'd together.  That is,
  * there is no way to directly build (A|B|C) + (D|E|F).  You can
  * always expand the previous statement to the OR of multiple ANDs.
- * = TIMEOUTS
+ * @par Timeouts
  * There are two types of timeout types defined in
  * Event_Service_Constants.h.
  * ACE_ES_EVENT_INTERVAL_TIMEOUT - the consumer wants to receive a
@@ -66,7 +72,7 @@ using TAO_EC_Event_Initializer = void (*) (RtecEventComm::Event&);
  * Interval Timer:
  * (A+B+C) | (D+E+F) | (G+H+I) | IntervalTimeout
  * This registers to receive an interval timeout regardless of
- * other dependencies.  Event if events occur, the interval
+ * other dependencies. Even if events occur, the interval
  * timeout will still be sent.
  * Deadline Timer:
  * (A+B+C) | (D+E+F) | (G+H+I) | DeadlineTimeout
