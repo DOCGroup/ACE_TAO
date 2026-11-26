@@ -164,7 +164,7 @@ class ACE_Export ACE_Log_Category_TSS
 public:
   ACE_Log_Category_TSS(ACE_Log_Category* category, ACE_Log_Msg* logger);
 
-  const char* name() const;
+  char const * name() const;
   unsigned int id() const;
 
   ACE_Log_Msg* logger();
@@ -181,20 +181,20 @@ public:
    * restart flag, ostream, and the callback object.  This combines
    * all the other set methods into a single method.
    */
-  void set (const char *file,
+  void set (char const *file,
             int         line,
             int         op_status = -1,
             int         errnum = 0);
 
   /// These values are only actually set if the requested priority is
   /// enabled.
-  void conditional_set (const char *file,
+  void conditional_set (char const *file,
                         int         line,
                         int         op_status,
                         int         errnum);
 
 #if !defined (ACE_LACKS_VA_FUNCTIONS)
-  ssize_t log (ACE_Log_Priority priority, const ACE_TCHAR *format, ...);
+  ssize_t log (ACE_Log_Priority priority, ACE_TCHAR const *format, ...);
 
 #if defined (ACE_HAS_WCHAR)
   ssize_t log (ACE_Log_Priority priority, const ACE_ANTI_TCHAR *format, ...);
@@ -205,7 +205,7 @@ public:
   ssize_t log (const ACE_Log_Formatter &formatter);
 #endif /* ACE_LACKS_VA_FUNCTIONS */
 
-  ssize_t log (const ACE_TCHAR *format,
+  ssize_t log (ACE_TCHAR const *format,
                ACE_Log_Priority priority,
                va_list          argp);
 
@@ -218,9 +218,9 @@ public:
    * printable.
    */
   int log_hexdump (ACE_Log_Priority log_priority,
-                   const char *     buffer,
+                   char const *     buffer,
                    size_t           size,
-                   const ACE_TCHAR *text = nullptr);
+                   ACE_TCHAR const *text = nullptr);
 
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -281,7 +281,7 @@ public:
    * static initialization problem when the ACE_Log_Category
    * is created in static storage.
    */
-  explicit ACE_Log_Category(const char* name);
+  explicit ACE_Log_Category(char const * name);
   ~ACE_Log_Category();
 
   ACE_Log_Category (ACE_Log_Category const &) = delete;
@@ -290,7 +290,7 @@ public:
   ACE_Log_Category &operator= (ACE_Log_Category &&) = delete;
 
   unsigned int id() const;
-  const char* name() const;
+  char const * name() const;
 
   ACE_Log_Category_TSS* per_thr_obj();
 
@@ -305,7 +305,7 @@ public:
 private:
   friend class ACE_Log_Category_TSS;
 
-  const char* name_;
+  char const * name_;
   unsigned int id_ {};
   u_long priority_mask_;
 

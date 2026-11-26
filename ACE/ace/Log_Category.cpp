@@ -20,7 +20,7 @@ ACE_Log_Category_tss_destroy(void * p)
 }
 #endif // defined (ACE_HAS_THREADS)
 
-ACE_Log_Category::ACE_Log_Category(const char* name)
+ACE_Log_Category::ACE_Log_Category(char const * name)
   : name_(name)
 /// Default per-process priority mask
 /// By default, all priorities are enabled.

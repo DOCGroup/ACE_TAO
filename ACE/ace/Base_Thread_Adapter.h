@@ -102,7 +102,7 @@ public:
   static void close_log_msg ();
 
   /// Invoke the sync_log_msg_hook, if it is present
-  static void sync_log_msg (const ACE_TCHAR *prog_name);
+  static void sync_log_msg (ACE_TCHAR const *prog_name);
 
   /// Invoke the thr_desc_log_msg_hook, if it is present
   static ACE_OS_Thread_Descriptor *thr_desc_log_msg ();

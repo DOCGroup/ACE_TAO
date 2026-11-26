@@ -79,7 +79,7 @@ ACE_Base_Thread_Adapter::close_log_msg ()
 }
 
 void
-ACE_Base_Thread_Adapter::sync_log_msg (const ACE_TCHAR *prg)
+ACE_Base_Thread_Adapter::sync_log_msg (ACE_TCHAR const *prg)
 {
   if (ACE_Base_Thread_Adapter::sync_log_msg_hook_ != nullptr)
   {
