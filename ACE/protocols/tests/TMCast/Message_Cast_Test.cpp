@@ -2,6 +2,8 @@
 #include "ace/TMCast/LinkListener.hpp"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
+#include "ace/OS_NS_unistd.h"
+#include "ace/SOCK_Dgram.h"
 
 #include <cstring>
 #include <memory>
@@ -73,6 +75,62 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   if (acquire_result == 0)
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Queue guard unlocked a lock it no longer owned\n")), 1);
+    }
+
+  ACE_INET_Addr local (static_cast<u_short> (0), ACE_TEXT ("127.0.0.1"));
+  ACE_SOCK_Dgram_Mcast receiver;
+  ACE_SOCK_Dgram sender;
+  if (receiver.ACE_SOCK_Dgram::open (local) == -1
+      || receiver.get_local_addr (local) == -1
+      || sender.open (ACE_Addr::sap_any) == -1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not open test datagram sockets: %m\n")), 1);
+    }
+
+  bool received {};
+  {
+    ACE_TMCast::MessageQueue incoming;
+    ACE_TMCast::LinkListener listener (receiver, incoming);
+    char const short_packet = 'x';
+    ACE_TMCast::Protocol::MessageHeader valid_header {};
+    valid_header.length = sizeof valid_header;
+    valid_header.current.id = 42;
+    if (sender.send (std::addressof (short_packet), 1, local) != 1
+        || sender.send (std::addressof (valid_header), sizeof valid_header, local)
+             != static_cast<ssize_t> (sizeof valid_header))
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not send test datagrams: %m\n")), 1);
+      }
+
+    for (int attempt = 0; attempt < 200 && !received; ++attempt)
+      {
+        {
+          ACE_TMCast::MessageQueueAutoLock lock (incoming);
+          if (!incoming.empty ())
+            {
+              ACE_TMCast::MessagePtr const packet (incoming.front ());
+              incoming.pop ();
+              ACE_TMCast::LinkData const *link_data =
+                dynamic_cast<ACE_TMCast::LinkData const *> (packet.get ());
+              if (link_data == nullptr || !link_data->valid ()
+                  || link_data->header ().current.id != 42)
+                {
+                  ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Listener did not survive short datagram\n")), 1);
+                }
+              received = true;
+            }
+        }
+        if (!received)
+          {
+            ACE_OS::sleep (ACE_Time_Value (0, 10000));
+          }
+      }
+  }
+  sender.close ();
+  receiver.close ();
+  if (!received)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Listener did not receive valid datagram\n")), 1);
     }
   return 0;
 }
