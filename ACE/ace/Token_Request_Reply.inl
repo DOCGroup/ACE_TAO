@@ -131,7 +131,7 @@ ACE_Token_Request::token_name (ACE_TCHAR const *token_name,
   size_t len = ACE_TOKEN_REQUEST_HEADER_SIZE;
 
   // ... then add in the amount of the variable-sized portion.
-  len += token_name_length + client_id_length + 1;
+  len += (token_name_length + client_id_length + 1) * sizeof (ACE_TCHAR);
   this->length (ACE_Utils::truncate_cast<ACE_UINT32> (len));
 }
 

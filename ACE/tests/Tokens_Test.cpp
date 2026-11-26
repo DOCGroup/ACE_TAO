@@ -26,6 +26,7 @@
 #include "ace/Barrier.h"
 #include "ace/OS_NS_unistd.h"
 
+#include <cstring>
 #include <memory>
 
 #if defined (ACE_HAS_THREADS) && defined (ACE_HAS_TOKENS_LIBRARY)
@@ -196,6 +197,21 @@ run_main (int, ACE_TCHAR *[])
   ACE_START_TEST (ACE_TEXT ("Tokens_Test"));
 #if defined (ACE_HAS_THREADS)
 #if defined (ACE_HAS_TOKENS_LIBRARY)
+  ACE_Token_Request request (0, 0, 0, ACE_TEXT ("token"), ACE_TEXT ("client"),
+                             ACE_Synch_Options::defaults);
+  ACE_Token_Request received (0, 0, 0, ACE_TEXT (""), ACE_TEXT (""),
+                              ACE_Synch_Options::defaults);
+  void *request_buffer {};
+  void *received_buffer {};
+  int const request_length = request.encode (request_buffer);
+  received.encode (received_buffer);
+  ACE_TEST_ASSERT (request_length == ACE_TOKEN_REQUEST_HEADER_SIZE + 14 * sizeof (ACE_TCHAR));
+  std::memcpy (received_buffer, request_buffer, request.length ());
+  int const decode_result = received.decode ();
+  ACE_TEST_ASSERT (decode_result == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (received.token_name (), ACE_TEXT ("token")) == 0);
+  ACE_TEST_ASSERT (ACE_OS::strcmp (received.client_id (), ACE_TEXT ("client")) == 0);
+
   ACE_Token_Proxy *token {};
   std::unique_ptr<ACE_Token_Proxy> A;
   std::unique_ptr<ACE_Token_Proxy> B;

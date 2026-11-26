@@ -64,7 +64,7 @@ ACE_Token_Request::decode ()
   else // Skip this->tokenName_ + '\0' + ':'.
     {
       this->client_id_ =
-        std::addressof (this->token_name_[(token_len + 2) * sizeof (ACE_TCHAR)]);
+        std::addressof (this->token_name_[token_len + 2]);
     }
 
   // Fixed size header
@@ -72,9 +72,8 @@ ACE_Token_Request::decode ()
   // ':'
   // client_id_ plus '\0'
   size_t const data_size = ACE_TOKEN_REQUEST_HEADER_SIZE
-                           + ACE_OS::strlen (this->token_name_) + 1
-                           + ACE_OS::strlen (this->client_id_) + 1
-                           + 1;
+                           + (token_len + ACE_OS::strlen (this->client_id_) + 3)
+                             * sizeof (ACE_TCHAR);
 
   // Make sure the message was correctly received and framed.
   return this->length () == data_size ? 0 : -1;
