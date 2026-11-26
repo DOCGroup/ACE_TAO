@@ -74,7 +74,7 @@ CORBA::string_free (char *str)
 // ****************************************************************
 
 CORBA::WChar*
-CORBA::wstring_dup (const WChar *const str)
+CORBA::wstring_dup (WChar const *const str)
 {
   if (!str)
     {

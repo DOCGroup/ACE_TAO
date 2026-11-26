@@ -81,7 +81,7 @@ CORBA::Exception::_tao_print_exception (char const *user_provided_info,
 
 #if defined (ACE_USES_WCHAR)
 void
-CORBA::Exception::_tao_print_exception (const ACE_WCHAR_T *info,
+CORBA::Exception::_tao_print_exception (ACE_WCHAR_T const *info,
                                         FILE *f) const
 {
   // Even though this call causes additional type conversions, this is

@@ -40,7 +40,7 @@ namespace CORBA
    */
   /// @{
   TAO_Export WChar * wstring_alloc (ULong len);
-  TAO_Export WChar * wstring_dup (const WChar * const);
+  TAO_Export WChar * wstring_dup (WChar const * const);
   TAO_Export void wstring_free (WChar * const);
   /// @}
 }  // End CORBA namespace.

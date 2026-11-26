@@ -142,7 +142,7 @@ namespace CORBA
     /**
      * @note This method is TAO-specific.
      */
-    void _tao_print_exception (const ACE_WCHAR_T *info, FILE *f = stdout) const;
+    void _tao_print_exception (ACE_WCHAR_T const *info, FILE *f = stdout) const;
 #endif  // ACE_USES_WCHAR
 
     /// Returns a string containing information about the exception. This
