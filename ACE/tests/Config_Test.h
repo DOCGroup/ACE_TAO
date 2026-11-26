@@ -42,20 +42,20 @@ private:
 
   void get_section_string (ACE_Configuration&             config,
                            ACE_Configuration_Section_Key& SectionKey,
-                           const ACE_TCHAR*               pszName,
+                           ACE_TCHAR const *               pszName,
                            ACE_TCHAR*                     pszVariable,
                            int                            nMaxLength);
 
   void get_section_integer (ACE_Configuration&             config,
                             ACE_Configuration_Section_Key& SectionKey,
-                            const ACE_TCHAR*               pszName,
+                            ACE_TCHAR const *               pszName,
                             int*                           nVariable,
                             int                            nMinValue,
                             int                            nMaxValue);
 
   void get_section_boolean (ACE_Configuration&             config,
                             ACE_Configuration_Section_Key& SectionKey,
-                            const ACE_TCHAR*               pszName,
+                            ACE_TCHAR const *               pszName,
                             int*                           pVariable);
 
 private:

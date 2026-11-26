@@ -20,7 +20,7 @@ const ACE_Byte one_padded_stream[] = "This stream is different from the above in
 const ACE_Byte two_padded_stream[] = "This stream is different from the above in that, it results in two padding characters to be addedddd";
 
 int
-encode_decode_stream (const ACE_Byte* stream, size_t length)
+encode_decode_stream (ACE_Byte const * stream, size_t length)
 {
   size_t encode_len = 0;
 

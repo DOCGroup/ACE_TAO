@@ -179,10 +179,10 @@ public:
       timeout_triggered_ (false)
   {}
 
-  int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg) override;
 
-  bool trigger_in(const ACE_Time_Value &delay);
+  bool trigger_in(ACE_Time_Value const &delay);
 
   bool timeout_triggered () { return this->timeout_triggered_; }
 
@@ -191,15 +191,15 @@ private:
   bool timeout_triggered_;
 };
 
-int TestHandler::handle_timeout (const ACE_Time_Value &,
-                                 const void *)
+int TestHandler::handle_timeout (ACE_Time_Value const &,
+                                 void const *)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) TestHandler::handle_timeout - timeout triggered\n"));
   this->timeout_triggered_ = true;
   return 0;
 }
 
-bool TestHandler::trigger_in(const ACE_Time_Value &delay)
+bool TestHandler::trigger_in(ACE_Time_Value const &delay)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) TestHandler::trigger_in - scheduling timer\n"));
   return -1 != reactor_->schedule_timer (this, nullptr, delay, ACE_Time_Value (0));

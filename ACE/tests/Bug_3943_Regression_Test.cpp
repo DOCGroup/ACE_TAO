@@ -216,11 +216,11 @@ namespace {
     bool wait_for_completion(Direction direction);
 
     ssize_t send (IovecGuard& iovec_array,
-                  const ACE_TCHAR * const send_desc,
+                  ACE_TCHAR const * const send_desc,
                   bool use_sendv,
                   bool test_message = false);
 
-    ssize_t send (char send_char, const ACE_TCHAR * const send_desc);
+    ssize_t send (char send_char, ACE_TCHAR const * const send_desc);
 
     const ACE_Time_Value DEFAULT_TIME_VALUE;
   };
@@ -292,7 +292,7 @@ Svc_Handler::send_data ()
   bool successful = true;
   bool win32_test = false;
   const int testType = processENOBUFS();
-  const ACE_TCHAR *send_desc = ACE_TEXT ("");
+  ACE_TCHAR const *send_desc = ACE_TEXT ("");
   ssize_t result = 0;
   if (testType == 0)
     {
@@ -590,12 +590,12 @@ Svc_Handler::send_data ()
 
 ssize_t
 Svc_Handler::send (IovecGuard& iovec_array,
-                   const ACE_TCHAR * const send_desc,
+                   ACE_TCHAR const * const send_desc,
                    const bool use_sendv,
                    const bool test_message)
 {
   ++expected_num_messages;
-  const ACE_TCHAR* const send_func_name =
+  ACE_TCHAR const * const send_func_name =
     (use_sendv) ? ACE_TEXT ("ACE_OS::sendv") : ACE_TEXT ("ACE_OS::send");
   if (ACE::debug())
     {
@@ -761,7 +761,7 @@ Svc_Handler::send (IovecGuard& iovec_array,
 }
 
 ssize_t
-Svc_Handler::send (char send_char, const ACE_TCHAR * const send_desc)
+Svc_Handler::send (char send_char, ACE_TCHAR const * const send_desc)
 {
   ssize_t send_status;
   while ((send_status =
@@ -831,10 +831,10 @@ Svc_Handler::recv_data ()
                 total_bytes += r_bytes)
             {
               bool finished = false;
-              const char* const actualBufferEnd = buffer + r_bytes;
+              char const * const actualBufferEnd = buffer + r_bytes;
               *(buffer + r_bytes) = 0;
-              const char* partOfBufferEnd = actualBufferEnd;
-              const char* partOfBufferStart = buffer;
+              char const * partOfBufferEnd = actualBufferEnd;
+              char const * partOfBufferStart = buffer;
               if (*(actualBufferEnd - 1) == FINISHED_CHAR)
                 {
                   finished = true;
@@ -850,7 +850,7 @@ Svc_Handler::recv_data ()
               // loop through in case there is more than one message represented
               while (partOfBufferStart < partOfBufferEnd)
                 {
-                  const char* restartLoc =
+                  char const * restartLoc =
                     ACE_OS::strchr(partOfBufferStart, RESTART_CHAR);
                   if (restartLoc && (restartLoc < partOfBufferEnd))
                     {
@@ -1163,7 +1163,7 @@ run_main (int , ACE_TCHAR *[])
   ACE_INET_Addr server_addr;
 
   // Bind acceptor to any port and then find out what the port was.
-  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1
+  if (acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {
       ACE_ERROR ((LM_ERROR,
