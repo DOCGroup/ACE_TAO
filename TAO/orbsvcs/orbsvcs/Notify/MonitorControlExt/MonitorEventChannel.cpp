@@ -890,7 +890,7 @@ TAO_MonitorEventChannel::named_new_for_consumers (
 
       if (name == nullptr)
         {
-          const std::string id_name = std::to_string (id);
+          std::string const id_name = std::to_string (id);
           full += id_name.c_str ();
         }
       else
@@ -956,7 +956,7 @@ TAO_MonitorEventChannel::named_new_for_suppliers (
 
       if (name == nullptr)
         {
-          const std::string id_name = std::to_string (id);
+          std::string const id_name = std::to_string (id);
           full += id_name.c_str ();
         }
       else

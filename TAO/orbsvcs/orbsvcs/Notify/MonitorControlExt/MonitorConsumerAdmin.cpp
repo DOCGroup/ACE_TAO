@@ -162,7 +162,7 @@ TAO_MonitorConsumerAdmin::obtain_notification_push_supplier (
       ctype, proxy_id);
 
   // Next, map the proxy id to the name in the ec.
-  const std::string proxy_name = std::to_string (proxy_id);
+  std::string const proxy_name = std::to_string (proxy_id);
   ec->map_supplier_proxy (proxy_id, proxy_name.c_str ());
 
   return proxy._retn ();

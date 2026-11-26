@@ -27,7 +27,7 @@ TAO_Notify_POA_Helper::get_unique_id ()
   /// Factory for generating unique ids for the POAs.
   static TAO_Notify_ID_Factory poa_id_factory;
 
-  const std::string id = std::to_string (poa_id_factory.id ());
+  std::string const id = std::to_string (poa_id_factory.id ());
   return ACE_CString (id.c_str ());
 }
 

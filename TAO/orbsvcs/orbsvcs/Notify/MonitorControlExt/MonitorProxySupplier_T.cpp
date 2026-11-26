@@ -96,7 +96,7 @@ TAO_MonitorProxySupplier_T<ProxyPushSupplier>::configure(
     }
 
   this->base_stat_name_ = admin_->stat_name ();
-  const std::string proxy_name = std::to_string (proxy_id);
+  std::string const proxy_name = std::to_string (proxy_id);
   this->base_stat_name_ += proxy_name.c_str ();
   this->base_stat_name_ += "/";
 

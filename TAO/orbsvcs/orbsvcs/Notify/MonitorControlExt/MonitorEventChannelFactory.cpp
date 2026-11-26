@@ -244,7 +244,7 @@ TAO_MonitorEventChannelFactory::create_channel (
 
   // Construct the name using the new id
   ACE_CString sname (this->name_ + "/");
-  const std::string id_name = std::to_string (id);
+  std::string const id_name = std::to_string (id);
   sname += id_name.c_str ();
 
   ACE_WRITE_GUARD_RETURN (TAO_SYNCH_RW_MUTEX, guard, this->mutex_, nullptr);

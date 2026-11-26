@@ -41,14 +41,14 @@ namespace TAO_Notify
   NVP::NVP(const TAO_Notify_Property_Short& p)
     : name(p.name())
   {
-    const std::string string_value = std::to_string (p.value ());
+    std::string const string_value = std::to_string (p.value ());
     value = string_value.c_str ();
   }
 
   NVP::NVP(const TAO_Notify_Property_Long& p)
     : name(p.name())
   {
-    const std::string string_value = std::to_string (static_cast<long> (p.value ()));
+    std::string const string_value = std::to_string (static_cast<long> (p.value ()));
     value = string_value.c_str ();
   }
 
@@ -70,7 +70,7 @@ namespace TAO_Notify
   NVP::NVP(char const *n, CORBA::Long v)
     : name(n)
   {
-    const std::string string_value = std::to_string (static_cast<long> (v));
+    std::string const string_value = std::to_string (static_cast<long> (v));
     value = string_value.c_str ();
   }
 
