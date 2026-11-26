@@ -62,7 +62,7 @@ Tester::test ()
     }
 
 #else
-  const ACE_Utils::UUID &new_uuid = *uuid;
+  ACE_Utils::UUID const &new_uuid = *uuid;
 #endif
 
   // Construct UUID using the copy constructor

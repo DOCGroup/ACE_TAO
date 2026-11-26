@@ -13,7 +13,7 @@
 using namespace std;
 
 template<template<typename U, typename = std::allocator<U>> class container, typename DT>
-container<DT> initializer(const DT &d)
+container<DT> initializer(DT const &d)
 {
   container<DT> t ;
   t.insert(t.end(), d);

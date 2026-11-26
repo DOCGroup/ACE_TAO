@@ -78,7 +78,7 @@ run_main (int, ACE_TCHAR *[])
 
   lastError = ACE_OS::last_error();
 
-  const ACE_sema_t &semaphoreLock = semaphore0.lock();
+  ACE_sema_t const &semaphoreLock = semaphore0.lock();
   if ((semaphoreLock == ACE_INVALID_HANDLE) ||
       (lastError != 0))
   {
@@ -96,7 +96,7 @@ run_main (int, ACE_TCHAR *[])
 
     lastError = ACE_OS::last_error();
 
-    const ACE_sema_t &semaphore1Lock = semaphore1.lock();
+    ACE_sema_t const &semaphore1Lock = semaphore1.lock();
 
     if ((semaphore1Lock == ACE_INVALID_HANDLE) ||
         (lastError != ERROR_ALREADY_EXISTS))
@@ -118,7 +118,7 @@ run_main (int, ACE_TCHAR *[])
 
   lastError = ACE_OS::last_error();
 
-  const ACE_mutex_t &mutexLock = mutex0.lock();
+  ACE_mutex_t const &mutexLock = mutex0.lock();
 
   if ((mutexLock.proc_mutex_ == ACE_INVALID_HANDLE) ||
       (lastError != 0))
@@ -136,7 +136,7 @@ run_main (int, ACE_TCHAR *[])
 
     lastError = ACE_OS::last_error();
 
-    const ACE_mutex_t &mutex1Lock = mutex1.lock();
+    ACE_mutex_t const &mutex1Lock = mutex1.lock();
 
     if ((mutex1Lock.proc_mutex_ == ACE_INVALID_HANDLE) ||
         (lastError != ERROR_ALREADY_EXISTS))

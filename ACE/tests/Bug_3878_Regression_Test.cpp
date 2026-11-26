@@ -60,7 +60,7 @@ public:
     return 0;
   }
 
-  const ACE_Thread_ID& thread_id ()
+  ACE_Thread_ID const & thread_id ()
   {
     return thread_id_;
   }
@@ -143,7 +143,7 @@ public:
 
   int shut_down ();
 
-  const ACE_Thread_ID& thread_id (Worker *worker);
+  ACE_Thread_ID const & thread_id (Worker *worker);
 
   int return_to_work (Worker *worker) override
   {
@@ -233,7 +233,7 @@ Manager::shut_down ()
   return 0;
 }
 
-const ACE_Thread_ID&
+ACE_Thread_ID const &
 Manager::thread_id (Worker *worker)
 {
   return worker->thread_id ();
