@@ -60,9 +60,9 @@ class Home_Exec_Op_Attr_Generator
 public:
   explicit Home_Exec_Op_Attr_Generator (be_visitor_scope *visitor);
 
-  Home_Exec_Op_Attr_Generator (const Home_Exec_Op_Attr_Generator &) = delete;
+  Home_Exec_Op_Attr_Generator (Home_Exec_Op_Attr_Generator const &) = delete;
   Home_Exec_Op_Attr_Generator (Home_Exec_Op_Attr_Generator &&) = delete;
-  Home_Exec_Op_Attr_Generator &operator= (const Home_Exec_Op_Attr_Generator &) = delete;
+  Home_Exec_Op_Attr_Generator &operator= (Home_Exec_Op_Attr_Generator const &) = delete;
   Home_Exec_Op_Attr_Generator &operator= (Home_Exec_Op_Attr_Generator &&) = delete;
 
   int emit (be_interface *derived_interface,

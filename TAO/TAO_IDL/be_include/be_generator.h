@@ -238,7 +238,7 @@ public:
 
   AST_Expression *create_expr (ACE_CDR::Double d) override;
 
-  AST_Expression *create_expr (const ACE_CDR::Fixed &f) override;
+  AST_Expression *create_expr (ACE_CDR::Fixed const &f) override;
 
   AST_EnumVal *create_enum_val (ACE_CDR::ULong v,
                                         UTL_ScopedName *n) override;

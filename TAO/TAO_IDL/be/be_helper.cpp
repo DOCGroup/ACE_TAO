@@ -467,7 +467,7 @@ TAO_OutStream::operator<< (const ACE_CDR::LongLong num)
 }
 
 TAO_OutStream &
-TAO_OutStream::operator<< (const TAO_NL&)
+TAO_OutStream::operator<< (TAO_NL const &)
 {
   this->pending_whitespace_.clear ();
   this->write_newline ();
@@ -477,7 +477,7 @@ TAO_OutStream::operator<< (const TAO_NL&)
 }
 
 TAO_OutStream &
-TAO_OutStream::operator<< (const TAO_NL_2&)
+TAO_OutStream::operator<< (TAO_NL_2 const &)
 {
   this->pending_whitespace_.clear ();
   this->write_newline ();
@@ -487,7 +487,7 @@ TAO_OutStream::operator<< (const TAO_NL_2&)
 }
 
 TAO_OutStream &
-TAO_OutStream::operator<< (const TAO_INDENT& i)
+TAO_OutStream::operator<< (TAO_INDENT const & i)
 {
   this->incr_indent (false);
 
@@ -500,7 +500,7 @@ TAO_OutStream::operator<< (const TAO_INDENT& i)
 }
 
 TAO_OutStream &
-TAO_OutStream::operator<< (const TAO_UNINDENT& i)
+TAO_OutStream::operator<< (TAO_UNINDENT const & i)
 {
   this->decr_indent (false);
 

@@ -823,7 +823,7 @@ be_generator::create_expr (ACE_CDR::Double d)
 }
 
 AST_Expression *
-be_generator::create_expr (const ACE_CDR::Fixed &f)
+be_generator::create_expr (ACE_CDR::Fixed const &f)
 {
   be_expression *retval {};
   ACE_NEW_RETURN (retval,

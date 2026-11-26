@@ -88,7 +88,7 @@ TAO_CodeGen::downcase (std::string const& str)
 
 // Set the client header stream.
 int
-TAO_CodeGen::start_client_header (const std::string &fname)
+TAO_CodeGen::start_client_header (std::string const &fname)
 {
   // @@ We are making use of "included_idl_files" that is in the
   // idl_global. We need to make sure the validity of those files.
@@ -293,7 +293,7 @@ TAO_CodeGen::client_header ()
 
 // Set the client stub stream.
 int
-TAO_CodeGen::start_client_stubs (const std::string &fname)
+TAO_CodeGen::start_client_stubs (std::string const &fname)
 {
   // Clean up between multiple files.
   this->client_stubs_ = std::make_unique<TAO_OutStream> ();
@@ -338,7 +338,7 @@ TAO_CodeGen::client_stubs ()
 
 // Set the client inline stream.
 int
-TAO_CodeGen::start_client_inline (const std::string &fname)
+TAO_CodeGen::start_client_inline (std::string const &fname)
 {
   // Clean up between multiple files.
   this->client_inline_ = std::make_unique<TAO_OutStream> ();
@@ -369,7 +369,7 @@ TAO_CodeGen::client_inline ()
 
 // Set the server header stream.
 int
-TAO_CodeGen::start_server_header (const std::string &fname)
+TAO_CodeGen::start_server_header (std::string const &fname)
 {
   // Clean up between multiple files.
   this->server_header_ = std::make_unique<TAO_OutStream> ();
@@ -480,7 +480,7 @@ TAO_CodeGen::server_header ()
 
 // Set the server header stream.
 int
-TAO_CodeGen::start_server_template_header (const std::string &fname)
+TAO_CodeGen::start_server_template_header (std::string const &fname)
 {
   // Clean up between multiple files.
   this->server_template_header_ = std::make_unique<TAO_OutStream> ();
@@ -530,7 +530,7 @@ TAO_CodeGen::server_template_header ()
 
 // Set the server skeletons stream.
 int
-TAO_CodeGen::start_server_skeletons (const std::string &fname)
+TAO_CodeGen::start_server_skeletons (std::string const &fname)
 {
   // Clean up between multiple files.
   this->server_skeletons_ = std::make_unique<TAO_OutStream> ();
@@ -586,7 +586,7 @@ TAO_CodeGen::server_skeletons ()
 
 // Start the server template skeleton stream.
 int
-TAO_CodeGen::start_server_template_skeletons (const std::string &fname)
+TAO_CodeGen::start_server_template_skeletons (std::string const &fname)
 {
   // Clean up between multiple files.
   this->server_template_skeletons_ = std::make_unique<TAO_OutStream> ();
@@ -631,7 +631,7 @@ TAO_CodeGen::server_template_skeletons ()
 }
 
 int
-TAO_CodeGen::start_anyop_header (const std::string &fname)
+TAO_CodeGen::start_anyop_header (std::string const &fname)
 {
   // We may want to generate the full file or generate an empty
   // one, but this is the only condition under which we want to
@@ -814,7 +814,7 @@ TAO_CodeGen::start_anyop_header (const std::string &fname)
 }
 
 int
-TAO_CodeGen::start_anyop_source (const std::string &fname)
+TAO_CodeGen::start_anyop_source (std::string const &fname)
 {
   if (!be_global->gen_anyop_files ())
     {
@@ -872,7 +872,7 @@ TAO_CodeGen::anyop_source ()
 }
 
 int
-TAO_CodeGen::start_ciao_svnt_header (const std::string &fname)
+TAO_CodeGen::start_ciao_svnt_header (std::string const &fname)
 {
   // Clean up between multiple files.
   this->ciao_svnt_header_ = std::make_unique<TAO_OutStream> ();
@@ -963,7 +963,7 @@ TAO_CodeGen::start_ciao_svnt_header (const std::string &fname)
 }
 
 int
-TAO_CodeGen::start_ciao_svnt_source (const std::string &fname)
+TAO_CodeGen::start_ciao_svnt_source (std::string const &fname)
 {
   // Clean up between multiple files.
   this->ciao_svnt_source_ = std::make_unique<TAO_OutStream> ();
@@ -1000,7 +1000,7 @@ TAO_CodeGen::start_ciao_svnt_source (const std::string &fname)
 }
 
 int
-TAO_CodeGen::start_ciao_svnt_template_header (const std::string &fname)
+TAO_CodeGen::start_ciao_svnt_template_header (std::string const &fname)
 {
   // Clean up between multiple files.
   this->ciao_svnt_template_header_ = std::make_unique<TAO_OutStream> ();
@@ -1074,7 +1074,7 @@ TAO_CodeGen::start_ciao_svnt_template_header (const std::string &fname)
 }
 
 int
-TAO_CodeGen::start_ciao_svnt_template_source (const std::string &fname)
+TAO_CodeGen::start_ciao_svnt_template_source (std::string const &fname)
 {
   // Clean up between multiple files.
   this->ciao_svnt_template_source_ = std::make_unique<TAO_OutStream> ();
@@ -1135,7 +1135,7 @@ TAO_CodeGen::ciao_svnt_template_source ()
 }
 
 int
-TAO_CodeGen::start_ciao_exec_header (const std::string &fname)
+TAO_CodeGen::start_ciao_exec_header (std::string const &fname)
 {
   // Clean up between multiple files.
   this->ciao_exec_header_ = std::make_unique<TAO_OutStream> ();
@@ -1184,7 +1184,7 @@ TAO_CodeGen::start_ciao_exec_header (const std::string &fname)
 }
 
 int
-TAO_CodeGen::start_ciao_exec_source (const std::string &fname)
+TAO_CodeGen::start_ciao_exec_source (std::string const &fname)
 {
   // Clean up between multiple files.
   this->ciao_exec_source_ = std::make_unique<TAO_OutStream> ();
@@ -1222,7 +1222,7 @@ TAO_CodeGen::ciao_exec_source ()
 }
 
 int
-TAO_CodeGen::start_ciao_exec_idl (const std::string &fname)
+TAO_CodeGen::start_ciao_exec_idl (std::string const &fname)
 {
   // Clean up between multiple files.
   this->ciao_exec_idl_ = std::make_unique<TAO_OutStream> ();
@@ -1261,7 +1261,7 @@ TAO_CodeGen::ciao_exec_idl ()
 }
 
 int
-TAO_CodeGen::start_ciao_conn_header (const std::string &fname)
+TAO_CodeGen::start_ciao_conn_header (std::string const &fname)
 {
   // Clean up between multiple files.
   this->ciao_conn_header_ = std::make_unique<TAO_OutStream> ();
@@ -1322,7 +1322,7 @@ TAO_CodeGen::ciao_conn_header ()
 }
 
 int
-TAO_CodeGen::start_ciao_conn_source (const std::string &fname)
+TAO_CodeGen::start_ciao_conn_source (std::string const &fname)
 {
   // Clean up between multiple files.
   this->ciao_conn_source_ = std::make_unique<TAO_OutStream> ();
@@ -1359,7 +1359,7 @@ TAO_CodeGen::ciao_conn_source ()
 }
 
 int
-TAO_CodeGen::start_ciao_ami_conn_idl (const std::string &fname)
+TAO_CodeGen::start_ciao_ami_conn_idl (std::string const &fname)
 {
   // Clean up between multiple files.
   this->ciao_ami_conn_idl_ = std::make_unique<TAO_OutStream> ();
@@ -1399,7 +1399,7 @@ TAO_CodeGen::ciao_ami_conn_idl ()
 
 // Set the server header stream.
 int
-TAO_CodeGen::start_implementation_header (const std::string &fname)
+TAO_CodeGen::start_implementation_header (std::string const &fname)
 {
   // Clean up between multiple files.
   this->implementation_header_ = std::make_unique<TAO_OutStream> ();
@@ -1446,7 +1446,7 @@ TAO_CodeGen::implementation_header ()
 
 // Set the implementation skeleton stream.
 int
-TAO_CodeGen::start_implementation_skeleton (const std::string &fname)
+TAO_CodeGen::start_implementation_skeleton (std::string const &fname)
 {
   // Clean up between multiple files.
   this->implementation_skeleton_ = std::make_unique<TAO_OutStream> ();
@@ -1578,7 +1578,7 @@ TAO_CodeGen::end_server_header ()
 }
 
 int
-TAO_CodeGen::end_implementation_header (const std::string &fname)
+TAO_CodeGen::end_implementation_header (std::string const &fname)
 {
   if (fname.empty ())
     {

@@ -206,10 +206,10 @@ public:
   /// @name Stream manipulators
   /// @{
 
-  TAO_OutStream &operator<< (const TAO_NL& nl);
-  TAO_OutStream &operator<< (const TAO_NL_2& nl_twice);
-  TAO_OutStream &operator<< (const TAO_INDENT& i);
-  TAO_OutStream &operator<< (const TAO_UNINDENT& i);
+  TAO_OutStream &operator<< (TAO_NL const & nl);
+  TAO_OutStream &operator<< (TAO_NL_2 const & nl_twice);
+  TAO_OutStream &operator<< (TAO_INDENT const & i);
+  TAO_OutStream &operator<< (TAO_UNINDENT const & i);
 
   /// @}
 

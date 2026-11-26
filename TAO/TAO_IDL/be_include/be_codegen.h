@@ -200,48 +200,48 @@ public:
   ~TAO_CodeGen ();
 
   /// Set the client header stream.
-  int start_client_header (const std::string &fname);
+  int start_client_header (std::string const &fname);
 
   /// Set the client inline stream.
-  int start_client_inline (const std::string &fname);
+  int start_client_inline (std::string const &fname);
 
   /// Set the client stub stream.
-  int start_client_stubs (const std::string &fname);
+  int start_client_stubs (std::string const &fname);
 
   /// Set the server header stream.
-  int start_server_header (const std::string &fname);
+  int start_server_header (std::string const &fname);
 
   /// Set the implementation header stream.
-  int start_implementation_header (const std::string &fname);
+  int start_implementation_header (std::string const &fname);
 
   /// Set the implementation skeleton stream.
-  int start_implementation_skeleton (const std::string &fname);
+  int start_implementation_skeleton (std::string const &fname);
 
   /// Set the server template header stream.
-  int start_server_template_header (const std::string &fname);
+  int start_server_template_header (std::string const &fname);
 
   /// Set the server skeletons stream.
-  int start_server_skeletons (const std::string &fname);
+  int start_server_skeletons (std::string const &fname);
 
   /// Set the server template skeletons stream.
-  int start_server_template_skeletons (const std::string &fname);
+  int start_server_template_skeletons (std::string const &fname);
 
   /// Set the anyop header stream.
-  int start_anyop_header (const std::string &fname);
+  int start_anyop_header (std::string const &fname);
 
   /// Set the anyop source stream.
-  int start_anyop_source (const std::string &fname);
+  int start_anyop_source (std::string const &fname);
 
-  int start_ciao_svnt_header (const std::string &fname);
-  int start_ciao_svnt_source (const std::string &fname);
-  int start_ciao_svnt_template_header (const std::string &fname);
-  int start_ciao_svnt_template_source (const std::string &fname);
-  int start_ciao_exec_header (const std::string &fname);
-  int start_ciao_exec_source (const std::string &fname);
-  int start_ciao_exec_idl (const std::string &fname);
-  int start_ciao_conn_header (const std::string &fname);
-  int start_ciao_conn_source (const std::string &fname);
-  int start_ciao_ami_conn_idl (const std::string &fname);
+  int start_ciao_svnt_header (std::string const &fname);
+  int start_ciao_svnt_source (std::string const &fname);
+  int start_ciao_svnt_template_header (std::string const &fname);
+  int start_ciao_svnt_template_source (std::string const &fname);
+  int start_ciao_exec_header (std::string const &fname);
+  int start_ciao_exec_source (std::string const &fname);
+  int start_ciao_exec_idl (std::string const &fname);
+  int start_ciao_conn_header (std::string const &fname);
+  int start_ciao_conn_source (std::string const &fname);
+  int start_ciao_ami_conn_idl (std::string const &fname);
 
   /// Generate code at the end such as the <<= and >>= operators along
   /// with the closing preprocessor conditional.
@@ -257,7 +257,7 @@ public:
   int end_server_header ();
 
   /// Put a last \#endif in the server header.
-  int end_implementation_header (const std::string &fname);
+  int end_implementation_header (std::string const &fname);
 
   /// Put a last \#endif in the server header.
   int end_implementation_skeleton (const char *fname);

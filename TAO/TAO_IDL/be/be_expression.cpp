@@ -89,7 +89,7 @@ be_expression::be_expression (ACE_CDR::Double d)
 {
 }
 
-be_expression::be_expression (const ACE_CDR::Fixed &f)
+be_expression::be_expression (ACE_CDR::Fixed const &f)
   : AST_Expression (f)
 {
 }

@@ -49,7 +49,7 @@ public:
 
   explicit be_expression (ACE_CDR::Double d);
 
-  explicit be_expression (const ACE_CDR::Fixed &f);
+  explicit be_expression (ACE_CDR::Fixed const &f);
 
   // Visiting.
   virtual int accept (be_visitor *visitor);
