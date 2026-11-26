@@ -40,7 +40,7 @@ namespace ACE
             protected:
               int read_from_stream (char_type* buffer, std::streamsize length) override;
 
-              int write_to_stream (const char_type* buffer, std::streamsize length) override;
+              int write_to_stream (char_type const* buffer, std::streamsize length) override;
 
             private:
               std::streamsize length_;
@@ -70,7 +70,7 @@ namespace ACE
             protected:
               int read_from_stream (char_type* buffer, std::streamsize length) override;
 
-              int write_to_stream (const char_type* buffer, std::streamsize length) override;
+              int write_to_stream (char_type const* buffer, std::streamsize length) override;
 
               int getc ();
 

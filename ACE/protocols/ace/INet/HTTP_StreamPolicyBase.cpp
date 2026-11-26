@@ -27,7 +27,7 @@ namespace ACE
 
     template <class STREAM_BUFFER>
     int StreamPolicyBase<STREAM_BUFFER>::write_to_stream_i (
-        const char_type * buf,
+        char_type const * buf,
         std::streamsize length)
       {
         return this->streambuf_->write_to_stream_i (buf, length);

@@ -44,11 +44,11 @@ namespace ACE
               StreamInterceptorBase ();
 
             public:
-              virtual void before_write (const char_type* buffer,
+              virtual void before_write (char_type const* buffer,
                                          std::streamsize length_to_write);
               virtual void after_write (int length_written);
               virtual void before_read (std::streamsize length_to_read);
-              virtual void after_read (const char_type* buffer,
+              virtual void after_read (char_type const* buffer,
                                        int length_read);
               virtual void on_eof ();
           };

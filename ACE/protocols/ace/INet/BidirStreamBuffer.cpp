@@ -192,7 +192,7 @@ namespace ACE
 
     template <class ACE_CHAR_T, class STREAM_HANDLER, class TR>
     int
-    BasicBidirStreamBuffer<ACE_CHAR_T, STREAM_HANDLER, TR>::write_to_stream (const char_type* buffer, std::streamsize length)
+    BasicBidirStreamBuffer<ACE_CHAR_T, STREAM_HANDLER, TR>::write_to_stream (char_type const* buffer, std::streamsize length)
       {
         return this->stream_ == nullptr ? 0 : this->stream_->write_to_stream (buffer, length, sizeof(char_type));
       }

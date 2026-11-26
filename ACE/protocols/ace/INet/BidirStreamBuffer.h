@@ -86,7 +86,7 @@ namespace ACE
             private:
               virtual int read_from_stream (char_type* buffer, std::streamsize length);
 
-              virtual int write_to_stream (const char_type* buffer, std::streamsize length);
+              virtual int write_to_stream (char_type const* buffer, std::streamsize length);
 
               int flush_buffer ();
 

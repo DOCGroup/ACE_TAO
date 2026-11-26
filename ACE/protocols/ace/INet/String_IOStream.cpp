@@ -119,7 +119,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    int String_StreamBufferBase<ACE_CHAR_T, TR>::write_to_stream (const char_type* buffer, std::streamsize length)
+    int String_StreamBufferBase<ACE_CHAR_T, TR>::write_to_stream (char_type const* buffer, std::streamsize length)
       {
         int n = 0;
         if (this->string_ref_)

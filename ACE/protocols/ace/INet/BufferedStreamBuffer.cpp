@@ -153,7 +153,7 @@ namespace ACE
 
     template <class ACE_CHAR_T, class TR>
     int
-    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::write_to_stream (const char_type* /*buffer*/, std::streamsize /*length*/)
+    BasicBufferedStreamBuffer<ACE_CHAR_T, TR>::write_to_stream (char_type const* /*buffer*/, std::streamsize /*length*/)
       {
         // to be implemented in derived class
         return 0;

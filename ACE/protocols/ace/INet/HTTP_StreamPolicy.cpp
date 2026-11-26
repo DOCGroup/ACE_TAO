@@ -44,7 +44,7 @@ namespace ACE
 
     template <class STREAM_BUFFER>
     int FixedLengthStreamPolicyBase<STREAM_BUFFER>::write_to_stream (
-        const char_type * buf,
+        char_type const * buf,
         std::streamsize length)
       {
         int n = 0;
@@ -146,7 +146,7 @@ namespace ACE
 
     template <class STREAM_BUFFER>
     int ChunkedTransferStreamPolicyBase<STREAM_BUFFER>::write_to_stream (
-        const char_type * buf,
+        char_type const * buf,
         std::streamsize length)
       {
         this->chunk_.clear ();

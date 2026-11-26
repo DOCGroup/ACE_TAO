@@ -35,14 +35,14 @@ namespace ACE
 
               virtual int read_from_stream (char_type* buffer, std::streamsize length) = 0;
 
-              virtual int write_to_stream (const char_type* buffer, std::streamsize length) = 0;
+              virtual int write_to_stream (char_type const* buffer, std::streamsize length) = 0;
 
               void set_stream_buffer (STREAM_BUFFER* streambuf);
 
             protected:
               int read_from_stream_i (char_type* buffer, std::streamsize length);
 
-              int write_to_stream_i (const char_type* buffer, std::streamsize length);
+              int write_to_stream_i (char_type const* buffer, std::streamsize length);
 
             private:
               STREAM_BUFFER* streambuf_;
