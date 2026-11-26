@@ -76,11 +76,11 @@ public:
 
   TAO_ETCL_Literal_Constraint
   operator/ (TAO_ETCL_Literal_Constraint const &rhs);
+  /// @}
 
   /// Unary minus.
   TAO_ETCL_Literal_Constraint
   operator- ();
-  /// @}
 
   /// Ensure both operands are of the same simple numeric type.
   Literal_Type widest_type (ETCL_Literal_Constraint const &rhs) override;
