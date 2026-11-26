@@ -41,13 +41,13 @@ public:
   /// @name Send and receive operations
   /// @{
   /// send upto @a n bytes in @a buf.
-  ssize_t send (const void *buf, size_t n) const;
+  ssize_t send (void const *buf, size_t n) const;
 
   /// Recv upto @a n bytes in @a buf.
   ssize_t recv (void *buf, size_t n) const;
 
   /// Send n bytes, keep trying until n are sent.
-  ssize_t send_n (const void *buf,
+  ssize_t send_n (void const *buf,
                   size_t n) const;
 
   /**
@@ -90,7 +90,7 @@ public:
    */
   ssize_t recv_n (void *buf,
                   size_t n,
-                  const ACE_Time_Value *timeout = nullptr,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr) const;
 
 #if defined (ACE_HAS_STREAM_PIPES)
@@ -101,8 +101,8 @@ public:
                 int *flags) const;
 
   /// Send bytes via STREAM pipes using "band" mode.
-  ssize_t send (const ACE_Str_Buf *cntl,
-                const ACE_Str_Buf *data,
+  ssize_t send (ACE_Str_Buf const *cntl,
+                ACE_Str_Buf const *data,
                 int band,
                 int flags) const;
 
@@ -112,8 +112,8 @@ public:
                 int *flags) const;
 
   /// Send @a cntl and @a data via STREAM pipes.
-  ssize_t send (const ACE_Str_Buf *cntl,
-                const ACE_Str_Buf *data,
+  ssize_t send (ACE_Str_Buf const *cntl,
+                ACE_Str_Buf const *data,
                 int flags = 0) const;
 #endif /* ACE_HAS_STREAM_PIPES */
 
@@ -141,7 +141,7 @@ public:
   ssize_t recv (size_t n, ...) const;
 
   /// Send @a n bytes via Win32 WriteFile using overlapped I/O.
-  ssize_t send (const void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
+  ssize_t send (void const *buf, size_t n, ACE_OVERLAPPED *overlapped) const;
 
   /// Recv @a n bytes via Win32 ReadFile using overlapped I/O.
   ssize_t recv (void *buf, size_t n, ACE_OVERLAPPED *overlapped) const;

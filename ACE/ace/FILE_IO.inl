@@ -14,8 +14,8 @@ ACE_FILE_IO::sendv_n (const iovec iov[], int n) const
 }
 
 ACE_INLINE ssize_t
-ACE_FILE_IO::send_n (const ACE_Message_Block *message_block,
-                     const ACE_Time_Value *timeout,
+ACE_FILE_IO::send_n (ACE_Message_Block const *message_block,
+                     ACE_Time_Value const *timeout,
                      size_t *bytes_transferred)
 {
   ACE_TRACE ("ACE_FILE_IO::send_n");
@@ -51,7 +51,7 @@ ACE_FILE_IO::sendv (const iovec iov[], int n) const
 /// this many bytes are sent.
 
 ACE_INLINE ssize_t
-ACE_FILE_IO::send_n (const void *buf, size_t n) const
+ACE_FILE_IO::send_n (void const *buf, size_t n) const
 {
   ACE_TRACE ("ACE_FILE_IO::send_n");
   return ACE::write_n (this->get_handle (), buf, n);
@@ -68,7 +68,7 @@ ACE_FILE_IO::recv_n (void *buf, size_t n) const
 }
 
 ACE_INLINE ssize_t
-ACE_FILE_IO::send (const void *buf, size_t n) const
+ACE_FILE_IO::send (void const *buf, size_t n) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
   return ACE_OS::write (this->get_handle (), buf, n);
@@ -104,7 +104,7 @@ ACE_FILE_IO::recv (ACE_Str_Buf *cntl, ACE_Str_Buf *data, int *band, int *flags) 
 }
 
 ACE_INLINE ssize_t
-ACE_FILE_IO::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int band, int flags) const
+ACE_FILE_IO::send (ACE_Str_Buf const *cntl, ACE_Str_Buf const *data, int band, int flags) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
   return ACE_OS::putpmsg (this->get_handle (), (strbuf *) cntl, (strbuf *) data, band, flags);
@@ -118,14 +118,14 @@ ACE_FILE_IO::recv (ACE_Str_Buf *cntl, ACE_Str_Buf *data, int *flags) const
 }
 
 ACE_INLINE ssize_t
-ACE_FILE_IO::send (const ACE_Str_Buf *cntl, const ACE_Str_Buf *data, int flags) const
+ACE_FILE_IO::send (ACE_Str_Buf const *cntl, ACE_Str_Buf const *data, int flags) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");
   return ACE_OS::putmsg (this->get_handle (), (strbuf *) cntl, (strbuf *) data, flags);
 }
 
 ACE_INLINE ssize_t
-ACE_FILE_IO::send (const void *buf, size_t n,
+ACE_FILE_IO::send (void const *buf, size_t n,
                    ACE_OVERLAPPED *overlapped) const
 {
   ACE_TRACE ("ACE_FILE_IO::send");

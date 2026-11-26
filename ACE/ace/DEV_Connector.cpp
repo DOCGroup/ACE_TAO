@@ -28,9 +28,9 @@ ACE_DEV_Connector::ACE_DEV_Connector ()
 
 int
 ACE_DEV_Connector::connect (ACE_DEV_IO &new_io,
-                            const ACE_DEV_Addr &remote_sap,
+                            ACE_DEV_Addr const &remote_sap,
                             ACE_Time_Value *timeout,
-                            const ACE_Addr &,
+                            ACE_Addr const &,
                             int,
                             int flags,
                             int perms)

@@ -4,9 +4,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_FILE_Connector::ACE_FILE_Connector (ACE_FILE_IO &new_io,
-                                        const ACE_FILE_Addr &remote_sap,
+                                        ACE_FILE_Addr const &remote_sap,
                                         ACE_Time_Value *timeout,
-                                        const ACE_Addr &local_sap,
+                                        ACE_Addr const &local_sap,
                                         int reuse_addr,
                                         int flags,
                                         int perms)

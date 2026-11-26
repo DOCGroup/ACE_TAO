@@ -4,9 +4,9 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE
 ACE_DEV_Connector::ACE_DEV_Connector (ACE_DEV_IO &new_io,
-                                      const ACE_DEV_Addr &remote_sap,
+                                      ACE_DEV_Addr const &remote_sap,
                                       ACE_Time_Value *timeout,
-                                      const ACE_Addr &local_sap,
+                                      ACE_Addr const &local_sap,
                                       int reuse_addr,
                                       int flags,
                                       int perms)

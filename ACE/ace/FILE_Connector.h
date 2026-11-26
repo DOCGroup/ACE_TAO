@@ -50,9 +50,9 @@ public:
    * method.
    */
   ACE_FILE_Connector (ACE_FILE_IO &new_io,
-                      const ACE_FILE_Addr &remote_sap,
+                      ACE_FILE_Addr const &remote_sap,
                       ACE_Time_Value *timeout = nullptr,
-                      const ACE_Addr &local_sap = ACE_Addr::sap_any,
+                      ACE_Addr const &local_sap = ACE_Addr::sap_any,
                       int reuse_addr = 0,
                       int flags = O_RDWR | O_CREAT,
                       int perms = ACE_DEFAULT_FILE_PERMS);
@@ -74,9 +74,9 @@ public:
    * arguments are passed down to the @c ACE_OS::open method.
    */
   int connect (ACE_FILE_IO &new_io,
-               const ACE_FILE_Addr &remote_sap,
+               ACE_FILE_Addr const &remote_sap,
                ACE_Time_Value *timeout = nullptr,
-               const ACE_Addr &local_sap = ACE_Addr::sap_any,
+               ACE_Addr const &local_sap = ACE_Addr::sap_any,
                int reuse_addr = 0,
                int flags = O_RDWR | O_CREAT,
                int perms = ACE_DEFAULT_FILE_PERMS);

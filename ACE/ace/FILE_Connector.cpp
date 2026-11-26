@@ -32,9 +32,9 @@ ACE_FILE_Connector::ACE_FILE_Connector ()
 
 int
 ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
-                             const ACE_FILE_Addr &remote_sap,
+                             ACE_FILE_Addr const &remote_sap,
                              ACE_Time_Value *timeout,
-                             const ACE_Addr &,
+                             ACE_Addr const &,
                              int,
                              int flags,
                              int perms)
@@ -45,7 +45,7 @@ ACE_FILE_Connector::connect (ACE_FILE_IO &new_io,
   ACE_HANDLE handle = ACE_INVALID_HANDLE;
 
   // Check to see if caller has requested that we create the filename.
-  if (reinterpret_cast<const ACE_Addr &> (
+  if (reinterpret_cast<ACE_Addr const &> (
         const_cast<ACE_FILE_Addr &> (remote_sap)) == ACE_Addr::sap_any)
     {
       // Create a new temporary file.

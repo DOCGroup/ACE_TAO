@@ -43,19 +43,19 @@ public:
   ACE_FILE_IO ();
 
   /// send upto @a n bytes in @a buf.
-  ssize_t send (const void *buf, size_t n) const;
+  ssize_t send (void const *buf, size_t n) const;
 
   /// Recv upto @a n bytes in @a buf.
   ssize_t recv (void *buf, size_t n) const;
 
   /// Send n bytes, keep trying until n are sent.
-  ssize_t send_n (const void *buf, size_t n) const;
+  ssize_t send_n (void const *buf, size_t n) const;
 
   /// Send all the @a message_blocks chained through their next and
   /// cont pointers.  This call uses the underlying OS gather-write
   /// operation to reduce the domain-crossing penalty.
-  ssize_t send_n (const ACE_Message_Block *message_block,
-                  const ACE_Time_Value *timeout = nullptr,
+  ssize_t send_n (ACE_Message_Block const *message_block,
+                  ACE_Time_Value const *timeout = nullptr,
                   size_t *bytes_transferred = nullptr);
 
   /// Recv n bytes, keep trying until n are received.
@@ -63,8 +63,8 @@ public:
 
 #if defined (ACE_HAS_STREAM_PIPES)
   /// Send bytes via STREAM pipes.
-  ssize_t send (const ACE_Str_Buf *cntl,
-                const ACE_Str_Buf *data,
+  ssize_t send (ACE_Str_Buf const *cntl,
+                ACE_Str_Buf const *data,
                 int flags = 0) const;
 
   /// Recv bytes via STREAM pipes.
@@ -73,8 +73,8 @@ public:
                 int *flags) const;
 
   /// Send bytes via STREAM pipes using "band" mode.
-  ssize_t send (const ACE_Str_Buf *cntl,
-                const ACE_Str_Buf *data,
+  ssize_t send (ACE_Str_Buf const *cntl,
+                ACE_Str_Buf const *data,
                 int band,
                 int flags) const;
 
@@ -110,7 +110,7 @@ public:
   ssize_t recv (size_t n, ...) const;
 
   /// Send @a n bytes via Win32 WriteFile using overlapped I/O.
-  ssize_t send (const void *buf,
+  ssize_t send (void const *buf,
                 size_t n,
                 ACE_OVERLAPPED *overlapped) const;
 
