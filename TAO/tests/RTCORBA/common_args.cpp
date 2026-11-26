@@ -9,8 +9,8 @@
 using ULong_Array = ACE_Array_Base<CORBA::ULong>;
 
 int
-get_priority_bands (const char *test_type,
-                    const ACE_TCHAR *bands_file,
+get_priority_bands (char const *test_type,
+                    ACE_TCHAR const *bands_file,
                     RTCORBA::RTORB_ptr rt_orb,
                     CORBA::PolicyList &policies,
                     int debug)
@@ -108,9 +108,9 @@ get_priority_bands (const char *test_type,
 }
 
 int
-get_values (const char *test_type,
-            const ACE_TCHAR *file_name,
-            const char *name,
+get_values (char const *test_type,
+            ACE_TCHAR const *file_name,
+            char const *name,
             ULong_Array &values,
             int debug)
 {
@@ -192,8 +192,8 @@ get_values (const char *test_type,
 }
 
 int
-get_priority_lanes (const char *test_type,
-                    const ACE_TCHAR *lanes_file,
+get_priority_lanes (char const *test_type,
+                    ACE_TCHAR const *lanes_file,
                     RTCORBA::RTORB_ptr rt_orb,
                     CORBA::ULong stacksize,
                     CORBA::ULong static_threads,
@@ -247,8 +247,8 @@ get_priority_lanes (const char *test_type,
 }
 
 int
-get_protocols (const char *test_type,
-               const ACE_TCHAR *lanes_file,
+get_protocols (char const *test_type,
+               ACE_TCHAR const *lanes_file,
                RTCORBA::RTORB_ptr rt_orb,
                CORBA::PolicyList &policies,
                int debug)

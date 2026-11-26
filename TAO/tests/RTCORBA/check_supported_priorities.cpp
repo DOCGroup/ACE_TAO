@@ -4,7 +4,7 @@
 #include "tao/RTCORBA/Priority_Mapping_Manager.h"
 #include "tao/Protocols_Hooks.h"
 
-const char *
+char const *
 sched_policy_name (int sched_policy)
 {
   char const *name {};
