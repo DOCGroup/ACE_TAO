@@ -31,9 +31,9 @@ public:
 
   ~be_visitor_sequence_base () override;
 
-  be_visitor_sequence_base (const be_visitor_sequence_base &) = delete;
+  be_visitor_sequence_base (be_visitor_sequence_base const &) = delete;
   be_visitor_sequence_base (be_visitor_sequence_base &&) = delete;
-  be_visitor_sequence_base &operator= (const be_visitor_sequence_base &) = delete;
+  be_visitor_sequence_base &operator= (be_visitor_sequence_base const &) = delete;
   be_visitor_sequence_base &operator= (be_visitor_sequence_base &&) = delete;
 
   int visit_predefined_type (be_predefined_type *node) override;
@@ -77,10 +77,10 @@ public:
 
   ~be_visitor_sequence_base_template_args () override;
 
-  be_visitor_sequence_base_template_args (const be_visitor_sequence_base_template_args &) = delete;
+  be_visitor_sequence_base_template_args (be_visitor_sequence_base_template_args const &) = delete;
   be_visitor_sequence_base_template_args (be_visitor_sequence_base_template_args &&) = delete;
   be_visitor_sequence_base_template_args &operator= (
-    const be_visitor_sequence_base_template_args &) = delete;
+    be_visitor_sequence_base_template_args const &) = delete;
   be_visitor_sequence_base_template_args &operator= (
     be_visitor_sequence_base_template_args &&) = delete;
 

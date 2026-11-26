@@ -25,9 +25,9 @@ public:
 
   ~be_visitor_sequence_cdr_op_cs () override;
 
-  be_visitor_sequence_cdr_op_cs (const be_visitor_sequence_cdr_op_cs &) = delete;
+  be_visitor_sequence_cdr_op_cs (be_visitor_sequence_cdr_op_cs const &) = delete;
   be_visitor_sequence_cdr_op_cs (be_visitor_sequence_cdr_op_cs &&) = delete;
-  be_visitor_sequence_cdr_op_cs &operator= (const be_visitor_sequence_cdr_op_cs &) = delete;
+  be_visitor_sequence_cdr_op_cs &operator= (be_visitor_sequence_cdr_op_cs const &) = delete;
   be_visitor_sequence_cdr_op_cs &operator= (be_visitor_sequence_cdr_op_cs &&) = delete;
 
   /// visit sequence

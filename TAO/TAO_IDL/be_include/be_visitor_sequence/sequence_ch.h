@@ -26,9 +26,9 @@ public:
 
   ~be_visitor_sequence_ch () override  = default;
 
-  be_visitor_sequence_ch (const be_visitor_sequence_ch &) = delete;
+  be_visitor_sequence_ch (be_visitor_sequence_ch const &) = delete;
   be_visitor_sequence_ch (be_visitor_sequence_ch &&) = delete;
-  be_visitor_sequence_ch &operator= (const be_visitor_sequence_ch &) = delete;
+  be_visitor_sequence_ch &operator= (be_visitor_sequence_ch const &) = delete;
   be_visitor_sequence_ch &operator= (be_visitor_sequence_ch &&) = delete;
 
   /// visit sequence node.
