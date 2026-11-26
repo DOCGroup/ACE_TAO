@@ -82,8 +82,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::close_i ()
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i (const EXT_ID &ext_id,
-                                                   const INT_ID &int_id)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind_i (EXT_ID const &ext_id,
+                                                   INT_ID const &int_id)
 {
   // Try to find the key.
   ACE_UINT32 slot = 0;
@@ -250,8 +250,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_move (ACE_UINT32 slot,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_bind (const EXT_ID &ext_id,
-                                                        const INT_ID &int_id)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_bind (EXT_ID const &ext_id,
+                                                        INT_ID const &int_id)
 {
   // This function assumes that the find() has already been done, and
   // therefore, simply adds to the map.
@@ -277,8 +277,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::shared_bind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
-                                                     const INT_ID &int_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
+                                                     INT_ID const &int_id,
                                                      EXT_ID &old_ext_id,
                                                      INT_ID &old_int_id)
 {
@@ -310,8 +310,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
-                                                     const INT_ID &int_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
+                                                     INT_ID const &int_id,
                                                      INT_ID &old_int_id)
 {
   // First try to find the key.
@@ -341,8 +341,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
-                                                     const INT_ID &int_id)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (EXT_ID const &ext_id,
+                                                     INT_ID const &int_id)
 {
   // First try to find the key.
   ACE_UINT32 slot = 0;
@@ -369,7 +369,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind_i (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (EXT_ID const &ext_id,
                                                       INT_ID &int_id)
 {
   // Try to find the key.
@@ -392,7 +392,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind_i (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_and_return_index (EXT_ID const &ext_id,
                                                                   ACE_UINT32 &slot)
 {
   // Go through the entire occupied list looking for the key.
@@ -457,7 +457,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_all ()
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (EXT_ID const &ext_id,
                                                    INT_ID &int_id)
 {
   // Try to find the key.
@@ -474,7 +474,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find_i (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_and_return_index (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_and_return_index (EXT_ID const &ext_id,
                                                                     ACE_UINT32 &slot)
 {
   // Try to find the key.
@@ -514,7 +514,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_slot (ACE_UINT32 slot)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (EXT_ID const &ext_id,
                                                      INT_ID &int_id)
 {
   // Unbind the entry.

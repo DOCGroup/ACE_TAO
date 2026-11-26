@@ -62,8 +62,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::~ACE_Map_Manager ()
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind (const EXT_ID &ext_id,
-                                                 const INT_ID &int_id)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind (EXT_ID const &ext_id,
+                                                 INT_ID const &int_id)
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
@@ -72,8 +72,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::bind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (const EXT_ID &ext_id,
-                                                   const INT_ID &int_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (EXT_ID const &ext_id,
+                                                   INT_ID const &int_id,
                                                    EXT_ID &old_ext_id,
                                                    INT_ID &old_int_id)
 {
@@ -86,8 +86,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (const EXT_ID &ext_id,
-                                                   const INT_ID &int_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (EXT_ID const &ext_id,
+                                                   INT_ID const &int_id,
                                                    INT_ID &old_int_id)
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
@@ -98,8 +98,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (const EXT_ID &ext_id,
-                                                   const INT_ID &int_id)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (EXT_ID const &ext_id,
+                                                   INT_ID const &int_id)
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
 
@@ -108,7 +108,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::rebind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind (EXT_ID const &ext_id,
                                                     INT_ID &int_id)
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
@@ -118,7 +118,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::trybind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id) const
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (EXT_ID const &ext_id) const
 {
   ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> *nc_this =
     (ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> *) this;
@@ -129,7 +129,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id) const
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (EXT_ID const &ext_id,
                                                  INT_ID &int_id) const
 {
   ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK> *nc_this =
@@ -140,7 +140,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::find (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (EXT_ID const &ext_id)
 {
   // Unbind the entry.
   ACE_UINT32 slot = 0;
@@ -149,7 +149,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind_i (const EXT_ID &ext_id)
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind (const EXT_ID &ext_id,
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind (EXT_ID const &ext_id,
                                                    INT_ID &int_id)
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
@@ -159,7 +159,7 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind (const EXT_ID &ext_id,
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind (const EXT_ID &ext_id)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::unbind (EXT_ID const &ext_id)
 {
   ACE_WRITE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
   return this->unbind_i (ext_id);
@@ -206,8 +206,8 @@ ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::move_from_occupied_list_to_free_list 
 }
 
 template <class EXT_ID, class INT_ID, class ACE_LOCK> ACE_INLINE int
-ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::equal (const EXT_ID &id1,
-                                                  const EXT_ID &id2)
+ACE_Map_Manager<EXT_ID, INT_ID, ACE_LOCK>::equal (EXT_ID const &id1,
+                                                  EXT_ID const &id2)
 {
   return id1 == id2;
 }

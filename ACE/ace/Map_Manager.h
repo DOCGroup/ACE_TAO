@@ -174,8 +174,8 @@ public:
    * @retval 1 If an attempt is made to bind an existing entry.
    * @retval -1 If failures occur.
    */
-  int bind (const EXT_ID &ext_id,
-            const INT_ID &int_id);
+  int bind (EXT_ID const &ext_id,
+            INT_ID const &int_id);
 
   /**
    * Reassociate @a ext_id with @a int_id.  If @a ext_id is not in the
@@ -188,8 +188,8 @@ public:
    * @retval 1 If an existing entry was rebound.
    * @retval -1 If failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               EXT_ID &old_ext_id,
               INT_ID &old_int_id);
 
@@ -202,14 +202,14 @@ public:
    * @retval 1 If an existing entry was rebound.
    * @retval -1 If failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               INT_ID &old_int_id);
 
   /// Reassociate @a ext_id with @a int_id.  Old values in the map are
   /// ignored.
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id);
 
   /**
    * Associate @a ext_id with @a int_id if and only if @a ext_id is not
@@ -219,7 +219,7 @@ public:
    * @retval 1 If an attempt is made to bind an existing entry.
    * @retval -1 If failures occur.
    */
-  int trybind (const EXT_ID &ext_id,
+  int trybind (EXT_ID const &ext_id,
                INT_ID &int_id);
 
   /**
@@ -227,11 +227,11 @@ public:
    * @retval 0 If found.
    * @retval -1 If not found.
    */
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             INT_ID &int_id) const;
 
   /// Returns 0 if the @a ext_id is in the mapping, otherwise -1.
-  int find (const EXT_ID &ext_id) const;
+  int find (EXT_ID const &ext_id) const;
 
   /**
    * Unbind (remove) the @a ext_id from the map.  Don't return the
@@ -239,14 +239,14 @@ public:
    * @a int_ids are *not* dynamically allocated...)  Returns 0 if
    * successful, else -1.
    */
-  int unbind (const EXT_ID &ext_id);
+  int unbind (EXT_ID const &ext_id);
 
   /**
    * Break any association of @a ext_id.  Returns the value of @a int_id
    * in case the caller needs to deallocate memory.  Returns 0 if
    * successful, else -1.
    */
-  int unbind (const EXT_ID &ext_id,
+  int unbind (EXT_ID const &ext_id,
               INT_ID &int_id);
 
   /**
@@ -295,59 +295,59 @@ protected:
 
   /// Performs the binding of @a ext_id to @a int_id.  Must be called
   /// with locks held.
-  int bind_i (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  int bind_i (EXT_ID const &ext_id,
+              INT_ID const &int_id);
 
   /// Bind an entry (without finding first).  Must be called with locks
   /// held.
-  int shared_bind (const EXT_ID &ext_id,
-                   const INT_ID &int_id);
+  int shared_bind (EXT_ID const &ext_id,
+                   INT_ID const &int_id);
 
   /// Performs a rebinding of @c ext_it to @a int_id.  Also, recovers old
   /// values.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id,
+  int rebind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id,
                 EXT_ID &old_ext_id,
                 INT_ID &old_int_id);
 
   /// Performs a rebinding of @c ext_it to @a int_id.  Also, recovers old
   /// values.  Must be called with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id,
+  int rebind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id,
                 INT_ID &old_int_id);
 
   /// Performs a rebinding of @c ext_it to @a int_id.  Must be called
   /// with locks held.
-  int rebind_i (const EXT_ID &ext_id,
-                const INT_ID &int_id);
+  int rebind_i (EXT_ID const &ext_id,
+                INT_ID const &int_id);
 
   /// Performs a conditional bind of @a int_id using @a ext_id as the
   /// key.  Must be called with locks held.
-  int trybind_i (const EXT_ID &ext_id,
+  int trybind_i (EXT_ID const &ext_id,
                  INT_ID &int_id);
 
   /// Performs a find of @a int_id using @a ext_id as the key.  Must be
   /// called with locks held.
-  int find_i (const EXT_ID &ext_id,
+  int find_i (EXT_ID const &ext_id,
               INT_ID &int_id);
 
   /// Performs a find using @a ext_id as the key.  Must be called with
   /// locks held.
-  int find_and_return_index (const EXT_ID &ext_id,
+  int find_and_return_index (EXT_ID const &ext_id,
                              ACE_UINT32 &slot);
 
   /// Performs an unbind of @a int_id using @a ext_id as the key.  Must
   /// be called with locks held.
-  int unbind_i (const EXT_ID &ext_id,
+  int unbind_i (EXT_ID const &ext_id,
                 INT_ID &int_id);
 
   /// Performs an unbind using @a ext_id as the key.  Must be called
   /// with locks held.
-  int unbind_i (const EXT_ID &ext_id);
+  int unbind_i (EXT_ID const &ext_id);
 
   /// Performs an unbind using @a ext_id as the key.  Must be called
   /// with locks held.
-  int unbind_and_return_index (const EXT_ID &ext_id,
+  int unbind_and_return_index (EXT_ID const &ext_id,
                                ACE_UINT32 &slot);
 
   /// Unbind @a slot.
@@ -361,7 +361,7 @@ protected:
 
   /// Returns 1 if @c id1 == @c id2, else 0.  This is defined as a
   /// separate method to facilitate template specialization.
-  int equal (const EXT_ID &id1, const EXT_ID &id2);
+  int equal (EXT_ID const &id1, EXT_ID const &id2);
 
   /// This function returns the new size of the Map Manager.  This
   /// function is called when we run out of room and need to resize.
