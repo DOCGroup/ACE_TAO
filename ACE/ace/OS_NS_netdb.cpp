@@ -281,7 +281,7 @@ ACE_OS::getmacaddress (struct macaddr_node_t *node)
 #elif defined ACE_VXWORKS
 
   int name[] = {CTL_NET, AF_ROUTE, 0, 0, NET_RT_IFLIST, 0};
-  static const size_t name_elts = sizeof name / sizeof name[0];
+  static size_t const name_elts = sizeof name / sizeof name[0];
 
   size_t result_sz = 0u;
   if (sysctl (name, name_elts, 0, &result_sz, 0, 0u) != 0)

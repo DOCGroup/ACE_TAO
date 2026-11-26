@@ -421,9 +421,9 @@ ACE_OS::cuserid (char *user, size_t maxlen)
       // zero pointer was passed in as the destination.
 
 #if defined (_POSIX_SOURCE) && defined (L_cuserid)
-      const size_t ACE_L_cuserid = L_cuserid;
+      size_t const ACE_L_cuserid = L_cuserid;
 #else
-      const size_t ACE_L_cuserid = 9;  // 8 character user ID + NULL
+      size_t const ACE_L_cuserid = 9;  // 8 character user ID + NULL
 #endif  /* _POSIX_SOURCE */
 
       static char tmp[ACE_L_cuserid] = { '\0' };

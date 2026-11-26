@@ -166,7 +166,7 @@ ACE_TSS_Emulation::tss_base (void* ts_storage[], u_int *ts_created)
       if (ts_storage == 0)
         {
 #ifdef ACE_HAS_ALLOC_HOOKS
-          const size_t n = ACE_TSS_THREAD_KEYS_MAX * sizeof (void *);
+          size_t const n = ACE_TSS_THREAD_KEYS_MAX * sizeof (void *);
           ACE_Allocator *const alloc = ACE_Allocator::instance ();
           ACE_ALLOCATOR_RETURN (ts_storage,
                                 static_cast<void **> (alloc->malloc (n)), 0);

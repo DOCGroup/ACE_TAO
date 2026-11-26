@@ -57,7 +57,7 @@ ACE_OS::dlerror ()
       return nullptr;
     }
 #   if defined (ACE_USES_WCHAR)
-  const size_t BufLen = 256;
+  size_t const BufLen = 256;
   static wchar_t buf[BufLen];
   ACE_OS::strsncpy (buf, ACE_TEXT_CHAR_TO_TCHAR (err), BufLen);
   return buf;

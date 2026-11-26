@@ -800,7 +800,7 @@ namespace { // helpers for vsnprintf_emulation
         {
           return;
         }
-      const size_t m = n > this->avail_ ? this->avail_ : n;
+      size_t const m = n > this->avail_ ? this->avail_ : n;
       std::memcpy (this->buf_, s, m);
       this->buf_ += m;
       this->avail_ -= m;
@@ -813,7 +813,7 @@ namespace { // helpers for vsnprintf_emulation
         {
           return;
         }
-      const size_t m = n > this->avail_ ? this->avail_ : n;
+      size_t const m = n > this->avail_ ? this->avail_ : n;
       ACE_OS::memset (this->buf_, c, m);
       this->buf_ += m;
       this->avail_ -= m;
@@ -1171,7 +1171,7 @@ namespace { // helpers for vsnprintf_emulation
     void conv_str (char const *str, Snprintf_Flags flags,
                    int width, int precision)
     {
-      const size_t len = std::strlen (str),
+      size_t const len = std::strlen (str),
         n = (precision >= 0 && precision < int (len)) ? precision : len;
       this->pad (str, n, flags, width);
     }
@@ -1185,7 +1185,7 @@ namespace { // helpers for vsnprintf_emulation
                       flags, width, precision);
 #else
       std::mbstate_t mbstate = std::mbstate_t ();
-      const size_t n = 1 + wcsrtombs (0, &str, 0, &mbstate);
+      size_t const n = 1 + wcsrtombs (0, &str, 0, &mbstate);
       char *buf = static_cast<char *> (ACE_Allocator::instance ()->malloc (n));
       if (buf)
         {
@@ -1595,7 +1595,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, char const *fmt, va_list ap)
     {
       // Output up to next % in format string
       const bool escaped = pct[1] == '%';
-      const size_t non_conv = pct - fmt + escaped;
+      size_t const non_conv = pct - fmt + escaped;
       sb.out (fmt, non_conv);
       fmt += 1 + non_conv;
       if (escaped)

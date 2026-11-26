@@ -122,7 +122,7 @@ ACE_OS::writev_emulation (ACE_HANDLE handle, const iovec *iov, int n)
   for (int i = 0; i < n; iter += iov[i++].iov_len)
     ACE_OS::memcpy (iter, iov[i].iov_base, iov[i].iov_len);
 
-  const ssize_t result = ACE_OS::write (handle, buf, length);
+  ssize_t const result = ACE_OS::write (handle, buf, length);
 
 # ifdef ACE_HAS_ALLOC_HOOKS
   ACE_Allocator::instance ()->free (buf);
