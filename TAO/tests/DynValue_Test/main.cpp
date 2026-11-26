@@ -243,7 +243,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG,
         "..%N:%l Attempting to get_long from dynamic any\n"));
-      const CORBA::Long myLongExtracted = dany_boxed->get_long ();
+      CORBA::Long const myLongExtracted = dany_boxed->get_long ();
       ACE_DEBUG ((LM_DEBUG,
                   "..%N:%l checking value, long is %d\n",
                   myLongExtracted ));

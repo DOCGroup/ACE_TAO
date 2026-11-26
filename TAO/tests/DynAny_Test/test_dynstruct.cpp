@@ -103,7 +103,7 @@ Test_DynStruct::run_test ()
       data.m_shortseq2 =
         fa1->get_short_seq ();
 
-      const bool good =
+      bool const good =
         data.m_shortseq2->length () == data.m_shortseq1.length ();
 
       if (good)
@@ -318,7 +318,7 @@ Test_DynStruct::run_test ()
       DynamicAny::NameValuePairSeq_var gm =
         sm->get_members ();
 
-      const CORBA::ULong index = 2;
+      CORBA::ULong const index = 2;
 
       if (std::strcmp (gm[index].id, "es"))
         {
