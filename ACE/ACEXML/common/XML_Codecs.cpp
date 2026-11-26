@@ -9,10 +9,10 @@ ACEXML_Base64::encode (ACEXML_Char const * input,
                        size_t* output_len)
 {
   if (input == nullptr)
-  {
-    return nullptr;
-  }
-  const size_t len = ACE_OS::strlen (input);
+    {
+      return nullptr;
+    }
+  size_t const len = ACE_OS::strlen (input);
 
   std::unique_ptr<ACE_Byte[]> const buf {new (std::nothrow) ACE_Byte[len + 1]};
   if (!buf)
@@ -32,9 +32,9 @@ ACEXML_Base64::encode (ACEXML_Char const * input,
     ACE_Base64::encode (buf.get (), len, &encode_len));
 
   if (encoded_buf == nullptr)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
   ACEXML_Char *result {};
   ACE_NEW_RETURN (result,
@@ -43,7 +43,7 @@ ACEXML_Base64::encode (ACEXML_Char const * input,
 
   for (size_t j = 0; j < encode_len; ++j)
     {
-      result[j] = (ACEXML_Char)encoded_buf[j];
+      result[j] = static_cast<ACEXML_Char> (encoded_buf[j]);
     }
   result[encode_len] = 0;
 
@@ -56,11 +56,11 @@ ACEXML_Base64::decode (ACEXML_Char const * input,
                        size_t* output_len)
 {
   if (input == nullptr)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
-  const size_t len = ACE_OS::strlen (input);
+  size_t const len = ACE_OS::strlen (input);
 
   std::unique_ptr<ACE_Byte[]> const buf {new (std::nothrow) ACE_Byte[len + 1]};
   if (!buf)
@@ -82,9 +82,9 @@ ACEXML_Base64::decode (ACEXML_Char const * input,
     ACE_Base64::decode (buf.get (), &decode_len));
 
   if (decoded_buf == nullptr)
-  {
-    return nullptr;
-  }
+    {
+      return nullptr;
+    }
 
   ACEXML_Char *result {};
 
@@ -94,7 +94,7 @@ ACEXML_Base64::decode (ACEXML_Char const * input,
 
   for (size_t j = 0; j < decode_len; ++j)
     {
-      result[j] = (ACEXML_Char)decoded_buf[j];
+      result[j] = static_cast<ACEXML_Char> (decoded_buf[j]);
     }
 
   result[decode_len] = 0;
