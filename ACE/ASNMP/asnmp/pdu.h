@@ -48,12 +48,13 @@ public:
   Pdu (Vb *pvbs, int pvb_count);
 
   Pdu (Pdu const &pdu);
-
+  Pdu (Pdu &&pdu);
 
   ~Pdu();
 
   /// assignment to another Pdu object overloaded
   Pdu &operator= (Pdu const &pdu);
+  Pdu &operator= (Pdu &&pdu);
 
   /// append a vb to the pdu
   Pdu &operator+= (Vb &vb);

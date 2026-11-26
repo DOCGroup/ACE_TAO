@@ -208,6 +208,20 @@ static void VbTest()
   ACE_TEST_ASSERT(copied_pdu.get_vb (copied_vb, 1) == 1);
   ACE_TEST_ASSERT(copied_vb == v10);
 
+  Pdu move_packet_source (pdu);
+  Pdu move_packet (std::move (move_packet_source));
+  Pdu move_packet_assigned;
+  move_packet_assigned = std::move (move_packet);
+  Vb moved_packet_vb;
+  int const packet_result = move_packet_assigned.get_vb (moved_packet_vb, 1);
+  ACE_TEST_ASSERT (move_packet_source.get_vb_count () == 0);
+  ACE_TEST_ASSERT (move_packet.get_vb_count () == 0);
+  ACE_TEST_ASSERT (move_packet_assigned.get_vb_count () == 2);
+  ACE_TEST_ASSERT (packet_result == 1);
+  ACE_TEST_ASSERT (moved_packet_vb == v10);
+  move_packet_source += v5;
+  ACE_TEST_ASSERT (move_packet_source.get_vb_count () == 1);
+
   ACE_TEST_ASSERT(copied_pdu.delete_vb (0) == 1);
   ACE_TEST_ASSERT(copied_pdu.get_vb_count() == 1);
   ACE_TEST_ASSERT(copied_pdu.get_vb (copied_vb, 0) == 1);

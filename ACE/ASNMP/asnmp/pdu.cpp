@@ -73,6 +73,12 @@ Pdu::Pdu (Pdu const &pdu)
    *this = pdu;
 }
 
+Pdu::Pdu (Pdu &&pdu)
+  : Pdu ()
+{
+  *this = std::move (pdu);
+}
+
 Pdu::~Pdu() = default;
 
 Pdu &Pdu::operator= (Pdu const &pdu)
@@ -115,6 +121,25 @@ Pdu &Pdu::operator= (Pdu const &pdu)
      }
 
    return *this;
+}
+
+Pdu &Pdu::operator= (Pdu &&pdu)
+{
+  if (this != std::addressof (pdu))
+    {
+      this->vbs_ = std::move (pdu.vbs_);
+      this->vb_count_ = std::exchange (pdu.vb_count_, 0);
+      this->error_status_ = std::exchange (pdu.error_status_, 0);
+      this->error_index_ = std::exchange (pdu.error_index_, 0);
+      this->validity_ = std::exchange (pdu.validity_, 0);
+      this->request_id_ = std::exchange (pdu.request_id_, 0UL);
+      this->pdu_type_ = std::exchange (pdu.pdu_type_, 0);
+      this->notify_timestamp_ = pdu.notify_timestamp_;
+      this->notify_id_ = std::move (pdu.notify_id_);
+      this->notify_enterprise_ = std::move (pdu.notify_enterprise_);
+      this->output_ = std::move (pdu.output_);
+    }
+  return *this;
 }
 
 // append operator, appends a string
