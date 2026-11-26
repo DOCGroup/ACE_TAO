@@ -38,11 +38,11 @@ public:
   static unsigned failed_test_count_;
   static unsigned total_test_count_;
 
-  explicit Annotation_Test (const std::string &name);
+  explicit Annotation_Test (std::string const &name);
 
   ~Annotation_Test ();
 
-  void failed (const std::string &message = "");
+  void failed (std::string const &message = "");
 
   Annotation_Test &error_count (int error_count);
 
@@ -50,7 +50,7 @@ public:
 
   Annotation_Test &last_warning (UTL_Error::ErrorCode last_warning);
 
-  Annotation_Test &run (const std::string &idl);
+  Annotation_Test &run (std::string const &idl);
 
   AST_Decl *assert_node (char const *name, UTL_Scope *from = nullptr);
 

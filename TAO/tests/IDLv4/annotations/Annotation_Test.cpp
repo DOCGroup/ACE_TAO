@@ -5,7 +5,7 @@
 unsigned Annotation_Test::failed_test_count_ = 0;
 unsigned Annotation_Test::total_test_count_ = 0;
 
-Annotation_Test::Annotation_Test (const std::string &name)
+Annotation_Test::Annotation_Test (std::string const &name)
   : name_ (name),
     failed_ (false),
     error_count_ (0),
@@ -46,7 +46,7 @@ Annotation_Test::~Annotation_Test ()
 }
 
 void
-Annotation_Test::failed (const std::string &message)
+Annotation_Test::failed (std::string const &message)
 {
   if (message.length ())
     {
@@ -85,7 +85,7 @@ Annotation_Test::last_warning (UTL_Error::ErrorCode last_warning)
 }
 
 Annotation_Test &
-Annotation_Test::run (const std::string &idl)
+Annotation_Test::run (std::string const &idl)
 {
   // Reset Error State
   idl_global->set_err_count (0);
