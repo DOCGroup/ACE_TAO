@@ -1,0 +1,6 @@
+project(INet_Connection_Cache_Test) : aceexe, inet {
+  exename = inet_connection_cache_test
+  Source_Files {
+    Connection_Cache.cpp
+  }
+}

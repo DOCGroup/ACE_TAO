@@ -190,32 +190,55 @@ namespace ACE
 
             if (create_connection)
               {
-                std::unique_ptr<connection_type> new_connection (
-                  connection_factory.create_connection (key));
-                if (new_connection != nullptr)
+                try
                   {
-                    INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("ConnectionCache::claim_connection - ")
-                                             ACE_TEXT ("successfully created new connection\n")));
-
-                    ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
-                                              guard_,
-                                              this->lock_,
-                                              false));
-
-                    ConnectionCacheValue cacheval (new_connection.get ());
-                    cacheval.state (ConnectionCacheValue::CST_BUSY);
-                    if (this->set_connection (key, cacheval))
+                    std::unique_ptr<connection_type> new_connection (
+                      connection_factory.create_connection (key));
+                    if (new_connection != nullptr)
                       {
-                        connection = new_connection.release ();
-                        return true;
+                        INET_DEBUG (9, (LM_INFO, DLINFO ACE_TEXT ("ConnectionCache::claim_connection - ")
+                                                 ACE_TEXT ("successfully created new connection\n")));
+
+                        ACE_MT (ACE_GUARD_RETURN (ACE_SYNCH_MUTEX,
+                                                  guard_,
+                                                  this->lock_,
+                                                  false));
+
+                        ConnectionCacheValue cacheval (new_connection.get ());
+                        cacheval.state (ConnectionCacheValue::CST_BUSY);
+                        if (this->set_connection (key, cacheval))
+                          {
+                            connection = new_connection.release ();
+                            return true;
+                          }
                       }
-                    return false;
                   }
-                else
-                {
-                  return false;
-                }
+                catch (...)
+                  {
+                    try
+                      {
+                        this->discard_pending_connection (key);
+                      }
+                    catch (...)
+                      {
+                      }
+                    throw;
+                  }
+                this->discard_pending_connection (key);
+                return false;
               }
+          }
+      }
+
+    void ConnectionCache::discard_pending_connection (ConnectionKey const& key)
+      {
+        ACE_MT (ACE_GUARD (ACE_SYNCH_MUTEX, guard_, this->lock_));
+        ConnectionCacheValue cacheval;
+        if (this->find_connection (key, cacheval)
+            && cacheval.state () == ConnectionCacheValue::CST_INIT)
+          {
+            this->cache_map_.unbind (ConnectionCacheKey (key));
+            this->condition_.broadcast ();
           }
       }
 

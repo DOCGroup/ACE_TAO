@@ -254,6 +254,8 @@ namespace ACE
               bool find_connection (ConnectionKey const& key,
                                     ConnectionCacheValue& cacheval);
 
+              void discard_pending_connection (ConnectionKey const& key);
+
               mutable ACE_SYNCH_MUTEX lock_;
               ACE_SYNCH_CONDITION condition_;
               map_type cache_map_;
