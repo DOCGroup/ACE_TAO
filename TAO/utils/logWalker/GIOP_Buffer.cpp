@@ -13,7 +13,7 @@ static size_t leadin_len_1_6 = 19;
 
 char const *GIOP_Buffer::size_leadin {};
 size_t GIOP_Buffer::leadin_len {};
-const size_t GIOP_Buffer::giop_header_len = 12;
+size_t const GIOP_Buffer::giop_header_len = 12;
 
 void
 GIOP_Buffer::init_leadin (int version)

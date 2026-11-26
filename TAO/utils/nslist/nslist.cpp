@@ -260,7 +260,8 @@ namespace
                  ACE_DEBUG ((LM_DEBUG, " {Operation on conext IOR timed out}"));
               }
 
-            if (const size_t backwards= NestedNamingContexts::hasBeenSeen (xc.in ()))
+            size_t const backwards = NestedNamingContexts::hasBeenSeen (xc.in ());
+            if (backwards != 0)
               {
                 ACE_DEBUG ((LM_DEBUG, " (Binding Loop)\n"));
                 if (!options.no_loops)
