@@ -29,12 +29,12 @@
 static const char ACE_ALPHABET[] = "abcdefghijklmnopqrstuvwxyz";
 
 // pipe name to use
-static const ACE_TCHAR *PIPE_NAME = ACE_TEXT ("ace_pipe_name");
+static ACE_TCHAR const *PIPE_NAME = ACE_TEXT ("ace_pipe_name");
 
 static ACE_THR_FUNC_RETURN
 client (void *)
 {
-  const ACE_TCHAR *rendezvous = PIPE_NAME;
+  ACE_TCHAR const *rendezvous = PIPE_NAME;
   ACE_SPIPE_Stream cli_stream;
   ACE_SPIPE_Connector con;
 
@@ -45,7 +45,7 @@ client (void *)
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n%a"), rendezvous, 1));
     }
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
     if (cli_stream.send (c, 1) == -1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
@@ -81,7 +81,7 @@ client (void *)
     }
 
   // Write out the alphabet one byte at a time
-  for (const char *d = ACE_ALPHABET; *d != '\0'; ++d)
+  for (char const *d = ACE_ALPHABET; *d != '\0'; ++d)
     if (cli_stream.send (d, 1) == -1)
       {
         ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("send")));
@@ -105,9 +105,9 @@ server (void *)
   ACE_SPIPE_Acceptor acceptor;
   ACE_SPIPE_Stream new_stream;
   char buf[BUFSIZ];
-  const char *t = ACE_ALPHABET;
+  char const *t = ACE_ALPHABET;
 
-  const ACE_TCHAR *rendezvous = PIPE_NAME;
+  ACE_TCHAR const *rendezvous = PIPE_NAME;
 
   // Initialize named pipe listener.
 

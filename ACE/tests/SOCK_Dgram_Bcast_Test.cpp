@@ -141,7 +141,7 @@ tries to receive at least one datagram.
 \retval 0 datagram was received
 \retval -1 datagram was not received
 */
-int run_auto_test (const ACE_TCHAR *prog_name)
+int run_auto_test (ACE_TCHAR const *prog_name)
 {
 #if defined (ACE_HAS_PROCESS_SPAWN)
   ACE_DEBUG ((LM_INFO, ACE_TEXT ("Running auto_tests in process mode\n")));

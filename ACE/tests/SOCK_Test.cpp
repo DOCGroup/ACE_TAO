@@ -85,7 +85,7 @@ client (void *arg)
   }
 
   // Send data to server (correctly handles "incomplete writes").
-  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       if (cli_stream.send_n (c, 1) == -1)
         {
@@ -134,7 +134,7 @@ server (void *arg)
   ACE_Time_Value tv (def_timeout);
 
   char buf[BUFSIZ];
-  const char *t = ACE_ALPHABET;
+  char const *t = ACE_ALPHABET;
 
   int result = ACE::handle_read_ready (peer_acceptor->get_handle (),
                                        std::addressof (tv));
