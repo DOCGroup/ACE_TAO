@@ -1657,14 +1657,14 @@ TAO_Container_i::create_local_interface_i (
           ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (inherited_key,
                                                     stringified,
-                                                    inherited_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR (inherited_path));
         }
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_LocalInterface,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::LocalInterfaceDef::_narrow (obj.in ());
@@ -1763,7 +1763,7 @@ TAO_Container_i::create_ext_value_i (
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Value,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::ExtValueDef::_narrow (obj.in ());
@@ -1839,7 +1839,7 @@ TAO_Container_i::lookup_name_recursive (
                                                         ACE_TEXT ("name"),
                                                         name);
 
-              if (std::strcmp (name.c_str (), search_name) == 0)
+              if (std::strcmp (ACE_TEXT_ALWAYS_CHAR (name.c_str ()), search_name) == 0)
                 {
                   kind_queue.push_back (def_kind);
 
@@ -1928,7 +1928,7 @@ TAO_Container_i:: lookup_attr (
                                                     ACE_TEXT ("name"),
                                                     name);
 
-          if (name == search_name)
+          if (name == ACE_TEXT_CHAR_TO_TCHAR (search_name))
             {
               kind_queue.push_back (CORBA::dk_Attribute);
 
@@ -2029,7 +2029,7 @@ TAO_Container_i::lookup_op (
                                                     ACE_TEXT ("name"),
                                                     name);
 
-          if (name == search_name)
+          if (name == ACE_TEXT_CHAR_TO_TCHAR (search_name))
             {
               kind_queue.push_back (CORBA::dk_Operation);
 
@@ -2260,7 +2260,7 @@ TAO_Container_i::update_refs (char const *path,
                                                 ACE_TEXT ("name"),
                                                 ref_name);
 
-      ACE_TString::size_type pos = ref_name.find (this->repo_->extension ());
+      ACE_TString::size_type pos = ref_name.find (ACE_TEXT_CHAR_TO_TCHAR (this->repo_->extension ()));
 
       // If one of the names has been mangled by move(), fix it.
       if (pos != ACE_TString::npos)
@@ -2271,7 +2271,7 @@ TAO_Container_i::update_refs (char const *path,
             {
               this->repo_->config ()->set_string_value (ref_key,
                                                         ACE_TEXT ("name"),
-                                                        name);
+                                                        ACE_TEXT_CHAR_TO_TCHAR (name));
             }
           else
             {
@@ -2282,7 +2282,7 @@ TAO_Container_i::update_refs (char const *path,
 
           this->repo_->config ()->set_string_value (ref_key,
                                                     ACE_TEXT ("path"),
-                                                    path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR (path));
 
           return;
         }
@@ -2304,11 +2304,11 @@ TAO_Container_i::update_refs (char const *path,
 
   this->repo_->config ()->set_string_value (new_key,
                                             ACE_TEXT ("name"),
-                                            name);
+                                            ACE_TEXT_CHAR_TO_TCHAR (name));
 
   this->repo_->config ()->set_string_value (new_key,
                                             ACE_TEXT ("path"),
-                                            path);
+                                            ACE_TEXT_CHAR_TO_TCHAR (path));
 
   this->repo_->config ()->set_integer_value (refs_key,
                                              ACE_TEXT ("count"),
@@ -2365,7 +2365,7 @@ TAO_Container_i::create_value_common (
       // no other way to know about a specific key.
       this->repo_->config ()->expand_path (
                                   this->repo_->root_key (),
-                                  base_path,
+                                  ACE_TEXT_CHAR_TO_TCHAR (base_path),
                                   TAO_IFR_Service_Utils::tmp_key_,
                                   false
                                 );
@@ -2376,7 +2376,7 @@ TAO_Container_i::create_value_common (
 
       this->repo_->config ()->set_string_value (new_key,
                                                 ACE_TEXT ("base_value"),
-                                                base_path);
+                                                ACE_TEXT_CHAR_TO_TCHAR (base_path));
     }
 
   CORBA::ULong length = abstract_base_values.length ();
@@ -2405,7 +2405,7 @@ TAO_Container_i::create_value_common (
           // no other way to know about a specific key.
           this->repo_->config ()->expand_path (
                                       this->repo_->root_key (),
-                                      base_path,
+                                      ACE_TEXT_CHAR_TO_TCHAR (base_path),
                                       TAO_IFR_Service_Utils::tmp_key_,
                                       false
                                     );
@@ -2454,7 +2454,7 @@ TAO_Container_i::create_value_common (
           // the name clash checker for base interfaces is static, and has
           // no other way to know about a specific key.
           this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                               supported_path,
+                                               ACE_TEXT_CHAR_TO_TCHAR (supported_path),
                                                TAO_IFR_Service_Utils::tmp_key_,
                                                false);
           this->repo_->config ()->get_integer_value (
