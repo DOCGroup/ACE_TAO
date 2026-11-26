@@ -20,9 +20,9 @@ ACE_DLL::ACE_DLL (bool close_handle_on_destruction)
   ACE_TRACE ("ACE_DLL::ACE_DLL (int)");
 }
 
-ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
+ACE_DLL::ACE_DLL (ACE_DLL const &rhs)
 {
-  ACE_TRACE ("ACE_DLL::ACE_DLL (const ACE_DLL &)");
+  ACE_TRACE ("ACE_DLL::ACE_DLL (ACE_DLL const &)");
 
   if (rhs.dll_name_
       // This will automatically up the refcount.
@@ -38,9 +38,9 @@ ACE_DLL::ACE_DLL (const ACE_DLL &rhs)
 }
 
 ACE_DLL &
-ACE_DLL::operator= (const ACE_DLL &rhs)
+ACE_DLL::operator= (ACE_DLL const &rhs)
 {
-  ACE_TRACE ("ACE_DLL::operator= (const ACE_DLL &)");
+  ACE_TRACE ("ACE_DLL::operator= (ACE_DLL const &)");
 
   ACE_DLL tmp (rhs);
 

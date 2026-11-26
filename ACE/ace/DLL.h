@@ -50,7 +50,7 @@ public:
   explicit ACE_DLL (bool close_handle_on_destruction = true);
 
   /// Allow assignment
-  ACE_DLL& operator= (const ACE_DLL &rhs);
+  ACE_DLL &operator= (ACE_DLL const &rhs);
 
   /**
    * This constructor performs the actions of open() during construction.
@@ -75,7 +75,7 @@ public:
                     int open_mode = ACE_DEFAULT_SHLIB_MODE,
                     bool close_handle_on_destruction = true);
 
-  ACE_DLL (const ACE_DLL &);
+  ACE_DLL (ACE_DLL const &);
 
   /**
    * This method opens and dynamically links a specified DLL.
