@@ -53,7 +53,7 @@ public:
    */
   ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
                     int flags,
-                    const ACE_Time_Value *timeout) override;
+                    ACE_Time_Value const *timeout) override;
 
   /**
    * Wait to to @a timeout amount of time to send @a buf.  If @c send
@@ -61,7 +61,7 @@ public:
    * the number of bytes sent is returned.  */
   ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                     int flags,
-                    const ACE_Time_Value *timeout) override;
+                    ACE_Time_Value const *timeout) override;
 
   /**
    * Convert the buffer offset @a off to absolute address to @a buf.
@@ -129,7 +129,7 @@ public:
    */
   ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
                     int flags,
-                    const ACE_Time_Value *timeout) override;
+                    ACE_Time_Value const *timeout) override;
 
   /**
    * Wait to to @a timeout amount of time to send @a buf.  If @c send
@@ -137,7 +137,7 @@ public:
    * the number of bytes sent is returned.  */
   ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                     int flags,
-                    const ACE_Time_Value *timeout) override;
+                    ACE_Time_Value const *timeout) override;
 
 private:
   Channel recv_channel_ {};
@@ -228,7 +228,7 @@ public:
    */
   ssize_t send (const void *buf,
                 size_t n,
-                const ACE_Time_Value *timeout);
+                ACE_Time_Value const *timeout);
 
   /**
    * Wait to to @a timeout amount of time to send up to @a n bytes into
@@ -239,7 +239,7 @@ public:
   ssize_t send (const void *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout);
+                ACE_Time_Value const *timeout);
 
   /**
    * Wait to to @a timeout amount of time to send the @a message_block.
@@ -247,7 +247,7 @@ public:
    * it succeeds the number of bytes sent is returned.
    */
   ssize_t send (const ACE_Message_Block *message_block,
-                const ACE_Time_Value *timeout);
+                ACE_Time_Value const *timeout);
 
   /**
    * Wait up to @a timeout amount of time to receive up to @a n bytes
@@ -257,7 +257,7 @@ public:
    */
   ssize_t recv (void *buf,
                 size_t n,
-                const ACE_Time_Value *timeout);
+                ACE_Time_Value const *timeout);
 
   /**
    * Wait up to @a timeout amount of time to receive up to @a n bytes
@@ -268,7 +268,7 @@ public:
   ssize_t recv (void *buf,
                 size_t n,
                 int flags,
-                const ACE_Time_Value *timeout);
+                ACE_Time_Value const *timeout);
 
   /// Dump the state of an object.
   void dump () const;
@@ -286,7 +286,7 @@ public:
   */
 
 private:
-  ssize_t fetch_recv_buf (int flag, const ACE_Time_Value *timeout);
+  ssize_t fetch_recv_buf (int flag, ACE_Time_Value const *timeout);
 
   /// Actual deliverying mechanism.
   std::unique_ptr<ACE_MEM_SAP> deliver_strategy_ {};

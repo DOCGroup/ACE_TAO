@@ -28,7 +28,7 @@ ACE_MEM_SAP_Node::data ()
 }
 
 ACE_INLINE ACE_MEM_SAP_Node *
-ACE_MEM_SAP::acquire_buffer (const ssize_t size)
+ACE_MEM_SAP::acquire_buffer (ssize_t const size)
 {
   ACE_TRACE ("ACE_MEM_SAP::acquire_buffer");
   if (this->shm_malloc_ == nullptr)

@@ -55,7 +55,7 @@ ACE_Reactive_MEM_IO::get_buf_len (const ACE_OFF_T off, ACE_MEM_SAP_Node *&buf)
 }
 
 ACE_INLINE ssize_t
-ACE_MEM_IO::fetch_recv_buf (int flag, const ACE_Time_Value *timeout)
+ACE_MEM_IO::fetch_recv_buf (int flag, ACE_Time_Value const *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::fetch_recv_buf");
 
@@ -94,7 +94,7 @@ ACE_INLINE ssize_t
 ACE_MEM_IO::send (const void *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout)
+                  ACE_Time_Value const *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::send");
 
@@ -127,7 +127,7 @@ ACE_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf,
                   size_t len,
                   int flags,
-                  const ACE_Time_Value *timeout)
+                  ACE_Time_Value const *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
 
@@ -197,7 +197,7 @@ ACE_MEM_IO::recv (void *buf, size_t n)
 ACE_INLINE ssize_t
 ACE_MEM_IO::recv (void *buf,
                   size_t len,
-                  const ACE_Time_Value *timeout)
+                  ACE_Time_Value const *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::recv");
   return this->recv (buf, len, 0, timeout);
@@ -206,7 +206,7 @@ ACE_MEM_IO::recv (void *buf,
 ACE_INLINE ssize_t
 ACE_MEM_IO::send (const void *buf,
                   size_t len,
-                  const ACE_Time_Value *timeout)
+                  ACE_Time_Value const *timeout)
 {
   ACE_TRACE ("ACE_MEM_IO::send");
   return this->send (buf, len, 0, timeout);

@@ -40,6 +40,8 @@ class ACE_MEM_SAP_Node
 public:
   using ACE_MEM_SAP_NODE_PTR = ACE_Based_Pointer<ACE_MEM_SAP_Node>;
 
+  ACE_MEM_SAP_Node () = delete;
+
   /// Initialize the node with its capacity.
   explicit ACE_MEM_SAP_Node (size_t cap);
 
@@ -100,7 +102,7 @@ public:
    */
   virtual ssize_t recv_buf (ACE_MEM_SAP_Node *&buf,
                             int flags,
-                            const ACE_Time_Value *timeout) = 0;
+                            ACE_Time_Value const *timeout) = 0;
 
   /**
    * Wait to to @a timeout amount of time to send @a buf.  If @c send
@@ -108,11 +110,11 @@ public:
    * the number of bytes sent is returned.  */
   virtual ssize_t send_buf (ACE_MEM_SAP_Node *buf,
                             int flags,
-                            const ACE_Time_Value *timeout) = 0;
+                            ACE_Time_Value const *timeout) = 0;
 
   /// request a buffer of size @a size.  Return 0 if the @c shm_malloc_ is
   /// not initialized.
-  ACE_MEM_SAP_Node *acquire_buffer (const ssize_t size);
+  ACE_MEM_SAP_Node *acquire_buffer (ssize_t const size);
 
   /// release a buffer pointed by @a buf.  Return -1 if the @c shm_malloc_
   /// is not initialized.
