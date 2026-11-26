@@ -117,12 +117,12 @@ namespace TAO
       TAO_Object_Adapter &object_adapter () const;
 
       /// System ID accessor.
-      const PortableServer::ObjectId &id () const;
+      PortableServer::ObjectId const &id () const;
 
       /// User ID accessors.  This is the same value returned by
       /// PortableServer::Current::get_object_id().
-      void user_id (const PortableServer::ObjectId *);
-      const PortableServer::ObjectId &user_id () const;
+      void user_id (PortableServer::ObjectId const *);
+      PortableServer::ObjectId const &user_id () const;
 
       /// Servant accessor.
       PortableServer::Servant servant () const;

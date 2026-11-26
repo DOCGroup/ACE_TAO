@@ -60,7 +60,7 @@ namespace TAO
 
     void
     ServantRetentionStrategyRetain::deactivate_object (
-      const PortableServer::ObjectId &id)
+      PortableServer::ObjectId const &id)
     {
       TAO_Active_Object_Map_Entry *active_object_map_entry {};
       int const result = this->active_object_map_->
@@ -117,14 +117,14 @@ namespace TAO
 
     int
     ServantRetentionStrategyRetain::unbind_using_user_id (
-      const PortableServer::ObjectId &user_id)
+      PortableServer::ObjectId const &user_id)
     {
       return this->active_object_map_->unbind_using_user_id (user_id);
     }
 
     PortableServer::Servant
     ServantRetentionStrategyRetain::find_servant (
-      const PortableServer::ObjectId &system_id)
+      PortableServer::ObjectId const &system_id)
     {
       // Find user id from system id.
       PortableServer::ObjectId_var user_id;
@@ -158,7 +158,7 @@ namespace TAO
 
     PortableServer::ObjectId *
     ServantRetentionStrategyRetain::system_id_to_object_id (
-      const PortableServer::ObjectId &system_id)
+      PortableServer::ObjectId const &system_id)
     {
       // The object denoted by the reference does not have to be
       // active for this operation to succeed.
@@ -175,7 +175,7 @@ namespace TAO
 
     PortableServer::Servant
     ServantRetentionStrategyRetain::user_id_to_servant (
-      const PortableServer::ObjectId &id)
+      PortableServer::ObjectId const &id)
     {
       // If the POA has the RETAIN policy and the specified ObjectId is in
       // the Active Object Map, this operation returns the servant
@@ -192,7 +192,7 @@ namespace TAO
 
     CORBA::Object_ptr
     ServantRetentionStrategyRetain::id_to_reference (
-      const PortableServer::ObjectId &id,
+      PortableServer::ObjectId const &id,
       bool indirect)
     {
       // If an object with the specified Object Id value is currently
@@ -229,7 +229,7 @@ namespace TAO
 
     TAO_Servant_Location
     ServantRetentionStrategyRetain::servant_present (
-      const PortableServer::ObjectId &system_id,
+      PortableServer::ObjectId const &system_id,
       PortableServer::Servant &servant)
     {
       // Find user id from system id.
@@ -259,7 +259,7 @@ namespace TAO
 
     PortableServer::Servant
     ServantRetentionStrategyRetain::find_servant (
-      const PortableServer::ObjectId &system_id,
+      PortableServer::ObjectId const &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl)
     {
@@ -301,7 +301,7 @@ namespace TAO
 
     int
     ServantRetentionStrategyRetain::find_servant_priority (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         CORBA::Short &priority)
     {
       PortableServer::ObjectId user_id;
@@ -381,7 +381,7 @@ namespace TAO
 
     int
     ServantRetentionStrategyRetain::is_user_id_in_map (
-      const PortableServer::ObjectId &id,
+      PortableServer::ObjectId const &id,
       CORBA::Short priority,
       bool &priorities_match,
       bool &wait_occurred_restart_call)
@@ -737,7 +737,7 @@ namespace TAO
 
     void
     ServantRetentionStrategyRetain::activate_object_with_id (
-      const PortableServer::ObjectId &id,
+      PortableServer::ObjectId const &id,
       PortableServer::Servant servant,
       CORBA::Short priority,
       bool &wait_occurred_restart_call)
@@ -886,7 +886,7 @@ namespace TAO
 #if !defined (CORBA_E_MICRO)
     CORBA::Object_ptr
     ServantRetentionStrategyRetain::create_reference_with_id (
-      const PortableServer::ObjectId &oid,
+      PortableServer::ObjectId const &oid,
       char const *intf,
       CORBA::Short priority)
     {
@@ -930,8 +930,8 @@ namespace TAO
     int
     ServantRetentionStrategyRetain::rebind_using_user_id_and_system_id (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id,
-      const PortableServer::ObjectId &system_id,
+      PortableServer::ObjectId const &user_id,
+      PortableServer::ObjectId const &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall)
     {
       TAO_Active_Object_Map_Entry *entry {};

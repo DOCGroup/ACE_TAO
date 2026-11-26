@@ -40,7 +40,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantManager::system_id_to_servant (
-      const PortableServer::ObjectId &system_id)
+      PortableServer::ObjectId const &system_id)
     {
       return this->poa_->find_servant (system_id);
     }
@@ -54,7 +54,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantManager::id_to_servant (
-      const PortableServer::ObjectId &id)
+      PortableServer::ObjectId const &id)
     {
       return this->poa_->user_id_to_servant_i (id);
     }

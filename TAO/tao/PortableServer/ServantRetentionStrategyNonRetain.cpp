@@ -35,7 +35,7 @@ namespace TAO
 
     void
     ServantRetentionStrategyNonRetain::deactivate_object (
-      const PortableServer::ObjectId &/*id*/)
+      PortableServer::ObjectId const &/*id*/)
     {
       // When using Non_Retain we don't have an active object map and we just
       // can't deactivate any object
@@ -44,14 +44,14 @@ namespace TAO
 
     PortableServer::Servant
     ServantRetentionStrategyNonRetain::find_servant (
-      const PortableServer::ObjectId &/*system_id*/)
+      PortableServer::ObjectId const &/*system_id*/)
     {
       throw PortableServer::POA::WrongPolicy ();
     }
 
     PortableServer::ObjectId *
     ServantRetentionStrategyNonRetain::system_id_to_object_id (
-      const PortableServer::ObjectId &system_id)
+      PortableServer::ObjectId const &system_id)
     {
       // The system id is the id (and no conversion/transformation is
       // needed).
@@ -65,14 +65,14 @@ namespace TAO
 
     PortableServer::Servant
     ServantRetentionStrategyNonRetain::user_id_to_servant (
-      const PortableServer::ObjectId &/*id*/)
+      PortableServer::ObjectId const &/*id*/)
     {
       throw PortableServer::POA::WrongPolicy ();
     }
 
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::id_to_reference (
-      const PortableServer::ObjectId &/*id*/,
+      PortableServer::ObjectId const &/*id*/,
       bool /*indirect*/)
     {
       throw PortableServer::POA::WrongPolicy ();
@@ -80,7 +80,7 @@ namespace TAO
 
     TAO_Servant_Location
     ServantRetentionStrategyNonRetain::servant_present (
-      const PortableServer::ObjectId &/*system_id*/,
+      PortableServer::ObjectId const &/*system_id*/,
       PortableServer::Servant &/*servant*/)
     {
       return TAO_Servant_Location::Not_Found;
@@ -88,7 +88,7 @@ namespace TAO
 
     PortableServer::Servant
     ServantRetentionStrategyNonRetain::find_servant (
-      const PortableServer::ObjectId &system_id,
+      PortableServer::ObjectId const &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl)
     {
@@ -105,7 +105,7 @@ namespace TAO
 
     int
     ServantRetentionStrategyNonRetain::find_servant_priority (
-        const PortableServer::ObjectId &/*system_id*/,
+        PortableServer::ObjectId const &/*system_id*/,
         CORBA::Short &/*priority*/)
     {
       return -1;
@@ -155,7 +155,7 @@ namespace TAO
 
     void
     ServantRetentionStrategyNonRetain::activate_object_with_id (
-      const PortableServer::ObjectId &/*id*/,
+      PortableServer::ObjectId const &/*id*/,
       PortableServer::Servant /*servant*/,
       CORBA::Short /*priority*/,
       bool &/*wait_occurred_restart_call*/)
@@ -222,7 +222,7 @@ namespace TAO
 #if !defined (CORBA_E_MICRO)
     CORBA::Object_ptr
     ServantRetentionStrategyNonRetain::create_reference_with_id (
-      const PortableServer::ObjectId &oid,
+      PortableServer::ObjectId const &oid,
       char const *intf,
       CORBA::Short priority)
     {
@@ -261,8 +261,8 @@ namespace TAO
     int
     ServantRetentionStrategyNonRetain::rebind_using_user_id_and_system_id (
       PortableServer::Servant /*servant*/,
-      const PortableServer::ObjectId &/*user_id*/,
-      const PortableServer::ObjectId &/*system_id*/,
+      PortableServer::ObjectId const &/*user_id*/,
+      PortableServer::ObjectId const &/*system_id*/,
       TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
     {
       return -1;
@@ -277,7 +277,7 @@ namespace TAO
 
     int
     ServantRetentionStrategyNonRetain::unbind_using_user_id (
-      const PortableServer::ObjectId &/*user_id*/)
+      PortableServer::ObjectId const &/*user_id*/)
     {
       return 0;
     }

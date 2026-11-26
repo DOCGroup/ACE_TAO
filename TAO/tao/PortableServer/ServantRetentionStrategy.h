@@ -43,16 +43,16 @@ namespace TAO
                                      bool &wait_occurred_restart_call) = 0;
 
       virtual TAO_Servant_Location servant_present (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         PortableServer::Servant &servant) = 0;
 
       virtual PortableServer::Servant find_servant (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl) = 0;
 
       virtual int find_servant_priority (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         CORBA::Short &priority) = 0;
 
       virtual PortableServer::ObjectId *activate_object (
@@ -61,24 +61,24 @@ namespace TAO
         bool &wait_occurred_restart_call) = 0;
 
       virtual void activate_object_with_id (
-        const PortableServer::ObjectId &id,
+        PortableServer::ObjectId const &id,
         PortableServer::Servant servant,
         CORBA::Short priority,
         bool &wait_occurred_restart_call) = 0;
 
-      virtual void deactivate_object (const PortableServer::ObjectId &id) = 0;
+      virtual void deactivate_object (PortableServer::ObjectId const &id) = 0;
 
       virtual PortableServer::Servant find_servant (
-        const PortableServer::ObjectId &system_id) = 0;
+        PortableServer::ObjectId const &system_id) = 0;
 
       virtual PortableServer::ObjectId *system_id_to_object_id (
-        const PortableServer::ObjectId &system_id) = 0;
+        PortableServer::ObjectId const &system_id) = 0;
 
       virtual PortableServer::Servant user_id_to_servant (
-        const PortableServer::ObjectId &id) = 0;
+        PortableServer::ObjectId const &id) = 0;
 
       virtual CORBA::Object_ptr id_to_reference (
-        const PortableServer::ObjectId &id,
+        PortableServer::ObjectId const &id,
         bool indirect) = 0;
 
       virtual void deactivate_all_objects () = 0;
@@ -95,19 +95,19 @@ namespace TAO
 
 #if !defined (CORBA_E_MICRO)
       virtual CORBA::Object_ptr create_reference_with_id (
-        const PortableServer::ObjectId &oid,
+        PortableServer::ObjectId const &oid,
         char const *intf,
         CORBA::Short priority) = 0;
 #endif
 
       virtual int rebind_using_user_id_and_system_id (
         PortableServer::Servant servant,
-        const PortableServer::ObjectId &user_id,
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &user_id,
+        PortableServer::ObjectId const &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall) = 0;
 
       virtual int unbind_using_user_id (
-        const PortableServer::ObjectId &user_id) = 0;
+        PortableServer::ObjectId const &user_id) = 0;
 
       virtual CORBA::Boolean servant_has_remaining_activations (
         PortableServer::Servant servant) = 0;

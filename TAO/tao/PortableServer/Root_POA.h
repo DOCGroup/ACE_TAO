@@ -218,16 +218,16 @@ public:
 
   PortableServer::ObjectId *activate_object (PortableServer::Servant p_servant) override;
 
-  void activate_object_with_id (const PortableServer::ObjectId &id,
+  void activate_object_with_id (PortableServer::ObjectId const &id,
                                 PortableServer::Servant p_servant) override;
 
-  void deactivate_object (const PortableServer::ObjectId &oid) override;
+  void deactivate_object (PortableServer::ObjectId const &oid) override;
 
   CORBA::Object_ptr create_reference (char const *intf) override;
 
 #if !defined (CORBA_E_MICRO)
   CORBA::Object_ptr create_reference_with_id (
-      const PortableServer::ObjectId &oid,
+      PortableServer::ObjectId const &oid,
       char const *intf) override;
 #endif
 
@@ -241,9 +241,9 @@ public:
 
   PortableServer::ObjectId *reference_to_id (CORBA::Object_ptr reference) override;
 
-  PortableServer::Servant id_to_servant (const PortableServer::ObjectId &oid) override;
+  PortableServer::Servant id_to_servant (PortableServer::ObjectId const &oid) override;
 
-  CORBA::Object_ptr id_to_reference (const PortableServer::ObjectId &oid) override;
+  CORBA::Object_ptr id_to_reference (PortableServer::ObjectId const &oid) override;
 
   CORBA::OctetSeq *id () override;
 
@@ -362,8 +362,8 @@ public:
 
   int rebind_using_user_id_and_system_id (
     PortableServer::Servant servant,
-    const PortableServer::ObjectId &user_id,
-    const PortableServer::ObjectId &system_id,
+    PortableServer::ObjectId const &user_id,
+    PortableServer::ObjectId const &system_id,
     TAO::Portable_Server::Servant_Upcall &servant_upcall);
 
   CORBA::Boolean servant_has_remaining_activations (
@@ -377,7 +377,7 @@ public:
     PortableServer::Servant servant,
     bool &wait_occurred_restart_call);
 
-  void deactivate_object_i (const PortableServer::ObjectId &oid);
+  void deactivate_object_i (PortableServer::ObjectId const &oid);
 
   CORBA::Boolean is_persistent () const;
 
@@ -385,14 +385,14 @@ public:
 
   bool has_system_id () const;
 
-  PortableServer::Servant find_servant (const PortableServer::ObjectId &system_id);
+  PortableServer::Servant find_servant (PortableServer::ObjectId const &system_id);
 
   TAO_Servant_Location servant_present (
-    const PortableServer::ObjectId &system_id,
+    PortableServer::ObjectId const &system_id,
     PortableServer::Servant &servant);
 
   PortableServer::Servant find_servant (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl);
 
@@ -405,17 +405,17 @@ public:
    * servant exists and priority successfully retrieved.
    */
   int find_servant_priority (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         CORBA::Short &priority);
 
-  int unbind_using_user_id (const PortableServer::ObjectId &user_id);
+  int unbind_using_user_id (PortableServer::ObjectId const &user_id);
 
   void cleanup_servant (
     PortableServer::Servant servant,
-    const PortableServer::ObjectId &user_id);
+    PortableServer::ObjectId const &user_id);
 
   void post_invoke_servant_cleanup(
-    const PortableServer::ObjectId &system_id,
+    PortableServer::ObjectId const &system_id,
     const TAO::Portable_Server::Servant_Upcall &servant_upcall);
 
    bool validate_lifespan (
@@ -427,7 +427,7 @@ public:
       CORBA::Short priority,
       bool &wait_occurred_restart_call);
 
-  CORBA::Object_ptr id_to_reference_i (const PortableServer::ObjectId &oid,
+  CORBA::Object_ptr id_to_reference_i (PortableServer::ObjectId const &oid,
                                        bool indirect);
 
   PortableServer::ObjectId *servant_to_id_i (PortableServer::Servant servant);
@@ -441,7 +441,7 @@ public:
 
   int delete_child (const String &child);
 
-  PortableServer::Servant user_id_to_servant_i (const PortableServer::ObjectId &oid);
+  PortableServer::Servant user_id_to_servant_i (PortableServer::ObjectId const &oid);
 
   CORBA::ORB_ptr _get_orb () override;
 
@@ -456,11 +456,11 @@ public:
 
   /// Hook - A servant has been activated.
   virtual void servant_activated_hook (PortableServer::Servant servant,
-                               const PortableServer::ObjectId& oid);
+                               PortableServer::ObjectId const& oid);
 
   /// Hook - A servant has been deactivated.
   virtual void servant_deactivated_hook (PortableServer::Servant servant,
-                                 const PortableServer::ObjectId& oid);
+                                 PortableServer::ObjectId const& oid);
 
 protected:
 #if (TAO_HAS_MINIMUM_POA == 0)
@@ -544,7 +544,7 @@ protected:
   PortableServer::Servant get_servant_i ();
 
 protected:
-  void activate_object_with_id_i (const PortableServer::ObjectId &id,
+  void activate_object_with_id_i (PortableServer::ObjectId const &id,
                                   PortableServer::Servant p_servant,
                                   CORBA::Short priority,
                                   bool &wait_occurred_restart_call);
@@ -562,7 +562,7 @@ protected:
                                         CORBA::Short priority);
 
   CORBA::Object_ptr create_reference_with_id_i (
-      const PortableServer::ObjectId &oid,
+      PortableServer::ObjectId const &oid,
       char const *intf,
       CORBA::Short priority);
 
@@ -570,7 +570,7 @@ protected:
 
   CORBA::Object_ptr servant_to_reference_i (PortableServer::Servant p_servant);
 
-  PortableServer::Servant id_to_servant_i (const PortableServer::ObjectId &oid);
+  PortableServer::Servant id_to_servant_i (PortableServer::ObjectId const &oid);
 
   /// Call the IORInterceptor::establish_components() method on all
   /// registered IORInterceptors.
@@ -590,7 +590,7 @@ protected:
 
   void set_id (TAO_Root_POA *parent);
 
-  TAO::ObjectKey *create_object_key (const PortableServer::ObjectId &id);
+  TAO::ObjectKey *create_object_key (PortableServer::ObjectId const &id);
 
   static int parse_key (const TAO::ObjectKey &key,
                         TAO_Object_Adapter::poa_name &poa_system_name,
@@ -615,12 +615,12 @@ protected:
   void set_obj_ref_factory (
     PortableInterceptor::ObjectReferenceFactory *current_factory);
 
-  TAO_Servant_Location locate_servant_i (const PortableServer::ObjectId &id,
+  TAO_Servant_Location locate_servant_i (PortableServer::ObjectId const &id,
                                          PortableServer::Servant &servant);
 
   PortableServer::Servant locate_servant_i (
       char const *operation,
-      const PortableServer::ObjectId &id,
+      PortableServer::ObjectId const &id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool &wait_occurred_restart_call);
@@ -629,7 +629,7 @@ public:
   /// @todo Temporarily for servant retention
   CORBA::Object_ptr
   invoke_key_to_object_helper_i (char const *repository_id,
-                                 const PortableServer::ObjectId & id);
+                                 PortableServer::ObjectId const & id);
 protected:
   /// Get the ORT adapter, in case there is no adapter yet, this method will
   /// try to create one and hold the POA lock

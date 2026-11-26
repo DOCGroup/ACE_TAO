@@ -739,7 +739,7 @@ TAO_Root_POA::the_children ()
 #endif /* TAO_HAS_MINIMUM_POA == 0 && !defined (CORBA_E_COMPACT) && !defined (CORBA_E_MICRO) */
 
 PortableServer::Servant
-TAO_Root_POA::id_to_servant (const PortableServer::ObjectId &oid)
+TAO_Root_POA::id_to_servant (PortableServer::ObjectId const &oid)
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (nullptr);
@@ -748,7 +748,7 @@ TAO_Root_POA::id_to_servant (const PortableServer::ObjectId &oid)
 }
 
 CORBA::Object_ptr
-TAO_Root_POA::id_to_reference (const PortableServer::ObjectId &oid)
+TAO_Root_POA::id_to_reference (PortableServer::ObjectId const &oid)
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD_RETURN (nullptr);
@@ -758,7 +758,7 @@ TAO_Root_POA::id_to_reference (const PortableServer::ObjectId &oid)
 
 #if ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
-TAO_Root_POA::create_reference_with_id (const PortableServer::ObjectId &id,
+TAO_Root_POA::create_reference_with_id (PortableServer::ObjectId const &id,
                                         char const *intf)
 {
   // Lock access for the duration of this transaction.
@@ -1142,7 +1142,7 @@ TAO_Root_POA::activate_object (PortableServer::Servant servant)
 }
 
 void
-TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
+TAO_Root_POA::activate_object_with_id (PortableServer::ObjectId const &id,
                                        PortableServer::Servant servant)
 {
   while (true)
@@ -1172,7 +1172,7 @@ TAO_Root_POA::activate_object_with_id (const PortableServer::ObjectId &id,
 }
 
 void
-TAO_Root_POA::activate_object_with_id_i (const PortableServer::ObjectId &id,
+TAO_Root_POA::activate_object_with_id_i (PortableServer::ObjectId const &id,
                                          PortableServer::Servant servant,
                                          CORBA::Short priority,
                                          bool &wait_occurred_restart_call)
@@ -1260,7 +1260,7 @@ TAO_Root_POA::deactivate_all_objects_i (CORBA::Boolean etherealize_objects)
 }
 
 void
-TAO_Root_POA::deactivate_object (const PortableServer::ObjectId &oid)
+TAO_Root_POA::deactivate_object (PortableServer::ObjectId const &oid)
 {
   // Lock access for the duration of this transaction.
   TAO_POA_GUARD;
@@ -1269,7 +1269,7 @@ TAO_Root_POA::deactivate_object (const PortableServer::ObjectId &oid)
 }
 
 void
-TAO_Root_POA::deactivate_object_i (const PortableServer::ObjectId &id)
+TAO_Root_POA::deactivate_object_i (PortableServer::ObjectId const &id)
 {
   this->active_policy_strategies_.servant_retention_strategy()->
     deactivate_object (id);
@@ -1306,7 +1306,7 @@ TAO_Root_POA::create_reference_i (char const *intf,
 
 CORBA::Object_ptr
 TAO_Root_POA::invoke_key_to_object_helper_i (char const *repository_id,
-                                             const PortableServer::ObjectId & id)
+                                             PortableServer::ObjectId const & id)
 {
   const PortableInterceptor::ObjectId &user_oid =
     reinterpret_cast <const PortableInterceptor::ObjectId &>(id);
@@ -1325,7 +1325,7 @@ TAO_Root_POA::invoke_key_to_object_helper_i (char const *repository_id,
 
 #if ! defined (CORBA_E_MICRO)
 CORBA::Object_ptr
-TAO_Root_POA::create_reference_with_id_i (const PortableServer::ObjectId &user_id,
+TAO_Root_POA::create_reference_with_id_i (PortableServer::ObjectId const &user_id,
                                           char const *intf,
                                           CORBA::Short priority)
 {
@@ -1472,14 +1472,14 @@ TAO_Root_POA::reference_to_id (CORBA::Object_ptr reference)
 }
 
 PortableServer::Servant
-TAO_Root_POA::find_servant (const PortableServer::ObjectId &system_id)
+TAO_Root_POA::find_servant (PortableServer::ObjectId const &system_id)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
     find_servant (system_id);
 }
 
 int
-TAO_Root_POA::unbind_using_user_id (const PortableServer::ObjectId &user_id)
+TAO_Root_POA::unbind_using_user_id (PortableServer::ObjectId const &user_id)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
     unbind_using_user_id  (user_id);
@@ -1488,14 +1488,14 @@ TAO_Root_POA::unbind_using_user_id (const PortableServer::ObjectId &user_id)
 void
 TAO_Root_POA::cleanup_servant (
   PortableServer::Servant servant,
-  const PortableServer::ObjectId &user_id)
+  PortableServer::ObjectId const &user_id)
 {
   this->active_policy_strategies_.request_processing_strategy()->
     cleanup_servant (servant, user_id);
 }
 
 PortableServer::Servant
-TAO_Root_POA::id_to_servant_i (const PortableServer::ObjectId &id)
+TAO_Root_POA::id_to_servant_i (PortableServer::ObjectId const &id)
 {
   PortableServer::Servant servant =
     this->active_policy_strategies_.request_processing_strategy()->
@@ -1521,14 +1521,14 @@ TAO_Root_POA::id_to_servant_i (const PortableServer::ObjectId &id)
 }
 
 PortableServer::Servant
-TAO_Root_POA::user_id_to_servant_i (const PortableServer::ObjectId &id)
+TAO_Root_POA::user_id_to_servant_i (PortableServer::ObjectId const &id)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
     user_id_to_servant (id);
 }
 
 CORBA::Object_ptr
-TAO_Root_POA::id_to_reference_i (const PortableServer::ObjectId &id,
+TAO_Root_POA::id_to_reference_i (PortableServer::ObjectId const &id,
                                  bool indirect)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
@@ -1548,7 +1548,7 @@ TAO_Root_POA::id ()
 
 PortableServer::Servant
 TAO_Root_POA::locate_servant_i (char const *operation,
-                                const PortableServer::ObjectId &system_id,
+                                PortableServer::ObjectId const &system_id,
                                 TAO::Portable_Server::Servant_Upcall &servant_upcall,
                                 TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
                                 bool &wait_occurred_restart_call)
@@ -1695,7 +1695,7 @@ TAO_Root_POA::parse_key (const TAO::ObjectKey &key,
 }
 
 TAO::ObjectKey *
-TAO_Root_POA::create_object_key (const PortableServer::ObjectId &id)
+TAO_Root_POA::create_object_key (PortableServer::ObjectId const &id)
 {
   // Calculate the space required for the key.
   CORBA::ULong const buffer_size =
@@ -2178,7 +2178,7 @@ TAO_Root_POA::client_exposed_policies (CORBA::Short /* object_priority */)
 }
 
 TAO_Servant_Location
-TAO_Root_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
+TAO_Root_POA::locate_servant_i (PortableServer::ObjectId const &system_id,
                                 PortableServer::Servant &servant)
 {
   return this->active_policy_strategies_.request_processing_strategy()->
@@ -2186,7 +2186,7 @@ TAO_Root_POA::locate_servant_i (const PortableServer::ObjectId &system_id,
 }
 
 TAO_Servant_Location
-TAO_Root_POA::servant_present (const PortableServer::ObjectId &system_id,
+TAO_Root_POA::servant_present (PortableServer::ObjectId const &system_id,
                                PortableServer::Servant &servant)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
@@ -2195,7 +2195,7 @@ TAO_Root_POA::servant_present (const PortableServer::ObjectId &system_id,
 
 PortableServer::Servant
 TAO_Root_POA::find_servant (
-        const PortableServer::ObjectId &system_id,
+        PortableServer::ObjectId const &system_id,
         TAO::Portable_Server::Servant_Upcall &servant_upcall,
         TAO::Portable_Server::POA_Current_Impl &poa_current_impl)
 {
@@ -2207,7 +2207,7 @@ TAO_Root_POA::find_servant (
 
 int
 TAO_Root_POA::find_servant_priority (
-         const PortableServer::ObjectId &system_id,
+         PortableServer::ObjectId const &system_id,
          CORBA::Short &priority)
 {
   return this->active_policy_strategies_.servant_retention_strategy()->
@@ -2365,8 +2365,8 @@ TAO_Root_POA::has_system_id () const
 int
 TAO_Root_POA::rebind_using_user_id_and_system_id (
   PortableServer::Servant servant,
-  const PortableServer::ObjectId &user_id,
-  const PortableServer::ObjectId &system_id,
+  PortableServer::ObjectId const &user_id,
+  PortableServer::ObjectId const &system_id,
   TAO::Portable_Server::Servant_Upcall &servant_upcall)
 {
   return this->active_policy_strategies_.servant_retention_strategy ()->
@@ -2399,7 +2399,7 @@ TAO_Root_POA::allow_multiple_activations () const
 
 void
 TAO_Root_POA::post_invoke_servant_cleanup(
-  const PortableServer::ObjectId &system_id,
+  PortableServer::ObjectId const &system_id,
   const TAO::Portable_Server::Servant_Upcall &servant_upcall)
 {
   this->active_policy_strategies_.request_processing_strategy ()->
@@ -2632,13 +2632,13 @@ TAO_Root_POA::poa_deactivated_hook ()
 
 void
 TAO_Root_POA::servant_activated_hook (PortableServer::Servant,
-                                      const PortableServer::ObjectId&)
+                                      PortableServer::ObjectId const&)
 {
 }
 
 void
 TAO_Root_POA::servant_deactivated_hook (PortableServer::Servant,
-                                        const PortableServer::ObjectId&)
+                                        PortableServer::ObjectId const&)
 {
 }
 

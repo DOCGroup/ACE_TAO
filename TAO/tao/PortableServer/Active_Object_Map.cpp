@@ -414,7 +414,7 @@ TAO_Unique_Id_Strategy::is_servant_in_map (PortableServer::Servant servant,
 int
 TAO_Unique_Id_Strategy::bind_using_user_id (
   PortableServer::Servant servant,
-  const PortableServer::ObjectId &user_id,
+  PortableServer::ObjectId const &user_id,
   CORBA::Short priority,
   TAO_Active_Object_Map_Entry *&entry)
 {

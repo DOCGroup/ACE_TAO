@@ -41,7 +41,7 @@ namespace TAO
 
     TAO_Servant_Location
     RequestProcessingStrategyAOMOnly::locate_servant (
-      const PortableServer::ObjectId & system_id,
+      PortableServer::ObjectId const & system_id,
       PortableServer::Servant & servant)
     {
       return this->poa_->servant_present (system_id, servant);
@@ -50,7 +50,7 @@ namespace TAO
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::locate_servant (
       char const */*operation*/,
-      const PortableServer::ObjectId &system_id,
+      PortableServer::ObjectId const &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool & /*wait_occurred_restart_call*/)
@@ -73,14 +73,14 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::system_id_to_servant (
-      const PortableServer::ObjectId &system_id)
+      PortableServer::ObjectId const &system_id)
     {
       return this->poa_->find_servant (system_id);
     }
 
     PortableServer::Servant
     RequestProcessingStrategyAOMOnly::id_to_servant (
-      const PortableServer::ObjectId &id)
+      PortableServer::ObjectId const &id)
     {
       return this->poa_->user_id_to_servant_i (id);
     }
@@ -88,7 +88,7 @@ namespace TAO
     void
     RequestProcessingStrategyAOMOnly::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id)
+      PortableServer::ObjectId const &user_id)
     {
       if (servant)
         {
@@ -130,7 +130,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyAOMOnly::post_invoke_servant_cleanup(
-      const PortableServer::ObjectId &/*system_id*/,
+      PortableServer::ObjectId const &/*system_id*/,
       const TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
     {
     }

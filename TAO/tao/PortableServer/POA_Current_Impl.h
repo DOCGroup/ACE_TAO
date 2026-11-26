@@ -94,13 +94,13 @@ namespace TAO
       TAO_ORB_Core &orb_core () const;
 
       /// Set the object ID.
-      void object_id (const PortableServer::ObjectId &id);
+      void object_id (PortableServer::ObjectId const &id);
 
       /// Get the object ID.
-      const PortableServer::ObjectId &object_id () const;
+      PortableServer::ObjectId const &object_id () const;
 
       /// Just replace the object id smartly
-      void replace_object_id (const PortableServer::ObjectId &system_id);
+      void replace_object_id (PortableServer::ObjectId const &system_id);
 
       /// Set the object key.
       void object_key (const TAO::ObjectKey &key);

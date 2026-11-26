@@ -22,7 +22,7 @@ namespace TAO
     }
 
     ACE_INLINE void
-    POA_Current_Impl::object_id (const PortableServer::ObjectId &id)
+    POA_Current_Impl::object_id (PortableServer::ObjectId const &id)
     {
       if (this->object_id_.release () ||
           this->object_id_.get_buffer() == this->object_id_buf_)
@@ -41,7 +41,7 @@ namespace TAO
         }
     }
 
-    ACE_INLINE const PortableServer::ObjectId &
+    ACE_INLINE PortableServer::ObjectId const &
     POA_Current_Impl::object_id () const
     {
       return this->object_id_;
@@ -49,7 +49,7 @@ namespace TAO
 
     ACE_INLINE void
     POA_Current_Impl::replace_object_id (
-      const PortableServer::ObjectId &system_id)
+      PortableServer::ObjectId const &system_id)
     {
       // This has the effect of replacing the underlying buffer
       // with that of another object id without copying.

@@ -58,7 +58,7 @@ namespace TAO
 
     TAO_Servant_Location
     RequestProcessingStrategyServantActivator::locate_servant (
-      const PortableServer::ObjectId &system_id,
+      PortableServer::ObjectId const &system_id,
       PortableServer::Servant &servant)
     {
       TAO_Servant_Location location =
@@ -78,7 +78,7 @@ namespace TAO
     PortableServer::Servant
     RequestProcessingStrategyServantActivator::locate_servant (
       char const */*operation*/,
-      const PortableServer::ObjectId &system_id,
+      PortableServer::ObjectId const &system_id,
       TAO::Portable_Server::Servant_Upcall &servant_upcall,
       TAO::Portable_Server::POA_Current_Impl &poa_current_impl,
       bool &wait_occurred_restart_call)
@@ -172,7 +172,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyServantActivator::etherealize_servant (
-      const PortableServer::ObjectId& object_id,
+      PortableServer::ObjectId const& object_id,
       PortableServer::Servant servant,
       CORBA::Boolean cleanup_in_progress)
     {
@@ -195,7 +195,7 @@ namespace TAO
 
     PortableServer::Servant
     RequestProcessingStrategyServantActivator::incarnate_servant (
-      const PortableServer::ObjectId& object_id)
+      PortableServer::ObjectId const& object_id)
     {
       PortableServer::Servant servant {};
 
@@ -222,7 +222,7 @@ namespace TAO
     void
     RequestProcessingStrategyServantActivator::cleanup_servant (
       PortableServer::Servant servant,
-      const PortableServer::ObjectId &user_id)
+      PortableServer::ObjectId const &user_id)
     {
       // If a servant manager is associated with the POA,
       // ServantLocator::etherealize will be invoked with the oid and the
@@ -293,7 +293,7 @@ namespace TAO
 
     void
     RequestProcessingStrategyServantActivator::post_invoke_servant_cleanup(
-      const PortableServer::ObjectId &/*system_id*/,
+      PortableServer::ObjectId const &/*system_id*/,
       const TAO::Portable_Server::Servant_Upcall &/*servant_upcall*/)
     {
     }
