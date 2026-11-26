@@ -52,7 +52,7 @@ namespace TAO
   class TAO_PortableGroup_Export PG_Object_Group
   {
   protected:
-    // Information about an object group member
+    /// Information about an object group member.
     struct MemberInfo
     {
       /// Reference to the member.

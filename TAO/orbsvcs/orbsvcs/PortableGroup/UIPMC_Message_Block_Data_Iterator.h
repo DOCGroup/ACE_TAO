@@ -45,7 +45,7 @@ private:
   /// Length used in a split message block.
   size_t iov_len_left_ {};
 
-  // Current message iterator state.
+  /// Current message iterator state.
   enum class State
   {
     INTER_BLOCK,
