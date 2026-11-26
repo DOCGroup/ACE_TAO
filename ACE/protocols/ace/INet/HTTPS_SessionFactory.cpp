@@ -37,12 +37,12 @@ namespace ACE
 
     ACE::INet::ConnectionHolder*
     SessionFactory_Impl::create_connection (
-        const ACE::INet::ConnectionKey& key) const
+        ACE::INet::ConnectionKey const& key) const
       {
         INET_TRACE ("HTTPS_SessionFactory_Impl::create_connection");
 
-        const ACE::HTTP::ClientRequestHandler::HttpConnectionKey& ikey =
-            dynamic_cast<const ACE::HTTP::ClientRequestHandler::HttpConnectionKey&> (key);
+        ACE::HTTP::ClientRequestHandler::HttpConnectionKey const& ikey =
+            dynamic_cast<ACE::HTTP::ClientRequestHandler::HttpConnectionKey const&> (key);
 
         SessionHolder_Impl* session_holder {};
         ACE_NEW_RETURN (session_holder,

@@ -53,7 +53,7 @@ namespace ACE
             protected:
               void close_connection ();
 
-              bool connect_i (const ACE_Synch_Options& sync_opt) override;
+              bool connect_i (ACE_Synch_Options const& sync_opt) override;
 
               void close_i () override;
 

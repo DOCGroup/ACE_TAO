@@ -33,11 +33,11 @@ namespace ACE
 
               virtual Request& request () = 0;
 
-              virtual const Request& request () const = 0;
+              virtual Request const& request () const = 0;
 
               virtual Response& response () = 0;
 
-              virtual const Response& response () const = 0;
+              virtual Response const& response () const = 0;
           };
       }
   }

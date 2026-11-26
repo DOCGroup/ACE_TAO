@@ -50,7 +50,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const Request& ClientRequestHandler::request () const
+    Request const& ClientRequestHandler::request () const
       {
         return this->request_;
       }
@@ -62,7 +62,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    const Response& ClientRequestHandler::response () const
+    Response const& ClientRequestHandler::response () const
       {
         return this->response_;
       }

@@ -72,7 +72,7 @@ namespace ACE
               void close ();
 
               stream_type& stream ();
-              const stream_type& stream () const;
+              stream_type const& stream () const;
 
             protected:
               buffer_type streambuf_;

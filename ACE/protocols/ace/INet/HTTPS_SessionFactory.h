@@ -57,7 +57,7 @@ namespace ACE
 
             public:
               ACE::INet::ConnectionHolder* create_connection (
-                  const ACE::INet::ConnectionKey& key) const override;
+                  ACE::INet::ConnectionKey const& key) const override;
           };
       }
   }

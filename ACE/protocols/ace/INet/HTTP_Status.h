@@ -88,9 +88,9 @@ namespace ACE
 
               Status(Code status, ACE_CString const& reason);
 
-              Status(const Status& status);
+              Status(Status const& status);
 
-              Status& operator =(const Status& status);
+              Status& operator =(Status const& status);
 
               /// Set the status code.
               void set_status(Code status);

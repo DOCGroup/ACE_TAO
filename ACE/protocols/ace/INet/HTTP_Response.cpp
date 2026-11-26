@@ -21,12 +21,12 @@ namespace ACE
       {
       }
 
-    Response::Response(const Status& status)
+    Response::Response(Status const& status)
       : status_ (status)
       {
       }
 
-    Response::Response(ACE_CString const& version, const Status& status)
+    Response::Response(ACE_CString const& version, Status const& status)
       : Header (version), status_ (status)
       {
       }

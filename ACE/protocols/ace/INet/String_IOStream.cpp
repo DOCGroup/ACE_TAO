@@ -208,7 +208,7 @@ namespace ACE
       }
 
     template <class ACE_CHAR_T, class TR>
-    String_IStreamBase<ACE_CHAR_T, TR>::String_IStreamBase(const string_type& string)
+    String_IStreamBase<ACE_CHAR_T, TR>::String_IStreamBase(string_type const& string)
       : String_IOSBase<ACE_CHAR_T, TR> (const_cast<string_type&> (string),
                                         std::ios::in),
         std::basic_istream<ACE_CHAR_T, TR> (String_IOSBase<ACE_CHAR_T, TR>::rdbuf ())

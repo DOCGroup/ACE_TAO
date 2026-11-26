@@ -17,7 +17,7 @@ namespace ACE
 {
   namespace INet
   {
-    URLStream::URLStream (const URLStream& url_stream)
+    URLStream::URLStream (URLStream const& url_stream)
       : request_handler_ref_ (url_stream.request_handler_ref_),
         request_handler_ (url_stream.request_handler_)
       {
@@ -179,7 +179,7 @@ namespace ACE
       }
 
 #if defined (ACE_HAS_WCHAR)
-    bool URL_Base::parse (const ACE_WString& url_string)
+    bool URL_Base::parse (ACE_WString const& url_string)
       {
         return this->parse (ACE_Wide_To_Ascii (url_string.c_str ()).char_rep ());
       }
@@ -189,7 +189,7 @@ namespace ACE
         return ACE_Ascii_To_Wide (this->to_string().c_str ()).wchar_rep ();
       }
 
-    URL_Base* URL_Base::create_from_wstring (const ACE_WString& url_string)
+    URL_Base* URL_Base::create_from_wstring (ACE_WString const& url_string)
       {
         return create_from_string (ACE_Wide_To_Ascii (url_string.c_str ()).char_rep ());
       }

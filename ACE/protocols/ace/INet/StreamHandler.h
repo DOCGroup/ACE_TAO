@@ -44,7 +44,7 @@ namespace ACE
               using base_type = ACE_Svc_Handler<ACE_PEER_STREAM, ACE_SYNCH_USE>;
               using mq_type = ACE_Message_Queue<ACE_SYNCH_USE>;
 
-              StreamHandler (const ACE_Synch_Options &synch_options = ACE_Synch_Options::defaults,
+              StreamHandler (ACE_Synch_Options const &synch_options = ACE_Synch_Options::defaults,
                              ACE_Thread_Manager *thr_mgr = nullptr,
                              mq_type *mq = nullptr,
                              ACE_Reactor *reactor = ACE_Reactor::instance ());
@@ -69,7 +69,7 @@ namespace ACE
               int read_from_stream (void * buf, size_t length, size_t char_size);
 
               /// Called by streambuffer to send new data to peer
-              int write_to_stream (const void * buf, size_t length, size_t char_size);
+              int write_to_stream (void const * buf, size_t length, size_t char_size);
 
               /// Returns true as long as the connection to peer is active
               bool is_connected () const;

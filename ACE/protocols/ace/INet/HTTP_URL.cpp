@@ -34,7 +34,7 @@ namespace ACE
         this->parse (url_string);
       }
 
-    URL::URL (const URL& url)
+    URL::URL (URL const& url)
       : ACE::INet::URL_INetAuthBase (0)
       {
         *this = url;
@@ -48,7 +48,7 @@ namespace ACE
 
     URL::~URL () = default;
 
-    URL& URL::operator =(const URL& url)
+    URL& URL::operator =(URL const& url)
       {
         this->set_user_info (url.get_user_info ());
         this->set_host (url.get_host ());
@@ -111,7 +111,7 @@ namespace ACE
         return prh;
       }
 
-    const URL::Factory& URL::factory_ = *URL::TURLFactorySingleton::instance ();
+    URL::Factory const& URL::factory_ = *URL::TURLFactorySingleton::instance ();
 
     URL::Factory::Factory ()
       {

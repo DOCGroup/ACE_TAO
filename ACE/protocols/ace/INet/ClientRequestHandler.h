@@ -40,7 +40,7 @@ namespace ACE
               ClientRequestHandler ();
               virtual ~ClientRequestHandler ();
 
-              virtual std::istream& handle_open_request (const URL_Base& url) = 0;
+              virtual std::istream& handle_open_request (URL_Base const& url) = 0;
 
               virtual std::istream& response_stream () = 0;
 
@@ -88,7 +88,7 @@ namespace ACE
                     u_short port () const;
 
                   protected:
-                    bool equal (const ConnectionKey& key) const override;
+                    bool equal (ConnectionKey const& key) const override;
 
                   private:
                     ACE_CString host_;

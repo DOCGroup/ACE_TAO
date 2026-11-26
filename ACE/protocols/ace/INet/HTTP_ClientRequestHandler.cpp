@@ -77,12 +77,12 @@ namespace ACE
 
     ACE::INet::ConnectionHolder*
     SessionFactory_Impl::create_connection (
-        const ACE::INet::ConnectionKey& key) const
+        ACE::INet::ConnectionKey const& key) const
       {
         INET_TRACE ("HTTP_SessionFactory_Impl::create_connection");
 
-        const ClientRequestHandler::HttpConnectionKey& ikey =
-            dynamic_cast<const ClientRequestHandler::HttpConnectionKey&> (key);
+        ClientRequestHandler::HttpConnectionKey const& ikey =
+            dynamic_cast<ClientRequestHandler::HttpConnectionKey const&> (key);
 
         SessionHolder_Impl* session_holder {};
         ACE_NEW_RETURN (session_holder,
@@ -163,10 +163,10 @@ namespace ACE
         return k;
       }
 
-    bool ClientRequestHandler::HttpConnectionKey::equal (const ACE::INet::ConnectionKey& key) const
+    bool ClientRequestHandler::HttpConnectionKey::equal (ACE::INet::ConnectionKey const& key) const
       {
         try {
-          const HttpConnectionKey& http_key = dynamic_cast<const HttpConnectionKey&> (key);
+          HttpConnectionKey const& http_key = dynamic_cast<HttpConnectionKey const&> (key);
           return (INetConnectionKey::equal (key) &&
                     this->proxy_connection_ == http_key.is_proxy_connection () &&
                     (!this->proxy_connection_ ||
@@ -196,14 +196,14 @@ namespace ACE
       }
 
     std::istream& ClientRequestHandler::handle_open_request (
-        const ACE::INet::URL_Base& url)
+        ACE::INet::URL_Base const& url)
       {
-        const URL& http_url = dynamic_cast<const URL&> (url);
+        URL const& http_url = dynamic_cast<URL const&> (url);
         return this->handle_get_request (http_url);
       }
 
     std::istream& ClientRequestHandler::handle_get_request (
-        const URL& http_url)
+        URL const& http_url)
       {
         bool connected = false;
         if (http_url.has_proxy ())
@@ -300,15 +300,15 @@ namespace ACE
         return true;
       }
 
-    void ClientRequestHandler::initialize_request (const URL& /*url*/, Request& /*request*/)
+    void ClientRequestHandler::initialize_request (URL const& /*url*/, Request& /*request*/)
       {
       }
 
-    void ClientRequestHandler::handle_request_error (const URL& /*url*/)
+    void ClientRequestHandler::handle_request_error (URL const& /*url*/)
       {
       }
 
-    void ClientRequestHandler::handle_connection_error (const URL& /*url*/)
+    void ClientRequestHandler::handle_connection_error (URL const& /*url*/)
       {
       }
 

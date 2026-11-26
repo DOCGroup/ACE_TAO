@@ -36,10 +36,10 @@ namespace ACE
             public:
               URL ();
               explicit URL (ACE_CString const& url_string);
-              URL (const URL& url);
+              URL (URL const& url);
               ~URL () override;
 
-              URL& operator =(const URL& url);
+              URL& operator =(URL const& url);
 
               ACE_CString const& get_scheme () const override;
 
@@ -98,7 +98,7 @@ namespace ACE
                 };
 
               using TURLFactorySingleton = ACE_Singleton<Factory, ACE_Null_Mutex>;
-              static const Factory& factory_;
+              static Factory const& factory_;
           };
       }
   }

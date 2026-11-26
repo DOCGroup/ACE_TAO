@@ -63,11 +63,11 @@ namespace ACE
 
               Request& request () override;
 
-              const Request& request () const override;
+              Request const& request () const override;
 
               Response& response () override;
 
-              const Response& response () const override;
+              Response const& response () const override;
 
               std::ostream& request_stream ();
 
@@ -75,11 +75,11 @@ namespace ACE
 
               bool is_response_ok () const override;
 
-              std::istream& handle_open_request (const ACE::INet::URL_Base& url) override;
+              std::istream& handle_open_request (ACE::INet::URL_Base const& url) override;
 
-              virtual std::istream& handle_get_request (const URL& url, bool binary=true);
+              virtual std::istream& handle_get_request (URL const& url, bool binary=true);
 /*
-              virtual std::ostream& start_put_request (const URL& url, bool binary=true);
+              virtual std::ostream& start_put_request (URL const& url, bool binary=true);
 
               virtual bool finish_put_request ();
 */
@@ -147,7 +147,7 @@ namespace ACE
                     ~SessionFactory () override;
 
                     ACE::INet::ConnectionHolder* create_connection (
-                        const ACE::INet::ConnectionKey& key) const override;
+                        ACE::INet::ConnectionKey const& key) const override;
                 };
 
               SessionHolder& session ();
@@ -157,13 +157,13 @@ namespace ACE
               virtual bool initialize_connection (ACE_CString const& host,
                                                   u_short port);
 
-              virtual bool handle_credentials (const URL& url,
+              virtual bool handle_credentials (URL const& url,
                                                ACE_CString& user,
                                                ACE_CString& password);
 
-              virtual void handle_request_error (const URL& url);
+              virtual void handle_request_error (URL const& url);
 
-              virtual void handle_connection_error (const URL& url);
+              virtual void handle_connection_error (URL const& url);
 
               void release_connection ();
 
@@ -205,7 +205,7 @@ namespace ACE
 
               bool parse_ext_address (ACE_CString const& str, ACE_INET_Addr& addr);
 
-              bool send_active_address (const ACE_INET_Addr& addr);
+              bool send_active_address (ACE_INET_Addr const& addr);
 
             private:
               Request request_;

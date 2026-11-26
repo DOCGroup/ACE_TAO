@@ -70,12 +70,12 @@ namespace ACE
       {
       }
 
-    Status::Status(const Status& status)
+    Status::Status(Status const& status)
       {
         *this = status;
       }
 
-    Status& Status::operator =(const Status& status)
+    Status& Status::operator =(Status const& status)
       {
         this->code_ = status.get_status ();
         this->reason_ = status.get_reason ();

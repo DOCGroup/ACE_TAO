@@ -160,7 +160,7 @@ namespace ACE
       {
       }
 
-    NVPair::NVPair (const NVPair& pair)
+    NVPair::NVPair (NVPair const& pair)
       {
         *this = pair;
       }

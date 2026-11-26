@@ -19,7 +19,7 @@ namespace ACE
   {
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
     StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::StreamHandler (
-        const ACE_Synch_Options &synch_options,
+        ACE_Synch_Options const &synch_options,
         ACE_Thread_Manager *thr_mgr,
         mq_type *mq,
         ACE_Reactor *reactor)
@@ -456,7 +456,7 @@ namespace ACE
       }
 
     template <ACE_PEER_STREAM_1, ACE_SYNCH_DECL>
-    int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::write_to_stream (const void * buf, size_t length, size_t char_size)
+    int StreamHandler<ACE_PEER_STREAM, ACE_SYNCH_USE>::write_to_stream (void const * buf, size_t length, size_t char_size)
       {
         INET_TRACE ("ACE_IOS_StreamHandler::write_to_stream");
 

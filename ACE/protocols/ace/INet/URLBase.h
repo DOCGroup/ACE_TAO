@@ -39,7 +39,7 @@ namespace ACE
         class ACE_INET_Export URLStream
           {
             public:
-              URLStream (const URLStream& url_stream);
+              URLStream (URLStream const& url_stream);
               ~URLStream ();
 
               bool operator ! ();
@@ -103,11 +103,11 @@ namespace ACE
               static URL_Base* create_from_string (ACE_CString const& url_string);
 
 #if defined (ACE_HAS_WCHAR)
-              virtual bool parse (const ACE_WString& url_string);
+              virtual bool parse (ACE_WString const& url_string);
 
               virtual ACE_WString to_wstring () const;
 
-              static URL_Base* create_from_wstring (const ACE_WString& url_string);
+              static URL_Base* create_from_wstring (ACE_WString const& url_string);
 #endif
 
               virtual bool validate ();

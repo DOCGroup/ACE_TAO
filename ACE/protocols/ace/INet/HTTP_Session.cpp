@@ -49,7 +49,7 @@ namespace ACE
       }
 
     template <ACE_SYNCH_DECL>
-    bool Session_T<ACE_SYNCH_USE>::connect_i (const ACE_Synch_Options& sync_opt)
+    bool Session_T<ACE_SYNCH_USE>::connect_i (ACE_Synch_Options const& sync_opt)
       {
         INET_TRACE ("ACE_HTTP_Session::connect_i");
 

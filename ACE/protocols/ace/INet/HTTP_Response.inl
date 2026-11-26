@@ -14,7 +14,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void Response::reset (const Status& status)
+    void Response::reset (Status const& status)
       {
         this->clear ();
         this->set_version (EMPTY);
@@ -22,7 +22,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    void Response::reset (ACE_CString const& version, const Status& status)
+    void Response::reset (ACE_CString const& version, Status const& status)
       {
         this->clear ();
         this->set_version (version);
@@ -30,14 +30,14 @@ namespace ACE
       }
 
     ACE_INLINE
-    void Response::set_status(const Status& status)
+    void Response::set_status(Status const& status)
       {
         this->status_ = status;
       }
 
     /// Return the status.
     ACE_INLINE
-    const Status& Response::get_status() const
+    Status const& Response::get_status() const
       {
         return this->status_;
       }

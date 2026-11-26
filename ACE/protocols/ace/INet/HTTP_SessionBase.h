@@ -94,7 +94,7 @@ namespace ACE
 
               void close_streams ();
 
-              virtual bool connect_i (const ACE_Synch_Options& sync_opt) = 0;
+              virtual bool connect_i (ACE_Synch_Options const& sync_opt) = 0;
 
               virtual void close_i () = 0;
 

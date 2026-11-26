@@ -45,7 +45,7 @@ namespace ACE
               String_StreamBufferBase (string_type& string, openmode mode);
               ~String_StreamBufferBase () override;
 
-              const string_type& str () const;
+              string_type const& str () const;
 
               void close_string ();
 
@@ -98,7 +98,7 @@ namespace ACE
 
               void close ();
 
-              const buffer_type& stream () const;
+              buffer_type const& stream () const;
 
             protected:
               buffer_type streambuf_;
@@ -123,7 +123,7 @@ namespace ACE
               explicit String_OStreamBase(string_type& string);
               ~String_OStreamBase();
 
-              const string_type& str () const;
+              string_type const& str () const;
 
               void clear ();
           };
@@ -145,7 +145,7 @@ namespace ACE
               using pos_type = typename ios_base::buffer_type::pos_type;
 
               explicit String_IStreamBase();
-              explicit String_IStreamBase(const string_type& string);
+              explicit String_IStreamBase(string_type const& string);
               ~String_IStreamBase();
 
               String_IStreamBase& rewind ();

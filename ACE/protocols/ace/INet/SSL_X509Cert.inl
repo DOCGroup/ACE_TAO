@@ -17,7 +17,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    SSL_X509Cert::SSL_X509Cert (const SSL_X509Cert& cert)
+    SSL_X509Cert::SSL_X509Cert (SSL_X509Cert const& cert)
       {
         *this = cert;
       }

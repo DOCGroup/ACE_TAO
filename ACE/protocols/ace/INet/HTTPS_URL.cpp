@@ -32,7 +32,7 @@ namespace ACE
         this->parse (url_string);
       }
 
-    URL::URL (const URL& url)
+    URL::URL (URL const& url)
       : ACE::HTTP::URL (0)
       {
         *this = url;
@@ -40,7 +40,7 @@ namespace ACE
 
     URL::~URL () = default;
 
-    URL& URL::operator =(const URL& url)
+    URL& URL::operator =(URL const& url)
       {
         ACE::HTTP::URL::operator=(url);
         return *this;
@@ -82,7 +82,7 @@ namespace ACE
         return prh;
       }
 
-    const URL::Factory& URL::factory_ = *URL::TURLFactorySingleton::instance ();
+    URL::Factory const& URL::factory_ = *URL::TURLFactorySingleton::instance ();
 
     URL::Factory::Factory ()
       {

@@ -101,7 +101,7 @@ namespace ACE
 
             public:
               ACE::INet::ConnectionHolder* create_connection (
-                  const ACE::INet::ConnectionKey& key) const override;
+                  ACE::INet::ConnectionKey const& key) const override;
           };
 
         /**
@@ -150,11 +150,11 @@ namespace ACE
 
               Request& request () override;
 
-              const Request& request () const override;
+              Request const& request () const override;
 
               Response& response () override;
 
-              const Response& response () const override;
+              Response const& response () const override;
 
               std::ostream& request_stream ();
 
@@ -162,14 +162,14 @@ namespace ACE
 
               bool is_response_ok () const override;
 
-              std::istream& handle_open_request (const ACE::INet::URL_Base& url) override;
+              std::istream& handle_open_request (ACE::INet::URL_Base const& url) override;
 
-              virtual std::istream& handle_get_request (const URL& url);
+              virtual std::istream& handle_get_request (URL const& url);
 /*
-              virtual std::istream& handle_post_request (const URL& url,
-                                                         const PostData& post_data);
+              virtual std::istream& handle_post_request (URL const& url,
+                                                         PostData const& post_data);
 
-              virtual std::istream& handle_put_request (const URL& url,
+              virtual std::istream& handle_put_request (URL const& url,
                                                         std::istream* put_data = nullptr);
 */
 
@@ -196,7 +196,7 @@ namespace ACE
                     u_short proxy_target_port () const;
 
                   protected:
-                    bool equal (const ACE::INet::ConnectionKey& key) const override;
+                    bool equal (ACE::INet::ConnectionKey const& key) const override;
 
                   private:
                     bool proxy_connection_;
@@ -218,11 +218,11 @@ namespace ACE
                                                   ACE_CString const& proxy_host = Request::EMPTY,
                                                   u_short proxy_port = 0);
 
-              virtual void initialize_request (const URL& url, Request& request);
+              virtual void initialize_request (URL const& url, Request& request);
 
-              virtual void handle_request_error (const URL& url);
+              virtual void handle_request_error (URL const& url);
 
-              virtual void handle_connection_error (const URL& url);
+              virtual void handle_connection_error (URL const& url);
 
               void release_connection ();
 

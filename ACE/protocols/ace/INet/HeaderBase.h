@@ -40,11 +40,11 @@ namespace ACE
               NVPair ();
               NVPair (ACE_CString const& first);
               NVPair (ACE_CString const& first, ACE_CString const& second);
-              NVPair (const NVPair& pair);
+              NVPair (NVPair const& pair);
               virtual ~NVPair ();
-              NVPair& operator =(const NVPair& pair);
-              bool operator ==(const NVPair& pair) const;
-              bool operator <(const NVPair& pair) const;
+              NVPair& operator =(NVPair const& pair);
+              bool operator ==(NVPair const& pair) const;
+              bool operator <(NVPair const& pair) const;
 
               ACE_CString const& first () const;
 

@@ -39,24 +39,24 @@ namespace ACE
             public:
               Response();
 
-              explicit Response(const Status& status);
+              explicit Response(Status const& status);
 
-              Response(ACE_CString const& version, const Status& status = Status());
+              Response(ACE_CString const& version, Status const& status = Status());
 
               ~Response () override;
 
               /// Reset the response object
               void reset ();
 
-              void reset (const Status& status);
+              void reset (Status const& status);
 
-              void reset (ACE_CString const& version, const Status& status = Status());
+              void reset (ACE_CString const& version, Status const& status = Status());
 
               /// Set the status.
-              void set_status(const Status& status);
+              void set_status(Status const& status);
 
               /// Return the status.
-              const Status& get_status() const;
+              Status const& get_status() const;
 
               /// Adds a Cookie header.
               void add_cookie(ACE_CString const& cookie);

@@ -70,7 +70,7 @@ namespace ACE
               int sync () override;
 
               STREAM_HANDLER& stream ();
-              const STREAM_HANDLER& stream () const;
+              STREAM_HANDLER const& stream () const;
 
               void close_stream ();
 

@@ -28,11 +28,11 @@ namespace ACE
 
     ACE::INet::ConnectionHolder*
     ClientRequestHandler::SessionFactory::create_connection (
-        const ACE::INet::ConnectionKey& key) const
+        ACE::INet::ConnectionKey const& key) const
       {
         INET_TRACE ("FTP::ClientRequestHandler::SessionFactory::create_connection");
 
-        const INetConnectionKey& ikey = dynamic_cast<const INetConnectionKey&> (key);
+        INetConnectionKey const& ikey = dynamic_cast<INetConnectionKey const&> (key);
 
         SessionHolder* session_holder {};
         ACE_NEW_RETURN (session_holder,
@@ -121,14 +121,14 @@ namespace ACE
       }
 
     std::istream& ClientRequestHandler::handle_open_request (
-        const ACE::INet::URL_Base& url)
+        ACE::INet::URL_Base const& url)
       {
-        const URL& ftp_url = dynamic_cast<const URL&> (url);
+        URL const& ftp_url = dynamic_cast<URL const&> (url);
         return this->handle_get_request (ftp_url);
       }
 
     std::istream& ClientRequestHandler::handle_get_request (
-        const URL& ftp_url,
+        URL const& ftp_url,
         bool binary)
       {
         if (this->initialize_connection (ftp_url.get_host (),
@@ -217,7 +217,7 @@ namespace ACE
         }
       }
 
-    bool ClientRequestHandler::handle_credentials (const URL& url,
+    bool ClientRequestHandler::handle_credentials (URL const& url,
                                                    ACE_CString& user,
                                                    ACE_CString& password)
       {
@@ -227,11 +227,11 @@ namespace ACE
         return URL::authenticate (authentication);
       }
 
-    void ClientRequestHandler::handle_request_error (const URL& /*url*/)
+    void ClientRequestHandler::handle_request_error (URL const& /*url*/)
       {
       }
 
-    void ClientRequestHandler::handle_connection_error (const URL& /*url*/)
+    void ClientRequestHandler::handle_connection_error (URL const& /*url*/)
       {
       }
 
@@ -668,7 +668,7 @@ namespace ACE
       }
 
     bool
-    ClientRequestHandler::send_active_address (const ACE_INET_Addr& addr)
+    ClientRequestHandler::send_active_address (ACE_INET_Addr const& addr)
       {
         ACE::IOS::CString_OStream arg;
         char ip_buf[128];

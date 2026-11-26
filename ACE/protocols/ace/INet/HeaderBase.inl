@@ -103,7 +103,7 @@ namespace ACE
       }
 
     ACE_INLINE
-    NVPair& NVPair::operator =(const NVPair& pair)
+    NVPair& NVPair::operator =(NVPair const& pair)
       {
         this->first (pair.first ());
         this->second (pair.second ());
@@ -111,13 +111,13 @@ namespace ACE
       }
 
     ACE_INLINE
-    bool NVPair::operator ==(const NVPair& pair) const
+    bool NVPair::operator ==(NVPair const& pair) const
       {
         return this->first_ == pair.first ();
       }
 
     ACE_INLINE
-    bool NVPair::operator <(const NVPair& pair) const
+    bool NVPair::operator <(NVPair const& pair) const
       {
         return this->first_ < pair.first ();
       }
