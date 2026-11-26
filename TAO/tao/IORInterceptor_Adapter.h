@@ -82,7 +82,7 @@ public:
       PortableInterceptor::AdapterState state) = 0;
 
   virtual void adapter_manager_state_changed (
-      const char * id,
+      char const *id,
       PortableInterceptor::AdapterState state) = 0;
 };
 

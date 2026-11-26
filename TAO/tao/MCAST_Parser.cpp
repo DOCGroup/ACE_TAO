@@ -27,7 +27,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 TAO_MCAST_Parser::~TAO_MCAST_Parser () = default;
 
 bool
-TAO_MCAST_Parser::match_prefix (const char *ior_string) const
+TAO_MCAST_Parser::match_prefix (char const *ior_string) const
 {
   return (std::strncmp (ior_string,
                         ::mcast_prefix,
@@ -35,7 +35,7 @@ TAO_MCAST_Parser::match_prefix (const char *ior_string) const
 }
 
 CORBA::Object_ptr
-TAO_MCAST_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
+TAO_MCAST_Parser::parse_string (char const *ior, CORBA::ORB_ptr orb)
 {
   char const * const mcast_name =
     ior + sizeof (::mcast_prefix) + 1;
@@ -59,11 +59,11 @@ TAO_MCAST_Parser::parse_string (const char *ior, CORBA::ORB_ptr orb)
 }
 
 CORBA::Object_ptr
-TAO_MCAST_Parser::multicast_to_service (const char *service_name,
+TAO_MCAST_Parser::multicast_to_service (char const *service_name,
                                         unsigned short port,
-                                        const char *mcast_address,
+                                        char const *mcast_address,
                                         int mcast_ttl,
-                                        const char *mcast_nic,
+                                        char const *mcast_nic,
                                         CORBA::ORB_ptr orb,
                                         ACE_Time_Value *timeout)
 {
@@ -103,11 +103,11 @@ TAO_MCAST_Parser::multicast_to_service (const char *service_name,
 
 int
 TAO_MCAST_Parser::multicast_query (char* & buf,
-                                   const char *service_name,
+                                   char const *service_name,
                                    unsigned short port,
-                                   const char *mcast_address,
+                                   char const *mcast_address,
                                    int mcast_ttl,
-                                   const char *mcast_nic,
+                                   char const *mcast_nic,
                                    ACE_Time_Value *timeout,
                                    CORBA::ORB_ptr orb)
 {

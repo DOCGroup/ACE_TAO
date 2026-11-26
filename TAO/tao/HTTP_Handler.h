@@ -40,7 +40,7 @@ public:
 
   /// Always use this constructor to make HTTP_Handlers
   TAO_HTTP_Handler (ACE_Message_Block *mb,
-                    const ACE_TCHAR *filename);
+                    ACE_TCHAR const *filename);
 
   /// returns the number of bytes read/written in the last operation.
   size_t byte_count () const;
@@ -74,16 +74,16 @@ public:
   TAO_HTTP_Reader () = delete;
 
   TAO_HTTP_Reader (ACE_Message_Block *mb,
-                   const ACE_TCHAR *filename,
-                   const char *request_prefix = "GET",
-                   const char *request_suffix = "HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n");
+                   ACE_TCHAR const *filename,
+                   char const *request_prefix = "GET",
+                   char const *request_suffix = "HTTP/1.0\r\nAccept: HTTP/1.0\r\n\r\n");
 
 private:
   //NOTE: these functions return -1 on error
   int send_request () override;
   int receive_reply () override;
-  const char *request_prefix_;
-  const char *request_suffix_;
+  char const *request_prefix_;
+  char const *request_suffix_;
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

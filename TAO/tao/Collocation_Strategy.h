@@ -34,7 +34,7 @@ namespace TAO
       TAO_CS_LAST
     };
 
-  inline const char * translate_collocation_strategy (Collocation_Strategy cs)
+  inline char const *translate_collocation_strategy (Collocation_Strategy cs)
     {
 #define TAO_CS(X) case X: return #X
       switch (cs)

@@ -40,28 +40,28 @@ public:
 
   /// @name IOR_Parser methods
   /// @{
-  bool match_prefix (const char *ior_string) const override;
+  bool match_prefix (char const *ior_string) const override;
 
   /// Parse the ior-string that is passed.
-  CORBA::Object_ptr parse_string (const char *ior,
+  CORBA::Object_ptr parse_string (char const *ior,
                                   CORBA::ORB_ptr orb) override;
   /// @}
 
 private:
-  CORBA::Object_ptr multicast_to_service (const char *service_name,
+  CORBA::Object_ptr multicast_to_service (char const *service_name,
                                           unsigned short port,
-                                          const char *mcast_address,
+                                          char const *mcast_address,
                                           int mcast_ttl,
-                                          const char *mcast_nic,
+                                          char const *mcast_nic,
                                           CORBA::ORB_ptr orb,
                                           ACE_Time_Value *timeout);
 
   int multicast_query (char *&buf,
-                       const char *service_name,
+                       char const *service_name,
                        unsigned short port,
-                       const char *mcast_address,
+                       char const *mcast_address,
                        int mcast_ttl,
-                       const char *mcast_nic,
+                       char const *mcast_nic,
                        ACE_Time_Value *timeout,
                        CORBA::ORB_ptr orb);
 

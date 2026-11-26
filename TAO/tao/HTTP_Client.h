@@ -51,8 +51,8 @@ public:
 
   /// Initializes the class with the given filename, hostname and port.
   /// it should be called with the filename, before any read/write calls
-  int open (const ACE_TCHAR *filename,
-            const ACE_TCHAR *hostname = ACE_DEFAULT_SERVER_HOST,
+  int open (ACE_TCHAR const *filename,
+            ACE_TCHAR const *hostname = ACE_DEFAULT_SERVER_HOST,
             u_short port = 80);
 
   /// Starts a connection, and reads a file from the server into

@@ -47,7 +47,7 @@ namespace TAO
     virtual ~Object_Proxy_Broker ();
 
     virtual CORBA::Boolean _is_a (CORBA::Object_ptr target,
-                                  const char *logical_type_id) = 0;
+                                  char const *logical_type_id) = 0;
 
 #if (TAO_HAS_MINIMUM_CORBA == 0)
 

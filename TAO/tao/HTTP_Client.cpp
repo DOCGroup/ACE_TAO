@@ -11,8 +11,8 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 int
-TAO_HTTP_Client::open (const ACE_TCHAR *filename,
-                       const ACE_TCHAR *hostname,
+TAO_HTTP_Client::open (ACE_TCHAR const *filename,
+                       ACE_TCHAR const *hostname,
                        u_short port)
 {
   this->filename_ = filename;

@@ -73,7 +73,7 @@ public:
 
   virtual CORBA::InterfaceDef_ptr get_interface (
       CORBA::ORB_ptr orb,
-      const char *repo_id) = 0;
+      char const *repo_id) = 0;
 
   virtual CORBA::InterfaceDef_ptr get_interface_remote (
       CORBA::Object_ptr target) = 0;

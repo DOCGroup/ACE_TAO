@@ -9,7 +9,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 TAO_HTTP_Handler::TAO_HTTP_Handler (ACE_Message_Block * mb,
-                                    const ACE_TCHAR *filename) :
+                                    ACE_TCHAR const *filename) :
   mb_ (mb),
   filename_ (filename)
 {
@@ -57,9 +57,9 @@ TAO_HTTP_Handler::byte_count () const
 // Reader **************************************************
 
 TAO_HTTP_Reader::TAO_HTTP_Reader (ACE_Message_Block * mb,
-                                  const ACE_TCHAR *filename,
-                                  const char *request_prefix,
-                                  const char *request_suffix) :
+                                  ACE_TCHAR const *filename,
+                                  char const *request_prefix,
+                                  char const *request_suffix) :
   TAO_HTTP_Handler (mb, filename),
   request_prefix_ (request_prefix),
   request_suffix_ (request_suffix)
