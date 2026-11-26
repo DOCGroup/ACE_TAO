@@ -56,11 +56,11 @@ namespace ACE
 
               int read_from_stream (char* buffer, std::streamsize length) override;
 
-              int write_to_stream (const char* buffer, std::streamsize length) override;
+              int write_to_stream (char const * buffer, std::streamsize length) override;
 
               virtual int read_from_stream_i (char* buffer, std::streamsize length);
 
-              virtual int write_to_stream_i (const char* buffer, std::streamsize length);
+              virtual int write_to_stream_i (char const * buffer, std::streamsize length);
 
             private:
               std::iostream & stream_;

@@ -58,7 +58,7 @@ namespace ACE
               /// Add authentication header with encoded credentials to request.
               void set_credentials (Request& request) const;
 
-              static const char* SCHEME;
+              static char const * SCHEME;
 
               BasicAuthentication (BasicAuthentication const &) = delete;
               BasicAuthentication (BasicAuthentication &&) = delete;

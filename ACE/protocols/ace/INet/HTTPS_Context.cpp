@@ -97,7 +97,7 @@ namespace ACE
 
     Context::~Context () = default;
 
-    bool Context::load_trusted_ca (const char* ca_location)
+    bool Context::load_trusted_ca (char const * ca_location)
       {
         ACE_stat stat;
         if (ca_location != nullptr && ACE_OS::stat (ca_location, &stat) == 0)

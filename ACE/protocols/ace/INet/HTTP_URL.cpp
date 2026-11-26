@@ -13,7 +13,7 @@ namespace ACE
 {
   namespace HTTP
   {
-    const char* URL::PROTOCOL = "http";
+    char const * URL::PROTOCOL = "http";
 
     const ACE_CString& URL::protocol ()
       {

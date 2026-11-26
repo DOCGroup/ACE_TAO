@@ -13,7 +13,7 @@ namespace ACE
 {
   namespace FTP
   {
-    const char* URL::PROTOCOL = "ftp";
+    char const * URL::PROTOCOL = "ftp";
 
     const ACE_CString& URL::protocol ()
       {

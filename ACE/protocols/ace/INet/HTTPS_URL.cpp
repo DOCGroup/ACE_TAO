@@ -13,7 +13,7 @@ namespace ACE
 {
   namespace HTTPS
   {
-    const char* URL::PROTOCOL = "https";
+    char const * URL::PROTOCOL = "https";
 
     const ACE_CString& URL::protocol ()
       {

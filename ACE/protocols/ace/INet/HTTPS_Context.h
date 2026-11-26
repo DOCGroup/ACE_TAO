@@ -63,11 +63,11 @@ namespace ACE
 
               bool use_default_ca ();
 
-              bool set_key_files (const char* certificate_filename,
-                                  const char* private_key_filename,
+              bool set_key_files (char const * certificate_filename,
+                                  char const * private_key_filename,
                                   int file_type = SSL_FILETYPE_PEM);
 
-              bool load_trusted_ca (const char* ca_location);
+              bool load_trusted_ca (char const * ca_location);
 
               int has_trusted_ca ();
 

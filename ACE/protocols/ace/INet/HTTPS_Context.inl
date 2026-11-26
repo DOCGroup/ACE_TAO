@@ -41,8 +41,8 @@ namespace ACE
       }
 
     ACE_INLINE
-    bool Context::set_key_files (const char* certificate_filename,
-                                 const char* private_key_filename,
+    bool Context::set_key_files (char const * certificate_filename,
+                                 char const * private_key_filename,
                                  int file_type)
       {
         if (this->ssl_ctx_->certificate (certificate_filename, file_type) == 0)

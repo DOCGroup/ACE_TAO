@@ -65,7 +65,7 @@ namespace ACE
 
               u_short default_port () const override;
 
-              static const char* PROTOCOL;
+              static char const * PROTOCOL;
 
               static const ACE_CString& protocol ();
 

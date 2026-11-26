@@ -48,7 +48,7 @@ namespace ACE
         return ACE_Utils::truncate_cast<int> (this->stream_.gcount ());
       }
 
-    int StreamBuffer::write_to_stream (const char* buffer, std::streamsize length)
+    int StreamBuffer::write_to_stream (char const * buffer, std::streamsize length)
       {
         if (this->policy_)
           {
@@ -60,7 +60,7 @@ namespace ACE
         }
       }
 
-    int StreamBuffer::write_to_stream_i (const char* buffer, std::streamsize length)
+    int StreamBuffer::write_to_stream_i (char const * buffer, std::streamsize length)
       {
         this->stream_.write (buffer, length);
         return this->stream_.good () ? ACE_Utils::truncate_cast<int> (length) : -1;
