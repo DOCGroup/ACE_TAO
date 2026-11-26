@@ -324,7 +324,7 @@ private:
    * @c ACE_Log_Msg::priority_mask() appropriately.  Returns number of
    * errors that occurred on failure and 0 otherwise.
    */
-  virtual int open_i (const ACE_TCHAR program_name[],
+  virtual int open_i (ACE_TCHAR const program_name[],
                       ACE_TCHAR const *logger_key,
                       bool ignore_static_svcs,
                       bool ignore_default_svc_conf_file,
@@ -397,7 +397,7 @@ private:
    * non-0 then the application is responsible for setting the
    * @c ACE_Log_Msg::priority_mask appropriately.
    */
-  static int open (const ACE_TCHAR program_name[],
+  static int open (ACE_TCHAR const program_name[],
                    ACE_TCHAR const *logger_key = ACE_DEFAULT_LOGGER_KEY,
                    bool ignore_static_svcs = true,
                    bool ignore_default_svc_conf_file = false,
@@ -514,7 +514,7 @@ private:
   /// @{
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file.
-  static int initialize (const ACE_Service_Type *,
+  static int initialize (ACE_Service_Type const *,
                          ACE_TCHAR const *parameters);
 
   /// Initialize and activate a statically @a svc_name service.
@@ -523,7 +523,7 @@ private:
 
   /// Resume a @a svc_name that was previously suspended or has not yet
   /// been resumed (e.g., a static service).
-  static int resume (const ACE_TCHAR svc_name[]);
+  static int resume (ACE_TCHAR const svc_name[]);
 
   /**
    * Suspend @a svc_name.  Note that this will not unlink the service
@@ -533,11 +533,11 @@ private:
    * service can be resumed later on by calling the @c RESUME member
    * function...
    */
-  static int suspend (const ACE_TCHAR svc_name[]);
+  static int suspend (ACE_TCHAR const svc_name[]);
 
   /// Totally remove @a svc_name from the daemon by removing it
   /// from the ACE_Reactor, and unlinking it if necessary.
-  static int remove (const ACE_TCHAR svc_name[]);
+  static int remove (ACE_TCHAR const svc_name[]);
   /// @}
 
   /// Dump the state of an object.
@@ -551,11 +551,11 @@ private:
 
   /// Process a file containing a list of service configuration
   /// directives.
-  static int process_file (const ACE_TCHAR file[]);
+  static int process_file (ACE_TCHAR const file[]);
 
   /// Process one service configuration @a directive, which is passed as
   /// a string.  Returns the number of errors that occurred.
-  static int process_directive (const ACE_TCHAR directive[]);
+  static int process_directive (ACE_TCHAR const directive[]);
 
   /**
    * Process one static service definition.  Load a new static service
@@ -569,7 +569,7 @@ private:
    *
    * @return Returns -1 if the service cannot be 'loaded'.
    */
-  static int process_directive (const ACE_Static_Svc_Descriptor &ssd,
+  static int process_directive (ACE_Static_Svc_Descriptor const &ssd,
                                 bool force_replace = false);
 
   /**

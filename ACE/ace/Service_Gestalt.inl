@@ -4,7 +4,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /// constructor just handles simple initializations).
 
 ACE_INLINE int
-ACE_Service_Gestalt::open (const ACE_TCHAR program_name[],
+ACE_Service_Gestalt::open (ACE_TCHAR const program_name[],
                            ACE_TCHAR const *logger_key,
                            bool ignore_static_svcs,
                            bool ignore_default_svc_conf,
@@ -51,8 +51,8 @@ ACE_Service_Gestalt::open (int argc,
 /// Searches for a service object declaration in the local repo, only
 
 ACE_INLINE int
-ACE_Service_Gestalt::find (const ACE_TCHAR name[],
-                           const ACE_Service_Type **srp,
+ACE_Service_Gestalt::find (ACE_TCHAR const name[],
+                           ACE_Service_Type const **srp,
                            bool ignore_suspended) const
 {
   // Closing the gestalt will have disassociated it from the

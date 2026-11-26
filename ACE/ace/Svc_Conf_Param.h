@@ -67,7 +67,7 @@ public:
     source.file = file;
   }
 
-  ACE_Svc_Conf_Param (ACE_Service_Gestalt *gestalt, const ACE_TCHAR *directive)
+  ACE_Svc_Conf_Param (ACE_Service_Gestalt *gestalt, ACE_TCHAR const *directive)
     : type (SVC_CONF_DIRECTIVE),
       yyerrno (0),
       yylineno (1),
@@ -90,7 +90,7 @@ public:
     FILE *file;
 
     /// String containing directive that will be scanned and parsed.
-    const ACE_TCHAR *directive;
+    ACE_TCHAR const *directive;
   } source;
 
   /// Discriminant use to determine which union member to use.

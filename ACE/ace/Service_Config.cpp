@@ -219,7 +219,7 @@ ACE_Service_Config::parse_args_i (int argc, ACE_TCHAR *argv[])
 } /* parse_args_i () */
 
 int
-ACE_Service_Config::open_i (const ACE_TCHAR program_name[],
+ACE_Service_Config::open_i (ACE_TCHAR const program_name[],
                             ACE_TCHAR const *logger_key,
                             bool ,
                             bool ,
@@ -356,7 +356,7 @@ ACE_Service_Config::insert (ACE_Static_Svc_Descriptor* stsd)
 // Totally remove <svc_name> from the daemon by removing it from the
 // ACE_Reactor, and unlinking it if necessary.
 int
-ACE_Service_Config::remove (const ACE_TCHAR svc_name[])
+ACE_Service_Config::remove (ACE_TCHAR const svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::remove");
   return ACE_Service_Repository::instance ()->remove (svc_name);
@@ -369,7 +369,7 @@ ACE_Service_Config::remove (const ACE_TCHAR svc_name[])
 // can be resumed later on by calling the <resume> method...
 
 int
-ACE_Service_Config::suspend (const ACE_TCHAR svc_name[])
+ACE_Service_Config::suspend (ACE_TCHAR const svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::suspend");
   return ACE_Service_Repository::instance ()->suspend (svc_name);
@@ -379,7 +379,7 @@ ACE_Service_Config::suspend (const ACE_TCHAR svc_name[])
 // been resumed (e.g., a static service).
 
 int
-ACE_Service_Config::resume (const ACE_TCHAR svc_name[])
+ACE_Service_Config::resume (ACE_TCHAR const svc_name[])
 {
   ACE_TRACE ("ACE_Service_Config::resume");
   return ACE_Service_Repository::instance ()->resume (svc_name);

@@ -73,9 +73,9 @@ public:
                        bool svc_repo_is_owned = true,
                        bool no_static_svcs = true);
 
-  ACE_Service_Gestalt (const ACE_Service_Gestalt &) = delete;
+  ACE_Service_Gestalt (ACE_Service_Gestalt const &) = delete;
   ACE_Service_Gestalt (ACE_Service_Gestalt &&) = delete;
-  ACE_Service_Gestalt &operator= (const ACE_Service_Gestalt &) = delete;
+  ACE_Service_Gestalt &operator= (ACE_Service_Gestalt const &) = delete;
   ACE_Service_Gestalt &operator= (ACE_Service_Gestalt &&) = delete;
 
   /// Perform user-specified close activities and remove dynamic
@@ -99,7 +99,7 @@ public:
    * true then the application is responsible for setting the
    * ACE_Log_Msg::priority_mask appropriately.
    */
-  int open (const ACE_TCHAR program_name[],
+  int open (ACE_TCHAR const program_name[],
             ACE_TCHAR const *logger_key = nullptr,
             bool ignore_static_svcs = true,
             bool ignore_default_svc_conf_file = false,
@@ -187,7 +187,7 @@ public:
 
   /// Process one service configuration @a directive, which is passed as
   /// a string.  Returns the number of errors that occurred.
-  int process_directive (const ACE_TCHAR directive[]);
+  int process_directive (ACE_TCHAR const directive[]);
 
   /// Process one static service definition.
   /**
@@ -201,12 +201,12 @@ public:
    *
    * @return Returns -1 if the service cannot be 'loaded'.
    */
-  int process_directive (const ACE_Static_Svc_Descriptor &ssd,
+  int process_directive (ACE_Static_Svc_Descriptor const &ssd,
                          bool force_replace = false);
 
   /// Process a file containing a list of service configuration
   /// directives.
-  int process_file (const ACE_TCHAR file[]);
+  int process_file (ACE_TCHAR const file[]);
 
   /**
    * Locate an entry with @a name in the table.  If @a ignore_suspended
@@ -216,8 +216,8 @@ public:
    * If @a name is found, but it is suspended and the caller wants to
    * ignore suspended services a -2 is returned.
    */
-  int find (const ACE_TCHAR name[],
-            const ACE_Service_Type **srp = nullptr,
+  int find (ACE_TCHAR const name[],
+            ACE_Service_Type const **srp = nullptr,
             bool ignore_suspended = true) const;
 
   /**
@@ -263,7 +263,7 @@ public:
   /// ensuring that the dynamic service is registered before any of its
   /// subordinate static services. Thus avoiding any finalization order
   /// problems.
-  int initialize (const ACE_Service_Type_Factory *,
+  int initialize (ACE_Service_Type_Factory const *,
                   ACE_TCHAR const *parameters);
 #endif /* (ACE_USES_CLASSIC_SVC_CONF == 1) */
 
@@ -279,7 +279,7 @@ public:
   /// which the static services reside.  It may not crash, for
   /// instance, when the first static service to register is the same
   /// as the dynamic service being loaded. You should be so lucky!
-  int initialize (const ACE_Service_Type *,
+  int initialize (ACE_Service_Type const *,
                   ACE_TCHAR const *parameters);
 
   /// Initialize and activate a statically @a svc_name service.
@@ -288,7 +288,7 @@ public:
 
   /// Resume a @a svc_name that was previously suspended or has not yet
   /// been resumed (e.g., a static service).
-  int resume (const ACE_TCHAR svc_name[]);
+  int resume (ACE_TCHAR const svc_name[]);
 
   /**
    * Suspend @a svc_name.  Note that this will not unlink the service
@@ -298,11 +298,11 @@ public:
    * service can be resumed later on by calling the @c resume() member
    * function...
    */
-  int suspend (const ACE_TCHAR svc_name[]);
+  int suspend (ACE_TCHAR const svc_name[]);
 
   /// Totally remove @a svc_name from the daemon by removing it
   /// from the ACE_Reactor, and unlinking it if necessary.
-  int remove (const ACE_TCHAR svc_name[]);
+  int remove (ACE_TCHAR const svc_name[]);
 
   /**
    * Using the supplied name, finds and (if needed) returns a pointer to a
@@ -313,10 +313,10 @@ public:
 
   struct Processed_Static_Svc
   {
-    explicit Processed_Static_Svc (const ACE_Static_Svc_Descriptor *);
+    explicit Processed_Static_Svc (ACE_Static_Svc_Descriptor const *);
     ~Processed_Static_Svc ();
     ACE_TCHAR * name_ {};
-    const ACE_Static_Svc_Descriptor *assd_;
+    ACE_Static_Svc_Descriptor const *assd_;
     ACE_ALLOC_HOOK_DECLARE;
   };
 
@@ -338,7 +338,7 @@ protected:
    * ACE_Log_Msg::priority_mask() appropriately.  Returns number of
    * errors that occurred on failure and 0 otherwise.
    */
-  int open_i (const ACE_TCHAR program_name[],
+  int open_i (ACE_TCHAR const program_name[],
               ACE_TCHAR const *logger_key = nullptr,
               bool ignore_static_svcs = true,
               bool ignore_default_svc_conf_file = false,
@@ -358,7 +358,7 @@ protected:
   /// Process a static directive without also inserting its descriptor
   /// the global table. This avoids multiple additions when processing
   /// directives in non-global gestalts.
-  int process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
+  int process_directive_i (ACE_Static_Svc_Descriptor const &ssd,
                            bool force_replace = false);
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
@@ -374,10 +374,10 @@ protected:
 
   /// Dynamically link the shared object file and retrieve a pointer to
   /// the designated shared object in this file.
-  int initialize_i (const ACE_Service_Type *sr, ACE_TCHAR const *parameters);
+  int initialize_i (ACE_Service_Type const *sr, ACE_TCHAR const *parameters);
 
-  const ACE_Static_Svc_Descriptor* find_processed_static_svc (ACE_TCHAR const *);
-  void add_processed_static_svc (const ACE_Static_Svc_Descriptor *);
+  ACE_Static_Svc_Descriptor const* find_processed_static_svc (ACE_TCHAR const *);
+  void add_processed_static_svc (ACE_Static_Svc_Descriptor const *);
 
   /// Performs the common initialization tasks for a new or previously
   /// closed instance. Must not be virtual, as it is called from the

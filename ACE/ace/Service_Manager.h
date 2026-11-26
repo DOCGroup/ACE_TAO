@@ -92,7 +92,7 @@ protected:
   /// Dump the state of an object.
   void dump () const;
 
-  int open (const ACE_INET_Addr &sia);
+  int open (ACE_INET_Addr const &sia);
 
   /// @name Demultiplexing hooks
   /// @{

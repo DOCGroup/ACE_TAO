@@ -43,7 +43,7 @@ ACE_Service_Manager::resume ()
 }
 
 int
-ACE_Service_Manager::open (const ACE_INET_Addr &sia)
+ACE_Service_Manager::open (ACE_INET_Addr const &sia)
 {
   ACE_TRACE ("ACE_Service_Manager::open");
 

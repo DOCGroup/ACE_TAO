@@ -68,7 +68,7 @@ ACE_Service_Type_Dynamic_Guard::ACE_Service_Type_Dynamic_Guard
 
 ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard ()
 {
-  const ACE_Service_Type *tmp {};
+  ACE_Service_Type const *tmp {};
 
   // Lookup without ignoring suspended services. Making sure
   // not to ignore any inactive services, since those may be forward
@@ -129,7 +129,7 @@ ACE_Service_Type_Dynamic_Guard::~ACE_Service_Type_Dynamic_Guard ()
 
 
 ACE_Service_Gestalt::Processed_Static_Svc::
-Processed_Static_Svc (const ACE_Static_Svc_Descriptor *assd)
+Processed_Static_Svc (ACE_Static_Svc_Descriptor const *assd)
   : assd_ (assd)
 {
 #if defined (ACE_HAS_ALLOC_HOOKS)
@@ -331,7 +331,7 @@ ACE_Service_Gestalt::find_static_svc_descriptor (ACE_TCHAR const * name,
 }
 
 /// @brief
-const ACE_Static_Svc_Descriptor*
+ACE_Static_Svc_Descriptor const*
 ACE_Service_Gestalt::find_processed_static_svc (ACE_TCHAR const * name)
 {
   if (this->processed_static_svcs_ == nullptr || name == nullptr)
@@ -360,7 +360,7 @@ ACE_Service_Gestalt::find_processed_static_svc (ACE_TCHAR const * name)
 /// for static service objects, loaded in another repository.
 void
 ACE_Service_Gestalt::add_processed_static_svc
-  (const ACE_Static_Svc_Descriptor *assd)
+  (ACE_Static_Svc_Descriptor const *assd)
 {
   /// When process_directive(Static_Svc_Descriptor&) is called, it
   /// associates a service object with the Gestalt and makes the
@@ -455,11 +455,11 @@ ACE_Service_Gestalt::initialize (ACE_TCHAR const *svc_name,
     }
 #endif
 
-  const ACE_Service_Type *srp {};
+  ACE_Service_Type const *srp {};
   for (int i = 0; this->find (svc_name, &srp) == -1 && i < 2; ++i)
     //  if (this->repo_->find (svc_name, &srp) == -1)
     {
-      const ACE_Static_Svc_Descriptor *assd =
+      ACE_Static_Svc_Descriptor const *assd =
         ACE_Service_Config::global()->find_processed_static_svc(svc_name);
       if (assd != nullptr)
         {
@@ -503,7 +503,7 @@ ACE_Service_Gestalt::initialize (ACE_TCHAR const *svc_name,
 
 #if (ACE_USES_CLASSIC_SVC_CONF == 1)
 int
-ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
+ACE_Service_Gestalt::initialize (ACE_Service_Type_Factory const *stf,
                                  ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Gestalt::initialize");
@@ -521,7 +521,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 
   ACE_Service_Type *srp {};
   int const retv = this->repo_->find (stf->name (),
-                                      (const ACE_Service_Type **) &srp);
+                                      (ACE_Service_Type const **) &srp);
 
   // If there is an active service already, remove it first
   // before it can be re-installed.
@@ -602,7 +602,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type_Factory *stf,
 /// It may not crash, for instance, when the first static service to register
 /// is the same as the dynamic service being loaded. You should be so lucky! ..
 int
-ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
+ACE_Service_Gestalt::initialize (ACE_Service_Type const *sr,
                                  ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Gestalt::initialize");
@@ -618,7 +618,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
 
   ACE_Service_Type *srp {};
   if (this->repo_->find (sr->name (),
-                         (const ACE_Service_Type **) &srp) >= 0)
+                         (ACE_Service_Type const **) &srp) >= 0)
     {
 #ifndef ACE_NLOGGING
       ACELIB_DEBUG ((LM_WARNING,
@@ -636,7 +636,7 @@ ACE_Service_Gestalt::initialize (const ACE_Service_Type *sr,
 /// Dynamically link the shared object file and retrieve a pointer to
 /// the designated shared object in this file.
 int
-ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
+ACE_Service_Gestalt::initialize_i (ACE_Service_Type const *sr,
                                    ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Gestalt::initialize_i");
@@ -687,7 +687,7 @@ ACE_Service_Gestalt::initialize_i (const ACE_Service_Type *sr,
 // ACE_Reactor, and unlinking it if necessary.
 
 int
-ACE_Service_Gestalt::remove (const ACE_TCHAR svc_name[])
+ACE_Service_Gestalt::remove (ACE_TCHAR const svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::remove");
   if (this->repo_ == nullptr)
@@ -704,7 +704,7 @@ ACE_Service_Gestalt::remove (const ACE_TCHAR svc_name[])
 /// member function on the appropriate @c ACE_Service_Object.  A service
 /// can be resumed later on by calling the @c resume method...
 int
-ACE_Service_Gestalt::suspend (const ACE_TCHAR svc_name[])
+ACE_Service_Gestalt::suspend (ACE_TCHAR const svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::suspend");
   if (this->repo_ == nullptr)
@@ -719,7 +719,7 @@ ACE_Service_Gestalt::suspend (const ACE_TCHAR svc_name[])
 // been resumed (e.g., a static service).
 
 int
-ACE_Service_Gestalt::resume (const ACE_TCHAR svc_name[])
+ACE_Service_Gestalt::resume (ACE_TCHAR const svc_name[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::resume");
   if (this->repo_ == nullptr)
@@ -731,7 +731,7 @@ ACE_Service_Gestalt::resume (const ACE_TCHAR svc_name[])
 }
 
 int
-ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
+ACE_Service_Gestalt::process_directive (ACE_Static_Svc_Descriptor const &ssd,
                                         bool force_replace)
 {
   int const result = process_directive_i (ssd, force_replace);
@@ -743,7 +743,7 @@ ACE_Service_Gestalt::process_directive (const ACE_Static_Svc_Descriptor &ssd,
 }
 
 int
-ACE_Service_Gestalt::process_directive_i (const ACE_Static_Svc_Descriptor &ssd,
+ACE_Service_Gestalt::process_directive_i (ACE_Static_Svc_Descriptor const &ssd,
                                           bool force_replace)
 {
   if (this->repo_ == nullptr)
@@ -883,7 +883,7 @@ ACE_Service_Gestalt::get_xml_svc_conf (ACE_DLL &xmldll)
 #endif /* ACE_USES_CLASSIC_SVC_CONF == 1 */
 
 int
-ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
+ACE_Service_Gestalt::process_file (ACE_TCHAR const file[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::process_file");
 
@@ -964,7 +964,7 @@ ACE_Service_Gestalt::process_file (const ACE_TCHAR file[])
 }
 
 int
-ACE_Service_Gestalt::process_directive (const ACE_TCHAR directive[])
+ACE_Service_Gestalt::process_directive (ACE_TCHAR const directive[])
 {
   ACE_TRACE ("ACE_Service_Gestalt::process_directive");
 
@@ -1033,7 +1033,7 @@ ACE_Service_Gestalt::init_svc_conf_file_queue ()
 } /* init_svc_conf_file_queue () */
 
 int
-ACE_Service_Gestalt::open_i (const ACE_TCHAR program_name[],
+ACE_Service_Gestalt::open_i (ACE_TCHAR const program_name[],
                              ACE_TCHAR const * logger_key,
                              bool ignore_static_svcs,
                              bool ignore_default_svc_conf_file,

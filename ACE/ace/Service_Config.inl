@@ -5,7 +5,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 /// This is the primary entry point into the ACE_Service_Config (the
 /// constructor just handles simple initializations).
 ACE_INLINE int
-ACE_Service_Config::open (const ACE_TCHAR program_name[],
+ACE_Service_Config::open (ACE_TCHAR const program_name[],
                           ACE_TCHAR const *logger_key,
                           bool ignore_static_svcs,
                           bool ignore_default_svc_conf,
@@ -133,7 +133,7 @@ ACE_Service_Config::initialize (ACE_TCHAR const *svc_name,
 /// Dynamically link the shared object file and retrieve a pointer to
 /// the designated shared object in this file.
 ACE_INLINE int
-ACE_Service_Config::initialize (const ACE_Service_Type *sr,
+ACE_Service_Config::initialize (ACE_Service_Type const *sr,
                                 ACE_TCHAR const *parameters)
 {
   ACE_TRACE ("ACE_Service_Config::initialize");
@@ -142,14 +142,14 @@ ACE_Service_Config::initialize (const ACE_Service_Type *sr,
 
 /// Process a file containing a list of service configuration
 /// directives.
-ACE_INLINE int ACE_Service_Config::process_file (const ACE_TCHAR file[])
+ACE_INLINE int ACE_Service_Config::process_file (ACE_TCHAR const file[])
 {
   return ACE_Service_Config::current ()->process_file (file);
 }
 
 ///
 ACE_INLINE int
-ACE_Service_Config::process_directive (const ACE_TCHAR directive[])
+ACE_Service_Config::process_directive (ACE_TCHAR const directive[])
 {
   return ACE_Service_Config::current ()->process_directive (directive);
 }
@@ -163,7 +163,7 @@ ACE_Service_Config::process_directives ()
 }
 
 ACE_INLINE int
-ACE_Service_Config::process_directive (const ACE_Static_Svc_Descriptor &ssd,
+ACE_Service_Config::process_directive (ACE_Static_Svc_Descriptor const &ssd,
                                        bool force_replace)
 {
   return ACE_Service_Config::current ()->process_directive (ssd, force_replace);
