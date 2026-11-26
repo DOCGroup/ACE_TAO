@@ -65,7 +65,7 @@ size_t const ACE_MAX_THREADS = 4;
 
 #if defined ACE_HAS_CONSOLE_TEST_OUTPUT
 #ifndef ACE_START_TEST
-# define ACE_START_TEST(NAME) const ACE_TCHAR *program = NAME; ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), NAME))
+# define ACE_START_TEST(NAME) ACE_TCHAR const *program = NAME; ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("(%P|%t) Starting %s test at %D\n"), NAME))
 #endif /* ACE_START_TEST */
 
 #ifndef ACE_END_TEST
@@ -86,7 +86,7 @@ size_t const ACE_MAX_THREADS = 4;
 #endif
 
 #define ACE_START_TEST_TEMPLATE(NAME, APPEND) \
-  const ACE_TCHAR *program = NAME; \
+  ACE_TCHAR const *program = NAME; \
   if (ACE_LOG_MSG->open (program, ACE_TEST_LOG_MSG_FLAGS) != 0) \
     ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("open log_msg failed")), -1); \
   ACE_TEST_SET_OUTPUT (APPEND); \
@@ -161,11 +161,11 @@ public:
   ACE_Test_Output ();
   ~ACE_Test_Output ();
   static ACE_Test_Output *instance ();
-  int set_output (const ACE_TCHAR *filename, int append = 0);
+  int set_output (ACE_TCHAR const *filename, int append = 0);
   OFSTREAM *output_file ();
   void close ();
-  const ACE_TCHAR *dll_name ();
-  const ACE_TCHAR *name ();
+  ACE_TCHAR const *dll_name ();
+  ACE_TCHAR const *name ();
   static void close_singleton ();
 
 private:
