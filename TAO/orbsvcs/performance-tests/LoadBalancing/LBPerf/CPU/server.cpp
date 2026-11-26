@@ -95,7 +95,7 @@ join_object_group (CORBA::ORB_ptr orb,
   catch (const CosNaming::NamingContext::NotFound& )
     {
       // Object group not created.  Create one.
-      const char repository_id[] = "IDL:Test/Roundtrip:1.0";
+      char const repository_id[] = "IDL:Test/Roundtrip:1.0";
 
       PortableGroup::Criteria criteria (1);
       criteria.length (1);
@@ -143,7 +143,7 @@ join_object_group (CORBA::ORB_ptr orb,
 
               if (reject_threshold != 0)
                 {
-                  const CORBA::ULong i = len - 1;
+                  CORBA::ULong const i = len - 1;
 
                   strategy_props.length (len++);
 
@@ -155,7 +155,7 @@ join_object_group (CORBA::ORB_ptr orb,
 
               if (critical_threshold != 0)
                 {
-                  const CORBA::ULong i = len - 1;
+                  CORBA::ULong const i = len - 1;
 
                   strategy_props.length (len++);
 
@@ -167,7 +167,7 @@ join_object_group (CORBA::ORB_ptr orb,
 
               if (dampening != 0)
                 {
-                  const CORBA::ULong i = len - 1;
+                  CORBA::ULong const i = len - 1;
 
                   strategy_props.length (len++);
 
@@ -325,7 +325,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

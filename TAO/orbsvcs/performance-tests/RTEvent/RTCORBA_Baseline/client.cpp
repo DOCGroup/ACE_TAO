@@ -41,7 +41,7 @@ public:
       {
         this->run_test ();
       }
-    catch (const CORBA::Exception&)
+    catch (CORBA::Exception const&)
       {
       }
 
@@ -85,7 +85,7 @@ public:
           ACE_hrtime_t elapsed = ACE_OS::gethrtime () - start;
 
           this->sample_history.sample (elapsed);
-        } catch (const CORBA::Exception&) {
+        } catch (CORBA::Exception const&) {
         }
       }
   }
@@ -138,7 +138,7 @@ public:
           CORBA::ULongLong dummy = 0;
           (void) this->roundtrip_->test_method (dummy,
                                                 this->workload_);
-        } catch (const CORBA::Exception&) {
+        } catch (CORBA::Exception const&) {
         }
       }
   }
@@ -251,7 +251,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ACE_DEBUG ((LM_DEBUG, "(%P|%t) client - starting cleanup\n"));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

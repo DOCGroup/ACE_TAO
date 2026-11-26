@@ -170,7 +170,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       orb->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;
