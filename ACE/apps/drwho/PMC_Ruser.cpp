@@ -85,7 +85,7 @@ PMC_Ruser::insert_protocol_info (Protocol_Record &protocol_record)
   Drwho_Node *np = this->get_drwho_node (ACE::strnnew (current_node->get_login_name (),
                                                        MAXUSERIDNAMELEN),
                                          prp->drwho_list_);
-  const int length = std::strlen (prp->get_host ());
+  int const length = std::strlen (prp->get_host ());
 
   np->set_real_name (ACE::strnew (current_node->get_real_name ()));
 

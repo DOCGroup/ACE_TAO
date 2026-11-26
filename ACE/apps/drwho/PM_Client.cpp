@@ -52,7 +52,7 @@ PM_Client::process ()
     }
 
   int active_friends = 0;
-  const int users = this->Protocol_Manager::get_total_users ();
+  int const users = this->Protocol_Manager::get_total_users ();
 
   ACE_DEBUG ((LM_DEBUG,
               "------------------------\n"));

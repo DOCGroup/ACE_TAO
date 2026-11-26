@@ -35,7 +35,7 @@ private:
   whod host_data;
   int number_of_users {};
   int current_user {};
-  const int WHOD_HEADER_SIZE;
+  int const WHOD_HEADER_SIZE;
   char original_pathname[MAXPATHLEN + 1];
   char const *rwho_dir_name;
 
