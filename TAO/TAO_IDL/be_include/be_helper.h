@@ -160,7 +160,7 @@ public:
   int nl ();
 
   /// "printf" style variable argument print
-  int print (const char *format, ...)
+  int print (char const *format, ...)
     ACE_GCC_FORMAT_ATTRIBUTE (printf, 2, 3);
 
   /// Generate a \#if !defined, \#define macro
@@ -191,7 +191,7 @@ public:
     return *this;
   }
 
-  TAO_OutStream &operator<< (const char *str);
+  TAO_OutStream &operator<< (char const *str);
   TAO_OutStream &operator<< (char ch);
   TAO_OutStream &operator<< (std::string const &str);
   TAO_OutStream &operator<< (const ACE_CDR::UShort num);
@@ -230,7 +230,7 @@ public:
 
   TAO_OutStream &print (AST_Expression *idl);
 
-  void insert_comment (const char *file, int line);
+  void insert_comment (char const *file, int line);
 #define TAO_INSERT_COMMENT(STRM) (STRM)->insert_comment (__FILE__, __LINE__)
 
 protected:

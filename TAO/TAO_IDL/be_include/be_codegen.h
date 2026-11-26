@@ -260,7 +260,7 @@ public:
   int end_implementation_header (std::string const &fname);
 
   /// Put a last \#endif in the server header.
-  int end_implementation_skeleton (const char *fname);
+  int end_implementation_skeleton (char const *fname);
 
   /// Put a last \#endif in the server template header.
   int end_server_template_header ();

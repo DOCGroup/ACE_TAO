@@ -349,7 +349,7 @@ TAO_OutStream::gen_endif ()
 
 // Printf style variable argument print.
 int
-TAO_OutStream::print (const char *format, ...)
+TAO_OutStream::print (char const *format, ...)
 {
   if (format[0] == '\n')
     {
@@ -374,7 +374,7 @@ TAO_OutStream::print (const char *format, ...)
 }
 
 TAO_OutStream &
-TAO_OutStream::operator<< (const char *str)
+TAO_OutStream::operator<< (char const *str)
 {
   this->write_text (str);
   return *this;
@@ -581,7 +581,7 @@ TAO_OutStream::print (UTL_IdList *idl)
 
 template <typename IntType>
 void
-signed_int_helper (TAO_OutStream &os, IntType value, IntType min, const char *specifier)
+signed_int_helper (TAO_OutStream &os, IntType value, IntType min, char const *specifier)
 {
   /*
    * It seems that in C/C++ the minus sign and the bare number are parsed
@@ -741,7 +741,7 @@ TAO_OutStream::print (AST_Expression *expr)
   return *this;
 }
 
-void TAO_OutStream::insert_comment (const char *file, int line)
+void TAO_OutStream::insert_comment (char const *file, int line)
 {
   if (be_global->gen_source_info ())
     {
