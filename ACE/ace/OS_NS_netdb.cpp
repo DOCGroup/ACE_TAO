@@ -409,7 +409,8 @@ ACE_OS::getaddrinfo_emulation (char const *name, addrinfo **result)
       (*result)[i].ai_addrlen = sizeof (sockaddr_in);
       (*result)[i].ai_addr = reinterpret_cast<sockaddr *> (addr_storage) + i;
       (*result)[i].ai_addr->sa_family = AF_INET;
-      std::memcpy (std::addressof (addr_storage[i].sin_addr), host->h_addr_list[i],
+      std::memcpy (std::addressof (addr_storage[i].sin_addr),
+                   host->h_addr_list[i],
                    (std::min) (size_t (host->h_length), sizeof (in_addr)));
       if (i < n - 1)
         {
