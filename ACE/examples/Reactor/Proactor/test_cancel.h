@@ -24,7 +24,7 @@ public:
 
 protected:
   /// Reads data from the socket asynchronously.
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
 private:
   /// Asynchronous reader for the socket.

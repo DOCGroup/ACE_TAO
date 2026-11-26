@@ -29,8 +29,8 @@ public:
     {
     }
 
-  virtual void handle_time_out (const ACE_Time_Value &tv,
-                                const void *arg)
+  virtual void handle_time_out (ACE_Time_Value const &tv,
+                                void const *arg)
     {
       // Print out when timeouts occur.
       ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %:.\n",

@@ -123,8 +123,8 @@ Dgram_Endpoint::handle_input (ACE_HANDLE)
 }
 
 int
-Dgram_Endpoint::handle_timeout (const ACE_Time_Value &,
-                                const void *)
+Dgram_Endpoint::handle_timeout (ACE_Time_Value const &,
+                                void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               "(%P|%t) timed out for endpoint\n"));
@@ -133,9 +133,9 @@ Dgram_Endpoint::handle_timeout (const ACE_Time_Value &,
 
 static int
 run_test (u_short localport,
-          const ACE_TCHAR *remotehost,
+          ACE_TCHAR const *remotehost,
           u_short remoteport,
-          const ACE_TCHAR *peer)
+          ACE_TCHAR const *peer)
 {
   ACE_INET_Addr const remote_addr (remoteport, remotehost);
   ACE_INET_Addr const local_addr (localport);

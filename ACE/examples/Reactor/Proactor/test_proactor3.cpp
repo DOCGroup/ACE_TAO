@@ -192,11 +192,11 @@ protected:
 
   /// This is called when asynchronous read operation from the socket
   /// complete.
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
   /// This is called when an asynchronous write to the file
   /// completes.
-  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
 private:
   int  initiate_read_stream ();
@@ -328,7 +328,7 @@ Receiver::initiate_write_stream (ACE_Message_Block &mb, int nbytes)
 }
 
 void
-Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Receiver::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   // Reset pointers.
   result.message_block ().rd_ptr ()[result.bytes_transferred ()] = '\0';
@@ -379,7 +379,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 }
 
 void
-Receiver::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+Receiver::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   if (result.bytes_transferred () == 0 || result.error () != 0)
     {
@@ -430,7 +430,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (const ACE_TCHAR *host, u_short port);
+  int open (ACE_TCHAR const *host, u_short port);
   void close ();
 
   ACE_HANDLE handle () const override;
@@ -440,10 +440,10 @@ protected:
   // These methods are called by the framework
 
   /// This is called when asynchronous reads from the socket complete
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
   /// This is called when asynchronous writes from the socket complete
-  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
 private:
   int initiate_read_stream ();
@@ -465,7 +465,7 @@ private:
   long io_count_;
 };
 
-static const char *data = "Welcome to Irfan World! Irfan RULES here !!\n";
+static char const *data = "Welcome to Irfan World! Irfan RULES here !!\n";
 
 Sender::Sender ()
   : io_count_ (0)
@@ -494,7 +494,7 @@ void Sender::handle (ACE_HANDLE handle)
   this->stream_.set_handle (handle);
 }
 
-int Sender::open (const ACE_TCHAR *host, u_short port)
+int Sender::open (ACE_TCHAR const *host, u_short port)
 {
   // Initialize stuff
   // Connect to remote host
@@ -597,7 +597,7 @@ Sender::initiate_read_stream ()
 }
 
 void
-Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+Sender::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   if (result.bytes_transferred () == 0 || result.error () != 0)
     {
@@ -638,7 +638,7 @@ Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
 }
 
 void
-Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Sender::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   if (result.bytes_transferred () == 0 || result.error () != 0)
     {
@@ -686,7 +686,7 @@ Sender::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 }
 
 static int
-set_proactor_type (const char *ptype)
+set_proactor_type (char const *ptype)
 {
   if (!ptype)
     {

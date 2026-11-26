@@ -45,10 +45,10 @@ protected:
   /// @name Framework callbacks
   /// @{
   /// This is called when asynchronous reads from the socket complete.
-  void handle_read_file (const ACE_Asynch_Read_File::Result &result) override;
+  void handle_read_file (ACE_Asynch_Read_File::Result const &result) override;
 
   /// This is called when asynchronous writes from the socket complete.
-  void handle_write_file (const ACE_Asynch_Write_File::Result &result) override;
+  void handle_write_file (ACE_Asynch_Write_File::Result const &result) override;
   /// @}
 
 private:
@@ -151,7 +151,7 @@ Simple_Tester::initiate_read_file ()
 }
 
 void
-Simple_Tester::handle_read_file (const ACE_Asynch_Read_File::Result &result)
+Simple_Tester::handle_read_file (ACE_Asynch_Read_File::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG, "handle_read_file called\n"));
 
@@ -188,7 +188,7 @@ Simple_Tester::handle_read_file (const ACE_Asynch_Read_File::Result &result)
 }
 
 void
-Simple_Tester::handle_write_file (const ACE_Asynch_Write_File::Result &result)
+Simple_Tester::handle_write_file (ACE_Asynch_Write_File::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG, "handle_write_File called\n"));
 

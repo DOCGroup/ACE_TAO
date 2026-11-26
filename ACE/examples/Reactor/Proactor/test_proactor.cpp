@@ -42,10 +42,10 @@ static ACE_TCHAR *host {};
 static u_short port = ACE_DEFAULT_SERVER_PORT;
 
 // File that we're sending.
-static const ACE_TCHAR *file = ACE_TEXT("test_proactor.cpp");
+static ACE_TCHAR const *file = ACE_TEXT("test_proactor.cpp");
 
 // Name of the output file.
-static const ACE_TCHAR *dump_file = ACE_TEXT("output");
+static ACE_TCHAR const *dump_file = ACE_TEXT("output");
 
 // Keep track of when we're done.
 static int done = 0;
@@ -177,7 +177,7 @@ Receiver::initiate_read_stream ()
 }
 
 void
-Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Receiver::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_read_stream called\n"));
@@ -239,7 +239,7 @@ Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
 }
 
 void
-Receiver::handle_write_file (const ACE_Asynch_Write_File::Result &result)
+Receiver::handle_write_file (ACE_Asynch_Write_File::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG, "handle_write_file called\n"));
 
@@ -282,7 +282,7 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (const ACE_TCHAR *host,
+  int open (ACE_TCHAR const *host,
             u_short port);
 
   ACE_HANDLE handle () const override;
@@ -296,9 +296,9 @@ protected:
    * This is called when asynchronous writes from the socket complete
    * This is called when asynchronous reads from the socket complete
    */
-  void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result) override;
-  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
-  void handle_read_file (const ACE_Asynch_Read_File::Result &result) override;
+  void handle_transmit_file (ACE_Asynch_Transmit_File::Result const &result) override;
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
+  void handle_read_file (ACE_Asynch_Read_File::Result const &result) override;
 
 private:
   /// Transmit the entire file in one fell swoop.
@@ -371,7 +371,7 @@ Sender::handle (ACE_HANDLE handle)
 }
 
 int
-Sender::open (const ACE_TCHAR *host,
+Sender::open (ACE_TCHAR const *host,
                u_short port)
 {
   // Initialize stuff
@@ -481,7 +481,7 @@ Sender::transmit_file ()
 }
 
 void
-Sender::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
+Sender::handle_transmit_file (ACE_Asynch_Transmit_File::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_transmit_file called\n"));
@@ -534,7 +534,7 @@ Sender::initiate_read_file ()
 }
 
 void
-Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
+Sender::handle_read_file (ACE_Asynch_Read_File::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_read_file called\n"));
@@ -583,7 +583,7 @@ Sender::handle_read_file (const ACE_Asynch_Read_File::Result &result)
 }
 
 void
-Sender::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+Sender::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_write_stream called\n"));

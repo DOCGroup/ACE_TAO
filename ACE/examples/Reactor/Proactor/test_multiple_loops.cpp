@@ -29,8 +29,8 @@ public:
   Timeout_Handler () = default;
 
   // This is called by the Proactor. This is declared in ACE_Handler.
-  void handle_time_out (const ACE_Time_Value &tv,
-                        const void *arg) override
+  void handle_time_out (ACE_Time_Value const &tv,
+                        void const *arg) override
     {
       // Print out when timeouts occur.
       ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %:.\n",
@@ -49,8 +49,8 @@ public:
     }
 
   // This method is declared in ACE_Event_Handler.
-  int handle_timeout (const ACE_Time_Value &tv,
-                      const void *arg) override
+  int handle_timeout (ACE_Time_Value const &tv,
+                      void const *arg) override
     {
       this->handle_time_out (tv, arg);
       return 0;

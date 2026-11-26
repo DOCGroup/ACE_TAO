@@ -96,7 +96,7 @@ Receiver::open (ACE_HANDLE handle,
 }
 
 void
-Receiver::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+Receiver::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG, "handle_read_stream called\n"));
 

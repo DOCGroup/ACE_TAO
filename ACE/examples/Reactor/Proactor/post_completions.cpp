@@ -52,7 +52,7 @@ class My_Result : public RESULT_CLASS
 {
 public:
   My_Result (ACE_Handler &handler,
-             const void *act,
+             void const *act,
              int signal_number,
              size_t sequence_number)
     : RESULT_CLASS (handler.proxy (),
@@ -74,7 +74,7 @@ public:
      */
   void complete (size_t,
                  int success,
-                 const void *completion_key,
+                 void const *completion_key,
                  u_long error) override
     {
       this->success_ = success;

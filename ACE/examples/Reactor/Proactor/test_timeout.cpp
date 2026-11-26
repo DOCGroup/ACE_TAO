@@ -34,8 +34,8 @@ public:
     {
     }
 
-  void handle_time_out (const ACE_Time_Value &tv,
-                                const void *arg) override
+  void handle_time_out (ACE_Time_Value const &tv,
+                                void const *arg) override
     {
       // Print out when timeouts occur.
       ACE_DEBUG ((LM_DEBUG, "(%t) %d timeout occurred for %s @ %:.\n",

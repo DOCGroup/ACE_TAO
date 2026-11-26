@@ -42,22 +42,22 @@ public:
   Receiver ();
   ~Receiver () override;
 
-  int open_addr (const ACE_INET_Addr &localAddr);
+  int open_addr (ACE_INET_Addr const &localAddr);
 
 protected:
   // These methods are called by the framework
 
   /// This method will be called when an asynchronous read completes on
   /// a UDP socket.
-  void handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result) override;
+  void handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result) override;
 
 private:
   ACE_SOCK_Dgram sock_dgram_;
 
   /// rd (read dgram): for reading from a UDP socket.
   ACE_Asynch_Read_Dgram rd_;
-  const char* completion_key_;
-  const char* act_;
+  char const * completion_key_;
+  char const * act_;
 };
 
 Receiver::Receiver ()
@@ -72,7 +72,7 @@ Receiver::~Receiver ()
 }
 
 int
-Receiver::open_addr (const ACE_INET_Addr &localAddr)
+Receiver::open_addr (ACE_INET_Addr const &localAddr)
 {
   ACE_DEBUG ((LM_DEBUG,
               "%N:%l:Receiver::open_addr called\n"));
@@ -166,7 +166,7 @@ Receiver::open_addr (const ACE_INET_Addr &localAddr)
 }
 
 void
-Receiver::handle_read_dgram (const ACE_Asynch_Read_Dgram::Result &result)
+Receiver::handle_read_dgram (ACE_Asynch_Read_Dgram::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_read_dgram called\n"));
@@ -224,14 +224,14 @@ public:
 
   //FUZZ: disable check_for_lack_ACE_OS
   ///FUZZ: enable check_for_lack_ACE_OS
-  int open (const ACE_TCHAR *host, u_short port);
+  int open (ACE_TCHAR const *host, u_short port);
 
 protected:
   // These methods are called by the framework
 
   /// This is called when asynchronous writes from the dgram socket
   /// complete
-  void handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result) override;
+  void handle_write_dgram (ACE_Asynch_Write_Dgram::Result const &result) override;
 
 private:
   /// Network I/O handle
@@ -240,8 +240,8 @@ private:
   /// wd (write dgram): for writing to the socket
   ACE_Asynch_Write_Dgram wd_;
 
-  const char* completion_key_;
-  const char* act_;
+  char const * completion_key_;
+  char const * act_;
 };
 
 Sender::Sender ()
@@ -256,7 +256,7 @@ Sender::~Sender ()
 }
 
 int
-Sender::open (const ACE_TCHAR *host,
+Sender::open (ACE_TCHAR const *host,
               u_short port)
 {
   // Initialize stuff
@@ -342,7 +342,7 @@ Sender::open (const ACE_TCHAR *host,
 }
 
 void
-Sender::handle_write_dgram (const ACE_Asynch_Write_Dgram::Result &result)
+Sender::handle_write_dgram (ACE_Asynch_Write_Dgram::Result const &result)
 {
   ACE_DEBUG ((LM_DEBUG,
               "handle_write_dgram called\n"));

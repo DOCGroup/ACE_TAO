@@ -25,9 +25,9 @@ public:
 protected:
   /// @name Framework callbacks
   /// @{
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
-  void handle_write_file (const ACE_Asynch_Write_File::Result &result) override;
+  void handle_write_file (ACE_Asynch_Write_File::Result const &result) override;
   /// @}
 
 private:
