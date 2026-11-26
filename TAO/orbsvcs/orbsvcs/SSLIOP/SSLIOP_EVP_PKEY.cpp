@@ -5,13 +5,14 @@
 #include <openssl/dsa.h>
 #include <openssl/dh.h>
 #include "orbsvcs/SSLIOP/params_dup.h"
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ::EVP_PKEY *
 TAO::SSLIOP::OpenSSL_traits<::EVP_PKEY>::copy (::EVP_PKEY const & key)
 {
-  ::EVP_PKEY * pkey = const_cast<::EVP_PKEY *> (&key);
+  ::EVP_PKEY * pkey = const_cast<::EVP_PKEY *> (std::addressof (key));
 
   // We're using the EVP_PKEY_var even though it depends on this
   // trait function.  This works since we're not actually using

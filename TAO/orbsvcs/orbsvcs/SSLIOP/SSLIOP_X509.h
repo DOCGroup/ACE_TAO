@@ -19,6 +19,7 @@
 
 #include <openssl/x509.h>
 #include <openssl/crypto.h>
+#include <memory>
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -31,11 +32,6 @@ namespace TAO
     struct OpenSSL_traits<::X509>
     {
       /// Increase the reference count on the given OpenSSL structure.
-      /**
-       * @note This used to be in a function template but MSVC++ 6
-       *       can't handle function templates correctly so reproduce
-       *       the code in each specialization.  *sigh*
-       */
       static ::X509 * _duplicate (::X509 * st)
       {
         if (st != nullptr)
@@ -55,7 +51,7 @@ namespace TAO
       /// Perform deep copy of the given OpenSSL structure.
       static ::X509 * copy (::X509 const & st)
       {
-        return ::X509_dup (const_cast<::X509 *> (&st));
+        return ::X509_dup (const_cast<::X509 *> (std::addressof (st)));
       }
 
       /// Decrease the reference count on the given OpenSSL
