@@ -168,11 +168,11 @@ ECMS_Driver::run (int argc, ACE_TCHAR* argv[])
 
       // @@ Deactivate the suppliers (as CORBA Objects?)
     }
-  catch (const CORBA::SystemException& sys_ex)
+  catch (CORBA::SystemException const & sys_ex)
     {
       sys_ex._tao_print_exception ("SYS_EX in Supplier");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("NON SYS EX in Supplier");
     }
@@ -283,11 +283,11 @@ ECMS_Driver::supplier_task (Test_Supplier& supplier)
           ACE_OS::sleep (tv);
         }
     }
-  catch (const CORBA::SystemException& sys_ex)
+  catch (CORBA::SystemException const & sys_ex)
     {
       sys_ex._tao_print_exception ("SYS_EX");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("NON SYS EX");
     }
@@ -486,17 +486,17 @@ Test_Supplier::disconnect ()
     {
       proxy->disconnect_push_consumer ();
     }
-  catch (const CORBA::OBJECT_NOT_EXIST&)
+  catch (CORBA::OBJECT_NOT_EXIST const &)
     {
       // Ignore, the EC can shutdown before we get a chance to
       // disconnect
     }
-  catch (const CORBA::TRANSIENT&)
+  catch (CORBA::TRANSIENT const &)
     {
       // Ignore, the EC can shutdown before we get a chance to
       // disconnect
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       throw;
     }

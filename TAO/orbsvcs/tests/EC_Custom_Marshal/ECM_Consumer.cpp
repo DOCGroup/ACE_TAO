@@ -169,11 +169,11 @@ Driver::run (int argc, ACE_TCHAR* argv[])
 
       channel->destroy ();
     }
-  catch (const CORBA::SystemException& sys_ex)
+  catch (CORBA::SystemException const & sys_ex)
     {
       sys_ex._tao_print_exception ("SYS_EX in Consumer");
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("NON SYS EX in Consumer");
     }
@@ -211,7 +211,7 @@ Driver::push_consumer (RtecEventComm::EventSet const& events)
 #if (TAO_NO_COPY_OCTET_SEQUENCES == 1)
   for (CORBA::ULong i {}; i < events.length (); ++i)
     {
-      const RtecEventComm::Event& e = events[i];
+      RtecEventComm::Event const & e = events[i];
 
       if (e.data.payload.mb () == nullptr)
         {
