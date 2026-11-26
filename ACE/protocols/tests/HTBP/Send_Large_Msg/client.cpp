@@ -110,7 +110,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         n += stream->send (buffer+n,Send_Size);
         ACE_DEBUG ((LM_DEBUG,
                     ACE_TEXT("(%P|%t) Client: ")
-                    ACE_TEXT("Sending %b of %d\n"),
+                    ACE_TEXT("Sending %b of %b\n"),
                     n, Send_Size));
       }
     if (n == -1 && errno != 0)
