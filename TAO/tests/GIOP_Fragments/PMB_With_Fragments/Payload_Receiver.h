@@ -16,7 +16,7 @@ public:
 
   /// @name Skeleton methods
   /// @{
-  void more_data (const Test::Payload &payload) override;
+  void more_data (Test::Payload const &payload) override;
 
   void shutdown () override;
   /// @}

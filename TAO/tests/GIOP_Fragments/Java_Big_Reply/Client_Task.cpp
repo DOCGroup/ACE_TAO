@@ -42,7 +42,7 @@ Client_Task::svc ()
 //          ACE_OS::sleep(tv);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception Caught\n");
       return -1;
