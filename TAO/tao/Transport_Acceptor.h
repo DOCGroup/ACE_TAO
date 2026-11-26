@@ -53,7 +53,7 @@ namespace TAO
  * representation is "TA\x00".  If necessary, we can request more ORB
  * types later.
  */
-CORBA::ULong TAO_ORB_TYPE const = 0x54414f00U;
+CORBA::ULong const TAO_ORB_TYPE = 0x54414f00U;
 
 // ****************************************************************
 
@@ -108,7 +108,7 @@ public:
    * in the mprofile that is of the same type.  Currently, this
    * is used when RT CORBA is enabled.
    */
-  virtual int create_profile (const TAO::ObjectKey &object_key,
+  virtual int create_profile (TAO::ObjectKey const &object_key,
                               TAO_MProfile &mprofile,
                               CORBA::Short priority) = 0;
 

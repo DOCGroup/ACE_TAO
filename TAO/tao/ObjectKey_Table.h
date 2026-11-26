@@ -43,8 +43,8 @@ namespace TAO
   class TAO_Export Less_Than_ObjectKey
   {
   public:
-    bool operator () (const TAO::ObjectKey &lhs,
-                      const TAO::ObjectKey &rhs) const;
+    bool operator () (TAO::ObjectKey const &lhs,
+                      TAO::ObjectKey const &rhs) const;
   };
 
   /**
