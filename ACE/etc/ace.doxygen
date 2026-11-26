@@ -2301,6 +2301,8 @@ PREDEFINED             = __ACE_INLINE__= \
                          ACE_PEER_ACCEPTOR_2=_ACE_PEER_ACCEPTOR \
                          "ACE_PEER_CONNECTOR_1=typename _ACE_PEER_CONNECTOR" \
                          ACE_PEER_CONNECTOR_2=_ACE_PEER_CONNECTOR \
+                         "ACE_ALLOC_HOOK_DEFINE(X)=" \
+                         "ACE_ALLOC_HOOK_DEFINE_Tc(X)=" \
                          ACE_INLINE=inline \
                          ACE_NAMESPACE_INLINE_FUNCTION=inline \
                          ACE_Export= \
