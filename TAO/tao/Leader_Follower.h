@@ -135,6 +135,7 @@ public:
    *
    */
   /// @{
+
   /// Allocate a new follower to the caller.
   TAO_LF_Follower *allocate_follower ();
 
@@ -146,6 +147,7 @@ public:
    *
    */
   /// @{
+
   /// Add a new follower to the set
   void add_follower (TAO_LF_Follower *follower);
 
@@ -213,6 +215,7 @@ private:
    *
    */
   /// @{
+
   /// Remove a follower from the Followers set and promote it to the
   /// leader role.
   /**

@@ -267,9 +267,11 @@ protected:
    * requests and replies.
    */
   /// @{
+
   /// Strategy that sends data currently marshaled into this
   /// TAO_OutputCDR stream if necessary.
   std::unique_ptr<TAO_GIOP_Fragmentation_Strategy> fragmentation_strategy_;
+  /// @}
 
   /// Buffer where the request is placed.
   TAO_OutputCDR out_stream_;

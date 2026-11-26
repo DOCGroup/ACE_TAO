@@ -121,6 +121,7 @@ CORBA::ULong const TAO_SVC_CONTEXT_ALIGN = 0x54414f00U;
  * @note The values below are subject to change at any point.
  */
 /// @{
+
 /// Local IPC (Unix Domain)
 CORBA::ULong const TAO_TAG_UIOP_PROFILE = 0x54414f00U;
 

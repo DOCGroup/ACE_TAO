@@ -270,6 +270,7 @@ private:
    * requests and replies.
    */
   /// @{
+
   /// Strategy that sends data currently marshaled into this
   /// TAO_OutputCDR stream if necessary.
   TAO_GIOP_Fragmentation_Strategy * const fragmentation_strategy_;
