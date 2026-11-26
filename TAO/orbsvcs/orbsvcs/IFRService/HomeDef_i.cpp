@@ -254,7 +254,7 @@ TAO_HomeDef_i::supported_interfaces_i ()
 
   if (status != 0)
     {
-      return retval;
+      return safe_retval._retn ();
     }
 
   CORBA::ULong count = 0;
@@ -310,6 +310,9 @@ TAO_HomeDef_i::supported_interfaces_i (
                                         ACE_TEXT ("supported"),
                                         true,
                                         supported_key);
+  this->repo_->config ()->set_integer_value (supported_key,
+                                             ACE_TEXT ("count"),
+                                             length);
   for (CORBA::ULong i {}; i < length; ++i)
     {
       ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);

@@ -1561,6 +1561,23 @@ IDL3_Client::home_inheritance_test (CORBA::ComponentIR::HomeDef_var const& hd)
       return -1;
     }
 
+  CORBA::InterfaceDefSeq empty;
+  bhd->supported_interfaces (empty);
+  CORBA::InterfaceDefSeq_var cleared = bhd->supported_interfaces ();
+
+  if (cleared->length () != 0)
+    {
+      return -1;
+    }
+
+  bhd->supported_interfaces (supported.in ());
+  supported = bhd->supported_interfaces ();
+
+  if (supported->length () != length)
+    {
+      return -1;
+    }
+
   for (CORBA::ULong i = 0; i < length; ++i)
     {
       str = supported[i]->id ();
