@@ -117,6 +117,7 @@ public:
 
   /// @name ACE_Task manipulation routines
   /// @{
+
   /// Get the writer task.
   ACE_Task<ACE_SYNCH_USE, TIME_POLICY> *writer ();
 
@@ -147,6 +148,7 @@ public:
 
   /// @name Module identity
   /// @{
+
   /// Get the module name.
   ACE_TCHAR const *name () const;
 
@@ -156,6 +158,7 @@ public:
 
   /// @name Task argument
   /// @{
+
   /// Get the argument passed to the tasks.
   void *arg () const;
 

@@ -35,6 +35,7 @@ class ACE_Export ACE_NS_String
 public:
   /// @name Initialization
   /// @{
+
   /// Default "no-op" constructor.
   ACE_NS_String ();
 

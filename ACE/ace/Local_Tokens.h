@@ -385,6 +385,7 @@ public:
 
   /// @name Token accessors
   /// @{
+
   /// Stack of owners.
   using OWNER_STACK = ACE_Unbounded_Stack<ACE_TPQ_Entry *>;
 
@@ -806,6 +807,7 @@ public:
 
   /// @name Utility methods
   /// @{
+
   /// Get the client id of the proxy.  This is implemented as
   /// thread-specific data.
   virtual ACE_TCHAR const *client_id () const;
