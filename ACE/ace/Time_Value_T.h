@@ -50,7 +50,7 @@ public:
   /// @}
 
   /// Construct from an @c ACE_Time_Value_T with the same time policy.
-  ACE_Time_Value_T(const ACE_Time_Value_T<TIME_POLICY>& tv)
+  ACE_Time_Value_T(ACE_Time_Value_T<TIME_POLICY> const & tv)
     : ACE_Time_Value (tv),
       time_policy_ (tv.time_policy_)
   {}
@@ -71,7 +71,7 @@ public:
   ACE_Time_Value_T<TIME_POLICY> &operator += (time_t tv);
 
   /// Assign @ tv to this
-  ACE_Time_Value_T<TIME_POLICY> &operator = (const ACE_Time_Value_T<TIME_POLICY> &tv);
+  ACE_Time_Value_T<TIME_POLICY> &operator = (ACE_Time_Value_T<TIME_POLICY> const &tv);
 
   /// Assign @ tv to this
   ACE_Time_Value_T<TIME_POLICY> &operator = (const ACE_Time_Value &tv);

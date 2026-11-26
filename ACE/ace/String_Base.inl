@@ -16,7 +16,7 @@ ACE_String_Base<ACE_CHAR_T>::dump () const
 
 // Assignment method (does not copy memory)
 template <class ACE_CHAR_T> ACE_INLINE ACE_String_Base<ACE_CHAR_T> &
-ACE_String_Base<ACE_CHAR_T>::assign_nocopy (const ACE_String_Base<ACE_CHAR_T> &s)
+ACE_String_Base<ACE_CHAR_T>::assign_nocopy (ACE_String_Base<ACE_CHAR_T> const &s)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::assign_nocopy");
   this->set (s.rep_, s.len_, false);
@@ -93,7 +93,7 @@ ACE_String_Base<ACE_CHAR_T>::c_str () const
 /// Less than comparison operator.
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-ACE_String_Base<ACE_CHAR_T>::operator < (const ACE_String_Base<ACE_CHAR_T> &s) const
+ACE_String_Base<ACE_CHAR_T>::operator < (ACE_String_Base<ACE_CHAR_T> const &s) const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::operator <");
   return compare (s) < 0;
@@ -111,7 +111,7 @@ ACE_String_Base<ACE_CHAR_T>::operator > (ACE_String_Base const &s) const
 // Comparison operator.
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-ACE_String_Base<ACE_CHAR_T>::operator!= (const ACE_String_Base<ACE_CHAR_T> &s) const
+ACE_String_Base<ACE_CHAR_T>::operator!= (ACE_String_Base<ACE_CHAR_T> const &s) const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::operator!=");
   return !(*this == s);
@@ -124,7 +124,7 @@ ACE_String_Base<ACE_CHAR_T>::operator!= (ACE_CHAR_T const *s) const
 }
 
 template <class ACE_CHAR_T> ACE_INLINE typename ACE_String_Base<ACE_CHAR_T>::size_type
-ACE_String_Base<ACE_CHAR_T>::find (const ACE_String_Base<ACE_CHAR_T>&str,
+ACE_String_Base<ACE_CHAR_T>::find (ACE_String_Base<ACE_CHAR_T> const &str,
                              typename ACE_String_Base<ACE_CHAR_T>::size_type pos) const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::find");
@@ -132,7 +132,7 @@ ACE_String_Base<ACE_CHAR_T>::find (const ACE_String_Base<ACE_CHAR_T>&str,
 }
 
 template <class ACE_CHAR_T> ACE_INLINE typename ACE_String_Base<ACE_CHAR_T>::size_type
-ACE_String_Base<ACE_CHAR_T>::strstr (const ACE_String_Base<ACE_CHAR_T> &s) const
+ACE_String_Base<ACE_CHAR_T>::strstr (ACE_String_Base<ACE_CHAR_T> const &s) const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::strstr");
   return this->find (s.rep_);
@@ -451,13 +451,13 @@ operator <= (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & rhs) const
 }
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-operator== (ACE_CHAR_T const *s, const ACE_String_Base<ACE_CHAR_T> &t)
+operator== (ACE_CHAR_T const *s, ACE_String_Base<ACE_CHAR_T> const &t)
 {
   return t == s;
 }
 
 template <class ACE_CHAR_T> ACE_INLINE bool
-operator!= (ACE_CHAR_T const *s, const ACE_String_Base<ACE_CHAR_T> &t)
+operator!= (ACE_CHAR_T const *s, ACE_String_Base<ACE_CHAR_T> const &t)
 {
   return !(t == s);
 }

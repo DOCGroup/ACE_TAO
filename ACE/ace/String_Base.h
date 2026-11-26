@@ -401,7 +401,7 @@ public:
    *  @return Integer index value of the first location of string @a s or
    *          @c npos (not found).
    */
-  size_type strstr (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  size_type strstr (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Find @a str starting at pos.  Returns the slot of the first
@@ -412,7 +412,7 @@ public:
    *  @return Index value of the first location of string @a str else
    *          @c npos.
    */
-  size_type find (const ACE_String_Base<ACE_CHAR_T> &str, size_type pos = 0) const;
+  size_type find (ACE_String_Base<ACE_CHAR_T> const &str, size_type pos = 0) const;
 
   /**
    *  Find @a s starting at @a pos.  Returns the slot of the first
@@ -453,7 +453,7 @@ public:
    * @param s Input ACE_String_Base string to compare against stored string.
    * @return @c true if equal, @c false otherwise.
    */
-  bool operator == (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  bool operator == (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Equality comparison operator (must match entire string).
@@ -469,7 +469,7 @@ public:
    *  @param s Input ACE_String_Base string to compare against stored string.
    *  @return @c true if less than, @c false otherwise.
    */
-  bool operator < (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  bool operator < (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Greater than comparison operator.
@@ -477,7 +477,7 @@ public:
    *  @param s Input ACE_String_Base string to compare against stored string.
    *  @return @c true if greater than, @c false otherwise.
    */
-  bool operator > (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  bool operator > (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Inequality comparison operator.
@@ -485,7 +485,7 @@ public:
    *  @param s String to compare against stored string.
    *  @return @c true if not equal, @c false otherwise.
    */
-  bool operator != (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  bool operator != (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Inequality comparison operator.
@@ -502,7 +502,7 @@ public:
    *  @return Integer value of result (less than 0, 0, greater than 0)
    *    depending on how input string @a s is to the stored string.
    */
-  int compare (const ACE_String_Base<ACE_CHAR_T> &s) const;
+  int compare (ACE_String_Base<ACE_CHAR_T> const &s) const;
 
   /**
    *  Dump the state of an object.
@@ -859,11 +859,11 @@ template < class ACE_CHAR_T >
 
 template <class ACE_CHAR_T>
   bool operator == (ACE_CHAR_T const *s,
-                    const ACE_String_Base<ACE_CHAR_T> &t);
+                    ACE_String_Base<ACE_CHAR_T> const &t);
 
 template <class ACE_CHAR_T>
   bool operator != (ACE_CHAR_T const *s,
-                    const ACE_String_Base<ACE_CHAR_T> &t);
+                    ACE_String_Base<ACE_CHAR_T> const &t);
 
 ACE_END_VERSIONED_NAMESPACE_DECL
 

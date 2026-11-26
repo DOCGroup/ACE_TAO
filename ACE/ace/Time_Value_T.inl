@@ -15,7 +15,7 @@ ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator += (time_
 }
 
 template <class TIME_POLICY>
-ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator = (const ACE_Time_Value_T<TIME_POLICY> &tv)
+ACE_Time_Value_T<TIME_POLICY> &ACE_Time_Value_T<TIME_POLICY>::operator = (ACE_Time_Value_T<TIME_POLICY> const &tv)
 {
   this->time_policy_ = tv.time_policy_;
   this->ACE_Time_Value::operator =(tv);

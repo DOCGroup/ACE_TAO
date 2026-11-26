@@ -68,7 +68,7 @@ ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (
 }
 
 template <class ACE_CHAR_T>
-ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (const ACE_String_Base<ACE_CHAR_T> &s)
+ACE_String_Base<ACE_CHAR_T>::ACE_String_Base (ACE_String_Base<ACE_CHAR_T> const &s)
   : allocator_ (s.allocator_ ? s.allocator_ : ACE_Allocator::instance ())
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::ACE_String_Base");
@@ -334,7 +334,7 @@ ACE_String_Base<ACE_CHAR_T>::operator= (ACE_CHAR_T const *s)
 
 // Assignment operator (does copy memory).
 template <class ACE_CHAR_T> ACE_String_Base<ACE_CHAR_T> &
-ACE_String_Base<ACE_CHAR_T>::operator= (const ACE_String_Base<ACE_CHAR_T> &s)
+ACE_String_Base<ACE_CHAR_T>::operator= (ACE_String_Base<ACE_CHAR_T> const &s)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::operator=");
 
@@ -401,7 +401,7 @@ ACE_String_Base<ACE_CHAR_T>::rep () const
 }
 
 template <class ACE_CHAR_T> int
-ACE_String_Base<ACE_CHAR_T>::compare (const ACE_String_Base<ACE_CHAR_T> &s) const
+ACE_String_Base<ACE_CHAR_T>::compare (ACE_String_Base<ACE_CHAR_T> const &s) const
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::compare");
 
@@ -427,7 +427,7 @@ ACE_String_Base<ACE_CHAR_T>::compare (const ACE_String_Base<ACE_CHAR_T> &s) cons
 // Comparison operator.
 
 template <class ACE_CHAR_T> bool
-ACE_String_Base<ACE_CHAR_T>::operator== (const ACE_String_Base<ACE_CHAR_T> &s) const
+ACE_String_Base<ACE_CHAR_T>::operator== (ACE_String_Base<ACE_CHAR_T> const &s) const
 {
   return this->len_ == s.len_ &&
          std::memcmp (this->rep_,
@@ -614,7 +614,7 @@ operator = (const ACE_String_Base_Const_Iterator <ACE_CHAR_T> & rhs)
 }
 
 template <class ACE_CHAR_T> ACE_String_Base<ACE_CHAR_T>
-operator+ (const ACE_String_Base<ACE_CHAR_T> &s, const ACE_String_Base<ACE_CHAR_T> &t)
+operator+ (ACE_String_Base<ACE_CHAR_T> const &s, ACE_String_Base<ACE_CHAR_T> const &t)
 {
   ACE_String_Base<ACE_CHAR_T> temp (s.length () + t.length ());
   temp += s;
@@ -623,7 +623,7 @@ operator+ (const ACE_String_Base<ACE_CHAR_T> &s, const ACE_String_Base<ACE_CHAR_
 }
 
 template <class ACE_CHAR_T> ACE_String_Base<ACE_CHAR_T>
-operator+ (ACE_CHAR_T const *s, const ACE_String_Base<ACE_CHAR_T> &t)
+operator+ (ACE_CHAR_T const *s, ACE_String_Base<ACE_CHAR_T> const &t)
 {
   size_t slen = 0;
   if (s != nullptr)
@@ -640,7 +640,7 @@ operator+ (ACE_CHAR_T const *s, const ACE_String_Base<ACE_CHAR_T> &t)
 }
 
 template <class ACE_CHAR_T> ACE_String_Base<ACE_CHAR_T>
-operator+ (const ACE_String_Base<ACE_CHAR_T> &s, ACE_CHAR_T const *t)
+operator+ (ACE_String_Base<ACE_CHAR_T> const &s, ACE_CHAR_T const *t)
 {
   size_t tlen = 0;
   if (t != nullptr)
@@ -657,7 +657,7 @@ operator+ (const ACE_String_Base<ACE_CHAR_T> &s, ACE_CHAR_T const *t)
 }
 
 template <class ACE_CHAR_T> ACE_String_Base<ACE_CHAR_T>
-operator + (const ACE_String_Base<ACE_CHAR_T> &t,
+operator + (ACE_String_Base<ACE_CHAR_T> const &t,
             const ACE_CHAR_T c)
 {
   ACE_String_Base<ACE_CHAR_T> temp (t.length () + 1);
@@ -668,7 +668,7 @@ operator + (const ACE_String_Base<ACE_CHAR_T> &t,
 
 template <class ACE_CHAR_T> ACE_String_Base<ACE_CHAR_T>
 operator + (const ACE_CHAR_T c,
-            const ACE_String_Base<ACE_CHAR_T> &t)
+            ACE_String_Base<ACE_CHAR_T> const &t)
 {
   ACE_String_Base<ACE_CHAR_T> temp (t.length () + 1);
   temp += c;
@@ -690,7 +690,7 @@ ACE_String_Base<ACE_CHAR_T>::operator+= (ACE_CHAR_T const * s)
 
 template <class ACE_CHAR_T>
 ACE_String_Base<ACE_CHAR_T> &
-ACE_String_Base<ACE_CHAR_T>::operator+= (const ACE_String_Base<ACE_CHAR_T> &s)
+ACE_String_Base<ACE_CHAR_T>::operator+= (ACE_String_Base<ACE_CHAR_T> const &s)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::operator+=(const ACE_String_Base<ACE_CHAR_T> &)");
   return this->append (s.rep_, s.len_);
