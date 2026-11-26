@@ -38,7 +38,7 @@ class SYNCHRONIZER : public ACE_SV_Semaphore_Simple
 {
 public:
   SYNCHRONIZER (int initial_value)
-    : ACE_SV_Semaphore_Simple ((const char *) nullptr,
+    : ACE_SV_Semaphore_Simple ((char const *) nullptr,
                                ACE_SV_Semaphore_Simple::ACE_CREATE,
                                initial_value)
   {}
@@ -51,7 +51,7 @@ using SYNCHRONIZER = ACE_Process_Semaphore;
 #define SYNC_EXTRA_ARGS , sem_name ()
 ACE_TCHAR sem_name_[ACE_UNIQUE_NAME_LEN] = ACE_TEXT ("/");
 
-const ACE_TCHAR *sem_name ()
+ACE_TCHAR const *sem_name ()
 {
   ACE::unique_name (sem_name_, sem_name_ + 1, ACE_UNIQUE_NAME_LEN - 1);
   return sem_name_;
@@ -75,7 +75,7 @@ child (void * = nullptr)
   result = synchronizer->acquire ();
   ACE_TEST_ASSERT (result != -1);
 
-  const char *t = ACE_ALPHABET;
+  char const *t = ACE_ALPHABET;
   ACE_Shared_Memory_MM shm_child;
 
   result = shm_child.open (shm_key);
@@ -112,7 +112,7 @@ parent (void * = nullptr)
 
   char *s = shm;
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       *s++ = *c;
     }

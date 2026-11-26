@@ -31,10 +31,10 @@
 class CDR_Test
 {
   /// Output the state of a @c CDR_Test object to the @c ostream.
-  friend ostream& operator << (ostream &os, const CDR_Test &t);
+  friend ostream& operator << (ostream &os, CDR_Test const &t);
 
   /// Convert the state of this object into an @c ACE_OutputCDR.
-  friend void operator << (ACE_OutputCDR &os, const CDR_Test &t);
+  friend void operator << (ACE_OutputCDR &os, CDR_Test const &t);
 
   /// Convert the @c ACE_InputCDR into the state of this object.
   friend void operator >> (ACE_InputCDR &is, CDR_Test &);
@@ -50,7 +50,7 @@ public:
             ACE_CDR::Double d);
 
   /// Compare @a rhs for equality with @c this.
-  bool operator == (const CDR_Test &rhs) const;
+  bool operator == (CDR_Test const &rhs) const;
 
 private:
   ACE_CDR::Char char_;
@@ -63,7 +63,7 @@ private:
 
 ostream &
 operator << (ostream &os,
-             const CDR_Test &t)
+             CDR_Test const &t)
 {
   os << "Char:              " << t.char_ << endl
      << "Short:             " << t.word2_ << endl
@@ -111,7 +111,7 @@ CDR_Test::CDR_Test (ACE_CDR::Char o,
 }
 
 void
-operator << (ACE_OutputCDR &os, const CDR_Test &t)
+operator << (ACE_OutputCDR &os, CDR_Test const &t)
 {
   os << t.char_;
   os << t.word2_;
@@ -133,7 +133,7 @@ operator >> (ACE_InputCDR &is, CDR_Test &t)
 }
 
 bool
-CDR_Test::operator == (const CDR_Test &rhs) const
+CDR_Test::operator == (CDR_Test const &rhs) const
 {
   // @@ Workaround bug in egcs-1.1.1 using a single && expression
   // results in UMR errors in purify.
@@ -167,7 +167,7 @@ CDR_Test::operator == (const CDR_Test &rhs) const
 static int
 run_test (int write_file,
           ACE_FILE_IO &file,
-          const ACE_TCHAR *filename,
+          ACE_TCHAR const *filename,
           CDR_Test &cdr_test)
 {
   if (write_file)
@@ -197,7 +197,7 @@ run_test (int write_file,
       *ace_file_stream::instance ()->output_file () << cdr_test;
 
       // Save the data.
-      const ACE_Message_Block *output_mb =
+      ACE_Message_Block const *output_mb =
         output_cdr.begin ();
 
       ACE_DEBUG ((LM_DEBUG,
@@ -308,7 +308,7 @@ run_test (int write_file,
 }
 
 static void
-usage (const ACE_TCHAR *cmd)
+usage (ACE_TCHAR const *cmd)
 {
   ACE_ERROR ((LM_ERROR,
               ACE_TEXT ("Usage: %s ")

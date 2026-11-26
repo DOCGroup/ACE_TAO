@@ -255,7 +255,7 @@ create_reactor ()
 }
 
 int
-test_reactive (const ACE_TCHAR *prog,
+test_reactive (ACE_TCHAR const *prog,
                ACE_MEM_Addr &server_addr)
 {
   ACE_DEBUG ((LM_DEBUG, "Testing Reactive MEM_Stream\n\n"));
@@ -342,7 +342,7 @@ test_reactive (const ACE_TCHAR *prog,
 }
 
 int
-test_concurrent (const ACE_TCHAR *prog,
+test_concurrent (ACE_TCHAR const *prog,
                  ACE_MEM_Addr &server_addr)
 {
   ACE_DEBUG ((LM_DEBUG, "Testing Multithreaded MEM_Stream\n\n"));

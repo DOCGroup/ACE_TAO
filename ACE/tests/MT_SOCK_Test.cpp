@@ -84,7 +84,7 @@ client (void *arg)
 
   ACE_DEBUG ((LM_DEBUG, "(%P|%t) client: Sending data...\n"));
 
-  for (const char *c = ACE_ALPHABET; *c != '\0'; ++c)
+  for (char const *c = ACE_ALPHABET; *c != '\0'; ++c)
     {
       if (cli_stream.send_n (c, 1) == -1)
       {
@@ -225,7 +225,7 @@ server (void *arg)
       while ((result = peer_acceptor->accept (new_stream,
                                               &cli_addr)) != -1)
         {
-          const char *t = ACE_ALPHABET;
+          char const *t = ACE_ALPHABET;
 
           ++num_clients_connected;
 
