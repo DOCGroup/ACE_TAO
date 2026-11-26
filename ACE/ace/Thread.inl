@@ -75,7 +75,7 @@ ACE_Thread::spawn (ACE_THR_FUNC func,
                    void *thr_stack,
                    size_t thr_stack_size,
                    ACE_Thread_Adapter *thread_adapter,
-                   const char **thr_name)
+                   char const **thr_name)
 {
   ACE_TRACE ("ACE_Thread::spawn");
 

@@ -84,7 +84,7 @@ public:
                     void *stack = nullptr,
                     size_t stack_size = ACE_DEFAULT_THREAD_STACKSIZE,
                     ACE_Thread_Adapter *thread_adapter = nullptr,
-                    const char **thr_name = nullptr);
+                    char const **thr_name = nullptr);
 
   /**
    * Spawn N new threads, which execute @a func with argument @a arg (if
@@ -108,7 +108,7 @@ public:
                          void *stack[] = nullptr,
                          size_t stack_size[] = nullptr,
                          ACE_Thread_Adapter *thread_adapter = nullptr,
-                         const char *thr_name[] = nullptr);
+                         char const *thr_name[] = nullptr);
 
   /**
    * Spawn @a n new threads, which execute @a func with argument @a arg
@@ -138,7 +138,7 @@ public:
                          size_t stack_size[] = nullptr,
                          ACE_hthread_t thread_handles[] = nullptr,
                          ACE_Thread_Adapter *thread_adapter = nullptr,
-                         const char *thr_name[] = nullptr);
+                         char const *thr_name[] = nullptr);
 
   /**
    * Wait for one or more threads to exit and reap their exit status.
