@@ -254,7 +254,7 @@ Server::activate_low_servants ()
   ACE_TCHAR *addr = ACE_OS::strstr (GLOBALS::instance ()->endpoint,
                                     protocol_delimiter);
 
-  const size_t random_endpoint_length =
+  size_t const random_endpoint_length =
     ACE_OS::strlen (GLOBALS::instance ()->endpoint) -
     ACE_OS::strlen (addr) +
     ACE_OS::strlen (protocol_delimiter);
