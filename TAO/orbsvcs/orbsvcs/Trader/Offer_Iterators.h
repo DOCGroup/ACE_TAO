@@ -20,10 +20,6 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-  // *************************************************************
-  // TAO_Offer_Iterator
-  // *************************************************************
-
 /**
  * @brief Implements the CosTrading::OfferIterator IDL interface.
  *
@@ -88,10 +84,6 @@ public:
   TAO_Property_Filter pfilter_;
 };
 
-  // *************************************************************
-  // TAO_Query_Only_Offer_Iterator
-  // *************************************************************
-
 /**
  * @brief Implements an OfferIterator for a query-only trader.
  *
@@ -128,10 +120,6 @@ private:
   /// to iterate over.
   std::deque<CosTrading::Offer const *> offers_;
 };
-
-  // *************************************************************
-  // TAO_Offer_Iterator_Collection
-  // *************************************************************
 
 /**
  * @brief Collects several offer iterators into one iterator.
@@ -174,10 +162,6 @@ private:
   /// The iterator collection.
   Offer_Iters iters_;
 };
-
-  // *************************************************************
-  // TAO_Offer_Id_Iterator
-  // *************************************************************
 
 /**
  * @brief Stores the overflow of offer IDs from the Admin list_offers method.
