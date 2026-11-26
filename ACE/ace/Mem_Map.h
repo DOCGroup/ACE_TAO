@@ -52,7 +52,7 @@ public:
                LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Map a file specified by @a file_name.
-  ACE_Mem_Map (const ACE_TCHAR *filename,
+  ACE_Mem_Map (ACE_TCHAR const *filename,
                size_t length = static_cast<size_t> (-1),
                int flags = O_RDWR | O_CREAT,
                mode_t mode = ACE_DEFAULT_FILE_PERMS,
@@ -81,7 +81,7 @@ public:
            LPSECURITY_ATTRIBUTES sa = 0);
 
   /// Map a file specified by @a filename.
-  int map (const ACE_TCHAR *filename,
+  int map (ACE_TCHAR const *filename,
            size_t length = static_cast<size_t> (-1),
            int flags = O_RDWR | O_CREAT,
            mode_t mode = ACE_DEFAULT_FILE_PERMS,
@@ -94,7 +94,7 @@ public:
   ~ACE_Mem_Map ();
 
   /// Open the file without mapping it.
-  int open (const ACE_TCHAR *filename,
+  int open (ACE_TCHAR const *filename,
             int flags = O_RDWR | O_CREAT,
             mode_t perms = ACE_DEFAULT_FILE_PERMS,
             LPSECURITY_ATTRIBUTES sa = 0);
@@ -172,7 +172,7 @@ public:
   ACE_HANDLE handle () const;
 
   /// Return the name of file that is mapped (if any).
-  const ACE_TCHAR *filename () const;
+  ACE_TCHAR const *filename () const;
 
   /// Dump the state of an object.
   void dump () const;

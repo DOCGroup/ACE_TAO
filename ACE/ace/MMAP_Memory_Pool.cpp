@@ -117,7 +117,7 @@ ACE_MMAP_Memory_Pool::protect (void *addr, size_t len, int prot)
 }
 
 ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool (
-  const ACE_TCHAR *backing_store_name,
+  ACE_TCHAR const *backing_store_name,
   const OPTIONS *options)
 {
   ACE_TRACE ("ACE_MMAP_Memory_Pool::ACE_MMAP_Memory_Pool");
@@ -595,7 +595,7 @@ ACE_MMAP_Memory_Pool::round_up (size_t nbytes)
 
 ACE_ALLOC_HOOK_DEFINE(ACE_Lite_MMAP_Memory_Pool)
 
-ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (const ACE_TCHAR *backing_store_name,
+ACE_Lite_MMAP_Memory_Pool::ACE_Lite_MMAP_Memory_Pool (ACE_TCHAR const *backing_store_name,
                                                       const OPTIONS *options)
   : ACE_MMAP_Memory_Pool (backing_store_name, options)
 {

@@ -192,7 +192,7 @@ ACE_Mem_Map::map_it (ACE_HANDLE handle,
 }
 
 int
-ACE_Mem_Map::open (const ACE_TCHAR *file_name,
+ACE_Mem_Map::open (ACE_TCHAR const *file_name,
                    int flags,
                    mode_t perms,
                    LPSECURITY_ATTRIBUTES sa)
@@ -219,7 +219,7 @@ ACE_Mem_Map::open (const ACE_TCHAR *file_name,
 }
 
 int
-ACE_Mem_Map::map (const ACE_TCHAR *file_name,
+ACE_Mem_Map::map (ACE_TCHAR const *file_name,
                   size_t len,
                   int flags,
                   mode_t mode,
@@ -259,7 +259,7 @@ ACE_Mem_Map::ACE_Mem_Map ()
 }
 
 // Map a file specified by FILE_NAME.
-ACE_Mem_Map::ACE_Mem_Map (const ACE_TCHAR *file_name,
+ACE_Mem_Map::ACE_Mem_Map (ACE_TCHAR const *file_name,
                           size_t len,
                           int flags,
                           mode_t mode,
