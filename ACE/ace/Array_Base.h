@@ -78,9 +78,11 @@ public:
   /**
    * Assignment operator performs an assignment by making an exact
    * copy of the contents of parameter @a s, i.e., *this == s will
-   * return true.  Note that if the @c max_size_ of @c array_ is >= than
-   * <s.max_size_> we can copy it without reallocating.  However, if
-   * @c max_size_ is < <s.max_size_> we must delete the @c array_,
+   * return true.
+   *
+   * @note If the @c max_size_ of @c array_ is at least @c s.max_size_,
+   * we can copy it without reallocating.  If @c max_size_ is less than
+   * @c s.max_size_, we must delete the @c array_,
    * reallocate a new @c array_, and then copy the contents of @a s.
    */
   void operator= (ACE_Array_Base<T> const &s);
@@ -106,8 +108,9 @@ public:
 
   /**
    * Get an item in the array at location @a slot.  Returns -1 if
-   * @a slot is not in range, else returns 0.  Note that this function
-   * copies the item.  If you want to avoid the copy, you can use
+   * @a slot is not in range, else returns 0.
+   *
+   * @note This function copies the item.  To avoid the copy, use
    * the const operator [], but then you'll be responsible for range checking.
    */
   int get (T &item, size_type slot) const;

@@ -85,8 +85,10 @@ public:
    * Reserves a slot in the internal structure and returns the key and
    * a pointer to the value.  User should place their @a value into
    * @a internal_value.  This method is useful in reducing the number
-   * of copies required in some cases.  Note that @a internal_value is
-   * only a temporary pointer and will change when the map resizes.
+   * of copies required in some cases.
+   *
+   * @note @a internal_value is only a temporary pointer and will change
+   * when the map resizes.
    * Therefore, the user should use the pointer immediately and not
    * hold on to it.
    */
@@ -126,8 +128,9 @@ public:
 
   /**
    * Locate @a value associated with @a key.  The value is returned via
-   * @a internal_value and hence a copy is saved.  Note that
-   * @a internal_value is only a temporary pointer and will change when
+   * @a internal_value and hence a copy is saved.
+   *
+   * @note @a internal_value is only a temporary pointer and will change when
    * the map resizes.  Therefore, the user should use the pointer
    * immediately and not hold on to it.
    */
@@ -144,8 +147,9 @@ public:
 
   /**
    * Locate @a value associated with @a key.  The value is returned via
-   * @a internal_value and hence a copy is saved.  Note that
-   * @a internal_value is only a temporary pointer and will change when
+   * @a internal_value and hence a copy is saved.
+   *
+   * @note @a internal_value is only a temporary pointer and will change when
    * the map resizes or when this slot is reused.  Therefore, the user
    * should use the pointer immediately and not hold on to it.
    */
