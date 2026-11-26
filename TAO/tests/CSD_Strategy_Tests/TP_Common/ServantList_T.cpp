@@ -75,7 +75,7 @@ ServantList<T>::deactivate(PortableServer::POA_ptr poa)
 
     poa->deactivate_object(id.in());
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception ("ServantList_T::deactivate_servant ()");
   }

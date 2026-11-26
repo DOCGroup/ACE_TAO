@@ -56,7 +56,7 @@ Foo_C_cust_op5::execute_i()
   {
     this->servant_->cust_op5();
   }
-  catch (const CustomException& )
+  catch (CustomException const & )
   {
     this->exception_ = true;
   }

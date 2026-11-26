@@ -21,7 +21,7 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
 
     void op5() override;
 
-    CORBA::Boolean op6(const TimeOfDay& t,
+    CORBA::Boolean op6(TimeOfDay const & t,
                        char*& message) override;
 
     void op7(Callback_ptr cb) override;
@@ -34,11 +34,11 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
 
     void test_var_array_arg(const Var_Array messages) override;
 
-    void test_bounded_var_size_arg(const Bounded_Var_Size& message) override;
+    void test_bounded_var_size_arg(Bounded_Var_Size const & message) override;
 
-    void test_unbounded_var_size_arg(const Unbounded_Var_Size& message) override;
+    void test_unbounded_var_size_arg(Unbounded_Var_Size const & message) override;
 
-    void test_fixed_size_arg(const TimeOfDay& t) override;
+    void test_fixed_size_arg(TimeOfDay const & t) override;
 
     void test_special_basic_arg(CORBA::Boolean value,
                                 CORBA::Long client_id) override;

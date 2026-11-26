@@ -42,7 +42,7 @@ Foo_B_SimpleClientEngine::execute()
 
     this->obj_->op7 (this->callback_.in ());
   }
-  catch (const FooException& )
+  catch (FooException const & )
   {
     ACE_ERROR((LM_ERROR, "(%P|%t)Foo_A_SimpleClientEngine::execute  " \
                "FooException raised by op7() call.\n"));

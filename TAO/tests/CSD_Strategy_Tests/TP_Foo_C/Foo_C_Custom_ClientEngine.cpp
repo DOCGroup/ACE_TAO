@@ -48,7 +48,7 @@ Foo_C_Custom_ClientEngine::execute()
     {
       this->proxy_.op5();
     }
-  catch (const FooException& )
+  catch (FooException const & )
     {
       // Expected
       caught_exception = true;
@@ -81,7 +81,7 @@ Foo_C_Custom_ClientEngine::execute()
     {
       this->proxy_.cust_op5();
     }
-  catch (const CORBA::Exception&)//(CustomException, ex)
+  catch (CORBA::Exception const &)//(CustomException, ex)
     {
       // Expected
       caught_exception = true;

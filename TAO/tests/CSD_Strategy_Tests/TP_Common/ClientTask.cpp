@@ -64,7 +64,7 @@ ClientTask::svc()
         ++this->failure_count_;
       }
   }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
   {
     ex._tao_print_exception (
       "ClientTask::svc Caught exception from execute():");

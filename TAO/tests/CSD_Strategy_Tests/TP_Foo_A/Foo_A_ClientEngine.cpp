@@ -50,7 +50,7 @@ Foo_A_ClientEngine::execute()
   {
     this->obj_->op5();
   }
-  catch (const FooException& )
+  catch (FooException const & )
   {
     // Expected
     caught_exception = true;

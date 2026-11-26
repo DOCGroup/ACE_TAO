@@ -41,7 +41,7 @@ Foo_B_i::op5()
 }
 
 CORBA::Boolean
-Foo_B_i::op6(const TimeOfDay& t,
+Foo_B_i::op6(TimeOfDay const & t,
              char*& message)
 {
   ++this->op_count_[5];
@@ -116,7 +116,7 @@ Foo_B_i::test_fixed_array_arg(const Fixed_Array message)
 }
 
 void
-Foo_B_i::test_bounded_var_size_arg(const Bounded_Var_Size& message)
+Foo_B_i::test_bounded_var_size_arg(Bounded_Var_Size const & message)
 {
   ++this->op_count_[10];
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_bounded_var_size_arg ")
@@ -126,7 +126,7 @@ Foo_B_i::test_bounded_var_size_arg(const Bounded_Var_Size& message)
 }
 
 void
-Foo_B_i::test_unbounded_var_size_arg(const Unbounded_Var_Size& message)
+Foo_B_i::test_unbounded_var_size_arg(Unbounded_Var_Size const & message)
 {
   ++this->op_count_[11];
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_unbounded_var_size_arg ")
@@ -136,7 +136,7 @@ Foo_B_i::test_unbounded_var_size_arg(const Unbounded_Var_Size& message)
 }
 
 void
-Foo_B_i::test_fixed_size_arg(const TimeOfDay& t)
+Foo_B_i::test_fixed_size_arg(TimeOfDay const & t)
 {
   ACE_UNUSED_ARG(t);
 
