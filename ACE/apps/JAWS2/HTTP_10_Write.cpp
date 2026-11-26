@@ -22,7 +22,7 @@ JAWS_HTTP_10_Write_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
   JAWS_IO_Handler *handler_ptr = data->io_handler ();
 
   JAWS_Dispatch_Policy *dispatch_policy = this->policy ();
-  if (dispatch_policy == 0)
+  if (dispatch_policy == nullptr)
     {
       dispatch_policy = data->policy ();
     }

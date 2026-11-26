@@ -20,7 +20,7 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 
   JAWS_IO_Handler *handler_ptr = data->io_handler ();
   JAWS_Dispatch_Policy *dispatch_policy = this->policy ();
-  if (dispatch_policy == 0)
+  if (dispatch_policy == nullptr)
     {
       dispatch_policy = data->policy ();
     }
@@ -30,20 +30,15 @@ JAWS_HTTP_10_Parse_Task::handle_put (JAWS_Data_Block *data, ACE_Time_Value *)
 
   if (data->payload ())
     {
-      info = reinterpret_cast<JAWS_HTTP_10_Request *> (data->payload ());
+      info = static_cast<JAWS_HTTP_10_Request *> (data->payload ());
     }
   else
     {
       info = new JAWS_HTTP_10_Request;
-      if (info == 0)
-        {
-          ACE_ERROR ((LM_ERROR, "%p\n", "JAWS_HTTP_10_Parse_Task::handle_put"));
-          return -1;
-        }
-      data->payload (static_cast<void *> (info));
+      data->payload (info);
     }
 
-  while (info->receive (*static_cast<ACE_Message_Block *> (data)) == 0)
+  while (info->receive (*data) == 0)
     {
       int next_read_size = data->space ();
 
