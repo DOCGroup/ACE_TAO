@@ -9,11 +9,11 @@
 
 ACEXML_Char const * ACEXML_SAXException::exception_name_ = ACE_TEXT ("ACEXML_SAXException");
 
-const ACEXML_Char ACEXML_SAXNotSupportedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotSupportedException");
+ACEXML_Char const ACEXML_SAXNotSupportedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotSupportedException");
 
-const ACEXML_Char ACEXML_SAXNotRecognizedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotRecognizedException");
+ACEXML_Char const ACEXML_SAXNotRecognizedException::exception_name_[] = ACE_TEXT ("ACEXML_SAXNotRecognizedException");
 
-const ACEXML_Char ACEXML_SAXParseException::exception_name_[] = ACE_TEXT ("ACEXML_SAXParseException");
+ACEXML_Char const ACEXML_SAXParseException::exception_name_[] = ACE_TEXT ("ACEXML_SAXParseException");
 
 #if !defined (__ACEXML_INLINE__)
 # include "ACEXML/common/SAXExceptions.inl"
@@ -77,18 +77,10 @@ ACEXML_SAXException::print () const
 ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException ()
 = default;
 
-ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (ACEXML_SAXNotSupportedException const &ex)
-  : ACEXML_SAXException (ex)
-{
-}
+ACEXML_SAXNotSupportedException::ACEXML_SAXNotSupportedException (ACEXML_SAXNotSupportedException const &) = default;
 
 ACEXML_SAXNotSupportedException&
-ACEXML_SAXNotSupportedException::operator= (const
-                                            ACEXML_SAXNotSupportedException &ex)
-{
-  this->ACEXML_SAXException::operator= (ex);
-  return *this;
-}
+ACEXML_SAXNotSupportedException::operator= (ACEXML_SAXNotSupportedException const &) = default;
 
 ACEXML_SAXNotSupportedException*
 ACEXML_SAXNotSupportedException::_downcast (ACEXML_Exception* ex)
@@ -135,17 +127,10 @@ ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (ACEXML_Char 
 {
 }
 
-ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (ACEXML_SAXNotRecognizedException const &ex)
-  : ACEXML_SAXException (ex)
-{
-}
+ACEXML_SAXNotRecognizedException::ACEXML_SAXNotRecognizedException (ACEXML_SAXNotRecognizedException const &) = default;
 
 ACEXML_SAXNotRecognizedException&
-ACEXML_SAXNotRecognizedException::operator= (ACEXML_SAXNotRecognizedException const &ex)
-{
-  this->ACEXML_SAXException::operator= (ex);
-  return *this;
-}
+ACEXML_SAXNotRecognizedException::operator= (ACEXML_SAXNotRecognizedException const &) = default;
 
 ACEXML_SAXNotRecognizedException*
 ACEXML_SAXNotRecognizedException::_downcast (ACEXML_Exception* ex)
@@ -187,17 +172,10 @@ ACEXML_SAXParseException::ACEXML_SAXParseException (ACEXML_Char const *msg)
 {
 }
 
-ACEXML_SAXParseException::ACEXML_SAXParseException (ACEXML_SAXParseException const &ex)
-  : ACEXML_SAXException (ex)
-{
-}
+ACEXML_SAXParseException::ACEXML_SAXParseException (ACEXML_SAXParseException const &) = default;
 
 ACEXML_SAXParseException&
-ACEXML_SAXParseException::operator= (ACEXML_SAXParseException const &ex)
-{
-  this->ACEXML_SAXException::operator= (ex);
-  return *this;
-}
+ACEXML_SAXParseException::operator= (ACEXML_SAXParseException const &) = default;
 
 ACEXML_SAXParseException*
 ACEXML_SAXParseException::_downcast (ACEXML_Exception* ex)
