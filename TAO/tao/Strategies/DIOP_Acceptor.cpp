@@ -255,8 +255,8 @@ TAO_DIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                          ACE_Reactor *reactor,
                          int major,
                          int minor,
-                         const char *address,
-                         const char *options)
+                         char const *address,
+                         char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -384,7 +384,7 @@ TAO_DIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  ACE_Reactor *reactor,
                                  int major,
                                  int minor,
-                                 const char *options)
+                                 char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -539,7 +539,7 @@ int
 TAO_DIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
                              ACE_INET_Addr &addr,
                              char *&host,
-                             const char *specified_hostname)
+                             char const *specified_hostname)
 {
   if (orb_core->orb_params ()->use_dotted_decimal_addresses ())
     {
@@ -582,7 +582,7 @@ TAO_DIOP_Acceptor::hostname (TAO_ORB_Core *orb_core,
 }
 
 int
-TAO_DIOP_Acceptor::parse_address (const char *address,
+TAO_DIOP_Acceptor::parse_address (char const *address,
                                   ACE_INET_Addr &addr,
                                   ACE_CString &specified_hostname,
                                   int *def_type)
@@ -593,7 +593,7 @@ TAO_DIOP_Acceptor::parse_address (const char *address,
     specified_hostname.clear();
   }
 
-  const char *port_separator_loc = std::strchr (address, ':');
+  char const *port_separator_loc = std::strchr (address, ':');
   char tmp_host[MAXHOSTNAMELEN + 1];
   tmp_host[0] = '\0';
   bool host_defaulted = port_separator_loc == address;
@@ -1119,7 +1119,7 @@ TAO_DIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 }
 
 int
-TAO_DIOP_Acceptor::parse_options (const char *str)
+TAO_DIOP_Acceptor::parse_options (char const *str)
 {
   if (str == nullptr)
     {

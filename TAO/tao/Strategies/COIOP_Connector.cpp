@@ -100,7 +100,7 @@ TAO_COIOP_Connector::make_profile ()
 }
 
 int
-TAO_COIOP_Connector::check_prefix (const char *endpoint)
+TAO_COIOP_Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
@@ -108,7 +108,7 @@ TAO_COIOP_Connector::check_prefix (const char *endpoint)
       return -1;  // Failure
     }
 
-  const char *protocol[] = { "COIOP", "COIOPloc" };
+  char const *protocol[] = { "COIOP", "COIOPloc" };
 
   size_t const slot = std::strchr (endpoint, ':') - endpoint;
 

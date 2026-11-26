@@ -1,6 +1,6 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const char *
+ACE_INLINE char const *
 TAO_DIOP_Endpoint::host () const
 {
   return this->host_.in ();

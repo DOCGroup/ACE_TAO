@@ -92,11 +92,11 @@ TAO_COIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_COIOP_Profile::parse_string_i (const char *ior)
+TAO_COIOP_Profile::parse_string_i (char const *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
-  const char *okd =
+  char const *okd =
     std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == nullptr || okd == ior)
@@ -241,7 +241,7 @@ TAO_COIOP_Profile::to_string () const
   return buf;
 }
 
-const char *
+char const *
 TAO_COIOP_Profile::prefix ()
 {
   return ::the_prefix;
@@ -349,7 +349,7 @@ TAO_COIOP_Profile::decode_endpoints ()
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.

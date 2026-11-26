@@ -39,7 +39,7 @@ TAO_DIOP_Profile::TAO_DIOP_Profile (const ACE_INET_Addr &addr,
 {
 }
 
-TAO_DIOP_Profile::TAO_DIOP_Profile (const char* host,
+TAO_DIOP_Profile::TAO_DIOP_Profile (char const *host,
                                     CORBA::UShort port,
                                     const TAO::ObjectKey &object_key,
                                     const ACE_INET_Addr &addr,
@@ -111,11 +111,11 @@ TAO_DIOP_Profile::decode_profile (TAO_InputCDR& cdr)
 }
 
 void
-TAO_DIOP_Profile::parse_string_i (const char *ior)
+TAO_DIOP_Profile::parse_string_i (char const *ior)
 {
   // Pull off the "hostname:port/" part of the objref
   // Copy the string because we are going to modify it...
-  const char *okd = std::strchr (ior, this->object_key_delimiter_);
+  char const *okd = std::strchr (ior, this->object_key_delimiter_);
 
   if (okd == nullptr || okd == ior)
     {
@@ -130,7 +130,7 @@ TAO_DIOP_Profile::parse_string_i (const char *ior)
   // Length of host string.
   CORBA::ULong length_host {};
 
-  const char *cp_pos = std::strchr (ior, ':');  // Look for a port
+  char const *cp_pos = std::strchr (ior, ':');  // Look for a port
 #if defined (ACE_HAS_IPV6)
   // IPv6 numeric address in host string?
   bool ipv6_in_host {};
@@ -472,7 +472,7 @@ TAO_DIOP_Profile::to_string () const
   return buf;
 }
 
-const char *
+char const *
 TAO_DIOP_Profile::prefix ()
 {
   return ::the_prefix;
@@ -491,8 +491,8 @@ TAO_DIOP_Profile::create_profile_body (TAO_OutputCDR &encap) const
 #if defined (ACE_HAS_IPV6)
   // For IPv6 decimal addresses make sure the possibly included scopeid
   // is not published as this has only local meaning.
-  const char* host;
-  const char* pos;
+  char const *host;
+  char const *pos;
   if (this->endpoint_.is_ipv6_decimal_ &&
       (pos = std::strchr (host = this->endpoint_.host (), '%')) != nullptr)
     {
@@ -599,7 +599,7 @@ TAO_DIOP_Profile::decode_endpoints ()
       const CORBA::Octet *buf =
         tagged_component.component_data.get_buffer ();
 
-      TAO_InputCDR in_cdr (reinterpret_cast<const char*> (buf),
+      TAO_InputCDR in_cdr (reinterpret_cast<char const *> (buf),
                            tagged_component.component_data.length ());
 
       // Extract the Byte Order.

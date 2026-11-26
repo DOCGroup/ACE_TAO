@@ -27,7 +27,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const ACE_INET_Addr &addr,
   this->set (addr, use_dotted_decimal_addresses);
 }
 
-TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
+TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (char const *host,
                                       CORBA::UShort port,
                                       const ACE_INET_Addr &addr,
                                       CORBA::Short priority)
@@ -47,7 +47,7 @@ TAO_DIOP_Endpoint::TAO_DIOP_Endpoint ()
 {
 }
 
-TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (const char *host,
+TAO_DIOP_Endpoint::TAO_DIOP_Endpoint (char const *host,
                                       CORBA::UShort port,
                                       CORBA::Short priority)
   : TAO_Endpoint (TAO_TAG_DIOP_PROFILE, priority),
@@ -150,8 +150,8 @@ TAO_DIOP_Endpoint::addr_to_string (char *buffer, size_t length)
   return 0;
 }
 
-const char *
-TAO_DIOP_Endpoint::host (const char *h)
+char const *
+TAO_DIOP_Endpoint::host (char const *h)
 {
   this->host_ = h;
 #if defined (ACE_HAS_IPV6)

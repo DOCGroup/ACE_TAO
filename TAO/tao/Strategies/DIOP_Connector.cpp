@@ -256,7 +256,7 @@ TAO_DIOP_Connector::make_profile ()
 }
 
 int
-TAO_DIOP_Connector::check_prefix (const char *endpoint)
+TAO_DIOP_Connector::check_prefix (char const *endpoint)
 {
   // Check for a valid string
   if (!endpoint || !*endpoint)
@@ -264,7 +264,7 @@ TAO_DIOP_Connector::check_prefix (const char *endpoint)
     return -1;  // Failure
   }
 
-  const char *protocol[] = { "diop", "dioploc" };
+  char const *protocol[] = { "diop", "dioploc" };
 
   size_t const slot = std::strchr (endpoint, ':') - endpoint;
 

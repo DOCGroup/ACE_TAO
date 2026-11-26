@@ -177,8 +177,8 @@ TAO_COIOP_Acceptor::open (TAO_ORB_Core *orb_core,
                           ACE_Reactor *,
                           int major,
                           int minor,
-                          const char *address,
-                          const char *options)
+                          char const *address,
+                          char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -203,7 +203,7 @@ TAO_COIOP_Acceptor::open_default (TAO_ORB_Core *orb_core,
                                  ACE_Reactor *,
                                  int major,
                                  int minor,
-                                 const char *options)
+                                 char const *options)
 {
   this->orb_core_ = orb_core;
 
@@ -283,7 +283,7 @@ TAO_COIOP_Acceptor::object_key (IOP::TaggedProfile &profile,
 }
 
 int
-TAO_COIOP_Acceptor::parse_options (const char *str)
+TAO_COIOP_Acceptor::parse_options (char const *str)
 {
   if (str == nullptr)
     {
