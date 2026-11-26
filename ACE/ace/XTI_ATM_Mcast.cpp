@@ -29,7 +29,7 @@ ACE_XTI_ATM_Mcast::ACE_XTI_ATM_Mcast ()
 
 int
 ACE_XTI_ATM_Mcast::add_leaf (ACE_TLI_Stream &current_stream,
-                             const ACE_Addr &remote_sap,
+                             ACE_Addr const &remote_sap,
                              ACE_INT32 leaf_id,
                              ACE_Time_Value *timeout)
 {

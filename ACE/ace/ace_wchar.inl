@@ -114,7 +114,7 @@ ACE_Ascii_To_Wide::wchar_rep ()
 }
 
 inline wchar_t *
-ACE_Ascii_To_Wide::convert (const char *str)
+ACE_Ascii_To_Wide::convert (char const *str)
 {
   // Short circuit null pointer case
   if (!str)
@@ -165,7 +165,7 @@ ACE_Ascii_To_Wide::convert (const char *str)
 }
 
 inline
-ACE_Ascii_To_Wide::ACE_Ascii_To_Wide (const char *s)
+ACE_Ascii_To_Wide::ACE_Ascii_To_Wide (char const *s)
 {
 #if defined(ACE_HAS_ICONV)
   if (ACE_Ascii_To_Wide_iconv_env == 0)

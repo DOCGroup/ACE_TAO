@@ -190,7 +190,7 @@ public:
   wchar_t *wchar_rep ();
 
   /// Converts an char string to unicode/wide and returns a new string.
-  static wchar_t *convert (const char *str);
+  static wchar_t *convert (char const *str);
 
 private:
   /// Internal pointer to the converted string.
