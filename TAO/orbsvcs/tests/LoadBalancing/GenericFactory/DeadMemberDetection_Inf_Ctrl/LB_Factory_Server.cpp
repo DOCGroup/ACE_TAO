@@ -21,7 +21,7 @@ LB_Factory_Server::run ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught while running LB_Factory_Server\n");
       return -1;
@@ -40,7 +40,7 @@ LB_Factory_Server::destroy ()
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         "Exception caught while destroying LB_Factory_Server\n");
@@ -181,7 +181,7 @@ LB_Factory_Server::init ()
           }
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception raised in LB_Factory_Server::init()");
       return -1;

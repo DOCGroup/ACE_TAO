@@ -14,7 +14,7 @@ Factory::Factory (int id, int pong_delay)
 CORBA::Object_ptr
 Factory::create_object (
     char const * /*type_id*/,
-    const PortableGroup::Criteria & /*the_criteria*/,
+    PortableGroup::Criteria const & /*the_criteria*/,
     PortableGroup::GenericFactory::FactoryCreationId_out fcid)
 {
   Simple *servant {};
@@ -57,7 +57,7 @@ Factory::create_object (
 
 void
 Factory::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId & fcid)
+    PortableGroup::GenericFactory::FactoryCreationId const & fcid)
 {
   ACE_DEBUG ((LM_DEBUG, "(%P|%t)%T delete_object\n"));
   ACE_OS::sleep (10);

@@ -8,7 +8,7 @@ Factory::Factory () = default;
 CORBA::Object_ptr
 Factory::create_object (
     char const * /*type_id*/,
-    const PortableGroup::Criteria & /*the_criteria*/,
+    PortableGroup::Criteria const & /*the_criteria*/,
     PortableGroup::GenericFactory::FactoryCreationId_out fcid)
 {
   Simple *servant {};
@@ -51,7 +51,7 @@ Factory::create_object (
 
 void
 Factory::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId &
+    PortableGroup::GenericFactory::FactoryCreationId const &
       fcid)
 {
   CORBA::ULong my_fcid {};

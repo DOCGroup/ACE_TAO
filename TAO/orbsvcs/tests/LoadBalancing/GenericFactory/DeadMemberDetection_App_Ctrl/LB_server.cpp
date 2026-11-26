@@ -31,7 +31,7 @@ LB_server::destroy ()
         this->orb_->destroy ();
       }
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception caught while destroying LB_server\n");
       return -1;
@@ -122,7 +122,7 @@ LB_server::start_orb_and_poa ()
                             -1);
         }
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised initialising ORB or POA");
       return -1;
@@ -161,7 +161,7 @@ LB_server::create_object_group ()
         return -1;
       }
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised while creating object group");
       return -1;
@@ -181,7 +181,7 @@ LB_server::get_object_group ()
         return -1;
       }
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised while getting object group");
       return -1;
@@ -201,7 +201,7 @@ LB_server::register_servant (Basic *servant, std::string const &location_name)
       location[0].id = CORBA::string_dup (location_name.c_str ());
       this->lm_->add_member (this->object_group_.in (), location, basic.in ());
     }
-  catch (const CORBA::Exception &ex)
+  catch (CORBA::Exception const &ex)
     {
       ex._tao_print_exception ("Exception raised while registering servant");
       return -1;

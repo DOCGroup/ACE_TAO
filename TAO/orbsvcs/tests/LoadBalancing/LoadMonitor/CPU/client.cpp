@@ -95,7 +95,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
               retrieved_load = true;
             }
-          catch (const CORBA::Exception&)
+          catch (CORBA::Exception const &)
             {
               ACE_DEBUG ((LM_DEBUG, ".")); // Show some progress.
 
@@ -145,7 +145,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 
       ::check_loads (loads.in ());
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("CPU Load Monitor test:");
       return 1;

@@ -25,7 +25,7 @@ LB_server::run ()
     {
       this->orb_->run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught while running LB_server\n");
       return -1;
@@ -44,7 +44,7 @@ LB_server::destroy ()
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         "Exception caught while destroying LB_server\n");
@@ -155,7 +155,7 @@ LB_server::init ()
         return -1;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception raised in LB_server::init()");
       return -1;
@@ -256,7 +256,7 @@ LB_server::create_object_group ()
         return -1;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         "Exception raised while creating object group");

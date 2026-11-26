@@ -25,7 +25,7 @@ LB_server::run ()
           this->orb_->perform_work (std::addressof (period));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught while running LB_server\n");
       return -1;
@@ -44,7 +44,7 @@ LB_server::destroy ()
 
       this->orb_->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         "Exception caught while destroying LB_server\n");
@@ -140,7 +140,7 @@ LB_server::start_orb_and_poa ()
                             -1);
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception raised initialising ORB or POA");
       return -1;
@@ -232,7 +232,7 @@ LB_server::create_object_group (char const *loc_1, char const *loc_2)
         return -1;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception (
         "Exception raised while creating object group");
