@@ -3,6 +3,7 @@
 #include "ace/INet/ConnectionCache.h"
 #include "ace/Log_Msg.h"
 #include "ace/OS_main.h"
+#include <new>
 #include <stdexcept>
 
 #if defined (ACE_HAS_THREADS)
@@ -36,6 +37,12 @@ protected:
 };
 
 class Test_Connection : public ACE::INet::ConnectionHolder {};
+
+class Failing_Key : public Test_Key
+{
+public:
+  ACE::INet::ConnectionKey *duplicate () const override { return nullptr; }
+};
 
 class Test_Factory : public ACE::INet::ConnectionFactory
 {
@@ -78,11 +85,25 @@ int
 ACE_TMAIN (int, ACE_TCHAR *[])
 {
   Test_Key const key;
+  Failing_Key const failing_key;
   Test_Factory const fail (Test_Factory::Result::fail);
   Test_Factory const exception (Test_Factory::Result::exception);
   Test_Factory const success (Test_Factory::Result::success);
   ACE::INet::ConnectionCache cache;
   ACE::INet::ConnectionHolder *connection {};
+  bool copy_failed {};
+  try
+    {
+      cache.claim_connection (failing_key, connection, success, false);
+    }
+  catch (std::bad_alloc const &)
+    {
+      copy_failed = true;
+    }
+  if (!copy_failed || cache.has_connection (key))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Cache key duplication failure was not reported\n")), 1);
+    }
   if (cache.claim_connection (key, connection, fail, false) || cache.has_connection (key))
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Failed factory left a cache entry\n")), 1);
@@ -101,7 +122,22 @@ ACE_TMAIN (int, ACE_TCHAR *[])
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Throwing factory left a cache entry\n")), 1);
     }
   if (!cache.claim_connection (key, connection, success, false)
-      || connection == nullptr || !cache.release_connection (key, connection)
+      || connection == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not create connection after factory failure\n")), 1);
+    }
+  bool assignment_failed {};
+  try
+    {
+      cache.release_connection (failing_key, connection);
+    }
+  catch (std::bad_alloc const &)
+    {
+      assignment_failed = true;
+    }
+  ACE::INet::ConnectionHolder *other {};
+  if (!assignment_failed || cache.claim_connection (key, other, success, false)
+      || !cache.release_connection (key, connection)
       || !cache.claim_connection (key, connection, success, false)
       || !cache.close_connection (key, connection))
     {

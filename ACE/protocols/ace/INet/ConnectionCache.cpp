@@ -1,6 +1,7 @@
 #include "ace/INet/ConnectionCache.h"
 
 #include <memory>
+#include <new>
 #include <utility>
 
 #if !defined (__ACE_INLINE__)
@@ -41,6 +42,10 @@ namespace ACE
             if (cachekey.key_ != nullptr)
             {
               duplicate.reset (cachekey.key_->duplicate ());
+              if (!duplicate)
+                {
+                  throw std::bad_alloc ();
+                }
             }
             this->owned_key_ = std::move (duplicate);
             this->key_ = this->owned_key_.get ();

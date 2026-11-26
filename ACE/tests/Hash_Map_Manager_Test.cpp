@@ -14,6 +14,50 @@
 #include "ace/Hash_Map_Manager.h"
 #include "ace/Malloc_T.h"
 #include "ace/Null_Mutex.h"
+#include <stdexcept>
+
+class Throwing_Value
+{
+public:
+  Throwing_Value () = default;
+  Throwing_Value (Throwing_Value const &)
+  {
+    throw std::runtime_error ("test copy failure");
+  }
+  Throwing_Value &operator= (Throwing_Value const &) = default;
+};
+
+static int
+test_throwing_value ()
+{
+  using Map = ACE_Hash_Map_Manager_Ex<int, Throwing_Value, ACE_Hash<int>,
+                                      ACE_Equal_To<int>, ACE_Null_Mutex>;
+  Map map;
+  Throwing_Value value;
+  bool bind_failed {};
+  try
+    {
+      map.bind (1, value);
+    }
+  catch (std::runtime_error const &)
+    {
+      bind_failed = true;
+    }
+  bool trybind_failed {};
+  try
+    {
+      map.trybind (2, value);
+    }
+  catch (std::runtime_error const &)
+    {
+      trybind_failed = true;
+    }
+  if (!bind_failed || !trybind_failed || map.current_size () != 0)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Hash map failed to handle a throwing entry\n")), -1);
+    }
+  return 0;
+}
 
 static constexpr size_t STRING_TABLE_ENTRIES = 3 * 2;
 static constexpr size_t MAX_HASH = 6;
@@ -349,7 +393,9 @@ run_main (int, ACE_TCHAR *[])
 
   run_test ();
 
+  int const exception_test_result = test_throwing_value ();
+
   ACE_END_TEST;
 
-  return 0;
+  return exception_test_result;
 }
