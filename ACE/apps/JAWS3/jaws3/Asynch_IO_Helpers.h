@@ -19,11 +19,11 @@ class JAWS_EC_AH_Adapter : public ACE_Handler
 public:
   static JAWS_EC_AH_Adapter * make (JAWS_Event_Completer *);
 
-  void handle_read_stream (const ACE_Asynch_Read_Stream::Result &result) override;
+  void handle_read_stream (ACE_Asynch_Read_Stream::Result const &result) override;
 
-  void handle_write_stream (const ACE_Asynch_Write_Stream::Result &result) override;
+  void handle_write_stream (ACE_Asynch_Write_Stream::Result const &result) override;
 
-  void handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result) override;
+  void handle_transmit_file (ACE_Asynch_Transmit_File::Result const &result) override;
 
 private:
   JAWS_EC_AH_Adapter (JAWS_Event_Completer *completer)
@@ -32,7 +32,7 @@ private:
   }
 
 protected:
-  JAWS_Event_Result make_io_result ( const ACE_Asynch_Result &result
+  JAWS_Event_Result make_io_result ( ACE_Asynch_Result const &result
                                    , JAWS_Event_Result::JE_REASON reason_ok
                                    , JAWS_Event_Result::JE_REASON reason_fail);
 

@@ -25,7 +25,7 @@ public:
   JAWS_Options &operator= (JAWS_Options const &) = delete;
   JAWS_Options &operator= (JAWS_Options &&) = delete;
 
-  const char *getenv (const char *key);
+  char const *getenv (char const *key);
 
   static JAWS_Options * instance ()
   {

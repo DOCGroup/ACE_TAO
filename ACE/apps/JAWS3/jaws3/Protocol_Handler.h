@@ -16,7 +16,7 @@ public:
 protected:
   virtual int service (JAWS_Event_Completer *, void *data) = 0;
 
-  virtual JAWS_Protocol_State * transition ( const JAWS_Event_Result &
+  virtual JAWS_Protocol_State * transition ( JAWS_Event_Result const &
                                            , void *data
                                            , void *act) = 0;
 };
@@ -50,9 +50,9 @@ protected:
 
 protected:
   /// Handles event completion and transitions to the next protocol state.
-  void event_complete (const JAWS_Event_Result &result, void *act);
+  void event_complete (JAWS_Event_Result const &result, void *act);
 
-  void default_complete (const JAWS_Event_Result &result, void *act) override
+  void default_complete (JAWS_Event_Result const &result, void *act) override
   {
     this->event_complete (result, act);
   }

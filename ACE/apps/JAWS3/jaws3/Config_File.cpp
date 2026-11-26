@@ -64,9 +64,9 @@ private:
 class JAWS_Config_File_Impl
 {
 public:
-  explicit JAWS_Config_File_Impl (const ACE_TCHAR *config_file);
+  explicit JAWS_Config_File_Impl (ACE_TCHAR const *config_file);
   ~JAWS_Config_File_Impl ();
-  int find (const ACE_TCHAR *key, const ACE_TCHAR *&value);
+  int find (ACE_TCHAR const *key, ACE_TCHAR const *&value);
 
   void parse_file ();
   void reset ();
@@ -80,7 +80,7 @@ private:
   std::unique_ptr<JAWS_Symbol_Table> symbols_;
 };
 
-JAWS_Config_File_Impl::JAWS_Config_File_Impl (const ACE_TCHAR *config_file)
+JAWS_Config_File_Impl::JAWS_Config_File_Impl (ACE_TCHAR const *config_file)
   : faddr_ (config_file)
   , strings_ (std::make_unique<JAWS_strings> ())
   , symbols_ (std::make_unique<JAWS_Symbol_Table> (
@@ -92,7 +92,7 @@ JAWS_Config_File_Impl::JAWS_Config_File_Impl (const ACE_TCHAR *config_file)
 JAWS_Config_File_Impl::~JAWS_Config_File_Impl () = default;
 
 int
-JAWS_Config_File_Impl::find (const ACE_TCHAR *key, const ACE_TCHAR *&value)
+JAWS_Config_File_Impl::find (ACE_TCHAR const *key, ACE_TCHAR const *&value)
 {
   return this->symbols_->find (key, value);
 }
@@ -117,8 +117,8 @@ JAWS_Config_File_Impl::parse_file ()
   ACE_Message_Block buffer (8192);
   ACE_Message_Block line (4096);
   ssize_t count = 0;
-  const ACE_TCHAR *sym_name;
-  const ACE_TCHAR *sym_value;
+  ACE_TCHAR const *sym_name;
+  ACE_TCHAR const *sym_value;
   bool last_line_was_read = false;
   ACE_TCHAR *end_of_current_line {};
   ACE_TCHAR *p {};
@@ -292,7 +292,7 @@ JAWS_Config_File::JAWS_Config_File (ACE_TCHAR const *config_file,
 JAWS_Config_File::~JAWS_Config_File () = default;
 
 int
-JAWS_Config_File::find (const ACE_TCHAR *key, const ACE_TCHAR *&value)
+JAWS_Config_File::find (ACE_TCHAR const *key, ACE_TCHAR const *&value)
 {
   return this->impl_->find (key, value);
 }

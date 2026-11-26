@@ -9,42 +9,42 @@
 JAWS_Event_Completer::~JAWS_Event_Completer () = default;
 
 void
-JAWS_Event_Completer::default_complete (const JAWS_Event_Result &, void *)
+JAWS_Event_Completer::default_complete (JAWS_Event_Result const &, void *)
 {
 }
 
 void
-JAWS_Event_Completer::accept_complete (const JAWS_Event_Result &r, void *d)
-{
-  this->default_complete (r, d);
-}
-
-void
-JAWS_Event_Completer::connect_complete (const JAWS_Event_Result &r, void *d)
+JAWS_Event_Completer::accept_complete (JAWS_Event_Result const &r, void *d)
 {
   this->default_complete (r, d);
 }
 
 void
-JAWS_Event_Completer::input_complete (const JAWS_Event_Result &r, void *d)
+JAWS_Event_Completer::connect_complete (JAWS_Event_Result const &r, void *d)
 {
   this->default_complete (r, d);
 }
 
 void
-JAWS_Event_Completer::output_complete (const JAWS_Event_Result &r, void *d)
+JAWS_Event_Completer::input_complete (JAWS_Event_Result const &r, void *d)
 {
   this->default_complete (r, d);
 }
 
 void
-JAWS_Event_Completer::timer_complete (const JAWS_Event_Result &r, void *d)
+JAWS_Event_Completer::output_complete (JAWS_Event_Result const &r, void *d)
 {
   this->default_complete (r, d);
 }
 
 void
-JAWS_Event_Completer::lambda_complete (const JAWS_Event_Result &r, void *d)
+JAWS_Event_Completer::timer_complete (JAWS_Event_Result const &r, void *d)
+{
+  this->default_complete (r, d);
+}
+
+void
+JAWS_Event_Completer::lambda_complete (JAWS_Event_Result const &r, void *d)
 {
   this->default_complete (r, d);
 }

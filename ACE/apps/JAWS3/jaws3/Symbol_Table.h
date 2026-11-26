@@ -7,28 +7,28 @@
 #include "jaws3/Export.h"
 
 #define JAWS_SYMBOL_TABLE_ENTRY \
-        ACE_Hash_Map_Entry <const ACE_TCHAR *, const ACE_TCHAR *>
+        ACE_Hash_Map_Entry <ACE_TCHAR const *, ACE_TCHAR const *>
 
 #define JAWS_SYMBOL_TABLE_BASE \
-        ACE_Hash_Map_Manager_Ex<const ACE_TCHAR *, const ACE_TCHAR *, \
-                                ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, \
+        ACE_Hash_Map_Manager_Ex<ACE_TCHAR const *, ACE_TCHAR const *, \
+                                ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, \
                                 ACE_SYNCH_NULL_MUTEX>
 
 #define JAWS_SYMBOL_TABLE_ITERATOR_BASE \
-        ACE_Hash_Map_Iterator_Base_Ex<const ACE_TCHAR *, const ACE_TCHAR *, \
-                                      ACE_Hash<const ACE_TCHAR *>, \
-                                      ACE_Equal_To<const ACE_TCHAR *>, \
+        ACE_Hash_Map_Iterator_Base_Ex<ACE_TCHAR const *, ACE_TCHAR const *, \
+                                      ACE_Hash<ACE_TCHAR const *>, \
+                                      ACE_Equal_To<ACE_TCHAR const *>, \
                                       ACE_SYNCH_NULL_MUTEX>
 
 #define JAWS_SYMBOL_TABLE_ITERATOR \
-        ACE_Hash_Map_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, \
-                                 ACE_Hash<const ACE_TCHAR *>, ACE_Equal_To<const ACE_TCHAR *>, \
+        ACE_Hash_Map_Iterator_Ex<ACE_TCHAR const *, ACE_TCHAR const *, \
+                                 ACE_Hash<ACE_TCHAR const *>, ACE_Equal_To<ACE_TCHAR const *>, \
                                  ACE_SYNCH_NULL_MUTEX>
 
 #define JAWS_SYMBOL_TABLE_REVERSE_ITERATOR \
-        ACE_Hash_Map_Reverse_Iterator_Ex<const ACE_TCHAR *, const ACE_TCHAR *, \
-                                         ACE_Hash<const ACE_TCHAR *>, \
-                                         ACE_Equal_To<const ACE_TCHAR *>, \
+        ACE_Hash_Map_Reverse_Iterator_Ex<ACE_TCHAR const *, ACE_TCHAR const *, \
+                                         ACE_Hash<ACE_TCHAR const *>, \
+                                         ACE_Equal_To<ACE_TCHAR const *>, \
                                          ACE_SYNCH_NULL_MUTEX>
 
 class JAWS_Symbol_Table;

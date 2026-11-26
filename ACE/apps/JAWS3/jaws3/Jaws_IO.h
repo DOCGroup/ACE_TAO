@@ -44,19 +44,19 @@ public:
   virtual void send ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
-                    , const ACE_Time_Value &tv
+                    , ACE_Time_Value const &tv
                     , void *act = nullptr) = 0;
 
   virtual void recv ( ACE_HANDLE handle
                     , ACE_Message_Block *mb
                     , JAWS_Event_Completer *completer
-                    , const ACE_Time_Value &tv
+                    , ACE_Time_Value const &tv
                     , void *act = nullptr) = 0;
 
   virtual void transmit ( ACE_HANDLE handle
                         , ACE_HANDLE source
                         , JAWS_Event_Completer *completer
-                        , const ACE_Time_Value &tv
+                        , ACE_Time_Value const &tv
                         , void *act = nullptr
                         , ACE_Message_Block *header = nullptr
                         , ACE_Message_Block *trailer = nullptr) = 0;
@@ -95,19 +95,19 @@ public:
   void send ( ACE_HANDLE handle
             , ACE_Message_Block *mb
             , JAWS_Event_Completer *completer
-            , const ACE_Time_Value &tv
+            , ACE_Time_Value const &tv
             , void *act = nullptr);
 
   void recv ( ACE_HANDLE handle
             , ACE_Message_Block *mb
             , JAWS_Event_Completer *completer
-            , const ACE_Time_Value &tv
+            , ACE_Time_Value const &tv
             , void *act = nullptr);
 
   void transmit ( ACE_HANDLE handle
                 , ACE_HANDLE source
                 , JAWS_Event_Completer *completer
-                , const ACE_Time_Value &tv
+                , ACE_Time_Value const &tv
                 , void *act = nullptr
                 , ACE_Message_Block *header = nullptr
                 , ACE_Message_Block *trailer = nullptr);

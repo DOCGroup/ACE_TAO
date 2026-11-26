@@ -126,7 +126,7 @@ JAWS_EC_AH_Adapter::make (JAWS_Event_Completer *completer)
 
 void
 JAWS_EC_AH_Adapter
-::handle_read_stream (const ACE_Asynch_Read_Stream::Result &result)
+::handle_read_stream (ACE_Asynch_Read_Stream::Result const &result)
 {
   JAWS_Event_Result io_result;
 
@@ -144,7 +144,7 @@ JAWS_EC_AH_Adapter
 
 void
 JAWS_EC_AH_Adapter
-::handle_write_stream (const ACE_Asynch_Write_Stream::Result &result)
+::handle_write_stream (ACE_Asynch_Write_Stream::Result const &result)
 {
   JAWS_Event_Result io_result;
 
@@ -162,7 +162,7 @@ JAWS_EC_AH_Adapter
 
 void
 JAWS_EC_AH_Adapter
-::handle_transmit_file (const ACE_Asynch_Transmit_File::Result &result)
+::handle_transmit_file (ACE_Asynch_Transmit_File::Result const &result)
 {
   JAWS_Event_Result io_result;
 
@@ -181,7 +181,7 @@ JAWS_EC_AH_Adapter
 
 JAWS_Event_Result
 JAWS_EC_AH_Adapter
-::make_io_result ( const ACE_Asynch_Result &result
+::make_io_result ( ACE_Asynch_Result const &result
                  , JAWS_Event_Result::JE_REASON reason_ok
                  , JAWS_Event_Result::JE_REASON reason_fail)
 {
@@ -257,7 +257,7 @@ void
 JAWS_Asynch_IO::send ( ACE_HANDLE handle
                      , ACE_Message_Block *mb
                      , JAWS_Event_Completer *completer
-                     , const ACE_Time_Value &tv
+                     , ACE_Time_Value const &tv
                      , void *act)
 {
   JAWS_Reactive_IO::instance ()->send (handle, mb, completer, tv, act);
@@ -267,7 +267,7 @@ void
 JAWS_Asynch_IO::recv ( ACE_HANDLE handle
                      , ACE_Message_Block *mb
                      , JAWS_Event_Completer *completer
-                     , const ACE_Time_Value &tv
+                     , ACE_Time_Value const &tv
                      , void *act)
 {
   JAWS_Reactive_IO::instance ()->recv (handle, mb, completer, tv, act);
@@ -277,7 +277,7 @@ void
 JAWS_Asynch_IO::transmit ( ACE_HANDLE handle
                          , ACE_HANDLE source
                          , JAWS_Event_Completer *completer
-                         , const ACE_Time_Value &tv
+                         , ACE_Time_Value const &tv
                          , void *act
                          , ACE_Message_Block *header
                          , ACE_Message_Block *trailer)

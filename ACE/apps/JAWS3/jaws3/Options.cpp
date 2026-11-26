@@ -12,8 +12,8 @@ JAWS_Options::JAWS_Options ()
   this->cf_ = std::make_unique<JAWS_Config_File> ("jaws.conf");
 }
 
-const char *
-JAWS_Options::getenv (const char *key)
+char const *
+JAWS_Options::getenv (char const *key)
 {
   char const *value {};
   if (this->cf_ == nullptr || this->cf_->find (key, value) < 0)

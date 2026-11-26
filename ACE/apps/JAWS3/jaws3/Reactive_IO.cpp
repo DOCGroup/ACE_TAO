@@ -15,7 +15,7 @@ void
 JAWS_Reactive_IO::send ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
                        , JAWS_Event_Completer *completer
-                       , const ACE_Time_Value &tv
+                       , ACE_Time_Value const &tv
                        , void *act)
 {
   if (mb->length () == 0)
@@ -65,7 +65,7 @@ void
 JAWS_Reactive_IO::recv ( ACE_HANDLE handle
                        , ACE_Message_Block *mb
                        , JAWS_Event_Completer *completer
-                       , const ACE_Time_Value &tv
+                       , ACE_Time_Value const &tv
                        , void *act)
 {
   JAWS_IO_Reactive_Recv *rr;
@@ -101,7 +101,7 @@ void
 JAWS_Reactive_IO::transmit ( ACE_HANDLE handle
                            , ACE_HANDLE source
                            , JAWS_Event_Completer *completer
-                           , const ACE_Time_Value &tv
+                           , ACE_Time_Value const &tv
                            , void *act
                            , ACE_Message_Block *header
                            , ACE_Message_Block *trailer)
@@ -189,7 +189,7 @@ JAWS_IO_Reactive_Handler::close (int result)
 }
 
 int
-JAWS_IO_Reactive_Handler::handle_timeout (const ACE_Time_Value &, const void *)
+JAWS_IO_Reactive_Handler::handle_timeout (ACE_Time_Value const &, void const *)
 {
   if (this->was_active_)
     {
@@ -573,7 +573,7 @@ JAWS_IO_Reactive_Transmit::close (int result)
 }
 
 int
-JAWS_IO_Reactive_Transmit::handle_timeout (const ACE_Time_Value &, const void *)
+JAWS_IO_Reactive_Transmit::handle_timeout (ACE_Time_Value const &, void const *)
 {
   if (this->was_active_)
     {

@@ -5,7 +5,7 @@
 #include "jaws3/Timer_Helpers.h"
 
 int
-JAWS_Timer_EH::handle_timeout (const ACE_Time_Value &, const void *)
+JAWS_Timer_EH::handle_timeout (ACE_Time_Value const &, void const *)
 {
   JAWS_Event_Result const timer_result ( 0
                                  , JAWS_Event_Result::JE_OK

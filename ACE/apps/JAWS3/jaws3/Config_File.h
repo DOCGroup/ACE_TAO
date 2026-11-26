@@ -42,7 +42,7 @@ public:
   /// @{
 
   /// Finds the value associated with @c key.
-  int find (const ACE_TCHAR *key, const ACE_TCHAR *&value);
+  int find (ACE_TCHAR const *key, ACE_TCHAR const *&value);
 
   /// Re-reads the configuration file.
   void reset ();

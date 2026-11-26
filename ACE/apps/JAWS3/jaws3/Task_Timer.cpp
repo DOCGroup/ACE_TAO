@@ -15,7 +15,7 @@ JAWS_Task_Timer::JAWS_Task_Timer ()
 
 void
 JAWS_Task_Timer::schedule_timer ( long *timer_id
-                                , const ACE_Time_Value &delta
+                                , ACE_Time_Value const &delta
                                 , JAWS_Event_Completer *completer
                                 , void *act)
 {
@@ -44,7 +44,7 @@ JAWS_Task_Timer::schedule_timer ( long *timer_id
 
 void
 JAWS_Task_Timer::schedule_absolute_timer ( long *timer_id
-                                         , const ACE_Time_Value &tv
+                                         , ACE_Time_Value const &tv
                                          , JAWS_Event_Completer *completer
                                          , void *act)
 {
@@ -72,7 +72,7 @@ JAWS_Task_Timer::schedule_absolute_timer ( long *timer_id
 
 void
 JAWS_Task_Timer::schedule_interval_timer ( long *timer_id
-                                         , const ACE_Time_Value &interval
+                                         , ACE_Time_Value const &interval
                                          , JAWS_Event_Completer *completer
                                          , void *act)
 {

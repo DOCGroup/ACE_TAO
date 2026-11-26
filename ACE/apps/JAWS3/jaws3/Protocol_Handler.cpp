@@ -36,7 +36,7 @@ JAWS_Protocol_Handler::service ()
 }
 
 void
-JAWS_Protocol_Handler::event_complete ( const JAWS_Event_Result &result
+JAWS_Protocol_Handler::event_complete ( JAWS_Event_Result const &result
                                       , void *act)
 {
   // This call is done in the context of the dispatching
