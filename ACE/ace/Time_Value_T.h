@@ -57,7 +57,7 @@ public:
 
   /// Construct from ACE_Time_Value
   explicit ACE_Time_Value_T(ACE_Time_Value const& tv,
-                            const TIME_POLICY& tp = TIME_POLICY ())
+                            TIME_POLICY const& tp = TIME_POLICY ())
     : ACE_Time_Value (tv),
       time_policy_ (tp)
   {}

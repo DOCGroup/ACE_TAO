@@ -48,7 +48,7 @@ template <class EXT_ID, class INT_ID>
 class ACE_RB_Tree_Node : public ACE_RB_Tree_Node_Base
 {
 public:
-  ACE_RB_Tree_Node (const EXT_ID &k, const INT_ID &t);
+  ACE_RB_Tree_Node (EXT_ID const &k, INT_ID const &t);
 
   ~ACE_RB_Tree_Node ();
 
@@ -213,16 +213,16 @@ public:
    * new entry is bound successfully, returns 1 if an attempt is made
    * to bind an existing entry, and returns -1 if failures occur.
    */
-  int bind (const EXT_ID &item,
-            const INT_ID &int_id);
+  int bind (EXT_ID const &item,
+            INT_ID const &int_id);
 
   /**
    * Same as a normal bind, except the tree entry is also passed back
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int bind (const EXT_ID &ext_id,
-            const INT_ID &int_id,
+  int bind (EXT_ID const &ext_id,
+            INT_ID const &int_id,
             ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -232,7 +232,7 @@ public:
    * if a new entry is bound successfully, returns 1 if an attempt is
    * made to bind an existing entry, and returns -1 if failures occur.
    */
-  int trybind (const EXT_ID &ext_id,
+  int trybind (EXT_ID const &ext_id,
                INT_ID &int_id);
 
   /**
@@ -240,7 +240,7 @@ public:
    * back to the caller.  The entry in this case will either be the
    * newly created entry, or the existing one.
    */
-  int trybind (const EXT_ID &ext_id,
+  int trybind (EXT_ID const &ext_id,
                INT_ID &int_id,
                ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
@@ -250,16 +250,16 @@ public:
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id);
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id);
 
   /**
    * Same as a normal rebind, except the tree entry is also passed back
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -269,8 +269,8 @@ public:
    * Returns 0 if a new entry is bound successfully, returns 1 if an
    * existing entry was rebound, and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               INT_ID &old_int_id);
 
   /**
@@ -278,8 +278,8 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               INT_ID &old_int_id,
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
@@ -293,8 +293,8 @@ public:
    * bound successfully, returns 1 if an existing entry was rebound,
    * and returns -1 if failures occur.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               EXT_ID &old_ext_id,
               INT_ID &old_int_id);
 
@@ -303,20 +303,20 @@ public:
    * to the caller.  The entry in this case will either be the newly
    * created entry, or the existing one.
    */
-  int rebind (const EXT_ID &ext_id,
-              const INT_ID &int_id,
+  int rebind (EXT_ID const &ext_id,
+              INT_ID const &int_id,
               EXT_ID &old_ext_id,
               INT_ID &old_int_id,
               ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
   /// Locate @a ext_id and pass out parameter via @a int_id.  If found,
   /// return 0, returns -1 if not found.
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             INT_ID &int_id);
 
   /// Locate @a ext_id and pass out parameter via @a entry.  If found,
   /// return 0, returns -1 if not found.
-  int find (const EXT_ID &ext_id,
+  int find (EXT_ID const &ext_id,
             ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -324,11 +324,11 @@ public:
    * @a int_id to the caller (this is useful for collections where the
    * @c int_ids are *not* dynamically allocated...)
    */
-  int unbind (const EXT_ID &ext_id);
+  int unbind (EXT_ID const &ext_id);
 
   /// Break any association of @a ext_id.  Returns the value of @a int_id
   /// in case the caller needs to deallocate memory.
-  int unbind (const EXT_ID &ext_id,
+  int unbind (EXT_ID const &ext_id,
               INT_ID &int_id);
 
   /**
@@ -399,7 +399,7 @@ public:
    * int find (const EXT_ID &ext_id); which will return
    * 0 if the @a ext_id is in the tree, otherwise -1.
    */
-  INT_ID* find (const EXT_ID &k);
+  INT_ID* find (EXT_ID const &k);
 
   /**
    * Inserts a *copy* of the key and the item into the tree: both the
@@ -412,7 +412,7 @@ public:
    * associated with the existing key.
    * @deprecated
    */
-  INT_ID* insert (const EXT_ID &k, const INT_ID &t);
+  INT_ID* insert (EXT_ID const &k, INT_ID const &t);
 
   /**
    * Removes the item associated with the given key from the tree and
@@ -421,7 +421,7 @@ public:
    * occurred.
    * @deprecated
    */
-  int remove (const EXT_ID &k);
+  int remove (EXT_ID const &k);
 
   /// @deprecated
   /// Destroys all nodes and sets the root pointer null.
@@ -489,7 +489,7 @@ protected:
    * RIGHT if the node is to the right of the node to be inserted,
    * or EXACT if an exactly matching node already exists.
    */
-  ACE_RB_Tree_Node<EXT_ID, INT_ID> *find_node (const EXT_ID &k,
+  ACE_RB_Tree_Node<EXT_ID, INT_ID> *find_node (EXT_ID const &k,
                                                ACE_RB_Tree_Base::RB_SearchResult &result);
 
   /// Rebalance the tree after insertion of a node.
@@ -509,7 +509,7 @@ protected:
    * otherwise just find a match node
    * Returns 0 for success, or -1 if it cannot find the key in the tree.
    */
-  int find_i (const EXT_ID &ext_id, ACE_RB_Tree_Node<EXT_ID, INT_ID>* &entry, int find_exact = 1);
+  int find_i (EXT_ID const &ext_id, ACE_RB_Tree_Node<EXT_ID, INT_ID>* &entry, int find_exact = 1);
 
   /**
    * Inserts a *copy* of the key and the item into the tree: both the
@@ -521,7 +521,7 @@ protected:
    * is created, and the returned pointer addresses the existing item
    * associated with the existing key.
    */
-  INT_ID* insert_i (const EXT_ID &k, const INT_ID &t);
+  INT_ID* insert_i (EXT_ID const &k, INT_ID const &t);
 
   /**
    * Inserts a *copy* of the key and the item into the tree: both the
@@ -533,7 +533,7 @@ protected:
    * exist, and a new one is successfully created, and the method returns 0.
    * If there was an error, the method returns -1.
    */
-  int insert_i (const EXT_ID &k, const INT_ID &t,
+  int insert_i (EXT_ID const &k, INT_ID const &t,
                 ACE_RB_Tree_Node<EXT_ID, INT_ID> *&entry);
 
   /**
@@ -542,7 +542,7 @@ protected:
    * destroyed it, 0 if it did not find the item, or -1 if an error
    * occurred.  Returns the stored internal id in the second argument.
    */
-  int remove_i (const EXT_ID &k, INT_ID &i);
+  int remove_i (EXT_ID const &k, INT_ID &i);
 
   /// Removes the item associated with the given key from the tree and
   /// destroys it.
@@ -557,7 +557,7 @@ protected:
   void dump_node_i (ACE_RB_Tree_Node<EXT_ID, INT_ID> &node) const;
 
   /// Less than comparison function for keys, using comparison functor.
-  int lessthan (const EXT_ID &k1, const EXT_ID &k2);
+  int lessthan (EXT_ID const &k1, EXT_ID const &k2);
   /// @}
 
 private:
@@ -641,7 +641,7 @@ protected:
    * Constructor.  Takes an ACE_RB_Tree over which to iterate, and a key.
    * The key must come first to distinguish the case of EXT_ID == int.
    */
-  ACE_RB_Tree_Iterator_Base (const EXT_ID& key,
+  ACE_RB_Tree_Iterator_Base (EXT_ID const& key,
                              ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS,ACE_LOCK> &tree);
 
   ~ACE_RB_Tree_Iterator_Base ();
@@ -703,7 +703,7 @@ public:
    * Constructor.  Takes an ACE_RB_Tree over which to iterate, and a key;
    * the key comes first in order to distinguish the case of EXT_ID == int.
    */
-  ACE_RB_Tree_Iterator (const EXT_ID &key,
+  ACE_RB_Tree_Iterator (EXT_ID const &key,
                         ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
   ~ACE_RB_Tree_Iterator ();
@@ -824,7 +824,7 @@ public:
    * Constructor.  Takes an ACE_RB_Tree over which to iterate, and a key;
    * the key comes first in order to distinguish the case of EXT_ID == int.
    */
-  ACE_RB_Tree_Reverse_Iterator (const EXT_ID &key,
+  ACE_RB_Tree_Reverse_Iterator (EXT_ID const &key,
                                 ACE_RB_Tree<EXT_ID, INT_ID, COMPARE_KEYS, ACE_LOCK> &tree);
 
   ~ACE_RB_Tree_Reverse_Iterator ();
