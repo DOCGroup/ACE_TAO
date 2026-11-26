@@ -64,7 +64,7 @@ public:
   ACE_Message_Queue<ACE_SYNCH> *queue_;
 
   /// string of characters to indicate message order
-  const char *order_string_;
+  char const *order_string_;
 
   /// array of message blocks to use
   ACE_Message_Block **array_;
@@ -133,7 +133,7 @@ order_consumer (void *args)
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
     static_cast<ArgStruct *> (args)->queue_;
-  const char *receipt_order =
+  char const *receipt_order =
     static_cast<ArgStruct *> (args)->order_string_;
   u_int expected_count =
     static_cast<ArgStruct *> (args)->expected_count_;
@@ -146,7 +146,7 @@ order_consumer (void *args)
   // Keep looping, reading a message out of the queue, until we reach
   // the end of the receipt order string, which signals us to quit.
 
-  for (const char *expected = receipt_order;
+  for (char const *expected = receipt_order;
        *expected != '\0';
        ++expected)
   {
@@ -181,7 +181,7 @@ order_producer (void *args)
 
   ACE_Message_Queue<ACE_SYNCH> *msg_queue =
     static_cast<ArgStruct *> (args)->queue_;
-  const char *send_order =
+  char const *send_order =
     static_cast<ArgStruct *> (args)->order_string_;
   ACE_Message_Block **block_array =
     static_cast<ArgStruct *> (args)->array_;
@@ -195,7 +195,7 @@ order_producer (void *args)
   // array, setting the current message block's read pointer to the
   // current position in the send order string.
   size_t local_count = 0;
-  const char *c;
+  char const *c;
 
   for (local_count = 0, c = send_order; *c != '\0'; ++local_count, ++c)
     {
@@ -222,8 +222,8 @@ order_producer (void *args)
 
 static int
 run_order_test (ACE_Message_Queue<ACE_SYNCH>* msg_queue,
-                const char *send_order,
-                const char *receipt_order)
+                char const *send_order,
+                char const *receipt_order)
 {
   size_t i;
   const size_t array_size = std::strlen (send_order);

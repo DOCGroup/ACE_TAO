@@ -9,7 +9,7 @@
 
 struct Multicast_Address
 {
-  const char *addr_;
+  char const *addr_;
   bool is_multicast_;
 };
 

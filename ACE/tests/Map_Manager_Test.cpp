@@ -842,7 +842,7 @@ run_test (int (*ptf) (size_t, size_t, int),
           size_t table_size,
           size_t iterations,
           int test_iterators,
-          const ACE_TCHAR *test_name)
+          ACE_TCHAR const *test_name)
 {
   ACE_Profile_Timer timer;
   timer.start ();

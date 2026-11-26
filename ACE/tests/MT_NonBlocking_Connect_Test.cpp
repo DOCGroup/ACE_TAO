@@ -39,7 +39,7 @@ static int number_of_threads = 10;
 static int debug = 0;
 static int result = 0;
 
-static const ACE_TCHAR* hosts[] = {
+static ACE_TCHAR const * hosts[] = {
   ACE_TEXT ("www.russiantvguide.com:80"),
   ACE_TEXT ("news.bbc.co.uk:80"),
   ACE_TEXT ("www.cnn.com:80"),
