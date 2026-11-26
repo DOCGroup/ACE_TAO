@@ -26,7 +26,7 @@ struct array_traits
   using const_value_type = typename T_forany::_array_type const;
   using slice_type = typename T_forany::_slice_type;
 
-  inline static void copy (slice_type * _tao_to, const slice_type * _tao_from)
+  inline static void copy (slice_type * _tao_to, slice_type const * _tao_from)
   {
     TAO::Array_Traits<forany_type>::copy (_tao_to, _tao_from);
   }
@@ -42,7 +42,7 @@ struct array_traits
   }
 
   inline static slice_type * dup(
-      const slice_type * value)
+      slice_type const * value)
   {
     return TAO::Array_Traits<forany_type>::dup (value);
   }

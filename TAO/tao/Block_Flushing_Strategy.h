@@ -42,7 +42,7 @@ public:
 
 private:
   int call_handle_output (TAO_Transport *transport,
-                          const TAO::Transport::Drain_Constraints &dc);
+                          TAO::Transport::Drain_Constraints const &dc);
 };
 
 TAO_END_VERSIONED_NAMESPACE_DECL

@@ -20,7 +20,7 @@ TAO_Block_Flushing_Strategy::cancel_output (TAO_Transport *)
 
 int
 TAO_Block_Flushing_Strategy::call_handle_output (TAO_Transport *transport,
-    const TAO::Transport::Drain_Constraints &dc)
+    TAO::Transport::Drain_Constraints const &dc)
 {
   switch (transport->handle_output (dc).dre_)
     {

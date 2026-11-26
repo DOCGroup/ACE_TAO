@@ -78,7 +78,7 @@ public:
   virtual void components_established (PortableInterceptor::IORInfo_ptr info) = 0;
 
   virtual void adapter_state_changed (
-      const TAO::ObjectReferenceTemplate_Array &array_obj_ref_template,
+      TAO::ObjectReferenceTemplate_Array const &array_obj_ref_template,
       PortableInterceptor::AdapterState state) = 0;
 
   virtual void adapter_manager_state_changed (
