@@ -35,7 +35,7 @@ public:
   void invoke (CORBA::ServerRequest_ptr request,
                TAO_AMH_DSI_Response_Handler_ptr rh);
   CORBA::RepositoryId _primary_interface (
-      const PortableServer::ObjectId &oid,
+      PortableServer::ObjectId const &oid,
       PortableServer::POA_ptr poa) override;
   /// @}
 

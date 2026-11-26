@@ -165,7 +165,7 @@ prepare_tests (CORBA::ORB_ptr orb, PortableServer::POA_ptr root_poa)
 
       my_compress_poa = root_poa->create_POA("My_Compress_Poa", nullptr, policies);
     }
-  catch(const CORBA::PolicyError&)
+  catch(CORBA::PolicyError const &)
     {
       policies.length(0);
       my_compress_poa = root_poa->create_POA("My_Compress_Poa", nullptr, policies);
@@ -251,7 +251,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Exception caught:");
       return 1;

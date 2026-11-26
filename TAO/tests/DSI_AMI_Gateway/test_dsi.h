@@ -46,7 +46,7 @@ public:
                TAO_AMH_DSI_Response_Handler_ptr rh);
 
   CORBA::RepositoryId _primary_interface (
-      const PortableServer::ObjectId &oid,
+      PortableServer::ObjectId const &oid,
       PortableServer::POA_ptr poa) override;
 
   PortableServer::POA_ptr _default_POA () override;

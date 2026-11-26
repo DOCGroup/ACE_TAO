@@ -59,7 +59,7 @@ DSI_Simple_Server::invoke (CORBA::ServerRequest_ptr request)
 }
 
 CORBA::RepositoryId
-DSI_Simple_Server::_primary_interface (const PortableServer::ObjectId &,
+DSI_Simple_Server::_primary_interface (PortableServer::ObjectId const &,
                                        PortableServer::POA_ptr)
 {
   return CORBA::string_dup ("IDL:Simple_Server:1.0");

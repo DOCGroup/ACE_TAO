@@ -90,7 +90,7 @@ Roundtrip::invoke (CORBA::ServerRequest_ptr request,
 }
 
 CORBA::RepositoryId
-Roundtrip::_primary_interface (const PortableServer::ObjectId &,
+Roundtrip::_primary_interface (PortableServer::ObjectId const &,
                                PortableServer::POA_ptr)
 {
   return CORBA::string_dup ("IDL:Test/Roundtrip:1.0");
