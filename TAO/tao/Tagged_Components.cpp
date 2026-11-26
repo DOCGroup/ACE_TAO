@@ -127,7 +127,7 @@ void
 TAO_Tagged_Components::set_known_component_i (
     const IOP::TaggedComponent& component)
 {
-  TAO_InputCDR cdr (reinterpret_cast<const char*> (
+  TAO_InputCDR cdr (reinterpret_cast<char const *> (
                       component.component_data.get_buffer ()),
                     component.component_data.length ());
 

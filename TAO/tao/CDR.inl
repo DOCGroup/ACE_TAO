@@ -121,7 +121,7 @@ TAO_OutputCDR::reset_vt_indirect_maps ()
 
 
 ACE_INLINE
-TAO_InputCDR::TAO_InputCDR (const char *buf,
+TAO_InputCDR::TAO_InputCDR (char const *buf,
                             size_t bufsiz,
                             int byte_order,
                             ACE_CDR::Octet major_version,
@@ -406,7 +406,7 @@ ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
 }
 
 ACE_INLINE CORBA::Boolean operator<< (TAO_OutputCDR &os,
-                                      const char * x)
+                                      char const *x)
 {
   return
     os.fragment_stream (ACE_CDR::OCTET_ALIGN,

@@ -340,7 +340,7 @@ public:
    * exercised wrt alignment, because this constructor will *not* work
    * if the buffer is unproperly aligned.
    */
-  TAO_InputCDR (const char* buf,
+  TAO_InputCDR (char const *buf,
                 size_t bufsiz,
                 int byte_order = ACE_CDR_BYTE_ORDER,
                 ACE_CDR::Octet major_version = TAO_DEF_GIOP_MAJOR,

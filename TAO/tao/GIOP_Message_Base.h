@@ -186,7 +186,7 @@ private:
   int dump_consolidated_msg (TAO_OutputCDR &stream);
 
   /// Print out a debug messages..
-  void dump_msg (const char *label, const u_char *ptr,
+  void dump_msg (char const *label, u_char const *ptr,
                  size_t len);
 
   /// Writes the GIOP header in to @a msg

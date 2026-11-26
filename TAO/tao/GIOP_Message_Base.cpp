@@ -1361,7 +1361,7 @@ TAO_GIOP_Message_Base::send_error (TAO_Transport *transport)
   if (TAO_debug_level > 9)
     {
       this->dump_msg ("send_error",
-                      reinterpret_cast <const u_char *> (error_message),
+                      reinterpret_cast <u_char const *> (error_message),
                       TAO_GIOP_MESSAGE_HEADER_LEN);
     }
 
@@ -1465,7 +1465,7 @@ TAO_GIOP_Message_Base::
   if (TAO_debug_level > 9)
     {
       this->dump_msg ("send_close_connection",
-                      reinterpret_cast <const u_char *> (close_message),
+                      reinterpret_cast <u_char const *> (close_message),
                       TAO_GIOP_MESSAGE_HEADER_LEN);
     }
 
@@ -1541,8 +1541,8 @@ TAO_GIOP_Message_Base::send_reply_exception (
 }
 
 void
-TAO_GIOP_Message_Base::dump_msg (const char *label,
-                                 const u_char *ptr,
+TAO_GIOP_Message_Base::dump_msg (char const *label,
+                                 u_char const *ptr,
                                  size_t len)
 {
     if (TAO_debug_level < 10)
@@ -1555,7 +1555,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
         return;
       }
 
-    static const char *names[] =
+    static char const *names[] =
     {
       "Request",
       "Reply",
@@ -1568,7 +1568,7 @@ TAO_GIOP_Message_Base::dump_msg (const char *label,
     };
 
     // Message name.
-    const char *message_name = "UNKNOWN MESSAGE";
+    char const *message_name = "UNKNOWN MESSAGE";
     u_long const slot = ptr[TAO_GIOP_MESSAGE_TYPE_OFFSET];
     if (slot < sizeof (names) / sizeof (names[0]))
     {

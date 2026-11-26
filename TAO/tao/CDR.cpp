@@ -14,7 +14,7 @@
 
 #if defined (ACE_ENABLE_TIMEPROBES)
 
-static const char *TAO_CDR_Timeprobe_Description[] =
+static char const *TAO_CDR_Timeprobe_Description[] =
 {
   "OutputCDR::ctor[1] - enter",
   "OutputCDR::ctor[1] - leave",
