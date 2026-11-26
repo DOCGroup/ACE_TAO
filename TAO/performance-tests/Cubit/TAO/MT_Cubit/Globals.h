@@ -4,7 +4,7 @@
 /**
  *  @file    Globals.h
  *
- *  All the globally defined classes, functions, types, and #defines
+ *  All the globally defined classes, functions, types, and macros
  *  are centralized here.
  *
  *  @author Nagarajan Surendran <naga@cs.wustl.edu>
