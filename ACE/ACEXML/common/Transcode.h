@@ -30,9 +30,7 @@
 class ACEXML_Export ACEXML_Transcoder
 {
 public:
-  /*
-   * Status of the conversion function.
-   */
+  /// Status of the conversion function.
   enum
   {
     ACEXML_SUCCESS = 0,
@@ -47,7 +45,7 @@ public:
   // into different encoding.  Return number of characters put into
   // destination or consumed from src if success without
   // error, otherwise, return corresponding error code.
-  /*
+  /**
    * Convert a UTF-16 character into a string in UTF-8 encoding.
    *
    * @return number of characters the function uses to store the
@@ -58,7 +56,7 @@ public:
                          ACEXML_UTF8 *dst,
                          size_t len);
 
-  /*
+  /**
    * Convert a UCS-4 character into a string in UTF-8 encoding.
    *
    * @return number of characters the function uses to store the
@@ -69,7 +67,7 @@ public:
                         ACEXML_UTF8 *dst,
                         size_t len);
 
-  /*
+  /**
    * Convert a UCS-4 character into a string in UTF-16 encoding.
    *
    * @return number of characters the function uses to store the
@@ -80,7 +78,7 @@ public:
                          ACEXML_UTF16 *dst,
                          size_t len);
 
-  /*
+  /**
    * Convert a UTF-16 surrogate character pair into a string in UTF-8 encoding.
    *
    * @return number of characters the function uses to store the
@@ -92,7 +90,7 @@ public:
                              ACEXML_UTF8 *dst,
                              size_t len);
 
-  /*
+  /**
    * Convert a UTF-16 surrogate character pair into a UCS-4 character.
    *
    * @return SUCCESS if it succeeds or one of the error STATUS
@@ -102,7 +100,7 @@ public:
                              ACEXML_UTF16 low,
                              ACEXML_UCS4 &dst);
 
-  /*
+  /**
    * Convert the first UNICODE character in a UTF-8 character string
    * into a UCS-4 character.
    *
@@ -110,11 +108,11 @@ public:
    *         UTF-8 string if it succeeds or one of the error STATUS
    *         otherwise.
    */
-  static int utf82ucs4 (const ACEXML_UTF8 *src,
+  static int utf82ucs4 (ACEXML_UTF8 const *src,
                         size_t len,
                         ACEXML_UCS4 &dst);
 
-  /*
+  /**
    * Convert the first UNICODE character in a UTF-16 character string
    * into a UCS-4 character.
    *
@@ -122,11 +120,11 @@ public:
    *         UTF-16 string if it succeeds or one of the error STATUS
    *         otherwise.
    */
-  static int utf162ucs4 (const ACEXML_UTF16 *src,
+  static int utf162ucs4 (ACEXML_UTF16 const *src,
                         size_t len,
                         ACEXML_UCS4 &dst);
 
-//    static int utf82utf16 (const ACEXML_UTF8 *src,
+//    static int utf82utf16 (ACEXML_UTF8 const *src,
 //                           size_t len,
 //                           ACEXML_UTF16 &dst);
   // This function does not handle surrogates.
@@ -134,29 +132,29 @@ public:
   /// @name Non-inlined conversions
   /// @{
 
-  /*
+  /**
    * Convert a UTF-8 string into a UTF-16 string.
    *
-   * @param len The length of @a dst string.
+   * The length of the destination string is given by @a len.
    *
    * @return number of characters the function consumed from the
    *         UTF-8 string if it succeeds or one of the error STATUS
    *         otherwise.
    */
-  static int utf8s2utf16s (const ACEXML_UTF8 *src,
+  static int utf8s2utf16s (ACEXML_UTF8 const *src,
                            ACEXML_UTF16 *dst,
                            size_t len);
 
-  /*
+  /**
    * Convert a UTF-16 string into a UTF-8 string.
    *
-   * @param len The length of @a dst string.
+   * The length of the destination string is given by @a len.
    *
    * @return number of characters the function uses in
    *         UTF-8 string if it succeeds or one of the error STATUS
    *         otherwise.
    */
-  static int utf16s2utf8s (const ACEXML_UTF16 *src,
+  static int utf16s2utf8s (ACEXML_UTF16 const *src,
                            ACEXML_UTF8 *dst,
                            size_t len);
   /// @}

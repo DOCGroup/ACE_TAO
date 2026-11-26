@@ -235,7 +235,7 @@ ACEXML_Transcoder::utf82ucs4 (ACEXML_UTF8 const *the_src,
 }
 
 int
-ACEXML_Transcoder::utf162ucs4 (const ACEXML_UTF16 *src,
+ACEXML_Transcoder::utf162ucs4 (ACEXML_UTF16 const *src,
                                size_t len,
                                ACEXML_UCS4 &dst)
 {
@@ -269,7 +269,7 @@ ACEXML_Transcoder::utf162ucs4 (const ACEXML_UTF16 *src,
 }
 
 int
-ACEXML_Transcoder::utf8s2utf16s (const ACEXML_UTF8 *src,
+ACEXML_Transcoder::utf8s2utf16s (ACEXML_UTF8 const *src,
                                  ACEXML_UTF16 *dst,
                                  size_t len)
 {
@@ -313,7 +313,7 @@ ACEXML_Transcoder::utf8s2utf16s (const ACEXML_UTF8 *src,
 }
 
 int
-ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
+ACEXML_Transcoder::utf16s2utf8s (ACEXML_UTF16 const *src,
                                  ACEXML_UTF8 *dst,
                                  size_t len)
 {
@@ -323,7 +323,7 @@ ACEXML_Transcoder::utf16s2utf8s (const ACEXML_UTF16 *src,
   }
 
   size_t src_len = 1;
-  for (const ACEXML_UTF16 *p = src; *p++ != 0; ++src_len)
+  for (ACEXML_UTF16 const *p = src; *p++ != 0; ++src_len)
     {
       ;
     }
