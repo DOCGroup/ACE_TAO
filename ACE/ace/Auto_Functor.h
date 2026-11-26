@@ -14,6 +14,7 @@
 #endif /* ACE_LACKS_PRAGMA_ONCE */
 
 #include "ace/Global_Macros.h"
+#include <utility>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -84,6 +85,7 @@ public:
 
   /// noexcept
   X * get();
+  X * get() const;
 
   /// noexcept
   X * release();

@@ -68,11 +68,16 @@ ACE_Utils::Auto_Functor<X,Functor>::get()
 
 template<typename X, typename Functor>
 ACE_INLINE X *
+ACE_Utils::Auto_Functor<X,Functor>::get() const
+{
+  return p_;
+}
+
+template<typename X, typename Functor>
+ACE_INLINE X *
 ACE_Utils::Auto_Functor<X,Functor>::release()
 {
-  X * tmp = p_;
-  p_ = nullptr;
-  return tmp;
+  return std::exchange (p_, nullptr);
 }
 
 template<typename X, typename Functor>
