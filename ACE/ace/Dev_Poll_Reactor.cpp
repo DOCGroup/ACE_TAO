@@ -163,7 +163,7 @@ ACE_Dev_Poll_Reactor_Notify::notify (ACE_Event_Handler *eh,
   // pipe bytes will cause the entire notification queue to be processed.
   // Note that we don't need a timeout since the pipe is already in
   // nonblocking mode and all we want is one attempt.
-  const ssize_t n = ACE::send (this->notification_pipe_.write_handle (),
+  ssize_t const n = ACE::send (this->notification_pipe_.write_handle (),
                          &buffer,
                          1);             // Only need one byte to pop the pipe
   if (n == -1 && (errno != EAGAIN))

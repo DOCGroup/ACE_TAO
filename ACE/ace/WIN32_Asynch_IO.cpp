@@ -1165,7 +1165,7 @@ ACE_WIN32_Asynch_Read_File_Result::complete (size_t bytes_transferred,
     }
   else
   {
-    static const size_t page_size = ACE_OS::getpagesize();
+    static size_t const page_size = ACE_OS::getpagesize();
 
     for (ACE_Message_Block* mb = &this->message_block_;
          (mb != nullptr) && (bytes_transferred > 0);
@@ -1363,7 +1363,7 @@ ACE_WIN32_Asynch_Read_File::readv (ACE_Message_Block &message_block,
                                    int signal_number)
 {
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
-  static const size_t page_size = ACE_OS::getpagesize();
+  static size_t const page_size = ACE_OS::getpagesize();
 
   FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
   int buffer_pointers_count = 0;
@@ -1579,7 +1579,7 @@ ACE_WIN32_Asynch_Write_File_Result::complete (size_t bytes_transferred,
     }
   else
   {
-    static const size_t page_size = ACE_OS::getpagesize();
+    static size_t const page_size = ACE_OS::getpagesize();
 
     for (ACE_Message_Block* mb = &this->message_block_;
          (mb != nullptr) && (bytes_transferred > 0);
@@ -1814,7 +1814,7 @@ ACE_WIN32_Asynch_Write_File::writev (ACE_Message_Block &message_block,
                                      int signal_number)
 {
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
-  static const size_t page_size = ACE_OS::getpagesize();
+  static size_t const page_size = ACE_OS::getpagesize();
 
   FILE_SEGMENT_ELEMENT buffer_pointers[ACE_IOV_MAX + 1];
   int buffer_pointers_count = 0;

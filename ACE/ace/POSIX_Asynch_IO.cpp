@@ -2180,7 +2180,7 @@ ACE_POSIX_Asynch_Transmit_File::transmit_file (ACE_HANDLE file,
                                                int signal_number)
 {
   // Adjust these parameters if there are default values specified.
-  const ssize_t file_size = ACE_OS::filesize (file);
+  ssize_t const file_size = ACE_OS::filesize (file);
 
   if (file_size == -1)
     {
