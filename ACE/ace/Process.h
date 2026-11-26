@@ -167,7 +167,7 @@ public:
 
 #if defined (ACE_HAS_WCHAR)
   /// Anti-TChar version of command_line ()
-  int command_line (const ACE_ANTI_TCHAR *format, ...);
+  int command_line (ACE_ANTI_TCHAR const *format, ...);
 #endif /* ACE_HAS_WCHAR */
 #endif // ACE_LACKS_VA_FUNCTIONS
 
@@ -599,7 +599,7 @@ public:
    * ACE_Process_Manager in the same process that's expecting
    * @c SIGCHLD to kick off process reaping.
    */
-  pid_t wait (const ACE_Time_Value &tv,
+  pid_t wait (ACE_Time_Value const &tv,
               ACE_exitcode *status = nullptr);
 
   /// Send the process a signal.  This only has an effect on operating

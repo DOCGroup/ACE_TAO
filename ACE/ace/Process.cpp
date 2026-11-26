@@ -604,7 +604,7 @@ ACE_Process::running () const
 }
 
 pid_t
-ACE_Process::wait (const ACE_Time_Value &tv,
+ACE_Process::wait (ACE_Time_Value const &tv,
                    ACE_exitcode *status)
 {
 #if defined (ACE_WIN32)
@@ -1351,7 +1351,7 @@ ACE_Process_Options::command_line (ACE_TCHAR const *format, ...)
 
 #if defined (ACE_HAS_WCHAR)
 int
-ACE_Process_Options::command_line (const ACE_ANTI_TCHAR *format, ...)
+ACE_Process_Options::command_line (ACE_ANTI_TCHAR const *format, ...)
 {
   ACE_ANTI_TCHAR *anti_clb {};
   ACE_NEW_RETURN (anti_clb,

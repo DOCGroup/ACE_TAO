@@ -242,7 +242,7 @@ public:
    *
    * @retval 0 on success; -1 on failure.
    */
-  int wait (const ACE_Time_Value &timeout = ACE_Time_Value::max_time);
+  int wait (ACE_Time_Value const &timeout = ACE_Time_Value::max_time);
 
   /// @sa wait
   template<class Rep, class Period>
@@ -266,7 +266,7 @@ public:
    * if a timeout occurred, or ACE_INVALID_PID on error.
    */
   pid_t wait (pid_t pid,
-              const ACE_Time_Value &timeout,
+              ACE_Time_Value const &timeout,
               ACE_exitcode *status = nullptr);
 
   /// @sa wait
@@ -327,7 +327,7 @@ public:
    * @retval 0 on success, -1 on failure, and ACE_INVALID_PID when the
    * specified @a pid is not managed by this ACE_Process_Manager.
    */
-  int set_scheduler (const ACE_Sched_Params &params, pid_t pid);
+  int set_scheduler (ACE_Sched_Params const &params, pid_t pid);
 
   /**
    * Sets the scheduling parameters for all the processes managed by
@@ -336,7 +336,7 @@ public:
    *
    * @retval 0 on success, -1 on failure.
    */
-  int set_scheduler_all (const ACE_Sched_Params &params);
+  int set_scheduler_all (ACE_Sched_Params const &params);
 
   /// Dump the state of an object.
   void dump () const;

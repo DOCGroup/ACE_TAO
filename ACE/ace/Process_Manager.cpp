@@ -671,7 +671,7 @@ ACE_Process_Manager::terminate (pid_t pid, int sig)
 }
 
 int
-ACE_Process_Manager::set_scheduler (const ACE_Sched_Params & params,
+ACE_Process_Manager::set_scheduler (ACE_Sched_Params const & params,
                                     pid_t pid)
 {
   ACE_TRACE ("ACE_Process_Manager::set_scheduler");
@@ -693,7 +693,7 @@ ACE_Process_Manager::set_scheduler (const ACE_Sched_Params & params,
 }
 
 int
-ACE_Process_Manager::set_scheduler_all (const ACE_Sched_Params & params)
+ACE_Process_Manager::set_scheduler_all (ACE_Sched_Params const & params)
 {
   ACE_TRACE ("ACE_Process_Manager::set_scheduler_all");
 
@@ -752,7 +752,7 @@ ACE_Process_Manager::find_proc (ACE_HANDLE h)
 // Wait for all the Processs to exit, or until @a timeout elapses.
 // Returns the number of Processes remaining, or -1 on an error.
 int
-ACE_Process_Manager::wait (const ACE_Time_Value &timeout)
+ACE_Process_Manager::wait (ACE_Time_Value const &timeout)
 {
   ACE_TRACE ("ACE_Process_Manager::wait");
 
@@ -813,7 +813,7 @@ ACE_Process_Manager::wait (pid_t pid,
 // Process reaping on Unix as above.
 pid_t
 ACE_Process_Manager::wait (pid_t pid,
-                           const ACE_Time_Value &timeout,
+                           ACE_Time_Value const &timeout,
                            ACE_exitcode *status)
 {
   ACE_TRACE ("ACE_Process_Manager::wait");
