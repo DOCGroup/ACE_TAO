@@ -137,8 +137,8 @@ namespace
 }  // Close anonymous namespace
 
 FILE *
-ACE_OS::fopen (const char *filename,
-               const ACE_TCHAR *mode)
+ACE_OS::fopen (char const *filename,
+               ACE_TCHAR const *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
 #if defined (ACE_LACKS_FOPEN)
@@ -193,22 +193,22 @@ ACE_OS::fopen (const char *filename,
 
 #if defined (ACE_HAS_WCHAR)
 FILE *
-ACE_OS::fopen (const char *filename,
-               const ACE_ANTI_TCHAR *mode)
+ACE_OS::fopen (char const *filename,
+               ACE_ANTI_TCHAR const *mode)
 {
   return ACE_OS::fopen (filename, ACE_TEXT_ANTI_TO_TCHAR (mode));
 }
 
 FILE *
 ACE_OS::fopen (const wchar_t *filename,
-               const ACE_ANTI_TCHAR *mode)
+               ACE_ANTI_TCHAR const *mode)
 {
   return ACE_OS::fopen (filename, ACE_TEXT_ANTI_TO_TCHAR (mode));
 }
 
 FILE *
 ACE_OS::fopen (const wchar_t *filename,
-               const ACE_TCHAR *mode)
+               ACE_TCHAR const *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
 #if defined (ACE_LACKS_FOPEN)
@@ -218,7 +218,7 @@ ACE_OS::fopen (const wchar_t *filename,
 #else
   int hmode = _O_TEXT;
 
-  for (const ACE_TCHAR *mode_ptr = mode; *mode_ptr != 0; ++mode_ptr)
+  for (ACE_TCHAR const *mode_ptr = mode; *mode_ptr != 0; ++mode_ptr)
     fopen_mode_to_open_mode_converter (*mode_ptr, hmode);
 
   ACE_HANDLE handle = ACE_OS::open (filename, hmode);
@@ -257,7 +257,7 @@ ACE_OS::fopen (const wchar_t *filename,
 
 #if !defined (ACE_DISABLE_TEMPNAM)
 char *
-ACE_OS::tempnam (const char *dir, const char *pfx)
+ACE_OS::tempnam (char const *dir, char const *pfx)
 {
   ACE_OS_TRACE ("ACE_OS::tempnam");
 #if defined (ACE_LACKS_TEMPNAM)
@@ -314,7 +314,7 @@ ACE_OS::tempnam (const wchar_t *dir, const wchar_t *pfx)
 // The following *printf functions aren't inline because
 // they use varargs.
 int
-ACE_OS::fprintf (FILE *fp, const char *format, ...)
+ACE_OS::fprintf (FILE *fp, char const *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::fprintf");
 #if defined (ACE_LACKS_VA_FUNCTIONS)
@@ -351,7 +351,7 @@ ACE_OS::fprintf (FILE *fp, const wchar_t *format, ...)
 #endif /* ACE_HAS_WCHAR */
 
 int
-ACE_OS::asprintf (char **bufp, const char *format, ...)
+ACE_OS::asprintf (char **bufp, char const *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::asprintf");
 #if defined (ACE_LACKS_VA_FUNCTIONS)
@@ -388,7 +388,7 @@ ACE_OS::asprintf (wchar_t **bufp, const wchar_t *format, ...)
 
 #if !defined ACE_FACE_DEV || !defined ACE_STDIO_USE_STDLIB_FOR_VARARGS
 int
-ACE_OS::printf (const char *format, ...)
+ACE_OS::printf (char const *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::printf");
 #if defined (ACE_LACKS_VA_FUNCTIONS)
@@ -424,7 +424,7 @@ ACE_OS::printf (const wchar_t *format, ...)
 
 #if !defined ACE_STDIO_USE_STDLIB_FOR_VARARGS || defined ACE_LACKS_SNPRINTF
 int
-ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
+ACE_OS::snprintf (char *buf, size_t maxlen, char const *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::snprintf");
 #if defined (ACE_LACKS_VA_FUNCTIONS)
@@ -443,7 +443,7 @@ ACE_OS::snprintf (char *buf, size_t maxlen, const char *format, ...)
 #endif /* ACE_STDIO_USE_STDLIB_FOR_VARARGS */
 
 int
-ACE_OS::vsprintf (char *buffer, const char *format, va_list argptr)
+ACE_OS::vsprintf (char *buffer, char const *format, va_list argptr)
 {
 #ifdef ACE_LACKS_VSPRINTF
   ACE_UNUSED_ARG (buffer);
@@ -476,7 +476,7 @@ ACE_OS::snprintf (wchar_t *buf, size_t maxlen, const wchar_t *format, ...)
 #endif /* ACE_HAS_WCHAR */
 
 int
-ACE_OS::sprintf (char *buf, const char *format, ...)
+ACE_OS::sprintf (char *buf, char const *format, ...)
 {
   // ACE_OS_TRACE ("ACE_OS::sprintf");
 #if defined (ACE_LACKS_VA_FUNCTIONS)
@@ -513,7 +513,7 @@ ACE_OS::sprintf (wchar_t *buf, const wchar_t *format, ...)
 
 #if !defined (ACE_HAS_VASPRINTF) && !defined (ACE_LACKS_VA_COPY)
 int
-ACE_OS::vasprintf_emulation(char **bufp, const char *format, va_list argptr)
+ACE_OS::vasprintf_emulation(char **bufp, char const *format, va_list argptr)
 {
   va_list ap;
   va_copy (ap, argptr);
@@ -607,7 +607,7 @@ namespace { // helpers for vsnprintf_emulation
   {
     Snprintf_Flags () = default;
 
-    explicit Snprintf_Flags (const char *&fmt)
+    explicit Snprintf_Flags (char const *&fmt)
     {
       this->parse_flags (fmt);
       if (this->has (SNPRINTF_LEFT))
@@ -620,7 +620,7 @@ namespace { // helpers for vsnprintf_emulation
         }
     }
 
-    void parse_flags (const char *&fmt)
+    void parse_flags (char const *&fmt)
     {
       for (; true; ++fmt)
         {
@@ -638,7 +638,7 @@ namespace { // helpers for vsnprintf_emulation
         }
     }
 
-    void parse_length (const char *&fmt)
+    void parse_length (char const *&fmt)
     {
       if (fmt[0] == 'h' && fmt[1] == 'h')
         {
@@ -728,7 +728,7 @@ namespace { // helpers for vsnprintf_emulation
 
   struct Snprintf_Digit_Grouping
   {
-    Snprintf_Digit_Grouping (Snprintf_Flags flags, const char *grouping,
+    Snprintf_Digit_Grouping (Snprintf_Flags flags, char const *grouping,
                              char thousands)
       : grouping_ (flags.has (SNPRINTF_GROUP) ? grouping : 0)
       , separator_ (flags.has (SNPRINTF_GROUP) ? *grouping : CHAR_MAX)
@@ -748,7 +748,7 @@ namespace { // helpers for vsnprintf_emulation
         {
           return 0;
         }
-      const char *grouping = this->grouping_;
+      char const *grouping = this->grouping_;
       int group = *grouping;
       int separators = 0;
       while (group > 0 && group < CHAR_MAX && digits > group)
@@ -782,9 +782,9 @@ namespace { // helpers for vsnprintf_emulation
       return separate;
     }
 
-    const char *grouping_;
+    char const *grouping_;
     int separator_, next_sep_;
-    const char thousands_;
+    char const thousands_;
   };
 
   struct Snprintf_Buffer
@@ -794,7 +794,7 @@ namespace { // helpers for vsnprintf_emulation
       , avail_ (max - 1) // last byte is not available for writes, must be null
     {}
 
-    void out (const char *s, size_t n)
+    void out (char const *s, size_t n)
     {
       if (n == 0)
         {
@@ -820,7 +820,7 @@ namespace { // helpers for vsnprintf_emulation
       this->written_ += n;
     }
 
-    void pad (const char *s, size_t n, Snprintf_Flags flags, int width)
+    void pad (char const *s, size_t n, Snprintf_Flags flags, int width)
     {
       const int used = static_cast<int> (n);
       if (!flags.has (SNPRINTF_LEFT) && width > used)
@@ -861,15 +861,15 @@ namespace { // helpers for vsnprintf_emulation
 
 #ifdef ACE_LACKS_LOCALECONV
       static constexpr char thousands_sep = 0;
-      static const char grouping[] = "";
+      static char const grouping[] = "";
 #else
 # ifdef localeconv
 #  undef localeconv
 # endif
       const std::lconv *const conv = std::localeconv ();
-      const char thousands_sep =
+      char const thousands_sep =
         conv && *conv->thousands_sep ? *conv->thousands_sep : ',';
-      const char *grouping = conv ? conv->grouping : "";
+      char const *grouping = conv ? conv->grouping : "";
 #endif
 
       if (base != 10)
@@ -880,7 +880,7 @@ namespace { // helpers for vsnprintf_emulation
 
       char buf[100];
       char *it = buf + sizeof buf;
-      const char a = flags.has (SNPRINTF_UCASE) ? 'A' : 'a';
+      char const a = flags.has (SNPRINTF_UCASE) ? 'A' : 'a';
       int sep_chars = 0;
 
       for (ACE_UINT64 v = val; v; v /= base)
@@ -958,8 +958,8 @@ namespace { // helpers for vsnprintf_emulation
       char *it = buf;
 
       // Find the sign bit manually, signbit() is only available with C99/C++11
-      const void *const ptr = &val;
-      const char *const pval = static_cast<const char *> (ptr);
+      void const *const ptr = &val;
+      char const *const pval = static_cast<char const *> (ptr);
 #if ACE_BYTE_ORDER == ACE_LITTLE_ENDIAN
 # if defined LDBL_MANT_DIG && LDBL_MANT_DIG == 64
 #  define SIGN_OFFSET 9
@@ -1000,13 +1000,13 @@ namespace { // helpers for vsnprintf_emulation
 
 #ifdef ACE_LACKS_LOCALECONV
       static constexpr char radix = '.', thousands_sep = 0;
-      static const char grouping[] = "";
+      static char const grouping[] = "";
 #else
       const std::lconv *const conv = std::localeconv ();
-      const char radix = conv ? *conv->decimal_point : '.';
-      const char thousands_sep =
+      char const radix = conv ? *conv->decimal_point : '.';
+      char const thousands_sep =
         conv && *conv->thousands_sep ? *conv->thousands_sep : ',';
-      const char *grouping = conv ? conv->grouping : "";
+      char const *grouping = conv ? conv->grouping : "";
 #endif
 
       const long double log = val > 0 ? std::log10 (val) : 0;
@@ -1042,7 +1042,7 @@ namespace { // helpers for vsnprintf_emulation
             {
               exp -= 4;
             }
-          const char a = flags.has (SNPRINTF_UCASE) ? 'A' : 'a';
+          char const a = flags.has (SNPRINTF_UCASE) ? 'A' : 'a';
           *it++ = hex_digit (mant, a);
           if (precision >= 0 || flags.has (SNPRINTF_ALT) || mant > 0)
             {
@@ -1082,7 +1082,7 @@ namespace { // helpers for vsnprintf_emulation
             }
 
           it += dig_left;
-          const char *const frac_start = it;
+          char const *const frac_start = it;
 
           if (precision == -1)
             {
@@ -1133,7 +1133,7 @@ namespace { // helpers for vsnprintf_emulation
         }
 
       int used = static_cast<int> (it - buf);
-      const char *const end = it;
+      char const *const end = it;
       it = buf;
       if (flags.has (SNPRINTF_ZERO) && used < width)
         {
@@ -1168,7 +1168,7 @@ namespace { // helpers for vsnprintf_emulation
       this->pad (reinterpret_cast<char *> (&c), 1, flags, width);
     }
 
-    void conv_str (const char *str, Snprintf_Flags flags,
+    void conv_str (char const *str, Snprintf_Flags flags,
                    int width, int precision)
     {
       const size_t len = std::strlen (str),
@@ -1207,7 +1207,7 @@ namespace { // helpers for vsnprintf_emulation
 # define ACE_SNPRINTF_EOVERFLOW EINVAL
 #endif
 
-  int snprintf_read_int (const char *&fmt)
+  int snprintf_read_int (char const *&fmt)
   {
     char *end {};
     const unsigned long i = ACE_OS::strtoul (fmt, &end, 10);
@@ -1220,9 +1220,9 @@ namespace { // helpers for vsnprintf_emulation
     return static_cast<int> (i);
   }
 
-  int snprintf_positional (const char *&fmt)
+  int snprintf_positional (char const *&fmt)
   {
-    const char *f = fmt;
+    char const *f = fmt;
     const int i = snprintf_read_int (f);
     if (i > 0 && *f == '$')
       {
@@ -1268,9 +1268,9 @@ namespace { // helpers for vsnprintf_emulation
       };
     };
 
-    static void conv_storage_needed (const char *fmt, int &storage_needed)
+    static void conv_storage_needed (char const *fmt, int &storage_needed)
     {
-      while (const char *f = std::strpbrk (fmt, "*%"))
+      while (char const *f = std::strpbrk (fmt, "*%"))
         {
           if (!*f || *f == '%')
             {
@@ -1285,12 +1285,12 @@ namespace { // helpers for vsnprintf_emulation
         }
     }
 
-    void scan (int n, const char *fmt, va_list ap)
+    void scan (int n, char const *fmt, va_list ap)
     {
       int storage_needed = n;
-      const char *f = fmt;
+      char const *f = fmt;
       conv_storage_needed (f, storage_needed);
-      while (const char *const pct = std::strchr (f, '%'))
+      while (char const *const pct = std::strchr (f, '%'))
         if (pct[1] == '%')
           {
             f = pct + 2;
@@ -1316,7 +1316,7 @@ namespace { // helpers for vsnprintf_emulation
       f = fmt;
       while (true)
         {
-          static const char digits[] = "0123456789";
+          static char const digits[] = "0123456789";
           f += std::strspn (f, "-+ #0'");
           if (*f == '*')
             {
@@ -1580,7 +1580,7 @@ namespace { // helpers for vsnprintf_emulation
 }
 
 int
-ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
+ACE_OS::vsnprintf_emulation (char *buf, size_t max, char const *fmt, va_list ap)
 {
   if (max > INT_MAX)
     {
@@ -1591,7 +1591,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
   Snprintf_Buffer sb (buf, max);
   Snprintf_Positional_Args pos_arg;
 
-  while (const char *const pct = std::strchr (fmt, '%'))
+  while (char const *const pct = std::strchr (fmt, '%'))
     {
       // Output up to next % in format string
       const bool escaped = pct[1] == '%';
@@ -1816,7 +1816,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, const char *fmt, va_list ap)
             }
           else
             {
-              sb.conv_str (GET_ARG (p, const char *), flags, width, precision);
+              sb.conv_str (GET_ARG (p, char const *), flags, width, precision);
             }
           break;
 

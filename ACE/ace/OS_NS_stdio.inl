@@ -84,7 +84,7 @@ ACE_OS::flock_adjust_params (ACE_OS::ace_flock_t *lock,
 ACE_INLINE int
 ACE_OS::flock_init (ACE_OS::ace_flock_t *lock,
                     int flags,
-                    const ACE_TCHAR *name,
+                    ACE_TCHAR const *name,
                     mode_t perms)
 {
   ACE_OS_TRACE ("ACE_OS::flock_init");
@@ -496,7 +496,7 @@ ACE_OS::fclose (FILE *fp)
 }
 
 ACE_INLINE FILE *
-ACE_OS::fdopen (ACE_HANDLE handle, const ACE_TCHAR *mode)
+ACE_OS::fdopen (ACE_HANDLE handle, ACE_TCHAR const *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fdopen");
 #if defined (ACE_WIN32)
@@ -611,7 +611,7 @@ ACE_OS::fileno (FILE *stream)
 #if !defined (ACE_WIN32)
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *
-ACE_OS::fopen (const char *filename, const char *mode)
+ACE_OS::fopen (char const *filename, char const *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
   return ::fopen (filename, mode);
@@ -620,7 +620,7 @@ ACE_OS::fopen (const char *filename, const char *mode)
 #if defined (ACE_HAS_WCHAR)
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *
-ACE_OS::fopen (const char *filename, const wchar_t *mode)
+ACE_OS::fopen (char const *filename, const wchar_t *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
   ACE_Wide_To_Ascii n_mode (mode);
@@ -640,7 +640,7 @@ ACE_OS::fopen (const wchar_t *filename, const wchar_t *mode)
 
 // Win32 PC implementation of fopen () is in OS_NS_stdio.cpp.
 ACE_INLINE FILE *
-ACE_OS::fopen (const wchar_t *filename, const char *mode)
+ACE_OS::fopen (const wchar_t *filename, char const *mode)
 {
   ACE_OS_TRACE ("ACE_OS::fopen");
   // Non-Windows doesn't use wchar_t file systems.
@@ -688,7 +688,7 @@ ACE_OS::putc (int c, FILE *fp)
 }
 
 ACE_INLINE int
-ACE_OS::fputs (const char *s, FILE *stream)
+ACE_OS::fputs (char const *s, FILE *stream)
 {
   ACE_OS_TRACE ("ACE_OS::fputs");
 #ifdef ACE_LACKS_FPUTS
@@ -717,7 +717,7 @@ ACE_OS::fread (void *ptr, size_t size, size_t nelems, FILE *fp)
 }
 
 ACE_INLINE FILE *
-ACE_OS::freopen (const ACE_TCHAR *filename, const ACE_TCHAR *mode, FILE* stream)
+ACE_OS::freopen (ACE_TCHAR const *filename, ACE_TCHAR const *mode, FILE* stream)
 {
   ACE_OS_TRACE ("ACE_OS::freopen");
 #if defined (ACE_WIN32) && defined(ACE_USES_WCHAR)
@@ -777,14 +777,14 @@ ACE_OS::ftell (FILE* fp)
 }
 
 ACE_INLINE size_t
-ACE_OS::fwrite (const void *ptr, size_t size, size_t nitems, FILE *fp)
+ACE_OS::fwrite (void const *ptr, size_t size, size_t nitems, FILE *fp)
 {
   ACE_OS_TRACE ("ACE_OS::fwrite");
   return std::fwrite (ptr, size, nitems, fp);
 }
 
 ACE_INLINE void
-ACE_OS::perror (const char *s)
+ACE_OS::perror (char const *s)
 {
   ACE_OS_TRACE ("ACE_OS::perror");
 #if defined (ACE_LACKS_PERROR)
@@ -811,7 +811,7 @@ ACE_OS::perror (const wchar_t *s)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::puts (const char *s)
+ACE_OS::puts (char const *s)
 {
   ACE_OS_TRACE ("ACE_OS::puts");
 #if defined (ACE_LACKS_PUTS)
@@ -838,8 +838,8 @@ ACE_OS::puts (const wchar_t *s)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::rename (const char *old_name,
-                const char *new_name,
+ACE_OS::rename (char const *old_name,
+                char const *new_name,
                 int flags)
 {
 # if defined (ACE_LACKS_RENAME)
@@ -923,7 +923,7 @@ ACE_OS::rewind (FILE *fp)
 }
 
 ACE_INLINE int
-ACE_OS::vasprintf (char **bufp, const char* format, va_list argptr)
+ACE_OS::vasprintf (char **bufp, char const* format, va_list argptr)
 {
 #if defined (ACE_HAS_VASPRINTF)
   return ::vasprintf (bufp, format, argptr);
@@ -955,7 +955,7 @@ ACE_OS::vasprintf (wchar_t **bufp, const wchar_t* format, va_list argptr)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::vprintf (const char *format, va_list argptr)
+ACE_OS::vprintf (char const *format, va_list argptr)
 {
 #if defined (ACE_LACKS_VPRINTF)
   ACE_UNUSED_ARG (format);
@@ -981,7 +981,7 @@ ACE_OS::vprintf (const wchar_t *format, va_list argptr)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::vfprintf (FILE *fp, const char *format, va_list argptr)
+ACE_OS::vfprintf (FILE *fp, char const *format, va_list argptr)
 {
 #ifdef ACE_LACKS_VFPRINTF
   ACE_UNUSED_ARG (fp);
@@ -1040,7 +1040,7 @@ ACE_OS::vsprintf (wchar_t *buffer, const wchar_t *format, va_list argptr)
 #endif /* ACE_HAS_WCHAR */
 
 ACE_INLINE int
-ACE_OS::vsnprintf (char *buffer, size_t maxlen, const char *format, va_list ap)
+ACE_OS::vsnprintf (char *buffer, size_t maxlen, char const *format, va_list ap)
 {
 #if !defined (ACE_LACKS_VSNPRINTF)
   int result;
