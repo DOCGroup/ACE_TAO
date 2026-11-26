@@ -1,5 +1,5 @@
 /**
- *  \file    Event_Persistence_Factory.h
+ *  @file    Standard_Event_Persistence.h
  *
  *  The standard implementation of Event_Persistence_Factory.
  *
@@ -111,14 +111,14 @@ namespace TAO_Notify
     /// Override Event_Persistent_Strategy methods
     /// Parse arguments and initialize.
     int init(int argc, ACE_TCHAR *argv[]) override;
-    // Prepare for shutdown
+    /// Prepare for shutdown.
     int fini () override;
 
-    // get the current factory, creating it if necessary
+    /// Get the current factory, creating it if necessary.
     Event_Persistence_Factory * get_factory () override;
 
   private:
-    // release the current factory so a new one can be created
+    /// Release the current factory so a new one can be created.
     void reset () override;
 
     /// File path specified by -file_path.
