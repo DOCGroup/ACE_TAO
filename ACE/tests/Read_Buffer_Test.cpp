@@ -7,6 +7,7 @@
 
 #include <cstdio>
 #include <cstring>
+#include <string>
 
 class Counting_Allocator : public ACE_New_Allocator
 {
@@ -53,6 +54,29 @@ run_main (int, ACE_TCHAR *[])
     }
 
     ACE_TEST_ASSERT (allocator.free_count_ == 1);
+  }
+
+  FILE * const large_file = std::tmpfile ();
+  if (large_file == nullptr)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to create large read test file\n")), -1);
+    }
+  std::string const input (BUFSIZ * 2 + 1, 'x');
+  if (std::fwrite (input.data (), 1, input.size (), large_file) != input.size ()
+      || std::fseek (large_file, 0, SEEK_SET) != 0)
+    {
+      std::fclose (large_file);
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Unable to prepare large read test file\n")), -1);
+    }
+  {
+    ACE_Read_Buffer reader (large_file, true);
+    ACE_Read_Buffer_Unique_Ptr buffer (reader.read (), {reader.alloc ()});
+    if (buffer == nullptr || reader.size () != input.size ()
+        || std::memcmp (buffer.get (), input.data (), input.size ()) != 0
+        || buffer.get ()[input.size ()] != '\0')
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Large buffer read failed\n")), -1);
+      }
   }
 
 #if !defined (ACE_LACKS_DUP) && !defined (ACE_LACKS_MKSTEMP) && !defined (ACE_LACKS_FDOPEN)
