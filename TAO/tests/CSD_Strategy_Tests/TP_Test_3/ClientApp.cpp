@@ -133,7 +133,7 @@ ClientApp::run_orb_event_loop()
 
 PortableServer::POA_ptr
 ClientApp::create_poa(CORBA::ORB_ptr orb,
-                      const char* poa_name)
+                      char const *poa_name)
 {
   // Get the Root POA.
   PortableServer::POA_var root_poa
@@ -250,9 +250,9 @@ ClientApp::arg_dependency_checks()
 
 int
 ClientApp::set_arg(unsigned&   value,
-                   const ACE_TCHAR* arg,
+                   ACE_TCHAR const *arg,
                    char        opt,
-                   const char* name,
+                   char const *name,
                    int         min)
 {
   const int tmp = ACE_OS::atoi(arg);

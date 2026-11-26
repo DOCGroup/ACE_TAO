@@ -31,9 +31,9 @@ class ClientApp : public TestAppBase
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
     int set_arg(unsigned&   value,
-                 const ACE_TCHAR* arg,
+                 ACE_TCHAR const *arg,
                  char        opt,
-                 const char* name,
+                 char const *name,
                  int         min = 0);
 
     void usage_statement();

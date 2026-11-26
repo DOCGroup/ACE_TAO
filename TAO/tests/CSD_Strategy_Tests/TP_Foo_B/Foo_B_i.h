@@ -26,9 +26,9 @@ class CSD_TP_Foo_B_Export Foo_B_i : public virtual POA_Foo_B
 
     void op7(Callback_ptr cb) override;
 
-    void test_unbounded_string_arg(const char* message) override;
+    void test_unbounded_string_arg(char const *message) override;
 
-    void test_bounded_string_arg(const char* message) override;
+    void test_bounded_string_arg(char const *message) override;
 
     void test_fixed_array_arg(const Fixed_Array message) override;
 

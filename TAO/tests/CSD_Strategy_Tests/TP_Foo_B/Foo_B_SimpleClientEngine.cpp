@@ -5,7 +5,7 @@
 #include "AppHelper.h"
 #include "ace/Log_Msg.h"
 
-extern const char* ONEWAY_ARG_TEST_STR;
+extern char const *ONEWAY_ARG_TEST_STR;
 
 Foo_B_SimpleClientEngine::Foo_B_SimpleClientEngine(Foo_B_ptr obj,
                                                    Callback_ptr callback,

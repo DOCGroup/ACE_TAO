@@ -72,7 +72,7 @@ Foo_B_i::op7(Callback_ptr cb)
 }
 
 void
-Foo_B_i::test_unbounded_string_arg(const char* message)
+Foo_B_i::test_unbounded_string_arg(char const *message)
 {
   ++this->op_count_[7];
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_unbounded_string_arg ")
@@ -82,7 +82,7 @@ Foo_B_i::test_unbounded_string_arg(const char* message)
 }
 
 void
-Foo_B_i::test_bounded_string_arg(const char* message)
+Foo_B_i::test_bounded_string_arg(char const *message)
 {
   ++this->op_count_[8];
   //ACE_DEBUG((LM_DEBUG, ACE_TEXT("(%P|%t)Foo_B_i::test_bounded_string_arg ")

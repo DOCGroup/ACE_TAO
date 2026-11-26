@@ -3,7 +3,7 @@
 
 #include <cstring>
 
-extern const char* ONEWAY_ARG_TEST_STR;
+extern char const *ONEWAY_ARG_TEST_STR;
 extern CORBA::Boolean special_value;
 
 Foo_B_Statistics::Foo_B_Statistics(unsigned num_remote_clients,

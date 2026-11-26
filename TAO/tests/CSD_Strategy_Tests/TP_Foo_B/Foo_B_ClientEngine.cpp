@@ -7,7 +7,7 @@
 #include "AppHelper.h"
 #include "ace/Log_Msg.h"
 
-const char* ONEWAY_ARG_TEST_STR = "TEST";
+char const *ONEWAY_ARG_TEST_STR = "TEST";
 
 Foo_B_ClientEngine::Foo_B_ClientEngine(Foo_B_ptr obj,
                                        Callback_ptr callback,

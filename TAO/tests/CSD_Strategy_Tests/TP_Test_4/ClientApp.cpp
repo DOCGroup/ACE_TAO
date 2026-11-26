@@ -156,9 +156,9 @@ ClientApp::arg_dependency_checks()
 
 int
 ClientApp::set_arg(unsigned&   value,
-                   const ACE_TCHAR* arg,
+                   ACE_TCHAR const *arg,
                    char        opt,
-                   const char* name,
+                   char const *name,
                    int         min)
 {
   int tmp = ACE_OS::atoi(arg);

@@ -40,16 +40,16 @@ class ServerApp : public TestAppBase
     int parse_args(int argc, ACE_TCHAR* argv[]);
 
     int set_arg(unsigned&   value,
-                 const ACE_TCHAR* arg,
+                 ACE_TCHAR const *arg,
                  char        opt,
-                 const char* name,
+                 char const *name,
                  int         min = 0);
 
     void usage_statement();
     int  arg_dependency_checks();
 
     PortableServer::POA_ptr create_poa(CORBA::ORB_ptr orb,
-                                       const char* poa_name);
+                                       char const *poa_name);
 
     using FooServantListType = ServantList<Foo_B_i>;
     using CallbackServantListType = ServantList<Callback_i>;
