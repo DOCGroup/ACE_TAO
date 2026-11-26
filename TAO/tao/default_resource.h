@@ -57,13 +57,13 @@ public:
   ~TAO_Codeset_Parameters ();
 
   /// The native codeset (getter)
-  const ACE_TCHAR* native ();
+  ACE_TCHAR const *native ();
 
   /// The native codeset (setter)
-  void native (const ACE_TCHAR* n);
+  void native (ACE_TCHAR const *n);
 
   /// Add a new codeset
-  void add_translator (const ACE_TCHAR* name);
+  void add_translator (ACE_TCHAR const *name);
 
   using iterator = std::vector<std::basic_string<ACE_TCHAR>>::const_iterator;
 
@@ -203,8 +203,8 @@ protected:
   /// Add a Parser name to the list of Parser names.
   int add_to_ior_parser_names (const char *);
 
-  void report_option_value_error (const ACE_TCHAR* option_name,
-                                  const ACE_TCHAR* option_value);
+  void report_option_value_error (ACE_TCHAR const *option_name,
+                                  ACE_TCHAR const *option_value);
 
 protected:
   /// The type of data blocks that the ORB should use

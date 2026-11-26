@@ -43,7 +43,7 @@ TAO_Codeset_Parameters::TAO_Codeset_Parameters ()
 
 TAO_Codeset_Parameters::~TAO_Codeset_Parameters () = default;
 
-const ACE_TCHAR*
+ACE_TCHAR const *
 TAO_Codeset_Parameters::native ()
 {
   return this->native_set_ ? this->native_.c_str () : nullptr;
@@ -69,7 +69,7 @@ TAO_Codeset_Parameters::apply_to (TAO_Codeset_Descriptor_Base *csd)
 }
 
 void
-TAO_Codeset_Parameters::native (const ACE_TCHAR* n)
+TAO_Codeset_Parameters::native (ACE_TCHAR const *n)
 {
   if (n == nullptr)
     {
@@ -84,7 +84,7 @@ TAO_Codeset_Parameters::native (const ACE_TCHAR* n)
 }
 
 void
-TAO_Codeset_Parameters::add_translator (const ACE_TCHAR*name)
+TAO_Codeset_Parameters::add_translator (ACE_TCHAR const *name)
 {
   this->translators_.emplace_back (name);
 }
@@ -1237,8 +1237,8 @@ TAO_Default_Resource_Factory::create_fragmentation_strategy (
 
 void
 TAO_Default_Resource_Factory::report_option_value_error (
-                                 const ACE_TCHAR* option_name,
-                                 const ACE_TCHAR* option_value)
+                                 ACE_TCHAR const *option_name,
+                                 ACE_TCHAR const *option_value)
 {
   TAOLIB_DEBUG((LM_DEBUG,
              ACE_TEXT ("TAO (%P|%t) - Default_Resource_Factory - unknown ")
