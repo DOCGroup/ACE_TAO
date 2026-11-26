@@ -52,7 +52,7 @@ public:
   /// Add an offer to the collection of offers the iterator will
   /// iterate over.
   virtual void add_offer (CosTrading::OfferId offer_id,
-                          const CosTrading::Offer* offer) = 0;
+                          CosTrading::Offer const* offer) = 0;
 
   /// The max_left operation returns the number of service offers
   /// remaining in the iterator. The exception UnknownMaxLeft is raised

@@ -602,8 +602,8 @@ TAO_Link_Attributes_i::max_link_follow_policy (CosTrading::FollowOption new_valu
 }
 
 bool
-operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
-           const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r)
+operator< (CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &l,
+           CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &r)
 {
   if (l.high < r.high)
     {
@@ -620,15 +620,15 @@ operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
 }
 
 bool
-operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
-           const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r)
+operator> (CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &l,
+           CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &r)
 {
   return (r < l);
 }
 
 bool
-operator== (const CosTrading::Admin::OctetSeq& left,
-            const CosTrading::Admin::OctetSeq& right)
+operator== (CosTrading::Admin::OctetSeq const& left,
+            CosTrading::Admin::OctetSeq const& right)
 {
   bool return_value {};
 

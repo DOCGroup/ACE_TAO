@@ -491,16 +491,16 @@ using TAO_String_Set = std::vector<CORBA::String_var>;
 using TAO_String_Queue = std::deque<std::string>;
 
 bool
-operator> (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
-           const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r);
+operator> (CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &l,
+           CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &r);
 
 bool
-operator< (const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &l,
-           const CosTradingRepos::ServiceTypeRepository::IncarnationNumber &r);
+operator< (CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &l,
+           CosTradingRepos::ServiceTypeRepository::IncarnationNumber const &r);
 
 bool
-operator== (const CosTrading::Admin::OctetSeq& left,
-            const CosTrading::Admin::OctetSeq& right);
+operator== (CosTrading::Admin::OctetSeq const& left,
+            CosTrading::Admin::OctetSeq const& right);
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 

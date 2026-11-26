@@ -175,7 +175,7 @@ private:
    */
   int fill_receptacles (char const *,
                         CORBA::ULong how_many,
-                        const CosTrading::Lookup::SpecifiedProps& desired_props,
+                        CosTrading::Lookup::SpecifiedProps const& desired_props,
                         TAO_Policies& policies,
                         TAO_Preference_Interpreter& pref_inter,
                         CosTrading::OfferSeq& offers,
@@ -187,8 +187,8 @@ private:
                       char const *type,
                       char const *constr,
                       char const *pref,
-                      const CosTrading::PolicySeq& policy_seq,
-                      const CosTrading::Lookup::SpecifiedProps& desired_props,
+                      CosTrading::PolicySeq const& policy_seq,
+                      CosTrading::Lookup::SpecifiedProps const& desired_props,
                       CORBA::ULong how_many,
                       CosTrading::OfferSeq_out offers,
                       CosTrading::OfferIterator_out offer_itr,
@@ -209,14 +209,14 @@ private:
    * results of the federated queries into a single set of results
    * suitable for returning to the user.
    */
-  void federated_query (const CosTrading::LinkNameSeq& links,
+  void federated_query (CosTrading::LinkNameSeq const& links,
                         TAO_Policies const& policies,
-                        const CosTrading::Admin::OctetSeq& request_id,
+                        CosTrading::Admin::OctetSeq const& request_id,
                         TAO_Preference_Interpreter& pref_inter,
                         char const *type,
                         char const *constr,
                         char const *pref,
-                        const CosTrading::Lookup::SpecifiedProps& desired_props,
+                        CosTrading::Lookup::SpecifiedProps const& desired_props,
                         CORBA::ULong how_many,
                         CosTrading::OfferSeq& offers,
                         CosTrading::OfferIterator_ptr& offer_itr,
@@ -227,7 +227,7 @@ private:
                               CosTrading::OfferSeq& offers);
 
   CORBA::Boolean seen_request_id (TAO_Policies& policies,
-                                  const CosTrading::Admin::OctetSeq*& seq);
+                                  CosTrading::Admin::OctetSeq const*& seq);
 
   const unsigned int IDS_SAVED;
 
@@ -439,8 +439,8 @@ public:
 
  protected:
   void validate_properties (char const *type,
-                            const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
-                            const CosTrading::PropertySeq& properties);
+                            CosTradingRepos::ServiceTypeRepository::TypeStruct const* type_struct,
+                            CosTrading::PropertySeq const& properties);
 
  private:
   TAO_Trader<TRADER_LOCK_TYPE,MAP_LOCK_TYPE> &trader_;

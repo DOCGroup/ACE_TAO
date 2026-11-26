@@ -53,8 +53,8 @@ CosTradingRepos::ServiceTypeRepository::IncarnationNumber
 TAO_Service_Type_Repository::
 add_type (char const *name,
           char const *if_name,
-          const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
-          const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
+          CosTradingRepos::ServiceTypeRepository::PropStructSeq const &props,
+          CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const &super_types)
 {
   Prop_Map prop_map;
   Service_Type_Map super_map;
@@ -158,7 +158,7 @@ TAO_Service_Type_Repository::remove_type (char const *name)
 
 CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq *
 TAO_Service_Type_Repository::
-list_types (const CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes &which_types)
+list_types (CosTradingRepos::ServiceTypeRepository::SpecifiedServiceTypes const &which_types)
 {
   ACE_READ_GUARD_THROW_EX (ACE_Lock, ace_mon, *this->lock_, CORBA::INTERNAL ());
 
@@ -356,7 +356,7 @@ TAO_Service_Type_Repository::unmask_type (char const *name)
 
 void
 TAO_Service_Type_Repository::
-fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct &type_struct,
+fully_describe_type_i (CosTradingRepos::ServiceTypeRepository::TypeStruct const &type_struct,
                        CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
                        CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
 {
@@ -420,7 +420,7 @@ fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct 
 
 void
 TAO_Service_Type_Repository::
-collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::TypeStruct &type_struct,
+collect_inheritance_hierarchy (CosTradingRepos::ServiceTypeRepository::TypeStruct const &type_struct,
                                TAO_String_Queue &target)
 {
   // Recurse for each super_type
@@ -449,7 +449,7 @@ collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::Typ
 void
 TAO_Service_Type_Repository::
 validate_properties (Prop_Map &prop_map,
-                     const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props)
+                     CosTradingRepos::ServiceTypeRepository::PropStructSeq const &props)
 {
   for (CORBA::ULong i {};
        i < props.length ();
@@ -475,7 +475,7 @@ validate_properties (Prop_Map &prop_map,
 void
 TAO_Service_Type_Repository::
 validate_supertypes (Service_Type_Map &super_map,
-                     const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
+                     CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const &super_types)
 {
   for (CORBA::ULong i {};
        i < super_types.length ();
@@ -514,7 +514,7 @@ validate_supertypes (Service_Type_Map &super_map,
 void
 TAO_Service_Type_Repository::
 validate_inheritance (Prop_Map &prop_map,
-                      const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types)
+                      CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const &super_types)
 {
   CORBA::ULong const num_super_types = super_types.length ();
 
@@ -557,7 +557,7 @@ validate_inheritance (Prop_Map &prop_map,
               // If already there, check that it is compatible with
               // properties of other types. Value Types have to be the
               // same.
-              const CosTradingRepos::ServiceTypeRepository::PropStruct &property_in_map =
+              CosTradingRepos::ServiceTypeRepository::PropStruct const &property_in_map =
                 existing_prop->int_id_;
 
               CORBA::TypeCode_ptr prop_type = property_in_map.value_type.in ();
@@ -594,8 +594,8 @@ void
 TAO_Service_Type_Repository::
 update_type_map (char const *name,
                  char const *if_name,
-                 const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
-                 const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types,
+                 CosTradingRepos::ServiceTypeRepository::PropStructSeq const &props,
+                 CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const &super_types,
                  Prop_Map &,
                  Service_Type_Map &super_map)
 {

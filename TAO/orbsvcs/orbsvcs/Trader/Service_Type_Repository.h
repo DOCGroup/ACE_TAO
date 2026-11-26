@@ -217,33 +217,33 @@ private:
    * supertypes of the type, and a sequence representing the
    * transitive closure of the super type relation.
    */
-  void fully_describe_type_i (const CosTradingRepos::ServiceTypeRepository::TypeStruct &type_struct,
+  void fully_describe_type_i (CosTradingRepos::ServiceTypeRepository::TypeStruct const &type_struct,
                               CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
                               CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
 
-  void collect_inheritance_hierarchy (const CosTradingRepos::ServiceTypeRepository::TypeStruct &type_struct,
+  void collect_inheritance_hierarchy (CosTradingRepos::ServiceTypeRepository::TypeStruct const &type_struct,
                                       TAO_String_Queue &target);
 
   /// Confirm that the properties in props have valid names, and aren't
   /// duplicated. Cram those properties into the prop_map.
   void validate_properties (Prop_Map &prop_map,
-                            const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props);
+                            CosTradingRepos::ServiceTypeRepository::PropStructSeq const &props);
 
   /// Confirm that the each super type exists, and cram them into super_map.
   void validate_supertypes (Service_Type_Map &super_map,
-                            const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
+                            CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const &super_types);
 
   /// Ensure that properties of a super_type aren't having their types
   /// or retstrictions redefined.
   void validate_inheritance (Prop_Map &prop_map,
-                             const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types);
+                             CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const &super_types);
 
   /// Update the type map with the information contained in the
   /// TypeStruct, prop_map, and super_map.
   void update_type_map (char const *name,
                         char const *if_name,
-                        const CosTradingRepos::ServiceTypeRepository::PropStructSeq &props,
-                        const CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq &super_types,
+                        CosTradingRepos::ServiceTypeRepository::PropStructSeq const &props,
+                        CosTradingRepos::ServiceTypeRepository::ServiceTypeNameSeq const &super_types,
                         Prop_Map &prop_map,
                         Service_Type_Map &super_map);
 

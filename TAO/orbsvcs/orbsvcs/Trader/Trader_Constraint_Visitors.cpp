@@ -53,9 +53,9 @@ visit_property (TAO_Property_Constraint* literal)
 
 TAO_Trader_Constraint_Validator::
 TAO_Trader_Constraint_Validator
-(const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct)
+(CosTradingRepos::ServiceTypeRepository::TypeStruct const& type_struct)
 {
-  const CosTradingRepos::ServiceTypeRepository::PropStructSeq& prop_seq =
+  CosTradingRepos::ServiceTypeRepository::PropStructSeq const& prop_seq =
     type_struct.props;
   int const length = prop_seq.length ();
 

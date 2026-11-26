@@ -38,8 +38,8 @@ TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 query (char const *type,
        char const *constraint,
        char const *preferences,
-       const CosTrading::PolicySeq &in_policies,
-       const CosTrading::Lookup::SpecifiedProps &desired_props,
+       CosTrading::PolicySeq const &in_policies,
+       CosTrading::Lookup::SpecifiedProps const &desired_props,
        CORBA::ULong how_many,
        CosTrading::OfferSeq_out returned_offers,
        CosTrading::OfferIterator_out returned_offer_iterator,
@@ -50,7 +50,7 @@ query (char const *type,
 
   // If a federated query returns to us, ignore it to prevent
   // redundant results and infinite loops.
-  const CosTrading::Admin::OctetSeq* request_id {};
+  CosTrading::Admin::OctetSeq const* request_id {};
   int check = this->seen_request_id (policies, request_id);
 
   if (check)
@@ -67,7 +67,7 @@ query (char const *type,
 
   // If the importer has specified a starting trader, foward the
   // query.
-  const CosTrading::TraderName* trader_name =
+  CosTrading::TraderName const* trader_name =
     policies.starting_trader ();
 
   if (! CORBA::is_nil (link_if) && trader_name != nullptr)
@@ -313,7 +313,7 @@ int
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 fill_receptacles (char const */* type */,
                   CORBA::ULong how_many,
-                  const CosTrading::Lookup::SpecifiedProps& desired_props,
+                  CosTrading::Lookup::SpecifiedProps const& desired_props,
                   TAO_Policies& policies,
                   TAO_Preference_Interpreter& pref_inter,
                   CosTrading::OfferSeq& offers,
@@ -514,14 +514,14 @@ retrieve_links (TAO_Policies& policies,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-federated_query (const CosTrading::LinkNameSeq& links,
+federated_query (CosTrading::LinkNameSeq const& links,
                  TAO_Policies const& policies,
-                 const CosTrading::Admin::OctetSeq& request_id,
+                 CosTrading::Admin::OctetSeq const& request_id,
                  TAO_Preference_Interpreter& pref_inter,
                  char const *type,
                  char const *constr,
                  char const *pref,
-                 const CosTrading::Lookup::SpecifiedProps& desired_props,
+                 CosTrading::Lookup::SpecifiedProps const& desired_props,
                  CORBA::ULong how_many,
                  CosTrading::OfferSeq& offers,
                  CosTrading::OfferIterator_ptr& offer_iter,
@@ -670,8 +670,8 @@ forward_query (char const *next_hop,
                char const *type,
                char const *constr,
                char const *pref,
-               const CosTrading::PolicySeq& policy_seq,
-               const CosTrading::Lookup::SpecifiedProps& desired_props,
+               CosTrading::PolicySeq const& policy_seq,
+               CosTrading::Lookup::SpecifiedProps const& desired_props,
                CORBA::ULong how_many,
                CosTrading::OfferSeq_out offers,
                CosTrading::OfferIterator_out offer_itr,
@@ -733,7 +733,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CORBA::Boolean
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 seen_request_id (TAO_Policies& policies,
-                 const CosTrading::Admin::OctetSeq*& seq)
+                 CosTrading::Admin::OctetSeq const*& seq)
 {
   CORBA::Boolean return_value {};
   std::unique_ptr<CosTrading::Admin::OctetSeq const> request_id;
@@ -804,7 +804,7 @@ CosTrading::OfferId
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 _cxx_export (CORBA::Object_ptr reference,
              char const *type,
-             const CosTrading::PropertySeq &properties)
+             CosTrading::PropertySeq const &properties)
 {
   // For robustness purposes --
   if (CORBA::is_nil (reference))
@@ -898,8 +898,8 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 modify (char const *id,
-        const CosTrading::PropertyNameSeq& del_list,
-        const CosTrading::PropertySeq& modify_list)
+        CosTrading::PropertyNameSeq const& del_list,
+        CosTrading::PropertySeq const& modify_list)
 {
   // Throw an exception if the trader is not configured
   // to support properties modification.
@@ -1008,7 +1008,7 @@ withdraw_using_constraint (char const *type,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Register_ptr
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-resolve (const CosTrading::TraderName &name)
+resolve (CosTrading::TraderName const &name)
 {
   // Determine if the first link is a legal link name.
   if (! TAO_Trader_Base::is_valid_link_name (name[0]))
@@ -1067,10 +1067,10 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Register<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 validate_properties (char const *type,
-                     const CosTradingRepos::ServiceTypeRepository::TypeStruct* type_struct,
-                     const CosTrading::PropertySeq& properties)
+                     CosTradingRepos::ServiceTypeRepository::TypeStruct const* type_struct,
+                     CosTrading::PropertySeq const& properties)
 {
-  const CosTradingRepos::ServiceTypeRepository::PropStructSeq&prop_types = type_struct->props;
+  CosTradingRepos::ServiceTypeRepository::PropStructSeq const&prop_types = type_struct->props;
   TAO_Property_Evaluator_By_Name prop_eval (properties);
 
   // Perform property validation
@@ -1078,7 +1078,7 @@ validate_properties (char const *type,
 
   for (CORBA::ULong i {}; i < length; ++i)
     {
-      const CosTradingRepos::ServiceTypeRepository::PropStruct&
+      CosTradingRepos::ServiceTypeRepository::PropStruct const&
         prop_struct = prop_types[i];
       char const *prop_name  = prop_struct.name;
 
@@ -1099,7 +1099,7 @@ validate_properties (char const *type,
           if (check)
             {
               // Offer cannot redefine the type of an property.
-              const CosTrading::Property* prop =
+              CosTrading::Property const* prop =
                 prop_eval.get_property (prop_name);
               throw CosTrading::PropertyTypeMismatch (type, *prop);
             }
@@ -1387,7 +1387,7 @@ set_type_repos (CosTrading::TypeRepository_ptr repository)
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 CosTrading::Admin::OctetSeq*
 TAO_Admin<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-set_request_id_stem (const CosTrading::Admin::OctetSeq& stem)
+set_request_id_stem (CosTrading::Admin::OctetSeq const& stem)
 {
   ACE_GUARD_RETURN (TRADER_LOCK_TYPE, trader_mon, this->lock_,
                     std::addressof (this->stem_id_));
@@ -1649,10 +1649,10 @@ CosTrading::OfferId
 TAO_Proxy<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 export_proxy (CosTrading::Lookup_ptr,
               char const *,
-              const CosTrading::PropertySeq&,
+              CosTrading::PropertySeq const&,
               CORBA::Boolean,
               char const *,
-              const CosTrading::PolicySeq&)
+              CosTrading::PolicySeq const&)
 {
   throw CORBA::UNKNOWN ();
 

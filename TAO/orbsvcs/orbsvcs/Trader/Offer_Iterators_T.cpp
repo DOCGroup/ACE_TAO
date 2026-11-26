@@ -23,7 +23,7 @@ TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 template <class MAP_LOCK_TYPE> void
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 add_offer (CosTrading::OfferId id,
-           const CosTrading::Offer* /* offer */)
+           CosTrading::Offer const* /* offer */)
 {
   CORBA::String_var offer_id (id);
   this->offer_ids_.emplace_back (offer_id.in ());

@@ -99,7 +99,7 @@ TAO_Policy_Creator::use_proxy_offers (CORBA::Boolean prox_offs)
 }
 
 void
-TAO_Policy_Creator::starting_trader (const CosTrading::TraderName& name)
+TAO_Policy_Creator::starting_trader (CosTrading::TraderName const& name)
 {
   CosTrading::Policy& policy =
     this->fetch_next_policy (TAO_Policies::STARTING_TRADER);
@@ -140,19 +140,19 @@ TAO_Policy_Creator::exact_type_match (CORBA::Boolean exact_type)
 }
 
 void
-TAO_Policy_Creator::request_id (const CosTrading::Admin::OctetSeq& request_id)
+TAO_Policy_Creator::request_id (CosTrading::Admin::OctetSeq const& request_id)
 {
   CosTrading::Policy& policy =
     this->fetch_next_policy (TAO_Policies::REQUEST_ID);
   policy.value <<= request_id;
 }
 
-TAO_Policy_Creator::operator const CosTrading::PolicySeq& () const
+TAO_Policy_Creator::operator CosTrading::PolicySeq const& () const
 {
   return this->policies_;
 }
 
-const CosTrading::PolicySeq&
+CosTrading::PolicySeq const&
 TAO_Policy_Creator::policy_seq () const
 {
   return this->policies_;
@@ -220,7 +220,7 @@ TAO_Policy_Creator::fetch_next_policy (TAO_Policies::POLICY_TYPE pol_type)
 }
 
 TAO_Property_Evaluator::
-TAO_Property_Evaluator(const CosTrading::PropertySeq& props,
+TAO_Property_Evaluator(CosTrading::PropertySeq const& props,
                        CORBA::Boolean supports_dp)
   : props_ (props),
     supports_dp_ (supports_dp),
@@ -349,7 +349,7 @@ TAO_Property_Evaluator::property_type (int index)
 }
 
 TAO_Property_Evaluator_By_Name::
-TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
+TAO_Property_Evaluator_By_Name (CosTrading::PropertySeq const& properties
 ,
                                 CORBA::Boolean supports_dp)
     : TAO_Property_Evaluator (properties, supports_dp)
@@ -358,7 +358,7 @@ TAO_Property_Evaluator_By_Name (const CosTrading::PropertySeq& properties
 
   for (int i {}; i < length; ++i)
     {
-      const CosTrading::Property& prop = this->props_[i];
+      CosTrading::Property const& prop = this->props_[i];
 
       if (! TAO_Trader_Base::is_valid_property_name (prop.name))
       {
@@ -521,7 +521,7 @@ char const *TAO_Policies::POLICY_NAMES[] =
 };
 
 TAO_Policies::TAO_Policies (TAO_Trader_Base& trader,
-                            const CosTrading::PolicySeq& policies)
+                            CosTrading::PolicySeq const& policies)
   : trader_ (trader)
 {
   for (CORBA::ULong j {}; j < policies.length (); ++j)
@@ -760,7 +760,7 @@ TAO_Policies::exact_type_match () const
   return this->boolean_prop (EXACT_TYPE_MATCH);
 }
 
-const CosTrading::TraderName*
+CosTrading::TraderName const*
 TAO_Policies::starting_trader () const
 {
   CosTrading::TraderName const* trader_name {};
@@ -829,7 +829,7 @@ TAO_Policies::link_follow_rule () const
 }
 
 CosTrading::FollowOption
-TAO_Policies::link_follow_rule (const CosTrading::Link::LinkInfo& link_info) const
+TAO_Policies::link_follow_rule (CosTrading::Link::LinkInfo const& link_info) const
 {
   CosTrading::FollowOption return_value = CosTrading::local_only;
   CosTrading::FollowOption trader_max_follow_policy =
@@ -855,7 +855,7 @@ TAO_Policies::hop_count () const
   return this->ulong_prop (HOP_COUNT);
 }
 
-const CosTrading::Admin::OctetSeq*
+CosTrading::Admin::OctetSeq const*
 TAO_Policies::request_id () const
 {
   CosTrading::Admin::OctetSeq const* request_id {};
@@ -885,7 +885,7 @@ TAO_Policies::request_id () const
 void
 TAO_Policies::
 copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
-                       const CosTrading::Link::LinkInfo& link_info) const
+                       CosTrading::Link::LinkInfo const& link_info) const
 {
   CosTrading::FollowOption follow_option = CosTrading::local_only;
   CosTrading::FollowOption trader_max_follow_policy =
@@ -933,7 +933,7 @@ copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
 void
 TAO_Policies::
 copy_to_pass (CosTrading::PolicySeq& policy_seq,
-              const CosTrading::Admin::OctetSeq& request_id) const
+              CosTrading::Admin::OctetSeq const& request_id) const
 {
   CORBA::ULong counter {};
   CosTrading::Policy* policy_buffer =
@@ -987,7 +987,7 @@ copy_to_pass (CosTrading::PolicySeq& policy_seq,
 
 void
 TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
-                               const CosTrading::TraderName& trader_name) const
+                               CosTrading::TraderName const& trader_name) const
 {
   // Create a new policy sequence, shortening the starting trader
   // policy by one link.
@@ -1053,12 +1053,12 @@ TAO_Policies::copy_to_forward (CosTrading::PolicySeq& policy_seq,
 
 TAO_Offer_Modifier::
 TAO_Offer_Modifier (char const *type_name,
-                    const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
+                    CosTradingRepos::ServiceTypeRepository::TypeStruct const& type_struct,
                     CosTrading::Offer* offer)
   : type_ (type_name),
     offer_ (offer)
 {
-  const CosTradingRepos::ServiceTypeRepository::PropStructSeq&
+  CosTradingRepos::ServiceTypeRepository::PropStructSeq const&
     pstructs = type_struct.props;
   CosTrading::PropertySeq& prop_seq = this->offer_->properties;
   CORBA::ULong pstructs_length = pstructs.length (),
@@ -1115,7 +1115,7 @@ TAO_Offer_Modifier::~TAO_Offer_Modifier ()
 
 void
 TAO_Offer_Modifier::
-delete_properties (const CosTrading::PropertyNameSeq& deletes)
+delete_properties (CosTrading::PropertyNameSeq const& deletes)
 {
   // Validate that the listed property names can be deleted
   CORBA::ULong i = 0,
@@ -1158,7 +1158,7 @@ delete_properties (const CosTrading::PropertyNameSeq& deletes)
 
 void
 TAO_Offer_Modifier::
-merge_properties (const CosTrading::PropertySeq& modifies)
+merge_properties (CosTrading::PropertySeq const& modifies)
 {
   int i = 0, length = 0;
   TAO_String_Set modify_me;
@@ -1226,7 +1226,7 @@ merge_properties (const CosTrading::PropertySeq& modifies)
 }
 
 void
-TAO_Offer_Modifier::affect_change (const CosTrading::PropertySeq& modifies)
+TAO_Offer_Modifier::affect_change (CosTrading::PropertySeq const& modifies)
 {
   // Create a new property list reflecting the deletes, modifies, and
   // add operations performed, and place this property list in the
@@ -1461,7 +1461,7 @@ TAO_Property_Filter (const SPECIFIED_PROPS& desired_props)
 {
   if (this->policy_ == CosTrading::Lookup::some)
     {
-      const CosTrading::PropertyNameSeq&
+      CosTrading::PropertyNameSeq const&
         prop_seq = desired_props.prop_names ();
       int length = prop_seq.length ();
 

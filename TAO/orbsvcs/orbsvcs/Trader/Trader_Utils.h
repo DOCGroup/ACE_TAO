@@ -88,7 +88,7 @@ protected:
 
   /// The offer from which the TAO_Property_Evaluator extracts property
   /// information.
-  const CosTrading::PropertySeq& props_;
+  CosTrading::PropertySeq const& props_;
 
   int supports_dp_;
 
@@ -258,7 +258,7 @@ public:
   /// DuplicatePolicyName exception is raised.
 
   TAO_Policies (TAO_Trader_Base& trader,
-                const CosTrading::PolicySeq& policies);
+                CosTrading::PolicySeq const& policies);
 
   ~TAO_Policies ();
 
@@ -342,7 +342,7 @@ public:
    * "starting_trader" policy with the first component removed.
    * END SPEC
    */
-  const CosTrading::TraderName* starting_trader () const;
+  CosTrading::TraderName const* starting_trader () const;
 
   /// The "link_follow_rule" policy indicates how the client wishes
   /// links to be followed in the resolution of its query. See the
@@ -361,7 +361,7 @@ public:
    * else min(trader.max_follow_policy, link.limiting_follow_rule,
    *          trader.def_follow_policy)
    */
-  CosTrading::FollowOption link_follow_rule (const CosTrading::Link::LinkInfo& link_info) const;
+  CosTrading::FollowOption link_follow_rule (CosTrading::Link::LinkInfo const& link_info) const;
 
   /// The "hop_count" policy indicates to the trader the maximum number
   /// of hops across federation links that should be tolerated in the
@@ -377,15 +377,15 @@ public:
 
   /// Return the request_id passed to the query method across a link to
   /// another trader.
-  const CosTrading::Admin::OctetSeq* request_id () const;
+  CosTrading::Admin::OctetSeq const* request_id () const;
 
   /// Policies to forward to the next trader in a federated query.
   void copy_to_pass (CosTrading::PolicySeq& policy_seq,
-                     const CosTrading::Admin::OctetSeq& request_id) const;
+                     CosTrading::Admin::OctetSeq const& request_id) const;
 
   /// Policies to forward to the next trader in a directed query.
   void copy_to_forward (CosTrading::PolicySeq& policy_seq,
-                        const CosTrading::TraderName& name) const;
+                        CosTrading::TraderName const& name) const;
 
   /**
    * Determine the link follow policy to pass down the link with @c link_name.
@@ -398,7 +398,7 @@ public:
    *                  trader.max_follow_policy)
    */
   void copy_in_follow_option (CosTrading::PolicySeq& policy_seq,
-                              const CosTrading::Link::LinkInfo& link_info) const;
+                              CosTrading::Link::LinkInfo const& link_info) const;
 
 private:
   /// Reconclile a ULong property with its default.
@@ -457,7 +457,7 @@ public:
 
   /// Designate a trader at which to begin the query.
   /// Copies the trader name.
-  void starting_trader (const CosTrading::TraderName& name);
+  void starting_trader (CosTrading::TraderName const& name);
   /// Takes ownership of the trader name.
   void starting_trader (CosTrading::TraderName* name);
 
@@ -468,17 +468,17 @@ public:
   void hop_count (CORBA::ULong hop_count);
 
   /// Set the identifier for this query (clients shouldn't use this).
-  void request_id (const CosTrading::Admin::OctetSeq& request_id);
+  void request_id (CosTrading::Admin::OctetSeq const& request_id);
 
   /// Search only the designated type --- not it's subtypes.
   void exact_type_match (CORBA::Boolean exact_type);
 
   /// Return the constructed policy sequence.
-  operator const CosTrading::PolicySeq& () const;
+  operator CosTrading::PolicySeq const& () const;
 
   /// Return a PolicySeq suitable for passing to the query method of
   /// the Lookup interface.
-  const CosTrading::PolicySeq& policy_seq () const;
+  CosTrading::PolicySeq const& policy_seq () const;
 
 private:
   /// Method to prepare the next slot in the policies_ sequence for
@@ -513,14 +513,14 @@ public:
   /// Modify an @a offer of type @a type, whose properties are described
   /// by @a type_struct
   TAO_Offer_Modifier (char const *type,
-                      const CosTradingRepos::ServiceTypeRepository::TypeStruct& type_struct,
+                      CosTradingRepos::ServiceTypeRepository::TypeStruct const& type_struct,
                       CosTrading::Offer* offer);
 
   ~TAO_Offer_Modifier ();
 
   /// Delete the properties whose names were given to the
   /// constructor. Ensure we don't delete mandatory properties.
-  void delete_properties (const CosTrading::PropertyNameSeq& deletes);
+  void delete_properties (CosTrading::PropertyNameSeq const& deletes);
 
   /**
    * Copy to the destination the union of the source and destination
@@ -528,10 +528,10 @@ public:
    * destination with the source's value. This class claims the memory
    * in the modifies sequence.
    */
-  void merge_properties (const CosTrading::PropertySeq& modifies);
+  void merge_properties (CosTrading::PropertySeq const& modifies);
 
   /// Return a reference to the Offer with the changes affected.
-  void affect_change (const CosTrading::PropertySeq& modifies);
+  void affect_change (CosTrading::PropertySeq const& modifies);
 
 private:
   using Property_Table = ACE_Hash_Map_Manager_Ex<CORBA::String_var,

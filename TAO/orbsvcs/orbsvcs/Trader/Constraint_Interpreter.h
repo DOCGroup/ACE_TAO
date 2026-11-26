@@ -41,7 +41,7 @@ class TAO_Constraint_Validator;
 class TAO_Trading_Serv_Export TAO_Constraint_Interpreter : public TAO_Interpreter
 {
 public:
-  TAO_Constraint_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
+  TAO_Constraint_Interpreter (CosTradingRepos::ServiceTypeRepository::TypeStruct const& ts,
                               char const *constraints);
 
   /**
@@ -86,7 +86,7 @@ public:
   TAO_Preference_Interpreter (TAO_Preference_Interpreter&&) = delete;
   TAO_Preference_Interpreter& operator= (TAO_Preference_Interpreter&&) = delete;
 
-  TAO_Preference_Interpreter (const CosTradingRepos::ServiceTypeRepository::TypeStruct& ts,
+  TAO_Preference_Interpreter (CosTradingRepos::ServiceTypeRepository::TypeStruct const& ts,
                               char const *preference);
 
   /**
