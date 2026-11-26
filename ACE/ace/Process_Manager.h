@@ -232,7 +232,9 @@ public:
    * below, this method does not require a signal handler or use of
    * ACE_OS::sigwait() because it simply blocks synchronously waiting
    * for all the children managed by this ACE_Process_Manager to
-   * exit.  Note that this does not return any status information
+   * exit.
+   *
+   * @note This does not return any status information
    * about the success or failure of exiting child processes, although
    * any registered exit handlers are called.
    *

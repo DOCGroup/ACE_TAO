@@ -67,7 +67,9 @@ public:
   /// ACE_Timer_List.
   /**
    * This timer gets dispatched via a signal, rather than by a user
-   * calling expire().  Note that interval timers are not implemented
+   * calling expire().
+   *
+   * @note Interval timers are not implemented
    * yet.
    */
   long schedule (TYPE type,

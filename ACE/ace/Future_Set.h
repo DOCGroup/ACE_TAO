@@ -71,10 +71,8 @@ public:
   int insert (ACE_Future<T> &future);
 
   /**
-   * Wait up to @a tv time to get the @a value.  Note that @a tv must be
-   * specified in absolute time rather than relative time.); get the
-   * next ACE_Future that is readable.  If @a tv = 0, the will block
-   * forever.
+   * Wait for the next readable ACE_Future. If @a tv is nullptr, block
+   * indefinitely.
    *
    * If a readable future becomes available, then the input
    * ACE_Future object param will be assigned with it and 1 will
@@ -84,6 +82,8 @@ public:
    * When a readable ACE_Future object is retrieved via the
    * ACE_Future_Set::next_readable() method, the ACE_Future_Set will
    * remove that ACE_Future object from its list of subjects.
+   *
+   * @note @a tv must specify an absolute time rather than a relative time.
    */
   int next_readable (ACE_Future<T> &result,
                      ACE_Time_Value *tv = nullptr);

@@ -71,14 +71,15 @@ public:
   /**
    * Insert a Token into the collection.  All ACE_Token type
    * operations performed on the collection will also be performed on
-   * the new_proxy until it is removed.  Note that no operations
-   * performed prior to the insertion will be performed.  Returns: 0
+   * the new_proxy until it is removed. Returns: 0
    * on success, -1 on failure with @c errno == problem.  If a token
    * proxy already exists in the collection with the same name, the
-   * insertion will fail.  Also, @c token is copied.  Note that during
-   * the copy, client_id's are *not* inherited.  The client ID of the
+   * insertion will fail. Also, @a token is copied.
+   *
+   * @note Operations performed before insertion are not performed on the
+   * new proxy. During the copy, client IDs are *not* inherited. The client ID of the
    * thread using the collection will be used.  Client ID's can be
-   * changed explicity on each proxy using is_member.
+   * changed explicitly on each proxy using is_member.
    */
   int insert (ACE_Token_Proxy &token);
 
