@@ -59,6 +59,22 @@ ACE_TMAIN (int, ACE_TCHAR *[])
   std::array<ACEXML_UTF16, 18> after {};
   ACEXML_Transcoder::utf8s2utf16s (decoded.data (), after.data (), after.size ());
 
+  for (size_t i {}; i < x; ++i)
+    {
+      if (after[i] != org[i])
+        {
+          return 1;
+        }
+    }
+
+  std::array<ACEXML_UTF8, 2> boundary {};
+  if (ACEXML_Transcoder::utf162utf8 (0x7ff, boundary.data (), boundary.size ()) != 2 ||
+      static_cast<unsigned char> (boundary[0]) != 0xdf ||
+      static_cast<unsigned char> (boundary[1]) != 0xbf)
+    {
+      return 1;
+    }
+
   ACE_DEBUG ((LM_DEBUG, "Restored UTF16 string:\n"));
   dump_utf16 (after.data (), x);
   ACE_DEBUG ((LM_DEBUG, "\n\n"));
