@@ -7,7 +7,6 @@
 #include <cstdlib>
 #include <cstring>
 
-
 static ACE_CString unique_prefix = "\001\002\003\004";
 
 AsyncAccessManager::AsyncAccessManager (UpdateableServerInfo &info,
@@ -825,7 +824,6 @@ AsyncAccessManager::_remove_ref ()
     }
 }
 
-
 ActivatorReceiver::ActivatorReceiver (AsyncAccessManager *aam,
                                       PortableServer::POA_ptr poa)
   :aam_ (aam->_add_ref ()),
@@ -912,7 +910,6 @@ void
 ActivatorReceiver::kill_server_excep (Messaging::ExceptionHolder * )
 {
 }
-
 
 AccessLiveListener::AccessLiveListener (char const *server,
                                         AsyncAccessManager *aam,
