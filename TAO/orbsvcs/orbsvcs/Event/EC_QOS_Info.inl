@@ -9,7 +9,7 @@ TAO_EC_QOS_Info::TAO_EC_QOS_Info ()
 }
 
 ACE_INLINE
-TAO_EC_QOS_Info::TAO_EC_QOS_Info (const TAO_EC_QOS_Info &rhs)
+TAO_EC_QOS_Info::TAO_EC_QOS_Info (TAO_EC_QOS_Info const &rhs)
   :  rt_info (rhs.rt_info),
      preemption_priority (rhs.preemption_priority),
      timer_id_ (rhs.timer_id_)

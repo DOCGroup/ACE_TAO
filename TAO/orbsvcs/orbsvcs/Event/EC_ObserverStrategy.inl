@@ -24,8 +24,8 @@ TAO_EC_Basic_ObserverStrategy::Observer_Entry::
 
 ACE_INLINE int
 TAO_EC_Basic_ObserverStrategy::Header_Compare::
-    operator () (const RtecEventComm::EventHeader& lhs,
-                 const RtecEventComm::EventHeader& rhs) const
+    operator () (RtecEventComm::EventHeader const & lhs,
+                 RtecEventComm::EventHeader const & rhs) const
 {
   if (lhs.source == rhs.source)
     {

@@ -36,7 +36,7 @@ TAO_EC_Reactive_Timeout_Generator::schedule_timer (
 
 int
 TAO_EC_Reactive_Timeout_Generator::cancel_timer (
-      const TAO_EC_QOS_Info&,
+      TAO_EC_QOS_Info const &,
       int id)
 {
   const void *vp;

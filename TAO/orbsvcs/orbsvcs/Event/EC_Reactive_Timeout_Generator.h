@@ -47,7 +47,7 @@ public:
   int schedule_timer (TAO_EC_Timeout_Filter* filter,
                       ACE_Time_Value const & delta,
                       ACE_Time_Value const & interval) override;
-  int cancel_timer (const TAO_EC_QOS_Info& info,
+  int cancel_timer (TAO_EC_QOS_Info const & info,
                     int id) override;
 
   /// @}

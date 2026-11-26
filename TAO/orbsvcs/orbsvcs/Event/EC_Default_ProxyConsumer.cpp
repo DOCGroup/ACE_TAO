@@ -78,7 +78,7 @@ TAO_EC_Default_ProxyPushConsumer::connect_push_supplier (
 }
 
 void
-TAO_EC_Default_ProxyPushConsumer::push (const RtecEventComm::EventSet& event)
+TAO_EC_Default_ProxyPushConsumer::push (RtecEventComm::EventSet const & event)
 {
   TAO_EC_ProxyPushConsumer_Guard ace_mon (this->lock_,
                                           this->ec_refcount_,

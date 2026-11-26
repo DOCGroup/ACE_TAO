@@ -47,7 +47,7 @@ public:
   void connect_push_supplier (
     RtecEventComm::PushSupplier_ptr push_supplier,
     const RtecEventChannelAdmin::SupplierQOS& qos) override;
-  void push (const RtecEventComm::EventSet& event) override;
+  void push (RtecEventComm::EventSet const & event) override;
   void disconnect_push_consumer () override;
 
   /// @}

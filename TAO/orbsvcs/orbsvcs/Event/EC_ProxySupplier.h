@@ -110,9 +110,9 @@ public:
    * may have changed.
    */
   void push_to_consumer (RtecEventComm::PushConsumer_ptr consumer,
-                         const RtecEventComm::EventSet &event);
+                         RtecEventComm::EventSet const &event);
   void reactive_push_to_consumer (RtecEventComm::PushConsumer_ptr consumer,
-                                  const RtecEventComm::EventSet &event);
+                                  RtecEventComm::EventSet const &event);
 
   /**
    * Invoke the _non_existent() pseudo-operation on the consumer. If
@@ -127,19 +127,19 @@ public:
 
   /// @name The TAO_EC_Filter methods, only push() is implemented
   /// @{
-  int filter (const RtecEventComm::EventSet &event,
+  int filter (RtecEventComm::EventSet const &event,
                       TAO_EC_QOS_Info& qos_info) override;
   int filter_nocopy (RtecEventComm::EventSet &event,
                              TAO_EC_QOS_Info &qos_info) override;
-  void push (const RtecEventComm::EventSet &event,
+  void push (RtecEventComm::EventSet const &event,
                      TAO_EC_QOS_Info& qos_info) override;
   void push_nocopy (RtecEventComm::EventSet &event,
                             TAO_EC_QOS_Info &qos_info) override;
   void clear () override;
   CORBA::ULong max_event_size () const override;
-  int can_match (const RtecEventComm::EventHeader &header) const override;
-  int add_dependencies (const RtecEventComm::EventHeader &header,
-                                const TAO_EC_QOS_Info &qos_info) override;
+  int can_match (RtecEventComm::EventHeader const &header) const override;
+  int add_dependencies (RtecEventComm::EventHeader const &header,
+                                TAO_EC_QOS_Info const &qos_info) override;
 
   /// @}
 protected:

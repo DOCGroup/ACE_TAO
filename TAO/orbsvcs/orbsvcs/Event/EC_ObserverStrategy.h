@@ -168,8 +168,8 @@ public:
 
   struct Header_Compare
   {
-    int operator () (const RtecEventComm::EventHeader& lhs,
-                     const RtecEventComm::EventHeader& rhs) const;
+    int operator () (RtecEventComm::EventHeader const & lhs,
+                     RtecEventComm::EventHeader const & rhs) const;
   };
 
   using Observer_Map =

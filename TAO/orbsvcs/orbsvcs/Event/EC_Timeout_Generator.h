@@ -58,7 +58,7 @@ public:
                               ACE_Time_Value const & interval) = 0;
 
   /// Cancel a timer at the given priority.
-  virtual int cancel_timer (const TAO_EC_QOS_Info& info,
+  virtual int cancel_timer (TAO_EC_QOS_Info const & info,
                             int id) = 0;
 };
 

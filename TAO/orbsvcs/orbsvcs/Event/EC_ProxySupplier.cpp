@@ -180,7 +180,7 @@ using Destroy_Guard = TAO_ESF_Proxy_RefCount_Guard<TAO_EC_Event_Channel_Base,
                                                    TAO_EC_ProxyPushSupplier>;
 
 int
-TAO_EC_ProxyPushSupplier::filter (const RtecEventComm::EventSet& event,
+TAO_EC_ProxyPushSupplier::filter (RtecEventComm::EventSet const & event,
                                   TAO_EC_QOS_Info& qos_info)
 {
   Destroy_Guard auto_destroy (this->refcount_,
@@ -224,7 +224,7 @@ TAO_EC_ProxyPushSupplier::filter_nocopy (RtecEventComm::EventSet& event,
 }
 
 void
-TAO_EC_ProxyPushSupplier::push (const RtecEventComm::EventSet& event,
+TAO_EC_ProxyPushSupplier::push (RtecEventComm::EventSet const & event,
                                 TAO_EC_QOS_Info& qos_info)
 {
   // The mutex is already held by the caller (usually the filter()
@@ -332,7 +332,7 @@ TAO_EC_ProxyPushSupplier::push_nocopy (RtecEventComm::EventSet& event,
 void
 TAO_EC_ProxyPushSupplier::push_to_consumer (
     RtecEventComm::PushConsumer_ptr consumer,
-    const RtecEventComm::EventSet& event)
+    RtecEventComm::EventSet const & event)
 {
   {
     ACE_GUARD_THROW_EX (
@@ -397,7 +397,7 @@ TAO_EC_ProxyPushSupplier::push_to_consumer (
 void
 TAO_EC_ProxyPushSupplier::reactive_push_to_consumer (
     RtecEventComm::PushConsumer_ptr consumer,
-    const RtecEventComm::EventSet& event)
+    RtecEventComm::EventSet const & event)
 {
   try
     {
@@ -468,7 +468,7 @@ TAO_EC_ProxyPushSupplier::max_event_size () const
 
 int
 TAO_EC_ProxyPushSupplier::can_match (
-      const RtecEventComm::EventHeader &header) const
+      RtecEventComm::EventHeader const &header) const
 {
   ACE_GUARD_RETURN (ACE_Lock, ace_mon, *this->lock_, 0);
 
@@ -482,8 +482,8 @@ TAO_EC_ProxyPushSupplier::can_match (
 
 int
 TAO_EC_ProxyPushSupplier::add_dependencies (
-      const RtecEventComm::EventHeader &header,
-      const TAO_EC_QOS_Info &qos_info)
+      RtecEventComm::EventHeader const &header,
+      TAO_EC_QOS_Info const &qos_info)
 {
   ACE_GUARD_THROW_EX (
           ACE_Lock, ace_mon, *this->lock_,

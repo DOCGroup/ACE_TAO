@@ -53,7 +53,7 @@ public:
 
   /// Schedule an event set and deliver them to the filter in the
   /// desired order and grouping.
-  virtual void schedule_event (const RtecEventComm::EventSet &event,
+  virtual void schedule_event (RtecEventComm::EventSet const &event,
                                TAO_EC_ProxyPushConsumer *consumer,
                                TAO_EC_Supplier_Filter *filter) = 0;
 };

@@ -16,7 +16,7 @@ TAO_EC_Reactive_Dispatching::shutdown ()
 void
 TAO_EC_Reactive_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                                    RtecEventComm::PushConsumer_ptr consumer,
-                                   const RtecEventComm::EventSet& event,
+                                   RtecEventComm::EventSet const & event,
                                    TAO_EC_QOS_Info&)
 {
   proxy->reactive_push_to_consumer (consumer, event);

@@ -41,7 +41,7 @@ public:
 
   /// Copy constructor, it does the obvious thing, but if it is not
   /// here the HP/aCC compiler breaks.
-  TAO_EC_QOS_Info (const TAO_EC_QOS_Info &rhs);
+  TAO_EC_QOS_Info (TAO_EC_QOS_Info const &rhs);
 
   RtecBase::handle_t rt_info;
   RtecBase::Preemption_Priority_t preemption_priority;

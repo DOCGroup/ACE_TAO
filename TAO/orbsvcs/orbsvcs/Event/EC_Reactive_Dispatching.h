@@ -50,7 +50,7 @@ public:
   void shutdown () override;
   void push (TAO_EC_ProxyPushSupplier *proxy,
                      RtecEventComm::PushConsumer_ptr consumer,
-                     const RtecEventComm::EventSet &event,
+                     RtecEventComm::EventSet const &event,
                      TAO_EC_QOS_Info &qos_info) override;
   void push_nocopy (TAO_EC_ProxyPushSupplier *proxy,
                             RtecEventComm::PushConsumer_ptr consumer,

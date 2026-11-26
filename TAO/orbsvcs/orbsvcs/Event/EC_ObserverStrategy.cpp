@@ -396,7 +396,7 @@ TAO_EC_Accumulate_Supplier_Headers::work (TAO_EC_ProxyPushSupplier *supplier)
   }
   for (CORBA::ULong j {}; j < sub.dependencies.length (); ++j)
     {
-      const RtecEventComm::Event& event =
+      RtecEventComm::Event const & event =
         sub.dependencies[j].event;
       RtecEventComm::EventType type = event.header.type;
 
@@ -421,7 +421,7 @@ TAO_EC_Accumulate_Consumer_Headers::work (TAO_EC_ProxyPushConsumer *consumer)
   }
   for (CORBA::ULong j {}; j < pub.publications.length (); ++j)
     {
-      const RtecEventComm::Event& event =
+      RtecEventComm::Event const & event =
         pub.publications[j].event;
       RtecEventComm::EventType type = event.header.type;
 

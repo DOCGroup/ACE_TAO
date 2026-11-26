@@ -107,7 +107,7 @@ TAO_EC_Kokyu_Dispatching::shutdown ()
 void
 TAO_EC_Kokyu_Dispatching::push (TAO_EC_ProxyPushSupplier* proxy,
                                 RtecEventComm::PushConsumer_ptr consumer,
-                                const RtecEventComm::EventSet& event,
+                                RtecEventComm::EventSet const & event,
                                 TAO_EC_QOS_Info&     qos_info)
 {
   RtecEventComm::EventSet event_copy = event;
