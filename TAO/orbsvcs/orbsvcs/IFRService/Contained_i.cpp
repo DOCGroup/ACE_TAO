@@ -486,7 +486,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
   else
     {
       ACE_TString container_path (
-          TAO_IFR_Service_Utils::reference_to_path (new_container)
+          ACE_TEXT_CHAR_TO_TCHAR (TAO_IFR_Service_Utils::reference_to_path (new_container))
         );
 
       this->repo_->config ()->expand_path (this->repo_->root_key (),
@@ -503,13 +503,13 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
   // If an exception is thrown, this must be restored.
   ACE_TString my_path;
   this->repo_->config ()->get_string_value (this->repo_->repo_ids_key (),
-                                            id.in (),
+                                            ACE_TEXT_CHAR_TO_TCHAR (id.in ()),
                                             my_path);
 
   // Remove the repo id, because the create_* function call will add it
   // again with a different path value.
   this->repo_->config ()->remove_value (this->repo_->repo_ids_key (),
-                                        id.in ());
+                                        ACE_TEXT_CHAR_TO_TCHAR (id.in ()));
 
   // Used for cleanup at the end of this function.
   ACE_Configuration_Section_Key old_section_key = this->section_key_;
@@ -520,7 +520,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
   CORBA::String_var container_id =
     as_contained.id_i ();
 
-  ACE_TString new_id (container_id.in ());
+  ACE_CString new_id (container_id.in ());
   new_id =
     new_id.substr (0, new_id.rfind (':')) + "/" + new_name + ":" + new_version;
 
@@ -545,7 +545,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
               || container_dk == CORBA::dk_Exception)
             {
               this->move_pre_process (new_container,
-                                      my_path.c_str (),
+                                      ACE_TEXT_ALWAYS_CHAR (my_path.c_str ()),
                                       new_name);
             }
 
@@ -555,7 +555,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                           new_version,
                                           members.in ());
 
-          ACE_TString new_path =
+          ACE_CString new_path =
             TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
           container_impl.update_refs (new_path.c_str ());
 
@@ -575,7 +575,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                           new_version,
                                           otype.in ());
 
-          ACE_TString new_path =
+          ACE_CString new_path =
             TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
           container_impl.update_refs (new_path.c_str ());
 
@@ -603,7 +603,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                                new_version,
                                                otype.in ());
 
-          ACE_TString new_path =
+          ACE_CString new_path =
             TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
           container_impl.update_refs (new_path.c_str ());
 
@@ -622,7 +622,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
               || container_dk == CORBA::dk_Exception)
             {
               this->move_pre_process (new_container,
-                                      my_path.c_str (),
+                                      ACE_TEXT_ALWAYS_CHAR (my_path.c_str ()),
                                       new_name);
             }
 
@@ -632,7 +632,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                             new_version,
                                             members.in ());
 
-          ACE_TString new_path =
+          ACE_CString new_path =
             TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
           container_impl.update_refs (new_path.c_str ());
 
@@ -656,7 +656,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
               || container_dk == CORBA::dk_Exception)
             {
               this->move_pre_process (new_container,
-                                      my_path.c_str (),
+                                      ACE_TEXT_ALWAYS_CHAR (my_path.c_str ()),
                                       new_name);
             }
 
@@ -667,7 +667,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                            disc_type.in (),
                                            members.in ());
 
-          ACE_TString new_path =
+          ACE_CString new_path =
             TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
           container_impl.update_refs (new_path.c_str ());
 
@@ -718,7 +718,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                                new_version,
                                                bases.in ());
 
-          ACE_TString new_path =
+          ACE_CString new_path =
             TAO_IFR_Service_Utils::reference_to_path (new_defn.in ());
           container_impl.update_refs (new_path.c_str ());
 
@@ -869,7 +869,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
       // If the move was not successful, we must restore this.
       this->repo_->config ()->set_string_value (
                                   this->repo_->repo_ids_key (),
-                                  id.in (),
+                                  ACE_TEXT_CHAR_TO_TCHAR (id.in ()),
                                   my_path
                                 );
       throw;
@@ -885,7 +885,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
                                                 ACE_TEXT("container_id"),
                                                 container_id);
 
-      if (container_id == "")
+      if (container_id.empty ())
         {
           parent_key = this->repo_->root_key ();
         }
@@ -905,7 +905,7 @@ TAO_Contained_i::move_i (CORBA::Container_ptr new_container,
 
       ACE_Configuration_Section_Key defns_key;
       this->repo_->config ()->open_section (parent_key,
-                                            "defns",
+                                            ACE_TEXT ("defns"),
                                             false,
                                             defns_key);
 
@@ -926,13 +926,13 @@ TAO_Contained_i::move_pre_process (CORBA::Container_ptr container,
 
   ACE_Configuration_Section_Key container_key;
   this->repo_->config ()->expand_path (this->repo_->root_key (),
-                                       container_path,
+                                       ACE_TEXT_CHAR_TO_TCHAR (container_path),
                                        container_key,
                                        false);
 
   ACE_Configuration_Section_Key refs_key;
   this->repo_->config ()->open_section (container_key,
-                                        "refs",
+                                        ACE_TEXT ("refs"),
                                         false,
                                         refs_key);
 
@@ -959,11 +959,12 @@ TAO_Contained_i::move_pre_process (CORBA::Container_ptr container,
                                                 ACE_TEXT("path"),
                                                 path);
 
-      if (ref_name == name && path == contained_path)
+      if (ref_name == ACE_TEXT_CHAR_TO_TCHAR (name)
+          && path == ACE_TEXT_CHAR_TO_TCHAR (contained_path))
         {
-          ref_name += this->repo_->extension ();
+          ref_name += ACE_TEXT_CHAR_TO_TCHAR (this->repo_->extension ());
           this->repo_->config ()->set_string_value (ref_key,
-                                                    "name",
+                                                    ACE_TEXT ("name"),
                                                     ref_name);
 
           break;
@@ -980,7 +981,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
   ACE_Configuration_Section_Key defns_key;
   int status =
     this->repo_->config ()->open_section (this->section_key_,
-                                          "defns",
+                                          ACE_TEXT ("defns"),
                                           false,
                                           defns_key);
 
@@ -988,13 +989,13 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
     {
       u_int count = 0;
       this->repo_->config ()->get_integer_value (defns_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
 
       for (u_int i {}; i < count; ++i)
         {
           ACE_Configuration_Section_Key defn_key;
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           status =
             this->repo_->config ()->open_section (defns_key,
                                                   stringified,
@@ -1021,8 +1022,8 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
               impl->section_key (defn_key);
 
               impl->move_i (new_container,
-                            name.c_str (),
-                            version.c_str (),
+                            ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
+                            ACE_TEXT_ALWAYS_CHAR (version.c_str ()),
                             false);
             }
         }
@@ -1040,7 +1041,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
       ACE_Configuration_Section_Key attrs_key;
       int status =
         this->repo_->config ()->open_section (this->section_key_,
-                                              "attrs",
+                                              ACE_TEXT ("attrs"),
                                               false,
                                               attrs_key);
 
@@ -1069,8 +1070,8 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
               impl.section_key (attr_key);
 
               impl.move_i (new_container,
-                           name.c_str (),
-                           version.c_str (),
+                           ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
+                           ACE_TEXT_ALWAYS_CHAR (version.c_str ()),
                            false);
             }
         }
@@ -1081,7 +1082,7 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
       ACE_Configuration_Section_Key ops_key;
       status =
         this->repo_->config ()->open_section (this->section_key_,
-                                              "ops",
+                                              ACE_TEXT ("ops"),
                                               false,
                                               ops_key);
 
@@ -1099,19 +1100,19 @@ TAO_Contained_i::move_contents (CORBA::Container_ptr new_container)
                                                     op_key);
 
               this->repo_->config ()->get_string_value (op_key,
-                                                        "name",
+                                                        ACE_TEXT ("name"),
                                                         name);
 
               this->repo_->config ()->get_string_value (op_key,
-                                                        "version",
+                                                        ACE_TEXT ("version"),
                                                         version);
 
               TAO_OperationDef_i impl (this->repo_);
               impl.section_key (op_key);
 
               impl.move_i (new_container,
-                           name.c_str (),
-                           version.c_str (),
+                           ACE_TEXT_ALWAYS_CHAR (name.c_str ()),
+                           ACE_TEXT_ALWAYS_CHAR (version.c_str ()),
                            false);
             }
         }
