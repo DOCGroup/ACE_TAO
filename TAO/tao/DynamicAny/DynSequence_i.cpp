@@ -29,7 +29,7 @@ TAO_DynSequence_i::init_common ()
 }
 
 void
-TAO_DynSequence_i::init (CORBA::Any const& any)
+TAO_DynSequence_i::init (CORBA::Any const &any)
 {
   CORBA::TypeCode_var const tc = any.type ();
 
@@ -92,7 +92,7 @@ TAO_DynSequence_i::init (CORBA::Any const& any)
       // This recursive step will call the correct constructor
       // based on the type of field_any.
       this->da_members_[i] =
-        TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+        TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const &> (
           field_any._tao_get_typecode (),
           field_any,
           this->allow_truncation_ );
@@ -268,7 +268,7 @@ TAO_DynSequence_i::get_elements ()
 }
 
 void
-TAO_DynSequence_i::set_elements (DynamicAny::AnySeq const& value)
+TAO_DynSequence_i::set_elements (DynamicAny::AnySeq const &value)
 {
   if (this->destroyed_)
     {
@@ -320,7 +320,7 @@ TAO_DynSequence_i::set_elements (DynamicAny::AnySeq const& value)
             }
 
           this->da_members_[i] =
-            TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+            TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const &> (
               value[i]._tao_get_typecode (),
               value[i],
               this->allow_truncation_ );
@@ -378,7 +378,7 @@ TAO_DynSequence_i::get_elements_as_dyn_any ()
 
 void
 TAO_DynSequence_i::set_elements_as_dyn_any (
-  DynamicAny::DynAnySeq const& values)
+  DynamicAny::DynAnySeq const &values)
 {
   if (this->destroyed_)
     {
@@ -444,7 +444,7 @@ TAO_DynSequence_i::set_elements_as_dyn_any (
   this->component_count_ = length;
 }
 void
-TAO_DynSequence_i::from_any (CORBA::Any const& any)
+TAO_DynSequence_i::from_any (CORBA::Any const &any)
 {
   if (this->destroyed_)
     {
@@ -512,7 +512,7 @@ TAO_DynSequence_i::from_any (CORBA::Any const& any)
             }
 
           this->da_members_[i] =
-            TAO::MakeDynAnyUtils::make_dyn_any_t<const CORBA::Any&> (
+            TAO::MakeDynAnyUtils::make_dyn_any_t<CORBA::Any const &> (
               field_any._tao_get_typecode (),
               field_any,
               this->allow_truncation_ );
