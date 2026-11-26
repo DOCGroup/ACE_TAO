@@ -87,9 +87,10 @@ int ACE_TMAIN(int argc, ACE_TCHAR * argv[])
       ACE_OS::sleep (1);
     }
   }
-  catch(const CORBA::Exception& ex) {
-    return 1;
-  }
+  catch (CORBA::Exception const& ex)
+    {
+      return 1;
+    }
 
   return 0;
 }

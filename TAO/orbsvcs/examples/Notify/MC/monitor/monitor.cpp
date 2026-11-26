@@ -282,12 +282,12 @@ ACE_TMAIN (int argc, ACE_TCHAR* argv[])
 
       orb->destroy ();
     }
-  catch (const CORBA::UserException& ex)
+  catch (CORBA::UserException const& ex)
     {
       ex._tao_print_exception ("Notification Service Monitor: ");
       ++status;
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const& ex)
     {
       ex._tao_print_exception ("Notification Service Monitor: ");
       ++status;
