@@ -89,7 +89,7 @@ public:
     return 0;
   };
 
-  void* getMemoryBlock(const char* block_name, unsigned int block_size)
+  void* getMemoryBlock(char const * block_name, unsigned int block_size)
   {
     void* shared {};
 
@@ -135,7 +135,7 @@ public:
 
 ShmemMan* ShmemMan::c_instance {};
 
-const char* block_name = "block_1";
+char const * block_name = "block_1";
 
 // Main function.
 int

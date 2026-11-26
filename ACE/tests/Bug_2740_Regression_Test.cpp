@@ -41,17 +41,17 @@ public:
 
   // Each client will send/recv 'echo_cnt' times, close/reopen the socket,
   // then echo, etc. for ACE_MAX_ITERATIONS times.
-  ClientSvcHandler (const ACE_INET_Addr &addr, int echo_cnt);
+  ClientSvcHandler (ACE_INET_Addr const &addr, int echo_cnt);
   ~ClientSvcHandler () override;
 
   int open (void* factory) override;
   int handle_input (ACE_HANDLE handle = ACE_INVALID_HANDLE) override;
-  int handle_timeout (const ACE_Time_Value &now, const void *act = nullptr) override;
+  int handle_timeout (ACE_Time_Value const &now, void const *act = nullptr) override;
   int handle_close (ACE_HANDLE handle = ACE_INVALID_HANDLE,
                     ACE_Reactor_Mask mask = 0) override;
 
 protected:
-  static const char *send_str;
+  static char const *send_str;
 
   ACE_INET_Addr server_addr_;
   // Know when we've received 'echo_cnt' echoes of the data. Don't want to
@@ -63,7 +63,7 @@ protected:
   long timer_ {-1};
 };
 
-const char *ClientSvcHandler::send_str =
+char const *ClientSvcHandler::send_str =
   "1234567890123456789012345678901234567890";
 
 class ServerSvcHandler : public ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>
@@ -75,7 +75,7 @@ public:
                     ACE_Reactor_Mask mask = 0) override;
 };
 
-ClientSvcHandler::ClientSvcHandler (const ACE_INET_Addr &addr, int echo_cnt)
+ClientSvcHandler::ClientSvcHandler (ACE_INET_Addr const &addr, int echo_cnt)
   : ACE_Svc_Handler<ACE_SOCK_STREAM, ACE_NULL_SYNCH>(),
     server_addr_ (addr),
     echo_cnt_ (ACE_OS::strlen (ClientSvcHandler::send_str) * echo_cnt),
@@ -193,7 +193,7 @@ ClientSvcHandler::handle_input (ACE_HANDLE handle)
 }
 
 int
-ClientSvcHandler::handle_timeout (const ACE_Time_Value &, const void*)
+ClientSvcHandler::handle_timeout (ACE_Time_Value const &, void const *)
 {
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("%t: client h %H: timeout\n"),
@@ -360,7 +360,7 @@ int run_main(int, ACE_TCHAR *[])
   ACE_Acceptor<ServerSvcHandler, ACE_SOCK_Acceptor> acceptor (
     std::addressof (reactor), ACE_NONBLOCK);
   ACE_SOCK_Acceptor::PEER_ADDR server_addr;
-  if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
+  if (acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &),
                      std::addressof (reactor)) == -1
       || acceptor.acceptor ().get_local_addr (server_addr) == -1)
     {

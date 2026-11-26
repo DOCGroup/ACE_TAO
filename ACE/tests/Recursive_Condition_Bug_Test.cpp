@@ -100,8 +100,8 @@ private:
 class Test_Handler : public ACE_Event_Handler
 {
 public:
-  int handle_timeout (const ACE_Time_Value &,
-                              const void *arg) override
+  int handle_timeout (ACE_Time_Value const &,
+                              void const *arg) override
   {
     ACE_DEBUG ((LM_DEBUG,
                 ACE_TEXT ("(%t) Test_Handler::handle_timeout\n")));
