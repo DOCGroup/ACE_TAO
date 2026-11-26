@@ -127,9 +127,10 @@ public:
    * Allows a client to read from a file without having to provide a
    * buffer to read.  This method determines how much data is in the
    * file, allocates a buffer of this size, reads in the data, and
-   * returns the number of bytes read.  The caller is responsible for
-   * deleting the member in the @c iov_base field of @c io_vec using
-   * delete [] io_vec->iov_base.
+   * returns the number of bytes read. The caller must release the
+   * @c iov_base buffer with @c delete[] on a @c char pointer, or with
+   * @c ACE_Allocator::free() when @c ACE_HAS_ALLOC_HOOKS is enabled. On failure,
+   * the buffer is null and the length is zero.
    */
   ssize_t recvv (iovec *io_vec);
 
