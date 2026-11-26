@@ -552,7 +552,7 @@ TAO_UIPMC_Mcast_Transport::handle_input (
       message_block.wr_ptr (complete->data_length ());
 
       // Make a node of the message block.
-      TAO_Queued_Data qd (&message_block);
+      TAO_Queued_Data qd (std::addressof (message_block));
       size_t mesg_length {};
 
       // Parse the incoming message for validity. The check needs to be

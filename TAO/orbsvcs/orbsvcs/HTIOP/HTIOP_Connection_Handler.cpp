@@ -297,7 +297,7 @@ TAO::HTIOP::Connection_Handler::process_listen_point_list
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      int retval = this->transport ()->recache_transport (&prop);
+      int retval = this->transport ()->recache_transport (std::addressof (prop));
       if (retval == -1)
       {
         return retval;

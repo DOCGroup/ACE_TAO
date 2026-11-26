@@ -425,7 +425,7 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
       // send the SecurityAssociation options with the
       //    IIOP::ListenPointList.  Presumably the new Firewall
       //    specification will address this deficiency.
-      TAO_SSLIOP_Synthetic_Endpoint endpoint (&tmpoint);
+      TAO_SSLIOP_Synthetic_Endpoint endpoint (std::addressof (tmpoint));
 
       // Construct a property object
       TAO_Base_Transport_Property prop (std::addressof (endpoint));
@@ -435,7 +435,7 @@ TAO::SSLIOP::Connection_Handler::process_listen_point_list (
 
       // The property for this handler has changed. Recache the
       // handler with this property
-      if (this->transport ()->recache_transport (&prop) == -1)
+      if (this->transport ()->recache_transport (std::addressof (prop)) == -1)
       {
         return -1;
       }
