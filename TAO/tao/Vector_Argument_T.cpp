@@ -45,7 +45,6 @@ TAO::In_Vector_Clonable_Argument_T<S,Insert_Policy>::clone ()
   return clone_arg.release ();
 }
 
-
 template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -77,7 +76,6 @@ TAO::Inout_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-
 template<typename S,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -99,7 +97,6 @@ TAO::Out_Vector_Argument_T<S,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
 
 template<typename S,
          template <typename> class Insert_Policy>

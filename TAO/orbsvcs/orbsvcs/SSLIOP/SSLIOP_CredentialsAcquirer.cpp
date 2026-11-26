@@ -15,7 +15,6 @@
 #include <openssl/x509.h>
 #include <openssl/pem.h>
 
-
 #if (defined (TAO_HAS_VERSIONED_NAMESPACE) && TAO_HAS_VERSIONED_NAMESPACE == 1)
 # define TAO_SSLIOP_PASSWORD_CALLBACK_NAME ACE_PREPROC_CONCATENATE(TAO_VERSIONED_NAMESPACE_NAME, _TAO_SSLIOP_password_callback)
 #else
@@ -65,7 +64,6 @@ TAO_SSLIOP_PASSWORD_CALLBACK_NAME (char *buf,
 
   return pwlen;
 }
-
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 

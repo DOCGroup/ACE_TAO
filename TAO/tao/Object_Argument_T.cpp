@@ -63,7 +63,6 @@ TAO::In_Object_Clonable_Argument_T<S_ptr,Insert_Policy>::clone ()
   return clone_arg.release ();
 }
 
-
 template<typename S_ptr,
          typename S_traits,
          template <typename> class Insert_Policy>
@@ -97,7 +96,6 @@ TAO::Inout_Object_Argument_T<S_ptr,S_traits,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-
 template<typename S_ptr,
          typename S_out,
          template <typename> class Insert_Policy>
@@ -120,7 +118,6 @@ TAO::Out_Object_Argument_T<S_ptr,S_out,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
 
 template<typename S_ptr,
          typename S_var,

@@ -32,7 +32,6 @@
 
 using SVC_HANDLER = ACE_Svc_Handler<ACE_SOCK_Stream, ACE_NULL_SYNCH>;
 
-
 class Client : public SVC_HANDLER
 {
 public:
@@ -78,7 +77,6 @@ private:
   std::queue<std::string*> buffer_list_;
   size_t offset_;
 };
-
 
 Client::Client ()
   : call_count_ (0)
@@ -240,7 +238,6 @@ Client::handle_close (ACE_HANDLE handle,
   //return SVC_HANDLER::handle_close (handle, mask);
 }
 
-
 Server::Server ()
   : offset_ (0)
 {
@@ -377,10 +374,8 @@ Server::handle_close (ACE_HANDLE handle,
   //return SVC_HANDLER::handle_close (handle, mask);
 }
 
-
 using ACCEPTOR = ACE_Acceptor<Server, ACE_SOCK_Acceptor>;
 using CONNECTOR = ACE_Connector<Client, ACE_SOCK_Connector>;
-
 
 class TestAcceptor : public ACCEPTOR
 {
@@ -409,7 +404,6 @@ public:
     return result;
   }
 };
-
 
 class TestConnector : public CONNECTOR
 {
@@ -470,7 +464,6 @@ public:
   }
 };
 
-
 static int
 disable_signal (int sigmin, int sigmax)
 {
@@ -509,7 +502,6 @@ disable_signal (int sigmin, int sigmax)
 
   return 0;
 }
-
 
 int
 run_main (int, ACE_TCHAR *[])

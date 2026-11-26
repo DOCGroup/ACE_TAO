@@ -53,7 +53,6 @@ TAO_Port_Utils<CORBA::ComponentIR::UsesDef>::set_is_multiple (
                              is_multiple);
 }
 
-
 TAO_ComponentDef_i::TAO_ComponentDef_i (TAO_Repository_i *repo)
   : TAO_IRObject_i (repo),
     TAO_Container_i (repo),

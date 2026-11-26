@@ -7,7 +7,6 @@
 
 #include <memory>
 
-
 AsyncListManager::AsyncListManager (Locator_Repository const *repo,
                                     PortableServer::POA_ptr poa,
                                     LiveCheck *pinger)
@@ -328,7 +327,6 @@ AsyncListManager::_remove_ref ()
       delete this;
     }
 }
-
 
 ListLiveListener::ListLiveListener (char const *server,
                                     int pid,

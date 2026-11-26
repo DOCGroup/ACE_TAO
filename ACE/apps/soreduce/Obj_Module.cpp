@@ -14,7 +14,6 @@
 
 #include "Obj_Module.h"
 
-
 Obj_Module::Obj_Module (ACE_CString const &name, size_t cap)
   : name_ (name),
     imports_(cap),

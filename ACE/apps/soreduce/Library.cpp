@@ -147,7 +147,6 @@ MPC_TAO_Dep_Lib::write_projectinfo()
            << "  idlflags    += -I$(TAO_ROOT)/orbsvcs" << endl;
 }
 
-
 Library::Library (char const *name)
   : name_ (name),
     exported_ (0)

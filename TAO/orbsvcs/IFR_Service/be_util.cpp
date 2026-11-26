@@ -12,7 +12,6 @@
 
 #include "ast_generator.h"
 
-
 #include <memory>
 #include <new>
 

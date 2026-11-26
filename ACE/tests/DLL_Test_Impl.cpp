@@ -105,7 +105,6 @@ public:
 
 static Static_Constructor_Test the_instance;
 
-
 Child::Child ()
 {
 }
@@ -171,7 +170,6 @@ Child::test ()
 
   ACE_DEBUG ((LM_DEBUG, ACE_TEXT ("testing exceptions finished\n")));
 }
-
 
 // Test dynamic cast
 extern "C" ACE_Svc_Export int

@@ -47,7 +47,6 @@ TAO::SSLIOP_Credentials::SSLIOP_Credentials (::X509 *cert, ::EVP_PKEY *evp)
         }
       BN_free (bn);
 
-
       TimeBase::UtcT & t = this->expiry_time_;
 
       ASN1_TIME const * exp = X509_get_notAfter (x);
@@ -208,7 +207,6 @@ TAO::SSLIOP_Credentials::_duplicate (TAO::SSLIOP::Credentials_ptr obj)
 
   return obj;
 }
-
 
 TAO::SSLIOP::Credentials_ptr
 tao_TAO_SSLIOP_Credentials_duplicate (TAO::SSLIOP::Credentials_ptr p)

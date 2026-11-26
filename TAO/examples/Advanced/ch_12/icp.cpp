@@ -202,7 +202,6 @@ actual_temp (StateMap::const_iterator pos)
   return vary_temp (count == 0 ? DFLT_TEMP : sum / count);
 }
 
-
 // ICP_get () returns an attribute value of the device with the given
 // id. The attribute is named by the attr parameter. The value is
 // copied into the buffer pointed to by the value pointer. The len

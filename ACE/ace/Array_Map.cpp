@@ -229,7 +229,6 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::grow (
     }
 }
 
-
 template <typename Key, typename Value, class EqualTo, class Alloc>
 bool
 operator== (ACE_Array_Map<Key, Value, EqualTo, Alloc> const & lhs,

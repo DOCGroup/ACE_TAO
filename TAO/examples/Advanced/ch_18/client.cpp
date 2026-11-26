@@ -52,7 +52,6 @@ resolve_init (CORBA::ORB_ptr orb, char const *id)
     return ref._retn ();
 }
 
-
 template<class T>
 typename T::_ptr_type
 resolve_name (
@@ -94,7 +93,6 @@ resolve_name (
     return ref._retn ();
 }
 
-
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
@@ -120,7 +118,6 @@ operator<< (std::ostream& os, CORBA::Exception const& e)
 }
 
 #endif
-
 
 // Show the details for a thermometer or thermostat.
 
@@ -157,7 +154,6 @@ operator<< (std::ostream& os, CCS::Thermometer_ptr t)
     return os;
 }
 
-
 // Show the information in a BtData struct.
 
 static std::ostream &
@@ -170,7 +166,6 @@ operator<< (std::ostream& os, CCS::Thermostat::BtData const& btd)
     os << "\terror_msg    : " << btd.error_msg << std::endl;
     return os;
 }
-
 
 // Loop over the sequence of records in an EChange exception and
 // show the details of each record.
@@ -187,7 +182,6 @@ operator<< (std::ostream& os, CCS::Controller::EChange const& ec)
 }
 
 #endif
-
 
 // Change the temperature of a thermostat.
 
@@ -213,7 +207,6 @@ set_temp (CCS::Thermostat_ptr tmstat, CCS::TempType new_temp)
         std::cerr << bt.details << std::endl;             // Overloaded <<
     }
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

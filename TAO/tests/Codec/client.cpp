@@ -95,7 +95,6 @@ test_codec (IOP::Codec_ptr const codec)
   CORBA::Any data {};
   data <<= value;
 
-
   CORBA::OctetSeq_var encoded_data {};
   CORBA::Any_var decoded_data {};
   Foo::Bar const *extracted_value {};
@@ -212,7 +211,6 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         codec_factory->create_codec_with_codesets (encoding_1_2)};
 
       retval = test_codec (codec_1_2.in ());
-
 
       // Set up a structure that contains information necessary to
       // create a GIOP 1.1 CDR encapsulation Codec.

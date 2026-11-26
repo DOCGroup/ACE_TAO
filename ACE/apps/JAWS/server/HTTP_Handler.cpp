@@ -306,7 +306,6 @@ No_Cache_Synch_HTTP_Handler_Factory::destroy_http_handler (HTTP_Handler &handler
   delete &handler;
 }
 
-
 // This only works on Win32
 #if defined (ACE_HAS_WIN32_OVERLAPPED_IO)
 void

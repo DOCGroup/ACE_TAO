@@ -53,7 +53,6 @@ TAO::In_UB_String_Clonable_Argument_T<S_var,Insert_Policy>::clone ()
   return clone_arg.release ();
 }
 
-
 template<typename S_var,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -86,7 +85,6 @@ TAO::Inout_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-
 template<typename S_var,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -107,7 +105,6 @@ TAO::Out_UB_String_Argument_T<S_var,Insert_Policy>::interceptor_value (
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
 
 template<typename S_var,
          template <typename> class Insert_Policy>

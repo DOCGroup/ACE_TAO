@@ -55,7 +55,6 @@ TAO::In_Var_Array_Clonable_Argument_T<S_forany,Insert_Policy>::clone ()
   return clone_arg.release ();
 }
 
-
 template<typename S_forany,
          template <typename> class Insert_Policy>
 CORBA::Boolean
@@ -87,7 +86,6 @@ TAO::Inout_Var_Array_Argument_T<S_forany,Insert_Policy>::interceptor_value (
 
 #endif /* TAO_HAS_INTERCEPTORS */
 
-
 template<typename S_out,
          typename S_forany,
          template <typename> class Insert_Policy>
@@ -117,7 +115,6 @@ interceptor_value (CORBA::Any *any) const
 }
 
 #endif /* TAO_HAS_INTERCEPTORS */
-
 
 template<typename S_var,
          typename S_forany,

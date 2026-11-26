@@ -18,7 +18,6 @@ test_i::invoke_me ()
   // @note "TSC" is "thread scope current"
   //       "RSC" is "request scope current"
 
-
   // Verify that the following RSC->TSC->RSC copying scenario works:
   //
   // 1.    ServerRequestInterceptor::receive_request_service_contexts()
@@ -32,7 +31,6 @@ test_i::invoke_me ()
   // By this point all of step 1 has occurred.  Step 2 will now
   // occur.
   PICurrentTest::test_var my_ref = this->_this ();
-
 
   CORBA::Any_var retrieved_any;
 
@@ -82,7 +80,6 @@ test_i::invoke_me ()
   // DIRECT collocation (and possibly THRU_POA collocation) is
   // disabled.
   my_ref->invoke_you ();
-
 
   // Insert some data into the TSC PICurrent object.
   char const str[] = "Drink milk!";

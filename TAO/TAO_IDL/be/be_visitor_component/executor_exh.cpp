@@ -312,7 +312,6 @@ be_visitor_executor_exh::visit_consumes (be_consumes *node)
   return 0;
 }
 
-
 Exec_Attr_Decl_Generator::Exec_Attr_Decl_Generator (
       be_visitor_scope * visitor)
   : visitor_ (visitor)

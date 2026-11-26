@@ -15,7 +15,6 @@
 
 #include "icp.h"
 
-
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
@@ -40,7 +39,6 @@ operator<< (std::ostream& os, CORBA::Exception const& e)
 }
 
 #endif
-
 
 Controller_impl * Thermometer_impl::m_ctrl {}; // static member
 
@@ -150,7 +148,6 @@ Thermometer_impl::location (char const *loc)
     set_loc (loc);
 }
 
-
 // Helper function to get a thermostat's nominal temperature.
 
 CCS::TempType
@@ -230,7 +227,6 @@ set_nominal (CCS::TempType new_temp)
 {
     return set_nominal_temp (new_temp);
 }
-
 
 // Helper function for thermometers and thermostats to
 // add themselves to the m_assets map.
@@ -381,7 +377,6 @@ find (CCS::Controller::SearchSeq & slist)
     }
     std::cerr << "end" << std::endl;
 }
-
 
 int
 ACE_TMAIN(int argc, ACE_TCHAR *argv[])

@@ -756,7 +756,6 @@ be_decl::ami4ccm_ex_idl_gen (bool val)
   this->ami4ccm_ex_idl_gen_ = val;
 }
 
-
 int
 be_decl::accept (be_visitor *visitor)
 {

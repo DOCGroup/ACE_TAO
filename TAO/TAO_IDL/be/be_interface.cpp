@@ -565,7 +565,6 @@ be_interface::gen_var_out_seq_decls ()
 
 TAO_IDL_Inheritance_Hierarchy_Worker::~TAO_IDL_Inheritance_Hierarchy_Worker () = default;
 
-
 class TAO_IDL_Gen_OpTable_Worker
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
@@ -598,7 +597,6 @@ TAO_IDL_Gen_OpTable_Worker::emit (be_interface *derived_interface,
                                   this->skeleton_name_,
                                   os);
 }
-
 
 class Pure_Virtual_Regenerator
   : public TAO_IDL_Inheritance_Hierarchy_Worker
@@ -669,7 +667,6 @@ Pure_Virtual_Regenerator::emit (be_interface *derived_interface,
 
   return 0;
 }
-
 
 int
 be_interface::gen_operation_table (std::string const& flat_name,
@@ -2346,7 +2343,6 @@ be_interface::gen_is_a_ancestors (TAO_OutStream *os)
   return 0;
 }
 
-
 class Facet_Op_Attr_Helper
   : public TAO_IDL_Inheritance_Hierarchy_Worker
 {
@@ -2381,7 +2377,6 @@ Facet_Op_Attr_Helper::emit (be_interface * /*derived_interface */,
 
   return visitor_->visit_scope (base_interface);
 }
-
 
 int
 be_interface::gen_ami4ccm_idl (TAO_OutStream *os)

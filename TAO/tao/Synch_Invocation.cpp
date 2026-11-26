@@ -789,7 +789,6 @@ namespace TAO
     return TAO_INVOKE_SYSTEM_EXCEPTION;
   }
 
-
   Synch_Oneway_Invocation::Synch_Oneway_Invocation (
     CORBA::Object_ptr otarget,
     Profile_Transport_Resolver &r,

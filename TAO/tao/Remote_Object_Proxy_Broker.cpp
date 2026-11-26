@@ -127,7 +127,6 @@ namespace TAO
 #endif /* TAO_HAS_MINIMUM_CORBA == 0 */
 }
 
-
 TAO::Remote_Object_Proxy_Broker *
 the_tao_remote_object_proxy_broker ()
 {

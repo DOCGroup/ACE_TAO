@@ -21,7 +21,6 @@
 
 constexpr char Controller_oid[] = "Controller";
 
-
 template<class T>
 typename T::_ptr_type
 resolve_init (CORBA::ORB_ptr orb, char const *id)
@@ -61,7 +60,6 @@ resolve_init (CORBA::ORB_ptr orb, char const *id)
   return ref._retn ();
 }
 
-
 // Generic ostream inserter for exceptions. Inserts the exception
 // name, if available, and the repository ID otherwise.
 
@@ -88,7 +86,6 @@ operator<< (std::ostream& os, CORBA::Exception const& e)
 
 #endif
 
-
 // Helper function to create object references.
 
 static CCS::Thermometer_ptr
@@ -114,7 +111,6 @@ make_dref (PortableServer::POA_ptr poa, CCS::AssetType anum)
     = poa->create_reference_with_id (oid.in (), rep_id);
   return CCS::Thermometer::_narrow (obj.in ());
 }
-
 
 Controller_impl *Thermometer_impl::m_ctrl {};  // static member
 
@@ -225,7 +221,6 @@ Thermometer_impl::location (char const *loc)
   set_loc (loc);
 }
 
-
 // Helper function to get a thermostat's nominal temperature.
 
 CCS::TempType
@@ -296,7 +291,6 @@ Thermostat_impl::set_nominal (CCS::TempType new_temp)
 {
   return set_nominal_temp (new_temp);
 }
-
 
 // Helper function to add an entry to the asset map.
 
@@ -561,7 +555,6 @@ Controller_impl::find (CCS::Controller::SearchSeq& slist)
     }
 }
 
-
 DeviceLocator_impl::
 DeviceLocator_impl (Controller_impl * ctrl) : m_ctrl (ctrl)
 {
@@ -651,7 +644,6 @@ preinvoke (
 
     return servant;
 }
-
 
 int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])

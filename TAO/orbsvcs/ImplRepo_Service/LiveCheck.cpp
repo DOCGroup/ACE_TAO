@@ -52,7 +52,6 @@ LiveListener::_remove_ref ()
     }
 }
 
-
 const int LiveEntry::reping_msec_[] = {10, 100, 500, 1000, 1000, 2000, 2000, 5000, 5000};
 int LiveEntry::reping_limit_ = sizeof (LiveEntry::reping_msec_) / sizeof (int);
 
@@ -605,7 +604,6 @@ PingReceiver::ping_excep (Messaging::ExceptionHolder * excep_holder)
   poa_->deactivate_object (oid.in());
 }
 
-
 LC_TimeoutGuard::LC_TimeoutGuard (LiveCheck *owner, LC_token_type token)
   :owner_ (owner),
    token_ (token),
@@ -681,7 +679,6 @@ bool LC_TimeoutGuard::blocked () const
 {
   return this->blocked_;
 }
-
 
 LiveCheck::LiveCheck ()
   :ping_interval_(),

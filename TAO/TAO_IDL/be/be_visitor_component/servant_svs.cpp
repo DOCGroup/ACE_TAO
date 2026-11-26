@@ -1025,7 +1025,6 @@ be_visitor_servant_svs::gen_get_all_emitters ()
       << "}";
 }
 
-
 be_visitor_obv_factory_reg::be_visitor_obv_factory_reg (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -1070,7 +1069,6 @@ be_visitor_obv_factory_reg::gen_obv_factory_registration (AST_Type *t)
           << "::" << fname << ");" << be_uidt_nl;
     }
 }
-
 
 be_visitor_attr_set::be_visitor_attr_set (be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -1147,7 +1145,6 @@ be_visitor_attr_set::visit_component_scope (be_component *node)
     this->be_visitor_component_scope::visit_component_scope (node->base_component ());
 }
 
-
 be_visitor_facet_executor_block::be_visitor_facet_executor_block (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -1174,7 +1171,6 @@ be_visitor_facet_executor_block::visit_provides (
 
   return 0;
 }
-
 
 be_visitor_connect_block::be_visitor_connect_block (
       be_visitor_context *ctx)
@@ -1219,7 +1215,6 @@ be_visitor_connect_block::visit_uses (be_uses *node)
   return 0;
 }
 
-
 be_visitor_disconnect_block::be_visitor_disconnect_block (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -1258,7 +1253,6 @@ be_visitor_disconnect_block::visit_uses (be_uses *node)
 
   return 0;
 }
-
 
 be_visitor_receptacle_desc::be_visitor_receptacle_desc (
       be_visitor_context *ctx,
@@ -1325,7 +1319,6 @@ be_visitor_receptacle_desc::visit_uses (be_uses *node)
   return 0;
 }
 
-
 be_visitor_subscribe_block::be_visitor_subscribe_block (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -1357,7 +1350,6 @@ be_visitor_subscribe_block::visit_publishes (
   return 0;
 }
 
-
 be_visitor_unsubscribe_block::be_visitor_unsubscribe_block (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -1383,7 +1375,6 @@ be_visitor_unsubscribe_block::visit_publishes (
 
   return 0;
 }
-
 
 be_visitor_event_source_desc::be_visitor_event_source_desc (
       be_visitor_context *ctx)
@@ -1427,7 +1418,6 @@ be_visitor_event_source_desc::visit_publishes (
   return 0;
 }
 
-
 be_visitor_connect_consumer_block::be_visitor_connect_consumer_block (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -1461,7 +1451,6 @@ be_visitor_connect_consumer_block::visit_emits (
   return 0;
 }
 
-
 be_visitor_disconnect_consumer_block::be_visitor_disconnect_consumer_block (
       be_visitor_context *ctx)
   : be_visitor_component_scope (ctx)
@@ -1487,7 +1476,6 @@ be_visitor_disconnect_consumer_block::visit_emits (
 
   return 0;
 }
-
 
 be_visitor_emitter_desc::be_visitor_emitter_desc (
       be_visitor_context *ctx)
@@ -1518,7 +1506,6 @@ be_visitor_emitter_desc::visit_emits (be_emits *node)
 
   return 0;
 }
-
 
 be_visitor_populate_port_tables::be_visitor_populate_port_tables (
       be_visitor_context *ctx)
@@ -1558,7 +1545,6 @@ be_visitor_populate_port_tables::visit_consumes (
 
   return 0;
 }
-
 
 Component_Op_Attr_Generator::Component_Op_Attr_Generator (
     be_visitor_scope * visitor)
