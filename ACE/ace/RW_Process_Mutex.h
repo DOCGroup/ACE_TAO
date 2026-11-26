@@ -101,7 +101,7 @@ public:
   int tryacquire_write_upgrade ();
 
   /// Return the underlying lock.
-  const ACE_File_Lock &lock () const;
+  ACE_File_Lock const &lock () const;
 
   /// Dump the state of an object.
   void dump () const;

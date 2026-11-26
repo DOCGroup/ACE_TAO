@@ -1,7 +1,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 #if defined (ACE_WIN32) || defined (ACE_HAS_POSIX_SEM)
-ACE_INLINE const ACE_sema_t &
+ACE_INLINE ACE_sema_t const &
 ACE_Process_Semaphore::lock () const
 {
 // ACE_TRACE ("ACE_Process_Semaphore::lock");

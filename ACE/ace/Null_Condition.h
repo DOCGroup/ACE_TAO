@@ -32,14 +32,14 @@ template <>
 class ACE_Condition<ACE_Null_Mutex>
 {
 public:
-  ACE_Condition (const ACE_Null_Mutex &m,
-                 const ACE_TCHAR * = nullptr,
+  ACE_Condition (ACE_Null_Mutex const &m,
+                 ACE_TCHAR const * = nullptr,
                  void * = nullptr)
     : mutex_ (const_cast<ACE_Null_Mutex &> (m)) {}
 
-  ACE_Condition (const ACE_Null_Mutex &m,
-                 const ACE_Condition_Attributes &,
-                 const ACE_TCHAR * = nullptr,
+  ACE_Condition (ACE_Null_Mutex const &m,
+                 ACE_Condition_Attributes const &,
+                 ACE_TCHAR const * = nullptr,
                  void * = nullptr)
   : mutex_ (const_cast<ACE_Null_Mutex &> (m)) {}
 
@@ -49,11 +49,11 @@ public:
   int remove () {return 0;}
 
   /// Returns -1 with @c errno == @c ETIME.
-  int wait (const ACE_Time_Value * = nullptr) {errno = ETIME; return -1;}
+  int wait (ACE_Time_Value const * = nullptr) {errno = ETIME; return -1;}
 
   /// Returns -1 with @c errno == @c ETIME.
   int wait (ACE_Null_Mutex &,
-            const ACE_Time_Value * = nullptr) {errno = ETIME; return -1;}
+            ACE_Time_Value const * = nullptr) {errno = ETIME; return -1;}
 
   /// Returns 0.
   int signal () {return 0;}

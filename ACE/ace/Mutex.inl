@@ -60,7 +60,7 @@ ACE_Mutex::tryacquire_read ()
   return ACE_OS::mutex_trylock (&this->lock_);
 }
 
-ACE_INLINE const ACE_mutex_t &
+ACE_INLINE ACE_mutex_t const &
 ACE_Mutex::lock () const
 {
 // ACE_TRACE ("ACE_Mutex::lock");

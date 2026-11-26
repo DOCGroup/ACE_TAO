@@ -100,7 +100,7 @@ public:
   int release ();
 
   /// Return the underlying lock.
-  const ACE_rwlock_t &lock () const;
+  ACE_rwlock_t const &lock () const;
 
   /// Dump the state of an object.
   void dump () const;

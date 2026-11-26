@@ -228,7 +228,7 @@ ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (char const *name,
 }
 
 #if defined (ACE_HAS_WCHAR)
-ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (const wchar_t *name,
+ACE_SV_Semaphore_Simple::ACE_SV_Semaphore_Simple (wchar_t const *name,
                                                   short flags,
                                                   int initial_value,
                                                   u_short nsems,

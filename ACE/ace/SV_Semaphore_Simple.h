@@ -63,7 +63,7 @@ public:
                            u_short nsems = 1,
                            mode_t perms = ACE_DEFAULT_FILE_PERMS);
 #if defined (ACE_HAS_WCHAR)
-  ACE_SV_Semaphore_Simple (const wchar_t *name,
+  ACE_SV_Semaphore_Simple (wchar_t const *name,
                            short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
                            int initial_value = 1,
                            u_short nsems = 1,
@@ -79,7 +79,7 @@ public:
             mode_t perms = ACE_DEFAULT_FILE_PERMS);
 
 #if defined (ACE_HAS_WCHAR)
-  int open (const wchar_t *name,
+  int open (wchar_t const *name,
             short flags = ACE_SV_Semaphore_Simple::ACE_CREATE,
             int initial_value = 1,
             u_short nsems = 1,

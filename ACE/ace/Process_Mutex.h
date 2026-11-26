@@ -111,7 +111,7 @@ public:
    * @param mode optional, the protection mode for either the backing store
    * file (for ACE_Mutex use) or the ACE_SV_Semaphore_Complex that's created.
    */
-  ACE_Process_Mutex (const wchar_t *name,
+  ACE_Process_Mutex (wchar_t const *name,
                      void *arg = nullptr,
                      mode_t mode = ACE_DEFAULT_FILE_PERMS);
 #endif /* ACE_HAS_WCHAR */
@@ -191,7 +191,7 @@ public:
 
 #if !defined (_ACE_USE_SV_SEM)
   /// Return the underlying mutex.
-  const ACE_mutex_t &lock () const;
+  ACE_mutex_t const &lock () const;
 #endif /* !_ACE_USE_SV_SEM */
 
   /// Get the name used for the lock, or null if no name is used.

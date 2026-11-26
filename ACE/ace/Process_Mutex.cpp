@@ -65,7 +65,7 @@ ACE_Process_Mutex::ACE_Process_Mutex (char const *name, void *arg, mode_t mode)
 }
 
 #if defined (ACE_HAS_WCHAR)
-ACE_Process_Mutex::ACE_Process_Mutex (const wchar_t *name,
+ACE_Process_Mutex::ACE_Process_Mutex (wchar_t const *name,
                                       void *arg,
                                       mode_t mode)
 #if defined (_ACE_USE_SV_SEM)

@@ -138,7 +138,7 @@ public:
   ACE_ALLOC_HOOK_DECLARE;
 
   /// Return the underlying lock.
-  const ACE_sema_t &lock () const;
+  ACE_sema_t const &lock () const;
 
 protected:
   ACE_sema_t semaphore_;

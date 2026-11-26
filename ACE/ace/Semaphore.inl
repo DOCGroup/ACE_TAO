@@ -1,6 +1,6 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
-ACE_INLINE const ACE_sema_t &
+ACE_INLINE ACE_sema_t const &
 ACE_Semaphore::lock () const
 {
 // ACE_TRACE ("ACE_Semaphore::lock");

@@ -7,7 +7,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 // Semaphores don't offer wide-char names, so convert the name and forward
 // to the narrow-char open().
 ACE_INLINE int
-ACE_SV_Semaphore_Simple::open (const wchar_t *name,
+ACE_SV_Semaphore_Simple::open (wchar_t const *name,
                                short flags,
                                int initial_value,
                                u_short nsems,
