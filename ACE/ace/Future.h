@@ -43,7 +43,7 @@ template <class T>
 class ACE_Future_Holder
 {
 public:
-  ACE_Future_Holder (const ACE_Future<T> &future);
+  ACE_Future_Holder (ACE_Future<T> const &future);
   ~ACE_Future_Holder () = default;
   ACE_Future_Holder () = delete;
 
@@ -71,7 +71,7 @@ public:
 
   /// Called by the ACE_Future in which we are subscribed to when
   /// its value is written to.
-  virtual void update (const ACE_Future<T> &future) = 0;
+  virtual void update (ACE_Future<T> const &future) = 0;
 
   /// Declare the dynamic allocation hooks.
   ACE_ALLOC_HOOK_DECLARE;
@@ -232,7 +232,7 @@ public:
 
   /// Copy constructor binds @a this and @a r to the same
   /// ACE_Future_Rep. An ACE_Future_Rep is created if necessary.
-  ACE_Future (const ACE_Future<T> &r);
+  ACE_Future (ACE_Future<T> const &r);
 
   /// Constructor that initialises an ACE_Future to point to the
   /// result @a r immediately.
@@ -242,7 +242,7 @@ public:
 
   /// Assignment operator that binds @a this and @a r to the same
   /// ACE_Future_Rep. An ACE_Future_Rep is created if necessary.
-  void operator = (const ACE_Future<T> &r);
+  void operator = (ACE_Future<T> const &r);
 
   /// Cancel an ACE_Future and assign the value @a r.  It is used if a
   /// client does not want to wait for the value to be produced.
@@ -263,10 +263,10 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Future<T> &r) const;
+  bool operator == (ACE_Future<T> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Future<T> &r) const;
+  bool operator != (ACE_Future<T> const &r) const;
 
   /**
    * Make the result available. Is used by the server thread to give

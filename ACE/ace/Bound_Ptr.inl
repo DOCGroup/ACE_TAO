@@ -142,7 +142,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (X *p)
 }
 
 template <class X, class ACE_LOCK> inline
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r)
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r)
   : counter_ (r.counter_),
     ptr_ (r.ptr_)
 {
@@ -150,7 +150,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_
 }
 
 template <class X, class ACE_LOCK> inline
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r)
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::ACE_Strong_Bound_Ptr (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r)
   : counter_ (r.counter_),
     ptr_ (r.ptr_)
 {
@@ -175,7 +175,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::~ACE_Strong_Bound_Ptr ()
 }
 
 template <class X, class ACE_LOCK> inline void
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &rhs)
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &rhs)
 {
   // Avoid refcount changes on self-assignment.
   if (std::addressof (rhs) == this)
@@ -195,7 +195,7 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE
 }
 
 template <class X, class ACE_LOCK> inline void
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &rhs)
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &rhs)
 {
   COUNTER *new_counter = rhs.counter_;
   X *new_ptr = rhs.ptr_;
@@ -219,13 +219,13 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_L
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator== (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const
 {
   return this->ptr_ == r.ptr_;
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator== (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const
 {
   // Use the weak pointer's operator== since it will check for null.
   return r == *this;
@@ -238,13 +238,13 @@ ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator== (X *p) const
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator!= (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const
 {
   return this->ptr_ != r.ptr_;
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const
+ACE_Strong_Bound_Ptr<X, ACE_LOCK>::operator!= (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const
 {
   // Use the weak pointer's operator!= since it will check for null.
   return r != *this;
@@ -301,7 +301,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::ACE_Weak_Bound_Ptr (X *p)
 }
 
 template <class X, class ACE_LOCK> inline
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::ACE_Weak_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r)
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::ACE_Weak_Bound_Ptr (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r)
   : counter_ (r.counter_),
     ptr_ (r.ptr_)
 {
@@ -309,7 +309,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::ACE_Weak_Bound_Ptr (const ACE_Weak_Bound_Ptr<X,
 }
 
 template <class X, class ACE_LOCK> inline
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::ACE_Weak_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r)
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::ACE_Weak_Bound_Ptr (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r)
   : counter_ (r.counter_),
     ptr_ (r.ptr_)
 {
@@ -323,7 +323,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::~ACE_Weak_Bound_Ptr ()
 }
 
 template <class X, class ACE_LOCK> inline void
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &rhs)
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator = (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &rhs)
 {
   // Retain the shared counter before releasing the current reference.
   COUNTER *new_counter = rhs.counter_;
@@ -334,7 +334,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOC
 }
 
 template <class X, class ACE_LOCK> inline void
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &rhs)
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator = (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &rhs)
 {
   // Retain the shared counter before releasing the current reference.
   COUNTER *new_counter = rhs.counter_;
@@ -345,7 +345,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator = (const ACE_Strong_Bound_Ptr<X, ACE_L
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const
 {
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
@@ -358,7 +358,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Weak_Bound_Ptr<X, ACE_LOC
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const
 {
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
@@ -384,7 +384,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator== (X *p) const
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const
 {
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.
@@ -397,7 +397,7 @@ ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Weak_Bound_Ptr<X, ACE_LOC
 }
 
 template <class X, class ACE_LOCK> inline bool
-ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const
+ACE_Weak_Bound_Ptr<X, ACE_LOCK>::operator!= (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const
 {
   // A weak pointer must behave as though it is automatically set to null
   // if the underlying object has been deleted.

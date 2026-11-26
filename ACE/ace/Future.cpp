@@ -20,7 +20,7 @@ ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future_Rep)
 ACE_ALLOC_HOOK_DEFINE_Tc(ACE_Future)
 
 template <class T>
-ACE_Future_Holder<T>::ACE_Future_Holder (const ACE_Future<T> &item)
+ACE_Future_Holder<T>::ACE_Future_Holder (ACE_Future<T> const &item)
   : item_ (item)
 {
 }
@@ -284,7 +284,7 @@ ACE_Future<T>::ACE_Future ()
 }
 
 template <class T>
-ACE_Future<T>::ACE_Future (const ACE_Future<T> &r)
+ACE_Future<T>::ACE_Future (ACE_Future<T> const &r)
   : future_rep_ (FUTURE_REP::attach (r.future_rep_))
 {
 }
@@ -303,13 +303,13 @@ ACE_Future<T>::~ACE_Future ()
 }
 
 template <class T> bool
-ACE_Future<T>::operator== (const ACE_Future<T> &r) const
+ACE_Future<T>::operator== (ACE_Future<T> const &r) const
 {
   return r.future_rep_ == this->future_rep_;
 }
 
 template <class T> bool
-ACE_Future<T>::operator!= (const ACE_Future<T> &r) const
+ACE_Future<T>::operator!= (ACE_Future<T> const &r) const
 {
   return r.future_rep_ != this->future_rep_;
 }
@@ -383,7 +383,7 @@ ACE_Future<T>::operator T ()
 }
 
 template <class T> void
-ACE_Future<T>::operator = (const ACE_Future<T> &rhs)
+ACE_Future<T>::operator = (ACE_Future<T> const &rhs)
 {
   // assignment:
   //

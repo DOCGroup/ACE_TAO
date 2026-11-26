@@ -110,15 +110,15 @@ public:
   explicit ACE_Strong_Bound_Ptr (X *p = nullptr);
 
   /// Copy constructor binds @c this and @a r to the same object.
-  ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
+  ACE_Strong_Bound_Ptr (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Constructor binds @c this and @a r to the same object.
-  ACE_Strong_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
+  ACE_Strong_Bound_Ptr (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Copy constructor binds @c this and @a r to the same object if
   /// Y* can be implicitly converted to X*.
   template <class Y, std::enable_if_t<std::is_convertible_v<Y *, X *>, int> = 0>
-  ACE_Strong_Bound_Ptr (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
+  ACE_Strong_Bound_Ptr (ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r)
       : counter_ (r.counter_),
         ptr_ (r.ptr_)
   {
@@ -128,16 +128,16 @@ public:
   ~ACE_Strong_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.
-  void operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
+  void operator = (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Assignment operator that binds @c this and @a r to the same object.
-  void operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
+  void operator = (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Assignment operator that binds @c this and @a r to the same object
   /// if Y* can be implicitly converted to X*.
   template <class Y, std::enable_if_t<std::is_convertible_v<Y *, X *>, int> = 0>
   ACE_Strong_Bound_Ptr<X, ACE_LOCK>&
-  operator= (const ACE_Strong_Bound_Ptr<Y, ACE_LOCK> &r)
+  operator= (ACE_Strong_Bound_Ptr<Y, ACE_LOCK> const &r)
   {
     COUNTER *new_counter = r.counter_;
     X* new_ptr = r.ptr_;
@@ -159,7 +159,7 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Equality operator that returns true if the ACE_Strong_Bound_Ptr
   /// and ACE_Weak_Bound_Ptr objects point to the same underlying
@@ -168,7 +168,7 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Equality operator that returns @c true if the
   /// ACE_Strong_Bound_Ptr and the raw pointer point to the same
@@ -176,10 +176,10 @@ public:
   bool operator == (X *p) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
   bool operator != (X *p) const;
@@ -245,18 +245,18 @@ public:
   explicit ACE_Weak_Bound_Ptr (X *p = nullptr);
 
   /// Copy constructor binds @c this and @a r to the same object.
-  ACE_Weak_Bound_Ptr (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
+  ACE_Weak_Bound_Ptr (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Constructor binds @c this and @a r to the same object.
-  ACE_Weak_Bound_Ptr (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
+  ACE_Weak_Bound_Ptr (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r);
 
   ~ACE_Weak_Bound_Ptr ();
 
   /// Assignment operator that binds @c this and @a r to the same object.
-  void operator = (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r);
+  void operator = (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Assignment operator that binds @c this and @a r to the same object.
-  void operator = (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r);
+  void operator = (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r);
 
   /// Equality operator that returns @c true if both
   /// ACE_Weak_Bound_Ptr objects point to the same underlying object.
@@ -264,7 +264,7 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Equality operator that returns @c true if the ACE_Weak_Bound_Ptr
   /// and ACE_Strong_Bound_Ptr objects point to the same underlying
@@ -273,17 +273,17 @@ public:
    * @note It also returns @c true if both objects have just been
    *       instantiated and not used yet.
    */
-  bool operator == (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator == (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Equality operator that returns @c true if the ACE_Weak_Bound_Ptr
   /// and the raw pointer point to the same underlying object.
   bool operator == (X *p) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Weak_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (ACE_Weak_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
-  bool operator != (const ACE_Strong_Bound_Ptr<X, ACE_LOCK> &r) const;
+  bool operator != (ACE_Strong_Bound_Ptr<X, ACE_LOCK> const &r) const;
 
   /// Inequality operator, which is the opposite of equality.
   bool operator != (X *p) const;
