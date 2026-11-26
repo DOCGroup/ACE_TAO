@@ -22,6 +22,7 @@
 #include "ace/SString.h"
 #include <type_traits>
 #include <utility>
+#include <cerrno>
 
 static_assert (!std::is_copy_constructible<ACE_Dirent>::value, "Directory streams cannot be copied");
 static_assert (!std::is_copy_assignable<ACE_Dirent>::value, "Directory streams cannot be copied");
@@ -57,6 +58,14 @@ comparator (ACE_DIRENT const **d1, ACE_DIRENT const **d2)
 static int
 dirent_selector_test ()
 {
+#if !defined (ACE_HAS_SCANDIR)
+  errno = 0;
+  if (ACE_OS::scandir_emulation (TestDir.c_str (), nullptr, nullptr, nullptr) != -1
+      || errno != EINVAL)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("scandir accepted a null output pointer\n")), -1);
+    }
+#endif
   int n;
   int error = 0;
   ACE_TCHAR const *test_dir = TestDir.c_str ();

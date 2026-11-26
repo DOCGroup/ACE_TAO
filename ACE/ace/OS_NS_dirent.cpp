@@ -9,6 +9,7 @@
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_stdlib.h"
 #include <algorithm>
+#include <cstddef>
 
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
@@ -174,18 +175,18 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
                            ACE_SCANDIR_SELECTOR selector,
                            ACE_SCANDIR_COMPARATOR comparator)
 {
+  if (namelist == nullptr)
+    {
+      errno = EINVAL;
+      return -1;
+    }
+
   ACE_DIR *dirp = ACE_OS::opendir (dirname);
 
   if (dirp == 0)
     {
       return -1;
     }
-  // A sanity check here.  "namelist" had better not be zero.
-  else if (namelist == 0)
-    {
-      return -1;
-    }
-
   ACE_DIRENT **vector {};
   ACE_DIRENT *dp {};
   int arena_size = 0;
@@ -222,6 +223,7 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
           if (newv && vector)
             {
               ACE_OS::memcpy (newv, vector, arena_size * sizeof (ACE_DIRENT *));
+              ACE_Allocator::instance ()->free (vector);
             }
 #else
           newv = static_cast<ACE_DIRENT **> (
@@ -247,9 +249,9 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
         ACE_OS::malloc (sizeof (ACE_DIRENT)));
 #endif /* ACE_HAS_ALLOC_HOOKS */
 #else
-      size_t dsize =
-        sizeof (ACE_DIRENT) +
-        ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (ACE_TCHAR));
+      size_t const copy_size = offsetof (ACE_DIRENT, d_name) +
+        ((ACE_OS::strlen (dp->d_name) + 1) * sizeof (dp->d_name[0]));
+      size_t const dsize = (std::max) (sizeof (ACE_DIRENT), copy_size);
 #if defined (ACE_HAS_ALLOC_HOOKS)
       ACE_DIRENT *newdp = static_cast<ACE_DIRENT *> (
         ACE_Allocator::instance ()->malloc (dsize));
@@ -293,7 +295,7 @@ ACE_OS::scandir_emulation (const ACE_TCHAR *dirname,
       vector[nfiles++] = newdp;
 #else
       vector[nfiles++] = static_cast<ACE_DIRENT *> (
-        ACE_OS::memcpy (newdp, dp, dsize));
+        ACE_OS::memcpy (newdp, dp, copy_size));
 #endif /* ACE_LACKS_STRUCT_DIR */
     }
 
