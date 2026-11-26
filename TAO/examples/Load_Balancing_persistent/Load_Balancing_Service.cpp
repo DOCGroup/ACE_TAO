@@ -117,7 +117,7 @@ Load_Balancing_Service::init (int argc, ACE_TCHAR* argv[])
                       ior.in ()));
         }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Load_Balancing_Service::init");
       return -1;
@@ -158,7 +158,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       result = factory.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Load_Balancing_Service");
       return 1;

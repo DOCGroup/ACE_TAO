@@ -82,7 +82,7 @@ Identity_Server::init (int argc,
         }
 
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Identity_Server::init");
       return -1;
@@ -116,7 +116,7 @@ Identity_Server::register_groups ()
     {
       factory->unbind_random ("Random group");
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%N | %l) <Unbind> harmless here\n"));
@@ -127,7 +127,7 @@ Identity_Server::register_groups ()
     {
       factory->unbind_round_robin ("Round Robin group");
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "(%N | %l) <Unbind> harmless here\n"));
@@ -198,7 +198,7 @@ Identity_Server::create_objects (size_t number_of_objects,
         {
           group->unbind (ACE_TEXT_ALWAYS_CHAR(id));
         }
-      catch (const CORBA::Exception&)
+      catch (CORBA::Exception const &)
         {
           ACE_DEBUG ((LM_DEBUG,
                       "(%N | %l) Harmless here\n"));
@@ -247,7 +247,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
 
       result = server.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Identity_Server");
       return 1;

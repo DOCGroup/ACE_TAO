@@ -75,7 +75,7 @@ Identity_Client::init (int argc, ACE_TCHAR* argv[])
         return result;
       }
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Identity_Client::init");
       return -1;
@@ -232,7 +232,7 @@ ACE_TMAIN(int argc, ACE_TCHAR *argv[])
     {
       result = client.run ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Identity_Client");
       return 1;
