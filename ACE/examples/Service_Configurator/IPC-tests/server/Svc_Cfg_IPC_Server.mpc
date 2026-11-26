@@ -24,3 +24,12 @@ project(*test) : aceexe, avoids_ace_for_tao {
     server_test.cpp
   }
 }
+
+project(*Service_Test) : aceexe, avoids_ace_for_tao {
+  exename = ipc_service_test
+  after += Svc_Cfg_IPC_Server_Lib
+  libs += IPC_Tests_Server
+  Source_Files {
+    IPC_Service_Test.cpp
+  }
+}
