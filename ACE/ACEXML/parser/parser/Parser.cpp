@@ -2109,8 +2109,8 @@ ACEXML_Parser::parse_entity_reference ()
       this->fatal_error (ACE_TEXT ("Undeclared Entity reference"));
     }
 
-  ACEXML_Char *systemId {};
-  ACEXML_Char *publicId {};
+  ACEXML_Char const *systemId {};
+  ACEXML_Char const *publicId {};
   if (!entity)
     {
       if (this->external_GE_.resolve_entity (replace, systemId, publicId) < 0)
@@ -2204,8 +2204,8 @@ ACEXML_Parser::parse_PE_reference ()
       this->fatal_error (ACE_TEXT ("Undefined Internal PEReference"));
     }
 
-  ACEXML_Char *systemId {};
-  ACEXML_Char *publicId {};
+  ACEXML_Char const *systemId {};
+  ACEXML_Char const *publicId {};
   if (!entity && this->validate_)
     {
       if (this->external_PE_.resolve_entity (replace, systemId, publicId) < 0)

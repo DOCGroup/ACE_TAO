@@ -33,8 +33,8 @@ ACEXML_Entity_Manager::resolve_entity (ACEXML_Char const *ref)
 
 ACEXML_INLINE int
 ACEXML_Entity_Manager::resolve_entity (ACEXML_Char const *ref,
-                                       ACEXML_Char*& systemId,
-                                       ACEXML_Char*& publicId)
+                                       ACEXML_Char const *&systemId,
+                                       ACEXML_Char const *&publicId)
 {
   if (this->entities_ == nullptr)
     {
@@ -47,11 +47,11 @@ ACEXML_Entity_Manager::resolve_entity (ACEXML_Char const *ref,
 
   if (iter != end)
     {
-      systemId = const_cast<ACEXML_Char*> ((*iter).int_id_.c_str());
+      systemId = (*iter).int_id_.c_str();
       ++iter;
       if (iter != end)
         {
-          publicId = const_cast<ACEXML_Char*> ((*iter).int_id_.c_str());
+          publicId = (*iter).int_id_.c_str();
         }
       return 0;
     }

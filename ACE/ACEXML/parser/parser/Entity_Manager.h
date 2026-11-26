@@ -76,8 +76,8 @@ public:
 
   /// Resolve an entity reference and return the tuple of @c systemId and
   /// @c publicId
-  int resolve_entity (ACEXML_Char const *ref, ACEXML_Char*& systemId,
-                      ACEXML_Char*& publicId);
+  int resolve_entity (ACEXML_Char const *ref, ACEXML_Char const *&systemId,
+                      ACEXML_Char const *&publicId);
 
   /// Number of items in the Entity Manager
   size_t size() const;
