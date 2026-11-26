@@ -39,9 +39,9 @@ public:
 
   /**
    * @name ACE_hrtime_t conversion routines
+   * @note ACE_hrtime_t values are interpreted as nanoseconds.
    */
   /// @{
-  // We interpret an ACE_hrtime_t as nanoseconds.
 
   /// @brief Convert relative high-resolution time to a TimeBase::TimeT.
   static void hrtime_to_TimeT (TimeBase::TimeT &lhs,
@@ -57,9 +57,9 @@ public:
 
   /**
    * @name ACE_Time_Value conversion routines
+   * @note ACE_Time_Value stores seconds and microseconds.
    */
   /// @{
-  // Recall that ACE_Time_Values are <seconds, useconds> pairs.
 
   /// @brief Convert relative ACE_Time_Value to a TimeBase::TimeT.
   static void Time_Value_to_TimeT (TimeBase::TimeT &lhs,
