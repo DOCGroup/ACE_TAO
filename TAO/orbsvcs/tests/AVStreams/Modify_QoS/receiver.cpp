@@ -11,7 +11,7 @@ static ACE_TCHAR const *output_file_name = ACE_TEXT ("output");
 // File name of the file into which received data is written.
 
 int
-Receiver_StreamEndPoint::get_callback (const char *,
+Receiver_StreamEndPoint::get_callback (char const *,
                                        TAO_AV_Callback *&callback)
 {
   // Return the receiver application callback to the AVStreams for
