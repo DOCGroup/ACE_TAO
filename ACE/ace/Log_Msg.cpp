@@ -2542,7 +2542,7 @@ void ACE_Log_Formatter::prepare_format ()
     case 'r':
       if (ACE_BIT_ENABLED (ACE_Log_Msg::flags_, ACE_Log_Msg::SILENT))
         {
-          const size_t len = std::strlen (this->bp_);
+          size_t const len = std::strlen (this->bp_);
           this->bspace_ -= len + 1;
           this->bp_ += len;
           this->copy_trunc ("}", 1);
@@ -2580,8 +2580,8 @@ void ACE_Log_Formatter::prepare_format ()
 
 bool ACE_Log_Formatter::process_conversion ()
 {
-  const size_t n = std::strspn (this->format_, "-+ #0123456789.Lh");
-  const size_t fspace = sizeof this->fmt_out_ - (this->fp_ - this->fmt_out_);
+  size_t const n = std::strspn (this->format_, "-+ #0123456789.Lh");
+  size_t const fspace = sizeof this->fmt_out_ - (this->fp_ - this->fmt_out_);
   if (n >= fspace || !this->format_[n])
     {
       return true;
@@ -3056,7 +3056,7 @@ ssize_t ACE_Log_Msg::log (ACE_Log_Formatter const &formatter)
   ACE_Log_Record record;
   if (const_cast<ACE_Log_Formatter &> (formatter).to_record (record))
     {
-      const ssize_t result = this->log (record, formatter.abort ());
+      ssize_t const result = this->log (record, formatter.abort ());
       if (formatter.abort ())
         {
 #ifndef ACE_LACKS_STDERR

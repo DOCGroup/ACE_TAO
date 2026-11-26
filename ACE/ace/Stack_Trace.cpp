@@ -73,8 +73,8 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frame
 void
 ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset, size_t num_frames)
 {
-  const size_t MAX_FRAMES = 128;
-  const ssize_t INITIAL_FRAME = 3;
+  size_t const MAX_FRAMES = 128;
+  ssize_t const INITIAL_FRAME = 3;
 
   void* stack[MAX_FRAMES];
   size_t stack_size = 0;
@@ -188,8 +188,8 @@ void
 ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
                                  size_t num_frames)
 {
-  const size_t MAX_FRAMES = 128;
-  const ssize_t INITIAL_FRAME = 3;
+  size_t const MAX_FRAMES = 128;
+  ssize_t const INITIAL_FRAME = 3;
 
   if (num_frames == 0)
     {
@@ -226,8 +226,8 @@ void
 ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
                                  size_t num_frames)
 {
-  const size_t MAX_FRAMES = 128;
-  const ssize_t INITIAL_FRAME = 2;
+  size_t const MAX_FRAMES = 128;
+  ssize_t const INITIAL_FRAME = 2;
 
   if (num_frames == 0)
     {
@@ -296,7 +296,7 @@ ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
               numArgs = 0;
             }
 
-          const size_t len = std::strlen (this->buf_);
+          size_t const len = std::strlen (this->buf_);
           size_t space = SYMBUFSIZ - len - 1;
           char *cursor = this->buf_ + len;
           size_t written = ACE_OS::snprintf (cursor, space, "%p %s",
@@ -616,8 +616,8 @@ void
 ACE_Stack_Trace::generate_trace (ssize_t starting_frame_offset,
                                  size_t num_frames)
 {
-  const size_t MAX_FRAMES = 128;
-  const ssize_t INITIAL_FRAME = 3;
+  size_t const MAX_FRAMES = 128;
+  ssize_t const INITIAL_FRAME = 3;
 
   if (num_frames == 0)
     {
