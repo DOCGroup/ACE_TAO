@@ -61,7 +61,7 @@ TAO_Repository_i::lookup_id_i (char const *search_id)
 
   ACE_TString path;
   if (this->config_->get_string_value (this->repo_ids_key_,
-                                       search_id,
+                                       ACE_TEXT_CHAR_TO_TCHAR (search_id),
                                        path)
        != 0)
     {
@@ -75,7 +75,7 @@ TAO_Repository_i::lookup_id_i (char const *search_id)
 
   u_int kind = 0;
   this->config_->get_integer_value (key,
-                                    "def_kind",
+                                    ACE_TEXT ("def_kind"),
                                     kind);
 
   CORBA::DefinitionKind def_kind =
@@ -83,7 +83,7 @@ TAO_Repository_i::lookup_id_i (char const *search_id)
 
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (def_kind,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::Contained::_narrow (obj.in ());
@@ -151,7 +151,7 @@ TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc)
       ACE_TString path;
       int status =
         this->config ()->get_string_value (this->repo_ids_key (),
-                                           id.in (),
+                                           ACE_TEXT_CHAR_TO_TCHAR (id.in ()),
                                            path);
 
       // TODO - something in case the repo id is an empty string,
@@ -189,7 +189,7 @@ TAO_Repository_i::get_canonical_typecode_i (CORBA::TypeCode_ptr tc)
 CORBA::PrimitiveDef_ptr
 TAO_Repository_i::get_primitive (CORBA::PrimitiveKind kind)
 {
-  ACE_TString obj_id ("pkinds\\");
+  ACE_CString obj_id ("pkinds\\");
 
   obj_id += this->pkind_to_string (kind);
 
