@@ -50,7 +50,7 @@ namespace ACE_Utils
           }
 
         // Copy the contents of the UUID.
-        std::memcpy (&this->uuid_, &rhs.uuid_, BINARY_SIZE);
+        std::memcpy (std::addressof (this->uuid_), std::addressof (rhs.uuid_), BINARY_SIZE);
 
         /// @todo We should create an UUID_Ex class for UUIDs that
         ///       contain the thread id and process id.

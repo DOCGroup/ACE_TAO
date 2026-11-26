@@ -1,4 +1,5 @@
 #include <cstring>
+#include <memory>
 
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
@@ -27,19 +28,19 @@ namespace ACE_Utils
     : thr_id_ (right.thr_id_),
       pid_ (right.pid_)
   {
-    std::memcpy (&this->uuid_, &right.uuid_, BINARY_SIZE);
+    std::memcpy (std::addressof (this->uuid_), std::addressof (right.uuid_), BINARY_SIZE);
   }
 
   ACE_INLINE void
   UUID::init ()
   {
-    std::memset (&this->uuid_, 0, BINARY_SIZE);
+    std::memset (std::addressof (this->uuid_), 0, BINARY_SIZE);
   }
 
   ACE_INLINE unsigned long
   UUID::hash () const
   {
-    return ACE::hash_pjw (reinterpret_cast <char const *> (&this->uuid_),
+    return ACE::hash_pjw (reinterpret_cast <char const *> (std::addressof (this->uuid_)),
                           UUID::BINARY_SIZE);
   }
 
@@ -118,7 +119,7 @@ namespace ACE_Utils
   ACE_INLINE void
   UUID::node (UUID_Node const & node)
   {
-    std::memcpy (&this->uuid_.node_, node.node_ID (), UUID_Node::NODE_ID_SIZE);
+    std::memcpy (std::addressof (this->uuid_.node_), node.node_ID (), UUID_Node::NODE_ID_SIZE);
   }
 
   ACE_INLINE ACE_CString*
@@ -156,13 +157,13 @@ namespace ACE_Utils
   ACE_INLINE bool
   UUID::operator == (UUID const &right) const
   {
-    return 0 == std::memcmp (&this->uuid_, &right.uuid_, BINARY_SIZE);
+    return 0 == std::memcmp (std::addressof (this->uuid_), std::addressof (right.uuid_), BINARY_SIZE);
   }
 
   ACE_INLINE bool
   UUID::operator != (UUID const &right) const
   {
-    return 0 != std::memcmp (&this->uuid_, &right.uuid_, BINARY_SIZE);
+    return 0 != std::memcmp (std::addressof (this->uuid_), std::addressof (right.uuid_), BINARY_SIZE);
   }
 
   ACE_INLINE bool
