@@ -24,7 +24,7 @@ lookup_name (void *arg)
   static struct
   {
     int emp_id;
-    const char *emp_name;
+    char const *emp_name;
   } employee_db[] =
     {
       {123, "John Wayne Bobbit"},

@@ -13,7 +13,7 @@
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const ACE_TCHAR *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
+  ACE_TCHAR const *host = argc > 1 ? argv[1] : ACE_DEFAULT_SERVER_HOST;
   u_short r_port = argc > 2 ? ACE_OS::atoi (argv[2]) : ACE_DEFAULT_SERVER_PORT;
   int timeout = argc > 3 ? ACE_OS::atoi (argv[3]) : ACE_DEFAULT_TIMEOUT;
   u_short l_port = argc > 4 ? ACE_OS::atoi (argv[4]) : ACE_DEFAULT_LOCAL_PORT;

@@ -40,7 +40,7 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         }
     } // while getopt
 
-  const char *host = argv[optind];
+  char const *host = argv[optind];
 
   int rate = (argc == 3) ? ACE_OS::atoi (argv[2]) :
     (argc == 5) ? ACE_OS::atoi (argv[4]) : 0;

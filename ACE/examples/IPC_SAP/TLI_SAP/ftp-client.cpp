@@ -18,8 +18,8 @@ int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
                         1);
     }
 
-  const ACE_TCHAR *filename  = argv[1];
-  const ACE_TCHAR *host_name = argc < 3 ? ACE_DEFAULT_SERVER_HOST : argv[2];
+  ACE_TCHAR const *filename  = argv[1];
+  ACE_TCHAR const *host_name = argc < 3 ? ACE_DEFAULT_SERVER_HOST : argv[2];
   u_short port = argc < 4 ? ACE_DEFAULT_SERVER_PORT : ACE_OS::atoi (argv[3]);
 
   ACE_TLI_Stream client;
