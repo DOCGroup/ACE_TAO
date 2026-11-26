@@ -43,7 +43,7 @@ ACE_OS::uname (ACE_utsname *name)
   SYSTEM_INFO sinfo;
   ::GetSystemInfo(&sinfo);
 
-  const char* unknown = "???";
+  char const* unknown = "???";
 
 # if defined (ACE_HAS_WIN32_GETVERSION)
   if (
@@ -54,7 +54,7 @@ ACE_OS::uname (ACE_utsname *name)
       )
     {
       // Get information from the two structures
-      const char *os {};
+      char const *os {};
       if (vinfo.dwPlatformId == VER_PLATFORM_WIN32_NT)
         {
           os = "Windows NT %d.%d";

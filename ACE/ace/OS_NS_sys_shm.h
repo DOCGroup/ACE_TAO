@@ -33,7 +33,7 @@ namespace ACE_OS
   /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
   void *shmat (int int_id,
-               const void *shmaddr,
+               void const *shmaddr,
                int shmflg);
 
   ACE_NAMESPACE_INLINE_FUNCTION
@@ -42,7 +42,7 @@ namespace ACE_OS
               struct shmid_ds *buf);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int shmdt (const void *shmaddr);
+  int shmdt (void const *shmaddr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int shmget (key_t key,

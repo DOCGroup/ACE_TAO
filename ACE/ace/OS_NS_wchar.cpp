@@ -77,8 +77,8 @@ ACE_OS::wcschr_emulation (const wchar_t *string, wchar_t c)
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSCMP)
 int
-ACE_OS::wcscmp_emulation (const ACE_WCHAR_T *string1,
-                          const ACE_WCHAR_T *string2)
+ACE_OS::wcscmp_emulation (ACE_WCHAR_T const *string1,
+                          ACE_WCHAR_T const *string2)
 {
   while (*string1 == *string2++)
     if (*string1++ == 0)
@@ -164,9 +164,9 @@ ACE_OS::wcsicmp_emulation (const wchar_t *s, const wchar_t *t)
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSLEN)
 size_t
-ACE_OS::wcslen_emulation (const ACE_WCHAR_T *string)
+ACE_OS::wcslen_emulation (ACE_WCHAR_T const *string)
 {
-  const ACE_WCHAR_T *s {};
+  ACE_WCHAR_T const *s {};
 
   for (s = string; *s; ++s)
     {
@@ -179,13 +179,13 @@ ACE_OS::wcslen_emulation (const ACE_WCHAR_T *string)
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCAT)
 ACE_WCHAR_T *
 ACE_OS::wcsncat_emulation (ACE_WCHAR_T *destination,
-                           const ACE_WCHAR_T *source,
+                           ACE_WCHAR_T const *source,
                            size_t count)
 {
   if (count != 0)
     {
       ACE_WCHAR_T *d = destination;
-      const ACE_WCHAR_T *s = source;
+      ACE_WCHAR_T const *s = source;
 
       while (*d != 0)
         ++d;
@@ -209,8 +209,8 @@ ACE_OS::wcsncat_emulation (ACE_WCHAR_T *destination,
 
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCMP)
 int
-ACE_OS::wcsncmp_emulation (const ACE_WCHAR_T *s1,
-                           const ACE_WCHAR_T *s2,
+ACE_OS::wcsncmp_emulation (ACE_WCHAR_T const *s1,
+                           ACE_WCHAR_T const *s2,
                            size_t len)
 {
   if (len == 0)
@@ -237,13 +237,13 @@ ACE_OS::wcsncmp_emulation (const ACE_WCHAR_T *s1,
 #if !defined (ACE_HAS_WCHAR) || defined (ACE_LACKS_WCSNCPY)
 ACE_WCHAR_T *
 ACE_OS::wcsncpy_emulation (ACE_WCHAR_T *destination,
-                           const ACE_WCHAR_T *source,
+                           ACE_WCHAR_T const *source,
                            size_t len)
 {
   if (len != 0)
     {
       ACE_WCHAR_T *d = destination;
-      const ACE_WCHAR_T *s = source;
+      ACE_WCHAR_T const *s = source;
 
       do
         {

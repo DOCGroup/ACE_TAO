@@ -4,7 +4,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 ACE_INLINE char *
-ACE_OS::compile (const char *instring, char *expbuf, char *endbuf)
+ACE_OS::compile (char const *instring, char *expbuf, char *endbuf)
 {
   ACE_OS_TRACE ("ACE_OS::compile");
 #if defined (ACE_HAS_REGEX)
@@ -19,7 +19,7 @@ ACE_OS::compile (const char *instring, char *expbuf, char *endbuf)
 }
 
 ACE_INLINE int
-ACE_OS::step (const char *str, char *expbuf)
+ACE_OS::step (char const *str, char *expbuf)
 {
   ACE_OS_TRACE ("ACE_OS::step");
 #if defined (ACE_HAS_REGEX)

@@ -32,12 +32,12 @@ namespace ACE_OS
   /// @name A set of wrappers for regular expressions.
   /// @{
   ACE_NAMESPACE_INLINE_FUNCTION
-  char *compile (const char *instring,
+  char *compile (char const *instring,
                  char *expbuf,
                  char *endbuf);
 
   ACE_NAMESPACE_INLINE_FUNCTION
-  int step (const char *str,
+  int step (char const *str,
             char *expbuf);
   /// @}
 
