@@ -270,16 +270,16 @@ TAO_ECG_Mcast_EH::add_new_subscriptions (Address_Set& multicast_addresses)
         }
 
       if (this->recvbuf_size_ != 0
-          && (((ACE_SOCK_Dgram *)socket)->set_option(SOL_SOCKET,
-                                                     SO_RCVBUF,
-                                                     (void *) &this->recvbuf_size_,
-                                                     sizeof (this->recvbuf_size_)) == -1)
+          && (socket->ACE_SOCK::set_option (SOL_SOCKET,
+                                           SO_RCVBUF,
+                                           std::addressof (this->recvbuf_size_),
+                                           sizeof (this->recvbuf_size_)) == -1)
           && errno != ENOTSUP )
         {
           ORBSVCS_ERROR ((LM_ERROR,
                       "Error: %d - Unable to set mcast_eh recvbuf_size:%B\n",
                       ACE_ERRNO_GET,
-                      this->recvbuf_size_));
+                      static_cast<size_t> (this->recvbuf_size_)));
         }
       (void) this->reactor ()->register_handler (
                                          socket->get_handle (),
