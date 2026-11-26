@@ -23,7 +23,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_OutputCDR;
 
 /**
- * @class TAO_GIOP_Fragmenation_Strategy
+ * @class TAO_GIOP_Fragmentation_Strategy
  *
  * @brief Abstract base class that defines TAO fragmentation strategy
  *        interface.

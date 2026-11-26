@@ -22,7 +22,7 @@ class TAO_OutputCDR;
 class TAO_Transport;
 
 /**
- * @class TAO_On_Demand_Fragmenation_Strategy
+ * @class TAO_On_Demand_Fragmentation_Strategy
  *
  * @brief On Demand GIOP message fragmentation strategy.
  *

@@ -21,7 +21,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 class TAO_OutputCDR;
 
 /**
- * @class TAO_Null_Fragmenation_Strategy
+ * @class TAO_Null_Fragmentation_Strategy
  *
  * @brief Null GIOP message fragmentation strategy.
  *
