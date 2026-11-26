@@ -952,7 +952,7 @@ void ACE_CDR::Fixed::normalize (UShort min_scale)
 
 ACE_CDR::Fixed ACE_CDR::Fixed::from_string (char const *str)
 {
-  const bool negative = *str == '-';
+  bool const negative = *str == '-';
   if (negative || *str == '+')
     {
       ++str;
@@ -1068,7 +1068,7 @@ ACE_CDR::Fixed ACE_CDR::Fixed::round (UShort scale) const
           f.digit (i, 0);
         }
       f.normalize (scale);
-      const bool negative = f.sign ();
+      bool const negative = f.sign ();
       if (negative)
         {
           f.value_[15] = (f.value_[15] & 0xf0) | POSITIVE;
@@ -1138,7 +1138,7 @@ bool ACE_CDR::Fixed::to_string (char *buffer, size_t buffer_size) const
       return false;
     }
 
-  const bool negative = this->sign ();
+  bool const negative = this->sign ();
   if (negative)
     {
       *buffer = '-';
@@ -1577,7 +1577,7 @@ ACE_CDR::Fixed &ACE_CDR::Fixed::operator/= (Fixed const &rhs)
       break;
     }
 
-  const bool neg = this->sign ();
+  bool const neg = this->sign ();
   if (neg)
     {
       this->value_[15] = (this->value_[15] & 0xf0) | POSITIVE;

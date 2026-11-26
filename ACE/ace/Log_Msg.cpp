@@ -2452,7 +2452,7 @@ ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, char const *fmt)
   , in_prog_ (' ')
   , last_star_ (0)
 {
-  const bool conditional_values = this->logger_->conditional_values_.is_set_;
+  bool const conditional_values = this->logger_->conditional_values_.is_set_;
   this->logger_->conditional_values_.is_set_ = false;
 
   this->enabled_ = this->logger_->log_priority_enabled (prio);
@@ -2490,7 +2490,7 @@ ACE_Log_Formatter::ACE_Log_Formatter (ACE_Log_Priority prio, char const *fmt)
   if (this->logger_->timestamp_)
     {
       ACE_TCHAR day_and_time[27];
-      const bool time_only = this->logger_->timestamp_ == 1;
+      bool const time_only = this->logger_->timestamp_ == 1;
       ACE_TCHAR const *const time =
         ACE::timestamp (day_and_time,
                         sizeof day_and_time / sizeof (ACE_TCHAR),
@@ -2556,7 +2556,7 @@ void ACE_Log_Formatter::prepare_format ()
 
   while (char const *const pct = std::strchr (this->format_, '%'))
     {
-      const bool escaped = pct[1] == '%';
+      bool const escaped = pct[1] == '%';
       this->format_ += 1 + this->copy_trunc (this->format_,
                                              pct - this->format_ + escaped);
       if (!this->bspace_)

@@ -765,7 +765,7 @@ namespace { // helpers for vsnprintf_emulation
 
     bool next (char *&buf)
     {
-      const bool separate = this->next_sep_ == 0;
+      bool const separate = this->next_sep_ == 0;
       if (separate)
         {
           *--buf = this->thousands_;
@@ -913,7 +913,7 @@ namespace { // helpers for vsnprintf_emulation
           *--it = '+';
         }
 
-      const bool has_sign = it < buf + sizeof buf - digits - sep_chars;
+      bool const has_sign = it < buf + sizeof buf - digits - sep_chars;
       bool has_0x = false;
       if (val != 0 && base == 16 && flags.has (SNPRINTF_ALT))
         {
@@ -981,7 +981,7 @@ namespace { // helpers for vsnprintf_emulation
         {
           *it++ = ' ';
         }
-      const bool has_sign = it > buf;
+      bool const has_sign = it > buf;
 
       if (!(val >= -(std::numeric_limits<long double>::max)()
             && val <= (std::numeric_limits<long double>::max)()))
@@ -1594,7 +1594,7 @@ ACE_OS::vsnprintf_emulation (char *buf, size_t max, char const *fmt, va_list ap)
   while (char const *const pct = std::strchr (fmt, '%'))
     {
       // Output up to next % in format string
-      const bool escaped = pct[1] == '%';
+      bool const escaped = pct[1] == '%';
       size_t const non_conv = pct - fmt + escaped;
       sb.out (fmt, non_conv);
       fmt += 1 + non_conv;

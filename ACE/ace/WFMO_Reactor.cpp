@@ -2050,7 +2050,7 @@ ACE_WFMO_Reactor::dispatch_handles (DWORD wait_status)
        ;
        ++number_of_handlers_dispatched)
     {
-      const bool ok = (
+      bool const ok = (
 #if ! defined(__BORLANDC__) \
     && !defined (__MINGW32__) \
     && !defined (_MSC_VER)
