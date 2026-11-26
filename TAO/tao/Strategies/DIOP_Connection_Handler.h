@@ -108,10 +108,9 @@ protected:
   /// Helper method used by the set_dscp_codepoint () methods
   int set_tos (int tos);
 
-  /**
-   * @name The DIOP Additions
-   */
+  /// @name DIOP address attributes
   /// @{
+
   /// This is always the remote address
   ACE_INET_Addr addr_;
 

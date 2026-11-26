@@ -79,6 +79,7 @@ public:
 
   /// @name SCIOP-specific methods
   /// @{
+
   /// Return a reference to the @c object_addr.
   ACE_INET_Addr const &object_addr () const;
 
