@@ -123,6 +123,7 @@ public:
    * @name Request attributes.
    */
   /// @{
+
   /// Return the operation name.
   char const *operation () const;
 

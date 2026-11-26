@@ -73,7 +73,8 @@ namespace TAO
      * value, if either or both exist.
      */
     /// @{
-    /// Populate the given @a CORBA::Any result argument.
+
+    /// Populate the given @c CORBA::Any result argument.
     /**
      * @note The default implementation is a no-op.
      */

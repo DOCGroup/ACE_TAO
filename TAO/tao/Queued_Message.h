@@ -104,6 +104,7 @@ public:
    *
    */
   /// @{
+
   /// Set/get the next element in the list
   TAO_Queued_Message *next () const;
 
@@ -126,6 +127,7 @@ public:
   /** @name Template Methods
    */
   /// @{
+
   /// Return the length of the message
   /**
    * If the message has been partially sent it returns the number of

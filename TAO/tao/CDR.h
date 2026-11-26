@@ -198,6 +198,7 @@ public:
    * requests and replies.
    */
   /// @{
+
   /// Fragment this output CDR stream if necessary.
   /**
    * Fragmentation will done through GIOP fragments when the length of
