@@ -48,6 +48,7 @@ public:
    * Methods exposed by the PortableInterceptor::IORInfo interface.
    */
   /// @{
+
   /// Return the policy matching the given policy type that is in
   /// effect for the object whose IOR is being created.
   CORBA::Policy_ptr get_effective_policy (CORBA::PolicyType type) override;
@@ -60,6 +61,7 @@ public:
   void add_ior_component_to_profile (
       IOP::TaggedComponent const &component,
       IOP::ProfileId profile_id) override;
+  /// @}
 
   char * manager_id () override;
 
@@ -71,8 +73,6 @@ public:
 
   void current_factory (
       PortableInterceptor::ObjectReferenceFactory *current_factory) override;
-
-  /// @}
 
   TAO_IORInfo () = delete;
   TAO_IORInfo (TAO_IORInfo const &) = delete;

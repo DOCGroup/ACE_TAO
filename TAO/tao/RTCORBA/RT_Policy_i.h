@@ -219,6 +219,7 @@ public:
 
   /// @name CDR encoder and decoder methods
   /// @{
+
   /// This method writes a CDR representation of the current object.
   CORBA::Boolean _tao_encode (TAO_OutputCDR &out_cdr) override;
 
