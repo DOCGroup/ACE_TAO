@@ -52,12 +52,12 @@ public:
             ACE_TCHAR *argv[]) override;
 
   /// Helper function for setting or reporting command line args
-  int set_args (const ACE_TCHAR *args);
+  int set_args (ACE_TCHAR const *args);
 
 private:
   void arg_manip (char *args, DWORD arglen, bool query);
-  void report_error (const ACE_TCHAR *format,
-                     const ACE_TCHAR *val,
+  void report_error (ACE_TCHAR const *format,
+                     ACE_TCHAR const *val,
                      LONG result);
 
   /// @name Command-line arguments

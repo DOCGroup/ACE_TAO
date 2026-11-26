@@ -61,7 +61,7 @@ private:
   ACE_TCHAR progname[128];
 
   bool opt_setargs {};
-  const ACE_TCHAR *opt_args {};
+  ACE_TCHAR const *opt_args {};
   bool opt_install {};
   bool opt_remove {};
   bool opt_start {};
@@ -149,7 +149,7 @@ Options::parse_args (int argc, ACE_TCHAR *argv[])
         default:
           // -c and -i can also be given without a value - if so, it defaults
           // to defined value.
-          const ACE_TCHAR *lastarg = get_opt.argv ()[get_opt.opt_ind () - 1];
+          ACE_TCHAR const *lastarg = get_opt.argv ()[get_opt.opt_ind () - 1];
           if (ACE_OS::strcmp (get_opt.argv_[get_opt.optind-1], ACE_TEXT ("-i")) == 0)
             {
               opt_install = true;

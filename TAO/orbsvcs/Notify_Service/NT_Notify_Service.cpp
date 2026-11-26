@@ -50,8 +50,8 @@ TAO_NT_Notify_Service::handle_exception (ACE_HANDLE)
 }
 
 void
-TAO_NT_Notify_Service::report_error (const ACE_TCHAR *format,
-                                     const ACE_TCHAR *val,
+TAO_NT_Notify_Service::report_error (ACE_TCHAR const *format,
+                                     ACE_TCHAR const *val,
                                      LONG result)
 {
   ACE_TCHAR msg[100];
@@ -147,7 +147,7 @@ TAO_NT_Notify_Service::arg_manip (char *args, DWORD arglen, bool query)
 }
 
 int
-TAO_NT_Notify_Service::set_args (const ACE_TCHAR *args)
+TAO_NT_Notify_Service::set_args (ACE_TCHAR const *args)
 {
   char argbuf[ACE_DEFAULT_ARGV_BUFSIZ];
   if (args == nullptr)
@@ -201,7 +201,7 @@ TAO_NT_Notify_Service::init (int argc,
 
   if (ACE_OS::strlen ((char *) buf) > 0)
     {
-      ACE_ARGV args ((const char*) buf);
+      ACE_ARGV args ((char const *) buf);
       // Allocate the internal args list to be one bigger than the
       // args list passed into the function. We use a 'save' list in
       // case we use a 'destructive' args list processor - this way we
