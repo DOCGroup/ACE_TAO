@@ -42,7 +42,7 @@ ACE_Sample_History::Samples_Deleter::operator() (ACE_UINT64 *samples) const
 
 void
 ACE_Sample_History::dump_samples (
-    const ACE_TCHAR *msg,
+    ACE_TCHAR const *msg,
     ACE_Sample_History::scale_factor_type scale_factor) const
 {
 #ifndef ACE_NLOGGING

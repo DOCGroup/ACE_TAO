@@ -97,7 +97,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (u_long event)
 }
 
 template <class ACE_LOCK, class ALLOCATOR> void
-ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (const char *event)
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::timeprobe (char const *event)
 {
   ACE_GUARD (ACE_LOCK, ace_mon, this->lock_);
 
@@ -200,7 +200,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::current_size ()
 }
 
 template <class ACE_LOCK, class ALLOCATOR> int
-ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::event_descriptions (const char **descriptions,
+ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::event_descriptions (char const **descriptions,
                                              u_long minimum_id)
 {
   ACE_GUARD_RETURN (ACE_LOCK, ace_mon, this->lock_, -1);
@@ -351,7 +351,7 @@ ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::print_absolute_times ()
   while (i != this->current_size_);
 }
 
-template <class ACE_LOCK, class ALLOCATOR> const char *
+template <class ACE_LOCK, class ALLOCATOR> char const *
 ACE_Timeprobe_Ex<ACE_LOCK, ALLOCATOR>::find_description_i (u_long i)
 {
   if (this->timeprobes_[i].event_type_ == ACE_timeprobe_t::STRING)

@@ -64,7 +64,7 @@ public:
    * Prints out all the samples, using @a msg as a prefix for each
    * message.
    */
-  void dump_samples (const ACE_TCHAR *msg,
+  void dump_samples (ACE_TCHAR const *msg,
                      scale_factor_type scale_factor) const;
 
   /// Collect the summary for all the samples

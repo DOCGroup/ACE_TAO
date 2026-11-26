@@ -77,10 +77,10 @@ public:
   void timeprobe (u_long event);
 
   /// Record a time. @a id is used to describe this time probe.
-  void timeprobe (const char *id);
+  void timeprobe (char const *id);
 
   /// Record event descriptions.
-  int event_descriptions (const char **descriptions,
+  int event_descriptions (char const **descriptions,
                           u_long minimum_id);
 
   /// Print the time probes.
@@ -107,7 +107,7 @@ public:
   ACE_Unbounded_Set<ACE_Event_Descriptions> &sorted_event_descriptions ();
 
   /// Find description of event @a i
-  const char *find_description_i (u_long i);
+  char const *find_description_i (u_long i);
 
   /// Sort event descriptions
   void sort_event_descriptions_i ();

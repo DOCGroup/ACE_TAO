@@ -64,7 +64,7 @@ class ACE_Export ACE_Event_Descriptions
 {
 public:
   /// Event descriptions
-  const char **descriptions_;
+  char const **descriptions_;
 
   /// Minimum id of this description set
   u_long minimum_id_;
@@ -85,7 +85,7 @@ public:
   union event
   {
     u_long event_number_;
-    const char *event_description_;
+    char const *event_description_;
   };
 
   /// Type of event.
