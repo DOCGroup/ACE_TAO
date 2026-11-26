@@ -35,6 +35,11 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 class ACE_Export ACE_CapEntry
 {
 public:
+   ACE_CapEntry () = delete;
+   ACE_CapEntry (ACE_CapEntry const &) = default;
+   ACE_CapEntry (ACE_CapEntry &&) = default;
+   ACE_CapEntry &operator= (ACE_CapEntry const &) = default;
+   ACE_CapEntry &operator= (ACE_CapEntry &&) = default;
    virtual ~ACE_CapEntry () = default;
 
 protected:
@@ -62,6 +67,7 @@ protected:
 class ACE_Export ACE_IntCapEntry : public ACE_CapEntry
 {
 public:
+  ACE_IntCapEntry () = delete;
   explicit ACE_IntCapEntry (int val);
   int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
@@ -81,7 +87,8 @@ protected:
 class ACE_Export ACE_StringCapEntry : public ACE_CapEntry
 {
 public:
-  explicit ACE_StringCapEntry (const ACE_TString &val);
+  ACE_StringCapEntry () = delete;
+  explicit ACE_StringCapEntry (ACE_TString const &val);
   ACE_TString getval () const;
   ACE_ALLOC_HOOK_DECLARE;
 
@@ -100,6 +107,7 @@ protected:
 class ACE_Export ACE_BoolCapEntry : public ACE_CapEntry
 {
 public:
+  ACE_BoolCapEntry () = delete;
   explicit ACE_BoolCapEntry (int val);
   int getval () const;
   ACE_ALLOC_HOOK_DECLARE;
@@ -131,7 +139,11 @@ public:
 
   ACE_Capabilities ();
 
-  ~ACE_Capabilities();
+  ACE_Capabilities (ACE_Capabilities const &) = delete;
+  ACE_Capabilities (ACE_Capabilities &&) = delete;
+  ACE_Capabilities &operator= (ACE_Capabilities const &) = delete;
+  ACE_Capabilities &operator= (ACE_Capabilities &&) = delete;
+  ~ACE_Capabilities ();
 
 public:
   /// Get a string entry.

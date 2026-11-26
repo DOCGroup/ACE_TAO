@@ -20,7 +20,7 @@ ACE_IntCapEntry::getval () const
 }
 
 ACE_INLINE
-ACE_StringCapEntry::ACE_StringCapEntry (const ACE_TString &val)
+ACE_StringCapEntry::ACE_StringCapEntry (ACE_TString const &val)
   : ACE_CapEntry (ACE_STRINGCAP),
     val_ (val)
 {
