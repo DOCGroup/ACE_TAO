@@ -119,7 +119,7 @@ ACE_INET_Addr::operator == (ACE_INET_Addr const &sap) const
       return false;
     }
 
-  return (std::memcmp (&this->inet_addr_,
+  return (std::memcmp (std::addressof (this->inet_addr_),
                        &sap.inet_addr_,
                        this->get_size ()) == 0);
 }
@@ -215,12 +215,12 @@ ACE_INET_Addr::set (ACE_INET_Addr const &sa)
   if (sa.get_type () == AF_ANY)
     {
       // Ugh, this is really a base class, so don't copy it.
-      std::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+      std::memset (std::addressof (this->inet_addr_), 0, sizeof (this->inet_addr_));
     }
   else
     {
       // It's ok to make the copy.
-      std::memcpy (&this->inet_addr_, &sa.inet_addr_, sa.get_size ());
+      std::memcpy (std::addressof (this->inet_addr_), &sa.inet_addr_, sa.get_size ());
 
       this->set_type (sa.get_type());
       this->set_size (sa.get_size());
@@ -409,7 +409,7 @@ ACE_INET_Addr::set (u_short port_number,
 
   if (address_family != AF_INET
       && ACE_OS::inet_pton (AF_INET6, host_name,
-                            &this->inet_addr_.in6_.sin6_addr) == 1)
+                            std::addressof (this->inet_addr_.in6_.sin6_addr)) == 1)
     {
       this->base_set (AF_INET6, sizeof this->inet_addr_.in4_);
 # ifdef ACE_HAS_SOCKADDR_IN6_SIN6_LEN
@@ -426,7 +426,7 @@ ACE_INET_Addr::set (u_short port_number,
 #endif /* ACE_HAS_IPV6 */
 
   if (ACE_OS::inet_pton (AF_INET, host_name,
-                         &this->inet_addr_.in4_.sin_addr) == 1)
+                         std::addressof (this->inet_addr_.in4_.sin_addr)) == 1)
     {
       this->base_set (AF_INET, sizeof this->inet_addr_.in4_);
 #ifdef ACE_HAS_SOCKADDR_IN_SIN_LEN
@@ -601,7 +601,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
   : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  std::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  std::memset (std::addressof (this->inet_addr_), 0, sizeof (this->inet_addr_));
   if (this->set (port_number,
                  host_name,
                  1,
@@ -621,7 +621,7 @@ ACE_INET_Addr::ACE_INET_Addr (u_short port_number,
   : ACE_Addr (determine_type (), sizeof (inet_addr_))
 {
   ACE_TRACE ("ACE_INET_Addr::ACE_INET_Addr");
-  std::memset (&this->inet_addr_, 0, sizeof (this->inet_addr_));
+  std::memset (std::addressof (this->inet_addr_), 0, sizeof (this->inet_addr_));
   if (this->set (port_number,
                  host_name,
                  1,
@@ -650,7 +650,7 @@ ACE_INET_Addr::set (sockaddr_in const *addr, int len)
       {
         len = maxlen;
       }
-      std::memcpy (&this->inet_addr_.in4_, addr, len);
+      std::memcpy (std::addressof (this->inet_addr_.in4_), addr, len);
       this->base_set (AF_INET, len);
       return 0;
     }
@@ -662,7 +662,7 @@ ACE_INET_Addr::set (sockaddr_in const *addr, int len)
         {
           len = maxlen;
         }
-      std::memcpy (&this->inet_addr_.in6_, addr, len);
+      std::memcpy (std::addressof (this->inet_addr_.in6_), addr, len);
       this->base_set (AF_INET6, len);
       return 0;
     }
@@ -947,7 +947,7 @@ ACE_INET_Addr::get_host_name_i (char hostname[], size_t len) const
 
 #if defined (ACE_HAS_IPV6)
   if ((this->get_type () == PF_INET6 &&
-       0 == std::memcmp (&this->inet_addr_.in6_.sin6_addr,
+       0 == std::memcmp (std::addressof (this->inet_addr_.in6_.sin6_addr),
                          &in6addr_any,
                          sizeof (this->inet_addr_.in6_.sin6_addr)))
       ||
@@ -1003,7 +1003,7 @@ int ACE_INET_Addr::set_address (char const *ip_addr,
 #endif
         this->inet_addr_.in4_.sin_family = AF_INET;
         this->set_size (sizeof (this->inet_addr_.in4_));
-        std::memcpy (&this->inet_addr_.in4_.sin_addr, &ip4, len);
+        std::memcpy (std::addressof (this->inet_addr_.in4_.sin_addr), &ip4, len);
       }
 #if defined (ACE_HAS_IPV6)
       else if (map == 0)
@@ -1015,7 +1015,7 @@ int ACE_INET_Addr::set_address (char const *ip_addr,
 #endif
           this->inet_addr_.in4_.sin_family = AF_INET;
           this->set_size (sizeof (this->inet_addr_.in4_));
-          std::memcpy (&this->inet_addr_.in4_.sin_addr, &ip4, len);
+          std::memcpy (std::addressof (this->inet_addr_.in4_.sin_addr), &ip4, len);
         }
       // If given an IPv4 address to copy to an IPv6 object, map it to
       // an IPv4-mapped IPv6 address.
@@ -1030,7 +1030,7 @@ int ACE_INET_Addr::set_address (char const *ip_addr,
           if (ip4 == ACE_HTONL (INADDR_ANY))
             {
               in6_addr const ip6 = in6addr_any;
-              std::memcpy (&this->inet_addr_.in6_.sin6_addr, &ip6, sizeof (ip6));
+              std::memcpy (std::addressof (this->inet_addr_.in6_.sin6_addr), &ip6, sizeof (ip6));
               return 0;
             }
           else
@@ -1038,10 +1038,10 @@ int ACE_INET_Addr::set_address (char const *ip_addr,
               // Build up a 128 bit address.  An IPv4-mapped IPv6 address
               // is defined as 0:0:0:0:0:ffff:IPv4_address.  This is defined
               // in RFC 1884 */
-              std::memset (&this->inet_addr_.in6_.sin6_addr, 0, 16);
+              std::memset (std::addressof (this->inet_addr_.in6_.sin6_addr), 0, 16);
               this->inet_addr_.in6_.sin6_addr.s6_addr[10] =
                 this->inet_addr_.in6_.sin6_addr.s6_addr[11] = 0xff;
-              std::memcpy (&this->inet_addr_.in6_.sin6_addr.s6_addr[12], &ip4, 4);
+              std::memcpy (std::addressof (this->inet_addr_.in6_.sin6_addr.s6_addr[12]), &ip4, 4);
             }
         }
 #endif /* ACE_HAS_IPV6 */
@@ -1062,7 +1062,7 @@ int ACE_INET_Addr::set_address (char const *ip_addr,
 #ifdef ACE_HAS_SOCKADDR_IN6_SIN6_LEN
       this->inet_addr_.in6_.sin6_len = sizeof (this->inet_addr_.in6_);
 #endif
-      std::memcpy (&this->inet_addr_.in6_.sin6_addr, ip_addr, len);
+      std::memcpy (std::addressof (this->inet_addr_.in6_.sin6_addr), ip_addr, len);
       return 0;
     } /* end len == 16 */
 #endif /* ACE_HAS_IPV6 */
@@ -1077,8 +1077,8 @@ int
 ACE_INET_Addr::set_interface (char const *intf_name)
 {
   if (this->get_type () == PF_INET6 &&
-      (IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr) ||
-       IN6_IS_ADDR_MC_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr)))
+      (IN6_IS_ADDR_LINKLOCAL (std::addressof (this->inet_addr_.in6_.sin6_addr)) ||
+       IN6_IS_ADDR_MC_LINKLOCAL (std::addressof (this->inet_addr_.in6_.sin6_addr))))
     {
 #if defined (ACE_LINUX)
       this->inet_addr_.in6_.sin6_scope_id =
@@ -1126,7 +1126,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
 
 #  if defined (ACE_WIN32)
       sockaddr *sa = reinterpret_cast<sockaddr *>
-                       (const_cast<sockaddr_in6 *> (&this->inet_addr_.in6_));
+                       (const_cast<sockaddr_in6 *> (std::addressof (this->inet_addr_.in6_)));
       if (ACE_OS::getnameinfo (sa, this->get_size (), dst, size,
                                0, 0,    // Don't want service name
                                NI_NUMERICHOST) == 0)
@@ -1137,12 +1137,12 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
       return 0;
 #  else
       char const *ch = ACE_OS::inet_ntop (AF_INET6,
-                                          &this->inet_addr_.in6_.sin6_addr,
+                                          std::addressof (this->inet_addr_.in6_.sin6_addr),
                                           dst,
                                           size);
 #if defined (ACE_LINUX)
-      if ((IN6_IS_ADDR_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr) ||
-           IN6_IS_ADDR_MC_LINKLOCAL (&this->inet_addr_.in6_.sin6_addr)) &&
+      if ((IN6_IS_ADDR_LINKLOCAL (std::addressof (this->inet_addr_.in6_.sin6_addr)) ||
+           IN6_IS_ADDR_MC_LINKLOCAL (std::addressof (this->inet_addr_.in6_.sin6_addr))) &&
           this->inet_addr_.in6_.sin6_scope_id != 0)
         {
           char scope_buf[32];
@@ -1160,7 +1160,7 @@ ACE_INET_Addr::get_host_addr (char *dst, int size) const
 #endif /* ACE_HAS_IPV6 */
 
   return ACE_OS::inet_ntop (AF_INET,
-          &this->inet_addr_.in4_.sin_addr,
+          std::addressof (this->inet_addr_.in4_.sin_addr),
           dst,
           size);
 }
@@ -1187,8 +1187,8 @@ ACE_INET_Addr::get_ip_address () const
 #if defined (ACE_HAS_IPV6)
   if (this->get_type () == AF_INET6)
     {
-      if (IN6_IS_ADDR_V4MAPPED (&this->inet_addr_.in6_.sin6_addr) ||
-          IN6_IS_ADDR_V4COMPAT (&this->inet_addr_.in6_.sin6_addr))
+      if (IN6_IS_ADDR_V4MAPPED (std::addressof (this->inet_addr_.in6_.sin6_addr)) ||
+          IN6_IS_ADDR_V4COMPAT (std::addressof (this->inet_addr_.in6_.sin6_addr)))
         {
           ACE_UINT32 addr;
           // Return the last 32 bits of the address
