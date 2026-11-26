@@ -1,9 +1,11 @@
 #include "ace/FILE_IO.h"
 
+#include "ace/ACE.h"
 #include "ace/Log_Category.h"
 #include "ace/OS_NS_sys_stat.h"
 #include "ace/OS_Memory.h"
 #include "ace/Truncate.h"
+#include <memory>
 #if defined (ACE_HAS_ALLOC_HOOKS)
 # include "ace/Malloc_Base.h"
 #endif /* ACE_HAS_ALLOC_HOOKS */
@@ -171,7 +173,9 @@ ACE_FILE_IO::recvv (iovec *io_vec)
                       char[len],
                       -1);
 #endif /* ACE_HAS_ALLOC_HOOKS */
-      ssize_t const received = this->recv_n (io_vec->iov_base, len);
+      size_t transferred {};
+      ssize_t const received = ACE::read_n (this->get_handle (), io_vec->iov_base,
+                                            len, std::addressof (transferred));
       if (received < 0)
         {
           int const saved_errno = errno;
@@ -184,8 +188,8 @@ ACE_FILE_IO::recvv (iovec *io_vec)
           errno = saved_errno;
           return received;
         }
-      io_vec->iov_len = static_cast<u_long> (received);
-      return received;
+      io_vec->iov_len = static_cast<u_long> (transferred);
+      return ACE_Utils::truncate_cast<ssize_t> (transferred);
     }
   else
     {

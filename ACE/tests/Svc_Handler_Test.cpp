@@ -171,6 +171,28 @@ run_main (int argc, ACE_TCHAR *argv[])
           {
             ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Reading file into allocated buffer failed\n")), 1);
           }
+        if (info.size_ > 6)
+          {
+            if (ACE_OS::lseek (file_io.get_handle (), 3, SEEK_SET) == -1)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Could not seek in file\n")), 1);
+              }
+            iovec remaining {};
+            ssize_t const read_remaining = file_io.recvv (std::addressof (remaining));
+            bool const remaining_valid = read_remaining == info.size_ - 3
+              && remaining.iov_len == static_cast<size_t> (read_remaining)
+              && remaining.iov_base != nullptr
+              && ACE_OS::memcmp (remaining.iov_base, "lo ", 3) == 0;
+#if defined (ACE_HAS_ALLOC_HOOKS)
+            ACE_Allocator::instance ()->free (remaining.iov_base);
+#else
+            delete [] static_cast<char *> (remaining.iov_base);
+#endif
+            if (!remaining_valid)
+              {
+                ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Reading remaining file data failed\n")), 1);
+              }
+          }
       }
 
     file_io.close ();
