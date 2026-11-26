@@ -45,8 +45,8 @@ public:
 
   int handle_input (ACE_HANDLE handle) override;
 
-  int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                              void const *act) override;
 
   int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask mask) override;
@@ -71,7 +71,7 @@ public:
                             ACE_Reactor_Mask mask) override;
 
 private:
-  int send_i (const char* buffer,
+  int send_i (char const * buffer,
               size_t size);
 
   std::queue<std::string*> buffer_list_;
@@ -187,7 +187,7 @@ Client::handle_input (ACE_HANDLE handle)
 }
 
 int
-Client::handle_timeout (const ACE_Time_Value &, const void *)
+Client::handle_timeout (ACE_Time_Value const &, void const *)
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%t) Expected client timeout occurred at: %T\n")));
@@ -280,7 +280,7 @@ Server::handle_input (ACE_HANDLE handle)
 }
 
 int
-Server::send_i (const char* buffer,
+Server::send_i (char const * buffer,
                 size_t size)
 {
   if (size == 0)
@@ -410,9 +410,9 @@ class TestConnector : public CONNECTOR
 public:
   int connect_svc_handler (
     CONNECTOR::handler_type *& handler,
-    const CONNECTOR::addr_type &remote_addr,
+    CONNECTOR::addr_type const &remote_addr,
     ACE_Time_Value *timeout,
-    const CONNECTOR::addr_type &local_addr,
+    CONNECTOR::addr_type const &local_addr,
     int reuse_addr,
     int flags,
     int perms) override
@@ -451,9 +451,9 @@ public:
   int connect_svc_handler (
     CONNECTOR::handler_type *& handler,
     CONNECTOR::handler_type *& sh_copy,
-    const CONNECTOR::addr_type &remote_addr,
+    CONNECTOR::addr_type const &remote_addr,
     ACE_Time_Value *timeout,
-    const CONNECTOR::addr_type &local_addr,
+    CONNECTOR::addr_type const &local_addr,
     int reuse_addr,
     int flags,
     int perms) override {

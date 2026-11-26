@@ -48,8 +48,8 @@ public:
 
   int handle_output (ACE_HANDLE handle) override;
 
-  int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                              void const *act) override;
 
   int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask mask) override;
@@ -65,8 +65,8 @@ public:
 
   int handle_input (ACE_HANDLE handle) override;
 
-  int handle_timeout (const ACE_Time_Value &current_time,
-                              const void *act) override;
+  int handle_timeout (ACE_Time_Value const &current_time,
+                              void const *act) override;
 
   int handle_close (ACE_HANDLE handle,
                             ACE_Reactor_Mask mask) override;
@@ -147,7 +147,7 @@ Client::handle_output (ACE_HANDLE)
 }
 
 int
-Client::handle_timeout (const ACE_Time_Value &, const void *)
+Client::handle_timeout (ACE_Time_Value const &, void const *)
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%t) Expected client timeout occurred at: %T\n")));
@@ -267,8 +267,8 @@ Server::handle_input (ACE_HANDLE /* handle */)
 }
 
 int
-Server::handle_timeout (const ACE_Time_Value &,
-                        const void *)
+Server::handle_timeout (ACE_Time_Value const &,
+                        void const *)
 {
   ACE_DEBUG ((LM_INFO,
               ACE_TEXT ("(%t) Expected server timeout occurred at: %T\n")));
@@ -378,9 +378,9 @@ class TestConnector : public CONNECTOR
 public:
   int connect_svc_handler (
     CONNECTOR::handler_type *& handler,
-    const CONNECTOR::addr_type &remote_addr,
+    CONNECTOR::addr_type const &remote_addr,
     ACE_Time_Value *timeout,
-    const CONNECTOR::addr_type &local_addr,
+    CONNECTOR::addr_type const &local_addr,
     int reuse_addr,
     int flags,
     int perms) override
@@ -435,9 +435,9 @@ public:
   int connect_svc_handler (
     CONNECTOR::handler_type *& handler,
     CONNECTOR::handler_type *& sh_copy,
-    const CONNECTOR::addr_type &remote_addr,
+    CONNECTOR::addr_type const &remote_addr,
     ACE_Time_Value *timeout,
-    const CONNECTOR::addr_type &local_addr,
+    CONNECTOR::addr_type const &local_addr,
     int reuse_addr,
     int flags,
     int perms) override {
