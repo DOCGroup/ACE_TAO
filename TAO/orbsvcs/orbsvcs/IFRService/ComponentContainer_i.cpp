@@ -73,7 +73,7 @@ TAO_ComponentContainer_i::create_component_i (
       // no other way to know about a specific key.
       this->repo_->config ()->expand_path (
                                   this->repo_->root_key (),
-                                  base_path,
+                                  ACE_TEXT_CHAR_TO_TCHAR (base_path),
                                   TAO_IFR_Service_Utils::tmp_key_,
                                   false
                                 );
@@ -89,7 +89,7 @@ TAO_ComponentContainer_i::create_component_i (
 //                                                base_id);
       this->repo_->config ()->set_string_value (new_key,
                                                 ACE_TEXT("base_component"),
-                                                base_path);
+                                                ACE_TEXT_CHAR_TO_TCHAR (base_path));
     }
 
   CORBA::ULong count = supports_interfaces.length ();
@@ -99,31 +99,31 @@ TAO_ComponentContainer_i::create_component_i (
     {
       ACE_Configuration_Section_Key supports_key;
       this->repo_->config ()->open_section (new_key,
-                                            "supported",
+                                            ACE_TEXT ("supported"),
                                             true,
                                             supports_key);
 
       this->repo_->config ()->set_integer_value (supports_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  count);
 
       for (i = 0; i < count; ++i)
         {
-          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           char const * const supported_path =
             TAO_IFR_Service_Utils::reference_to_path (
                 supports_interfaces[i]
               );
           this->repo_->config ()->set_string_value (supports_key,
                                                     stringified,
-                                                    supported_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR (supported_path));
         }
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Component,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::ComponentIR::ComponentDef::_narrow (obj.in ());
@@ -184,8 +184,8 @@ TAO_ComponentContainer_i::create_home_i (
     {
       base_path = TAO_IFR_Service_Utils::reference_to_path (base_home);
       this->repo_->config ()->set_string_value (new_key,
-                                                "base_home",
-                                                base_path);
+                                                ACE_TEXT ("base_home"),
+                                                ACE_TEXT_CHAR_TO_TCHAR (base_path));
     }
 
   if (! CORBA::is_nil (managed_component))
@@ -193,8 +193,8 @@ TAO_ComponentContainer_i::create_home_i (
       base_path =
         TAO_IFR_Service_Utils::reference_to_path (managed_component);
       this->repo_->config ()->set_string_value (new_key,
-                                                "managed",
-                                                base_path);
+                                                ACE_TEXT ("managed"),
+                                                ACE_TEXT_CHAR_TO_TCHAR (base_path));
     }
 
   CORBA::ULong length = supports_interfaces.length ();
@@ -204,11 +204,11 @@ TAO_ComponentContainer_i::create_home_i (
     {
       ACE_Configuration_Section_Key supports_key;
       this->repo_->config ()->open_section (new_key,
-                                            "supported",
+                                            ACE_TEXT ("supported"),
                                             true,
                                             supports_key);
       this->repo_->config ()->set_integer_value (supports_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  length);
 
       for (i = 0; i < length; ++i)
@@ -217,10 +217,10 @@ TAO_ComponentContainer_i::create_home_i (
             TAO_IFR_Service_Utils::reference_to_path (
                 supports_interfaces[i]
               );
-          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (supports_key,
                                                     stringified,
-                                                    supported_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR (supported_path));
         }
     }
 
@@ -229,14 +229,14 @@ TAO_ComponentContainer_i::create_home_i (
       char *primary_key_path =
         TAO_IFR_Service_Utils::reference_to_path (primary_key);
         this->repo_->config ()->set_string_value (new_key,
-                                                  "primary_key",
-                                                  primary_key_path);
+                                                  ACE_TEXT ("primary_key"),
+                                                  ACE_TEXT_CHAR_TO_TCHAR (primary_key_path));
     }
 
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Home,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::ComponentIR::HomeDef::_narrow (obj.in ());
@@ -301,15 +301,15 @@ TAO_ComponentContainer_i::create_event_i (
       );
 
   this->repo_->config ()->set_integer_value (new_key,
-                                             "is_custom",
+                                             ACE_TEXT ("is_custom"),
                                              (CORBA::ULong) is_custom);
 
   this->repo_->config ()->set_integer_value (new_key,
-                                             "is_abstract",
+                                             ACE_TEXT ("is_abstract"),
                                              (CORBA::ULong) is_abstract);
 
   this->repo_->config ()->set_integer_value (new_key,
-                                             "is_truncatable",
+                                             ACE_TEXT ("is_truncatable"),
                                              (CORBA::ULong) is_truncatable);
 
   if (!CORBA::is_nil (base_value))
@@ -322,7 +322,7 @@ TAO_ComponentContainer_i::create_event_i (
       // no other way to know about a specific key.
       this->repo_->config ()->expand_path (
                                   this->repo_->root_key (),
-                                  base_path,
+                                  ACE_TEXT_CHAR_TO_TCHAR (base_path),
                                   TAO_IFR_Service_Utils::tmp_key_,
                                   false
                                 );
@@ -332,8 +332,8 @@ TAO_ComponentContainer_i::create_event_i (
                                           CORBA::dk_Value);
 
       this->repo_->config ()->set_string_value (new_key,
-                                                "base_value",
-                                                base_path);
+                                                ACE_TEXT ("base_value"),
+                                                ACE_TEXT_CHAR_TO_TCHAR (base_path));
     }
 
   CORBA::ULong length = abstract_base_values.length ();
@@ -343,7 +343,7 @@ TAO_ComponentContainer_i::create_event_i (
     {
       ACE_Configuration_Section_Key bases_key;
       this->repo_->config ()->open_section (new_key,
-                                            "abstract_bases",
+                                            ACE_TEXT ("abstract_bases"),
                                             true,
                                             bases_key);
 
@@ -353,10 +353,10 @@ TAO_ComponentContainer_i::create_event_i (
             TAO_IFR_Service_Utils::reference_to_path (
                 abstract_base_values[i]
               );
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (bases_key,
                                                     stringified,
-                                                    base_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR (base_path));
         }
     }
 
@@ -366,12 +366,12 @@ TAO_ComponentContainer_i::create_event_i (
     {
       ACE_Configuration_Section_Key supported_key;
       this->repo_->config ()->open_section (new_key,
-                                            "supported",
+                                            ACE_TEXT ("supported"),
                                             true,
                                             supported_key);
 
       this->repo_->config ()->set_integer_value (supported_key,
-                                                 "count",
+                                                 ACE_TEXT ("count"),
                                                  length);
       for (i = 0; i < length; ++i)
         {
@@ -379,10 +379,10 @@ TAO_ComponentContainer_i::create_event_i (
             TAO_IFR_Service_Utils::reference_to_path (
                 supported_interfaces[i]
               );
-          char *stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR *stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->set_string_value (supported_key,
                                                     stringified,
-                                                    supported_path);
+                                                    ACE_TEXT_CHAR_TO_TCHAR (supported_path));
         }
     }
 
@@ -392,7 +392,7 @@ TAO_ComponentContainer_i::create_event_i (
     {
       ACE_Configuration_Section_Key initializers_key;
       this->repo_->config ()->open_section (new_key,
-                                            "initializers",
+                                            ACE_TEXT ("initializers"),
                                             true,
                                             initializers_key);
 
@@ -404,15 +404,15 @@ TAO_ComponentContainer_i::create_event_i (
 
       for (i = 0; i < length; ++i)
         {
-          char * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
+          ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (i);
           this->repo_->config ()->open_section (initializers_key,
                                                 stringified,
                                                 true,
                                                 initializer_key);
           this->repo_->config ()->set_string_value (
                                       initializer_key,
-                                      "name",
-                                      initializers[i].name.in ()
+                                      ACE_TEXT ("name"),
+                                      ACE_TEXT_CHAR_TO_TCHAR (initializers[i].name.in ())
                                     );
 
           count = initializers[i].members.length ();
@@ -420,17 +420,17 @@ TAO_ComponentContainer_i::create_event_i (
           if (count > 0)
             {
               this->repo_->config ()->open_section (initializer_key,
-                                                    "params",
+                                                    ACE_TEXT ("params"),
                                                     true,
                                                     outer_key);
 
               this->repo_->config ()->set_integer_value (outer_key,
-                                                         "count",
+                                                         ACE_TEXT ("count"),
                                                          count);
 
               for (CORBA::ULong j {}; j < count; ++j)
                 {
-                  char * const stringified = TAO_IFR_Service_Utils::int_to_string (j);
+                  ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (j);
                   this->repo_->config ()->open_section (outer_key,
                                                         stringified,
                                                         true,
@@ -438,8 +438,8 @@ TAO_ComponentContainer_i::create_event_i (
 
                   this->repo_->config ()->set_string_value (
                       inner_key,
-                      "arg_name",
-                      initializers[i].members[j].name.in ()
+                      ACE_TEXT ("arg_name"),
+                      ACE_TEXT_CHAR_TO_TCHAR (initializers[i].members[j].name.in ())
                     );
 
                   char * const path =
@@ -448,8 +448,8 @@ TAO_ComponentContainer_i::create_event_i (
                             );
 
                   this->repo_->config ()->set_string_value (inner_key,
-                                                            "arg_path",
-                                                            path);
+                                                            ACE_TEXT ("arg_path"),
+                                                            ACE_TEXT_CHAR_TO_TCHAR (path));
                 }
             }
 
@@ -458,23 +458,23 @@ TAO_ComponentContainer_i::create_event_i (
           if (count > 0)
             {
               this->repo_->config ()->open_section (initializer_key,
-                                                    "excepts",
+                                                    ACE_TEXT ("excepts"),
                                                     true,
                                                     outer_key);
 
               this->repo_->config ()->set_integer_value (outer_key,
-                                                         "count",
+                                                         ACE_TEXT ("count"),
                                                          count);
 
               for (CORBA::ULong k {}; k < count; ++k)
                 {
                   this->repo_->config ()->get_string_value (
                       this->repo_->repo_ids_key (),
-                      initializers[i].exceptions[k].id.in (),
+                      ACE_TEXT_CHAR_TO_TCHAR (initializers[i].exceptions[k].id.in ()),
                       excep_path
                     );
 
-                  char * const stringified = TAO_IFR_Service_Utils::int_to_string (k);
+                  ACE_TCHAR * const stringified = TAO_IFR_Service_Utils::int_to_string (k);
                   this->repo_->config ()->set_string_value (outer_key,
                                                             stringified,
                                                             excep_path);
@@ -486,7 +486,7 @@ TAO_ComponentContainer_i::create_event_i (
   // Create the object reference.
   CORBA::Object_var obj =
     TAO_IFR_Service_Utils::create_objref (CORBA::dk_Event,
-                                          path.c_str (),
+                                          ACE_TEXT_ALWAYS_CHAR (path.c_str ()),
                                           this->repo_);
 
   return CORBA::ComponentIR::EventDef::_narrow (obj.in ());
