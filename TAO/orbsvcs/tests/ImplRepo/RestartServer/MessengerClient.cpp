@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR *ior = ACE_TEXT("file://Messenger.ior");
+ACE_TCHAR const *ior = ACE_TEXT("file://Messenger.ior");
 int seconds_between_requests = 4;
 // Number of times we try to invoke the operation
 int number_of_tries = 2;

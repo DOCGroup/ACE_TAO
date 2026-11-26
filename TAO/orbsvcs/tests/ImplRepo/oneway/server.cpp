@@ -53,7 +53,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
   try {
     CORBA::ORB_var orb = CORBA::ORB_init(argc, argv);
 
-    const ACE_TCHAR *iorfile = ACE_TEXT ("");
+    ACE_TCHAR const *iorfile = ACE_TEXT ("");
 
     ACE_Get_Opt get_opts (argc, argv, ACE_TEXT ("o:?"));
     int c;

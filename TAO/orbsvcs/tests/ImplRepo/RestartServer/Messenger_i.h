@@ -18,8 +18,8 @@ public:
   virtual ~Messenger_i ();
 
   CORBA::Boolean send_message (
-    const char * user_name,
-    const char * subject,
+    char const *user_name,
+    char const *subject,
     char *& message) override;
 
   void abort (CORBA::Short delay_secs) override;

@@ -3,7 +3,7 @@
 #include "ace/Get_Opt.h"
 #include "ace/OS_NS_unistd.h"
 
-const ACE_TCHAR * pid_file = ACE_TEXT ("server.pid");
+ACE_TCHAR const *pid_file = ACE_TEXT ("server.pid");
 
 int
 parse_args (int argc, ACE_TCHAR *argv[])

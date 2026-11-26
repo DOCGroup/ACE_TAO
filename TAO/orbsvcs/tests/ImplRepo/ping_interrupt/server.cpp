@@ -26,7 +26,7 @@ namespace
 PortableServer::POA_ptr
 createPOA (PortableServer::POA_ptr root_poa,
            bool share_mgr,
-           const char* poa_name)
+           char const *poa_name)
 {
   PortableServer::LifespanPolicy_var life =
     root_poa->create_lifespan_policy(PortableServer::PERSISTENT);

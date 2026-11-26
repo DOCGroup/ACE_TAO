@@ -7,7 +7,7 @@
 #include "tao/AnyTypeCode/Any.h"
 
 int request_delay_secs = 0;
-const ACE_TCHAR *ior = ACE_TEXT ("");
+ACE_TCHAR const *ior = ACE_TEXT ("");
 CORBA::ORB_var orb;
 
 int
