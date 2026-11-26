@@ -125,7 +125,7 @@ public:
    * This is basically a no-op on CE because there is no concept of
    * environment variable on CE.
    */
-  static int get_env_global_scale_factor (const ACE_TCHAR *env
+  static int get_env_global_scale_factor (ACE_TCHAR const *env
                                           = ACE_TEXT ("ACE_SCALE_FACTOR"));
 
   /**
@@ -194,12 +194,12 @@ public:
 
   /// Print total time.
   /// @note only use @c print_total if incremental timings had been used!
-  void print_total (const ACE_TCHAR *message,
+  void print_total (ACE_TCHAR const *message,
                     const int iterations = 1,
                     ACE_HANDLE handle = ACE_STDOUT) const;
 
   /// Print average time.
-  void print_ave (const ACE_TCHAR *message,
+  void print_ave (ACE_TCHAR const *message,
                   const int iterations = 1,
                   ACE_HANDLE handle = ACE_STDOUT) const;
 

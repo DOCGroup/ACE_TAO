@@ -166,7 +166,7 @@ ACE_Framework_Repository::register_component (ACE_Framework_Component *fc)
 }
 
 int
-ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
+ACE_Framework_Repository::remove_component (ACE_TCHAR const *name)
 {
   ACE_TRACE ("ACE_Framework_Repository::remove_component");
   ACE_GUARD_RETURN (ACE_SYNCH_MUTEX, ace_mon, this->lock_, -1);
@@ -188,7 +188,7 @@ ACE_Framework_Repository::remove_component (const ACE_TCHAR *name)
 }
 
 int
-ACE_Framework_Repository::remove_dll_components (const ACE_TCHAR *dll_name)
+ACE_Framework_Repository::remove_dll_components (ACE_TCHAR const *dll_name)
 {
   ACE_TRACE ("ACE_Framework_Repository::remove_dll_components");
 
@@ -202,7 +202,7 @@ ACE_Framework_Repository::remove_dll_components (const ACE_TCHAR *dll_name)
 }
 
 int
-ACE_Framework_Repository::remove_dll_components_i (const ACE_TCHAR *dll_name)
+ACE_Framework_Repository::remove_dll_components_i (ACE_TCHAR const *dll_name)
 {
   ACE_TRACE ("ACE_Framework_Repository::remove_dll_components_i");
 

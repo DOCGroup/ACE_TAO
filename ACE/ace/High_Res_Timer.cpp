@@ -404,7 +404,7 @@ ACE_High_Res_Timer::elapsed_time_incr (ACE_hrtime_t &nanoseconds) const
 }
 
 void
-ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
+ACE_High_Res_Timer::print_ave (ACE_TCHAR const *str,
                                const int count,
                                ACE_HANDLE handle) const
 {
@@ -448,7 +448,7 @@ ACE_High_Res_Timer::print_ave (const ACE_TCHAR *str,
 }
 
 void
-ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
+ACE_High_Res_Timer::print_total (ACE_TCHAR const *str,
                                  const int count,
                                  ACE_HANDLE handle) const
 {
@@ -493,7 +493,7 @@ ACE_High_Res_Timer::print_total (const ACE_TCHAR *str,
 }
 
 int
-ACE_High_Res_Timer::get_env_global_scale_factor (const ACE_TCHAR *env)
+ACE_High_Res_Timer::get_env_global_scale_factor (ACE_TCHAR const *env)
 {
   if (env != nullptr)
     {

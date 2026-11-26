@@ -58,8 +58,8 @@ public:
   friend class ACE_Framework_Repository;
 
   ACE_Framework_Component (void *_this,
-                           const ACE_TCHAR *dll_name = nullptr,
-                           const ACE_TCHAR *name = nullptr);
+                           ACE_TCHAR const *dll_name = nullptr,
+                           ACE_TCHAR const *name = nullptr);
 
   ACE_Framework_Component (ACE_Framework_Component const &) = delete;
   ACE_Framework_Component (ACE_Framework_Component &&) = delete;
@@ -77,10 +77,10 @@ private:
   const void *this_;
 
   /// Library associated with this component
-  const ACE_TCHAR *dll_name_;
+  ACE_TCHAR const *dll_name_;
 
   /// Component name
-  const ACE_TCHAR *name_;
+  ACE_TCHAR const *name_;
 };
 
 /**
@@ -135,10 +135,10 @@ public:
 
   /// Remove a component.  Returns -1 on error or if component not found
   /// and 0 on success.
-  int remove_component (const ACE_TCHAR *name);
+  int remove_component (ACE_TCHAR const *name);
 
   /// Remove all components associated with a particular dll.
-  int remove_dll_components (const ACE_TCHAR *dll_name);
+  int remove_dll_components (ACE_TCHAR const *dll_name);
 
   /// Return the current size of the repository.
   int current_size () const;
@@ -164,7 +164,7 @@ private:
   };
 
   /// Actually removes the dll components, must be called with locks held.
-  int remove_dll_components_i (const ACE_TCHAR *dll_name);
+  int remove_dll_components_i (ACE_TCHAR const *dll_name);
 
   /// Compact component_vector_ after components have been removed while maintaining order.
   void compact ();
