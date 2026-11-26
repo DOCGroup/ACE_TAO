@@ -58,10 +58,10 @@ public:
   ~TAO_Thread_Lane_Resources ();
 
   /// Does @a mprofile belong to us?
-  bool is_collocated (const TAO_MProfile &mprofile);
+  bool is_collocated (TAO_MProfile const &mprofile);
 
   /// Open the acceptor registry.
-  int open_acceptor_registry (const TAO_EndpointSet &endpoint_set,
+  int open_acceptor_registry (TAO_EndpointSet const &endpoint_set,
                               bool ignore_address);
 
   /// Finalize resources.

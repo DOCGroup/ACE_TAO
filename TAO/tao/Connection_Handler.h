@@ -116,7 +116,7 @@ public:
   /// Release the OS resources related to this handler.
   virtual int release_os_resources ();
 
-  virtual int handle_write_ready (const ACE_Time_Value *timeout);
+  virtual int handle_write_ready (ACE_Time_Value const *timeout);
 
 protected:
   /// Return our TAO_ORB_Core pointer
@@ -172,8 +172,8 @@ protected:
   /// @}
 
 private:
-  TAO_Connection_Handler (const TAO_Connection_Handler &) = delete;
-  TAO_Connection_Handler &operator= (const TAO_Connection_Handler &) = delete;
+  TAO_Connection_Handler (TAO_Connection_Handler const &) = delete;
+  TAO_Connection_Handler &operator= (TAO_Connection_Handler const &) = delete;
 
   /// Pointer to the TAO_ORB_Core
   TAO_ORB_Core * const orb_core_;
@@ -208,9 +208,9 @@ public:
     ref_.add_reference ();
   }
 
-  TAO_Auto_Reference (const TAO_Auto_Reference &) = delete;
+  TAO_Auto_Reference (TAO_Auto_Reference const &) = delete;
   TAO_Auto_Reference (TAO_Auto_Reference &&) = delete;
-  TAO_Auto_Reference &operator= (const TAO_Auto_Reference &) = delete;
+  TAO_Auto_Reference &operator= (TAO_Auto_Reference const &) = delete;
   TAO_Auto_Reference &operator= (TAO_Auto_Reference &&) = delete;
 
   ~TAO_Auto_Reference ()

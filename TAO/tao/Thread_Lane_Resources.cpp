@@ -60,7 +60,7 @@ TAO_Thread_Lane_Resources::has_acceptor_registry_been_created () const
 }
 
 bool
-TAO_Thread_Lane_Resources::is_collocated (const TAO_MProfile& mprofile)
+TAO_Thread_Lane_Resources::is_collocated (TAO_MProfile const & mprofile)
 {
   if (!this->has_acceptor_registry_been_created ())
     {
@@ -334,7 +334,7 @@ TAO_Thread_Lane_Resources::ami_response_handler_allocator ()
 }
 
 int
-TAO_Thread_Lane_Resources::open_acceptor_registry (const TAO_EndpointSet &endpoint_set,
+TAO_Thread_Lane_Resources::open_acceptor_registry (TAO_EndpointSet const &endpoint_set,
                                                    bool ignore_address)
 {
   // Access the acceptor registry.

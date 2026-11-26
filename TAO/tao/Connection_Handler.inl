@@ -62,7 +62,7 @@ TAO_Connection_Handler::cancel_pending_connection ()
 /// Derived classes should implement this for proper support with the
 /// Blocking Flushing Strategy.
 ACE_INLINE int
-TAO_Connection_Handler::handle_write_ready (const ACE_Time_Value *)
+TAO_Connection_Handler::handle_write_ready (ACE_Time_Value const *)
 {
   return 0;
 }

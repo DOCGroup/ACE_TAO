@@ -705,7 +705,7 @@ TAO_IIOP_Connection_Handler::abort ()
 }
 
 int
-TAO_IIOP_Connection_Handler::handle_write_ready (const ACE_Time_Value *timeout)
+TAO_IIOP_Connection_Handler::handle_write_ready (ACE_Time_Value const *timeout)
 {
   return ACE::handle_write_ready (this->peer ().get_handle (), timeout);
 }
