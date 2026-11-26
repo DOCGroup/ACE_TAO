@@ -77,7 +77,7 @@ TAO_ORB_Parameters::TAO_ORB_Parameters ()
 }
 
 void
-TAO_ORB_Parameters::get_endpoint_set (const ACE_CString &lane,
+TAO_ORB_Parameters::get_endpoint_set (ACE_CString const &lane,
                                       TAO_EndpointSet &endpoint_set)
 {
   // Look for the lane in the endpoints map.
@@ -100,8 +100,8 @@ TAO_ORB_Parameters::get_endpoint_set (const ACE_CString &lane,
 }
 
 int
-TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
-                                   const ACE_CString &additional_endpoints)
+TAO_ORB_Parameters::add_endpoints (ACE_CString const &lane,
+                                   ACE_CString const &additional_endpoints)
 {
   TAO_EndpointSet endpoint_set;
 
@@ -134,7 +134,7 @@ TAO_ORB_Parameters::add_endpoints (const ACE_CString &lane,
 }
 
 int
-TAO_ORB_Parameters::parse_and_add_endpoints (const ACE_CString &endpoints,
+TAO_ORB_Parameters::parse_and_add_endpoints (ACE_CString const &endpoints,
                                              TAO_EndpointSet &endpoint_set)
 {
   // Parse the string into separate endpoints, where `endpoints' is of
@@ -445,7 +445,7 @@ TAO_ORB_Parameters::endpoint_selector_factory_name () const
   return this->endpoint_selector_factory_name_.c_str ();
 }
 
-const TAO::Invocation_Retry_Params &
+TAO::Invocation_Retry_Params const &
 TAO_ORB_Parameters::invocation_retry_params () const
 {
   return this->invocation_retry_params_;
@@ -464,7 +464,7 @@ TAO_ORB_Parameters::forward_on_exception_limit (const int ef, const int limit)
 }
 
 void
-TAO_ORB_Parameters::forward_on_exception_delay (const ACE_Time_Value &delay)
+TAO_ORB_Parameters::forward_on_exception_delay (ACE_Time_Value const &delay)
 {
   this->invocation_retry_params_.init_retry_delay_ = delay;
 }

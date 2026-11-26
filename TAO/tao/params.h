@@ -47,9 +47,9 @@ public:
 
   /// Specifies the endpoints on which this server is willing to
   /// listen for requests.
-  int add_endpoints (const ACE_CString &lane,
-                     const ACE_CString &endpoints);
-  void get_endpoint_set (const ACE_CString &lane,
+  int add_endpoints (ACE_CString const &lane,
+                     ACE_CString const &endpoints);
+  void get_endpoint_set (ACE_CString const &lane,
                          TAO_EndpointSet &endpoint_set);
 
   /// Set/Get the port of services locatable through multicast.
@@ -256,10 +256,10 @@ public:
   bool forward_invocation_on_object_not_exist () const;
 
   void forward_on_exception_limit (const int ef, const int limit);
-  void forward_on_exception_delay (const ACE_Time_Value &delay);
+  void forward_on_exception_delay (ACE_Time_Value const &delay);
 
   TAO::Invocation_Retry_Params &invocation_retry_params ();
-  const TAO::Invocation_Retry_Params &invocation_retry_params () const;
+  TAO::Invocation_Retry_Params const &invocation_retry_params () const;
 
   void forward_once_exception (const int ef);
   int forward_once_exception () const;
@@ -288,7 +288,7 @@ private:
   ///   iiop://space:2001,odyssey:2010;uiop://foo,bar
   ///
   /// All preconnect or endpoint strings should be of the above form(s).
-  int parse_and_add_endpoints (const ACE_CString &endpoints,
+  int parse_and_add_endpoints (ACE_CString const &endpoints,
                                TAO_EndpointSet &endpoint_set);
 
   /// Map of endpoints this server is willing to accept requests on.
