@@ -110,7 +110,7 @@ protected:
   /// @{
 
   /// Enable clients to limit the amount of time they wait for a token.
-  virtual int handle_timeout (const ACE_Time_Value &tv, const void *arg);
+  virtual int handle_timeout (ACE_Time_Value const &tv, void const *arg);
   /// @}
 
   /// return a proxy for the calling client_id and token name.
@@ -156,7 +156,7 @@ class ACE_TS_Mutex : public ACE_Local_Mutex
 {
 public:
   /// Creation.
-  ACE_TS_Mutex (const ACE_TCHAR *name,
+  ACE_TS_Mutex (ACE_TCHAR const *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -171,7 +171,7 @@ protected:
   virtual void token_acquired (ACE_TPQ_Entry *);
 
   /// Duplication.
-  ACE_TS_Mutex (const ACE_TS_Mutex &);
+  ACE_TS_Mutex (ACE_TS_Mutex const &);
 
   /// Return a deep copy.
   virtual ACE_Token_Proxy *clone () const;
@@ -191,7 +191,7 @@ class ACE_TS_RLock : public ACE_Local_RLock
 {
 public:
   /// Creation.
-  ACE_TS_RLock (const ACE_TCHAR *name,
+  ACE_TS_RLock (ACE_TCHAR const *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -206,7 +206,7 @@ protected:
   virtual void token_acquired (ACE_TPQ_Entry *);
 
   /// Duplication.
-  ACE_TS_RLock (const ACE_TS_RLock&);
+  ACE_TS_RLock (ACE_TS_RLock const &);
 
   /// Return a deep copy.
   virtual ACE_Token_Proxy *clone () const;
@@ -226,7 +226,7 @@ class ACE_TS_WLock : public ACE_Local_WLock
 {
 public:
   /// Creation.
-  ACE_TS_WLock (const ACE_TCHAR *name,
+  ACE_TS_WLock (ACE_TCHAR const *name,
                 ACE_Token_Handler *th);
 
 protected:
@@ -241,7 +241,7 @@ protected:
   virtual void token_acquired (ACE_TPQ_Entry *);
 
   /// Duplication.
-  ACE_TS_WLock (const ACE_TS_WLock&);
+  ACE_TS_WLock (ACE_TS_WLock const &);
 
   /// Return a deep copy.
   virtual ACE_Token_Proxy *clone () const;

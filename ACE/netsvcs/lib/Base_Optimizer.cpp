@@ -9,15 +9,15 @@ Base_Optimizer<Base, Member>::Base_Optimizer ()
 }
 
 template<class Base, class Member>
-Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base,
-                                              const Member &member)
+Base_Optimizer<Base, Member>::Base_Optimizer (Base const &base,
+                                              Member const &member)
   : Base (base),
     m_ (member)
 {
 }
 
 template<class Base, class Member>
-Base_Optimizer<Base, Member>::Base_Optimizer (const Base &base)
+Base_Optimizer<Base, Member>::Base_Optimizer (Base const &base)
   : Base (base)
 {
 }

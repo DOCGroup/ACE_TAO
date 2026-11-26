@@ -75,7 +75,7 @@ public:
   ACE_Time_Value timeout () const;
 
   /// Set the timeout.
-  void timeout (const ACE_Time_Value& timeout);
+  void timeout (ACE_Time_Value const & timeout);
 
   /// Encode the message before transmission.
   int encode (void *&);

@@ -110,8 +110,8 @@ public:
   int handle_input (ACE_HANDLE) override;
 
   /// Restart connection asynchronously when timeout occurs.
-  int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg) override;
 
   /// Get/Set remote addr
   void remote_addr (ACE_INET_Addr &addr);
@@ -185,8 +185,8 @@ public:
   ACE_TS_Clerk_Processor ();
 
   /// Query servers for time periodically (timeout value)
-  int handle_timeout (const ACE_Time_Value &tv,
-                              const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv,
+                              void const *arg) override;
 
   /// Set up connections to all servers
   int initiate_connection (ACE_TS_Clerk_Handler *,

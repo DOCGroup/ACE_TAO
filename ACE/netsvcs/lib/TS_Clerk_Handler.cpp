@@ -215,8 +215,8 @@ ACE_TS_Clerk_Handler::handle_input (ACE_HANDLE)
 
 // Restart connection asynchronously when timeout occurs.
 int
-ACE_TS_Clerk_Handler::handle_timeout (const ACE_Time_Value &,
-                                      const void *)
+ACE_TS_Clerk_Handler::handle_timeout (ACE_Time_Value const &,
+                                      void const *)
 {
   ACE_TRACE ("ACE_TS_Clerk_Handler::handle_timeout");
   ACE_DEBUG ((LM_DEBUG,
@@ -373,8 +373,8 @@ ACE_TS_Clerk_Processor::alloc ()
 
 // Query the servers for the latest time
 int
-ACE_TS_Clerk_Processor::handle_timeout (const ACE_Time_Value &,
-                                        const void *)
+ACE_TS_Clerk_Processor::handle_timeout (ACE_Time_Value const &,
+                                        void const *)
 {
   ACE_TRACE ("ACE_TS_Clerk_Processor::handle_timeout");
   return this->update_time ();

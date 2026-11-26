@@ -237,7 +237,7 @@ ACE_Name_Handler::abandon ()
 /// Enable clients to limit the amount of time they'll wait
 
 /* VIRTUAL */ int
-ACE_Name_Handler::handle_timeout (const ACE_Time_Value &, const void *)
+ACE_Name_Handler::handle_timeout (ACE_Time_Value const &, void const *)
 {
   ACE_TRACE ("ACE_Name_Handler::handle_timeout");
   return this->abandon ();

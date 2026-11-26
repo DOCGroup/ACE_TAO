@@ -38,11 +38,11 @@ class Static_Log_Message_Receiver
 public:
   /// Prints the log_record to stderr using record.print (hostname, 0, stderr).
   /// Serializes the output by using a ACE_SYNCH_MUTEX.
-  static void log_record(const ACE_TCHAR *hostname,
+  static void log_record(ACE_TCHAR const *hostname,
                          ACE_Log_Record &record);
 
   /// Prints the log_record to a user specified ostream.
-  static void log_output(const ACE_TCHAR *hostname,
+  static void log_output(ACE_TCHAR const *hostname,
                          ACE_Log_Record &record,
                          ostream *output);
 };
@@ -93,10 +93,10 @@ public:
   Log_Message_Receiver(Log_Message_Receiver<ACE_SYNCH_USE> const &rhs);
   ~Log_Message_Receiver ();
 
-  void log_record (const ACE_TCHAR *hostname,
+  void log_record (ACE_TCHAR const *hostname,
                    ACE_Log_Record &record);
 
-  void log_output(const ACE_TCHAR *hostname,
+  void log_output(ACE_TCHAR const *hostname,
                   ACE_Log_Record &record,
                   ostream *output);
 private:
@@ -120,9 +120,9 @@ public:
   static Log_Message_Receiver_Impl *attach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
   static void detach (Log_Message_Receiver_Impl<ACE_SYNCH_USE> *body);
 
-  void log_record (const ACE_TCHAR *hostname, ACE_Log_Record &record);
+  void log_record (ACE_TCHAR const *hostname, ACE_Log_Record &record);
 
-  void log_output(const ACE_TCHAR *hostname,
+  void log_output(ACE_TCHAR const *hostname,
                   ACE_Log_Record &record,
                   ostream *output);
 

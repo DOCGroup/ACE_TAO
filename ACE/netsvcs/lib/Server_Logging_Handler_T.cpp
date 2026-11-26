@@ -39,7 +39,7 @@ ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::ha
   return result >= 0 ? 0 : -1;
 }
 
-template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> const ACE_TCHAR *
+template <ACE_PEER_STREAM_1, class COUNTER, ACE_SYNCH_DECL, class LMR> ACE_TCHAR const *
 ACE_Server_Logging_Handler_T<ACE_PEER_STREAM_2, COUNTER, ACE_SYNCH_USE, LMR>::host_name ()
 {
 #if !defined (__GNUG__)

@@ -40,7 +40,7 @@ class ACE_Server_Logging_Handler_T : public ACE_Svc_Handler<ACE_PEER_STREAM_2, A
 {
 public:
   ACE_Server_Logging_Handler_T (ACE_Thread_Manager *,
-                                const LOG_MESSAGE_RECEIVER &receiver );
+                                LOG_MESSAGE_RECEIVER const &receiver );
 
   /// Process remote logging records.
   int handle_input (ACE_HANDLE = ACE_INVALID_HANDLE) override;
@@ -68,7 +68,7 @@ protected:
   ACE_TString host_name_;
 #endif /* ! __GNUG__ */
   /// Name of the host we are connected to.
-  const ACE_TCHAR *host_name ();
+  ACE_TCHAR const *host_name ();
 
   /// The receiver of log records
   LOG_MESSAGE_RECEIVER &receiver () { return receiver_; }
@@ -157,7 +157,7 @@ class ACE_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGING_P
 public:
   explicit ACE_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Server_Logging_Handler (ACE_Thread_Manager *,
-                              const LOG_MESSAGE_RECEIVER &receiver);
+                              LOG_MESSAGE_RECEIVER const &receiver);
 
   int open (void* = nullptr) override;
 };
@@ -186,7 +186,7 @@ class ACE_Thr_Server_Logging_Handler : public ACE_Server_Logging_Handler_T<LOGGI
 public:
   explicit ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager * = nullptr);
   ACE_Thr_Server_Logging_Handler (ACE_Thread_Manager *,
-                                  const LOG_MESSAGE_RECEIVER &receiver);
+                                  LOG_MESSAGE_RECEIVER const &receiver);
   int open (void * = nullptr) override;
   int svc () override;
 };

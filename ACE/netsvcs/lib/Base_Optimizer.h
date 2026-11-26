@@ -24,9 +24,9 @@ class Base_Optimizer : public Base
 {
 public:
   Base_Optimizer ();
-  explicit Base_Optimizer (const Base &base);
-  Base_Optimizer (const Base &base,
-                  const Member &member);
+  explicit Base_Optimizer (Base const &base);
+  Base_Optimizer (Base const &base,
+                  Member const &member);
 
   Member m_;
 };

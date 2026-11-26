@@ -47,7 +47,7 @@ public:
   using OPERATION = int (ACE_Name_Handler::*) ();
 
   /// Pointer to a member function of ACE_Naming_Context returning int
-  using LIST_OP = int (ACE_Naming_Context::*) (ACE_PWSTRING_SET &, const ACE_NS_WString &);
+  using LIST_OP = int (ACE_Naming_Context::*) (ACE_PWSTRING_SET &, ACE_NS_WString const &);
 
   /// Pointer to a member function of ACE_Name_Handler returning ACE_Name_Request
   using REQUEST = ACE_Name_Request (ACE_Name_Handler::*) (ACE_NS_WString *);
@@ -103,7 +103,7 @@ protected:
   /// @{
 
   /// Enable clients to limit the amount of time they wait for a name.
-  int handle_timeout (const ACE_Time_Value &tv, const void *arg) override;
+  int handle_timeout (ACE_Time_Value const &tv, void const *arg) override;
   /// @}
 
   /// Ensure dynamic allocation...
@@ -124,7 +124,7 @@ private:
     REQUEST request_factory_;
 
     /// Name of the operation we're dispatching (used for debugging).
-    const char *description_;
+    char const *description_;
   };
 
   /// This is the table of pointers to functions that we use to

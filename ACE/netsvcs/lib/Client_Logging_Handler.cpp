@@ -487,7 +487,7 @@ private:
   int parse_args (int argc, ACE_TCHAR *argv[]);
 
   /// Host where the logging server is located.
-  const ACE_TCHAR *server_host_;
+  ACE_TCHAR const *server_host_;
 
   /// Port number where the logging server is listening for connections.
   u_short server_port_;
@@ -501,7 +501,7 @@ private:
 
   /// Communication endpoint where the client logging daemon listens for
   /// connections from clients.
-  const ACE_TCHAR *logger_key_;
+  ACE_TCHAR const *logger_key_;
 
   /// Singleton handler that receives messages from clients and forwards
   /// them to the server.

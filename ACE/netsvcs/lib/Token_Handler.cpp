@@ -282,8 +282,8 @@ ACE_Token_Handler::remove (ACE_Token_Proxy * /* proxy */)
 // token.
 
 /* VIRTUAL */ int
-ACE_Token_Handler::handle_timeout (const ACE_Time_Value &,
-                                   const void *tp)
+ACE_Token_Handler::handle_timeout (ACE_Time_Value const &,
+                                   void const *tp)
 {
   ACE_TRACE ("ACE_Token_Handler::handle_timeout");
 
@@ -564,7 +564,7 @@ ACE_Token_Handler::abandon (int send_error)
 // ************************************************************
 // ************************************************************
 
-ACE_TS_Mutex::ACE_TS_Mutex (const ACE_TCHAR *name,
+ACE_TS_Mutex::ACE_TS_Mutex (ACE_TCHAR const *name,
                             ACE_Token_Handler *th)
 : ACE_Local_Mutex (name, 0, 1), // The 1 is debug.
   th_ (th)
@@ -572,7 +572,7 @@ ACE_TS_Mutex::ACE_TS_Mutex (const ACE_TCHAR *name,
   ACE_TRACE ("ACE_TS_Mutex::ACE_TS_Mutex");
 }
 
-ACE_TS_Mutex::ACE_TS_Mutex (const ACE_TS_Mutex &m)
+ACE_TS_Mutex::ACE_TS_Mutex (ACE_TS_Mutex const &m)
 : ACE_Local_Mutex (m),
   th_ (m.th_)
 {
@@ -608,7 +608,7 @@ ACE_TS_Mutex::clone () const
 
 // ************************************************************
 
-ACE_TS_RLock::ACE_TS_RLock (const ACE_TCHAR *name,
+ACE_TS_RLock::ACE_TS_RLock (ACE_TCHAR const *name,
                             ACE_Token_Handler *th)
 : ACE_Local_RLock (name, 0, 1), // The 1 is debug.
   th_ (th)
@@ -616,7 +616,7 @@ ACE_TS_RLock::ACE_TS_RLock (const ACE_TCHAR *name,
   ACE_TRACE ("ACE_TS_RLock::ACE_TS_RLock");
 }
 
-ACE_TS_RLock::ACE_TS_RLock (const ACE_TS_RLock &r)
+ACE_TS_RLock::ACE_TS_RLock (ACE_TS_RLock const &r)
 : ACE_Local_RLock (r),
   th_ (r.th_)
 {
@@ -653,7 +653,7 @@ ACE_TS_RLock::clone () const
 
 // ************************************************************
 
-ACE_TS_WLock::ACE_TS_WLock (const ACE_TCHAR *name,
+ACE_TS_WLock::ACE_TS_WLock (ACE_TCHAR const *name,
                             ACE_Token_Handler *th)
 : ACE_Local_WLock (name, 0, 1), // The 1 is debug.
   th_ (th)
@@ -661,7 +661,7 @@ ACE_TS_WLock::ACE_TS_WLock (const ACE_TCHAR *name,
   ACE_TRACE ("ACE_TS_WLock::ACE_TS_WLock");
 }
 
-ACE_TS_WLock::ACE_TS_WLock (const ACE_TS_WLock &w)
+ACE_TS_WLock::ACE_TS_WLock (ACE_TS_WLock const &w)
 : ACE_Local_WLock (w),
   th_ (w.th_)
 {
