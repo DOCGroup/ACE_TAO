@@ -158,7 +158,7 @@ out_of_sockets_handler ()
 
 static int
 cached_connect (STRATEGY_CONNECTOR &con,
-                const ACE_INET_Addr &server_addr)
+                ACE_INET_Addr const &server_addr)
 {
   // This will make sure we get the host information correct.
   ACE_INET_Addr remote_addr (server_addr.get_port_number (),
@@ -234,7 +234,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   ACCEPTOR listen_one_time_acceptor;
   ACE_INET_Addr server_addr;
 
-  if (0 != listen_one_time_acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)))
+  if (0 != listen_one_time_acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &)))
     {
       ACE_ERROR ((LM_ERROR, ACE_TEXT ("%p\n"), ACE_TEXT ("acceptor open")));
       return;
@@ -265,7 +265,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
         {
           // Bind acceptor to any port and then find out what the port
           // was.
-          if (acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &)) == -1)
+          if (acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &)) == -1)
             {
               out_of_sockets_handler ();
               continue;

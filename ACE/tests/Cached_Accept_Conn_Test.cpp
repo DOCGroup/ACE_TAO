@@ -73,7 +73,7 @@ Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::Accept_Strategy (CACHED_CONNE
 }
 
 template <class SVC_HANDLER, ACE_PEER_ACCEPTOR_1> int
-Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+Accept_Strategy<SVC_HANDLER, ACE_PEER_ACCEPTOR_2>::open (ACE_PEER_ACCEPTOR_ADDR const &local_addr,
                                                          bool restart)
 {
   int result = ACCEPT_STRATEGY_BASE::open (local_addr, restart);
@@ -232,7 +232,7 @@ static int iterations = 200;
 
 static int
 cached_connect (STRATEGY_CONNECTOR &con,
-                const ACE_INET_Addr &server_addr)
+                ACE_INET_Addr const &server_addr)
 {
   // This will make sure we get the host information correct.
   ACE_INET_Addr remote_addr (server_addr.get_port_number (),
@@ -302,7 +302,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
   ACE_INET_Addr server_addr;
 
   int result =
-    listen_one_time_acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
+    listen_one_time_acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &),
                                    ACE_Reactor::instance (),
                                    nullptr,
                                    &listen_one_time_accept_strategy);
@@ -337,7 +337,7 @@ test_connection_management (CACHING_STRATEGY &caching_strategy)
         {
           // Bind acceptor to any port and then find out what the port
           // was.
-          if (listen_multiple_times_acceptor.open (ACE_sap_any_cast (const ACE_INET_Addr &),
+          if (listen_multiple_times_acceptor.open (ACE_sap_any_cast (ACE_INET_Addr const &),
                                                    ACE_Reactor::instance (),
                                                    nullptr,
                                                    &listen_multiple_times_accept_strategy) == -1)

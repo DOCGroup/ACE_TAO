@@ -52,11 +52,11 @@ public:
    * ACE::Ping_Socket to the remote address (1), or not (0)
    */
   int open (ACE_Reactor * const    reactor,
-            const ACE_Time_Value & reply_wait,
-            const ACE_INET_Addr &  remote_addr,
+            ACE_Time_Value const & reply_wait,
+            ACE_INET_Addr const &  remote_addr,
             ACE_TCHAR *            success_status = nullptr,
             size_t                 max_attempts_num = 1,
-            const ACE_Addr &       local_addr = ACE_Addr::sap_any,
+            ACE_Addr const &       local_addr = ACE_Addr::sap_any,
             int                    connect_to_remote = 0);
 
   /**

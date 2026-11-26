@@ -88,7 +88,7 @@ public:
    * process runs out of descriptors, the unsed svc_handlers from the
    * CONNECTION CACHE are removed.
    */
-  int open (const ACE_PEER_ACCEPTOR_ADDR &local_addr,
+  int open (ACE_PEER_ACCEPTOR_ADDR const &local_addr,
             bool restart = false) override;
 
   /**
