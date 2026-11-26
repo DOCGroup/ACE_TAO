@@ -74,7 +74,10 @@ ACE_TCHAR const *Handle_L_Pipe::DEFAULT_RENDEZVOUS = ACE_TEXT ("/tmp/foo_pipe");
 #include "Handle_L_Pipe.inl"
 #endif /* __ACE_INLINE__ */
 
-Handle_L_Pipe local_pipe;
+extern "C"
+{
+  ACE_Svc_Export Handle_L_Pipe local_pipe;
+}
 ACE_Service_Object_Type lp (&local_pipe, ACE_TEXT ("Local_Pipe"));
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

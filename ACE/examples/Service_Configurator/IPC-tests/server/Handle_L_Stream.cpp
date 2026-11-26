@@ -12,7 +12,10 @@ char Handle_L_Stream::login[ACE_MAX_USERID];
 #include "Handle_L_Stream.inl"
 #endif /* __ACE_INLINE__ */
 
-Handle_L_Stream local_stream;
+extern "C"
+{
+  ACE_Svc_Export Handle_L_Stream local_stream;
+}
 ACE_Service_Object_Type ls (&local_stream, ACE_TEXT ("Local_Stream"));
 
 #endif /* ACE_LACKS_UNIX_DOMAIN_SOCKETS */

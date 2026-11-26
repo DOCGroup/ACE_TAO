@@ -6,5 +6,8 @@ unsigned short Handle_Broadcast::DEFAULT_PORT = ACE_DEFAULT_BROADCAST_PORT;
 #include "Handle_Broadcast.inl"
 #endif /* __ACE_INLINE__ */
 
-Handle_Broadcast remote_broadcast;
+extern "C"
+{
+  ACE_Svc_Export Handle_Broadcast remote_broadcast;
+}
 ACE_Service_Object_Type rb (&remote_broadcast, ACE_TEXT("Remote_Brdcast"));

@@ -6,6 +6,7 @@
 #include "ace/OS_NS_unistd.h"
 #include "ace/Get_Opt.h"
 #include "ace/INET_Addr.h"
+#include "ace/svc_export.h"
 #include "ace/TLI_Acceptor.h"
 #include "Handle_Thr_Stream.h"
 
@@ -206,7 +207,10 @@ using CLI_STREAM = CLI_Stream<THR_STREAM>;
 using HANDLE_THR_ACCEPTOR = Handle_Thr_Acceptor<CLI_STREAM, THR_ACCEPTOR>;
 
 // Service object.
-HANDLE_THR_ACCEPTOR remote_thr_stream;
+extern "C"
+{
+  ACE_Svc_Export HANDLE_THR_ACCEPTOR remote_thr_stream;
+}
 ACE_Service_Object_Type rts (&remote_thr_stream, ACE_TEXT("Remote_Thr_Stream"));
 
 #endif /* ACE_HAS_THREADS */
