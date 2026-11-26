@@ -95,7 +95,7 @@ namespace TAO
 
     protected:
       /**
-       * @c Struct Attributes
+       * @name Struct Attributes
        *
        * Attributes representing the structure of an OMG IDL
        * @c struct or @c exception.
@@ -105,6 +105,7 @@ namespace TAO
        *       increase cache hits by improving spatial locality.
        */
       /// @{
+
       /// Base attributes containing repository ID and name of
       /// structure type.
       Base_Attributes<StringType> base_attributes_;

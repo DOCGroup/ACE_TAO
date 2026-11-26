@@ -105,7 +105,7 @@ namespace TAO
 
     protected:
       /**
-       * @c Valuetype Attributes
+       * @name Valuetype Attributes
        *
        * Attributes representing the structure of an OMG IDL
        * @c valuetype or @c event.
@@ -115,6 +115,7 @@ namespace TAO
        *       increase cache hits by improving spatial locality.
        */
       /// @{
+
       /// Base attributes containing repository ID and name of
       /// @c valuetype.
       Base_Attributes<StringType> base_attributes_;

@@ -101,7 +101,7 @@ namespace TAO
 
     private:
       /**
-       * @c Union Attributes
+       * @name Union Attributes
        *
        * Attributes representing the structure of an OMG IDL
        * @c union.
@@ -111,6 +111,7 @@ namespace TAO
        *       increase cache hits by improving spatial locality.
        */
       /// @{
+
       /// Base attributes containing repository ID and name of
       /// union type.
       Base_Attributes<char const *> const base_attributes_;
