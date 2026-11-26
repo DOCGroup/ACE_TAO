@@ -65,9 +65,9 @@ namespace TAO
     using RegistryType_Entry = ACE_Hash_Map_Entry<ACE_CString, RoleInfo *>;
     using RegistryType_Iterator = ACE_Hash_Map_Iterator<ACE_CString, RoleInfo *, MapMutex>;
 
-    //////////////////////
-    // non-CORBA interface
   public:
+    /// @name Non-CORBA interface
+    /// @{
     explicit PG_FactoryRegistry (char const * name = "FactoryRegistry");
 
     ~PG_FactoryRegistry () override;
@@ -122,13 +122,14 @@ namespace TAO
      */
     ::PortableGroup::FactoryRegistry_ptr reference ();
 
-    ////////////////////////////////
-    // override servant base methods
+    /// @}
+
+    /// Override the servant base reference-counting method.
     void _remove_ref () override;
 
-    //////////////////
-    // CORBA interface
-    // See IDL for documentation
+    /// @name CORBA interface
+    /// See IDL for documentation.
+    /// @{
 
     void register_factory (
         char const *role,
@@ -150,6 +151,7 @@ namespace TAO
 
     ::PortableGroup::FactoryInfos * list_factories_by_location (
       PortableGroup::Location const &location) override;
+    /// @}
 
   private:
     /// @name Implementation methods
