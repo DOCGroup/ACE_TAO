@@ -109,10 +109,11 @@ public:
 
 #if !defined (ACE_LACKS_VA_FUNCTIONS)
   /**
-   * Send N char *ptrs and int lengths.  Note that the char *'s
-   * precede the ints (basically, a varargs version of @c writev()). The
-   * count N is the *total* number of trailing arguments, *not* a
+   * Send N char *ptrs and int lengths (a varargs version of @c writev()).
+   * The count N is the *total* number of trailing arguments, *not* a
    * couple of the number of tuple pairs!
+   *
+   * @note The char pointers precede the ints.
    */
   ssize_t send (size_t n, ...) const;
 

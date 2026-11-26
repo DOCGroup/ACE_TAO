@@ -132,8 +132,8 @@ public:
     /// Default value for BINDADDR option. (Environment-dependent.)
 #if defined (ACE_LACKS_PERFECT_MULTICAST_FILTERING) \
     && (ACE_LACKS_PERFECT_MULTICAST_FILTERING == 1)
-      /// Platforms that don't support perfect filtering. Note that perfect
-      /// filtering only really applies to multicast traffic, not unicast
+      /// Platforms that don't support perfect filtering.
+      /// @note Perfect filtering applies to multicast traffic, not unicast
       /// or broadcast.
       DEFOPT_BINDADDR  = OPT_BINDADDR_YES,
 # else

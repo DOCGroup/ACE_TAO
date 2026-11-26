@@ -239,8 +239,9 @@ namespace ACE_OS
     ACE_GCC_FORMAT_ATTRIBUTE (strftime, 3, 0);
 
   /**
-   * strptime wrapper. Note that the struct @a tm will always be set to
-   * zero
+   * strptime wrapper.
+   *
+   * @note The struct @a tm will always be set to zero.
    */
   ACE_NAMESPACE_INLINE_FUNCTION
   char *strptime (const char *buf,
