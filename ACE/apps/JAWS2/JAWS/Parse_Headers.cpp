@@ -1,6 +1,7 @@
 #include "JAWS/Parse_Headers.h"
 #include "ace/Log_Msg.h"
 #include <cstring>
+#include <memory>
 
 #define ACCESSOR(T,C,x) \
 T C :: x () const { return this-> x##_; }\
@@ -323,7 +324,7 @@ JAWS_Header_Info::dump ()
 JAWS_Headers *
 JAWS_Header_Info::table ()
 {
-  return &(this->table_);
+  return std::addressof (this->table_);
 }
 
 void

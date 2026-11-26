@@ -1,3 +1,5 @@
+#include <memory>
+
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # undef ACE_INLINE
 # define ACE_INLINE
@@ -12,19 +14,19 @@ HTTP_Request::~HTTP_Request () = default;
 ACE_INLINE Parse_HTTP_Request *
 HTTP_Request::request_line ()
 {
-  return &(this->request_);
+  return std::addressof (this->request_);
 }
 
 ACE_INLINE Parse_HTTP_Request const *
 HTTP_Request::request_line () const
 {
-  return &(this->request_);
+  return std::addressof (this->request_);
 }
 
 ACE_INLINE HTTP_Parse_URL *
 HTTP_Request::url ()
 {
-  return &(this->url_);
+  return std::addressof (this->url_);
 }
 
 ACE_INLINE void

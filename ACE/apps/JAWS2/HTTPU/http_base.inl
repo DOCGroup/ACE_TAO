@@ -1,3 +1,5 @@
+#include <memory>
+
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # undef ACE_INLINE
 # define ACE_INLINE
@@ -38,7 +40,7 @@ HTTP_Base::line () const
 ACE_INLINE HTTP_Headers *
 HTTP_Base::http_headers ()
 {
-  return &(this->info_);
+  return std::addressof (this->info_);
 }
 
 ACE_INLINE JAWS_Headers *

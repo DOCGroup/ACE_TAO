@@ -4,6 +4,8 @@
 #include "JAWS/Filecache.h"
 #include "JAWS/Cache_List_T.h"
 
+#include <memory>
+
 void
 JAWS_Referenced_Filecache_Factory::destroy (JAWS_Cache_Object *object)
 {
@@ -85,7 +87,7 @@ JAWS_Cached_FILE::~JAWS_Cached_FILE ()
 ACE_FILE_IO *
 JAWS_Cached_FILE::file ()
 {
-  return &(this->file_);
+  return std::addressof (this->file_);
 }
 
 ACE_Mem_Map *

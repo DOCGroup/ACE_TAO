@@ -1,3 +1,5 @@
+#include <memory>
+
 #if !defined (ACE_HAS_INLINED_OSCALLS)
 # undef ACE_INLINE
 # define ACE_INLINE
@@ -12,5 +14,5 @@ HTTP_Response::~HTTP_Response () = default;
 ACE_INLINE Parse_HTTP_Response *
 HTTP_Response::response_line ()
 {
-  return &(this->response_);
+  return std::addressof (this->response_);
 }
