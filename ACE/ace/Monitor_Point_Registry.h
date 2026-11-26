@@ -57,7 +57,7 @@ namespace ACE
 
       /// Increments the refcount, so the caller is responsible for
       /// decrementing it when finished.
-      Monitor_Base* get (const ACE_CString& name) const;
+      Monitor_Base* get (ACE_CString const& name) const;
 
       /// Returns a unique id for a constraint when it is created.
       long constraint_id ();

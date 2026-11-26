@@ -18,7 +18,7 @@ namespace ACE
     {}
 
 
-    Monitor_Control_Types::Constraint::Constraint (const Constraint& rhs)
+    Monitor_Control_Types::Constraint::Constraint (Constraint const& rhs)
       : expr (rhs.expr),
         control_action (rhs.control_action)
     {
@@ -37,7 +37,7 @@ namespace ACE
     }
 
     Monitor_Control_Types::Constraint&
-    Monitor_Control_Types::Constraint::operator= (const Constraint& rhs)
+    Monitor_Control_Types::Constraint::operator= (Constraint const& rhs)
     {
       if (this != std::addressof (rhs))
         {

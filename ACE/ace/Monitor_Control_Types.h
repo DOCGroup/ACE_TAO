@@ -75,8 +75,8 @@ namespace ACE
 
         /// Implemented explicitly so reference counting of control
         /// actions can be managed.
-        Constraint (const Constraint& rhs);
-        Constraint& operator= (const Constraint& rhs);
+        Constraint (Constraint const& rhs);
+        Constraint& operator= (Constraint const& rhs);
 
         ACE_CString expr;
         Control_Action* control_action {};

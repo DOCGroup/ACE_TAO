@@ -113,7 +113,7 @@ namespace ACE
     }
 
     Monitor_Base*
-    Monitor_Point_Registry::get (const ACE_CString& name) const
+    Monitor_Point_Registry::get (ACE_CString const& name) const
     {
       Map::data_type mp = nullptr;
 
