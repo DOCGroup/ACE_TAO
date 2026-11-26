@@ -7,6 +7,7 @@
 #include <ios>
 #include <memory>
 #include <stdexcept>
+#include <string>
 
 class Test_Handler
 {
@@ -28,15 +29,39 @@ public:
       {
         return -1;
       }
+    if (length > max_write_)
+      {
+        length = max_write_;
+      }
     if (length > 0)
       {
         written_ = *static_cast<char const *> (buffer);
+        written_data_.append (static_cast<char const *> (buffer), length);
       }
     return static_cast<int> (length);
   }
   int references_ {};
   char written_ {};
   bool fail_write_ {};
+  size_t max_write_ {1024};
+  std::string written_data_;
+};
+
+class Test_Buffer : public ACE::IOS::BufferedStreamBuffer
+{
+public:
+  explicit Test_Buffer (Test_Handler &handler)
+    : ACE::IOS::BufferedStreamBuffer (8, std::ios::out), handler_ (handler)
+  {
+  }
+
+  int write_to_stream (char const *buffer, std::streamsize length) override
+  {
+    return handler_.write_to_stream (buffer, static_cast<size_t> (length), 1);
+  }
+
+private:
+  Test_Handler &handler_;
 };
 
 int
@@ -104,5 +129,27 @@ ACE_TMAIN (int, ACE_TCHAR *[])
     {
       ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Stream handler was not released\n")), 1);
     }
+
+  handler.fail_write_ = false;
+  handler.max_write_ = 2;
+  handler.written_data_.clear ();
+  {
+    Test_Buffer output (handler);
+    if (output.sputn ("abcd", 4) != 4 || output.pubsync () != -1
+        || output.pubsync () != 0 || handler.written_data_ != "abcd")
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Buffered stream lost or repeated data after a short write\n")), 1);
+      }
+  }
+  handler.written_data_.clear ();
+  {
+    ACE::IOS::BasicBidirStreamBuffer<char, Test_Handler> output (
+      std::addressof (handler), 8, std::ios::out);
+    if (output.sputn ("abcd", 4) != 4 || output.pubsync () != -1
+        || output.pubsync () != 0 || handler.written_data_ != "abcd")
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bidirectional stream lost or repeated data after a short write\n")), 1);
+      }
+  }
   return 0;
 }

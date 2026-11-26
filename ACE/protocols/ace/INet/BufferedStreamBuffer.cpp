@@ -198,6 +198,12 @@ namespace ACE
           this->pbump (-n);
           return n;
         }
+        if (n_out > 0 && n_out < n)
+          {
+            std::memmove (this->pbase (), this->pbase () + n_out,
+                          (n - n_out) * sizeof (char_type));
+            this->pbump (-n_out);
+          }
         return -1;
       }
   }
