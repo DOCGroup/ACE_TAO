@@ -62,17 +62,25 @@ public:
 
   /// noexcept
   Auto_Functor (Auto_Functor & rhs);
+  Auto_Functor (Auto_Functor && rhs);
 
   /// noexcept
   Auto_Functor<X,Functor>& operator= (Auto_Functor & rhs);
+  Auto_Functor<X,Functor>& operator= (Auto_Functor && rhs);
 
   /// noexcept
   template<typename Y>
   Auto_Functor(Auto_Functor<Y,Functor>& rhs);
 
+  template<typename Y>
+  Auto_Functor(Auto_Functor<Y,Functor>&& rhs);
+
   /// noexcept
   template<typename Y>
   Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>& rhs);
+
+  template<typename Y>
+  Auto_Functor<X,Functor>& operator= (Auto_Functor<Y,Functor>&& rhs);
 
   /// noexcept
   ~Auto_Functor();
