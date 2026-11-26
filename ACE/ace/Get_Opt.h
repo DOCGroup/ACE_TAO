@@ -408,7 +408,7 @@ private:
     /// Contains a valid short option character or zero if it doesn't
     /// have a corresponding short option.  It can also contain a
     /// non-printable value that cannot be passed to @c optstring but
-    /// will be returned by <operator()>.  This is handy for
+    /// will be returned by @c operator(). This is handy for
     /// simplifying long option handling, see tests/Get_Opt_Test.cpp
     /// for an example of this technique.
     int val_;
@@ -475,7 +475,7 @@ private:
   /// (only valid when permuting).
   int nonopt_end_;
 
-  /// Points to the long_option found on last call to <operator()>.
+  /// Points to the long option found on the last call to @c operator().
   ACE_Get_Opt_Long_Option *long_option_ {};
 
   /// Array of long options.

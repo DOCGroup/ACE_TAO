@@ -63,7 +63,7 @@ protected:
   /// @{
 
   /// Trigger a reconfiguration of the Service Configurator by
-  /// re-reading its local <svc.conf> file.
+  /// re-reading its local @c svc.conf file.
   virtual int reconfigure_services ();
 
   /// Determine all the services offered by this daemon and return the

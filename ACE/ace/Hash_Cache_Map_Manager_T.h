@@ -93,7 +93,7 @@ public:
             VALUE const &value,
             CACHE_ENTRY *&entry);
 
-  /// Loopkup entry<key,value> in the cache.
+  /// Look up the entry for @a key in the cache.
   int find (KEY const &key,
             VALUE &value);
 

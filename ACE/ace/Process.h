@@ -183,7 +183,7 @@ public:
    */
   void process_name (ACE_TCHAR const *name);
 
-  /// Return the process_name.  If the <process_name(name)> set
+  /// Return the process name. If the @c process_name(name) set
   /// method is not called, this method will return argv[0].
   ACE_TCHAR const *process_name ();
 

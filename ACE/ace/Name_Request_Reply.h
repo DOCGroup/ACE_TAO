@@ -240,7 +240,7 @@ private:
     /// Type of the reply, i.e., success (0) or failure (-1).
     ACE_INT32 type_;
 
-    /// Indicates why error occurred if <this->type_> == failure (-1).
+    /// Indicates why an error occurred if @c this->type_ is failure (-1).
     /// Typical reasons include: @c ETIME (if the client timed out after
     /// waiting for the name).
     ACE_UINT32 errno_;

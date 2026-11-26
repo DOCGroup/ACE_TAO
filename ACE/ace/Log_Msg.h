@@ -638,7 +638,7 @@ private:
   /// Status of operation (-1 means failure, >= 0 means success).
   int status_ {};
 
-  /// Type of error that occurred (see <sys/errno.h>).
+  /// Type of error that occurred (see @c sys/errno.h).
   int errnum_ {};
 
   /// Line number where the error occurred.
