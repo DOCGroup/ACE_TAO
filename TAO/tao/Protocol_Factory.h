@@ -50,6 +50,7 @@ public:
 
   /// @name Factory methods
   /// @{
+
   /// Create an acceptor
   virtual TAO_Acceptor *make_acceptor () = 0;
 

@@ -44,6 +44,7 @@ public:
 
   /// @name TAO_Transport_Descriptor_Interface methods
   /// @{
+
   /// This call allocates and copies the contents of this class and
   /// returns the pointer
   TAO_Transport_Descriptor_Interface *duplicate () override;
