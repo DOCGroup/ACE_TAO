@@ -30,7 +30,7 @@ namespace TAO
   struct DynAnyBasicTypeUtils
   {
     static void
-    insert_value (const T &val,
+    insert_value (T const &val,
                   TAO_DynCommon *the_dynany);
 
     static typename BasicTypeTraits<T>::return_type

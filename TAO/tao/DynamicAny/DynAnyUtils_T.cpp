@@ -30,7 +30,7 @@ namespace TAO
 {
   template<typename T>
   void
-  DynAnyBasicTypeUtils<T>::insert_value (const T &val,
+  DynAnyBasicTypeUtils<T>::insert_value (T const &val,
                                          TAO_DynCommon *the_dynany)
   {
     if (the_dynany->destroyed ())
@@ -75,7 +75,7 @@ namespace TAO
         using ext_type = typename BasicTypeTraits<T>::extract_type;
         ret_type retval = ret_type ();
         ext_type extval (retval);
-        const CORBA::Any &my_any = the_dynany->the_any ();
+        CORBA::Any const &my_any = the_dynany->the_any ();
 
         if (!(my_any >>= extval))
           {

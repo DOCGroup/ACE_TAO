@@ -72,9 +72,9 @@ public:
 
   void insert_wchar (CORBA::WChar value) override;
 
-  void insert_wstring (const CORBA::WChar * value) override;
+  void insert_wstring (CORBA::WChar const *value) override;
 
-  void insert_any (const CORBA::Any & value) override;
+  void insert_any (CORBA::Any const &value) override;
 
   void insert_dyn_any (DynamicAny::DynAny_ptr value) override;
 
@@ -134,31 +134,31 @@ public:
 
   CORBA::AbstractBase_ptr get_abstract () override;
 
-  void insert_boolean_seq (const CORBA::BooleanSeq & value) override;
+  void insert_boolean_seq (CORBA::BooleanSeq const &value) override;
 
-  void insert_octet_seq (const CORBA::OctetSeq & value) override;
+  void insert_octet_seq (CORBA::OctetSeq const &value) override;
 
-  void insert_char_seq (const CORBA::CharSeq & value) override;
+  void insert_char_seq (CORBA::CharSeq const &value) override;
 
-  void insert_short_seq (const CORBA::ShortSeq & value) override;
+  void insert_short_seq (CORBA::ShortSeq const &value) override;
 
-  void insert_ushort_seq (const CORBA::UShortSeq & value) override;
+  void insert_ushort_seq (CORBA::UShortSeq const &value) override;
 
-  void insert_long_seq (const CORBA::LongSeq & value) override;
+  void insert_long_seq (CORBA::LongSeq const &value) override;
 
-  void insert_ulong_seq (const CORBA::ULongSeq & value) override;
+  void insert_ulong_seq (CORBA::ULongSeq const &value) override;
 
-  void insert_float_seq (const CORBA::FloatSeq & value) override;
+  void insert_float_seq (CORBA::FloatSeq const &value) override;
 
-  void insert_double_seq (const CORBA::DoubleSeq & value) override;
+  void insert_double_seq (CORBA::DoubleSeq const &value) override;
 
-  void insert_longlong_seq (const CORBA::LongLongSeq & value) override;
+  void insert_longlong_seq (CORBA::LongLongSeq const &value) override;
 
-  void insert_ulonglong_seq (const CORBA::ULongLongSeq & value) override;
+  void insert_ulonglong_seq (CORBA::ULongLongSeq const &value) override;
 
-  void insert_longdouble_seq (const CORBA::LongDoubleSeq & value) override;
+  void insert_longdouble_seq (CORBA::LongDoubleSeq const &value) override;
 
-  void insert_wchar_seq (const CORBA::WCharSeq & value) override;
+  void insert_wchar_seq (CORBA::WCharSeq const &value) override;
 
   CORBA::BooleanSeq * get_boolean_seq () override;
 
