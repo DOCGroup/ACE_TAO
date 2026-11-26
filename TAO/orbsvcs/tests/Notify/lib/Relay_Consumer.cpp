@@ -19,7 +19,7 @@ TAO_Notify_Tests_Relay_Consumer::connect ()
 }
 
 void
-TAO_Notify_Tests_Relay_Consumer::push_structured_event (const CosNotification::StructuredEvent &notification)
+TAO_Notify_Tests_Relay_Consumer::push_structured_event (CosNotification::StructuredEvent const &notification)
 {
   // The Periodic Consumer will record the run statistics.
   //TAO_Notify_Tests_Periodic_Consumer::push_structured_event (notification);

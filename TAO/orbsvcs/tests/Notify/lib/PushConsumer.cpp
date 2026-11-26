@@ -39,7 +39,7 @@ TAO_Notify_Tests_PushConsumer::disconnect_push_consumer ()
 }
 
 void
-TAO_Notify_Tests_PushConsumer::push (const CORBA::Any & /*data*/)
+TAO_Notify_Tests_PushConsumer::push (CORBA::Any const & /*data*/)
 {
   // NOP
 }

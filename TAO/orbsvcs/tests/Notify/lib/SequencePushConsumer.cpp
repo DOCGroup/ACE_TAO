@@ -40,7 +40,7 @@ TAO_Notify_Tests_SequencePushConsumer::disconnect_sequence_push_consumer ()
 
 void
 TAO_Notify_Tests_SequencePushConsumer::push_structured_events
-   (const CosNotification::EventBatch &/*notifications*/)
+   (CosNotification::EventBatch const &/*notifications*/)
 {
   // NOP
 }

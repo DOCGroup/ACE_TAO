@@ -39,7 +39,7 @@ TAO_Notify_Tests_Command::execute ()
         {
           this->execute_i ();
         }
-      catch (const CORBA::Exception& ex)
+      catch (CORBA::Exception const & ex)
         {
           ex._tao_print_exception (
             ACE_TEXT(

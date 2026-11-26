@@ -42,7 +42,7 @@ public:
 
   /// Accessor to set/get our name.
   void set_name (ACE_CString const & name);
-  const ACE_CString& get_name ();
+  ACE_CString const & get_name ();
 
 protected:
   /// My name.

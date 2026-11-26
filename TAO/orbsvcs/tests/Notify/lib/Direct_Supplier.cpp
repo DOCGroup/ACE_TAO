@@ -35,7 +35,7 @@ TAO_Notify_Tests_Direct_Supplier::connect ()
 }
 
 void
-TAO_Notify_Tests_Direct_Supplier::send_event (const CosNotification::StructuredEvent& event)
+TAO_Notify_Tests_Direct_Supplier::send_event (CosNotification::StructuredEvent const & event)
 {
   ACE_ASSERT (!CORBA::is_nil (this->target_object_.in ()));
 

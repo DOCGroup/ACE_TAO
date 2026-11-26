@@ -92,7 +92,7 @@ TAO_Notify_Tests_Worker::svc ()
       ACE_DEBUG ((LM_DEBUG, "Running Commands...\n"));
       this->cmd_builder_->execute ();
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Error: ORB run error\n");
     }
@@ -149,7 +149,7 @@ TAO_Notify_Tests_ORB_Run_Worker::svc ()
 
       this->orb_->run ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
     }
   return 0;

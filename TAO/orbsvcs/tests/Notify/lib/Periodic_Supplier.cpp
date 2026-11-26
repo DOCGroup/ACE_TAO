@@ -349,12 +349,12 @@ TAO_Notify_Tests_Periodic_Supplier::svc ()
 
       this->handle_svc ();
     }
-  catch (const CORBA::UserException& ue)
+  catch (CORBA::UserException const & ue)
     {
       ue._tao_print_exception (
         "Error: Periodic supplier: error sending event. ");
     }
-  catch (const CORBA::SystemException& se)
+  catch (CORBA::SystemException const & se)
     {
       se._tao_print_exception (
         "Error: Periodic supplier: error sending event. ");

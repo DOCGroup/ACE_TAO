@@ -32,7 +32,7 @@ public:
   void connect () override;
 
   // Send one event. Bypass sending to the Notify and send directly to taget consumer.
-  void send_event (const CosNotification::StructuredEvent& event) override;
+  void send_event (CosNotification::StructuredEvent const & event) override;
 
 protected:
   /// Target object.

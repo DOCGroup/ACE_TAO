@@ -31,7 +31,7 @@ public:
   /// Connect using options parsed and set initial QoS.
   void connect () override;
 
-  void push_structured_event (const CosNotification::StructuredEvent &/*notification*/) override;
+  void push_structured_event (CosNotification::StructuredEvent const &/*notification*/) override;
 
 protected:
   /// Destination object.

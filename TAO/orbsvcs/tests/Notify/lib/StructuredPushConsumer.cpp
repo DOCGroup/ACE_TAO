@@ -40,7 +40,7 @@ TAO_Notify_Tests_StructuredPushConsumer::disconnect_structured_push_consumer ()
 
 void
 TAO_Notify_Tests_StructuredPushConsumer::push_structured_event
-   (const CosNotification::StructuredEvent &/*notification*/)
+   (CosNotification::StructuredEvent const &/*notification*/)
 {
   // NOP
 }

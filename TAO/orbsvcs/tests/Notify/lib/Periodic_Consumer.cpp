@@ -76,7 +76,7 @@ TAO_Notify_Tests_Periodic_Consumer::init_state (ACE_Arg_Shifter& arg_shifter)
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::PropertySeq& prop_seq)
+TAO_Notify_Tests_Periodic_Consumer::handle_start_event (CosNotification::PropertySeq const & prop_seq)
 {
   if (TAO_debug_level > 0)
   {
@@ -115,7 +115,7 @@ TAO_Notify_Tests_Periodic_Consumer::handle_start_event (const CosNotification::P
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::PropertySeq& prop_seq)
+TAO_Notify_Tests_Periodic_Consumer::check_priority (CosNotification::PropertySeq const & prop_seq)
 {
   // Check if the event carries a Priority.
   int event_has_priority_set = 0;
@@ -174,12 +174,12 @@ TAO_Notify_Tests_Periodic_Consumer::check_priority (const CosNotification::Prope
 }
 
 void
-TAO_Notify_Tests_Periodic_Consumer::push_structured_event (const CosNotification::StructuredEvent & notification)
+TAO_Notify_Tests_Periodic_Consumer::push_structured_event (CosNotification::StructuredEvent const & notification)
 {
   ACE_GUARD_THROW_EX (TAO_SYNCH_MUTEX, ace_mon, this->lock_,
                       CORBA::INTERNAL ());
 
-  const CosNotification::PropertySeq& prop_seq =
+  CosNotification::PropertySeq const & prop_seq =
     notification.header.variable_header;
 
   if (this->count_ == -2)

@@ -67,7 +67,7 @@ public:
   virtual ~TAO_Notify_Tests_StructuredPushSupplier ();
 
   /// Send one event.
-  virtual void send_event (const CosNotification::StructuredEvent& event);
+  virtual void send_event (CosNotification::StructuredEvent const & event);
 
 protected:
   /// Connect to Peer.

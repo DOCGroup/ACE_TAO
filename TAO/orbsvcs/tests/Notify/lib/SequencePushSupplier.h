@@ -66,7 +66,7 @@ public:
   virtual ~TAO_Notify_Tests_SequencePushSupplier ();
 
   /// Send one event.
-  virtual void send_events (const CosNotification::EventBatch& events);
+  virtual void send_events (CosNotification::EventBatch const & events);
 
 protected:
   /// Connect to Peer.

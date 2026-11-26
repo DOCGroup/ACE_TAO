@@ -47,10 +47,10 @@ public:
 
 protected:
   void push_structured_event (
-        const CosNotification::StructuredEvent & notification) override;
+        CosNotification::StructuredEvent const & notification) override;
 
-  void handle_start_event (const CosNotification::PropertySeq& prop_seq);
-  void check_priority (const CosNotification::PropertySeq& prop_seq);
+  void handle_start_event (CosNotification::PropertySeq const & prop_seq);
+  void check_priority (CosNotification::PropertySeq const & prop_seq);
 
   /// @name Data members
   /// @{

@@ -18,7 +18,7 @@ Notify_Test_Client::~Notify_Test_Client ()
         root_poa_->destroy(true, true);
         orb_->destroy();
       }
-      catch (const CORBA::Exception& e)
+      catch (CORBA::Exception const & e)
       {
         e._tao_print_exception ("\nError: ");
       }

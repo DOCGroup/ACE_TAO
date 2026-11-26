@@ -72,7 +72,7 @@ TAO_Notify_Tests_Peer::set_name (ACE_CString const & name)
   this->name_ = name;
 }
 
-const ACE_CString&
+ACE_CString const &
 TAO_Notify_Tests_Peer::get_name ()
 {
   return this->name_;

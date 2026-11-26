@@ -135,14 +135,14 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::status ()
                       this->name_.c_str ()));
         }
     }
-  catch (const CORBA::TRANSIENT& ex)
+  catch (CORBA::TRANSIENT const & ex)
     {
       ex._tao_print_exception ("Error: ");
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s is_equivalent transient exception.",
                   this->name_.c_str ()));
     }
-  catch (const CORBA::Exception& ex)
+  catch (CORBA::Exception const & ex)
     {
       ex._tao_print_exception ("Error: ");
       ACE_DEBUG ((LM_DEBUG,
@@ -162,7 +162,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect ()
     {
       this->disconnect_from_proxy ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s failed to disconnect from proxy.",
@@ -173,7 +173,7 @@ TAO_Notify_Tests_Peer_T<Peer_Traits>::disconnect ()
     {
       this->deactivate ();
     }
-  catch (const CORBA::Exception&)
+  catch (CORBA::Exception const &)
     {
       ACE_DEBUG ((LM_DEBUG,
                   "Peer %s failed to deactivate.",

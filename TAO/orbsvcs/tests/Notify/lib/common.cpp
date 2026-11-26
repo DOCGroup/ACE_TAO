@@ -7,7 +7,7 @@
 #include <cstdio>
 
 char const *
-Any_String (const CORBA::Any& any)
+Any_String (CORBA::Any const & any)
 {
   static char out[256] = "";
   CORBA::Short s;

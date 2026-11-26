@@ -65,7 +65,7 @@ public:
   virtual ~TAO_Notify_Tests_PushSupplier ();
 
   /// Send one event.
-  virtual void send_event (const CORBA::Any & data);
+  virtual void send_event (CORBA::Any const & data);
 
 protected:
   /// Connect to Peer.

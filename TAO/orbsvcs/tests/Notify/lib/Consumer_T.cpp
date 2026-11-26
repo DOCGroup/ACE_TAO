@@ -82,8 +82,8 @@ TAO_Notify_Tests_Consumer_T<Consumer_Traits>::subscription_change (CosNotificati
 
 template <class Consumer_Traits> void
 TAO_Notify_Tests_Consumer_T<Consumer_Traits>::offer_change
-   (const CosNotification::EventTypeSeq & /*added*/,
-    const CosNotification::EventTypeSeq & /*removed*/)
+   (CosNotification::EventTypeSeq const & /*added*/,
+    CosNotification::EventTypeSeq const & /*removed*/)
 {
   // No-Op.
 }
