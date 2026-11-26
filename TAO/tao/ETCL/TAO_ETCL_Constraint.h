@@ -63,6 +63,8 @@ public:
   operator TAO::Any_Impl* () const;
   /// @}
 
+  /// @name Arithmetic operators
+  /// @{
   TAO_ETCL_Literal_Constraint
   operator+ (TAO_ETCL_Literal_Constraint const &rhs);
 
@@ -75,9 +77,10 @@ public:
   TAO_ETCL_Literal_Constraint
   operator/ (TAO_ETCL_Literal_Constraint const &rhs);
 
-  // Unary minus.
+  /// Unary minus.
   TAO_ETCL_Literal_Constraint
   operator- ();
+  /// @}
 
   /// Ensure both operands are of the same simple numeric type.
   Literal_Type widest_type (ETCL_Literal_Constraint const &rhs) override;
