@@ -341,6 +341,9 @@ namespace XMLSchema
       return *this;
     }
 
+    ID (ID &&) = delete;
+    ID &operator= (ID &&) = delete;
+
   public:
     using NCName<C>::container;
 
@@ -461,6 +464,9 @@ namespace XMLSchema
       id_ = x;
       return *this;
     }
+
+    IDREF (IDREF &&) = delete;
+    IDREF &operator= (IDREF &&) = delete;
 
   public:
     XSCRT::Type *operator->() const
