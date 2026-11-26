@@ -164,11 +164,6 @@ ACE_Capabilities::fillent (ACE_TCHAR const *buf)
           ACE_NEW_RETURN (ce,
                           ACE_StringCapEntry (s),
                           -1);
-          if (this->caps_.bind (name, ce) == -1)
-            {
-              delete ce;
-              return -1;
-            }
           break;
         case ACE_TEXT ('#'):
           // Integer property
@@ -176,25 +171,26 @@ ACE_Capabilities::fillent (ACE_TCHAR const *buf)
           ACE_NEW_RETURN (ce,
                           ACE_IntCapEntry (n),
                           -1);
-          if (this->caps_.bind (name, ce) == -1)
-            {
-              delete ce;
-              return -1;
-            }
           break;
         case ACE_TEXT (','):
           // Boolean
           ACE_NEW_RETURN (ce,
                           ACE_BoolCapEntry (1),
                           -1);
-          if (this->caps_.bind (name, ce) == -1)
-            {
-              delete ce;
-              return -1;
-            }
           break;
         default:
           return 0;
+        }
+
+      std::unique_ptr<ACE_CapEntry> entry (ce);
+      int const bind_result = this->caps_.bind (name, entry.get ());
+      if (bind_result == -1)
+        {
+          return -1;
+        }
+      if (bind_result == 0)
+        {
+          entry.release ();
         }
 
       if (*buf++ != ACE_TEXT (','))

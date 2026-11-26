@@ -27,20 +27,29 @@ load_config ()
     }
 
   int b = 0;
-  caps.getval (ACE_TEXT ("bool"), b);
+  if (caps.getval (ACE_TEXT ("bool"), b) != 0 || b != 1)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Incorrect boolean capability\n")), 1);
+    }
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("bool = %d\n"),
               b));
 
   int n = 0;
-  caps.getval (ACE_TEXT ("integer"), n);
+  if (caps.getval (ACE_TEXT ("integer"), n) != 0 || n != 2)
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Incorrect integer capability\n")), 1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("integer = %d\n"),
               n));
 
   ACE_TString s;
-  caps.getval (ACE_TEXT ("string"), s);
+  if (caps.getval (ACE_TEXT ("string"), s) != 0 || s != ACE_TEXT ("000030"))
+    {
+      ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Incorrect string capability\n")), 1);
+    }
 
   ACE_DEBUG ((LM_DEBUG,
               ACE_TEXT ("string = %s\n"),
@@ -61,8 +70,11 @@ run_main (int, ACE_TCHAR *[])
   const char file_contents[] =
     "Config|Esta entrada reservada para la configuracion,\n"
     "   bool,\n"
+    "   bool,\n"
     "   integer#2,\n"
-    "   string=000030,\n\n";
+    "   integer#3,\n"
+    "   string=000030,\n"
+    "   string=ignored,\n\n";
 
   ACE_HANDLE const fd = ACE_OS::open (config,
                                 O_RDWR | O_CREAT | O_TRUNC,
