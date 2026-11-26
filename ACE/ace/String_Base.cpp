@@ -438,7 +438,7 @@ ACE_String_Base<ACE_CHAR_T>::operator== (ACE_String_Base<ACE_CHAR_T> const &s) c
 template <class ACE_CHAR_T> bool
 ACE_String_Base<ACE_CHAR_T>::operator== (ACE_CHAR_T const *s) const
 {
-  const size_t len = ACE_OS::strlen (s);
+  size_t const len = ACE_OS::strlen (s);
   return this->len_ == len &&
          std::memcmp (this->rep_,
                          s,
@@ -451,7 +451,7 @@ ACE_String_Base<ACE_CHAR_T>::find (
   typename ACE_String_Base<ACE_CHAR_T>::size_type pos) const
 {
   ACE_CHAR_T *substr = this->rep_ + pos;
-  const size_t len = ACE_OS::strlen (s);
+  size_t const len = ACE_OS::strlen (s);
   ACE_CHAR_T *pointer = ACE_OS::strnstr (substr, s, len);
   if (pointer == nullptr)
     {
@@ -701,7 +701,7 @@ ACE_String_Base<ACE_CHAR_T> &
 ACE_String_Base<ACE_CHAR_T>::operator+= (const ACE_CHAR_T c)
 {
   ACE_TRACE ("ACE_String_Base<ACE_CHAR_T>::operator+=(const ACE_CHAR_T)");
-  const size_type slen = 1;
+  size_type const slen = 1;
   // This temp is silly but it quiets an optimizer warning in IBM XL C++ 10.
   ACE_String_Base<ACE_CHAR_T>& r = this->append (&c, slen);
   return r;

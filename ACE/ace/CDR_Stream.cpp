@@ -1248,7 +1248,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_InputCDR const & rhs,
   char *incoming_start = rhs.start_.base ();
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
 
-  const size_t newpos =
+  size_t const newpos =
     (rhs.start_.rd_ptr() - incoming_start)  + offset;
 
   if (newpos <= this->start_.space ()
@@ -1288,7 +1288,7 @@ ACE_InputCDR::ACE_InputCDR (ACE_InputCDR const & rhs,
   char *incoming_start = rhs.start_.base ();
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
 
-  const size_t newpos =
+  size_t const newpos =
     rhs.start_.rd_ptr() - incoming_start;
 
   if (newpos <= this->start_.space ()

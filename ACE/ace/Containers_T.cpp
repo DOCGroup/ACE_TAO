@@ -1971,7 +1971,7 @@ ACE_Array<T>::operator== (ACE_Array<T> const &s) const
       return false;
     }
 
-  const size_t len = s.size ();
+  size_t const len = s.size ();
   for (size_t slot = 0; slot < len; ++slot)
     {
       if ((*this)[slot] != s[slot])

@@ -255,7 +255,7 @@ ACE_SizeCDR::adjust (size_t size,
                      size_t align)
 {
 #if !defined (ACE_LACKS_CDR_ALIGNMENT)
-  const size_t offset = ACE_align_binary (size_, align) - size_;
+  size_t const offset = ACE_align_binary (size_, align) - size_;
   size_ += offset;
 #endif /* ACE_LACKS_CDR_ALIGNMENT */
   size_ += size;
