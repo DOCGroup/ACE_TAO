@@ -56,6 +56,8 @@ using ACE_Read_Buffer_Unique_Ptr =
 class ACE_Export ACE_Read_Buffer
 {
 public:
+  ACE_Read_Buffer () = delete;
+
   /// Read from a FILE *.
   ACE_Read_Buffer (FILE *fp,
                    bool close_on_delete = false,
