@@ -28,8 +28,8 @@ struct CDR_Test_Types
   ACE_CDR::Octet o;
   ACE_CDR::Short s;
   ACE_CDR::Long l;
-  const ACE_CDR::Char *str;
-  const ACE_CDR::WChar *wstr;
+  ACE_CDR::Char const *str;
+  ACE_CDR::WChar const *wstr;
   const std::string std_str;
 #if !defined(ACE_LACKS_STD_WSTRING)
   const std::wstring std_wstr;
@@ -184,12 +184,12 @@ short_stream ()
                       1);
   }
 
-  const ACE_Message_Block *out_mb = os.begin ();
+  ACE_Message_Block const *out_mb = os.begin ();
   size_t const len = out_mb->length ();
 
   // Create an input stream (copy constructor)
   ACE_InputCDR is (os);
-  const ACE_Message_Block *in_mb = is.start ();
+  ACE_Message_Block const *in_mb = is.start ();
 
   if (in_mb->length () != len)
   {

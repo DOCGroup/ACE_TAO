@@ -16,7 +16,7 @@
 #include "ace/Truncate.h"
 
 int
-tv_test_case (const ACE_Time_Value& tv, const char *what, time_t expect_sec, suseconds_t expect_usec = 0)
+tv_test_case (ACE_Time_Value const & tv, char const *what, time_t expect_sec, suseconds_t expect_usec = 0)
 {
   if (tv.sec () != expect_sec || tv.usec () != expect_usec)
   {
@@ -33,7 +33,7 @@ tv_test_case (const ACE_Time_Value& tv, const char *what, time_t expect_sec, sus
 template <class Rep, class Period>
 int
 tv_test_case (const std::chrono::duration<Rep, Period>& duration,
-  const char *what, time_t expect_sec, suseconds_t expect_usec = 0)
+  char const *what, time_t expect_sec, suseconds_t expect_usec = 0)
 {
   return tv_test_case (ACE_Time_Value {duration}, what, expect_sec, expect_usec);
 }

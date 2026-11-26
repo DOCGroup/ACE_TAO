@@ -844,8 +844,8 @@ run_main (int, ACE_TCHAR *[])
     // Set 1 for ACE_SString, which is not tested
     ACE_SString sstr;
 
-    const char *old = sstr.rep ();
-    const char *str = "What_a_day_it_has_been";
+    char const *old = sstr.rep ();
+    char const *str = "What_a_day_it_has_been";
 
     sstr.rep (const_cast<char *>(str));
 

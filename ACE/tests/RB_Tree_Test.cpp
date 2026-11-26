@@ -26,16 +26,16 @@
 // test.
 
 using INT_INT_RB_TREE_TEST = ACE_RB_Tree_Test<int, int, ACE_Less_Than<int>, ACE_Null_Mutex>;
-using INT_STR_RB_TREE_TEST = ACE_RB_Tree_Test<int, const char *, ACE_Less_Than<int>, ACE_Null_Mutex>;
-using STR_INT_RB_TREE_TEST = ACE_RB_Tree_Test<const char *, int, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
-using STR_STR_RB_TREE_TEST = ACE_RB_Tree_Test<const char *, const char *, ACE_Less_Than<const char *>, ACE_Null_Mutex>;
+using INT_STR_RB_TREE_TEST = ACE_RB_Tree_Test<int, char const *, ACE_Less_Than<int>, ACE_Null_Mutex>;
+using STR_INT_RB_TREE_TEST = ACE_RB_Tree_Test<char const *, int, ACE_Less_Than<char const *>, ACE_Null_Mutex>;
+using STR_STR_RB_TREE_TEST = ACE_RB_Tree_Test<char const *, char const *, ACE_Less_Than<char const *>, ACE_Null_Mutex>;
 
 // Number of entries placed in each tree.
 static int RB_TREE_TEST_ENTRIES = 8;
 
 // These arrays of numbers as ints and character strings are used to
 // instantiate key and item arrays in the tests.
-static const char *number_strings [] =
+static char const *number_strings [] =
 {
   "10", "20", "30", "40", "50", "60", "70", "80"
 };
