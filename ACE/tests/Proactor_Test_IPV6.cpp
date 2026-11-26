@@ -1426,7 +1426,7 @@ Client::initiate_write_stream ()
     return -1;
   }
 
-  static const size_t complete_message_length = std::strlen (complete_message);
+  static size_t const complete_message_length = std::strlen (complete_message);
 
 #if defined (ACE_WIN32)
   ACE_Message_Block *mb1 {},
@@ -1509,7 +1509,7 @@ Client::initiate_read_stream ()
     return -1;
   }
 
-  static const size_t complete_message_length =
+  static size_t const complete_message_length =
     std::strlen (complete_message);
 
 #if defined (ACE_WIN32)

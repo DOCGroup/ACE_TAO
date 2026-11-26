@@ -1244,9 +1244,9 @@ Sender::initiate_read_file ()
 {
   ACE_TEST_ASSERT (0 == this->file_offset_ % chunk_size);
 
-  static const size_t file_size = ACE_OS::filesize (input_file);
+  static size_t const file_size = ACE_OS::filesize (input_file);
 
-  static const size_t number_of_chunks_needed_for_file =
+  static size_t const number_of_chunks_needed_for_file =
     static_cast<size_t> (ACE_OS::ceil ((double) file_size / chunk_size));
 
   size_t const relevant_number_of_chunks =
