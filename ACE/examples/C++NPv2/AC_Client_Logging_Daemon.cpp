@@ -430,7 +430,7 @@ int AC_CLD_Connector::connect_svc_handler
 
 int AC_CLD_Connector::reconnect () {
   // Maximum number of times to retry connect.
-  const size_t MAX_RETRIES = 5;
+  size_t const MAX_RETRIES = 5;
   ACE_Time_Value timeout (1);
   size_t i;
   for (i = 0; i < MAX_RETRIES; ++i) {

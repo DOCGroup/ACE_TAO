@@ -62,7 +62,7 @@ public:
   }
 
   int svc () override {
-    const size_t FileReadSize = 8 * 1024;
+    size_t const FileReadSize = 8 * 1024;
     ACE_Message_Block mblk (FileReadSize);
 
     for (;; mblk.crunch ()) {

@@ -330,7 +330,7 @@ int CLD_Connector::connect
 
 int CLD_Connector::reconnect () {
   // Maximum number of times to retry connect.
-  const size_t MAX_RETRIES = 5;
+  size_t const MAX_RETRIES = 5;
 
   ACE_SOCK_Connector connector;
   ACE_Time_Value timeout (1); // Start with 1 second timeout.

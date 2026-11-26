@@ -79,7 +79,7 @@ static ACE_THR_FUNC_RETURN controller (void *arg) {
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const size_t N_THREADS = 4;
+  size_t const N_THREADS = 4;
   ACE_TP_Reactor tp_reactor;
   ACE_Reactor reactor (std::addressof (tp_reactor));
   std::unique_ptr<ACE_Reactor> const delete_instance

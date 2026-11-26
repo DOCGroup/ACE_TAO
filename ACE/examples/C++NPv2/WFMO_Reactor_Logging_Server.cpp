@@ -118,7 +118,7 @@ using Server_Logging_Daemon = Reactor_Logging_Server<Logging_Acceptor_WFMO>;
 
 int ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
-  const size_t N_THREADS = 4;
+  size_t const N_THREADS = 4;
   ACE_WFMO_Reactor wfmo_reactor;
   ACE_Reactor reactor (std::addressof (wfmo_reactor));
 
