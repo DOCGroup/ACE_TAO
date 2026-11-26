@@ -96,6 +96,21 @@ struct Cast_Other : virtual Cast_Base
 {
 };
 
+class Throwing_Lock : public ACE_Null_Mutex
+{
+public:
+  Throwing_Lock () { throw std::bad_alloc (); }
+};
+
+class Construction_Probe
+{
+public:
+  explicit Construction_Probe (int &destroyed) : destroyed_ (destroyed) {}
+  ~Construction_Probe () { ++this->destroyed_; }
+private:
+  int &destroyed_;
+};
+
 Child_Base::~Child_Base () = default;
 
 size_t Parent::instance_count_ = 0;
@@ -363,6 +378,23 @@ int
 run_main (int, ACE_TCHAR *[])
 {
   ACE_START_TEST (ACE_TEXT ("Bound_Ptr_Test"));
+  {
+    int destroyed {};
+    bool caught {};
+    try
+      {
+        ACE_Strong_Bound_Ptr<Construction_Probe, Throwing_Lock> ptr (
+          new Construction_Probe (destroyed));
+      }
+    catch (std::bad_alloc const &)
+      {
+        caught = true;
+      }
+    if (!caught || destroyed != 1)
+      {
+        ACE_ERROR_RETURN ((LM_ERROR, ACE_TEXT ("Bound pointer construction leaked its object\n")), -1);
+      }
+  }
 
   // The following test uses the ACE_Strong_Bound_Ptr in a single
   // thread of control, hence we use the ACE_Null_Mutex
