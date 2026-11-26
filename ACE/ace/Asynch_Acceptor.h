@@ -100,7 +100,7 @@ public:
    * @see ACE_INET_Addr
    * @see ACE_Service_Handler
    */
-  virtual int open (const ACE_INET_Addr &address,
+  virtual int open (ACE_INET_Addr const &address,
                     size_t bytes_to_read = 0,
                     bool pass_addresses = false,
                     int backlog = ACE_DEFAULT_ASYNCH_BACKLOG,
@@ -126,7 +126,7 @@ public:
    * You need only call this method if the @a reissue_accept argument
    * passed to @c open() was 0.
    */
-  virtual int accept (size_t bytes_to_read = 0, const void *act = nullptr);
+  virtual int accept (size_t bytes_to_read = 0, void const *act = nullptr);
 
   /**
    * Cancels all pending accepts operations issued by this object.
@@ -156,9 +156,9 @@ public:
    *              the service will not be opened.
    * @retval  0   Service opening will proceeed.
    */
-  virtual int validate_connection (const ACE_Asynch_Accept::Result& result,
-                                   const ACE_INET_Addr &remote,
-                                   const ACE_INET_Addr& local);
+  virtual int validate_connection (ACE_Asynch_Accept::Result const & result,
+                                   ACE_INET_Addr const &remote,
+                                   ACE_INET_Addr const & local);
 
   /**
    * Template method for deciding whether to reissue accept.
@@ -207,7 +207,7 @@ public:
 
 protected:
   /// This is called when an outstanding accept completes.
-  void handle_accept (const ACE_Asynch_Accept::Result &result) override;
+  void handle_accept (ACE_Asynch_Accept::Result const &result) override;
 
   /// Return the listen handle.
   ACE_HANDLE handle () const override;
@@ -215,7 +215,7 @@ protected:
   void handle (ACE_HANDLE h) override;
 
   /// This parses the address from read buffer.
-  void parse_address (const ACE_Asynch_Accept::Result &result,
+  void parse_address (ACE_Asynch_Accept::Result const &result,
                       ACE_INET_Addr &remote_address,
                       ACE_INET_Addr &local_address);
 

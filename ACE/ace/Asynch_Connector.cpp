@@ -43,10 +43,10 @@ ACE_Asynch_Connector<HANDLER>::open (bool pass_addresses,
 }
 
 template <class HANDLER> int
-ACE_Asynch_Connector<HANDLER>::connect (const ACE_INET_Addr & remote_sap,
-                                        const ACE_INET_Addr & local_sap,
+ACE_Asynch_Connector<HANDLER>::connect (ACE_INET_Addr const & remote_sap,
+                                        ACE_INET_Addr const & local_sap,
                                         int reuse_addr,
-                                        const void *act)
+                                        void const *act)
 {
   // Initiate asynchronous connect
   if (this->asynch_connect_.connect (ACE_INVALID_HANDLE,
@@ -64,7 +64,7 @@ ACE_Asynch_Connector<HANDLER>::connect (const ACE_INET_Addr & remote_sap,
 }
 
 template <class HANDLER> void
-ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result &result)
+ACE_Asynch_Connector<HANDLER>::handle_connect (ACE_Asynch_Connect::Result const &result)
 {
   // Variable for error tracking
   bool error {};
@@ -163,9 +163,9 @@ ACE_Asynch_Connector<HANDLER>::handle_connect (const ACE_Asynch_Connect::Result 
 
 template <class HANDLER> int
 ACE_Asynch_Connector<HANDLER>::validate_connection
-  (const ACE_Asynch_Connect::Result &,
-   const ACE_INET_Addr & /* remote_address */,
-   const ACE_INET_Addr & /* local_address */)
+  (ACE_Asynch_Connect::Result const &,
+   ACE_INET_Addr const & /* remote_address */,
+   ACE_INET_Addr const & /* local_address */)
 {
   // Default implementation always validates the remote address.
   return 0;
@@ -178,7 +178,7 @@ ACE_Asynch_Connector<HANDLER>::cancel ()
 }
 
 template <class HANDLER> void
-ACE_Asynch_Connector<HANDLER>::parse_address (const ACE_Asynch_Connect::Result &result,
+ACE_Asynch_Connector<HANDLER>::parse_address (ACE_Asynch_Connect::Result const &result,
                                               ACE_INET_Addr &remote_address,
                                               ACE_INET_Addr &local_address)
 {

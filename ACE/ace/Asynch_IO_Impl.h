@@ -48,14 +48,14 @@ public:
   virtual size_t bytes_transferred () const = 0;
 
   /// ACT associated with the operation.
-  virtual const void *act () const = 0;
+  virtual void const *act () const = 0;
 
   /// Did the operation succeed?
   virtual bool success () const = 0;
 
   /// This ACT is not the same as the ACT associated with the
   /// asynchronous operation.
-  virtual const void *completion_key () const = 0;
+  virtual void const *completion_key () const = 0;
 
   /// Error value if the operation fail.
   virtual u_long error () const = 0;
@@ -85,7 +85,7 @@ public:
   /// This is called when the asynchronous operation completes.
   virtual void complete (size_t bytes_transferred,
                          int success,
-                         const void *completion_key,
+                         void const *completion_key,
                          u_long error = 0) = 0;
 
   /// Post @c this to the Proactor's completion port.
@@ -113,9 +113,9 @@ public:
    * ACE_Handler::handle() will be called on the proxied handler to get the
    * correct handle.
    */
-  virtual int open (const ACE_Handler::Proxy_Ptr &handler_proxy,
+  virtual int open (ACE_Handler::Proxy_Ptr const &handler_proxy,
                     ACE_HANDLE handle,
-                    const void *completion_key,
+                    void const *completion_key,
                     ACE_Proactor *proactor) = 0;
 
   /**
@@ -152,7 +152,7 @@ public:
   /// be read and stored in the @a message_block.
   virtual int read (ACE_Message_Block &message_block,
                     size_t bytes_to_read,
-                    const void *act,
+                    void const *act,
                     int priority,
                     int signal_number) = 0;
 
@@ -163,7 +163,7 @@ public:
   */
   virtual int readv (ACE_Message_Block &message_block,
                      size_t bytes_to_read,
-                     const void *act,
+                     void const *act,
                      int priority,
                      int signal_number) = 0;
 #endif /* defined (ACE_WIN32) */
@@ -214,7 +214,7 @@ public:
   /// will be written from the @a message_block.
   virtual int write (ACE_Message_Block &message_block,
                      size_t bytes_to_write,
-                     const void *act,
+                     void const *act,
                      int priority,
                      int signal_number) = 0;
 
@@ -225,7 +225,7 @@ public:
   */
   virtual int writev (ACE_Message_Block &message_block,
                       size_t bytes_to_write,
-                      const void *act,
+                      void const *act,
                       int priority,
                       int signal_number) = 0;
 #endif /* defined (ACE_WIN32) */
@@ -281,7 +281,7 @@ public:
                     size_t bytes_to_read,
                     u_long offset,
                     u_long offset_high,
-                    const void *act,
+                    void const *act,
                     int priority,
                     int signal_number) = 0;
 
@@ -296,7 +296,7 @@ public:
                      size_t bytes_to_read,
                      u_long offset,
                      u_long offset_high,
-                     const void *act,
+                     void const *act,
                      int priority,
                      int signal_number) = 0;
 #endif /* defined (ACE_WIN32) */
@@ -305,7 +305,7 @@ public:
   /// be read and stored in the @a message_block.
   int read (ACE_Message_Block &message_block,
             size_t bytes_to_read,
-            const void *act,
+            void const *act,
             int priority,
             int signal_number) override = 0;
 
@@ -316,7 +316,7 @@ public:
   */
   int readv (ACE_Message_Block &message_block,
              size_t bytes_to_read,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number) override = 0;
 #endif /* defined (ACE_WIN32) */
@@ -361,7 +361,7 @@ public:
                      size_t bytes_to_write,
                      u_long offset,
                      u_long offset_high,
-                     const void *act,
+                     void const *act,
                      int priority,
                      int signal_number) = 0;
 
@@ -376,7 +376,7 @@ public:
                       size_t bytes_to_write,
                       u_long offset,
                       u_long offset_high,
-                      const void *act,
+                      void const *act,
                       int priority,
                       int signal_number) = 0;
 #endif /* defined (ACE_WIN32) */
@@ -385,7 +385,7 @@ public:
   /// will be written from the @a message_block.
   int write (ACE_Message_Block &message_block,
              size_t bytes_to_write,
-             const void *act,
+             void const *act,
              int priority,
              int signal_number) override = 0;
 
@@ -396,7 +396,7 @@ public:
   */
   int writev (ACE_Message_Block &message_block,
               size_t bytes_to_write,
-              const void *act,
+              void const *act,
               int priority,
               int signal_number) override = 0;
 #endif /* defined (ACE_WIN32) */
@@ -447,7 +447,7 @@ public:
   virtual int accept (ACE_Message_Block &message_block,
                       size_t bytes_to_read,
                       ACE_HANDLE accept_handle,
-                      const void *act,
+                      void const *act,
                       int priority,
                       int signal_number,
                       int addr_family) = 0;
@@ -501,10 +501,10 @@ public:
    * This starts off an asynchronous connect
    */
   virtual int connect (ACE_HANDLE connect_handle,
-                       const ACE_Addr & remote_sap,
-                       const ACE_Addr & local_sap,
+                       ACE_Addr const & remote_sap,
+                       ACE_Addr const & local_sap,
                        int   reuse_addr,
-                       const void *act,
+                       void const *act,
                        int   priority,
                        int   signal_number) = 0;
 
@@ -551,7 +551,7 @@ public:
                              u_long offset_high,
                              size_t bytes_per_send,
                              u_long flags,
-                             const void *act,
+                             void const *act,
                              int priority,
                              int signal_number) = 0;
 
@@ -637,7 +637,7 @@ public:
                         size_t &number_of_bytes_recvd,
                         int flags,
                         int protocol_family,
-                        const void *act,
+                        void const *act,
                         int priority,
                         int signal_number) = 0;
 
@@ -718,8 +718,8 @@ public:
   virtual ssize_t send (ACE_Message_Block *message_block,
                         size_t &number_of_bytes_sent,
                         int flags,
-                        const ACE_Addr &addr,
-                        const void *act,
+                        ACE_Addr const &addr,
+                        void const *act,
                         int priority,
                         int signal_number) = 0;
 

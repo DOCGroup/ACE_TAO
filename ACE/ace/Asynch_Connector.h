@@ -54,11 +54,11 @@ public:
                     bool validate_new_connection = true);
 
   /// This initiates a new asynchronous connect
-  virtual int connect (const ACE_INET_Addr &remote_sap,
-                       const ACE_INET_Addr &local_sap =
-                         (const ACE_INET_Addr &)ACE_Addr::sap_any,
+  virtual int connect (ACE_INET_Addr const &remote_sap,
+                       ACE_INET_Addr const &local_sap =
+                         (ACE_INET_Addr const &)ACE_Addr::sap_any,
                        int reuse_addr = 1,
-                       const void *act = nullptr);
+                       void const *act = nullptr);
 
   /**
    * This cancels all pending accepts operations that were issued by
@@ -98,9 +98,9 @@ public:
    * @retval  0   Service opening will proceeed.
    * @return  Return value is ignored if the connection attempt failed.
    */
-  virtual int validate_connection (const ACE_Asynch_Connect::Result& result,
-                                   const ACE_INET_Addr &remote,
-                                   const ACE_INET_Addr& local);
+  virtual int validate_connection (ACE_Asynch_Connect::Result const & result,
+                                   ACE_INET_Addr const &remote,
+                                   ACE_INET_Addr const & local);
 
   /// @name Low-level connection options
   /// @{
@@ -118,10 +118,10 @@ public:
 
 protected:
   /// This is called when an outstanding accept completes.
-  void handle_connect (const ACE_Asynch_Connect::Result &result) override;
+  void handle_connect (ACE_Asynch_Connect::Result const &result) override;
 
   /// This parses the address from read buffer.
-  void parse_address (const ACE_Asynch_Connect::Result &result,
+  void parse_address (ACE_Asynch_Connect::Result const &result,
                       ACE_INET_Addr &remote_address,
                       ACE_INET_Addr &local_address);
 

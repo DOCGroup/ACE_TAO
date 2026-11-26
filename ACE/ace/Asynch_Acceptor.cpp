@@ -35,7 +35,7 @@ ACE_Asynch_Acceptor<HANDLER>::~ACE_Asynch_Acceptor ()
 }
 
 template <class HANDLER> int
-ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
+ACE_Asynch_Acceptor<HANDLER>::open (ACE_INET_Addr const &address,
                                     size_t bytes_to_read,
                                     bool pass_addresses,
                                     int backlog,
@@ -100,7 +100,7 @@ ACE_Asynch_Acceptor<HANDLER>::open (const ACE_INET_Addr &address,
     }
 
   // If port is not specified, bind to any port.
-  static ACE_INET_Addr sa (ACE_sap_any_cast (const ACE_INET_Addr &));
+  static ACE_INET_Addr sa (ACE_sap_any_cast (ACE_INET_Addr const &));
 
   if (address == sa &&
       ACE::bind_port (this->listen_handle_,
@@ -195,7 +195,7 @@ ACE_Asynch_Acceptor<HANDLER>::get_handle () const
 }
 
 template <class HANDLER> int
-ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
+ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, void const *act)
 {
   ACE_TRACE ("ACE_Asynch_Acceptor<>::accept");
 
@@ -235,7 +235,7 @@ ACE_Asynch_Acceptor<HANDLER>::accept (size_t bytes_to_read, const void *act)
 }
 
 template <class HANDLER> void
-ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &result)
+ACE_Asynch_Acceptor<HANDLER>::handle_accept (ACE_Asynch_Accept::Result const &result)
 {
   ACE_TRACE ("ACE_Asynch_Acceptor<>::handle_accept");
 
@@ -356,9 +356,9 @@ ACE_Asynch_Acceptor<HANDLER>::handle_accept (const ACE_Asynch_Accept::Result &re
 
 template <class HANDLER> int
 ACE_Asynch_Acceptor<HANDLER>::validate_connection
-  (const ACE_Asynch_Accept::Result& /* result */,
-   const ACE_INET_Addr& /* remote */,
-   const ACE_INET_Addr& /* local */)
+  (ACE_Asynch_Accept::Result const & /* result */,
+   ACE_INET_Addr const & /* remote */,
+   ACE_INET_Addr const & /* local */)
 {
   // Default implementation always validates the remote address.
   return 0;
