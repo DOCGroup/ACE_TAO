@@ -7,7 +7,7 @@
  *   objects, and STL-style functors for comparison of container
  *   elements.  The command objects are invoked via an @c execute
  *   method, while the STL-style functors are invoked via an
- *   <operator()> method.
+ *   @c operator() method.
  *
  *  @author Chris Gill <cdgill@cs.wustl.edu>
  *  @author Based on Command Pattern implementations originally done by

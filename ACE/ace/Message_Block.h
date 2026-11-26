@@ -755,8 +755,8 @@ public:
 
   /**
    * Return a pointer to 1 past the end of the allotted data in a message.
-   * The allotted data may be less than allocated data if <size()> is passed
-   * an argument less than <capacity()>.
+   * The allotted data may be less than allocated data if @c size() is passed
+   * an argument less than @c capacity().
    */
   char *mark () const;
 

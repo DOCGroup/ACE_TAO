@@ -65,7 +65,7 @@ public:
   int acquire (ACE_Time_Value &tv);
 
   /**
-   * If @a tv == 0 then call <acquire()> directly.  Otherwise, Block
+   * If @a tv == 0 then call @c acquire() directly. Otherwise, block
    * the thread until the semaphore count becomes greater than 0
    * (at which point it is decremented) or until @a tv times out (in
    * which case -1 is returned and @c errno == @c ETIME).  Note that

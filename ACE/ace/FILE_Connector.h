@@ -66,8 +66,8 @@ public:
    * time to wait to create/open the file.  If it's 0 then we block
    * indefinitely.  If *timeout == {0, 0} then the file is created
    * using non-blocking mode.  In this case, if the create/open can't
-   * be done immediately the value of -1 is returned with <errno ==
-   * EWOULDBLOCK>.  If *timeout > {0, 0} then this is the maximum amount of
+   * be done immediately the value of -1 is returned with @c errno set to
+   * @c EWOULDBLOCK. If *timeout > {0, 0} then this is the maximum amount of
    * time to wait before timing out.  If the time expires before the
    * connection is made @c errno == ETIME.  The @a local_sap and
    * @a reuse_addr parameters are ignored.  The @a flags and @a perms
