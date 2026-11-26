@@ -10,7 +10,7 @@
 #endif /* __ACE_INLINE__ */
 
 template <typename T>
-TAO_Objref_Var_T<T>::TAO_Objref_Var_T (const TAO_Objref_Var_T<T> & p)
+TAO_Objref_Var_T<T>::TAO_Objref_Var_T (TAO_Objref_Var_T<T> const & p)
   : TAO_Base_var (),
     ptr_ (TAO::Objref_Traits<T>::duplicate (p.ptr ()))
 {
@@ -27,7 +27,7 @@ TAO_Objref_Var_T<T>::operator= (T * p)
 
 template <typename T>
 TAO_Objref_Var_T<T> &
-TAO_Objref_Var_T<T>::operator= (const TAO_Objref_Var_T<T> & p)
+TAO_Objref_Var_T<T>::operator= (TAO_Objref_Var_T<T> const & p)
 {
   if (this != std::addressof (p))
     {

@@ -12,7 +12,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template <typename T>
 TAO_Pseudo_Var_T<T> &
-TAO_Pseudo_Var_T<T>::operator= (const TAO_Pseudo_Var_T<T> & p)
+TAO_Pseudo_Var_T<T>::operator= (TAO_Pseudo_Var_T<T> const & p)
 {
   if (this != std::addressof (p))
     {

@@ -32,9 +32,9 @@ public:
 
   TAO_Seq_Out_T (T *&);
   TAO_Seq_Out_T (T_var &);
-  TAO_Seq_Out_T (const TAO_Seq_Out_T<T> &);
+  TAO_Seq_Out_T (TAO_Seq_Out_T<T> const &);
 
-  TAO_Seq_Out_T &operator= (const TAO_Seq_Out_T<T> &);
+  TAO_Seq_Out_T &operator= (TAO_Seq_Out_T<T> const &);
   TAO_Seq_Out_T &operator= (T *);
   TAO_Seq_Out_T &operator= (T_var const &) = delete;
 

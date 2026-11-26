@@ -45,11 +45,11 @@ class TAO_Objref_Var_T : private TAO_Base_var
 public:
   TAO_Objref_Var_T ();
   TAO_Objref_Var_T (T * p) : ptr_ (p) {}
-  TAO_Objref_Var_T (const TAO_Objref_Var_T<T> &);
+  TAO_Objref_Var_T (TAO_Objref_Var_T<T> const &);
   ~TAO_Objref_Var_T ();
 
   TAO_Objref_Var_T<T> & operator= (T *);
-  TAO_Objref_Var_T<T> & operator= (const TAO_Objref_Var_T<T> &);
+  TAO_Objref_Var_T<T> & operator= (TAO_Objref_Var_T<T> const &);
   TAO_Objref_Var_T (TAO_Base_var const &) = delete;
   TAO_Objref_Var_T &operator= (TAO_Base_var const &) = delete;
   T * operator-> () const;
@@ -89,11 +89,11 @@ class TAO_Objref_Out_T
 public:
   TAO_Objref_Out_T (T *&p);
   TAO_Objref_Out_T (TAO_Objref_Var_T<T> &p);
-  TAO_Objref_Out_T (const TAO_Objref_Out_T<T> &p);
+  TAO_Objref_Out_T (TAO_Objref_Out_T<T> const &p);
 
   TAO_Objref_Out_T &operator= (T *p);
-  TAO_Objref_Out_T &operator= (const TAO_Objref_Out_T<T> &p);
-  TAO_Objref_Out_T &operator= (const TAO_Objref_Var_T<T> &p);
+  TAO_Objref_Out_T &operator= (TAO_Objref_Out_T<T> const &p);
+  TAO_Objref_Out_T &operator= (TAO_Objref_Var_T<T> const &p);
 
   /// Cast operator.
   operator T *& ();

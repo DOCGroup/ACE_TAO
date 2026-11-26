@@ -10,7 +10,7 @@
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 template<typename T>
-TAO_Seq_Var_Base_T<T>::TAO_Seq_Var_Base_T (const TAO_Seq_Var_Base_T<T> & p)
+TAO_Seq_Var_Base_T<T>::TAO_Seq_Var_Base_T (TAO_Seq_Var_Base_T<T> const & p)
   : ptr_ (p.ptr_ ? new T (*p.ptr_) : nullptr)
 {
 }
@@ -19,7 +19,7 @@ TAO_Seq_Var_Base_T<T>::TAO_Seq_Var_Base_T (const TAO_Seq_Var_Base_T<T> & p)
 
 template<typename T>
 TAO_FixedSeq_Var_T<T> &
-TAO_FixedSeq_Var_T<T>::operator= (const TAO_FixedSeq_Var_T<T> & p)
+TAO_FixedSeq_Var_T<T>::operator= (TAO_FixedSeq_Var_T<T> const & p)
 {
   // Strongly exception safe assignment using copy and non-throwing
   // swap technique.
@@ -52,7 +52,7 @@ TAO_FixedSeq_Var_T<T>::operator= (T const & p)
 
 template<typename T>
 TAO_VarSeq_Var_T<T> &
-TAO_VarSeq_Var_T<T>::operator= (const TAO_VarSeq_Var_T<T> & p)
+TAO_VarSeq_Var_T<T>::operator= (TAO_VarSeq_Var_T<T> const & p)
 {
   // Strongly exception safe assignment using copy and non-throwing
   // swap technique.

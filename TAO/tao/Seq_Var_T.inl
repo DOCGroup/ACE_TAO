@@ -115,7 +115,7 @@ TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (T * p)
 {}
 
 template<typename T>
-TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (const TAO_FixedSeq_Var_T<T> & p)
+TAO_FixedSeq_Var_T<T>::TAO_FixedSeq_Var_T (TAO_FixedSeq_Var_T<T> const & p)
   : TAO_Seq_Var_Base_T<T> (p)
 {
 }
@@ -171,7 +171,7 @@ TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T (T * p)
 }
 
 template<typename T>
-TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T (const TAO_VarSeq_Var_T<T> & p)
+TAO_VarSeq_Var_T<T>::TAO_VarSeq_Var_T (TAO_VarSeq_Var_T<T> const & p)
   : TAO_Seq_Var_Base_T<T> (p)
 {
 }

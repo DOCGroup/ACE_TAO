@@ -80,7 +80,7 @@ TAO_Fixed_Var_T<T>::TAO_Fixed_Var_T (T * p)
 
 template<typename T>
 ACE_INLINE
-TAO_Fixed_Var_T<T>::TAO_Fixed_Var_T (const TAO_Fixed_Var_T<T> & p)
+TAO_Fixed_Var_T<T>::TAO_Fixed_Var_T (TAO_Fixed_Var_T<T> const & p)
   : TAO_Var_Base_T<T> (p)
 {}
 
@@ -172,7 +172,7 @@ TAO_Var_Var_T<T>::TAO_Var_Var_T (T * p)
 
 template<typename T>
 ACE_INLINE
-TAO_Var_Var_T<T>::TAO_Var_Var_T (const TAO_Var_Var_T<T> & p)
+TAO_Var_Var_T<T>::TAO_Var_Var_T (TAO_Var_Var_T<T> const & p)
   : TAO_Var_Base_T<T> (p)
 {}
 
@@ -249,14 +249,14 @@ TAO_Out_T<T>::TAO_Out_T (T_var & p)
 
 template<typename T>
 ACE_INLINE
-TAO_Out_T<T>::TAO_Out_T (const TAO_Out_T<T> & p)
+TAO_Out_T<T>::TAO_Out_T (TAO_Out_T<T> const & p)
   : ptr_ (p.ptr_)
 {}
 
 template<typename T>
 ACE_INLINE
 TAO_Out_T<T> &
-TAO_Out_T<T>::operator= (const TAO_Out_T<T> & p)
+TAO_Out_T<T>::operator= (TAO_Out_T<T> const & p)
 {
   this->ptr_ = p.ptr_;
   return *this;

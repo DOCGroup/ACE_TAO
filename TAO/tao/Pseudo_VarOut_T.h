@@ -50,12 +50,12 @@ class TAO_Pseudo_Var_T : private TAO_Base_var
 public:
   TAO_Pseudo_Var_T ();
   TAO_Pseudo_Var_T (typename T::_ptr_type);
-  TAO_Pseudo_Var_T (const TAO_Pseudo_Var_T<T> &);
+  TAO_Pseudo_Var_T (TAO_Pseudo_Var_T<T> const &);
 
   ~TAO_Pseudo_Var_T ();
 
   TAO_Pseudo_Var_T<T> & operator= (typename T::_ptr_type);
-  TAO_Pseudo_Var_T<T> & operator= (const TAO_Pseudo_Var_T<T> &);
+  TAO_Pseudo_Var_T<T> & operator= (TAO_Pseudo_Var_T<T> const &);
   TAO_Pseudo_Var_T (TAO_Base_var const &) = delete;
   TAO_Pseudo_Var_T &operator= (TAO_Base_var const &) = delete;
 
@@ -94,9 +94,9 @@ class TAO_Pseudo_Out_T
 public:
   TAO_Pseudo_Out_T (typename T::_ptr_type &);
   TAO_Pseudo_Out_T (typename T::_var_type &);
-  TAO_Pseudo_Out_T (const TAO_Pseudo_Out_T<T> &);
+  TAO_Pseudo_Out_T (TAO_Pseudo_Out_T<T> const &);
 
-  TAO_Pseudo_Out_T<T> & operator= (const TAO_Pseudo_Out_T<T> &);
+  TAO_Pseudo_Out_T<T> & operator= (TAO_Pseudo_Out_T<T> const &);
   TAO_Pseudo_Out_T<T> & operator= (typename T::_ptr_type);
 
   operator typename T::_ptr_type & ();
