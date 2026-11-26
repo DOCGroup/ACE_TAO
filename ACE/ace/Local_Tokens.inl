@@ -76,7 +76,7 @@ ACE_Tokens::inc_reference ()
   ++this->reference_count_;
 }
 
-ACE_INLINE const ACE_TPQ_Entry *
+ACE_INLINE ACE_TPQ_Entry const *
 ACE_Token_Proxy_Queue::head ()
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::head");
@@ -251,7 +251,7 @@ ACE_Local_WLock::ACE_Local_WLock (ACE_TCHAR const *token_name,
 // ************************************************************
 
 ACE_INLINE void
-ACE_Token_Name::operator= (const ACE_Token_Name &rhs)
+ACE_Token_Name::operator= (ACE_Token_Name const &rhs)
 {
   ACE_TRACE ("ACE_Token_Name::operator=");
   if (std::addressof (rhs) != this)
@@ -261,7 +261,7 @@ ACE_Token_Name::operator= (const ACE_Token_Name &rhs)
 }
 
 ACE_INLINE bool
-ACE_Token_Name::operator== (const ACE_Token_Name &rhs) const
+ACE_Token_Name::operator== (ACE_Token_Name const &rhs) const
 {
   ACE_TRACE ("ACE_Token_Name::operator==");
 

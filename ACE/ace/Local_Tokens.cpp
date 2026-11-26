@@ -80,7 +80,7 @@ ACE_TPQ_Entry::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_Token_Proxy *new_proxy,
+ACE_TPQ_Entry::ACE_TPQ_Entry (ACE_Token_Proxy const *new_proxy,
                               ACE_TCHAR const *client_id)
   : cond_var_ (lock_),
     // The proxy is logically mutable while the entry is active.
@@ -119,7 +119,7 @@ ACE_TPQ_Entry::ACE_TPQ_Entry ()
   ACE_TRACE ("ACE_TPQ_Entry::ACE_TPQ_Entry null const.");
 }
 
-ACE_TPQ_Entry::ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs)
+ACE_TPQ_Entry::ACE_TPQ_Entry (ACE_TPQ_Entry const &rhs)
 : cond_var_ (lock_)
 {
   ACE_TRACE ("ACE_TPQ_Entry::ACE_TPQ_Entry copy const.");
@@ -132,7 +132,7 @@ ACE_TPQ_Entry::~ACE_TPQ_Entry ()
 }
 
 void
-ACE_TPQ_Entry::operator= (const ACE_TPQ_Entry& rhs)
+ACE_TPQ_Entry::operator= (ACE_TPQ_Entry const& rhs)
 {
   ACE_TRACE ("ACE_TPQ_Entry::operator=");
   if (std::addressof (rhs) == this)
@@ -175,7 +175,7 @@ ACE_TSS_TPQ_Entry::dump () const
 #endif /* ACE_HAS_DUMP */
 }
 
-ACE_TSS_TPQ_Entry::ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
+ACE_TSS_TPQ_Entry::ACE_TSS_TPQ_Entry (ACE_Token_Proxy const *proxy,
                                       ACE_TCHAR const *client_id)
 : proxy_ (proxy),
   client_id_ (client_id)
@@ -368,7 +368,7 @@ ACE_Token_Proxy_Queue::dequeue ()
 }
 
 void
-ACE_Token_Proxy_Queue::remove (const ACE_TPQ_Entry *remove_me)
+ACE_Token_Proxy_Queue::remove (ACE_TPQ_Entry const *remove_me)
 {
   ACE_TRACE ("ACE_Token_Proxy_Queue::remove");
   // sanity
@@ -1144,7 +1144,7 @@ ACE_Token_Proxy::client_id () const
 {
   ACE_TRACE ("ACE_Token_Proxy::client_id");
   // Thread-specific.
-  const ACE_TPQ_Entry *temp = this->waiter_.operator->();
+  ACE_TPQ_Entry const *temp = this->waiter_.operator->();
   ACE_TCHAR const *id = temp->client_id ();
 
   if (id == nullptr)
@@ -1192,7 +1192,7 @@ ACE_Token_Proxy::ACE_Token_Proxy ()
 // be obtained through the token manager.  Also, we don't copy any
 // waiter info.  A copied Proxy does *not* inherit client_id.
 
-ACE_Token_Proxy::ACE_Token_Proxy (const ACE_Token_Proxy &)
+ACE_Token_Proxy::ACE_Token_Proxy (ACE_Token_Proxy const &)
   : waiter_ (this, nullptr)
 {
   ACE_TRACE ("ACE_Token_Proxy::ACE_Token_Proxy");
@@ -1560,7 +1560,7 @@ ACE_Token_Name::ACE_Token_Name (ACE_TCHAR const *token_name)
   this->name (token_name);
 }
 
-ACE_Token_Name::ACE_Token_Name (const ACE_Token_Name &rhs)
+ACE_Token_Name::ACE_Token_Name (ACE_Token_Name const &rhs)
 {
   ACE_TRACE ("ACE_Token_Name::ACE_Token_Name");
   this->name (rhs.name ());

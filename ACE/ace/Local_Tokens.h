@@ -109,15 +109,15 @@ public:
   /// Null constructor.
   ACE_TPQ_Entry ();
 
-  ACE_TPQ_Entry (const ACE_Token_Proxy *proxy,
+  ACE_TPQ_Entry (ACE_Token_Proxy const *proxy,
                  ACE_TCHAR const *client_id);
 
-  ACE_TPQ_Entry (const ACE_TPQ_Entry &rhs);
+  ACE_TPQ_Entry (ACE_TPQ_Entry const &rhs);
 
   ~ACE_TPQ_Entry ();
 
   /// Copy operator use by the queue.
-  void operator= (const ACE_TPQ_Entry &rhs);
+  void operator= (ACE_TPQ_Entry const &rhs);
 
   /// Get top of the queue.
   ACE_Token_Proxy *proxy () const;
@@ -212,7 +212,7 @@ public:
 
   /// These are passed to the constructor of ACE_TPQ_Entry in
   /// make_TSS_TYPE
-  ACE_TSS_TPQ_Entry (const ACE_Token_Proxy *proxy,
+  ACE_TSS_TPQ_Entry (ACE_Token_Proxy const *proxy,
                      ACE_TCHAR const *client_id);
 
   virtual ~ACE_TSS_TPQ_Entry () = default;
@@ -237,7 +237,7 @@ private:
   /// Arguments passed to the ACE_TPQ_Entry constructor in make_TSS_TYPE.
 
   /// Proxy.
-  const ACE_Token_Proxy *proxy_;
+  ACE_Token_Proxy const *proxy_;
 
   /// Client_id.
   ACE_TCHAR const *client_id_;
@@ -309,13 +309,13 @@ public:
                 int position);
 
   /// Top of the queue.
-  const ACE_TPQ_Entry* head ();
+  ACE_TPQ_Entry const* head ();
 
   /// Remove the top waiter.
   void dequeue ();
 
   /// Remove the waiter whose proxy ref matches @a remove_me.
-  void remove (const ACE_TPQ_Entry *remove_me);
+  void remove (ACE_TPQ_Entry const *remove_me);
 
   /// The number of waiters.
   int size ();
@@ -679,15 +679,15 @@ public:
   ACE_Token_Name (ACE_TCHAR const *token_name = nullptr);
 
   /// Copy construction.
-  ACE_Token_Name (const ACE_Token_Name &rhs);
+  ACE_Token_Name (ACE_Token_Name const &rhs);
 
   virtual ~ACE_Token_Name ();
 
   /// Copy.
-  void operator= (const ACE_Token_Name &rhs);
+  void operator= (ACE_Token_Name const &rhs);
 
   /// Comparison.
-  bool operator== (const ACE_Token_Name &rhs) const;
+  bool operator== (ACE_Token_Name const &rhs) const;
 
   /// Get the token name.
   ACE_TCHAR const *name () const;
@@ -858,7 +858,7 @@ public:
 
 protected:
   /// Duplication.
-  ACE_Token_Proxy (const ACE_Token_Proxy &);
+  ACE_Token_Proxy (ACE_Token_Proxy const &);
 
   /// If this is set, we ignore deadlock.
   int ignore_deadlock_ {};
