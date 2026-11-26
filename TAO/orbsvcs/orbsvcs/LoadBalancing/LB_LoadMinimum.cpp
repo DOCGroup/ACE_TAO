@@ -266,7 +266,7 @@ TAO_LB_LoadMinimum::analyze_loads (
     {
       try
         {
-          const PortableGroup::Location & loc = locations[i];
+          PortableGroup::Location const & loc = locations[i];
 
           // Retrieve the load list for the location from the
           // LoadManager and push it to this Strategy's load
@@ -294,7 +294,7 @@ TAO_LB_LoadMinimum::analyze_loads (
           */
 
         }
-      catch (const CosLoadBalancing::LocationNotFound&)
+      catch (CosLoadBalancing::LocationNotFound const&)
         {
           // no location found
           //
@@ -316,7 +316,7 @@ TAO_LB_LoadMinimum::analyze_loads (
     {
       try
         {
-          const PortableGroup::Location & loc = locations[j];
+          PortableGroup::Location const & loc = locations[j];
 
          /*
           ORBSVCS_DEBUG ((LM_DEBUG,
@@ -367,7 +367,7 @@ TAO_LB_LoadMinimum::analyze_loads (
               }
             }
         }
-      catch (const CosLoadBalancing::LocationNotFound&)
+      catch (CosLoadBalancing::LocationNotFound const&)
         {
           // no location found
           //
@@ -403,7 +403,7 @@ TAO_LB_LoadMinimum::get_location (
     {
       try
         {
-          const PortableGroup::Location & loc = locations[i];
+          PortableGroup::Location const & loc = locations[i];
 
           // Retrieve the load list for the location from the LoadManager
           // and push it to this Strategy's load processor.
@@ -514,7 +514,7 @@ TAO_LB_LoadMinimum::get_location (
 
           // ORBSVCS_DEBUG ((LM_DEBUG, "NEW MIN_LOAD == %f\n", min_load));
         }
-      catch (const CosLoadBalancing::LocationNotFound&)
+      catch (CosLoadBalancing::LocationNotFound const&)
         {
           // No load available for the requested location.  Try the
           // next location.

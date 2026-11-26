@@ -253,7 +253,7 @@ TAO_LB_LeastLoaded::analyze_loads (
     {
       try
         {
-          const PortableGroup::Location & loc = locations[i];
+          PortableGroup::Location const & loc = locations[i];
 
           // Retrieve the load list for the location from the
           // LoadManager and push it to this Strategy's load
@@ -305,7 +305,7 @@ TAO_LB_LeastLoaded::analyze_loads (
                 }
             }
         }
-      catch (const CosLoadBalancing::LocationNotFound&)
+      catch (CosLoadBalancing::LocationNotFound const&)
         {
           // No load available for the requested location.  Try the
           // next location.
@@ -340,7 +340,7 @@ TAO_LB_LeastLoaded::get_location (
     {
       try
         {
-          const PortableGroup::Location & loc = locations[i];
+          PortableGroup::Location const & loc = locations[i];
 
           // Retrieve the load list for the location from the LoadManager
           // and push it to this Strategy's load processor.
@@ -464,7 +464,7 @@ TAO_LB_LeastLoaded::get_location (
 
           // ORBSVCS_DEBUG ((LM_DEBUG, "NEW MIN_LOAD == %f\n", min_load));
         }
-      catch (const CosLoadBalancing::LocationNotFound&)
+      catch (CosLoadBalancing::LocationNotFound const&)
         {
           // No load available for the requested location.  Try the
           // next location.

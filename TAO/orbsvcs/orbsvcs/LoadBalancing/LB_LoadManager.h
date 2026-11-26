@@ -275,7 +275,7 @@ private:
   /// the_criteria.
   int get_initial_number_replicas (
     char const *type_id,
-    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::Criteria const & the_criteria,
     CORBA::UShort & initial_number_replicas) const;
 
   /// Extract the value of the Factories property from the_criteria.
@@ -287,7 +287,7 @@ private:
    */
   int get_factory_infos (
     char const *type_id,
-    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::Criteria const & the_criteria,
     PortableGroup::FactoryInfos & factory_infos) const;
 
   /// Preprocess Strategy or CustomStrategy properties.
@@ -301,7 +301,7 @@ private:
   /// Create a built-in load balancing strategy and return a reference
   /// to it.
   CosLoadBalancing::Strategy_ptr make_strategy (
-    const CosLoadBalancing::StrategyInfo * info);
+    CosLoadBalancing::StrategyInfo const * info);
 
 private:
   CORBA::ORB_var orb_;

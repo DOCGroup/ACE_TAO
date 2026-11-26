@@ -91,7 +91,7 @@ TAO_LB_IORInterceptor::adapter_manager_state_changed (
 
 void
 TAO_LB_IORInterceptor::adapter_state_changed (
-    const PortableInterceptor::ObjectReferenceTemplateSeq &,
+    PortableInterceptor::ObjectReferenceTemplateSeq const &,
     PortableInterceptor::AdapterState state)
 {
   if (state == PortableInterceptor::ACTIVE)
@@ -143,7 +143,7 @@ TAO_LB_IORInterceptor::register_load_alert ()
       this->lm_->register_load_alert (location,
                                       this->la_ref_.in ());
     }
-  catch (const CosLoadBalancing::LoadAlertAlreadyPresent& ex)
+  catch (CosLoadBalancing::LoadAlertAlreadyPresent const& ex)
     {
       if (TAO_debug_level > 0)
       {
@@ -152,7 +152,7 @@ TAO_LB_IORInterceptor::register_load_alert ()
 
       throw CORBA::BAD_INV_ORDER ();
     }
-  catch (const CosLoadBalancing::LoadAlertNotAdded& ex)
+  catch (CosLoadBalancing::LoadAlertNotAdded const& ex)
     {
       if (TAO_debug_level > 0)
       {

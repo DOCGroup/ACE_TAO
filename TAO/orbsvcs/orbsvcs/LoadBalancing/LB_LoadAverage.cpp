@@ -154,7 +154,7 @@ TAO_LB_LoadAverage::push_loads (
 
 CosLoadBalancing::LoadList *
 TAO_LB_LoadAverage::get_loads (CosLoadBalancing::LoadManager_ptr load_manager,
-                               const PortableGroup::Location & the_location)
+                               PortableGroup::Location const & the_location)
 {
   if (CORBA::is_nil (load_manager))
   {
@@ -229,7 +229,7 @@ TAO_LB_LoadAverage::analyze_loads (
     {
       try
         {
-          const PortableGroup::Location & loc = locations[i];
+          PortableGroup::Location const & loc = locations[i];
 
           // Retrieve the load list for the location from the
           // LoadManager and push it to this Strategy's load
@@ -254,7 +254,7 @@ TAO_LB_LoadAverage::analyze_loads (
                        total_load.value));
           */
         }
-      catch (const CosLoadBalancing::LocationNotFound&)
+      catch (CosLoadBalancing::LocationNotFound const&)
         {
           // no location found
           //
@@ -274,7 +274,7 @@ TAO_LB_LoadAverage::analyze_loads (
     {
       try
         {
-          const PortableGroup::Location & loc = locations[j];
+          PortableGroup::Location const & loc = locations[j];
 
          /*
           ORBSVCS_DEBUG ((LM_DEBUG,
@@ -330,7 +330,7 @@ TAO_LB_LoadAverage::analyze_loads (
 
             }
         }
-      catch (const CosLoadBalancing::LocationNotFound&)
+      catch (CosLoadBalancing::LocationNotFound const&)
         {
           // no location found
           //

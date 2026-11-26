@@ -81,8 +81,8 @@ TAO_LB_LoadManager::~TAO_LB_LoadManager ()
 
 void
 TAO_LB_LoadManager::push_loads (
-    const PortableGroup::Location & the_location,
-    const CosLoadBalancing::LoadList & loads)
+    PortableGroup::Location const & the_location,
+    CosLoadBalancing::LoadList const & loads)
 {
   if (loads.length () == 0)
   {
@@ -143,7 +143,7 @@ TAO_LB_LoadManager::push_loads (
 }
 
 CosLoadBalancing::LoadList *
-TAO_LB_LoadManager::get_loads (const PortableGroup::Location & the_location)
+TAO_LB_LoadManager::get_loads (PortableGroup::Location const & the_location)
 {
   CosLoadBalancing::LoadList * tmp;
   ACE_NEW_THROW_EX (tmp,
@@ -172,7 +172,7 @@ TAO_LB_LoadManager::get_loads (const PortableGroup::Location & the_location)
 }
 
 void
-TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
+TAO_LB_LoadManager::enable_alert (PortableGroup::Location const & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
@@ -230,7 +230,7 @@ TAO_LB_LoadManager::enable_alert (const PortableGroup::Location & the_location)
 }
 
 void
-TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
+TAO_LB_LoadManager::disable_alert (PortableGroup::Location const & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX, guard, this->load_alert_lock_);
 
@@ -288,7 +288,7 @@ TAO_LB_LoadManager::disable_alert (const PortableGroup::Location & the_location)
 
 void
 TAO_LB_LoadManager::register_load_alert (
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     CosLoadBalancing::LoadAlert_ptr load_alert)
 {
   if (CORBA::is_nil (load_alert))
@@ -316,7 +316,7 @@ TAO_LB_LoadManager::register_load_alert (
 
 CosLoadBalancing::LoadAlert_ptr
 TAO_LB_LoadManager::get_load_alert (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -339,7 +339,7 @@ TAO_LB_LoadManager::get_load_alert (
 
 void
 TAO_LB_LoadManager::remove_load_alert (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   // Disable the "alert" status on the LoadAlert object since it will
   // no longer be associated with the LoadManager.  In particular,
@@ -358,7 +358,7 @@ TAO_LB_LoadManager::remove_load_alert (
 
 void
 TAO_LB_LoadManager::register_load_monitor (
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     CosLoadBalancing::LoadMonitor_ptr load_monitor)
 {
   if (CORBA::is_nil (load_monitor))
@@ -422,7 +422,7 @@ TAO_LB_LoadManager::register_load_monitor (
 
 CosLoadBalancing::LoadMonitor_ptr
 TAO_LB_LoadManager::get_load_monitor (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   ACE_GUARD_RETURN (TAO_SYNCH_MUTEX,
                     guard,
@@ -441,7 +441,7 @@ TAO_LB_LoadManager::get_load_monitor (
 
 void
 TAO_LB_LoadManager::remove_load_monitor (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   ACE_GUARD (TAO_SYNCH_MUTEX,
              guard,
@@ -475,7 +475,7 @@ TAO_LB_LoadManager::remove_load_monitor (
 
 void
 TAO_LB_LoadManager::set_default_properties (
-    const PortableGroup::Properties & props)
+    PortableGroup::Properties const & props)
 {
   PortableGroup::Properties new_props (props);
   this->preprocess_properties (new_props);
@@ -492,7 +492,7 @@ TAO_LB_LoadManager::get_default_properties ()
 
 void
 TAO_LB_LoadManager::remove_default_properties (
-    const PortableGroup::Properties & props)
+    PortableGroup::Properties const & props)
 {
   this->property_manager_.remove_default_properties (props);
 }
@@ -500,7 +500,7 @@ TAO_LB_LoadManager::remove_default_properties (
 void
 TAO_LB_LoadManager::set_type_properties (
     char const *type_id,
-    const PortableGroup::Properties & overrides)
+    PortableGroup::Properties const & overrides)
 {
   PortableGroup::Properties new_overrides (overrides);
   this->preprocess_properties (new_overrides);
@@ -520,7 +520,7 @@ TAO_LB_LoadManager::get_type_properties (
 void
 TAO_LB_LoadManager::remove_type_properties (
     char const *type_id,
-    const PortableGroup::Properties & props)
+    PortableGroup::Properties const & props)
 {
   this->property_manager_.remove_type_properties (type_id,
                                                   props);
@@ -529,7 +529,7 @@ TAO_LB_LoadManager::remove_type_properties (
 void
 TAO_LB_LoadManager::set_properties_dynamically (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Properties & overrides)
+    PortableGroup::Properties const & overrides)
 {
   PortableGroup::Properties new_overrides (overrides);
   this->preprocess_properties (new_overrides);
@@ -549,9 +549,9 @@ TAO_LB_LoadManager::get_properties (
 PortableGroup::ObjectGroup_ptr
 TAO_LB_LoadManager::create_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     char const *type_id,
-    const PortableGroup::Criteria & the_criteria)
+    PortableGroup::Criteria const & the_criteria)
 {
   return
     this->object_group_manager_.create_member (object_group,
@@ -563,7 +563,7 @@ TAO_LB_LoadManager::create_member (
 PortableGroup::ObjectGroup_ptr
 TAO_LB_LoadManager::add_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location,
+    PortableGroup::Location const & the_location,
     CORBA::Object_ptr member)
 {
   PortableGroup::ObjectGroup_var ret =
@@ -578,7 +578,7 @@ TAO_LB_LoadManager::add_member (
 PortableGroup::ObjectGroup_ptr
 TAO_LB_LoadManager::remove_member (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   return
     this->object_group_manager_.remove_member (object_group,
@@ -595,7 +595,7 @@ TAO_LB_LoadManager::locations_of_members (
 
 PortableGroup::ObjectGroups *
 TAO_LB_LoadManager::groups_at_location (
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   return
     this->object_group_manager_.groups_at_location (the_location);
@@ -627,7 +627,7 @@ PortableGroup::ObjectGroup_ptr TAO_LB_LoadManager::get_object_group_ref_from_id 
 CORBA::Object_ptr
 TAO_LB_LoadManager::get_member_ref (
     PortableGroup::ObjectGroup_ptr object_group,
-    const PortableGroup::Location & the_location)
+    PortableGroup::Location const & the_location)
 {
   return
     this->object_group_manager_.get_member_ref (object_group,
@@ -637,7 +637,7 @@ TAO_LB_LoadManager::get_member_ref (
 CORBA::Object_ptr
 TAO_LB_LoadManager::create_object (
     char const *type_id,
-    const PortableGroup::Criteria & the_criteria,
+    PortableGroup::Criteria const & the_criteria,
     PortableGroup::GenericFactory::FactoryCreationId_out
       factory_creation_id)
 {
@@ -656,14 +656,14 @@ TAO_LB_LoadManager::create_object (
 
 void
 TAO_LB_LoadManager::delete_object (
-    const PortableGroup::GenericFactory::FactoryCreationId &
+    PortableGroup::GenericFactory::FactoryCreationId const &
       factory_creation_id)
 {
   this->generic_factory_.delete_object (factory_creation_id);
 }
 
 CORBA::Object_ptr
-TAO_LB_LoadManager::next_member (const PortableServer::ObjectId & oid)
+TAO_LB_LoadManager::next_member (PortableServer::ObjectId const & oid)
 {
   PortableGroup::ObjectGroup_var object_group =
     this->object_group_manager_.object_group (oid);
@@ -910,7 +910,7 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
 
       else if (property.nam == this->built_in_balancing_strategy_info_name_)
         {
-          const CosLoadBalancing::StrategyInfo * info {};
+          CosLoadBalancing::StrategyInfo const * info {};
 
           if (property.val >>= info)
             {
@@ -947,7 +947,7 @@ TAO_LB_LoadManager::preprocess_properties (PortableGroup::Properties & props)
 }
 
 CosLoadBalancing::Strategy_ptr
-TAO_LB_LoadManager::make_strategy (const CosLoadBalancing::StrategyInfo * info)
+TAO_LB_LoadManager::make_strategy (CosLoadBalancing::StrategyInfo const * info)
 {
   /**
    * @todo We need a strategy factory.  This is just too messy.
