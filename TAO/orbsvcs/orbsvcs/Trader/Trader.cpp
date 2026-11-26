@@ -29,7 +29,7 @@ TAO_Trader_Base::import_attributes ()
   return this->import_attributes_;
 }
 
-const TAO_Import_Attributes_i &
+TAO_Import_Attributes_i const &
 TAO_Trader_Base::import_attributes () const
 {
   return this->import_attributes_;
@@ -41,7 +41,7 @@ TAO_Trader_Base::support_attributes ()
   return this->support_attributes_;
 }
 
-const TAO_Support_Attributes_i &
+TAO_Support_Attributes_i const &
 TAO_Trader_Base::support_attributes () const
 {
   return this->support_attributes_;
@@ -53,7 +53,7 @@ TAO_Trader_Base::link_attributes ()
   return this->link_attributes_;
 }
 
-const TAO_Link_Attributes_i &
+TAO_Link_Attributes_i const &
 TAO_Trader_Base::link_attributes () const
 {
   return this->link_attributes_;
@@ -65,7 +65,7 @@ TAO_Trader_Base::trading_components ()
   return this->trading_components_;
 }
 
-const TAO_Trading_Components_i &
+TAO_Trading_Components_i const &
 TAO_Trader_Base::trading_components () const
 {
   return this->trading_components_;

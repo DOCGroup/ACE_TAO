@@ -420,19 +420,19 @@ public:
 
   TAO_Trading_Components_i &trading_components ();
 
-  const TAO_Trading_Components_i &trading_components () const;
+  TAO_Trading_Components_i const &trading_components () const;
 
   TAO_Import_Attributes_i &import_attributes ();
 
-  const TAO_Import_Attributes_i &import_attributes () const;
+  TAO_Import_Attributes_i const &import_attributes () const;
 
   TAO_Support_Attributes_i &support_attributes ();
 
-  const TAO_Support_Attributes_i &support_attributes () const;
+  TAO_Support_Attributes_i const &support_attributes () const;
 
   TAO_Link_Attributes_i &link_attributes ();
 
-  const TAO_Link_Attributes_i &link_attributes () const;
+  TAO_Link_Attributes_i const &link_attributes () const;
 
   /**
    * Determine whether the identifier is a valid one (i.e., if the

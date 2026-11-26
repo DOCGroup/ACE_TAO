@@ -10,7 +10,7 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 template <class MAP_LOCK_TYPE>
 TAO_Register_Offer_Iterator<MAP_LOCK_TYPE>::
 TAO_Register_Offer_Iterator (TAO_Offer_Database<MAP_LOCK_TYPE> &db,
-                             const TAO_Property_Filter& pfilter)
+                             TAO_Property_Filter const& pfilter)
   : TAO_Offer_Iterator (pfilter),
     db_ (db)
 {

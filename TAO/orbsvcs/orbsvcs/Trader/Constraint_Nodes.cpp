@@ -287,7 +287,7 @@ TAO_Literal_Constraint::TAO_Literal_Constraint ()
 }
 
 TAO_Literal_Constraint::
-TAO_Literal_Constraint (const TAO_Literal_Constraint& lit)
+TAO_Literal_Constraint (TAO_Literal_Constraint const& lit)
   : TAO_Constraint(),
     type_ (TAO_UNKNOWN)
 {
@@ -428,7 +428,7 @@ TAO_Literal_Constraint::accept (TAO_Constraint_Visitor* visitor)
 }
 
 void
-TAO_Literal_Constraint::operator= (const TAO_Literal_Constraint& co)
+TAO_Literal_Constraint::operator= (TAO_Literal_Constraint const& co)
 {
   this->copy (co);
 }
@@ -593,8 +593,8 @@ TAO_Literal_Constraint::comparable_type (CORBA::TypeCode_ptr type)
 }
 
 bool
-operator== (const TAO_Literal_Constraint& left,
-            const TAO_Literal_Constraint& right)
+operator== (TAO_Literal_Constraint const& left,
+            TAO_Literal_Constraint const& right)
 {
   bool return_value {};
   TAO_Expression_Type const widest_type =
@@ -628,8 +628,8 @@ operator== (const TAO_Literal_Constraint& left,
 }
 
 bool
-operator< (const TAO_Literal_Constraint& left,
-           const TAO_Literal_Constraint& right)
+operator< (TAO_Literal_Constraint const& left,
+           TAO_Literal_Constraint const& right)
 {
   bool return_value {};
   TAO_Expression_Type const widest_type =
@@ -663,8 +663,8 @@ operator< (const TAO_Literal_Constraint& left,
 }
 
 bool
-operator> (const TAO_Literal_Constraint& left,
-           const TAO_Literal_Constraint& right)
+operator> (TAO_Literal_Constraint const& left,
+           TAO_Literal_Constraint const& right)
 {
   bool return_value {};
   TAO_Expression_Type const widest_type =
@@ -694,14 +694,14 @@ operator> (const TAO_Literal_Constraint& left,
 }
 
 bool
-operator== (CORBA::Double left, const TAO_Literal_Constraint& right)
+operator== (CORBA::Double left, TAO_Literal_Constraint const& right)
 {
   return ACE::is_equal (left, static_cast<CORBA::Double> (right));
 }
 
 bool
 operator== (const TAO::String_Manager& left,
-            const TAO_Literal_Constraint& right)
+            TAO_Literal_Constraint const& right)
 {
   bool result {};
 
@@ -714,8 +714,8 @@ operator== (const TAO::String_Manager& left,
 }
 
 TAO_Literal_Constraint
-operator+ (const TAO_Literal_Constraint& left,
-           const TAO_Literal_Constraint& right)
+operator+ (TAO_Literal_Constraint const& left,
+           TAO_Literal_Constraint const& right)
 {
   TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
@@ -746,8 +746,8 @@ operator+ (const TAO_Literal_Constraint& left,
 }
 
 TAO_Literal_Constraint
-operator- (const TAO_Literal_Constraint& left,
-           const TAO_Literal_Constraint& right)
+operator- (TAO_Literal_Constraint const& left,
+           TAO_Literal_Constraint const& right)
 {
   TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
@@ -778,8 +778,8 @@ operator- (const TAO_Literal_Constraint& left,
 }
 
 TAO_Literal_Constraint
-operator* (const TAO_Literal_Constraint& left,
-           const TAO_Literal_Constraint& right)
+operator* (TAO_Literal_Constraint const& left,
+           TAO_Literal_Constraint const& right)
 {
   TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
@@ -810,8 +810,8 @@ operator* (const TAO_Literal_Constraint& left,
 }
 
 TAO_Literal_Constraint
-operator/ (const TAO_Literal_Constraint& left,
-           const TAO_Literal_Constraint& right)
+operator/ (TAO_Literal_Constraint const& left,
+           TAO_Literal_Constraint const& right)
 {
   TAO_Expression_Type const widest_type =
     TAO_Literal_Constraint::widest_type (left, right);
@@ -857,7 +857,7 @@ operator/ (const TAO_Literal_Constraint& left,
 }
 
 TAO_Literal_Constraint
-operator- (const TAO_Literal_Constraint& operand)
+operator- (TAO_Literal_Constraint const& operand)
 {
   switch (operand.expr_type ())
     {
@@ -883,8 +883,8 @@ operator- (const TAO_Literal_Constraint& operand)
 }
 
 TAO_Expression_Type
-TAO_Literal_Constraint::widest_type (const TAO_Literal_Constraint& left,
-                                     const TAO_Literal_Constraint& right)
+TAO_Literal_Constraint::widest_type (TAO_Literal_Constraint const& left,
+                                     TAO_Literal_Constraint const& right)
 {
   TAO_Expression_Type left_type = left.expr_type (),
     right_type = right.expr_type (),
@@ -906,7 +906,7 @@ TAO_Literal_Constraint::widest_type (const TAO_Literal_Constraint& left,
 }
 
 void
-TAO_Literal_Constraint::copy (const TAO_Literal_Constraint& lit)
+TAO_Literal_Constraint::copy (TAO_Literal_Constraint const& lit)
 {
   if (this->type_ == TAO_STRING)
   {

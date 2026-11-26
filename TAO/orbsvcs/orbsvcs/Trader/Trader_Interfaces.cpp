@@ -89,7 +89,7 @@ query (char const *type,
     }
 
   // Retrieve the type description struct from the Service Type Repos.
-  const TAO_Support_Attributes_i& support_attrs =
+  TAO_Support_Attributes_i const& support_attrs =
     this->trader_.support_attributes ();
   CosTradingRepos::ServiceTypeRepository_ptr rep =
     support_attrs.service_type_repos ();
@@ -413,7 +413,7 @@ fill_receptacles (char const */* type */,
 template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 TAO_Offer_Iterator *
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
-create_offer_iterator (const TAO_Property_Filter& pfilter)
+create_offer_iterator (TAO_Property_Filter const& pfilter)
 {
   // This is the factory method that creates the appropriate type of
   // offer iterator. If there's no Register interface, then we can
@@ -515,7 +515,7 @@ template <class TRADER_LOCK_TYPE, class MAP_LOCK_TYPE>
 void
 TAO_Lookup<TRADER_LOCK_TYPE,MAP_LOCK_TYPE>::
 federated_query (const CosTrading::LinkNameSeq& links,
-                 const TAO_Policies& policies,
+                 TAO_Policies const& policies,
                  const CosTrading::Admin::OctetSeq& request_id,
                  TAO_Preference_Interpreter& pref_inter,
                  char const *type,
