@@ -16,7 +16,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handler (ACE_Event_Handle
 
 template <class ACE_SELECT_REACTOR_TOKEN>
 ACE_INLINE int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handler (const ACE_Handle_Set &handles)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::resume_handler (ACE_Handle_Set const &handles)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::resume_handler");
   ACE_Handle_Set_Iterator handle_iter (handles);
@@ -45,7 +45,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handler (ACE_Event_Handl
 
 template <class ACE_SELECT_REACTOR_TOKEN>
 ACE_INLINE int
-ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handler (const ACE_Handle_Set &handles)
+ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::suspend_handler (ACE_Handle_Set const &handles)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::suspend_handler");
   ACE_Handle_Set_Iterator handle_iter (handles);

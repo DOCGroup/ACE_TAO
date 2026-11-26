@@ -93,13 +93,13 @@ ACE_Event_Tuple::ACE_Event_Tuple (ACE_Event_Handler* eh,
 }
 
 ACE_INLINE bool
-ACE_Event_Tuple::operator== (const ACE_Event_Tuple &rhs) const
+ACE_Event_Tuple::operator== (ACE_Event_Tuple const &rhs) const
 {
   return this->handle_ == rhs.handle_;
 }
 
 ACE_INLINE bool
-ACE_Event_Tuple::operator!= (const ACE_Event_Tuple &rhs) const
+ACE_Event_Tuple::operator!= (ACE_Event_Tuple const &rhs) const
 {
   return !(*this == rhs);
 }

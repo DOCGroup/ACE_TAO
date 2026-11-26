@@ -90,10 +90,10 @@ public:
   ACE_Event_Tuple (ACE_Event_Handler *eh, ACE_HANDLE h);
 
   /// Equality operator.
-  bool operator== (const ACE_Event_Tuple &rhs) const;
+  bool operator== (ACE_Event_Tuple const &rhs) const;
 
   /// Inequality operator.
-  bool operator!= (const ACE_Event_Tuple &rhs) const;
+  bool operator!= (ACE_Event_Tuple const &rhs) const;
 
 public:
   /// Handle.

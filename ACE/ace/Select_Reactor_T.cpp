@@ -292,7 +292,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
-  (const ACE_Handle_Set &handles,
+  (ACE_Handle_Set const &handles,
    ACE_Event_Handler *handler,
    ACE_Reactor_Mask mask)
 {
@@ -323,7 +323,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::handler
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
-  (const ACE_Handle_Set &handles,
+  (ACE_Handle_Set const &handles,
    ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::remove_handler");
@@ -635,7 +635,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::~ACE_Select_Reactor_T ()
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
-  (const ACE_Handle_Set &handles,
+  (ACE_Handle_Set const &handles,
    ACE_Reactor_Mask mask)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::remove_handler_i");
@@ -656,7 +656,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i
-  (const ACE_Handle_Set &handles,
+  (ACE_Handle_Set const &handles,
    ACE_Event_Handler *handler,
    ACE_Reactor_Mask mask)
 {
@@ -677,7 +677,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler_i
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
-  (const ACE_Sig_Set &sigset,
+  (ACE_Sig_Set const &sigset,
    ACE_Event_Handler *new_sh,
    ACE_Sig_Action *new_disp)
 {
@@ -706,7 +706,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::register_handler
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler
-  (const ACE_Sig_Set &sigset)
+  (ACE_Sig_Set const &sigset)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::remove_handler");
   int result = 0;
@@ -746,7 +746,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (ACE_Event_Handler 
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (long timer_id,
-                                                              const void **arg,
+                                                              void const **arg,
                                                               int dont_call_handle_close)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::cancel_timer");
@@ -767,9 +767,9 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::cancel_timer (long timer_id,
 template <class ACE_SELECT_REACTOR_TOKEN> long
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
   (ACE_Event_Handler *handler,
-   const void *arg,
-   const ACE_Time_Value &delay_time,
-   const ACE_Time_Value &interval)
+   void const *arg,
+   ACE_Time_Value const &delay_time,
+   ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::schedule_timer");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
@@ -790,7 +790,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::schedule_timer
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::reset_timer_interval
   (long timer_id,
-   const ACE_Time_Value &interval)
+   ACE_Time_Value const &interval)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::reset_timer_interval");
   ACE_MT (ACE_GUARD_RETURN (ACE_SELECT_REACTOR_TOKEN, ace_mon, this->token_, -1));
@@ -1097,7 +1097,7 @@ ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::remove_handler_i
 
 template <class ACE_SELECT_REACTOR_TOKEN> int
 ACE_Select_Reactor_T<ACE_SELECT_REACTOR_TOKEN>::work_pending
-  (const ACE_Time_Value &max_wait_time)
+  (ACE_Time_Value const &max_wait_time)
 {
   ACE_TRACE ("ACE_Select_Reactor_T::work_pending");
 

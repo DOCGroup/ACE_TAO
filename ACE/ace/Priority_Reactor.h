@@ -84,8 +84,8 @@ private:
   ACE_Allocator* tuple_allocator_ {};
 
   /// Deny access since member-wise won't work...
-  ACE_Priority_Reactor (const ACE_Priority_Reactor &);
-  ACE_Priority_Reactor &operator = (const ACE_Priority_Reactor &);
+  ACE_Priority_Reactor (ACE_Priority_Reactor const &);
+  ACE_Priority_Reactor &operator = (ACE_Priority_Reactor const &);
 };
 
 ACE_END_VERSIONED_NAMESPACE_DECL

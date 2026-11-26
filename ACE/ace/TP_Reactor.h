@@ -61,8 +61,8 @@ public:
 private:
   bool dispatch_;
 
-  ACE_EH_Dispatch_Info (const ACE_EH_Dispatch_Info &) = delete;
-  ACE_EH_Dispatch_Info &operator= (const ACE_EH_Dispatch_Info &) = delete;
+  ACE_EH_Dispatch_Info (ACE_EH_Dispatch_Info const &) = delete;
+  ACE_EH_Dispatch_Info &operator= (ACE_EH_Dispatch_Info const &) = delete;
   ACE_EH_Dispatch_Info (ACE_EH_Dispatch_Info &&) = delete;
   ACE_EH_Dispatch_Info &operator= (ACE_EH_Dispatch_Info &&) = delete;
 };
@@ -109,8 +109,8 @@ public:
 
 private:
   ACE_TP_Token_Guard () = delete;
-  ACE_TP_Token_Guard (const ACE_TP_Token_Guard &) = delete;
-  ACE_TP_Token_Guard &operator= (const ACE_TP_Token_Guard &) = delete;
+  ACE_TP_Token_Guard (ACE_TP_Token_Guard const &) = delete;
+  ACE_TP_Token_Guard &operator= (ACE_TP_Token_Guard const &) = delete;
   ACE_TP_Token_Guard (ACE_TP_Token_Guard &&) = delete;
   ACE_TP_Token_Guard &operator= (ACE_TP_Token_Guard &&) = delete;
 
