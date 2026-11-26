@@ -56,7 +56,7 @@ ACE_OS::sendfile_emulation (ACE_HANDLE out_fd,
 
 #if defined (ACE_WIN32)
   ssize_t const r =
-    ACE_OS::send (out_fd, static_cast<const char *> (buf), count);
+    ACE_OS::send (out_fd, static_cast<char const *> (buf), count);
 #else
   ssize_t const r = ACE_OS::write (out_fd, buf, count);
 #endif /* ACE_WIN32 */

@@ -44,14 +44,14 @@ namespace ACE_OS
               fd_set *rfds,
               fd_set *wfds = nullptr,
               fd_set *efds = nullptr,
-              const ACE_Time_Value *tv = nullptr);
+              ACE_Time_Value const *tv = nullptr);
 
   ACE_NAMESPACE_INLINE_FUNCTION
   int select (int width,
               fd_set *rfds,
               fd_set *wfds,
               fd_set *efds,
-              const ACE_Time_Value &tv);
+              ACE_Time_Value const &tv);
 } /* namespace ACE_OS */
 
 ACE_END_VERSIONED_NAMESPACE_DECL

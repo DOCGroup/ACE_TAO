@@ -13,7 +13,7 @@ namespace ACE_OS
 {
 
   ACE_INLINE ACE_HANDLE
-  creat (const ACE_TCHAR *filename, mode_t mode)
+  creat (ACE_TCHAR const *filename, mode_t mode)
   {
     ACE_OS_TRACE ("ACE_OS::creat");
 #if defined (ACE_WIN32) || defined (ACE_MQX)
@@ -102,7 +102,7 @@ namespace ACE_OS
   }
 
   ACE_INLINE ACE_OFF_T
-  filesize (const ACE_TCHAR *filename)
+  filesize (ACE_TCHAR const *filename)
   {
     ACE_OS_TRACE ("ACE_OS::filesize");
 
@@ -126,7 +126,7 @@ namespace ACE_OS
   }
 
   ACE_INLINE int
-  lstat (const char *file, ACE_stat *stp)
+  lstat (char const *file, ACE_stat *stp)
   {
     ACE_OS_TRACE ("ACE_OS::lstat");
 # if defined (ACE_LACKS_LSTAT)
@@ -150,7 +150,7 @@ namespace ACE_OS
 #endif /* ACE_HAS_WCHAR */
 
   ACE_INLINE int
-  mkdir (const char *path, mode_t mode)
+  mkdir (char const *path, mode_t mode)
   {
 #if defined (ACE_LACKS_MKDIR)
     ACE_UNUSED_ARG (path);
@@ -184,7 +184,7 @@ namespace ACE_OS
 #endif /* ACE_HAS_WCHAR */
 
   ACE_INLINE int
-  mkfifo (const ACE_TCHAR *file, mode_t mode)
+  mkfifo (ACE_TCHAR const *file, mode_t mode)
   {
     ACE_OS_TRACE ("ACE_OS::mkfifo");
 #if defined (ACE_LACKS_MKFIFO)
@@ -197,7 +197,7 @@ namespace ACE_OS
   }
 
   ACE_INLINE int
-  stat (const char *file, ACE_stat *stp)
+  stat (char const *file, ACE_stat *stp)
   {
     ACE_OS_TRACE ("ACE_OS::stat");
 #if defined (ACE_LACKS_STAT)

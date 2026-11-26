@@ -10,7 +10,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 ACE_INLINE int
 ACE_OS::select (int width,
                 fd_set *rfds, fd_set *wfds, fd_set *efds,
-                const ACE_Time_Value *timeout)
+                ACE_Time_Value const *timeout)
 {
   ACE_OS_TRACE ("ACE_OS::select");
 #if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
@@ -46,7 +46,7 @@ ACE_OS::select (int width,
 ACE_INLINE int
 ACE_OS::select (int width,
                 fd_set *rfds, fd_set *wfds, fd_set *efds,
-                const ACE_Time_Value &timeout)
+                ACE_Time_Value const &timeout)
 {
   ACE_OS_TRACE ("ACE_OS::select");
 #if defined (ACE_HAS_NONCONST_SELECT_TIMEVAL)
