@@ -56,10 +56,10 @@ public:
    * position. Profile reference counts are incremented for each copied
    * profile.
    */
-  TAO_MProfile (const TAO_MProfile &mprofiles);
+  TAO_MProfile (TAO_MProfile const &mprofiles);
 
   /// Assigment operator.
-  TAO_MProfile& operator= (const TAO_MProfile& mprofiles);
+  TAO_MProfile& operator= (TAO_MProfile const& mprofiles);
 
   /// Destructor: decrements reference count on all references
   /// profiles!
@@ -70,7 +70,7 @@ public:
   int set (CORBA::ULong sz);
 
   /// Copies the used profiles from @a mprofile. NOT THREAD SAFE.
-  int set (const TAO_MProfile &mprofile);
+  int set (TAO_MProfile const &mprofile);
 
   /// increase the number of profiles this object can hold.
   /// NOT THREAD SAFE
@@ -111,7 +111,7 @@ public:
 
   /// Return the profile at position @a slot.  If @a slot is out of range
   /// it returns 0.
-  const TAO_Profile* get_profile (CORBA::ULong slot) const;
+  TAO_Profile const* get_profile (CORBA::ULong slot) const;
 
   /// Sets the current slot back to 0.
   void rewind ();
@@ -129,10 +129,10 @@ public:
   int add_profiles (TAO_MProfile *pfiles);
 
   /// remove from this MProfile any profiles which also appear in pfiles.
-  int remove_profile (const TAO_Profile *pfile);
+  int remove_profile (TAO_Profile const *pfile);
 
   /// remove from this MProfile any profiles which also appear in pfiles.
-  int remove_profiles (const TAO_MProfile *pfiles);
+  int remove_profiles (TAO_MProfile const *pfiles);
 
   /// Set a pointer to the MProfile whose 'current' TAO_Profile was
   /// forwarded This object is the set of forwarding profiles.
@@ -147,7 +147,7 @@ public:
    * NON-THREAD SAFE, relies on some other entity to guarentee
    * the profiles will not change during the call.
    */
-  CORBA::Boolean is_equivalent (const TAO_MProfile *rhs);
+  CORBA::Boolean is_equivalent (TAO_MProfile const *rhs);
 
   /**
    * use all registered profiles.  The hash() method is called on each

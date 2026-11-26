@@ -641,7 +641,7 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   bool
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_available_i (const HASH_MAP_ENTRY &entry)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_available_i (HASH_MAP_ENTRY const &entry)
   {
     Cache_Entries_State const entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_IDLE_AND_PURGABLE);
@@ -690,7 +690,7 @@ namespace TAO
 
   template <typename TT, typename TRDT, typename PSTRAT>
   bool
-  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_connecting_i (const HASH_MAP_ENTRY &entry)
+  Transport_Cache_Manager_T<TT, TRDT, PSTRAT>::is_entry_connecting_i (HASH_MAP_ENTRY const &entry)
   {
     Cache_Entries_State const entry_state = entry.int_id_.recycle_state ();
     bool result = (entry_state == ENTRY_CONNECTING);

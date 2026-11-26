@@ -250,12 +250,12 @@ namespace TAO
     /**
      * Tries to find if the @c int_id_ in @a entry is available for use.
      */
-    bool is_entry_available_i (const HASH_MAP_ENTRY &entry);
+    bool is_entry_available_i (HASH_MAP_ENTRY const &entry);
 
     /**
      * Tries to find if the @c int_id_ in @a entry is connect pending
      */
-    bool is_entry_connecting_i (const HASH_MAP_ENTRY &entry);
+    bool is_entry_connecting_i (HASH_MAP_ENTRY const &entry);
 
     /**
      * Tries to find if the @c int_id_ in @a entry is purgable

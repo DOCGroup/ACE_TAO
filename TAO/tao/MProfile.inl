@@ -8,13 +8,13 @@ TAO_MProfile::TAO_MProfile (CORBA::ULong sz)
 }
 
 ACE_INLINE
-TAO_MProfile::TAO_MProfile (const TAO_MProfile &mprofiles)
+TAO_MProfile::TAO_MProfile (TAO_MProfile const &mprofiles)
 {
   this->set (mprofiles);
 }
 
 ACE_INLINE TAO_MProfile&
-TAO_MProfile::operator= (const TAO_MProfile& rhs)
+TAO_MProfile::operator= (TAO_MProfile const& rhs)
 {
   if (this == std::addressof (rhs))
     {
@@ -203,7 +203,7 @@ TAO_MProfile::size () const
   return static_cast<CORBA::ULong> (this->pfiles_.size ());
 }
 
-ACE_INLINE const TAO_Profile*
+ACE_INLINE TAO_Profile const*
 TAO_MProfile::get_profile (CORBA::ULong slot) const
 {
   if (slot >= this->last_)

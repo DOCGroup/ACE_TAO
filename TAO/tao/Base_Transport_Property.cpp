@@ -30,7 +30,7 @@ TAO_Base_Transport_Property::duplicate ()
 
 CORBA::Boolean
 TAO_Base_Transport_Property::is_equivalent
-  (const TAO_Transport_Descriptor_Interface *rhs)
+  (TAO_Transport_Descriptor_Interface const *rhs)
 {
   TAO_Base_Transport_Property const *other_desc =
     dynamic_cast<TAO_Base_Transport_Property const *> (rhs);

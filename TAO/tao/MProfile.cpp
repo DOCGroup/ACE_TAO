@@ -95,7 +95,7 @@ TAO_MProfile::set (CORBA::ULong sz)
 }
 
 int
-TAO_MProfile::set (const TAO_MProfile &mprofile)
+TAO_MProfile::set (TAO_MProfile const &mprofile)
 {
   // Copy only the used profiles, not the source's unused capacity.
   if (this->set (mprofile.last_) < 0)
@@ -214,7 +214,7 @@ TAO_MProfile::add_profiles (TAO_MProfile *pfiles)
 // { _, _, _, _, ..., _}
 //
 int
-TAO_MProfile::remove_profile (const TAO_Profile *pfile)
+TAO_MProfile::remove_profile (TAO_Profile const *pfile)
 {
   bool found {};
   for (TAO_PHandle h {}; h < this->last_; ++h)
@@ -245,7 +245,7 @@ TAO_MProfile::remove_profile (const TAO_Profile *pfile)
 }
 
 int
-TAO_MProfile::remove_profiles (const TAO_MProfile *pfiles)
+TAO_MProfile::remove_profiles (TAO_MProfile const *pfiles)
 {
   for (TAO_PHandle h {}; h < pfiles->last_; ++h)
     {
@@ -258,7 +258,7 @@ TAO_MProfile::remove_profiles (const TAO_MProfile *pfiles)
 }
 
 CORBA::Boolean
-TAO_MProfile::is_equivalent (const TAO_MProfile *rhs)
+TAO_MProfile::is_equivalent (TAO_MProfile const *rhs)
 {
   // Two profile lists are equivalent if at least one of the profiles
   // from the first list is_equivalent to at least one of the profiles
