@@ -8,14 +8,15 @@
 #include "ace/OS_NS_strings.h"
 #include "ace/OS_NS_stdlib.h"
 
+#include "tao/ORBInitializer_Registry.h"
 #include "tao/Strategies/advanced_resource.h"
 
-const ACE_TCHAR *ior_output_file = ACE_TEXT("test.ior");
+ACE_TCHAR const *ior_output_file = ACE_TEXT("test.ior");
 
 CORBA::Float reject_threshold = 0;
 CORBA::Float critical_threshold = 0;
 CORBA::Float dampening = 0;
-const char * strategy = "Random";
+ACE_TCHAR const *strategy = ACE_TEXT ("Random");
 int num_threads = 1;
 
 int
@@ -128,9 +129,9 @@ join_object_group (CORBA::ORB_ptr orb,
 
           CosLoadBalancing::StrategyInfo strategy_info;
 
-          strategy_info.name = CORBA::string_dup (strategy);
+          strategy_info.name = CORBA::string_dup (ACE_TEXT_ALWAYS_CHAR (strategy));
 
-          if (ACE_OS::strcasecmp (strategy, "LeastLoaded") == 0
+          if (ACE_OS::strcasecmp (strategy, ACE_TEXT ("LeastLoaded")) == 0
               && (reject_threshold != 0
                   || critical_threshold != 0
                   || dampening != 0))
