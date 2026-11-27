@@ -191,12 +191,12 @@ public:
 
 protected:
   /// Get the availability status
-  /// @note must be called with locks held
+  /// @note Must be called with locks held
   DsLogAdmin::AvailabilityStatus
   get_availability_status_i ();
 
   /// Tells if the Log is scheduled to run now.
-  /// @note must be called with locks held
+  /// @note Must be called with locks held
   CORBA::Boolean scheduled ();
 
   /// Copy the attributes of the log being passed.

@@ -72,7 +72,7 @@ class ACE_Reactor;
  * terminated process cleanup code, call one of the wait functions
  * whenever there might be managed processes that have exited.
  *
- * @note in either case, ACE_Process_Manager allows you to
+ * @note In either case, ACE_Process_Manager allows you to
  * register an ACE_Event_Handler to be called when a specific
  * spawned process exits, or when any process without a specific
  * ACE_Event_Handler exits.  When a process exits, the

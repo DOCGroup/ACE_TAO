@@ -109,7 +109,7 @@ private:
  * method.  Then, the object can deactivate itself by doing
  * this->deactivator_.deactivate ()
  *
- * @note deactivation does NOT happen automatically, and must be
+ * @note Deactivation does NOT happen automatically, and must be
  * explicitly initiated as described above.
  */
 class TAO_RTEvent_Serv_Export TAO_EC_Deactivated_Object

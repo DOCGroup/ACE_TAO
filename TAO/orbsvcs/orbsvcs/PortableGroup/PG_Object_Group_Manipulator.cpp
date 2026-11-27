@@ -111,7 +111,7 @@ int TAO::PG_Object_Group_Manipulator::set_primary (
   {
     (void)this->iorm_->remove_primary_tag (prop, group);
   }
-  /// @note iorm takes it's parameters in the "wrong" order for this call
+  /// @note The IOR manipulator takes its parameters in the "wrong" order for this call
   return this->iorm_->set_primary (prop, new_primary, group);
 }
 

@@ -7,7 +7,7 @@
  *    The first test illustrates the notification mechanisms in
  *    Message_Queue and its integration with Reactor.
  *
- *    @note the following things about this part of the test:
+ *    @note The following things about this part of the test:
  *
  *    1. Multiple threads are not required.
  *    2. You do not have to explicitly notify the Reactor

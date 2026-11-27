@@ -424,7 +424,7 @@ class ACE_Malloc_FIFO_Iterator_T;
  *   - void *base_addr ()
  *   - seh_selector() (only needed on Windows)
  *
- * @note the ACE_Allocator_Adapter class can be used to integrate allocator
+ * @note The ACE_Allocator_Adapter class can be used to integrate allocator
  * classes which do not meet the interface requirements of ACE_Malloc_T.
  *
  * @note The bind() and find() methods use linear search, so

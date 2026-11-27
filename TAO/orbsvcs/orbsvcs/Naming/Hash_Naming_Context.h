@@ -198,7 +198,7 @@ public:
    * bindings in which the given context is bound to some names, to
    * avoid dangling references when invoking @c destroy operation.
    * @note @c destroy is a no-op on the root context.
-   * @note after @c destroy is invoked on a Naming Context, all
+   * @note After @c destroy is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
   void destroy () override;
@@ -254,7 +254,7 @@ protected:
 
   /**
    * ID with which we are registered with @c poa_.
-   * @note if @c poa_id_ is equivalent to TAO_ROOT_NAMING_CONTEXT, then this Naming Context
+   * @note If @c poa_id_ is equivalent to TAO_ROOT_NAMING_CONTEXT, then this Naming Context
    * is the root Naming Context for the server, i.e., it is un@c destroyable.
    */
   ACE_CString poa_id_;

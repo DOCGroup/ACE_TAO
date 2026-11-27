@@ -44,7 +44,7 @@ public:
    *                    the connected socket. That is, if @c remote_sap
    *                    contains an IPv6 address, a socket with family
    *                    PF_INET6 will be used, else it will be PF_INET.
-   *                    @note remote_sap must be an address on the local
+   *                    @note The @a remote_sap must be an address on the local
    *                    host.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
    *                    of time to wait to connect. If the pointer is 0
@@ -89,7 +89,7 @@ public:
    *                    the connected socket. That is, if @c remote_sap
    *                    contains an IPv6 address, a socket with family
    *                    PF_INET6 will be used, else it will be PF_INET.
-   *                    @note remote_sap must be an address on the local
+   *                    @note The @a remote_sap must be an address on the local
    *                    host.
    * @param timeout     Pointer to an @c ACE_Time_Value object with amount
    *                    of time to wait to connect. If the pointer is 0

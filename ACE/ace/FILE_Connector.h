@@ -23,7 +23,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
  *
  * @brief Defines an active connection factory for the ACE_FILE wrappers.
  *
- * @note the O_APPEND flag is only partly supported on Win32. If
+ * @note The O_APPEND flag is only partly supported on Win32. If
  * you specify O_APPEND, then the file pointer will be positioned at
  * the end of the file initially during open, but it is not
  * re-positioned at the end prior to each write, as specified by

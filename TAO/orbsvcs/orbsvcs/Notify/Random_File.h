@@ -50,7 +50,7 @@ public:
   bool open (ACE_TCHAR const *filename, size_t const block_size = 512);
 
   /// Accessor for the block size.
-  /// @note signed size_t is used to be compatible with
+  /// @note Signed size_t is used to be compatible with
   /// ACE_FILE.
   size_t block_size () const;
 

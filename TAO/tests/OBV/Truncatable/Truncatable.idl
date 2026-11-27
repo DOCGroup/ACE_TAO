@@ -77,7 +77,7 @@ module OBV_TruncatableTest
   interface Test
   {
 
-    /// @note the "desc" parameter helps verify that truncated values are skipped properly.
+    /// @note The "desc" parameter helps verify that truncated values are skipped properly.
     /// the output is "id: input description"
     void op1 (in string id, in BaseValue iv, out BaseValue ov, inout string desc);
     void op2 (in TValue1 iv, in string id, out TValue1 ov, inout string desc);

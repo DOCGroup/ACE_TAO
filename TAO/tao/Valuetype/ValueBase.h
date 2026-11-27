@@ -166,7 +166,7 @@ namespace CORBA
     /// Give the list of the RepositoryIds in the valuetype "truncatable"
     /// inheritance hierarchy. List the id of this valuetype as first
     /// RepositoryID and go up the "truncatable" derivation hierarchy.
-    /// @note the truncatable repo ids only list the truncatable base types
+    /// @note The truncatable repo ids only list the truncatable base types
     /// to which this type is safe to truncate, not all its parents.
     virtual void _tao_obv_truncatable_repo_ids (Repository_Id_List &) const = 0;
 

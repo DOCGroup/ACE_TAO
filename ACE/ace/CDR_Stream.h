@@ -300,7 +300,7 @@ public:
 
   /// @}
 
-  /// @note the portion written starts at @a x and ends
+  /// @note The portion written starts at @a x and ends
   ///    at @a x + @a length.
   /// The length is *NOT* stored into the CDR stream.
   /// @name Array write operations

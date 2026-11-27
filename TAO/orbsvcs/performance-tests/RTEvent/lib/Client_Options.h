@@ -18,7 +18,7 @@
 
 /// Parse the command-line client_options for the tests.
 /**
- * @note some of the tests ignore some of the client_options, but it is
+ * @note Some of the tests ignore some of the client_options, but it is
  * easier to have them all in a single class.
  */
 class TAO_RTEC_Perf_Export Client_Options

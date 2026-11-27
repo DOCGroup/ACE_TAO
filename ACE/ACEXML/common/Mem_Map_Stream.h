@@ -134,7 +134,7 @@ public:
    *       of the stream plus @a offset.
    *
    *  If @a offset is greater than EOF, both positions are set to EOF.
-   *  @note special return value is returned to indicate this condition.
+   *  @note Special return value is returned to indicate this condition.
    */
   virtual ACE_OFF_T seek (ACE_OFF_T offset, int whence = SEEK_CUR);
 

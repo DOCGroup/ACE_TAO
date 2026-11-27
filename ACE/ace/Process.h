@@ -216,7 +216,7 @@ public:
   /// same as the single string in the prior case and can be obtained by
   /// providing max_len. @arg max_len, if non-zero, provides a location
   /// into which the total length of the command line buffer is returned.
-  /// @note spawn() calls command_line_argv().
+  /// @note The spawn() method calls command_line_argv().
   ACE_TCHAR *command_line_buf (size_t *max_len = nullptr);
 
   /**

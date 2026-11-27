@@ -325,7 +325,7 @@ public:
    * bindings in which the given context is bound to some names, to
    * avoid dangling references when invoking @c destroy operation.
    * @note @c destroy is a no-op on the root context.
-   * @note after @c destroy is invoked on a Naming Context, all
+   * @note After @c destroy is invoked on a Naming Context, all
    * BindingIterators associated with that Naming Context are also destroyed.
    */
   void destroy () override;

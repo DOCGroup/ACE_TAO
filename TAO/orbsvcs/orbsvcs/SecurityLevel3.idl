@@ -1080,7 +1080,7 @@ module SecurityLevel3 {
         /**
          * The principal attribute contains a local view of the
          * Principal that the Credentials intend to represent.
-         * @note during context establishment, the actual establish
+         * @note During context establishment, the actual establish
          * client principal may be represented differently, especially
          * with respect to environmental attributes. Some environmental
          * attributes are a direct result of context establishment.
@@ -1146,7 +1146,7 @@ module SecurityLevel3 {
         /**
          * The principal attribute contains a local view of the
          * Principal that the Credentials intend to represent.
-         * @note during context establishment, the actual establish
+         * @note During context establishment, the actual establish
          * target principal may be represented differently, especially
          * with respect to environmental attributes. Some environmental
          * attributes are a direct result of context establishment.
@@ -1551,7 +1551,7 @@ module SecurityLevel3 {
      *       The credentials must be
      *       IT_Simple, IT_Quoting, or IT_Proxy own credentials
      *       that supports endorsement.
-     *       @note a Initiator Credentials that is a IT_Proxy
+     *       @note An Initiator Credentials object that is an IT_Proxy
      *       may have an endorsement statement that not only
      *       endorses this immediate client, but may very well
      *       apply to the next target.

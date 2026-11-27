@@ -52,7 +52,7 @@ class ACE_Export ACE_Synch_Options
 public:
   /// Options flags for controlling synchronization.
   /**
-   * @note these flags can be bit-wise "or'd" together if both
+   * @note These flags can be bit-wise "or'd" together if both
    * options are desired.
    */
   enum

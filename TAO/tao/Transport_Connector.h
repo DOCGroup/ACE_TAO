@@ -190,7 +190,7 @@ protected:
   bool new_connection_is_ok (size_t busy_count);
 
   /// Wait for a transport to be connected
-  /// @note no longer changes transport reference count
+  /// @note This no longer changes the transport reference count.
   /// @retval true if wait was uneventful
   /// @retval false if error occurred during wait
   bool wait_for_transport (TAO::Profile_Transport_Resolver *r,

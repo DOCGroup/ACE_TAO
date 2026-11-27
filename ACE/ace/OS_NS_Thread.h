@@ -872,7 +872,7 @@ public:
    * address on success.  Returns 0 if local TSS had already been
    * setup for this thread.  There is no corresponding tss_close ()
    * because it is not needed.
-   * @note tss_open () is called by ACE for threads that it spawns.
+   * @note The tss_open() function is called by ACE for threads that it spawns.
    * If your application spawns threads without using ACE, and it uses
    * ACE's TSS emulation, each of those threads should call tss_open
    * ().  See the ace_thread_adapter () implementation for an example.
@@ -1331,7 +1331,7 @@ namespace ACE_OS {
    * acquired within the given amount of time, then this method
    * returns -1 with an @c ETIME errno on platforms that actually
    * support timed mutexes.  The timeout should be an absolute time.
-   * @note the mutex should not be a recursive one, i.e., it
+   * @note The mutex should not be a recursive one, i.e., it
    * should only be a standard mutex or an error checking mutex since
    * some implementations of this method don't support recursive
    * mutexes.  If you want to use a recursive mutex see the methods

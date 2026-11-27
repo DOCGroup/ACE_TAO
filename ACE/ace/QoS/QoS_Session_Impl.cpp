@@ -609,7 +609,7 @@ ACE_RAPI_Session::init_tspec_simplified (ACE_Flow_Spec const &flow_spec)
 }
 
 /// Construct a simplified RAPI flowspec object from ACE_Flow_Spec.
-/// @note the form of the FlowSpec is simplified as against the
+/// @note The form of the FlowSpec is simplified as against the
 /// full bodied IntServ version.
 rapi_flowspec_t *
 ACE_RAPI_Session::init_flowspec_simplified (ACE_Flow_Spec const &flow_spec)

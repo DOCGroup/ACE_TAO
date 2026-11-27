@@ -32,7 +32,7 @@
  * #endif
  * @endcode
  *
- * @note support for annotations and anonymous types in IDL4 predate this
+ * @note Support for annotations and anonymous types in IDL4 predate this
  * file, so they are a potential special case depending on what ACE/TAO is
  * being used.
  */

@@ -188,7 +188,7 @@ module CosNaming
       /// @name Deleting contexts
       /// @{
 
-      /// Delete the naming context.  @note the user should @c unbind()
+      /// Delete the naming context.  @note The user should @c unbind()
       /// any bindings in which the given context is bound to some
       /// names before invoking @c destroy() operation on it.
       void destroy ()

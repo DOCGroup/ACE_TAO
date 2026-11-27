@@ -191,7 +191,7 @@ public:
    * end_reactor_event_loop() method is invoked, or the ACE_Time_Value
    * expires while the underlying event demultiplexer is waiting for
    * events.
-   * @note it is possible for events to continuously be available,
+   * @note It is possible for events to continuously be available,
    * avoiding the need to wait for events. In this situation the timeout
    * value will not have an opportunity to expire until the next time
    * the underlying event demultiplexer waits for events.
@@ -465,7 +465,7 @@ public:
    * Install the new disposition (if given) and return the previous
    * disposition (if desired by the caller).
    *
-   * @note the registered handler's ACE_Event_Handler::handle_close ()
+   * @note The registered handler's ACE_Event_Handler::handle_close ()
    * callback will be called to indicate the signal handler has been removed.
    * Unlike with I/O handles, there is no way to prevent this callback. The
    * handle_close() callback can check the passed mask for the value

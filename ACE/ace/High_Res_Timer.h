@@ -193,7 +193,7 @@ public:
   void elapsed_time_incr (ACE_hrtime_t &nanoseconds) const;
 
   /// Print total time.
-  /// @note only use @c print_total if incremental timings had been used!
+  /// @note Only use @c print_total if incremental timings had been used!
   void print_total (ACE_TCHAR const *message,
                     int const iterations = 1,
                     ACE_HANDLE handle = ACE_STDOUT) const;

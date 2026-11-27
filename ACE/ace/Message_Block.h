@@ -145,7 +145,7 @@ public:
    * Create an ACE_Message_Block that refers to @a data without
    * copying it. The @a data memory will not be freed when this block is
    * destroyed; memory management of @a data is left to the caller.
-   * @note the @c size of the new ACE_Message_Block will be @a size, but
+   * @note The @c size of the new ACE_Message_Block will be @a size, but
    * the @c length will be 0 until the write pointer is changed.
    */
   explicit ACE_Message_Block (char const *data,
@@ -244,7 +244,7 @@ public:
   /**
    * Delete all the resources held in the message.
    *
-   * @note release() is designed to release the continuation
+   * @note The release() method is designed to release the continuation
    * chain; the destructor is not. See release() for details.
    */
   virtual ~ACE_Message_Block ();

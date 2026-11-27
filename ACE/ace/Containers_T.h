@@ -610,7 +610,7 @@ protected:
   /**
    * Move to the first element of the list. Returns 0 if the list is
    * empty, else 1.
-   * @note the head of the ACE_DLList is actually a null entry, so the
+   * @note The head of the ACE_DLList is actually a null entry, so the
    * first element is actually the 2n'd entry
    */
   int go_head ();

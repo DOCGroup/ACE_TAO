@@ -46,7 +46,7 @@ valuetype Event
 
 /// Derived Events
 ///
-/// @note do_print () is overridden in the implementation. We can't
+/// @note The do_print() method is overridden in the implementation. We can't
 /// tell this in IDL, because operations can't be declared again.
 /// They are implicit assumed to be polymorph.
 valuetype Temperature : Event

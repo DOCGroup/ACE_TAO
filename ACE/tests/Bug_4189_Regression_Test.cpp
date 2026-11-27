@@ -45,7 +45,8 @@ int reuseAddr_test ()
 }
 
 /* \brief Thread main function to run run_receiver function
-   @note run_receiver return valu is stored in receiver_exit_code global variable
+   @note The run_receiver() return value is stored in the receiver_exit_code
+   global variable.
 */
 static ACE_THR_FUNC_RETURN run_thread_receiver (void *)
 {

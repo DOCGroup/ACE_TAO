@@ -14,7 +14,7 @@
  *  in the line above @c \#include "ace/Log_Msg.h".  That's the approach shown below.
  *
  *  Another option is to add this line in $ACE_ROOT/ace/config.h.
- *  @note however, that if you add the line in config.h, you need to
+ *  @note However, if you add the line in config.h, you need to
  *  add it *after* you've built ACE, i.e., don't build ACE with it
  *  set to 0 as then you will get all the internal ACE_TRACE calls
  *  showing up as well!  In a nutshell, in this second option you

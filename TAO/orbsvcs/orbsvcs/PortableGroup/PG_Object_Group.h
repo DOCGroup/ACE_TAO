@@ -139,7 +139,7 @@ namespace TAO
     PortableGroup::ObjectGroup_ptr reference() const;
 
     /**
-     * @note the caller receives a copy of the factoryinfos in the result argument.
+     * @note The caller receives a copy of the factoryinfos in the result argument.
      * inefficient, but thread safe.
      */
     void get_group_specific_factories (PortableGroup::FactoryInfos & result) const;

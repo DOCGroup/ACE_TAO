@@ -71,7 +71,7 @@ public:
   static constexpr size_t SHORT_ALIGN = 2;
   static constexpr size_t LONG_ALIGN = 4;
   static constexpr size_t LONGLONG_ALIGN = 8;
-  /// @note the CORBA LongDouble alignment requirements do not
+  /// @note The CORBA LongDouble alignment requirements do not
   /// match its size...
   static constexpr size_t LONGDOUBLE_ALIGN = 8;
 

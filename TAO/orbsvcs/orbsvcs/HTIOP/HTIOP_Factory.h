@@ -84,7 +84,7 @@ namespace TAO
 
 TAO_END_VERSIONED_NAMESPACE_DECL
 
-/// @note these declarations are placed outside of the scope of the
+/// @note These declarations are placed outside of the scope of the
 /// namespace. The generated functions use a C style signature which does
 /// not accommodate namespaces, so assuming namespace concatenation is an
 /// error. The service class name should be composed of a flattened class
