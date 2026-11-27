@@ -84,14 +84,14 @@ public:
   int tryacquire_write_upgrade ();
 
   /**
-   * @note for interface uniformity with other synchronization
+   * @note For interface uniformity with other synchronization
    * wrappers we include the @c acquire method.  This is implemented as
    * a write-lock to safe...
    */
   int acquire ();
 
   /**
-   * @note for interface uniformity with other synchronization
+   * @note For interface uniformity with other synchronization
    * wrappers we include the tryacquire() method.  This is implemented
    * as a write-lock to be safe...  Returns -1 on failure.  If we
    * "failed" because someone else already had the lock, @c errno is

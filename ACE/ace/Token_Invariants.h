@@ -118,7 +118,7 @@ private:
  * invariants are always satisfied.  Currently, Token_Invariants
  * can test mutexes and readers/writer locks.  Does not test
  * recursive acquisition.
- * @note this class does not ever clean its database.  Until
+ * @note This class does not ever clean its database.  Until
  * destroyed, it's size will forever increase.
  */
 class ACE_Export ACE_Token_Invariant_Manager : public ACE_Cleanup

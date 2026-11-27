@@ -67,14 +67,14 @@ public:
   int remove (bool unlink_file = true);
 
   /**
-   * @note for interface uniformity with other synchronization
+   * @note For interface uniformity with other synchronization
    * wrappers we include the acquire() method. This is implemented as
    * a write-lock to be on the safe-side...
    */
   int acquire (short whence = 0, ACE_OFF_T start = 0, ACE_OFF_T len = 1);
 
   /**
-   * @note for interface uniformity with other synchronization
+   * @note For interface uniformity with other synchronization
    * wrappers we include the @c tryacquire method.  This is implemented
    * as a write-lock to be on the safe-side...  Returns -1 on failure.
    * If we "failed" because someone else already had the lock, @c errno

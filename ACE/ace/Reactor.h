@@ -104,7 +104,7 @@ public:
    * Run the event loop until the
    * ACE_Reactor::handle_events()/ACE_Reactor::alertable_handle_events()
    * method returns -1 or the end_event_loop() method is invoked.
-   * @note this method can only be used by the singleton
+   * @note This method can only be used by the singleton
    * ACE_Reactor::instance().  Thus, to run another reactor use
    * ACE_Reactor::run_reactor_event_loop().
    *
@@ -647,7 +647,7 @@ public:
 
   /// Add @a masks_to_be_added to the @a event_handler's entry.
   /// @a event_handler must already have been registered.
-  /// @note this call does not cause the Reactor to re-examine
+  /// @note This call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
   /// activity expected, or you need immediate re-examination of the
@@ -658,7 +658,7 @@ public:
 
   /// Add @a masks_to_be_added to the @a handle's entry.  @c event_handler
   /// associated with @a handle must already have been registered.
-  /// @note this call does not cause the Reactor to re-examine
+  /// @note This call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
   /// activity expected, or you need immediate re-examination of
@@ -668,7 +668,7 @@ public:
                        ACE_Reactor_Mask masks_to_be_added);
 
   /// Clear @a masks_to_be_cleared from the @a event_handler's entry.
-  /// @note this call does not cause the Reactor to re-examine
+  /// @note This call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
   /// activity expected, or you need immediate re-examination of
@@ -678,7 +678,7 @@ public:
                      ACE_Reactor_Mask masks_to_be_cleared);
 
   /// Clear @a masks_to_be_cleared from the @a handle's entry.
-  /// @note this call does not cause the Reactor to re-examine
+  /// @note This call does not cause the Reactor to re-examine
   /// its set of handlers - the new masks will be noticed the next
   /// time the Reactor waits for activity. If there is no other
   /// activity expected, or you need immediate re-examination of

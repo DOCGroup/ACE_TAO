@@ -19,7 +19,7 @@
 ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 /// Static constant representing `zero-time'.
-/// @note this object requires static construction.
+/// @note This object requires static construction.
 ACE_Time_Value const ACE_Time_Value::zero;
 
 /// Constant for maximum time representable.  Note that this time
@@ -27,7 +27,7 @@ ACE_Time_Value const ACE_Time_Value::zero;
 /// have *their own* implementation-specific maximum time representations.
 /// Its primary use is in time computations such as those used by the
 /// dynamic subpriority strategies in the ACE_Dynamic_Message_Queue class.
-/// @note this object requires static construction.
+/// @note This object requires static construction.
 ACE_Time_Value const ACE_Time_Value::max_time (
   (ACE_Numeric_Limits<time_t>::max) (),
   ACE_ONE_SECOND_IN_USECS - 1);
