@@ -920,7 +920,7 @@ module SecurityLevel3 {
      * Security Contexts may be long lived and not established on
      * every request. Therefore, an identifier is assigned.
      * <p>
-     * @note this Context Id is not directly related to the context
+     * @note This Context Id is not directly related to the context
      * defined in the CSIv2 specification.
      */
     typedef string ContextId;

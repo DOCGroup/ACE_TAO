@@ -87,7 +87,7 @@ private:
  * @brief Used to implement Synch Thread Pool
  *
  * Describe this and the others below.
- * @note this class was modified to make caching disabling possible
+ * @note This class was modified to make caching disabling possible
  */
 class Synch_Thread_Pool_Task : public ACE_Task<ACE_NULL_SYNCH>
 {
@@ -115,7 +115,7 @@ private:
  *
  * Spawns a new thread for every new incoming connection.  The
  * handle below is the socket stream of the incoming connection.
- * @note this class was modified to make caching disabling possible
+ * @note This class was modified to make caching disabling possible
  */
 class Thread_Per_Request_Task : public ACE_Task<ACE_NULL_SYNCH>
 {

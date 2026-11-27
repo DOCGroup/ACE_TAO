@@ -590,7 +590,7 @@ WUCS4_UTF16::write_measured_wchar_array (ACE_OutputCDR & cdr,
       sbpos += encode_utf16 (& sb[sbpos], x[i]);
     }
 #if defined (ACE_ENABLE_SWAP_ON_WRITE)
-  // @note this will rarely be enabled.
+  // This will rarely be enabled.
   if (cdr.do_byte_swap())
     {
       // note can't use swap_2_array because in-place swaps are not safe :-<

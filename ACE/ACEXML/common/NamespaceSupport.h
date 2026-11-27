@@ -113,7 +113,7 @@ private:
  *  support.popContext();
  * @endcode
  *
- * @note this class is optimized for the use case where most
+ * @note This class is optimized for the use case where most
  * elements do not contain Namespace declarations: if the same
  * prefix/URI mapping is repeated for each context (for example), this
  * class will be somewhat less efficient.

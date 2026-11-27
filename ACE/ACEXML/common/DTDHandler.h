@@ -26,7 +26,7 @@
  * The parser uses the instance to report notation and unparsed entity
  * declarations to the application.
  *
- * @note this interface includes only those DTD events that the XML
+ * @note This interface includes only those DTD events that the XML
  * recommendation requires processors to report: notation and unparsed
  * entity declarations.
  *

@@ -4,7 +4,7 @@
  *  This file implements classes to help manage the Properties
  *  defined in the Portable Object Group.
  *
- *  @note this started as a simple helper class to make decoding sets of properties
+ *  @note This started as a simple helper class to make decoding sets of properties
  *  easier, but expanded to provide more general support for managing sets of properties.
  *
  *  @author Dale Wilson <wilson_d@ociweb.com>
