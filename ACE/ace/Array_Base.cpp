@@ -21,7 +21,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 
 // Dynamically initialize an array.
 template <class T>
-ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
+ACE_Array_Base<T>::ACE_Array_Base (size_type size,
                                    ACE_Allocator *alloc)
   : max_size_ (size),
     cur_size_ (size),
@@ -44,7 +44,7 @@ ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
 }
 
 template <class T>
-ACE_Array_Base<T>::ACE_Array_Base (typename ACE_Array_Base<T>::size_type size,
+ACE_Array_Base<T>::ACE_Array_Base (size_type size,
                                    T const &default_value,
                                    ACE_Allocator *alloc)
   : max_size_ (size),
@@ -141,7 +141,7 @@ ACE_Array_Base<T>::operator= (ACE_Array_Base<T> const &s)
 
 template <class T> int
 ACE_Array_Base<T>::set (T const &new_item,
-                        typename ACE_Array_Base<T>::size_type slot)
+                        size_type slot)
 {
   if (this->in_range (slot))
     {
@@ -158,7 +158,7 @@ ACE_Array_Base<T>::set (T const &new_item,
 
 template <class T> int
 ACE_Array_Base<T>::get (T &item,
-                        typename ACE_Array_Base<T>::size_type slot) const
+                        size_type slot) const
 {
   if (this->in_range (slot))
     {
@@ -174,7 +174,7 @@ ACE_Array_Base<T>::get (T &item,
 }
 
 template<class T> int
-ACE_Array_Base<T>::max_size (typename ACE_Array_Base<T>::size_type new_size)
+ACE_Array_Base<T>::max_size (size_type new_size)
 {
   if (new_size > this->max_size_)
     {
@@ -208,7 +208,7 @@ ACE_Array_Base<T>::max_size (typename ACE_Array_Base<T>::size_type new_size)
 }
 
 template<class T> int
-ACE_Array_Base<T>::size (typename ACE_Array_Base<T>::size_type new_size)
+ACE_Array_Base<T>::size (size_type new_size)
 {
   int const r = this->max_size (new_size);
 

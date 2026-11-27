@@ -79,19 +79,19 @@ ACE_Array_Base<T>::max_size () const
 }
 
 template <class T> ACE_INLINE bool
-ACE_Array_Base<T>::in_range (typename ACE_Array_Base<T>::size_type index) const
+ACE_Array_Base<T>::in_range (size_type index) const
 {
   return index < this->cur_size_;
 }
 
 template <class T> ACE_INLINE T &
-ACE_Array_Base<T>::operator[] (typename ACE_Array_Base<T>::size_type index)
+ACE_Array_Base<T>::operator[] (size_type index)
 {
   return this->array_[index];
 }
 
 template <class T> ACE_INLINE T const &
-ACE_Array_Base<T>::operator[] (typename ACE_Array_Base<T>::size_type index) const
+ACE_Array_Base<T>::operator[] (size_type index) const
 {
   return this->array_[index];
 }
