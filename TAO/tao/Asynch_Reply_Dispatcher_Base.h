@@ -12,6 +12,7 @@
 
 #include "tao/Reply_Dispatcher.h"
 #include "tao/CDR.h"
+#include "tao/Transport.h"
 
 #include <memory>
 
@@ -31,7 +32,6 @@ TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
 class TAO_Pluggable_Reply_Params;
 class TAO_ORB_Core;
-class TAO_Transport;
 /**
  * @class TAO_Asynch_Reply_Dispatcher_Base
  *
@@ -102,7 +102,7 @@ protected:
   TAO_InputCDR reply_cdr_;
 
   /// This invocation is using this transport, may change...
-  TAO_Transport *transport_ {};
+  TAO_Transport_Auto_Ptr transport_ {};
 
 private:
   /// Lock to protect @c is_reply_dispatched_ flag.

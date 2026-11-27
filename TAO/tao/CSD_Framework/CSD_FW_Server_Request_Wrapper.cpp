@@ -31,6 +31,8 @@ TAO::CSD::FW_Server_Request_Wrapper::destroy_clone (
       return;
     }
 
+  TAO_Transport_Auto_Ptr const transport (request->transport_.get ());
+
   if (request->profile_.type_id_ != nullptr)
     {
       CORBA::string_free (const_cast<char*> (request->profile_.type_id_));
@@ -59,11 +61,6 @@ TAO::CSD::FW_Server_Request_Wrapper::destroy_clone (
 
       delete [] request->operation_details_->args_;
       delete request->operation_details_;
-    }
-
-  if (request->transport_ != nullptr)
-    {
-      request->transport_->remove_reference ();
     }
 
   delete request;

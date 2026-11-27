@@ -33,26 +33,13 @@ TAO_Asynch_Reply_Dispatcher_Base::TAO_Asynch_Reply_Dispatcher_Base (
 {
 }
 
-TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base ()
-{
-  // Release the transport that we own
-  if (this->transport_ != nullptr)
-  {
-    this->transport_->remove_reference ();
-  }
-}
+TAO_Asynch_Reply_Dispatcher_Base::~TAO_Asynch_Reply_Dispatcher_Base () = default;
 
 void
 TAO_Asynch_Reply_Dispatcher_Base::transport (TAO_Transport *t)
 {
-  if (this->transport_ != nullptr)
-  {
-    this->transport_->remove_reference ();
-  }
-
-  this->transport_ = t;
-
-  this->transport_->add_reference ();
+  t->add_reference ();
+  this->transport_.reset (t);
 }
 
 bool

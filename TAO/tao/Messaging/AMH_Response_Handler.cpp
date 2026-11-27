@@ -12,24 +12,11 @@
 #include "tao/SystemException.h"
 #include "tao/PortableServer/ForwardRequestC.h"
 
-#include <memory>
-
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
-
-namespace
-{
-  struct Transport_Deleter
-  {
-    void operator() (TAO_Transport *transport) const noexcept
-    {
-      transport->remove_reference ();
-    }
-  };
-}
 
 TAO_AMH_Response_Handler::~TAO_AMH_Response_Handler ()
 {
-  std::unique_ptr<TAO_Transport, Transport_Deleter> const transport (
+  TAO_Transport_Auto_Ptr const transport (
     this->transport_);
 
   // Since we are destroying the object we put a huge lock around the

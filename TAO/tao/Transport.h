@@ -1267,6 +1267,22 @@ private:
   mutable TAO_SYNCH_MUTEX output_cdr_mutex_;
 };
 
+/// Decrements a transport's reference count when invoked.
+struct TAO_Export TAO_Transport_Deleter
+{
+  void operator() (TAO_Transport *transport) const noexcept
+  {
+    if (transport != nullptr)
+      {
+        transport->remove_reference ();
+      }
+  }
+};
+
+/// Owning transport pointer that releases its reference on destruction.
+using TAO_Transport_Auto_Ptr =
+  std::unique_ptr<TAO_Transport, TAO_Transport_Deleter>;
+
 #if TAO_HAS_TRANSPORT_CURRENT == 1
 namespace TAO
 {
