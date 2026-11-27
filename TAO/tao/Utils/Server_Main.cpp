@@ -93,7 +93,7 @@ TAO::Utils::Server_Main<SERVANT>::run (int argc, ACE_TCHAR *argv[]) const
               else
                 {
                   TAOLIB_ERROR ((LM_ERROR,
-                                 "%T %C (%P|%t) Registration failed: %m\n",
+                                 "%T %C (%P|%t) Registration failed\n",
                                  this->name_.c_str ()));
                   result = -1;
                 }
