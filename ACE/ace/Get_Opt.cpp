@@ -201,8 +201,9 @@ ACE_Get_Opt::nextchar_i ()
       this->nextchar_ = nullptr;
       return EOF;
     }
-  else if (*(this->nextchar_ = this->argv_[this->optind]) != '-'
-            || this->nextchar_[1] == '\0')
+
+  this->nextchar_ = this->argv_[this->optind];
+  if (*this->nextchar_ != '-' || this->nextchar_[1] == '\0')
     {
       // We didn't get an option.
 
@@ -528,10 +529,9 @@ ACE_Get_Opt::long_option (ACE_TCHAR const *name,
     {
       // If the short_option already exists, make sure it matches, otherwise
       // add it.
-      ACE_TCHAR *s {};
-      if ((s = const_cast<ACE_TCHAR*> (
-                 ACE_OS::strchr (this->optstring_->c_str (),
-                                 short_option))) != nullptr)
+      ACE_TCHAR *s = const_cast<ACE_TCHAR*> (
+        ACE_OS::strchr (this->optstring_->c_str (), short_option));
+      if (s != nullptr)
         {
           // Short option exists, so verify the argument options
           if (s[1] == ':')
