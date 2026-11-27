@@ -3,7 +3,7 @@ ACE_BEGIN_VERSIONED_NAMESPACE_DECL
 template<typename Key, typename Value, class EqualTo, class Alloc>
 ACE_INLINE
 ACE_Array_Map<Key, Value, EqualTo, Alloc>::ACE_Array_Map (
-  typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::size_type s)
+  size_type s)
   : capacity_ (s)
   , nodes_ (s == 0 ? nullptr : this->alloc_.allocate (s))
 {

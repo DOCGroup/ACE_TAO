@@ -60,7 +60,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::swap (
 template<typename Key, typename Value, class EqualTo, class Alloc>
 std::pair<typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::iterator, bool>
 ACE_Array_Map<Key, Value, EqualTo, Alloc>::insert (
-  typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::value_type const & x)
+  value_type const & x)
 {
   // Linear insertion due to linear duplicate key search.
 
@@ -101,7 +101,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::insert (InputIterator f, InputIterato
 template<typename Key, typename Value, class EqualTo, class Alloc>
 void
 ACE_Array_Map<Key, Value, EqualTo, Alloc>::erase (
-  typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::iterator pos)
+  iterator pos)
 {
   iterator const first = this->begin ();
   iterator const last = this->end ();
@@ -128,7 +128,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::erase (
 template<typename Key, typename Value, class EqualTo, class Alloc>
 typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::size_type
 ACE_Array_Map<Key, Value, EqualTo, Alloc>::erase (
-  typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::key_type const & k)
+  key_type const & k)
 {
   iterator pos = this->find (k);
 
@@ -142,8 +142,8 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::erase (
 template<typename Key, typename Value, class EqualTo, class Alloc>
 void
 ACE_Array_Map<Key, Value, EqualTo, Alloc>::erase (
-  typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::iterator first,
-  typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::iterator last)
+  iterator first,
+  iterator last)
 {
   if (this->begin () <= first && first < last && last < this->end ())
     {
@@ -164,7 +164,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::clear ()
 template<typename Key, typename Value, class EqualTo, class Alloc>
 typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::iterator
 ACE_Array_Map<Key, Value, EqualTo, Alloc>::find (
-  typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::key_type const & k)
+  key_type const & k)
 {
   iterator const the_end = this->end ();
 
@@ -184,7 +184,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::find (
 template<typename Key, typename Value, class EqualTo, class Alloc>
 typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::const_iterator
 ACE_Array_Map<Key, Value, EqualTo, Alloc>::find (
-  typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::key_type const & k) const
+  key_type const & k) const
 {
   const_iterator const the_end = this->end ();
 
@@ -204,7 +204,7 @@ ACE_Array_Map<Key, Value, EqualTo, Alloc>::find (
 template<typename Key, typename Value, class EqualTo, class Alloc>
 void
 ACE_Array_Map<Key, Value, EqualTo, Alloc>::grow (
-  typename ACE_Array_Map<Key, Value, EqualTo, Alloc>::size_type s)
+  size_type s)
 {
   if (this->size () + s > this->capacity_)
     {
