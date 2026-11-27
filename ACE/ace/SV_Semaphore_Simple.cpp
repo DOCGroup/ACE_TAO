@@ -69,7 +69,9 @@ ACE_SV_Semaphore_Simple::op (short val, u_short n, short flags) const
     {
       return -1;
     }
-  else if ((op_op.sem_op = val) == 0)
+
+  op_op.sem_op = val;
+  if (op_op.sem_op == 0)
     {
       return -1;
     }

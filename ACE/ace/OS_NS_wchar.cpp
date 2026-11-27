@@ -192,7 +192,8 @@ ACE_OS::wcsncat_emulation (ACE_WCHAR_T *destination,
 
       do
         {
-          if ((*d = *s++) == 0)
+          *d = *s++;
+          if (*d == 0)
             {
               break;
             }
@@ -247,7 +248,9 @@ ACE_OS::wcsncpy_emulation (ACE_WCHAR_T *destination,
 
       do
         {
-          if ((*d++ = *s++) == 0)
+          ACE_WCHAR_T const value = *s++;
+          *d++ = value;
+          if (value == 0)
             {
               // NUL pad the remaining n-1 bytes
               while (--len != 0)
@@ -395,7 +398,8 @@ ACE_OS::wcsstr_emulation (const wchar_t *string,
 {
   wchar_t c;
 
-  if ((c = *charset++) != 0)
+  c = *charset++;
+  if (c != 0)
     {
       size_t const len = ACE_OS::strlen (charset);
       do

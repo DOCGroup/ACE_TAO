@@ -49,7 +49,8 @@ ACE_Pipe::open (int buffer_size)
   && !defined (ACE_HAS_STREAM_PIPES)
   ACE_UNUSED_ARG (buffer_size);
 
-  if ((this->handles_[0] = ACE_OS::socket (AF_LOCAL, SOCK_DGRAM, 0)) == -1)
+  this->handles_[0] = ACE_OS::socket (AF_LOCAL, SOCK_DGRAM, 0);
+  if (this->handles_[0] == -1)
     {
       return -1;
     }
@@ -71,7 +72,8 @@ ACE_Pipe::open (int buffer_size)
       return -1;
     }
 
-  if ((this->handles_[1] = ACE_OS::socket (AF_LOCAL, SOCK_DGRAM, 0)) == -1 ||
+  this->handles_[1] = ACE_OS::socket (AF_LOCAL, SOCK_DGRAM, 0);
+  if (this->handles_[1] == -1 ||
       ACE_OS::connect (this->handles_[1],
                        reinterpret_cast<sockaddr *> (&addr),
                        sizeof addr) == -1)

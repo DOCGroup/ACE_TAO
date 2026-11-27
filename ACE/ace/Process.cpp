@@ -203,36 +203,42 @@ ACE_Process::spawn (ACE_Process_Options &options)
   int saved_stdout = ACE_STDOUT;
   int saved_stderr = ACE_STDERR;
   // Save STD file descriptors and redirect
-  if (options.get_stdin () != ACE_INVALID_HANDLE) {
-    if ((saved_stdin = ACE_OS::dup (ACE_STDIN)) == -1 && errno != EBADF)
-      {
-        ACE_OS::exit (errno);
-      }
-    if (ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
-      {
-        ACE_OS::exit (errno);
-      }
-  }
-  if (options.get_stdout () != ACE_INVALID_HANDLE) {
-    if ((saved_stdout = ACE_OS::dup (ACE_STDOUT)) == -1 && errno != EBADF)
-      {
-        ACE_OS::exit (errno);
-      }
-    if (ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
-      {
-        ACE_OS::exit (errno);
-      }
-  }
-  if (options.get_stderr () != ACE_INVALID_HANDLE) {
-    if ((saved_stderr = ACE_OS::dup (ACE_STDERR)) == -1 && errno != EBADF)
-      {
-        ACE_OS::exit (errno);
-      }
-    if (ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
-      {
-        ACE_OS::exit (errno);
-      }
-  }
+  if (options.get_stdin () != ACE_INVALID_HANDLE)
+    {
+      saved_stdin = ACE_OS::dup (ACE_STDIN);
+      if (saved_stdin == -1 && errno != EBADF)
+        {
+          ACE_OS::exit (errno);
+        }
+      if (ACE_OS::dup2 (options.get_stdin (), ACE_STDIN) == -1)
+        {
+          ACE_OS::exit (errno);
+        }
+    }
+  if (options.get_stdout () != ACE_INVALID_HANDLE)
+    {
+      saved_stdout = ACE_OS::dup (ACE_STDOUT);
+      if (saved_stdout == -1 && errno != EBADF)
+        {
+          ACE_OS::exit (errno);
+        }
+      if (ACE_OS::dup2 (options.get_stdout (), ACE_STDOUT) == -1)
+        {
+          ACE_OS::exit (errno);
+        }
+    }
+  if (options.get_stderr () != ACE_INVALID_HANDLE)
+    {
+      saved_stderr = ACE_OS::dup (ACE_STDERR);
+      if (saved_stderr == -1 && errno != EBADF)
+        {
+          ACE_OS::exit (errno);
+        }
+      if (ACE_OS::dup2 (options.get_stderr (), ACE_STDERR) == -1)
+        {
+          ACE_OS::exit (errno);
+        }
+    }
 
   // Wide-char builds need narrow-char strings for commandline and
   // environment variables.

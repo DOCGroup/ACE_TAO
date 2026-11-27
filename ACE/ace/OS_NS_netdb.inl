@@ -416,7 +416,8 @@ ACE_OS::getipnodebyaddr (void const *src, size_t len, int family)
   struct hostent *hptr {};
   int errnum;
   //FUZZ: disable check_for_lack_ACE_OS
-  if ((hptr = ::getipnodebyaddr (src, len, family, &errnum)) == 0)
+  hptr = ::getipnodebyaddr (src, len, family, &errnum);
+  if (hptr == nullptr)
     {
       errno = errnum;
     }
@@ -455,7 +456,8 @@ ACE_OS::getipnodebyname (char const *name, int family, int flags)
   struct hostent *hptr {};
   int errnum;
   //FUZZ: disable check_for_lack_ACE_OS
-  if ((hptr = ::getipnodebyname (name, family, flags, &errnum)) == 0)
+  hptr = ::getipnodebyname (name, family, flags, &errnum);
+  if (hptr == nullptr)
     {
       errno = errnum;
     }
