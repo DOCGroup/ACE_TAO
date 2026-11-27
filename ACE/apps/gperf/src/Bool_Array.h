@@ -49,25 +49,27 @@ public:
   Bool_Array &operator= (Bool_Array &&) = delete;
 
   /// Initialize the array (requires O(n) time).
-  int open (u_long);
+  int open (size_t);
 
   ~Bool_Array ();
 
   /// Locate the @a value in the array (requires O(1) time).
-  int find (u_long value);
+  int find (size_t value);
 
   /// Reinitializes the array (requires O(1) time).
   void reset ();
 
 private:
+  using generation_type = unsigned long;
+
   /// Initialization of the index space.
-  std::unique_ptr<unsigned long[]> storage_array_;
+  std::unique_ptr<generation_type[]> storage_array_;
 
   /// Keep track of the current Generation.
-  unsigned long generation_number_ {};
+  generation_type generation_number_ {};
 
   /// Keep track of array size.
-  unsigned long size_ {};
+  size_t size_ {};
 };
 
 #endif /* BOOL_ARRAY_H */
