@@ -1748,14 +1748,21 @@ ACE_OS::sema_init (ACE_sema_t *s,
         }
     }
 
-  if ((s->fd_[0] = ACE_OS::open (name, O_RDONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE
-      || (s->fd_[1] = ACE_OS::open (name, O_WRONLY | O_NONBLOCK)) == ACE_INVALID_HANDLE)
+  s->fd_[0] = ACE_OS::open (name, O_RDONLY | O_NONBLOCK);
+  if (s->fd_[0] == ACE_INVALID_HANDLE)
+    {
+      return -1;
+    }
+
+  s->fd_[1] = ACE_OS::open (name, O_WRONLY | O_NONBLOCK);
+  if (s->fd_[1] == ACE_INVALID_HANDLE)
     {
       return -1;
     }
 
   /* turn off nonblocking for fd_[0] */
-  if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
+  flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0);
+  if (flags < 0)
     {
       return -1;
     }
@@ -2051,7 +2058,8 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   int     rc, flags;
 
   /* turn on nonblocking for s->fd_[0] */
-  if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) < 0)
+  flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0);
+  if (flags < 0)
     {
       return -1;
     }
@@ -2065,11 +2073,12 @@ ACE_OS::sema_trywait (ACE_sema_t *s)
   rc = ACE_OS::read (s->fd_[0], &c, sizeof (char));
 
   /* turn off nonblocking for fd_[0] */
-  if ((flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0)) >= 0)
-  {
-    flags &= ~O_NONBLOCK;
-    ACE_OS::fcntl (s->fd_[0], F_SETFL, flags);
-  }
+  flags = ACE_OS::fcntl (s->fd_[0], F_GETFL, 0);
+  if (flags >= 0)
+    {
+      flags &= ~O_NONBLOCK;
+      ACE_OS::fcntl (s->fd_[0], F_SETFL, flags);
+    }
 
   return rc == 1 ? 0 : (-1);
 # elif defined (ACE_HAS_THREADS)
@@ -2303,7 +2312,8 @@ ACE_OS::sema_wait (ACE_sema_t *s, ACE_Time_Value &tv)
       ACE_Handle_Set  fds_;
 
       fds_.set_bit (s->fd_[0]);
-      if ((rc = ACE_OS::select (ACE_Handle_Set::MAXSIZE, fds_, 0, 0, timeout)) != 1)
+      rc = ACE_OS::select (ACE_Handle_Set::MAXSIZE, fds_, 0, 0, timeout);
+      if (rc != 1)
         {
           if (rc == 0 || errno != EAGAIN)
           {
@@ -2709,9 +2719,13 @@ ACE_OS::thr_getprio (ACE_hthread_t ht_id, int &priority, int &policy)
   ACE_Errno_Guard error (errno);
   priority = ::GetThreadPriority (ht_id);
   DWORD const priority_class = ::GetPriorityClass (::GetCurrentProcess ());
-  if (priority_class == 0 && (error = ::GetLastError ()) != NO_ERROR)
+  if (priority_class == 0)
     {
-      ACE_FAIL_RETURN (-1);
+      error = ::GetLastError ();
+      if (error != NO_ERROR)
+        {
+          ACE_FAIL_RETURN (-1);
+        }
     }
 
   policy = (priority_class == REALTIME_PRIORITY_CLASS) ? ACE_SCHED_FIFO : ACE_SCHED_OTHER;
