@@ -52,7 +52,7 @@ public:
                                    ACE_TCHAR *argv[]) override;
 
 protected:
-  /// TODO: Need to set up service configurator to initialize the naming server
+  /// @todo Set up the Service Configurator to initialize the Naming Service.
   /// Instance of the TAO_Naming_Server
   std::unique_ptr<TAO_Naming_Server> naming_server_;
 };

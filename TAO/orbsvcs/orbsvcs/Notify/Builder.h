@@ -77,9 +77,9 @@ public:
                         , CosNotifyChannelAdmin::AdminID_out id);
 
   /// Build ConsumerAdmin during topology restore
-  /// TODO: this returns a reference to the actual type
-  /// to accomodate loadable builder/factory there should
-  /// be an appropriate base class for it to return.
+  /// @todo This returns a reference to the actual type. To accommodate a
+  /// loadable builder/factory, there should be an appropriate base class for
+  /// it to return.
   virtual TAO_Notify_ConsumerAdmin *
   build_consumer_admin (TAO_Notify_EventChannel* ec
                         , const CosNotifyChannelAdmin::AdminID id);
@@ -91,9 +91,9 @@ public:
                         , CosNotifyChannelAdmin::AdminID_out id);
 
   /// Build ConsumerAdmin during topology restore
-  /// TODO: this returns a reference to the actual type
-  /// to accomodate loadable builder/factory there should
-  /// be an appropriate base class for it to return.
+  /// @todo This returns a reference to the actual type. To accommodate a
+  /// loadable builder/factory, there should be an appropriate base class for
+  /// it to return.
   virtual TAO_Notify_SupplierAdmin *
   build_supplier_admin (TAO_Notify_EventChannel * ec
                         , const CosNotifyChannelAdmin::AdminID id);
