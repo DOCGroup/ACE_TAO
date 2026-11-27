@@ -65,14 +65,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #ifndef _AST_ARGUMENT_AST_ARGUMENT_HH
 #define _AST_ARGUMENT_AST_ARGUMENT_HH
 
-// Representation of argument to operation:
-// An argument is a field with a direction attached
-
 #include "ast_field.h"
 
+/// An operation argument is a field with a direction.
 class TAO_IDL_FE_Export AST_Argument : public virtual AST_Field
 {
 public:
+  AST_Argument () = delete;
   AST_Argument (AST_Argument const &) = delete;
   AST_Argument (AST_Argument &&) = delete;
   AST_Argument &operator= (AST_Argument const &) = delete;
@@ -106,8 +105,8 @@ public:
   static AST_Decl::NodeType const NT;
 
 private:
+  /// Argument direction.
   Direction const pd_direction;
-  // Argument direction.
 };
 
 #endif           // _AST_ARGUMENT_AST_ARGUMENT_HH

@@ -3,7 +3,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #include "be_visitor_xplicit_pre_proc.h"
 #include "be_home.h"

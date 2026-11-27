@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    cdr_op_ch.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_UNION_BRANCH_CDR_OP_CH_H_
 #define _BE_VISITOR_UNION_BRANCH_CDR_OP_CH_H_

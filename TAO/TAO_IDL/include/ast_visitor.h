@@ -1,6 +1,3 @@
-
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    ast_visitor.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Jeff Parsons <parsons@cs.wustl.edu>
  */
-//=============================================================================
 
 #ifndef TAO_IDL_FE_DLL_AST_VISITOR_H
 #define TAO_IDL_FE_DLL_AST_VISITOR_H

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    attribute.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "be_array.h"
 #include "be_component.h"
@@ -24,7 +21,6 @@
 #include "be_valuetype.h"
 #include "be_attribute.h"
 #include "be_operation.h"
-#include "be_predefined_type.h"
 #include "be_argument.h"
 
 #include "be_helper.h"

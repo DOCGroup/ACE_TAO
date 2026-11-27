@@ -1,4 +1,3 @@
-//=============================================================================
 /**
 *  @file   amh_rh_ss.h
 *
@@ -6,7 +5,6 @@
 *
 *  @author Darrell Brunsch <brunsch@cs.wustl.edu>
 */
-//=============================================================================
 
 #ifndef AMH_RH_OPERATION_SS_H
 #define AMH_RH_OPERATION_SS_H

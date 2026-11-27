@@ -67,17 +67,11 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "utl_scoped_name.h"
 
-// List of UTL_ScopedName nodes.
-
-// NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
-//       It relies on a type-unsafe cast from UTL_List to subclasses, which
-//       will cease to operate correctly if you use either multiple or
-//       public virtual inheritance.
-
+/// List of UTL_ScopedName nodes.
 class TAO_IDL_FE_Export UTL_NameList : public UTL_List
 {
 public:
+  UTL_NameList () = delete;
   UTL_NameList (UTL_ScopedName *s,
                 UTL_NameList *cdr);
 
@@ -100,13 +94,14 @@ private:
   bool pd_truncatable;
 };
 
-// Active iterator for UTL_NameList.
+/// Active iterator for UTL_NameList.
 class   UTL_NamelistActiveIterator : public UTL_ListActiveIterator
 {
 public:
+  UTL_NamelistActiveIterator () = delete;
   explicit UTL_NamelistActiveIterator (UTL_NameList *source);
 
-  // Get current item.
+  /// Get the current item.
   UTL_ScopedName *item () const;
 };
 

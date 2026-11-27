@@ -70,19 +70,13 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include <memory>
 
-// List of FE_Declarator nodes
-
-// NOTE: This list class only works correctly because we use single public
-//       inheritance, as opposed to multiple inheritance or public virtual.
-//       It relies on a type-unsafe cast from UTL_List to subclasses, which
-//       will cease to operate correctly if you use either multiple or
-//       public virtual inheritance.
-
 class FE_Declarator;
 
+/// List of FE_Declarator nodes.
 class TAO_IDL_FE_Export UTL_DeclList : public UTL_List
 {
 public:
+  UTL_DeclList () = delete;
   // Operations
 
   UTL_DeclList (FE_Declarator *s,
@@ -105,16 +99,17 @@ private:
   std::unique_ptr<FE_Declarator> pd_car_data; // The element this list stores
 };
 
-// Active iterator fooor UTL_DeclList
+/// Active iterator for UTL_DeclList.
 class TAO_IDL_FE_Export UTL_DecllistActiveIterator
   : public UTL_ListActiveIterator
 {
 public:
   // Operations
 
+  UTL_DecllistActiveIterator () = delete;
   explicit UTL_DecllistActiveIterator (UTL_DeclList *s);
 
-  // Get current item
+  /// Get the current item.
   FE_Declarator *item () const;
 };
 

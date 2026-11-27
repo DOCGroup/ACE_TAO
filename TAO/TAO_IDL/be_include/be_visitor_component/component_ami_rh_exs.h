@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    component_ami_rh_exs.h
  *
@@ -9,7 +7,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_AMI_RH_EXS_H_
 #define _BE_COMPONENT_AMI_RH_EXS_H_
@@ -41,7 +38,7 @@ private:
   void gen_op_body () override;
 
 private:
-  const char *your_code_here_ {"/* Your code here. */"};
+  char const *your_code_here_ {"/* Your code here. */"};
 };
 
 #endif /* _BE_COMPONENT_AMI_RH_EXS_H_ */

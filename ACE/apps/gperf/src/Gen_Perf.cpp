@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
  * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
@@ -35,8 +33,9 @@ extern char const *version_string;
 /// Reads input keys, possibly applies the reordering heuristic, sets
 /// the maximum associated value size (rounded up to the nearest power
 /// of 2), may initialize the associated values array, and determines
-/// the maximum hash table size.  Note: using the random numbers is
-/// often helpful, though not as deterministic, of course!
+/// the maximum hash table size.
+/// @note Using random numbers is often helpful, though it is less
+/// deterministic.
 Gen_Perf::Gen_Perf ()
   : max_hash_value (0),
     fewest_collisions (0),
@@ -320,11 +319,11 @@ Gen_Perf::open ()
     + option.asso_max ()
     * option.max_keysig_size ();
 
-  char *union_set {};
-  ACE_NEW_RETURN (union_set,
+  char *union_set_buffer {};
+  ACE_NEW_RETURN (union_set_buffer,
                   char[2 * option.max_keysig_size () + 1],
                   -1);
-  this->union_set.reset (union_set);
+  this->union_set.reset (union_set_buffer);
   ACE_OS::printf ("/* ");
 
   ACE_OS::printf ("C++ code produced by ACE gperf version %s */\n",

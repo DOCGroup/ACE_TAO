@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    ctor_assign.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_EXCEPTION_CTOR_ASSIGN_H_
 #define _BE_VISITOR_EXCEPTION_CTOR_ASSIGN_H_

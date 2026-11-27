@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
  * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
@@ -113,7 +111,7 @@ List_Node::List_Node (char const *input, int len)
       if (this->keysig.empty () && option[NOLENGTH])
         {
           ACE_ERROR ((LM_ERROR,
-                      "Can't hash keyword %s with chosen key positions.\n%a",
+                      "Can't hash keyword %C with chosen key positions.\n%a",
                       this->key.c_str (),
                       1));
         }

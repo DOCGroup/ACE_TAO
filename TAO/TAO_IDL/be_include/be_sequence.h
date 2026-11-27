@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    be_sequence.h
  *
@@ -10,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef BE_SEQUENCE_H
 #define BE_SEQUENCE_H

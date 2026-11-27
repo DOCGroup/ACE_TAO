@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
  * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
@@ -66,7 +64,7 @@ private:
   size_t size_;
 
   /// Find out how well our double hashing is working!
-  int collisions_;
+  int collisions_ {};
 };
 
 #endif /* HASH_TABLE_H */

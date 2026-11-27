@@ -1,4 +1,3 @@
-//=============================================================================
 /**
  *  @file   amh_rh_ss.h
  *
@@ -7,7 +6,6 @@
  *
  *  @author Mayur Deshpande <mayur@ics.uci.edu>
  */
-//=============================================================================
 
 #ifndef AMH_RH_INTERFACE_SS_H
 #define AMH_RH_INTERFACE_SS_H

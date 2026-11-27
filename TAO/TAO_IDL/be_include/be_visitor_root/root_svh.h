@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    root_svh.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ROOT_ROOT_SVH_H_
 #define _BE_VISITOR_ROOT_ROOT_SVH_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_root_svh () override;
 
-  be_visitor_root_svh (const be_visitor_root_svh &) = delete;
+  be_visitor_root_svh (be_visitor_root_svh const &) = delete;
   be_visitor_root_svh (be_visitor_root_svh &&) = delete;
-  be_visitor_root_svh &operator= (const be_visitor_root_svh &) = delete;
+  be_visitor_root_svh &operator= (be_visitor_root_svh const &) = delete;
   be_visitor_root_svh &operator= (be_visitor_root_svh &&) = delete;
 
   int visit_root (be_root *node) override;

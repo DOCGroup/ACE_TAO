@@ -1,4 +1,3 @@
-/* -*- c++ -*- */
 #include "ifr_visitor.h"
 
 #include "global_extern.h"

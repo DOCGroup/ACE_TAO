@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    operation_svs.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_OPERATION_SVS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_SVS_H_

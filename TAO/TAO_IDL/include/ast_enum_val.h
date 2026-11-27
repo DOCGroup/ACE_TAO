@@ -74,6 +74,7 @@ class AST_Enum;
 class TAO_IDL_FE_Export AST_EnumVal : public virtual AST_Constant
 {
 public:
+  AST_EnumVal () = delete;
   AST_EnumVal (ACE_CDR::ULong v,
                UTL_ScopedName *n);
   AST_EnumVal (AST_EnumVal const &) = delete;
@@ -93,11 +94,11 @@ public:
 
   bool annotatable () const override { return true; }
 
-  /// Parent Enum of this value
-  ///{
+  /// @name Parent enum of this value
+  /// @{
   AST_Enum *enum_parent () const;
   void enum_parent (AST_Enum * const node);
-  ///)
+  /// @}
 
 private:
   AST_Enum *enum_parent_ {};

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    array_ci.cpp
  *
@@ -7,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "array.h"
 
@@ -96,13 +93,11 @@ int be_visitor_array_ci::visit_array (be_array *node)
   std::string const& local_name =
     node->local_name ()->get_string ();
   std::string fname;
-  std::string lname;
 
   if (this->ctx_->tdef ())
     {
       // Typedefed node.
       fname = node->full_name ();
-      lname = local_name;
     }
   else
     {
@@ -116,15 +111,11 @@ int be_visitor_array_ci::visit_array (be_array *node)
           fname = parent->full_name ();
           fname += "::_";
           fname += local_name;
-          lname = "_";
-          lname += local_name;
         }
       else
         {
           fname = "_";
           fname += node->full_name ();
-          lname = "_";
-          lname += local_name;
         }
     }
 
@@ -132,30 +123,9 @@ int be_visitor_array_ci::visit_array (be_array *node)
 
   TAO_INSERT_COMMENT (os);
 
-  // Generate the array traits specialization definitions,
-  // guarded by #ifdef on unaliased array element type and length.
-
-  std::string unique;
-
-  if (nt == AST_Decl::NT_typedef)
-    {
-      be_typedef *td = dynamic_cast<be_typedef*> (bt);
-      unique = td->primitive_base_type ()->flat_name ();
-    }
-  else
-    {
-      unique = bt->flat_name ();
-    }
+  // Generate the array traits specialization definitions.
 
   size_t i;
-
-  for (i = 0; i < node->n_dims (); ++i)
-    {
-      unique += '_';
-      unique += std::to_string (node->dims ()[i]->ev ()->u.ulval);
-    }
-
-  unique += "_traits";
 
   *os << be_nl
       << be_global->core_versioning_begin ();
@@ -229,7 +199,7 @@ int be_visitor_array_ci::visit_array (be_array *node)
       // Retrieve the ith dimension value.
       AST_Expression *expr = node->dims ()[i].get ();
 
-      if ((expr == nullptr) || ((expr != nullptr) && (expr->ev () == nullptr)))
+      if (expr == nullptr || expr->ev () == nullptr)
         {
           ACE_ERROR_RETURN ((LM_ERROR,
                               "(%N:%l) be_visitor_array_cs::"

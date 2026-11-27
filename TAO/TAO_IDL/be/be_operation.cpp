@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    be_operation.cpp
  *
@@ -9,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "be_operation.h"
 #include "be_predefined_type.h"

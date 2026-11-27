@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    be_type.h
  *
@@ -9,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef BE_TYPE_H
 #define BE_TYPE_H
@@ -18,8 +15,6 @@
 
 #include "be_decl.h"
 #include "ast_type.h"
-
-#include <string>
 
 #include "ace/SString.h"
 

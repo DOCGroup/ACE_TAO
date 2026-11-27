@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    any_op.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_MODULE_ANY_OP_H_
 #define _BE_VISITOR_MODULE_ANY_OP_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_module_any_op () override;
 
-  be_visitor_module_any_op (const be_visitor_module_any_op &) = delete;
+  be_visitor_module_any_op (be_visitor_module_any_op const &) = delete;
   be_visitor_module_any_op (be_visitor_module_any_op &&) = delete;
-  be_visitor_module_any_op &operator= (const be_visitor_module_any_op &) = delete;
+  be_visitor_module_any_op &operator= (be_visitor_module_any_op const &) = delete;
   be_visitor_module_any_op &operator= (be_visitor_module_any_op &&) = delete;
 
   /// visit module

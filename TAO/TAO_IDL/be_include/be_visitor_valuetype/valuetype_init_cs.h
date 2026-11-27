@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    valuetype_init_cs.h
  *
@@ -9,7 +7,6 @@
  *
  *  @author Boris Kolpackov <bosk@ipmce.ru>
  */
-//=============================================================================
 
 #ifndef _BE_VALUETYPE_VALUETYPE_INIT_CS_H_
 #define _BE_VALUETYPE_VALUETYPE_INIT_CS_H_

@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    home_exs.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_HOME_HOME_EXS_H_
 #define _BE_HOME_HOME_EXS_H_
@@ -30,9 +27,9 @@ public:
 
   ~be_visitor_home_exs () override;
 
-  be_visitor_home_exs (const be_visitor_home_exs &) = delete;
+  be_visitor_home_exs (be_visitor_home_exs const &) = delete;
   be_visitor_home_exs (be_visitor_home_exs &&) = delete;
-  be_visitor_home_exs &operator= (const be_visitor_home_exs &) = delete;
+  be_visitor_home_exs &operator= (be_visitor_home_exs const &) = delete;
   be_visitor_home_exs &operator= (be_visitor_home_exs &&) = delete;
 
   int visit_home (be_home *node) override;
@@ -63,9 +60,9 @@ class Home_Exec_Op_Attr_Generator
 public:
   explicit Home_Exec_Op_Attr_Generator (be_visitor_scope *visitor);
 
-  Home_Exec_Op_Attr_Generator (const Home_Exec_Op_Attr_Generator &) = delete;
+  Home_Exec_Op_Attr_Generator (Home_Exec_Op_Attr_Generator const &) = delete;
   Home_Exec_Op_Attr_Generator (Home_Exec_Op_Attr_Generator &&) = delete;
-  Home_Exec_Op_Attr_Generator &operator= (const Home_Exec_Op_Attr_Generator &) = delete;
+  Home_Exec_Op_Attr_Generator &operator= (Home_Exec_Op_Attr_Generator const &) = delete;
   Home_Exec_Op_Attr_Generator &operator= (Home_Exec_Op_Attr_Generator &&) = delete;
 
   int emit (be_interface *derived_interface,

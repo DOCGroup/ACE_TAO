@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    root_exh.h
  *
@@ -10,7 +7,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ROOT_ROOT_EXH_H_
 #define _BE_VISITOR_ROOT_ROOT_EXH_H_
@@ -30,9 +26,9 @@ public:
 
   ~be_visitor_root_exh () override;
 
-  be_visitor_root_exh (const be_visitor_root_exh &) = delete;
+  be_visitor_root_exh (be_visitor_root_exh const &) = delete;
   be_visitor_root_exh (be_visitor_root_exh &&) = delete;
-  be_visitor_root_exh &operator= (const be_visitor_root_exh &) = delete;
+  be_visitor_root_exh &operator= (be_visitor_root_exh const &) = delete;
   be_visitor_root_exh &operator= (be_visitor_root_exh &&) = delete;
 
   int visit_root (be_root *node) override;

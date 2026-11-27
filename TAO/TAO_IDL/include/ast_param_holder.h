@@ -9,6 +9,7 @@ class TAO_IDL_FE_Export AST_Param_Holder
   : public virtual AST_Type
 {
 public:
+  AST_Param_Holder () = delete;
   AST_Param_Holder (AST_Param_Holder const &) = delete;
   AST_Param_Holder (AST_Param_Holder &&) = delete;
   AST_Param_Holder &operator= (AST_Param_Holder const &) = delete;

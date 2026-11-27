@@ -75,12 +75,11 @@ class AST_Type;
 class AST_UnionLabel;
 class AST_Union;
 
-// Representation of union branch declaration.
-// A branch of a union is a field with a label.
-
+/// Represents a union branch as a field with a label.
 class TAO_IDL_FE_Export AST_UnionBranch : public virtual AST_Field
 {
 public:
+  AST_UnionBranch () = delete;
   AST_UnionBranch (UTL_LabelList *ll,
                    AST_Type *ft,
                    UTL_ScopedName *n);

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    be_expression.h
  *
@@ -9,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef BE_EXPRESSION_H
 #define BE_EXPRESSION_H
@@ -52,7 +49,7 @@ public:
 
   explicit be_expression (ACE_CDR::Double d);
 
-  explicit be_expression (const ACE_CDR::Fixed &f);
+  explicit be_expression (ACE_CDR::Fixed const &f);
 
   // Visiting.
   virtual int accept (be_visitor *visitor);

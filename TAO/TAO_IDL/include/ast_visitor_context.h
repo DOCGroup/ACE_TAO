@@ -1,6 +1,3 @@
-
-/* -*- C++ -*- */
-//=============================================================================
 /**
  *  @file    ast_visitor_context.h
  *
@@ -12,7 +9,6 @@
  *
  *  @author Jeff Parsons & Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef AST_VISITOR_CONTEXT_H
 #define AST_VISITOR_CONTEXT_H

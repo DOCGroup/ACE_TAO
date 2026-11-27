@@ -84,35 +84,31 @@ public:
 
   // Operations
 
-  /**
-   * Get the underlying string.
-   */
-  ///{
+  /// Get the underlying string.
   std::string const& get_string () const;
-  ///}
 
+  /// Replace the underlying string.
   void replace_string (std::string const& s);
-  // Replace the underlying string.
 
   void preprocess_and_replace_string (std::string const& s);
 
+  /// Compare with another Identifier.
   bool compare (Identifier const *other) const;
-  // Compare with other Identifier.
 
+  /// Also check for a case-only difference.
   bool case_compare (Identifier const *other) const;
-  // Also check for case-only difference.
 
+  /// Check for a case-only difference without error or warning output.
   bool case_compare_quiet (Identifier const *other) const;
-  // Like the above but suppressing error or warning I/O
 
+  /// Create a deep copy.
   Identifier *copy () const;
-  // Create a deep copy.
 
+  /// Return whether the IDL string had a leading underscore.
   bool escaped () const;
-  // Accessor for the member.
 
+  /// Dump to an ostream.
   virtual void dump (ACE_OSTREAM_TYPE &o);
-  // Dump to an ostream.
 
   bool operator== (Identifier const &other) const;
 
@@ -122,7 +118,7 @@ private:
   // Storage for data.
   std::string pv_string_;
 
-  // Did the IDL string have a leading underscore?
+  /// Whether the IDL string had a leading underscore.
   bool escaped_ {};
 };
 

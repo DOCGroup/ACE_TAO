@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    be_visitor_union_branch.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_UNION_BRANCH_H
 #define TAO_BE_VISITOR_UNION_BRANCH_H

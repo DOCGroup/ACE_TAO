@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    component_svts.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Marcel Smit
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_COMPONENT_SVTS_H_
 #define _BE_COMPONENT_COMPONENT_SVTS_H_

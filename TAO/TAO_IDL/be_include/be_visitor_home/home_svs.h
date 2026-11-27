@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    home_svs.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_HOME_HOME_SVS_H_
 #define _BE_HOME_HOME_SVS_H_
@@ -30,9 +27,9 @@ public:
 
   ~be_visitor_home_svs () override;
 
-  be_visitor_home_svs (const be_visitor_home_svs &) = delete;
+  be_visitor_home_svs (be_visitor_home_svs const &) = delete;
   be_visitor_home_svs (be_visitor_home_svs &&) = delete;
-  be_visitor_home_svs &operator= (const be_visitor_home_svs &) = delete;
+  be_visitor_home_svs &operator= (be_visitor_home_svs const &) = delete;
   be_visitor_home_svs &operator= (be_visitor_home_svs &&) = delete;
 
   int visit_home (be_home *node) override;
@@ -63,9 +60,9 @@ class Home_Op_Attr_Generator
 public:
   explicit Home_Op_Attr_Generator (be_visitor_scope *visitor);
 
-  Home_Op_Attr_Generator (const Home_Op_Attr_Generator &) = delete;
+  Home_Op_Attr_Generator (Home_Op_Attr_Generator const &) = delete;
   Home_Op_Attr_Generator (Home_Op_Attr_Generator &&) = delete;
-  Home_Op_Attr_Generator &operator= (const Home_Op_Attr_Generator &) = delete;
+  Home_Op_Attr_Generator &operator= (Home_Op_Attr_Generator const &) = delete;
   Home_Op_Attr_Generator &operator= (Home_Op_Attr_Generator &&) = delete;
 
   int emit (be_interface *derived_interface,
@@ -83,9 +80,9 @@ public:
 
   ~be_visitor_home_attr_set () override;
 
-  be_visitor_home_attr_set (const be_visitor_home_attr_set &) = delete;
+  be_visitor_home_attr_set (be_visitor_home_attr_set const &) = delete;
   be_visitor_home_attr_set (be_visitor_home_attr_set &&) = delete;
-  be_visitor_home_attr_set &operator= (const be_visitor_home_attr_set &) = delete;
+  be_visitor_home_attr_set &operator= (be_visitor_home_attr_set const &) = delete;
   be_visitor_home_attr_set &operator= (be_visitor_home_attr_set &&) = delete;
 
   int visit_home (be_home *node) override;

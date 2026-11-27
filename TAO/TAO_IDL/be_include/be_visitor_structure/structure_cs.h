@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    structure_cs.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_STRUCTURE_STRUCTURE_CS_H_
 #define _BE_VISITOR_STRUCTURE_STRUCTURE_CS_H_
@@ -28,9 +24,9 @@ public:
 
   ~be_visitor_structure_cs () override  = default;
 
-  be_visitor_structure_cs (const be_visitor_structure_cs &) = delete;
+  be_visitor_structure_cs (be_visitor_structure_cs const &) = delete;
   be_visitor_structure_cs (be_visitor_structure_cs &&) = delete;
-  be_visitor_structure_cs &operator= (const be_visitor_structure_cs &) = delete;
+  be_visitor_structure_cs &operator= (be_visitor_structure_cs const &) = delete;
   be_visitor_structure_cs &operator= (be_visitor_structure_cs &&) = delete;
 
   /// visit structure.

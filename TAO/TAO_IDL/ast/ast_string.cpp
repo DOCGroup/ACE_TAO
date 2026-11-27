@@ -75,8 +75,6 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 #include "utl_identifier.h"
 #include "global_extern.h"
 
-#include <string>
-
 // Note we are overlooking the wstring case here.
 AST_Decl::NodeType const
 AST_String::NT = AST_Decl::NT_string;

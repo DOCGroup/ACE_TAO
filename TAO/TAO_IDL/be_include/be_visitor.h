@@ -1,6 +1,3 @@
-
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    be_visitor.h
  *
@@ -11,7 +8,6 @@
  *  @author Inc. and Carlos O'Ryan
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_H
 #define TAO_BE_VISITOR_H

@@ -1,4 +1,3 @@
-/* -*- C++ -*- */
 #ifndef TAO_IFR_VISITOR_MACRO_H
 #define TAO_IFR_VISITOR_MACRO_H
 

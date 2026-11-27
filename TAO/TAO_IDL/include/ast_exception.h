@@ -67,17 +67,14 @@ trademarks or registered trademarks of Sun Microsystems, Inc.
 
 #include "ast_structure.h"
 
-// NOTE: add (AST_ConcreteType *) is defined here because an exception
-// can contain locally defined types in addition to fields.
-//
-// NOTE: add (AST_EnumValue *) is defined here because enums can
-// be defined manifest locally; the constants defined in these
-// enums are inserted in the enclosing scope. It is unlikely that
-// a BE writer will need to overload this function in AST_Exception.
-
+/**
+ * @note An exception can contain local types as well as fields.
+ * Constants of locally defined enums are inserted into this scope.
+ */
 class TAO_IDL_FE_Export AST_Exception : public virtual AST_Structure
 {
 public:
+  AST_Exception () = delete;
   AST_Exception (AST_Exception const &) = delete;
   AST_Exception (AST_Exception &&) = delete;
   AST_Exception &operator= (AST_Exception const &) = delete;

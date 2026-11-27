@@ -1,5 +1,3 @@
-\input texinfo  @c -*-texinfo-*-
-
 @include version.texi
 
 @c %**start of header

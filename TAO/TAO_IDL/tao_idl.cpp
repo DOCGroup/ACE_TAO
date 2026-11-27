@@ -338,7 +338,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       // If exiting because of arguments, do it now
       if (idl_global->parse_args_exit_)
         {
-          int status = idl_global->parse_args_exit_status_;
+          int const status = idl_global->parse_args_exit_status_;
           if (status)
             {
               ACE_ERROR ((LM_ERROR,

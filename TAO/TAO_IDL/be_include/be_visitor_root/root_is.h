@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    root_is.h
  *
@@ -9,7 +7,6 @@
  *
  *  @author Yamuna Krishnamurthy (yamuna@cs.wustl.edu)
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ROOT_ROOT_IS_H_
 #define _BE_VISITOR_ROOT_ROOT_IS_H_
@@ -28,9 +25,9 @@ public:
 
   ~be_visitor_root_is () override;
 
-  be_visitor_root_is (const be_visitor_root_is &) = delete;
+  be_visitor_root_is (be_visitor_root_is const &) = delete;
   be_visitor_root_is (be_visitor_root_is &&) = delete;
-  be_visitor_root_is &operator= (const be_visitor_root_is &) = delete;
+  be_visitor_root_is &operator= (be_visitor_root_is const &) = delete;
   be_visitor_root_is &operator= (be_visitor_root_is &&) = delete;
 
   int visit_root (be_root *node) override;

@@ -3,11 +3,11 @@
 
 #include "ast_valuetype_fwd.h"
 
-// Representation of a forward eventtype declaration.
-
+/// Represents a forward eventtype declaration.
 class TAO_IDL_FE_Export AST_EventTypeFwd : public virtual AST_ValueTypeFwd
 {
 public:
+  AST_EventTypeFwd () = delete;
   AST_EventTypeFwd (AST_EventTypeFwd const &) = delete;
   AST_EventTypeFwd (AST_EventTypeFwd &&) = delete;
   AST_EventTypeFwd &operator= (AST_EventTypeFwd const &) = delete;

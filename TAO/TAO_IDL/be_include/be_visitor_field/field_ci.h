@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    field_ci.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_FIELD_CI_H_
 #define _BE_VISITOR_FIELD_CI_H_
@@ -27,9 +24,9 @@ public:
   explicit be_visitor_field_ci (be_visitor_context *ctx);
   ~be_visitor_field_ci () override;
 
-  be_visitor_field_ci (const be_visitor_field_ci &) = delete;
+  be_visitor_field_ci (be_visitor_field_ci const &) = delete;
   be_visitor_field_ci (be_visitor_field_ci &&) = delete;
-  be_visitor_field_ci &operator= (const be_visitor_field_ci &) = delete;
+  be_visitor_field_ci &operator= (be_visitor_field_ci const &) = delete;
   be_visitor_field_ci &operator= (be_visitor_field_ci &&) = delete;
 
   int visit_field (be_field *node) override;

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    arglist.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ARGUMENT_ARGLIST_H_
 #define _BE_VISITOR_ARGUMENT_ARGLIST_H_

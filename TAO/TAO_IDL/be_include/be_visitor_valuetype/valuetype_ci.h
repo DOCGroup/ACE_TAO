@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    valuetype_ci.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de> based on code from Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VALUETYPE_VALUETYPE_CI_H_
 #define _BE_VALUETYPE_VALUETYPE_CI_H_

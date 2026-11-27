@@ -12,6 +12,7 @@ class TAO_IDL_FE_Export AST_Template_Module_Inst
   : public virtual AST_Field
 {
 public:
+  AST_Template_Module_Inst () = delete;
   AST_Template_Module_Inst (UTL_ScopedName *n,
                             AST_Template_Module *ref,
                             FE_Utils::T_ARGLIST *template_args);

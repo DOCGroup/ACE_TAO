@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    executor_exs_attr_init.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_EXECUTOR_EXS_ATTR_INIT_H_
 #define _BE_COMPONENT_EXECUTOR_EXS_ATTR_INIT_H_

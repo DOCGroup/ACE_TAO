@@ -1,5 +1,3 @@
-// -*- C++ -*-
-
 /**
  * Copyright (C) 1989 Free Software Foundation, Inc.
  * written by Douglas C. Schmidt (d.schmidt@vanderbilt.edu)
@@ -35,7 +33,7 @@
 /**
  * Describes a duplicate entry.
  *
- * This is used for generating code by the <Key_List>.
+ * This is used for generating code by @c Key_List.
  */
 class Duplicate_Entry
 {

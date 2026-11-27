@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    be_visitor_component_scope.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_COMPONENT_SCOPE_H_
 #define _BE_COMPONENT_COMPONENT_SCOPE_H_

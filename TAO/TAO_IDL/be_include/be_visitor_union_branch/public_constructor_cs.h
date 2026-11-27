@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    public_constructor_cs.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Johnny Willemsen
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_UNION_BRANCH_PUBLIC_CONSTRUCTOR_CS_H_
 #define _BE_VISITOR_UNION_BRANCH_PUBLIC_CONSTRUCTOR_CS_H_

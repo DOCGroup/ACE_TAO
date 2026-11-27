@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    be_valuetype_fwd.cpp
  *
@@ -9,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems Inc.
  *  @author Torsten Kuepper  <kuepper2@lfa.uni-wuppertal.de>
  */
-//=============================================================================
 
 #include "be_valuetype_fwd.h"
 #include "be_visitor.h"

@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    facet_ami_exs.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_CONNECTOR_FACET_AMI_EXS_H_
 #define _BE_CONNECTOR_FACET_AMI_EXS_H_
@@ -51,8 +48,6 @@ private:
   bool for_reply_handler_ {true};
   bool sync_ {};
 };
-
-//==============================================================
 
 /// Worker class passed to traverse_inheritance_graph(),
 /// collects all operations and attributes.

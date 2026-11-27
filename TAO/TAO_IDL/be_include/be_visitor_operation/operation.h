@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    operation.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_OPERATION_H_
 #define _BE_VISITOR_OPERATION_OPERATION_H_

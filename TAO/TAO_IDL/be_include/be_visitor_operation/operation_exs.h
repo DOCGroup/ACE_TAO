@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    operation_exs.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_OPERATION_OPERATION_EXS_H_
 #define _BE_VISITOR_OPERATION_OPERATION_EXS_H_
@@ -49,7 +46,7 @@ private:
 private:
   TAO_OutStream &os_;
   be_decl *scope_ {};
-  const char *your_code_here_;
+  char const *your_code_here_;
   std::string class_extension_;
 };
 

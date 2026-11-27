@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    component_ex_idl.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_COMPONENT_EX_IDL_H_
 #define _BE_COMPONENT_COMPONENT_EX_IDL_H_

@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    be_visitor_root.h
  *
@@ -8,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef TAO_BE_VISITOR_ROOT_H
 #define TAO_BE_VISITOR_ROOT_H

@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    union.h
  *
@@ -7,7 +5,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #include "ace/Log_Msg.h"
 
@@ -29,4 +26,3 @@
 #include "be_visitor_context.h"
 #include "be_visitor_union_branch.h"
 #include "be_visitor_typecode.h"
-#include "be_visitor_context.h"

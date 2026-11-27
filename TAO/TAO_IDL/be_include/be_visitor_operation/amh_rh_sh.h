@@ -1,4 +1,3 @@
-//=============================================================================
 /**
 *  @file   amh_rh_sh.h
 *
@@ -6,7 +5,6 @@
 *
 *  @author Mayur Deshpande <mayur@ics.uci.edu>
 */
-//=============================================================================
 
 #ifndef AMH_RH_OPERATION_SH_H
 #define AMH_RH_OPERATION_SH_H

@@ -1,6 +1,3 @@
-// -*- C++ -*-
-
-//=============================================================================
 /**
  *  @file    be_visitor_argument.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale and Carlos O'Ryan
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ARGUMENT_H
 #define _BE_VISITOR_ARGUMENT_H

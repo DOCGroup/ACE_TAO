@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    structure_ch.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_STRUCTURE_STRUCTURE_CH_H_
 #define _BE_VISITOR_STRUCTURE_STRUCTURE_CH_H_
@@ -30,9 +26,9 @@ public:
   /// destructureor
   ~be_visitor_structure_ch () override  = default;
 
-  be_visitor_structure_ch (const be_visitor_structure_ch &) = delete;
+  be_visitor_structure_ch (be_visitor_structure_ch const &) = delete;
   be_visitor_structure_ch (be_visitor_structure_ch &&) = delete;
-  be_visitor_structure_ch &operator= (const be_visitor_structure_ch &) = delete;
+  be_visitor_structure_ch &operator= (be_visitor_structure_ch const &) = delete;
   be_visitor_structure_ch &operator= (be_visitor_structure_ch &&) = delete;
 
   /// visit structure. We provide code for this method in the derived class

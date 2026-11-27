@@ -1,6 +1,3 @@
-/* -*- c++ -*- */
-
-//=============================================================================
 /**
  *  @file    be_constant.h
  *
@@ -10,7 +7,6 @@
  *  @author Copyright 1994-1995 by Sun Microsystems
  *  @author Inc. and Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef BE_CONSTANT_H
 #define BE_CONSTANT_H

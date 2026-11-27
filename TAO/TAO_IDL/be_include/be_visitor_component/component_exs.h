@@ -1,5 +1,3 @@
-/* -*- c++ -*- */
-//=============================================================================
 /**
  *  @file    component_exs.h
  *
@@ -8,7 +6,6 @@
  *
  *  @author Jeff Parsons
  */
-//=============================================================================
 
 #ifndef _BE_COMPONENT_COMPONENT_EXS_H_
 #define _BE_COMPONENT_COMPONENT_EXS_H_
@@ -31,8 +28,6 @@ public:
 
   int visit_component (be_component *node) override;
 };
-
-// =============================================
 
 /// Worker class passed to traverse_inheritance_graph(),
 /// collects supported operations and attributes. Not used

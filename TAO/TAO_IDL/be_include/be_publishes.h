@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef BE_PUBLISHES_H
 #define BE_PUBLISHES_H
 

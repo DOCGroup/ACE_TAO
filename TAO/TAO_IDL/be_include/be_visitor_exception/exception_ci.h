@@ -1,6 +1,3 @@
-/* -*- C++ -*- */
-
-//=============================================================================
 /**
  *  @file    exception_ci.h
  *
@@ -9,7 +6,6 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_EXCEPTION_EXCEPTION_CI_H_
 #define _BE_VISITOR_EXCEPTION_EXCEPTION_CI_H_

@@ -1,4 +1,3 @@
-// -*- C++ -*-
 #ifndef AST_MIRROR_PORT_H
 #define AST_MIRROR_PORT_H
 
@@ -8,6 +7,7 @@ class TAO_IDL_FE_Export AST_Mirror_Port
   : public virtual AST_Extended_Port
 {
 public:
+  AST_Mirror_Port () = delete;
   AST_Mirror_Port (
     UTL_ScopedName *n,
     AST_PortType *porttype_ref);

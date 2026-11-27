@@ -1,5 +1,3 @@
-
-//=============================================================================
 /**
  *  @file    argument.h
  *
@@ -7,14 +5,12 @@
  *
  *  @author Aniruddha Gokhale
  */
-//=============================================================================
 
 #ifndef _BE_VISITOR_ARGUMENT_ARGUMENT_H_
 #define _BE_VISITOR_ARGUMENT_ARGUMENT_H_
 
 #include "ast_argument.h"
 
-#include <string>
 #include <string>
 
 /**
