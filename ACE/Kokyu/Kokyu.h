@@ -55,8 +55,7 @@ namespace Kokyu
 
     int activate ();
 
-    /// Non virtual destructor. Read as <b><i>this class not available
-    /// for inheritance<i></b>.
+    /// @note This class is not intended to be used as a base class.
     ~Dispatcher ();
   private:
     /// Owns the implementation created for this dispatcher.

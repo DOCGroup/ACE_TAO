@@ -53,9 +53,9 @@ public:
   struct EnvVar {
     ACE_TString name;
     ACE_TString value;
-    /// Supports explicit instantiation of std::vector<EnvVar>.
+    /// Supports explicit instantiation of @c std::vector<EnvVar>.
     bool operator==(const EnvVar&) const;
-    /// Supports explicit instantiation of std::vector<EnvVar>.
+    /// Supports explicit instantiation of @c std::vector<EnvVar>.
     bool operator!=(const EnvVar&) const;
   };
 

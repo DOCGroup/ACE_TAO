@@ -317,7 +317,7 @@ private:
   /// prints the latency stats.
   void print_stats ();
 
-  /// Records the latencies in the <Task_State>.
+  /// Records the latencies in @c Task_State.
   void put_latency (JITTER_ARRAY *jitter,
                     ACE_timer_t latency,
                     u_int thread_id,

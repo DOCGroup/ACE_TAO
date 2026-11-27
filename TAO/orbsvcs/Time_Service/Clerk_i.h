@@ -71,7 +71,7 @@ private:
   using File_Handle = std::unique_ptr<FILE, int (*) (FILE *)>;
   File_Handle ior_output_file_ {nullptr, ACE_OS::fclose};
 
-  /// Initialises the name client and registers the <TimeService> Clerk
+  /// Initialises the name client and registers the @c TimeService Clerk
   /// object with it.
   int init_naming_service ();
 
@@ -92,7 +92,7 @@ private:
 
   /**
    * An instance of the name server used for registering the
-   * <TimeService Clerk> object. The same instance is used by the
+   * @c TimeService Clerk object. The same instance is used by the
    * Clerk to periodically iterate through the Server Naming Context
    * and get IORs of the available servers.
    */

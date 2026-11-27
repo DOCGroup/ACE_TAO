@@ -473,7 +473,7 @@ module SecurityLevel3 {
          */
         /// For example, if a client uses the User/Password mechanism to
         /// communicate with a target, the client's OwnCredentials, created
-        /// using a PasswordGenerator, will have the <code>authenticated</code>
+        /// using a PasswordGenerator, will have the @c authenticated
         /// field in the principal in the initiator being true,
         /// although the client may not have been authenticated to the target.
         ///

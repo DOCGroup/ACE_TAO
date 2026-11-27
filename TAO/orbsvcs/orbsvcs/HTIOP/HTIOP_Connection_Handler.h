@@ -74,7 +74,7 @@ namespace TAO
                             ACE_thread_t  thread_names[] = nullptr);
 
       /// Only used when the handler is turned into an active object by
-      /// calling <activate>.  This serves as the event loop in such cases.
+      /// calling @c activate.  This serves as the event loop in such cases.
       virtual int svc ();
       /// @}
 #endif /* 0 */

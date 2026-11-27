@@ -69,8 +69,7 @@ namespace Kokyu
     DSRT_Dispatcher &operator= (DSRT_Dispatcher const &) = delete;
     DSRT_Dispatcher &operator= (DSRT_Dispatcher &&) = delete;
 
-    /// Non virtual destructor. Read as <b><i>this class not available
-    /// for inheritance<i></b>.
+    /// @note This class is not intended to be used as a base class.
     ~DSRT_Dispatcher ();
 
   private:

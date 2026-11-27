@@ -39,8 +39,8 @@ public:
   void cancel ();
 
 protected:
-  //// This is called when asynchronous <read> operation from the
-  //// socket completes.
+  /// This is called when the asynchronous @c read operation from the
+  /// socket completes.
   /**
    * @name AIO callback handling
    *

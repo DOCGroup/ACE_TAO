@@ -102,7 +102,7 @@ private:
   ACE_CString orb_ {};
 };
 
-/// The following Factory is used by the <ACE_Service_Config> and
+/// The following Factory is used by @c ACE_Service_Config and the
 /// dll_orb.conf file to dynamically initialize the state of the
 /// Time_Date service.
 ACE_SVC_FACTORY_DECLARE (DLL_ORB)

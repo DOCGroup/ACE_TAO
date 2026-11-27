@@ -123,7 +123,7 @@ namespace TAO
 
       CORBA::String_var htid_;
 
-      /// Cached instance of <ACE::HTBP::Addr> for use in making
+      /// Cached instance of @c ACE::HTBP::Addr for use in making
       /// invocations, etc.
       ACE::HTBP::Addr object_addr_;
 

@@ -55,10 +55,10 @@ private:
   /// The allocated buffers.
   std::vector<std::unique_ptr<char[]>> buffers_;
 
-  /// The size of the <buffers_> array.
+  /// The size of the @c buffers_ array.
   int const max_fragments_;
 
-  /// The maximum size of any element of <buffers_>
+  /// The maximum size of any element of @c buffers_.
   int const max_fragment_size_;
 };
 
