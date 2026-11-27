@@ -98,8 +98,6 @@ public:
 
   /// @name Singleton reactor event loop methods
   /// @{
-  // Note that these method ONLY work on the "Singleton Reactor,"
-  // i.e., the one returned from ACE_Reactor::instance().
   /**
    * Run the event loop until the
    * ACE_Reactor::handle_events()/ACE_Reactor::alertable_handle_events()

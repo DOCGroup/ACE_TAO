@@ -28,7 +28,7 @@
 
 TAO_BEGIN_VERSIONED_NAMESPACE_DECL
 
-// Note [] as sizeof used to infer length
+/// @note The array bound is inferred so @c sizeof includes the terminator.
 static constexpr char CopyPreferredInterfaceToken[] = "$$$$";
 
 // TAO UIPMC_Acceptor concrete call definition
