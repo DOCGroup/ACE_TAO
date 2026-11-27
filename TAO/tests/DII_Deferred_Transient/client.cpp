@@ -39,6 +39,7 @@ int
 ACE_TMAIN (int argc, ACE_TCHAR *argv[])
 {
   Client_Options options;
+  int test_result {};
   try
     {
       CORBA::ORB_var const orb = CORBA::ORB_init (argc, argv);
@@ -111,6 +112,7 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
         {
           ACE_DEBUG ((LM_ERROR,
                       "(%P|%t) - All requests unexpectedly succeeded\n"));
+          test_result = 1;
         }
       else
         {
@@ -127,5 +129,5 @@ ACE_TMAIN (int argc, ACE_TCHAR *argv[])
       return 1;
     }
 
-  return 0;
+  return test_result;
 }
